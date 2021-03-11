@@ -75,8 +75,8 @@ using the DRM Info app available in Play Store.
 
 ## License
 
-This add-on is licensed under the GNU GENERAL PUBLIC LICENSE Version 3 and MIT LICENSE. 
-Please see the LICENSE.txt file for details.
+This add-on is licensed under the **GNU GENERAL PUBLIC LICENSE Version 3** and **MIT LICENSE**. 
+Please see the **LICENSE.txt** file for details.
 
 
 ## Support
