@@ -1,0 +1,2569 @@
+# XBMC Media Center language file
+# Addon Name: m-TVGuide
+# Addon id: script.mtvguide
+# Addon Provider: mods-kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Norwegian (http://www.transifex.com/projects/p/xbmc-addons/language/no/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: no\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "This channel is missing epg data."
+msgstr "Denne kanalen mangler epg data."
+
+msgctxt "#30001"
+msgid "[B]Loading...[/B]"
+msgstr "[B]Loading...[/B]"
+
+msgctxt "#30002"
+msgid "Calculating remaning time..."
+msgstr "Beregning av gjenværende tid..."
+
+msgctxt "#30003"
+msgid "Approximately {} seconds left..."
+msgstr "Omtrent {} sekunder igjen..."
+
+msgctxt "#30004"
+msgid "Loading of data already in progress..."
+msgstr "Lasting av data som allerede er i gang..."
+
+msgctxt "#30005"
+msgid "Mouse control"
+msgstr "Muskontroll"
+
+msgctxt "#30006"
+msgid "Now"
+msgstr "Nå"
+
+msgctxt "#30007"
+msgid "[B]Tip![/B] You can also use the scroll wheel"
+msgstr "[B]Tips![/B] Du kan også bruke rullehjulet"
+
+msgctxt "#30008"
+msgid "Cancel"
+msgstr "Avbryt"
+
+msgctxt "#30009"
+msgid "Enter captcha"
+msgstr "Skriv inn captcha"
+
+msgctxt "#30100"
+msgid "General"
+msgstr "Generelt"
+
+msgctxt "#30101"
+msgid "EPG"
+msgstr "EPG"
+
+msgctxt "#30102"
+msgid "Show channels from category"
+msgstr "Vis kanaler fra kategori"
+
+msgctxt "#30103"
+msgid "XMLTV file"
+msgstr "XMLTV-fil"
+
+msgctxt "#30104"
+msgid "Clear cache..."
+msgstr "Tøm hurtiglager"
+
+msgctxt "#30105"
+msgid "Done!"
+msgstr "FERDIG"
+
+msgctxt "#30106"
+msgid "Show service notification"
+msgstr "Vis servicevarsling"
+
+msgctxt "#30108"
+msgid "Clear all reminders..."
+msgstr "Fjern alle påminnelser..."
+
+msgctxt "#30109"
+msgid "Clear all planed recordings..."
+msgstr "Fjern alle planlagte opptak..."
+
+msgctxt "#30110"
+msgid "Update program information on KODI startup"
+msgstr "Oppdater programinformasjon om KODI oppstart"
+
+msgctxt "#30111"
+msgid "[COLOR]Enter the url address or provide a path to your EPG files[/COLOR]"
+msgstr "[COLOR]Skriv inn url adressen eller gi banen til EPG filene dine[/COLOR]"
+
+msgctxt "#30116"
+msgid "Search for channel logos in"
+msgstr "Søk etter kanallogoer i"
+
+msgctxt "#30117"
+msgid "[COLOR]Premium EPG[/COLOR]"
+msgstr "[COLOR]Premium EPG[/COLOR]"
+
+msgctxt "#30118"
+msgid "Main"
+msgstr "Forsiden"
+
+msgctxt "#30119"
+msgid "Additional"
+msgstr "Tillegg"
+
+msgctxt "#30120"
+msgid "Additional"
+msgstr "Tillegg"
+
+msgctxt "#30149"
+msgid "does not exist. Default will be set!"
+msgstr "eksisterer ikke. Standard vil bli satt!"
+
+msgctxt "#30150"
+msgid "Sorry, an error has occurred"
+msgstr "Beklager, det har oppstått en feil"
+
+msgctxt "#30151"
+msgid "Error initializing EPG file:"
+msgstr "Feil ved lasting av EPG fil:"
+
+msgctxt "#30152"
+msgid "[CR]Error loading EPG (electronic program guide). Please check if EPG url is correct or if internet connection is available and try again."
+msgstr "[CR]Feil ved lasting av EPG (elektronisk programguide). Kontroller om EPG url er riktig eller om internettforbindelse er tilgjengelig, og prøv på nytt."
+
+msgctxt "#30153"
+msgid "because the settings are invalid!"
+msgstr "fordi innstillingene er ugyldige!"
+
+msgctxt "#30154"
+msgid "It looks like your current skin"
+msgstr "Det ser ut som din nåværende hud"
+
+msgctxt "#30155"
+msgid "is not supported by current version of m-TVGuide"
+msgstr "støttes ikke av gjeldende versjon av m-TVGuide"
+
+msgctxt "#30156"
+msgid "Please try with a different skin..."
+msgstr "Vennligst prøv med en annen hud..."
+
+msgctxt "#30157"
+msgid "It looks like the TV Guide database is broken."
+msgstr "Det ser ut til at m-TVGuide-databasen er ødelagt."
+
+msgctxt "#30158"
+msgid "Please remove database file using option in plugin settings "Database settings""
+msgstr "Vennligst fjern databasefilen ved hjelp av alternativet i plugininnstillinger "Database-innstillinger""
+
+msgctxt "#30159"
+msgid "Channel configuration is unfortunately lost."
+msgstr "Kanalkonfigurasjonen er dessverre tapt."
+
+msgctxt "#30160"
+msgid "Error is not critical and addon will start but please fix the issue!"
+msgstr "Feil er ikke kritisk, og addon vil starte, men vær så snill å løse problemet!"
+
+msgctxt "#30161"
+msgid "Error is critical and programs won't be visible, please fix EPG (electronic program guide) url!"
+msgstr "Feil er kritisk, og programmer vil ikke være synlige, vennligst reparer EPG (elektronisk programguide) url!"
+
+msgctxt "#30162"
+msgid "No description"
+msgstr "Ingen beskrivelse"
+
+msgctxt "#30163"
+msgid "Missing genre"
+msgstr "Manglende sjanger"
+
+msgctxt "#30164"
+msgid "No available information"
+msgstr "Ingen tilgjengelig informasjon"
+
+msgctxt "#30200"
+msgid "on [B]{}[/B] in 5 minutes..."
+msgstr "på [B]{}[/B] om 5 minutter..."
+
+msgctxt "#30201"
+msgid "on [B]{}[/B] is starting now..."
+msgstr "på [B]{}[/B] starter nå..."
+
+msgctxt "#30202"
+msgid "Starting scheduled program"
+msgstr "Starter planlagt program"
+
+msgctxt "#30203"
+msgid "Start scheduled program"
+msgstr "Start planlagt program"
+
+msgctxt "#30204"
+msgid "Cancel"
+msgstr "Avbryt"
+
+msgctxt "#30205"
+msgid "On screen display"
+msgstr "On screen display"
+
+msgctxt "#30206"
+msgid "Display current time during playback"
+msgstr "Vis gjeldende tid under avspilling"
+
+msgctxt "#30300"
+msgid "Watch {}"
+msgstr "Se {}"
+
+msgctxt "#30301"
+msgid "Remind"
+msgstr "Minne om"
+
+msgctxt "#30302"
+msgid "Don't remind"
+msgstr "Ikke minn deg"
+
+msgctxt "#30303"
+msgid "Cancel recording"
+msgstr "Avbryt opptak"
+
+msgctxt "#30304"
+msgid "Choose stream"
+msgstr "Velg strøm"
+
+msgctxt "#30305"
+msgid "You can choose your own .strm file."
+msgstr "Du kan velge din egen .strm-fil."
+
+msgctxt "#30306"
+msgid "Remove stream"
+msgstr "Fjern strømmen"
+
+msgctxt "#30307"
+msgid "Channels"
+msgstr "Kanaler"
+
+msgctxt "#30308"
+msgid "Exit"
+msgstr "Avslutt"
+
+msgctxt "#30309"
+msgid "Lists"
+msgstr "Lister"
+
+msgctxt "#30310"
+msgid "Channel listing"
+msgstr "Kanaloppføring"
+
+msgctxt "#30311"
+msgid "Now"
+msgstr "Nå"
+
+msgctxt "#30312"
+msgid "Next"
+msgstr "Neste"
+
+msgctxt "#30313"
+msgid "Start"
+msgstr "Start"
+
+msgctxt "#30314"
+msgid "Length"
+msgstr "Lengde"
+
+msgctxt "#30315"
+msgid "Search"
+msgstr "Søke"
+
+msgctxt "#30316"
+msgid "Title"
+msgstr "Tittel"
+
+msgctxt "#30317"
+msgid "Synopsis"
+msgstr "Synopsis"
+
+msgctxt "#30318"
+msgid "Category"
+msgstr "Kategori"
+
+msgctxt "#30319"
+msgid "Channel"
+msgstr "Kanal"
+
+msgctxt "#30320"
+msgid "New search"
+msgstr "Nytt søk"
+
+msgctxt "#30321"
+msgid "Remove search"
+msgstr "Fjern søk"
+
+msgctxt "#30322"
+msgid "Program search"
+msgstr "Programsøk"
+
+msgctxt "#30323"
+msgid "Synopsis search"
+msgstr "Synopsis søk"
+
+msgctxt "#30324"
+msgid "Program category search"
+msgstr "Programkategori søk"
+
+msgctxt "#30325"
+msgid "All channels"
+msgstr "Alle kanaler"
+
+msgctxt "#30326"
+msgid "Channel search"
+msgstr "Kanalsøk"
+
+msgctxt "#30327"
+msgid "Program search: [COLOR gold][B]{}[/B][/COLOR]"
+msgstr "Programsøk: [COLOR gold][B]{}[/B][/COLOR]"
+
+msgctxt "#30328"
+msgid "Synopsis search:"
+msgstr "Synopsis søk:"
+
+msgctxt "#30329"
+msgid "Today"
+msgstr "I dag"
+
+msgctxt "#30330"
+msgid "Tomorrow"
+msgstr "I morgen"
+
+msgctxt "#30331"
+msgid "Yesterday"
+msgstr "I går"
+
+msgctxt "#30332"
+msgid "in {} days"
+msgstr "om {} dager"
+
+msgctxt "#30333"
+msgid "in {} day"
+msgstr "om {} dag"
+
+msgctxt "#30334"
+msgid "in {} hours"
+msgstr "om {} time"
+
+msgctxt "#30335"
+msgid "in {} min"
+msgstr "om {} min"
+
+msgctxt "#30336"
+msgid "Reminders"
+msgstr "Påminnelser"
+
+msgctxt "#30337"
+msgid "Recordings"
+msgstr "Innspillinger"
+
+msgctxt "#30338"
+msgid "List view"
+msgstr "Listevisning"
+
+msgctxt "#30339"
+msgid "List future days"
+msgstr "Liste fremtidige dager"
+
+msgctxt "#30340"
+msgid "List previous hours"
+msgstr "Liste forrige timer"
+
+msgctxt "#30341"
+msgid "Sort list by time"
+msgstr "Sorter liste etter tid"
+
+msgctxt "#30342"
+msgid "Include synopsis in title search"
+msgstr "Inkluder synopsis i tittelsøk"
+
+msgctxt "#30343"
+msgid "Category list"
+msgstr "Kategori liste"
+
+msgctxt "#30344"
+msgid "Category search"
+msgstr "Kategori søk"
+
+msgctxt "#30345"
+msgid "Category search:"
+msgstr "Kategori søk:"
+
+msgctxt "#30346"
+msgid "Go to channel"
+msgstr "Gå til kanal"
+
+msgctxt "#30347"
+msgid "Determining order of channels"
+msgstr "Bestem kanal rekkefølge"
+
+msgctxt "#30348"
+msgid "Enable channel order by number"
+msgstr "Aktiver kanal rekkefølge etter nummer"
+
+msgctxt "#30349"
+msgid "Play on select"
+msgstr "På det valgte nummeret"
+
+msgctxt "#30350"
+msgid "Don't play"
+msgstr "Ingen avspilling"
+
+msgctxt "#30351"
+msgid "Play only in TV mode"
+msgstr "Avspilling bare i TV modus"
+
+msgctxt "#30352"
+msgid "Play"
+msgstr "Avspilling"
+
+msgctxt "#30353"
+msgid "Error"
+msgstr "Feil"
+
+msgctxt "#30354"
+msgid "Please enable channel order by number in settings"
+msgstr "Aktiver kanal rekkefølge etter nummer i innstillinger"
+
+msgctxt "#30355"
+msgid "Show channel logos"
+msgstr "Vis kanallogoer"
+
+msgctxt "#30356"
+msgid "Extended information"
+msgstr "Utvidet informasjon"
+
+msgctxt "#30357"
+msgid "Search as movie"
+msgstr "Søk som film"
+
+msgctxt "#30358"
+msgid "Search as TV show"
+msgstr "Søk som TV show"
+
+msgctxt "#30359"
+msgid "Search extended information"
+msgstr "Søk utvidet informasjon"
+
+msgctxt "#30360"
+msgid "Search as all"
+msgstr "Søk som alle"
+
+msgctxt "#30361"
+msgid "Search could not be found: {}"
+msgstr "Søket ble ikke funnet: {}"
+
+msgctxt "#30362"
+msgid "No such movie: {}"
+msgstr "Ingen slik film: {}"
+
+msgctxt "#30363"
+msgid "No such TV program: {}"
+msgstr "Ingen slik TV program: {}"
+
+msgctxt "#30364"
+msgid "Show program thumbnail"
+msgstr "Vis programminiatyrbilde"
+
+msgctxt "#30365"
+msgid "Time [CR](Attention! Reseting database required)"
+msgstr "Tid [CR](Merk! Tilbakestilling av database kreves)"
+
+msgctxt "#30366"
+msgid "Adjust timebar (min)"
+msgstr "Juster tidslinjen (min)"
+
+msgctxt "#30367"
+msgid "Fullscreen window size animation"
+msgstr "Fullskjermanimasjon"
+
+msgctxt "#30368"
+msgid "Site"
+msgstr "Nettstedet"
+
+msgctxt "#30369"
+msgid "Login with TV provider"
+msgstr "Logg inn med TV leverandøren"
+
+msgctxt "#30370"
+msgid "Operator"
+msgstr "Operatør"
+
+msgctxt "#30371"
+msgid "Reset login credentials"
+msgstr "Tilbakestill påloggingsinformasjon"
+
+msgctxt "#30372"
+msgid "Login credentials have been reset"
+msgstr "Innloggingsinformasjon er tilbakestilt"
+
+msgctxt "#30500"
+msgid "Edit channel order and visibility"
+msgstr "Rediger kanal rekkefølge og synlighet"
+
+msgctxt "#30501"
+msgid "Press context button to set channel order, move up and down to change position. Enable and disable channels with select button."
+msgstr "Trykk på kontekstknappen for å angi kanal rekkefølge, flytt opp og ned for å endre posisjon. Aktiver og deaktiver kanalene med valgknappen."
+
+msgctxt "#30502"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#30503"
+msgid "Cancel"
+msgstr "Avbryt"
+
+msgctxt "#30504"
+msgid "Notification from mods-kodi.pl"
+msgstr "Varsel fra mods-kodi.pl"
+
+msgctxt "#30505"
+msgid "Genre"
+msgstr "Sjanger"
+
+msgctxt "#30506"
+msgid "Episode"
+msgstr "Episode"
+
+msgctxt "#30507"
+msgid "Actors"
+msgstr "Skuespillere"
+
+msgctxt "#30508"
+msgid "Year"
+msgstr "År"
+
+msgctxt "#30509"
+msgid "Director"
+msgstr "Regissør"
+
+msgctxt "#30510"
+msgid "Plot"
+msgstr "Handlingen"
+
+msgctxt "#30511"
+msgid "Duration"
+msgstr "Varighet"
+
+msgctxt "#30512"
+msgid "Rating"
+msgstr "Grad"
+
+msgctxt "#30400"
+msgid "CHANNELS LIST"
+msgstr "KANALER LISTE"
+
+msgctxt "#30401"
+msgid "EXIT"
+msgstr "AVSLUTNING:"
+
+msgctxt "#30402"
+msgid "ADDON SETTINGS"
+msgstr "TILLEGG INNSTILLINGER"
+
+msgctxt "#30403"
+msgid "REMIND"
+msgstr "MINNE OM"
+
+msgctxt "#30404"
+msgid "PROGRAM"
+msgstr "PROGRAM"
+
+msgctxt "#30405"
+msgid "CHANNEL SETTINGS"
+msgstr "KANAL INNSTILLINGER"
+
+msgctxt "#30406"
+msgid "DON'T REMIND"
+msgstr "IKKE MINDRE"
+
+msgctxt "#30407"
+msgid "CHOOSE STREAM"
+msgstr "VELG STREAM"
+
+msgctxt "#30408"
+msgid "REMOVE STREAM"
+msgstr "FJERN STRØM"
+
+msgctxt "#30600"
+msgid "Setup stream"
+msgstr "Setup Stream"
+
+msgctxt "#30601"
+msgid "Stream file"
+msgstr "Strøm fil"
+
+msgctxt "#30602"
+msgid "Favourites"
+msgstr "[Favourites]"
+
+msgctxt "#30603"
+msgid "Addons"
+msgstr "Addons"
+
+msgctxt "#30604"
+msgid "Preview"
+msgstr "Forhåndsvisning"
+
+msgctxt "#30605"
+msgid "Save"
+msgstr "Lagre"
+
+msgctxt "#30606"
+msgid "Cancel"
+msgstr "Avbryt"
+
+msgctxt "#30607"
+msgid "Stop preview"
+msgstr "Stopp forhåndsvisning"
+
+msgctxt "#30610"
+msgid "Browse..."
+msgstr "Bla gjennom..."
+
+msgctxt "#30611"
+msgid "Click [B]Browse[/B] below and navigate to your stream file.[CR]When you have chosen your file you can preview the stream to test if it works in KODI."
+msgstr "Klikk på [B]Bla gjennom[/B] nedenfor og naviger til strømfilen din.[CR]Når du har valgt filen, kan du forhåndsvise strømmen for å teste om den fungerer i KODI."
+
+msgctxt "#30620"
+msgid "Choose a favourite. Only [B]PlayMedia[/B] favourites are supported."
+msgstr "Velg en favoritt. Bare [B]PlayMedia[/B] favoritter støttes."
+
+msgctxt "#30621"
+msgid "Live, schedule recording or download program.[CR]Add a task, use time-shift to urge or delay start of recording / download."
+msgstr "Live, planlegge opptak eller last ned program.[CR]Legg til en oppgave, bruk tidsskift for å oppfordre eller forsinke start av innspilling / nedlasting."
+
+msgctxt "#30700"
+msgid "Multiple addons provide this channels.[CR]Choose one to watch the stream."
+msgstr "Flere addons gir disse kanalene.[CR]Velg en for å se på strømmen."
+
+msgctxt "#30701"
+msgid "Source: "
+msgstr "Kilde: "
+
+msgctxt "#30702"
+msgid "Appearance"
+msgstr "Utseende"
+
+msgctxt "#30703"
+msgid "Automatically assign streams"
+msgstr "Tilordne strømmer automatisk"
+
+msgctxt "#30704"
+msgid "Use zipped epg"
+msgstr "Bruk glidelås epg"
+
+msgctxt "#30705"
+msgid "Show only programs with stream assigned"
+msgstr "Vis bare programmer med strøm tildelt"
+
+msgctxt "#30706"
+msgid "Auto detect EPG change"
+msgstr "Automatisk oppdag EPG-endring"
+
+msgctxt "#30707"
+msgid "Show info notification"
+msgstr "Vis info varsel"
+
+msgctxt "#30708"
+msgid "Use fast EPG parser"
+msgstr "Bruk rask EPG parser"
+
+msgctxt "#30709"
+msgid "Skin updated"
+msgstr "Hud oppdatert"
+
+msgctxt "#30710"
+msgid "Update"
+msgstr "Oppdater"
+
+msgctxt "#30711"
+msgid "Get more..."
+msgstr "Motta mer"
+
+msgctxt "#30712"
+msgid "All online skins are already installed!"
+msgstr "Alle online skins er allerede installert!"
+
+msgctxt "#30713"
+msgid "Failed to download skin!"
+msgstr "Kunne ikke laste ned hud!"
+
+msgctxt "#30714"
+msgid "Delete all skins"
+msgstr "Slett alle skinn"
+
+msgctxt "#30715"
+msgid "Enable adult channels"
+msgstr "Aktiver voksne kanaler"
+
+msgctxt "#30716"
+msgid "Enable swedish channels"
+msgstr "Aktiver svenske kanaler"
+
+msgctxt "#30717"
+msgid "EPG - XXX"
+msgstr "EPG - XXX"
+
+msgctxt "#30718"
+msgid "EPG - Swedish"
+msgstr "EPG - Svensk"
+
+msgctxt "#30719"
+msgid "Disable"
+msgstr "Deaktiver"
+
+msgctxt "#30720"
+msgid "Disabled"
+msgstr "Funksjonshemmet"
+
+msgctxt "#30721"
+msgid "Enabled"
+msgstr "Aktivert"
+
+msgctxt "#30722"
+msgid "Enable"
+msgstr "Aktiver"
+
+msgctxt "#30723"
+msgid "Password for adult channels taken from mods-kodi"
+msgstr "Skriv inn passord for voksne kanaler hentet fra mods-kodi"
+
+msgctxt "#30724"
+msgid "Incorrect password!"
+msgstr "Feil passord!"
+
+msgctxt "#30725"
+msgid "Enable english channels"
+msgstr "Aktiver engelske kanaler"
+
+msgctxt "#30726"
+msgid "EPG - English"
+msgstr "EPG - Engelsk"
+
+msgctxt "#30727"
+msgid "Enable danish channels"
+msgstr "Aktiver danske kanaler"
+
+msgctxt "#30728"
+msgid "EPG - Danish"
+msgstr "EPG - Dansk"
+
+msgctxt "#30729"
+msgid "Enable french channels"
+msgstr "Aktiver franske kanaler"
+
+msgctxt "#30730"
+msgid "EPG - French"
+msgstr "EPG - Fransk"
+
+msgctxt "#30731"
+msgid "Enable german channels"
+msgstr "Aktiver tyske kanaler"
+
+msgctxt "#30732"
+msgid "EPG - German"
+msgstr "EPG - Tysk"
+
+msgctxt "#30733"
+msgid "Enable croatian channels"
+msgstr "Aktiver kroatiske kanaler"
+
+msgctxt "#30734"
+msgid "EPG - Croatian"
+msgstr "EPG - Kroatisk"
+
+msgctxt "#30735"
+msgid "Enable serbian channels"
+msgstr "Aktiver serbiske kanaler"
+
+msgctxt "#30736"
+msgid "EPG - Serbian"
+msgstr "EPG - Serbisk"
+
+msgctxt "#30737"
+msgid "Enable norwegian channels"
+msgstr "Aktiver norske kanaler"
+
+msgctxt "#30738"
+msgid "EPG - Norwegian"
+msgstr "EPG - Norsk"
+
+msgctxt "#30739"
+msgid "Show all regions"
+msgstr "Vis alle regioner"
+
+msgctxt "#30740"
+msgid "[COLOR]Select EPG[/COLOR]"
+msgstr "[COLOR]Velg EPG[/COLOR]"
+
+msgctxt "#30741"
+msgid "Adult channels"
+msgstr "Voksne kanaler"
+
+msgctxt "#30742"
+msgid "Timezone"
+msgstr "Tidssone"
+
+msgctxt "#30743"
+msgid "Enable benelux channels"
+msgstr "Aktiver benelux kanaler"
+
+msgctxt "#30744"
+msgid "EPG - Benelux"
+msgstr "EPG - Benelux"
+
+msgctxt "#30745"
+msgid "Enable vod channels"
+msgstr "Aktiver vod kanaler"
+
+msgctxt "#30746"
+msgid "Video on demand channels"
+msgstr "Video on demand kanaler"
+
+msgctxt "#30747"
+msgid "adult channels"
+msgstr "voksne kanaler"
+
+msgctxt "#30748"
+msgid "vod channels"
+msgstr "vod kanaler"
+
+msgctxt "#30749"
+msgid "Enable radio channels"
+msgstr "Aktiver radio kanaler"
+
+msgctxt "#30750"
+msgid "EPG - Radio"
+msgstr "EPG - Radio"
+
+msgctxt "#30751"
+msgid "Radio channels"
+msgstr "Radio kanaler"
+
+msgctxt "#30752"
+msgid "EPG - Czech"
+msgstr "EPG - Tsjekkisk"
+
+msgctxt "#30753"
+msgid "Enable czech channels"
+msgstr "Aktiver tsjekkiske kanaler"
+
+msgctxt "#30754"
+msgid "EPG - US"
+msgstr "EPG - US"
+
+msgctxt "#30755"
+msgid "Enable american channels"
+msgstr "Aktiver amerikanske kanaler"
+
+msgctxt "#30756"
+msgid "EPG - Italian"
+msgstr "EPG - Italiensk"
+
+msgctxt "#30757"
+msgid "Enable italian channels"
+msgstr "Aktiver italienske kanaler"
+
+msgctxt "#30758"
+msgid "Polish channels"
+msgstr "Polske kanaler"
+
+msgctxt "#30759"
+msgid "Enable polish channels [COLOR disabled](Use main EPG)[/COLOR]"
+msgstr "Aktiver polske kanaler [COLOR disabled](Bruk hoved EPG)[/COLOR]"
+
+msgctxt "#30760"
+msgid "Enable subtitles"
+msgstr "Aktiver undertekster"
+
+msgctxt "#30802"
+msgid "m-TVGuide is configured to stream using"
+msgstr "m-TVGuide er konfigurert til å streame med"
+
+msgctxt "#30803"
+msgid "addon which is not installed."
+msgstr "addon som ikke er installert."
+
+msgctxt "#30804"
+msgid "Streaming using that addon is now disabled."
+msgstr "Strømning ved hjelp av det tillegget er nå deaktivert."
+
+msgctxt "#30901"
+msgid "Update"
+msgstr "Oppdater"
+
+msgctxt "#30902"
+msgid "Update now"
+msgstr "Oppdater nå"
+
+msgctxt "#30904"
+msgid "[COLOR]Telia Play[/COLOR]"
+msgstr "[COLOR]Telia Play[/COLOR]"
+
+msgctxt "#30905"
+msgid "Advertisement"
+msgstr "Reklame"
+
+msgctxt "#30910"
+msgid "Enable navigation panel for mouse or touch"
+msgstr "Aktiver navigasjonspanelet for mus eller touch"
+
+msgctxt "#30911"
+msgid "Timezone UTC (+00:00 GMT)"
+msgstr "Tidssone UTC (+ 00: 00 GMT)"
+
+msgctxt "#59904"
+msgid "Enable"
+msgstr "Aktivert"
+
+msgctxt "#59905"
+msgid "[COLOR]Playlists M3U[/COLOR]"
+msgstr "[COLOR]Playlists M3U[/COLOR]"
+
+msgctxt "#59906"
+msgid "Link"
+msgstr "Lenke"
+
+msgctxt "#59907"
+msgid "Source"
+msgstr "Kilde"
+
+msgctxt "#59908"
+msgid "File"
+msgstr "Fil"
+
+msgctxt "#59909"
+msgid "Multisession"
+msgstr "Multisession"
+
+msgctxt "#59910"
+msgid "Use free account"
+msgstr "Bruk gratis konto"
+
+msgctxt "#59911"
+msgid "[COLOR]Playlist 1[/COLOR]"
+msgstr "[COLOR]Spilleliste 1[/COLOR]"
+
+msgctxt "#59912"
+msgid "[COLOR]Playlist 2[/COLOR]"
+msgstr "[COLOR]Spilleliste 2[/COLOR]"
+
+msgctxt "#59913"
+msgid "[COLOR]Playlist 3[/COLOR]"
+msgstr "[COLOR]Spilleliste 3[/COLOR]"
+
+msgctxt "#59914"
+msgid "Display name"
+msgstr "Visningsnavn"
+
+msgctxt "#59915"
+msgid "Loading service"
+msgstr "Laster tjeneste"
+
+msgctxt "#59916"
+msgid "Number of playlists"
+msgstr "Antall spillelister"
+
+msgctxt "#59917"
+msgid "[COLOR]Playlist 4[/COLOR]"
+msgstr "[COLOR]Spilleliste 4[/COLOR]"
+
+msgctxt "#59918"
+msgid "[COLOR]Playlist 5[/COLOR]"
+msgstr "[COLOR]Spilleliste 5[/COLOR]"
+
+msgctxt "#59919"
+msgid "Url"
+msgstr "Url"
+
+msgctxt "#59920"
+msgid "[COLOR]C More[/COLOR]"
+msgstr "C More"
+
+msgctxt "#59921"
+msgid "[COLOR]Cyfrowy Polsat GO[/COLOR]"
+msgstr "Cyfrowy Polsat GO"
+
+msgctxt "#59922"
+msgid "[COLOR]FranceTV[/COLOR]"
+msgstr "FranceTV"
+
+msgctxt "#59923"
+msgid "[COLOR]nc+ GO[/COLOR]"
+msgstr "nc+ GO"
+
+msgctxt "#59924"
+msgid "Configuration tutorial"
+msgstr "Konfigurasjonsveiledning"
+
+msgctxt "#59925"
+msgid "Belgium"
+msgstr "Belgia"
+
+msgctxt "#59926"
+msgid "Czech"
+msgstr "Tsjekkia"
+
+msgctxt "#59927"
+msgid "Germany"
+msgstr "Tyskland"
+
+msgctxt "#59928"
+msgid "Denmark"
+msgstr "Danmark"
+
+msgctxt "#59929"
+msgid "France"
+msgstr "Frankrike"
+
+msgctxt "#59930"
+msgid "Croatia"
+msgstr "Kroatia"
+
+msgctxt "#59931"
+msgid "Italy"
+msgstr "Italia"
+
+msgctxt "#59932"
+msgid "Norway"
+msgstr "Norge"
+
+msgctxt "#59933"
+msgid "Poland"
+msgstr "Polen"
+
+msgctxt "#59934"
+msgid "Sweden"
+msgstr "Sverige"
+
+msgctxt "#59935"
+msgid "Serbia"
+msgstr "Serbia"
+
+msgctxt "#59936"
+msgid "Great Britain"
+msgstr "Storbritannia"
+
+msgctxt "#59937"
+msgid "United States"
+msgstr "Forente stater"
+
+msgctxt "#59938"
+msgid "Would you like to end setup configuration?"
+msgstr "Vil du avslutte konfigurasjonen?"
+
+msgctxt "#59939"
+msgid "Return"
+msgstr "Gå tilbake"
+
+msgctxt "#59940"
+msgid "Select electronic program guide (EPG) type"
+msgstr "Velg elektronisk programguide (EPG) type"
+
+msgctxt "#59941"
+msgid "Enter URL link to your electronic program guide (EPG)"
+msgstr "Skriv inn URL link til din elektroniske programguide (EPG)"
+
+msgctxt "#59942"
+msgid "Select your electronic program guide (EPG) file"
+msgstr "Velg din elektroniske programguide (EPG) fil"
+
+msgctxt "#59943"
+msgid "Select regions"
+msgstr "Velg regioner"
+
+msgctxt "#59944"
+msgid "Would you like to add an extra electronic program guide (EPG) for {} channels?"
+msgstr "Vil du legge til en ekstra elektronisk programguide (EPG) for {} kanaler?"
+
+msgctxt "#59945"
+msgid "Enter URL link to your electronic program guide (EPG) for {} channels"
+msgstr "Skriv inn URL link til den elektroniske programguiden (EPG) for {} kanaler"
+
+msgctxt "#59946"
+msgid "Select TV service or M3U playlist"
+msgstr "Velg TV tjeneste eller M3U spilleliste"
+
+msgctxt "#59947"
+msgid "TV services"
+msgstr "TV tjenester"
+
+msgctxt "#59948"
+msgid "M3U Playlist"
+msgstr "M3U spilleliste"
+
+msgctxt "#59949"
+msgid "Select TV services"
+msgstr "Velg TV tjenester"
+
+msgctxt "#59950"
+msgid "Enter login credentials for {}."
+msgstr "Skriv inn påloggingsinformasjon for {}."
+
+msgctxt "#59951"
+msgid "Would you like to login with a TV operator?"
+msgstr "Vil du logge inn med en TV operatør?"
+
+msgctxt "#59952"
+msgid "Username"
+msgstr "Brukernavn"
+
+msgctxt "#59953"
+msgid "Password"
+msgstr "Passord"
+
+msgctxt "#59954"
+msgid "Select M3U playlist type."
+msgstr "Velg M3U spillelistetype."
+
+msgctxt "#59955"
+msgid "Enter M3U playlist URL link"
+msgstr "Skriv inn URL link til M3U spilleliste"
+
+msgctxt "#59956"
+msgid "Select M3U playlist file"
+msgstr "Velg M3U spillelistefil"
+
+msgctxt "#59957"
+msgid "Would you like to setup recording service?"
+msgstr "Vil du konfigurere opptakstjeneste?"
+
+msgctxt "#59958"
+msgid "Select a storage location for your recordings"
+msgstr "Velg et lagringssted for opptakene dine"
+
+msgctxt "#59959"
+msgid "Would you like to start a configuration tutorial for m-TVGuide?"
+msgstr "Vil du starte en konfigurasjonsveiledning for m-TVGuide?"
+
+msgctxt "#59960"
+msgid "• Select electronic program guide (EPG). [COLOR grey]Supported program guides are URL link and/or .xml, .gz and .zip file extensions.[/COLOR][CR]• Select regions that are supported by the provided EPG.[CR]• Select a TV service and/or M3U playlist."
+msgstr "• Velg elektronisk programguide (EPG). [COLOR grey]Programstøttene som støttes er URL-kobling og/eller .xml, .gz og .zip filtypene.[/COLOR][CR]• Velg regioner som støttes av den medfølgende EPG.[CR]• Velg en TV-tjeneste og/eller M3U spilleliste."
+
+msgctxt "#59961"
+msgid "All settings are now configurated, you can now start m-TVGuide."
+msgstr "Alle innstillinger er nå konfigurert, du kan nå starte m-TVGuide."
+
+msgctxt "#59962"
+msgid "Would you like to add an extra EPG?"
+msgstr "Vil du legge til en ekstra EPG?"
+
+msgctxt "#59963"
+msgid "Belgian"
+msgstr "Belgiske"
+
+msgctxt "#59964"
+msgid "Czech"
+msgstr "Tjekkiske"
+
+msgctxt "#59965"
+msgid "German"
+msgstr "Tyske"
+
+msgctxt "#59966"
+msgid "Danish"
+msgstr "Danske"
+
+msgctxt "#59967"
+msgid "French"
+msgstr "Franske"
+
+msgctxt "#59968"
+msgid "Croatian"
+msgstr "Kroatiske"
+
+msgctxt "#59969"
+msgid "Italian"
+msgstr "Italienske"
+
+msgctxt "#59970"
+msgid "Norwegian"
+msgstr "Norske"
+
+msgctxt "#59971"
+msgid "Polish"
+msgstr "Polske"
+
+msgctxt "#59972"
+msgid "Swedish"
+msgstr "Svenske"
+
+msgctxt "#59973"
+msgid "Serbian"
+msgstr "Serbiske"
+
+msgctxt "#59974"
+msgid "English"
+msgstr "Engelske"
+
+msgctxt "#59975"
+msgid "American"
+msgstr "Amerikanske"
+
+msgctxt "#59976"
+msgid "Catchup"
+msgstr "Timeshift"
+
+msgctxt "#59977"
+msgid "Query format string"
+msgstr "Streng format"
+
+msgctxt "#59978"
+msgid "Enable catchup"
+msgstr "Aktiver timeshift"
+
+msgctxt "#59979"
+msgid "Wrong timeshift format."
+msgstr "Feil timeshift format."
+
+msgctxt "#59980"
+msgid "No available catchup playback."
+msgstr "Ingen tilgjengelige timeshift avspillinger."
+
+msgctxt "#59981"
+msgid "- Buffer before program start (min)"
+msgstr "- Buffer før programstart (min)"
+
+msgctxt "#59982"
+msgid "- Buffer after program end (min)"
+msgstr "- Buffer etter programslutt (min)"
+
+msgctxt "#59983"
+msgid "Other settings"
+msgstr "Andre innstillinger"
+
+msgctxt "#59984"
+msgid "Catchup only finished programmes"
+msgstr "Timeshift er bare tilgjengelig på fullførte programmer"
+
+msgctxt "#59985"
+msgid "Downloading:"
+msgstr "Nedlasting:"
+
+msgctxt "#59986"
+msgid "Finished downloading:"
+msgstr "Fullført nedlasting:"
+
+msgctxt "#59987"
+msgid "No download available for this program."
+msgstr "Ingen nedlasting tilgjengelig for dette programmet."
+
+msgctxt "#59988"
+msgid "Catchup window days"
+msgstr "Tidsskiftvindu dager"
+
+msgctxt "#59989"
+msgid "Catchup type"
+msgstr "Timeshift type"
+
+msgctxt "#59990"
+msgid "Append"
+msgstr "Append"
+
+msgctxt "#59991"
+msgid "Add channel from EPG (Electronic program guide)"
+msgstr "Legg til kanal fra EPG (Elektronisk programguide)"
+
+msgctxt "#59992"
+msgid "Add stream to selected channel"
+msgstr "Legg til strøm i valgt kanal"
+
+msgctxt "#59993"
+msgid "Added channel [B]{}[/B]. Restart required for changes to take place."
+msgstr "Lagt til kanal [B]{}[/B]. Start på nytt for at endringene skal finne sted."
+
+msgctxt "#59994"
+msgid "Select which channels to display"
+msgstr "Velg hvilke kanaler som skal vises"
+
+msgctxt "#59995"
+msgid "Missing channels"
+msgstr "Manglende kanaler"
+
+msgctxt "#59996"
+msgid "Xtream Codes"
+msgstr "Xtream Codes"
+
+msgctxt "#59997"
+msgid "Sort by selected character"
+msgstr "Sorter etter valgt bokstav"
+
+msgctxt "#59998"
+msgid "Only one download session at once allowed."
+msgstr "Bare en nedlastingsøkt på en gang tillatt."
+
+msgctxt "#59999"
+msgid "Shift"
+msgstr "Shift"
+
+msgctxt "#60000"
+msgid "Auto"
+msgstr "Auto"
+
+msgctxt "#60001"
+msgid "Manual"
+msgstr "Manuell"
+
+msgctxt "#60002"
+msgid "Catchup window"
+msgstr "Tidsskiftvindu"
+
+msgctxt "#60003"
+msgid "Add single URL value"
+msgstr "Legg til en enkelt URL verdi"
+
+msgctxt "#60004"
+msgid "Add multiple URL values"
+msgstr "Legg til flere URL verdier"
+
+msgctxt "#60005"
+msgid "Delete added channels"
+msgstr "Slett tilføyde kanaler"
+
+msgctxt "#60006"
+msgid "Select channels to delete"
+msgstr "Velg kanaler som skal slettes"
+
+msgctxt "#60007"
+msgid "Channels has been deleted. Restart required for changes to take place."
+msgstr "Kanaler er slettet. Start på nytt for at endringene skal finne sted."
+
+msgctxt "#60008"
+msgid "Save playlist to local drive"
+msgstr "Lagre spilleliste på lokal disk"
+
+msgctxt "#60009"
+msgid "Update playlist (days)"
+msgstr "Oppdater spilleliste (dager)"
+
+msgctxt "#30913"
+msgid "Settings"
+msgstr "Oppsett"
+
+msgctxt "#30914"
+msgid "Skin"
+msgstr "Huden"
+
+msgctxt "#30915"
+msgid "Enable add-on autostart"
+msgstr "Aktiver tilleggs autostart"
+
+msgctxt "#30916"
+msgid "Database"
+msgstr "Database"
+
+msgctxt "#30917"
+msgid "Fullscreen window size animation"
+msgstr "Fullskjermanimasjon"
+
+msgctxt "#30918"
+msgid "OSD on select"
+msgstr "OSD på valgt"
+
+msgctxt "#30919"
+msgid "Enable automatic channel playback"
+msgstr "Aktiver automatisk avspilling av kanalen"
+
+msgctxt "#30920"
+msgid "By channel number"
+msgstr "Etter kanalnummer"
+
+msgctxt "#30921"
+msgid "Last seen channel"
+msgstr "Sist sett kanal"
+
+msgctxt "#30930"
+msgid "Colours"
+msgstr "Farger"
+
+msgctxt "#30931"
+msgid "[COLOR]Category colours[/COLOR]"
+msgstr "[COLOR]Kategori farger[/COLOR]"
+
+msgctxt "#30932"
+msgid "Movies"
+msgstr "Filmer"
+
+msgctxt "#30933"
+msgid "TV series"
+msgstr "TV-serier"
+
+msgctxt "#30934"
+msgid "Current events"
+msgstr "Aktuelle hendelser"
+
+msgctxt "#30935"
+msgid "Entertainment"
+msgstr "Underholdning"
+
+msgctxt "#30936"
+msgid "Documentaries"
+msgstr "Dokumentar"
+
+msgctxt "#30937"
+msgid "Childrens programme"
+msgstr "Barneprogram"
+
+msgctxt "#30938"
+msgid "Sports"
+msgstr "Sport"
+
+msgctxt "#30939"
+msgid "Interactive entertainment"
+msgstr "Interaktiv underholdning"
+
+msgctxt "#30940"
+msgid "[COLOR]Default colors[/COLOR]"
+msgstr "[COLOR]Standardfargene[/COLOR]"
+
+msgctxt "#30941"
+msgid "Default color"
+msgstr "Standard farge"
+
+msgctxt "#30942"
+msgid "Focus colour"
+msgstr "Fokusfarge"
+
+msgctxt "#30943"
+msgid "Schedule colour"
+msgstr "Planlegg farge"
+
+msgctxt "#30944"
+msgid "Recording colour"
+msgstr "Opptaks farge"
+
+msgctxt "#30950"
+msgid "Clear database"
+msgstr "Klar database"
+
+msgctxt "#30951"
+msgid "Database cleared"
+msgstr "Database slettet"
+
+msgctxt "#30952"
+msgid "Delete custom streams"
+msgstr "Slett tilpassede strømmer"
+
+msgctxt "#30953"
+msgid "Export settings"
+msgstr "Exporter innstillinger"
+
+msgctxt "#30954"
+msgid "Import settings"
+msgstr "Importer innstillinger"
+
+msgctxt "#30955"
+msgid "Delete database file"
+msgstr "Slett databasefil"
+
+msgctxt "#30956"
+msgid "[COLOR]MojeFilmy[/COLOR]"
+msgstr "[COLOR]MojeFilmy[/COLOR]"
+
+msgctxt "#30957"
+msgid "Username"
+msgstr "Brukernavn"
+
+msgctxt "#30958"
+msgid "Max service startup time (sec)"
+msgstr "Maks oppstartstid for tjenesten (sek)"
+
+msgctxt "#30959"
+msgid "Playlist URL"
+msgstr "Spilleliste URL"
+
+msgctxt "#30960"
+msgid "Reconnect broken stream"
+msgstr "Koble til igjen ødelagt strøm"
+
+msgctxt "#30961"
+msgid "Max number of reattempts"
+msgstr "Maks antall reattempts"
+
+msgctxt "#30962"
+msgid "Reattempt delay (ms)"
+msgstr "Reattempt forsinkelse (ms)"
+
+msgctxt "#30963"
+msgid "Exit"
+msgstr "Avslutt"
+
+msgctxt "#30964"
+msgid "Press one more time to exit"
+msgstr "Trykk en gang til for å avslutte"
+
+msgctxt "#30965"
+msgid "Currently broadcast service"
+msgstr "Foreløpig sendes tjeneste"
+
+msgctxt "#30966"
+msgid "Movies (Interia)"
+msgstr "Filmer (interia)"
+
+msgctxt "#30967"
+msgid "TV series (Interia)"
+msgstr "TV-serie (Interia)"
+
+msgctxt "#30968"
+msgid "Magazine"
+msgstr "Blad"
+
+msgctxt "#30969"
+msgid "File has been deleted"
+msgstr "Filen er slettet"
+
+msgctxt "#30970"
+msgid "Assigned streams has been deleted"
+msgstr "Tilordne strømmer er slettet"
+
+msgctxt "#30971"
+msgid "Reminders has been cleared"
+msgstr "Påminnelser er fjernet"
+
+msgctxt "#30972"
+msgid "Scheduled recording has been cleared"
+msgstr "Planlagt opptak er slettet"
+
+msgctxt "#30973"
+msgid "Delete all settings"
+msgstr "Slett alle innstillingene"
+
+msgctxt "#30974"
+msgid "Stop playback while switching stream"
+msgstr "Stopp avspillingen mens du bytter strøm"
+
+msgctxt "#30975"
+msgid "Prefer HD-streams"
+msgstr "Foretrekker HD-strømmer"
+
+msgctxt "#30976"
+msgid "Refresh EPG table periodically"
+msgstr "Oppdater EPG tabellen med jevne mellomrom"
+
+msgctxt "#30977"
+msgid "Max stream startup time (sec)"
+msgstr "Max strøm oppstartstid (sek)"
+
+msgctxt "#30978"
+msgid "Database updated"
+msgstr "Database oppdatert"
+
+msgctxt "#30979"
+msgid "m-TVGuide restart required"
+msgstr "m-TVGuide omstart kreves"
+
+msgctxt "#30980"
+msgid "[COLOR]**WARNING!**[CR]Resetting your database will cause losing all settings![/COLOR]"
+msgstr "[COLOR]**ADVARSEL!**[CR]Tilbakestilling av databasen vil føre til at du mister alle innstillinger![/COLOR]"
+
+msgctxt "#30981"
+msgid "Do you really want to exit"
+msgstr "Vil du virkelig avslutte"
+
+msgctxt "#30982"
+msgid "Ask on exit"
+msgstr "Spør om avslutning"
+
+msgctxt "#30983"
+msgid "Click twice to exit"
+msgstr "Klikk to ganger for å avslutte"
+
+msgctxt "#30984"
+msgid "Add favorites"
+msgstr "Legg til favoritter"
+
+msgctxt "#30985"
+msgid "Add"
+msgstr "Legg til"
+
+msgctxt "#30986"
+msgid "Remove"
+msgstr "Fjern"
+
+msgctxt "#30987"
+msgid "Clear"
+msgstr "Ryd"
+
+msgctxt "#30988"
+msgid "Sort in alphabetic order"
+msgstr "Sorter i alfabetisk rekkefølge"
+
+msgctxt "#30989"
+msgid "Add channels to group [COLOR gold][B]{}[/B][/COLOR]"
+msgstr "Legg til kanaler til gruppe [COLOR gold][B]{}[/B][/COLOR]"
+
+msgctxt "#30990"
+msgid "Remove channels from group [COLOR gold][B]{}[/B][/COLOR]"
+msgstr "Fjern kanaler fra gruppe [COLOR gold][B]{}[/B][/COLOR]"
+
+msgctxt "#30991"
+msgid "Channel options"
+msgstr "Kanal alternativer"
+
+msgctxt "#30992"
+msgid "Group"
+msgstr "Gruppe"
+
+msgctxt "#30993"
+msgid "Remember list of favorites"
+msgstr "Husk favorittliste"
+
+msgctxt "#30994"
+msgid "Help - m-TVGuide [COLOR gold]EPG[/COLOR]"
+msgstr "Hjelp - m-TVGuide [COLOR gold]EPG[/COLOR]"
+
+msgctxt "#30995"
+msgid "TV Group"
+msgstr "TV Group"
+
+msgctxt "#30996"
+msgid "There is no space for this device. Swap it with one of those already available on your account?"
+msgstr "Det er ikke plass til denne enheten. Vil du bytte det med en av de som allerede er tilgjengelig på kontoen din?"
+
+msgctxt "#30997"
+msgid "Select a device to replace"
+msgstr "Velg en enhet du vil bytte ut"
+
+msgctxt "#30998"
+msgid "Catchup - m-TVGuide [COLOR gold]EPG[/COLOR]"
+msgstr "Timeshift - m-TVGuide [COLOR gold]EPG[/COLOR]"
+
+msgctxt "#30999"
+msgid "Would you like to start program [B]{}[/B] from the beginning?"
+msgstr "Vil du starte programmet [B]{}[/B] fra begynnelsen?"
+
+msgctxt "#31000"
+msgid "Would you like to download program [B]{}[/B]?"
+msgstr "Vil du laste ned program [B]{}[/B]?"
+
+msgctxt "#58000"
+msgid "Programme information"
+msgstr "Programinformasjon"
+
+msgctxt "#58001"
+msgid "Select destination folder"
+msgstr "Velg destinasjonsmappe"
+
+msgctxt "#58002"
+msgid "Export settings"
+msgstr "Eksporter innstillinger"
+
+msgctxt "#58003"
+msgid "Import settings"
+msgstr "Importer innstillinger"
+
+msgctxt "#58004"
+msgid "Failure - no settings to export!"
+msgstr "Feil - ingen innstillinger for eksport!"
+
+msgctxt "#58005"
+msgid "Settings exported successfully"
+msgstr "Innstillingene ble eksportert"
+
+msgctxt "#58006"
+msgid "Failure - please check if you have write permissions to that path"
+msgstr "Feil - vennligst sjekk om du har skrivetillatelser til den banen"
+
+msgctxt "#58007"
+msgid "Select settings backup file"
+msgstr "Velg innstillingene backup-fil"
+
+msgctxt "#58008"
+msgid "Settings imported successfully"
+msgstr "Innstillinger importeres vellykket"
+
+msgctxt "#58009"
+msgid "Failed to import settings"
+msgstr "Kunne ikke importere innstillinger"
+
+msgctxt "#58010"
+msgid "Please check if chosen file is a correct settings backup"
+msgstr "Vennligst sjekk om valgt fil er en korrekt sikkerhetskopiering"
+
+msgctxt "#58011"
+msgid "locked"
+msgstr "Låst"
+
+msgctxt "#31001"
+msgid "Enable OSD"
+msgstr "Aktiver OSD"
+
+msgctxt "#31002"
+msgid "Set keys"
+msgstr "Sett nøkler"
+
+msgctxt "#31003"
+msgid "SET"
+msgstr "SETT"
+
+msgctxt "#31004"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#31005"
+msgid "Home"
+msgstr "Hjem"
+
+msgctxt "#31006"
+msgid "Prog -"
+msgstr "Prog -"
+
+msgctxt "#31007"
+msgid "Prog +"
+msgstr "Prog +"
+
+msgctxt "#31008"
+msgid "Stop"
+msgstr "Stopp"
+
+msgctxt "#31009"
+msgid "Information"
+msgstr "Informasjon"
+
+msgctxt "#31010"
+msgid "Context"
+msgstr "Kontekst"
+
+msgctxt "#31011"
+msgid "Record"
+msgstr "Ta opp"
+
+msgctxt "#31012"
+msgid "Reset"
+msgstr "Reset"
+
+msgctxt "#31013"
+msgid "Defaults"
+msgstr "Defaults"
+
+msgctxt "#31014"
+msgid "Change stream"
+msgstr "Endre strøm"
+
+msgctxt "#31015"
+msgid "Vol +"
+msgstr "Vol +"
+
+msgctxt "#31016"
+msgid "Vol -"
+msgstr "Vol -"
+
+msgctxt "#31017"
+msgid "Switch to last seen channel"
+msgstr "Bytt til siste sett kanal"
+
+msgctxt "#31018"
+msgid "Lists"
+msgstr "Liste"
+
+msgctxt "#31019"
+msgid "Stream failed to start, aborting playback"
+msgstr "Strømmen kunne ikke startes, avbrutt avspilling"
+
+msgctxt "#31020"
+msgid "Reached reconnection limit, aborting playback"
+msgstr "Oppnådd grense for tilkobling på nytt, avbryter avspilling"
+
+msgctxt "#31021"
+msgid "Missing add-on: {}"
+msgstr "Mangler tillegg: {}"
+
+msgctxt "#310010"
+msgid ""
+msgstr ""
+
+msgctxt "#310011"
+msgid "Stop playback using navi back button"
+msgstr "Stopp avspillingen ved hjelp av navi tilbakeknappen"
+
+msgctxt "#310012"
+msgid "Recorded program"
+msgstr "Innspilt program"
+
+msgctxt "#310013"
+msgid "Start recorded program"
+msgstr "Start innspilt program"
+
+msgctxt "#310014"
+msgid "Save plugin settings!"
+msgstr "Lagre plugininnstillinger!"
+
+msgctxt "#55001"
+msgid "Change User-Agent"
+msgstr "Endre User-Agent"
+
+msgctxt "#55002"
+msgid "Username"
+msgstr "Brukernavn"
+
+msgctxt "#55003"
+msgid "Password"
+msgstr "Passord"
+
+msgctxt "#55005"
+msgid "Prefer high quality"
+msgstr "Foretrekker høy kvalitet"
+
+msgctxt "#55007"
+msgid "TV services"
+msgstr "TV tjenester"
+
+msgctxt "#55008"
+msgid "Assign also the streams of low- quality / backup"
+msgstr "Tilordne også strømmer av lav kvalitet / backup"
+
+msgctxt "#55010"
+msgid "0 Lowest"
+msgstr "0 Laveste"
+
+msgctxt "#55011"
+msgid "1 Very Low"
+msgstr "1 Veldig lav"
+
+msgctxt "#55017"
+msgid "2 Very Low"
+msgstr "2 Veldig lav"
+
+msgctxt "#55012"
+msgid "3 Low"
+msgstr "3 Lav"
+
+msgctxt "#55018"
+msgid "4 Low"
+msgstr "3 Lav"
+
+msgctxt "#55013"
+msgid "5 Mid"
+msgstr "5 Mid"
+
+msgctxt "#55019"
+msgid "6 Mid"
+msgstr "6 Mid"
+
+msgctxt "#55014"
+msgid "7 High"
+msgstr "7 Høy"
+
+msgctxt "#55020"
+msgid "8 High"
+msgstr "8 Høy"
+
+msgctxt "#55021"
+msgid "9 Very High"
+msgstr "9 Veldig høy"
+
+msgctxt "#55022"
+msgid "10 Very High"
+msgstr "10 Veldig høy"
+
+msgctxt "#55023"
+msgid "11 Highest"
+msgstr "11 Høyeste"
+
+msgctxt "#55015"
+msgid "Working"
+msgstr "Arbeider"
+
+msgctxt "#55016"
+msgid "Now Playing"
+msgstr "Spiller nå"
+
+msgctxt "#89000"
+msgid "Select quality"
+msgstr "Velg kvalitet"
+
+msgctxt "#89001"
+msgid "Enable sleep timer"
+msgstr "Aktiver sleep timer"
+
+msgctxt "#89002"
+msgid "Timeout action"
+msgstr "Timeout-handling"
+
+msgctxt "#89003"
+msgid "Timeout value (min)"
+msgstr "Timeout-verdi (min)"
+
+msgctxt "#89004"
+msgid "Stop playback"
+msgstr "Stopp avspillingen"
+
+msgctxt "#89005"
+msgid "Exit Kodi"
+msgstr "Avslutt Kodi"
+
+msgctxt "#89006"
+msgid "Shutdown"
+msgstr "Steng av"
+
+msgctxt "#89007"
+msgid "Hibernate"
+msgstr "Hibernate"
+
+msgctxt "#89008"
+msgid ""
+msgstr ""
+
+msgctxt "#89009"
+msgid ""
+msgstr ""
+
+msgctxt "#55009"
+msgid "Priority"
+msgstr "Prioritet"
+
+msgctxt "#57001"
+msgid "API error"
+msgstr "API feil"
+
+msgctxt "#57002"
+msgid "Could not connect to website"
+msgstr "Kunne ikke koble til nettsiden"
+
+msgctxt "#57003"
+msgid "Check your network connection."
+msgstr "Sjekk nettverksforbindelsen din."
+
+msgctxt "#57009"
+msgid "Script error."
+msgstr "Skriptfeil."
+
+msgctxt "#57010"
+msgid "Error on method getJsonFromAPI."
+msgstr "Feil på metode getJsonFromAPI."
+
+msgctxt "#57011"
+msgid "API connection didn't get any data."
+msgstr "API-tilkoblingen fikk ingen data."
+
+msgctxt "#57012"
+msgid "It could be network connection problem."
+msgstr "Det kan være problem med nettverksforbindelse."
+
+msgctxt "#57013"
+msgid "or wrong website API adress."
+msgstr "eller feil nettside-API-adresse."
+
+msgctxt "#57014"
+msgid "Error! (API: setPlayer)"
+msgstr "Feil! (API: setPlayer)"
+
+msgctxt "#57015"
+msgid "Could not get authorization data."
+msgstr "Kunne ikke få autorisasjonsdata."
+
+msgctxt "#57018"
+msgid "Playing error!"
+msgstr "Spillefeil!"
+
+msgctxt "#57019"
+msgid "Exceeded the limit of free viewing, or too many users."
+msgstr "Overgikk grensen for gratis visning, eller for mange brukere."
+
+msgctxt "#57020"
+msgid "Buy premium account now to watch unlimited!"
+msgstr "Kjøp premium konto nå for å se ubegrenset!"
+
+msgctxt "#57021"
+msgid "Playing has been stopped."
+msgstr "Spilling er stoppet."
+
+msgctxt "#57022"
+msgid "Wrong video adress. Playing has been stopped."
+msgstr "Feil videoadresse. Spilling er stoppet."
+
+msgctxt "#57027"
+msgid "Server has closed connection for unknown reason! Please try again."
+msgstr "Server har lukket forbindelse for ukjent grunn! Vær så snill, prøv på nytt."
+
+msgctxt "#57028"
+msgid "Playing has been stopped."
+msgstr "Spilling er stoppet."
+
+msgctxt "#57034"
+msgid "Information about user account"
+msgstr "Informasjon om brukerkonto"
+
+msgctxt "#57036"
+msgid "You do not have a premium account. Starting a sponsored broadcast."
+msgstr "Du har ikke en premium-konto. Starte en sponset kringkasting."
+
+msgctxt "#57037"
+msgid "To purchase a premium right now go to:"
+msgstr "Å kjøpe en premie akkurat nå, gå til:"
+
+msgctxt "#57038"
+msgid "http://mods-kodi.pl/"
+msgstr "http://mods-kodi.pl/"
+
+msgctxt "#57039"
+msgid "Content is not included in your service"
+msgstr "Innholdet er ikke inkludert i pakken din"
+
+msgctxt "#57042"
+msgid "Error connection with website!"
+msgstr "Feil forbindelse med nettsiden!"
+
+msgctxt "#57043"
+msgid "Selected channel does not exist!"
+msgstr "Valgt kanal eksisterer ikke!"
+
+msgctxt "#57044"
+msgid "No channel selected!"
+msgstr "Ingen kanal valgt!"
+
+msgctxt "#57045"
+msgid "No active server! We are sorry."
+msgstr "Ingen aktiv server! Vi er lei oss."
+
+msgctxt "#57046"
+msgid "Rules are not accepted!"
+msgstr "Regler er ikke akseptert!"
+
+msgctxt "#57047"
+msgid "Go to http://mods-kodi.pl/ and accept it, to use service."
+msgstr "Gå til http://mods-kodi.pl/ og godta det, for å bruke tjenesten."
+
+msgctxt "#57048"
+msgid "Login incorrect"
+msgstr "Logg inn feil"
+
+msgctxt "#57049"
+msgid "Configured"
+msgstr "konfigurert"
+
+msgctxt "#57050"
+msgid "URL is incorrect!"
+msgstr "URL er feil!"
+
+msgctxt "#57051"
+msgid "m-TVGuide"
+msgstr "m-tvguide"
+
+msgctxt "#57052"
+msgid "Addon is already running - can't be started again"
+msgstr "Addon kjører allerede - kan ikke startes igjen"
+
+msgctxt "#57053"
+msgid "Asset playback blocked due to VPN/proxy"
+msgstr "Tilgang til avspilling er blokkert på grunn av VPN/proxy"
+
+msgctxt "#57054"
+msgid "Service is unavailable in your location"
+msgstr "Tjenesten er ikke tilgjengelig i denne regionen"
+
+msgctxt "#57055"
+msgid "Maximum number of devices have been reached"
+msgstr "Maksimalt antall enheter er nådd"
+
+msgctxt "#68000"
+msgid "Plot"
+msgstr "Handling"
+
+msgctxt "#68001"
+msgid "Press [B]OK[/B] to show plot"
+msgstr "Trykk [B]OK[/B] for å vise handling"
+
+msgctxt "#68002"
+msgid "Switch"
+msgstr "Bytt"
+
+msgctxt "#68003"
+msgid "Play programme"
+msgstr "Spill av program"
+
+msgctxt "#68004"
+msgid "Search YouTube"
+msgstr "Søk på YouTube"
+
+msgctxt "#68005"
+msgid "Options"
+msgstr "Valg"
+
+msgctxt "#68006"
+msgid "Time:"
+msgstr "Tid:"
+
+msgctxt "#68007"
+msgid "Context menu"
+msgstr "Kontekst meny"
+
+msgctxt "#68008"
+msgid "Sections"
+msgstr "Seksjoner"
+
+msgctxt "#68009"
+msgid "View options"
+msgstr "Visningsalt."
+
+msgctxt "#68010"
+msgid "Browse for playlist"
+msgstr "Bla etter spilleliste"
+
+msgctxt "#68011"
+msgid "Previous"
+msgstr "Forrige"
+
+msgctxt "#68012"
+msgid "Subtitles"
+msgstr "Undertekster"
+
+msgctxt "#68013"
+msgid "Audio language"
+msgstr "Lydspråk"
+
+msgctxt "#68014"
+msgid "Numeric Input"
+msgstr "Numerisk inntasting"
+
+msgctxt "#68015"
+msgid "Ends at"
+msgstr "Slutter"
+
+msgctxt "#68016"
+msgid "Not available"
+msgstr "Ikke tilgjengelig"
+
+msgctxt "#68017"
+msgid "Time"
+msgstr "Tid"
+
+msgctxt "#68018"
+msgid "Date"
+msgstr "Dato"
+
+msgctxt "#69000"
+msgid "Recording"
+msgstr "Innspilling"
+
+msgctxt "#69001"
+msgid "Import RTMPDUMP"
+msgstr "Importer RTMPDUMP"
+
+msgctxt "#69002"
+msgid "Import FFMPEG"
+msgstr "Importer FFMPEG"
+
+msgctxt "#69003"
+msgid "Record destination"
+msgstr "Registrer destinasjon"
+
+msgctxt "#69004"
+msgid "Recording:"
+msgstr "Innspilling:"
+
+msgctxt "#69005"
+msgid "Finished recording:"
+msgstr "Ferdig opptak:"
+
+msgctxt "#69006"
+msgid "Not existing record destination directory - record canceled!"
+msgstr "Ikke eksisterende rekorddestinasjonskatalog - rekord kansellert!"
+
+msgctxt "#69007"
+msgid "Record error!"
+msgstr "Opptaksfeil!"
+
+msgctxt "#69008"
+msgid "Can't record due to not configured record application: "
+msgstr "Kan ikke ta opp på grunn av ikke konfigurert postprogram: "
+
+msgctxt "#69009"
+msgid "Record already scheduled - cancel?"
+msgstr "Registrer allerede planlagt - avbryt?"
+
+msgctxt "#69010"
+msgid "Schedule program record: "
+msgstr "Planlegg programoppføring: "
+
+msgctxt "#69011"
+msgid "Cancel ongoing recording?"
+msgstr "Avbryt pågående opptak?"
+
+msgctxt "#69012"
+msgid "Import record app"
+msgstr "Importer plateapp"
+
+msgctxt "#69013"
+msgid "successfully imported"
+msgstr "vellykket importert"
+
+msgctxt "#69014"
+msgid "FFMPEG record format"
+msgstr "FFMPEG-plateformat"
+
+msgctxt "#69015"
+msgid "Exit despite of scheduled recording?"
+msgstr "Utgang til tross for planlagt opptak?"
+
+msgctxt "#69016"
+msgid "Use FFMPEG to record RTMP instead of RTMPDUMP"
+msgstr "Bruk FFMPEG til å ta opp RTMP i stedet for RTMPDUMP"
+
+msgctxt "#69017"
+msgid "Install recording applications"
+msgstr "Installer innspillingsprogrammer"
+
+msgctxt "#69018"
+msgid "m-TVGuide is downloading files, Please press OK and wait until installation finishes."
+msgstr "m-TVGuide laster ned filer. Trykk OK og vent til installasjonen er ferdig."
+
+msgctxt "#69019"
+msgid "An error has occurred - try again or install manualy"
+msgstr "Det har oppstått en feil - prøv igjen eller installer manuelt"
+
+msgctxt "#69020"
+msgid "Debug log"
+msgstr "Feilsøkingslogg"
+
+msgctxt "#69021"
+msgid "Can't find FFMPEG or RTMPDUMP in system - please try to install by packet manager RTMPDUMP, FFMPEG or libav-tools or install manualy"
+msgstr "Kan ikke finne FFMPEG eller RTMPDUMP i systemet - prøv å installere av pakkebehandling RTMPDUMP, FFMPEG eller libav-verktøy eller installer manuelt"
+
+msgctxt "#69022"
+msgid "Error during automatic import - try importing files manually"
+msgstr "Feil under automatisk import - prøv å importere filer manuelt"
+
+msgctxt "#69023"
+msgid "Choose OS"
+msgstr "Velg OS"
+
+msgctxt "#69024"
+msgid "Maximum number of attempts to resume recording"
+msgstr "Maks antall forsøk på å fortsette opptaket"
+
+msgctxt "#69025"
+msgid "Delete watched recordings"
+msgstr "Slett se på opptak"
+
+msgctxt "#69026"
+msgid "Delete recording"
+msgstr "Slett opptak"
+
+msgctxt "#69027"
+msgid "Delete watched recording"
+msgstr "Slett sett opptak"
+
+msgctxt "#69028"
+msgid "Do nothing"
+msgstr "Gjør ingenting"
+
+msgctxt "#69029"
+msgid "Ask"
+msgstr "be!"
+
+msgctxt "#69030"
+msgid "Auto delete"
+msgstr "Automatisk sletting"
+
+msgctxt "#69031"
+msgid "[COLOR]FLV format does not work on OpenELEC/LibreELEC systems[/COLOR]"
+msgstr "[COLOR]FLV format fungerer ikke på OpenELEC/LibreELEC systemer[/COLOR]"
+
+msgctxt "#69032"
+msgid "[COLOR]Record application for common systems[/COLOR]"
+msgstr "[COLOR]Spill inn søknad for vanlige systemer[/COLOR]"
+
+msgctxt "#69033"
+msgid "Log uploaded to: "
+msgstr "Logg oppladet til: "
+
+msgctxt "#69034"
+msgid "Failed to upload log"
+msgstr "Kunne ikke laste opp logg"
+
+msgctxt "#69035"
+msgid "Upload Kodi log"
+msgstr "Last opp Kodi logg"
+
+msgctxt "#69036"
+msgid "Current EPG url is: "
+msgstr "Nåværende EPG url er: "
+
+msgctxt "#69037"
+msgid "No free stream available in service "
+msgstr "Ingen gratis strøm tilgjengelig i tjeneste "
+
+msgctxt "#69038"
+msgid "Stop player when recording is started"
+msgstr "Stopp spilleren når opptaket er startet"
+
+msgctxt "#69039"
+msgid "Record"
+msgstr "Ta opp"
+
+msgctxt "#69040"
+msgid "Video"
+msgstr "Video"
+
+msgctxt "#69041"
+msgid "Navigating in OSD previous, next program"
+msgstr "Navigere i OSD forrige, neste program"
+
+msgctxt "#69042"
+msgid "Show extra buttons on OSD"
+msgstr "Vis ekstra knapper på OSD"
+
+msgctxt "#69043"
+msgid "Display auto OSD on play"
+msgstr "Vis automatisk OSD på spill"
+
+msgctxt "#69044"
+msgid "Auto OSD display time (sec)"
+msgstr "Automatisk OSD-visningstid (sek)"
+
+msgctxt "#69045"
+msgid "OSD display time (sec)"
+msgstr "OSD visningstid (sek)"
+
+msgctxt "#69046"
+msgid "Show OSD on stream change"
+msgstr "Vis OSD på stream endring"
+
+msgctxt "#69047"
+msgid "Show service name in OSD"
+msgstr "Vis servicenavn i OSD"
+
+msgctxt "#69048"
+msgid "Current time during playback"
+msgstr "Nåværende tid under avspilling"
+
+msgctxt "#69049"
+msgid "Position"
+msgstr "Stilling"
+
+msgctxt "#69050"
+msgid "Top left"
+msgstr "Øverst til venstre"
+
+msgctxt "#69051"
+msgid "Top right"
+msgstr "Øverst til høyre"
+
+msgctxt "#69052"
+msgid "Bottom left"
+msgstr "Nede til venstre"
+
+msgctxt "#69053"
+msgid "Bottom right"
+msgstr "Nede til høyre"
+
+msgctxt "#69054"
+msgid "Size"
+msgstr "Størrelse"
+
+msgctxt "#69055"
+msgid "[CR][CR]Link copied to clipboard"
+msgstr "[CR][CR]Link kopiert til utklippstavle"
+
+msgctxt "#69056"
+msgid "Download"
+msgstr "Nedlasting"
+
+msgctxt "#69057"
+msgid "Cancel download"
+msgstr "Avbryt nedlastning"
+
+msgctxt "#70000"
+msgid "Program title"
+msgstr "Programtittel"
+
+msgctxt "#70001"
+msgid "Channel"
+msgstr "Kanaler"
+
+msgctxt "#70002"
+msgid "Start time"
+msgstr "Starttid"
+
+msgctxt "#70003"
+msgid "Record length"
+msgstr "Opptakslengde"
+
+msgctxt "#70004"
+msgid "Start record time-shift (min)"
+msgstr "Start rekordtidskift (min)"
+
+msgctxt "#70005"
+msgid "End record time-shift (min)"
+msgstr "Slutt rekordtidskift (min)"
+
+msgctxt "#70006"
+msgid "Task settings"
+msgstr "Oppgaveinnstillinger"
+
+msgctxt "#70008"
+msgid "Aqua"
+msgstr "Akvamarin"
+
+msgctxt "#70009"
+msgid "Blue"
+msgstr "Blå"
+
+msgctxt "#70010"
+msgid "Green"
+msgstr "Grønn"
+
+msgctxt "#70011"
+msgid "Red"
+msgstr "Rød"
+
+msgctxt "#70012"
+msgid "Purple"
+msgstr "Purple"
+
+msgctxt "#70013"
+msgid "Yellow"
+msgstr "Gul"
+
+msgctxt "#70014"
+msgid "Violet"
+msgstr "Violet"
+
+msgctxt "#70015"
+msgid "Orange"
+msgstr "Oransje"
+
+msgctxt "#70007"
+msgid "Default"
+msgstr "Standard"
+
+msgctxt "#70016"
+msgid "Default focus"
+msgstr "Standard fokus"
+
+msgctxt "#70017"
+msgid "Default remind"
+msgstr "Standard påminnelse"
+
+msgctxt "#70018"
+msgid "Default record"
+msgstr "Standard opptak"
+
+msgctxt "#70019"
+msgid "Full blue"
+msgstr "Full blå"
+
+msgctxt "#70020"
+msgid "Full red"
+msgstr "Full rød"
+
+msgctxt "#70021"
+msgid "Full orange"
+msgstr "Full oransje"
+
+msgctxt "#70022"
+msgid "Dark focus"
+msgstr "Mørk fokus"
+
+msgctxt "#70100"
+msgid "Add-on Install"
+msgstr "Utvidelse Installere"
+
+msgctxt "#70101"
+msgid "Missing fonts. Please change skin or install font pack."
+msgstr "Manglende skrifttyper. Bytt skin eller installer fontpakke."
+
+msgctxt "#70102"
+msgid "Installation has finished. Kodi will now exit."
+msgstr "Installasjonen er ferdig. Kodi vil nå gå ut."
+
+msgctxt "#70103"
+msgid "Installation has failed. m-TVGuide will now exit."
+msgstr "Installasjonen har mislyktes. m-TVGuide vil nå avslutte."
+
+msgctxt "#70104"
+msgid "Change skin"
+msgstr "Bytt skin"
+
+msgctxt "#70105"
+msgid "Install font pack"
+msgstr "Installer font pakke"
+
+msgctxt "#70106"
+msgid "Would you like to replace Kodi skin fonts? This option may break your skin and is not reversible."
+msgstr "Vil du erstatte Kodi skallets font? Dette alternativet kan rive skallet ditt og kan ikke gjenopprettes"
+
+msgctxt "#70107"
+msgid "Kodi skin is missing, please download and install: {}"
+msgstr "Kodi skin mangler. Last ned og installer: {}"
+
+msgctxt "#70108"
+msgid "Skin replacement or font installation is required to start m-TVGuide."
+msgstr "Skin utskifting eller fontinstallasjon er nødvendig for å starte m-TVGuide."
+
+msgctxt "#70109"
+msgid "Monday"
+msgstr "Mandag"
+
+msgctxt "#70110"
+msgid "Tuesday"
+msgstr "Tirsdag"
+
+msgctxt "#70111"
+msgid "Wednesday"
+msgstr "Onsdag"
+
+msgctxt "#70112"
+msgid "Thursday"
+msgstr "Torsdag"
+
+msgctxt "#70113"
+msgid "Friday"
+msgstr "Fredag"
+
+msgctxt "#70114"
+msgid "Saturday"
+msgstr "Lørdag"
+
+msgctxt "#70115"
+msgid "Sunday"
+msgstr "Søndag"
+
+msgctxt "#70116"
+msgid "Add channel"
+msgstr "Legg til kanal"
+
+msgctxt "#70117"
+msgid "List"
+msgstr "Liste"
+
+msgctxt "#70118"
+msgid "Non-writeable {} in use. Need to make a copy in userdata folder so we can install fonts. Would you like to continue?"
+msgstr "Ikke skrivbar {} i bruk. Trenger å lage en kopi i userdata mappen slik at vi kan installere skrifter. Vil du fortsette?"
+
+msgctxt "#80005"
+msgid "[COLOR]WP Pilot[/COLOR]"
+msgstr "[COLOR]WP Pilot[/COLOR]"
+
+msgctxt "#80006"
+msgid "[COLOR]Ipla[/COLOR]"
+msgstr "[COLOR]Ipla[/COLOR]"
+
+msgctxt "#90000"
+msgid "Server"
+msgstr "Server"
+
+msgctxt "#90001"
+msgid "Getting started"
+msgstr "Hjelp"
+
+msgctxt "#90002"
+msgid "Help"
+msgstr "Kom i gang"
+
+msgctxt "#90003"
+msgid "Readme"
+msgstr "Uttalelse"
+
+msgctxt "#90004"
+msgid "Credits"
+msgstr "Credits"

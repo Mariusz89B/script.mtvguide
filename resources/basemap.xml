@@ -1,0 +1,976 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map id="base" version="1.0" strm="">
+	<channel id="1 HD PL"                                  	title="(?=1(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="13 Ulica PL"                              	title="(?=13(th)?\s*(Ulica|STREET)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="360 TUNEBOX HD PL"                         title="(?=360\s*TUNE\s*BOX(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="360 TUNEBOX PL"                            title="(?=360\s*TUNE\s*BOX(\s*TV)?(\s*SD)?(\s*PL)?$)" strm=""/>
+	<channel id="4 Fun Dance PL"                           	title="(?=4\s*Fun(\s*Fit)?\s*(and|&amp;)?\s*Dance(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="4fun Gold PL"                             	title="(?=4\s*Fun\s*Gold(\s*Hits)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="4fun Hits PL"                             	title="(?=4\s*Fun\s*Hits(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="4fun Kids PL"                             	title="(?=4\s*Fun\s*Kids(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="4fun TV PL"                               	title="(?=4\s*FUN[\s.]*(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="4music PL"                                	title="(?=4\s*music(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="8TV PL"                                   	title="(?=(8\s*TV|TV\s*8)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="AMC PL"                                   	title="(?=AMC(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="ASTA TV PL"                               	title="(?=(TV\s*)?ASTA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="ATM Rozrywka PL"                          	title="(?=(ATM)?\s*ROZRYWKA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="AXN Black PL"                             	title="(?=AXN\s*Black(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="AXN PL"                                   	title="(?=AXN(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="AXN Spin PL"                              	title="(?=AXN\s*Spin(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="AXN White PL"                             	title="(?=AXN\s*White(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Active Family PL"                         	title="(?=Active\s*Family(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Adventure PL"                             	title="(?=Adventure(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Ale Kino+ PL"                             	title="(?=Ale\s*Kino\s*(\+|PLUS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Amazing PL"                               	title="(?=Amazing(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Animal Planet PL"                         	title="(?=Animal((\s*PL)?anet)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Atomic PL"                                	title="(?=Atomic(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="BBC Brit PL"                              	title="(?=BBC\s*Brit(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="BBC CBeebies PL"                          	title="(?=(BBC\s*)?CBeebies(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="BBC Earth PL"                             	title="(?=BBC\s*Earth(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="BBC First PL"                             	title="(?=BBC(\s*First)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="BBC Lifestyle PL"                         	title="(?=BBC\s*Lifestyle(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="BBC World News PL"                        	title="(?=BBC\s*(World|Word)\s*News(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="BBC World PL"                             	title="(?=BBC\s*World(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Baby TV PL"                               	title="(?=Baby(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Biznes 24 PL"                              title="(?=Biznes\s*24(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Boomerang PL"                             	title="(?=Boomerang(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="CBS Action PL"                            	title="(?=CBS\s*Action(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="CBS Europa PL"                            	title="(?=CBS\s*Europa(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="CBS REALITY DRAMA PL"                     	title="(?=CBS(\s*Reality)?\s*DRAMA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="CBS REALITY POLSKA PL"                    	title="(?=CBS\s*Reality(\s*Polska)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="CNBC PL"                                  	title="(?=CNBC(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="CNN PL"                                   	title="(?=CNN(\s*International)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="CT SPORT PL"                              	title="(?=CT\s*SPORT(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="CW24 TV PL"                               	title="(?=CW24(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="CZWORKA POLSKIE RADIO PL"                 	title="(?=CZW.*RKA\s*POLSKIE\s*RADIO(\s*LIVE)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Camido PL"                                	title="(?=Camido(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+ 4K PL"                             	title="(?=(Canal|C)\s*(\+|PLUS)?(\s*TV)?(\s*UHD|\s*4K)(\s*UHD)?(\s*Ultra)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+ Dokument PL"                      	title="(?=(Canal|C)\s*(\+|PLUS)?\s*(Dokument|Discovery)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+ Family PL"                         	title="(?=(Canal|C)\s*(\+|PLUS)?\s*Family(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+ Film PL"                           	title="(?=(Canal|C)\s*(\+|PLUS)?\s*Film(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+ Now PL"                            	title="(?=(Canal|C)\s*(\+|PLUS)?\s*Now(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+ PL"                                	title="(?=(Canal|C)\s*(\+|PLUS)?(\s*PREMIUM)?(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+ Seriale PL"                        	title="(?=(Canal|C)\s*(\+|PLUS)?\s*Seriale(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+ Sport 2 PL"                        	title="(?=(Canal|C)\s*(\+|PLUS)?\s*SPORT\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+ Sport 3 PL"                        	title="(?=(Canal|C)\s*(\+|PLUS)?\s*SPORT\s*3(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+ Sport 4 PL"                        	title="(?=(Canal|C)\s*(\+|PLUS)?\s*SPORT\s*4(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+ Sport PL"                          	title="(?=(CANAL|C)\s*(\+|PLUS)?\s*SPORT(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+1 PL"                               	title="(?=(Canal|C)\s*(\+|PLUS)?\s*1(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Cartoon Network PL"                       	title="(?=Carto(o)?n(\s*Network)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Cinemax 2 PL"                             	title="(?=Cinemax\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Cinemax PL"                               	title="(?=Cinemax(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Comedy Central Family PL"                 	title="(?=(Comedy\s*Central|CC)\s*(Family|Extra\s*Polsat)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Comedy Central PL"                        	title="(?=(Comedy\s*(Central|CENTERAL|Center)?|CC)(\s*Polska)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>	
+	<channel id="DLA CIEBIE PL"                            	title="(?=DLA\s*CIEBIE(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="DOCUBOX PL"                               	title="(?=Docu\s*Box(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="DTX PL"                                   	title="(?=((Discover(y)?)?\s*Turbo\s*(Xtra|EXTRA|EX)|DTX|Xtra)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Da Vinci Learning PL"                     	title="(?=DA\s*VINCI(\s*LEARNING)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Disco Polo Music PL"                      	title="(?=Disco\s*Polo(\s*Music)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Discovery Channel PL"                     	title="(?=Discovery(\s*Channel)?(\s*HD|\s*UHD)?(\s*HD|\s*UHD)?(\s*Showcase)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Discovery Historia PL"                    	title="(?=Discovery\s*(Historia|HISTORY)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Discovery Life PL"                        	title="(?=Discovery\s*Life(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Discovery Science PL"                     	title="(?=(D(\.)?|Discovery)\s*Science(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Disney Channel PL"                        	title="(?=DISNEY((\s*|-)(CHANNEL|Polska))?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Disney Junior PL"                         	title="(?=DISNEY\s*Junior(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Disney XD PL"                             	title="(?=DISNEY\s*XD(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Domo+ PL"                                 	title="(?=DOMO\s*(\+|PLUS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Duck TV PL"                               	title="(?=Duck(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="E! Entertainment PL"                      	title="(?=E(!)?(\s*Entertainment)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="ECHO 24 PL"                               	title="(?=ECHO\s*24(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="ESKA PARTY TV PL"                         	title="(?=ESKA\s*(PARTY|GO)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="ETV PL"                                   	title="(?=ETV(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="EURONEWS PL"                              	title="(?=Euro\s*news(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eleven Sports 1 4K PL"                     title="(?=(Eleven|11)(\s*Sport(s)?)?(\s*1)?(\s*UHD|s*4K)(\s*TV)?(\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eleven Sports 1 PL"                       	title="(?=(Eleven|11)(\s*Sport(s)?)?(\s*1)?(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eleven Sports 2 PL"                       	title="(?=(Eleven|11|E)(\s*Sport)(s)?(\s*2)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eleven Sports 3 PL"                       	title="(?=(Eleven|11|E)\s*(Sport(s)?(\s*3)|Extra)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eleven Sports 4 PL"                       	title="(?=(Eleven|11|E)\s*Sport(s)?(\s*4)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Epic Drama PL"                            	title="(?=Epic\s*Drama(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eska Best Music PL"                       	title="(?=Eska\s*Best\s*Music(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eska Rock TV PL"                          	title="(?=(Eskarock|Eska\s*Rock)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eska TV Extra PL"                         	title="(?=Eska\s*(\s*TV)?\s*Extra(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eska TV PL"                               	title="(?=Eska\s*(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eurochannel PL"                           	title="(?=Euro\s*channel(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eurosport 2 PL"                           	title="(?=(Euro\s*sport\s*2|EUROSPORT\s*2)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eurosport 4K PL"                           title="(?=Euro\s*sport(\s*1)?(\s*TV)?(\s*UHD|\s*4K)?(\s*PL)?$)" strm=""/>
+	<channel id="Eurosport PL"                             	title="(?=Euro\s*sport(\s*1)?(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="Extreme Sports Channel PL"                	title="(?=(Extreme|EXTREM)(\s*Sport(s)?)?(\s*Channel)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="FASHIONBOX PL"                            	title="(?=FASHIONBOX(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="FASTBOX AND FUN PL"						title="(?=(FAST)\s*(BOX)?(and|&amp;)?(FUN)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="FIGHTKLUB PL"                             	title="(?=FIGHT\s*KLUB(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="FOX Comedy PL"                            	title="(?=FOX\s*Comedy(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="FOX Life PL"                              	title="(?=FOX\s*Life(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="FOX PL"                                   	title="(?=FOX(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Family Sport PL"                          	title="(?=Family\s*Sport(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Fashion One PL"                           	title="(?=Fashion\s*(One|1)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Fashion TV PL"                            	title="(?=Fashion(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Fight Channel PL"                         	title="(?=Fight\s*Channel(\s*World)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="FightBox PL"                              	title="(?=Fight\s*Box(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="FilmBox Action PL"                        	title="(?=FilmBox\s*Action(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Filmbox Arthouse PL"                      	title="(?=Filmbox\s*Arthouse(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Filmbox Extra HD PL"                      	title="(?=Filmbox\s*Extra(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Filmbox Family PL"                        	title="(?=FILMBOX\s*FAMILY(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Filmbox Premium PL"                       	title="(?=FILM\s*BOX\s*PREMIUM(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="FofaTV PL"                                	title="(?=FofaTV(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Fokus TV PL"                              	title="(?=Fo(k|c)us(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Food Network PL"                          	title="(?=(Polsat\s*)?Food(\s*Network)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Formula 1 PL"                             	title="(?=Formula\s*1(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="FunBox 4K PL"                             	title="(?=Fun\s*Box(\s*TV)?(\s*UHD|\s*4K)(\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Game Show PL"                             	title="(?=Game\s*Show(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Gametoon PL"                              	title="(?=Gametoon(\s*E)?(sport)?(s)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Ginx TV PL"                               	title="(?=Ginx(\s*E)?(sport)?(s)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Golf Channel PL"                          	title="(?=Golf(\s*Channel)?(\s*Polska)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="HBO PL"                                   	title="(?=HBO(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="HBO2 PL"                                  	title="(?=HBO\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="HBO3 PL"                                  	title="(?=HBO\s*(3|COMEDY)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="HGTV PL"                                  	title="(?=(HGTV|TVN\s*METEO\s*Active)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="History 2 PL"                             	title="(?=(H|History)\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="History PL"                               	title="(?=History(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="ID PL"                                    	title="(?=(DISCOVERY\s*)?(INVESTIGATION|ID)(\s*DISCOVERY)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="JimJam Polsat PL"                         	title="(?=(Polsat\s*)?Jim\s*Jam(\s*Polsat)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="KSW PL"                                   	title="(?=.*KSW.*(\s*PL)?$)" strm=""/>
+	<channel id="Kino Polska International PL"             	title="(?=Kino\s*Polska\s*Int(ernational)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Kino Polska Muzyka International PL"      	title="(?=Kino(\s*Polska)?\s*Muzyka\s*Int(ernational)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Kino Polska Muzyka PL"                    	title="(?=Kino(\s*Polska)?\s*Muzyka(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Kino Polska PL"                           	title="(?=Kino(\s*Polska)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Kino TV PL"                               	title="(?=(Filmbox|Kino)\s*TV(\s*\(FILMBOX\))?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Kuchnia+ PL"                              	title="(?=Kuchnia\s*(\+|PLUS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="LECH TV PL"                               	title="(?=Lech(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="LUBELSKA TV PL"                           	title="(?=LUBELSKA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Lifetime PL"                              	title="(?=Life\s*time(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Love TV PL"                               	title="(?=Love(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MANGO PL"                                 	title="(?=MANGO(\s*24)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MC Play PL"                               	title="(?=MC(\s*PL)?ay(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="METRO PL"                                 	title="(?=METRO(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MEZZO PL"                                 	title="(?=MEZZO(\s*Live)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MGM PL"                                   	title="(?=MGM(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV 80s PL"                                title="(?=MTV.*(80(s)?)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV 90s PL"                                title="(?=MTV.*(90(s)?)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV Base PL"                              	title="(?=MTV\s*Base(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV Club PL"                               title="(?=MTV\s*Club(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV Dance PL"                             	title="(?=MTV\s*Dance(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV Dance PL"                             	title="(?=MTV\s*Dance(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV Hits PL"                              	title="(?=MTV\s*Hits(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV Hits PL"                               title="(?=MTV\s*Hits(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV Live HD PL"                           	title="(?=MTV\s*Live(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV Music 24 PL"                          	title="(?=MTV\s*Music\s*24(\s*PL)?$)" strm=""/>
+	<channel id="MTV Music PL"                             	title="(?=MTV\s*Music(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV Polska PL"                            	title="(?=MTV(\s*Music)?(\s*Polska)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV Rocks PL"                             	title="(?=MTV\s*Rocks(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MUSIC VOX TV 2 PL"                        	title="(?=MUSIC\s*VOX(\s*TV)?\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Miejska TV PL"                            	title="(?=Miejska(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Minimini+ PL"                             	title="(?=MINI\s*MINI\s*(\+|PLUS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Motowizja PL"                             	title="(?=(Motowizja|Motorwizja)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="NOVELA TV PL"                             	title="(?=NOVELA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="NOWA TV PL"                               	title="(?=NOWA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="NTL Radomsko PL"                          	title="(?=NTL(\s*Radomsko)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Nat Geo People PL"                        	title="(?=(Nat|National)\s*(Geo|Geographic)\s*People(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="National Geographic Channel PL"           	title="(?=(Nat|National)\s*(Geo|Geographic)(\s*CHANNEL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="National Geographic Wild PL"              	title="(?=(Nat|National)\s*(Geo|Geographic)\s*Wild(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Nick Jr. PL"                              	title="(?=Nick(elodeon)?\s*(Jr|JUNIOR)(\.)?(Polska)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Nickelodeon HD PL"                        	title="(?=Nickelodeon(\s*Polska)?(\s*TV)?\s*HD(\s*PL)?$)" strm=""/>
+	<channel id="Nickelodeon PL"                           	title="(?=Nickelodeon(\s*Polska)?(\s*TV)?(\s*PL)?$)" strm=""/>
+	<channel id="Nicktoons PL"                             	title="(?=Nicktoons(\s*Polska)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Nobox TV PL"                              	title="(?=Nobox(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Nuta TV PL"                               	title="(?=Nuta(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="OPOKA TV PL"                              	title="(?=OPOKA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Ocko PL"                                  	title="(?=Ocko(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Orange Sport PL"                          	title="(?=Orange\s*Sport(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="POLO PARTY TV PL"                         	title="(?=POLO\s*PARTY(\s*TV)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="POLSAT NEWS 2 PL"                         	title="(?=Polsat\s*NEWS\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="POLSAT ROMANS PL"                         	title="(?=Polsat\s*Romans(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="POLSAT Viasat Explore PL"                 	title="(?=(Polsat\s*)?Viasat\s*Explore(R)?(\s*Polsat)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="POMERANIA PL"                             	title="(?=POMERANIA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="POMORSKA PL"                              	title="(?=POMORSKA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="POWER TV PL"                              	title="(?=Power(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Paramount Channel PL"                     	title="(?=Paramount(\s*Channel)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Planete+ PL"                              	title="(?=PLANET(E)?\s*(\+|PLUS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polo TV PL"                               	title="(?=Polo(\s*TV)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polonia 1 PL"                             	title="(?=(TV\s*)?Polonia(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat 2 PL"                              	title="(?=Polsat\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Cafe PL"                           	title="(?=Polsat\s*Caf(e)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Comedy Central Extra PL"            title="(?=(Polsat)?(\s*Comedy\s*(Central|CENTERAL|Center)?|CC)\s*Extra(\s*Polsat)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Crime PL"                          	title="(?=(CI|Crime(\s*and|\s*\+|\s*PLUS)?\s*Investigation)(\s*Polsat)?(\s*Crime)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Doku PL"                           	title="(?=Polsat\s*Doku(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Film PL"                           	title="(?=Polsat\s*Film(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Games PL"                          	title="(?=Polsat\s*Games(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Music PL"                          	title="(?=(Muzo(\.)?(\s*TV)?|Polsat\s*Music)(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat News PL"                           	title="(?=Polsat\s*News(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat One PL"                            	title="(?=Polsat\s*(One|1)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat PL"                                	title="(?=Polsat(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Play PL"                           	title="(?=Polsat(\s*PL)?ay(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Rodzina PL"                        	title="(?=Polsat\s*Rodzina(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Seriale PL" 						title="(?=Polsat\s*Seriale(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>	
+	<channel id="Polsat Sport 2 PL"                        	title="(?=Polsat\s*Sport\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Sport 3 PL"                        	title="(?=Polsat\s*SPORT\s*3(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Sport Extra PL"                    	title="(?=Polsat\s*Sport\s*Extra(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Sport Fight PL"                    	title="(?=Polsat\s*Sport\s*Fight(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Sport News PL"                     	title="(?=Polsat\s*Sport\s*News(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Sport PL"                          	title="(?=Polsat\s*Sport(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Sport Premium 1 PL"                	title="(?=Polsat\s*Sport\s*(Prem|Premium)(\s*1)?(\s*PPV)?(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*SPORTS)?(\s*PL)?(\s*SPORTS)?$|pspremium1(\s*PL)?|PPV(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Sport Premium 2 PL"                	title="(?=Polsat\s*Sport\s*(Prem|Premium)(\s*2\s*PPV|\s*PPV\s*2|\s*2)(\s*TV)?(\s*HD|\s*UHD)?(\s*SPORTS)?(\s*PL)?(\s*SPORTS)?$|pspremium2(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Sport Premium 3 PL"                	title="(?=Polsat\s*Sport\s*(Prem|Premium)(\s*3\s*PPV|\s*PPV\s*3|\s*3)(\s*TV)?(\s*HD|\s*UHD)?(\s*SPORTS)?(\s*PL)?(\s*SPORTS)?$|pspremium3(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Sport Premium 4 PL"                	title="(?=Polsat\s*Sport\s*(Prem|Premium)(\s*4\s*PPV|\s*PPV\s*4|\s*4)(\s*TV)?(\s*HD|\s*UHD)?(\s*SPORTS)?(\s*PL)?(\s*SPORTS)?$|pspremium4(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Sport Premium 5 PL"                	title="(?=Polsat\s*Sport\s*(Prem|Premium)(\s*5\s*PPV|\s*PPV\s*5|\s*5)(\s*TV)?(\s*HD|\s*UHD)?(\s*SPORTS)?(\s*PL)?(\s*SPORTS)?$|pspremium5(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Sport Premium 6 PL"                	title="(?=Polsat\s*Sport\s*(Prem|Premium)(\s*6\s*PPV|\s*PPV\s*6|\s*6)(\s*TV)?(\s*HD|\s*UHD)?(\s*SPORTS)?(\s*PL)?(\s*SPORTS)?$|pspremium6(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Viasat History PL"                 	title="(?=(Polsat\s*)?Viasat\s*History(\s*Polsat)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Viasat Nature PL"                  	title="(?=(Polsat\s*)?Viasat\s*Nature(\s*Polsat)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Puls 2 PL"                                	title="(?=(TV|TVP)?\s*Puls\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="ROMANCE TV PL"                            	title="(?=ROMANCE(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Red Carpet TV PL"                         	title="(?=(Edusat|Red\s*Carpet)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Republika TV PL"                          	title="(?=(TV\s*)?Republika(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="STELLA PL"                                	title="(?=STELLA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Scifi Universal PL"                       	title="(?=Sci(-|\s*)Fi(\s*Universal)?(\s*Channel)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Sfera TV PL"                              	title="(?=SFERA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Sportklub PL"                             	title="(?=SPORT\s*KLUB(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Sportowa TV PL"                           	title="(?=Sportowa(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Stars TV PL"                              	title="(?=STAR(S)?[\s.]*(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Stingray Brava PL"                        	title="(?=Stingray\s*Brava(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Stingray Djazz PL"                        	title="(?=Stingray\s*Djazz(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Stingray Festival 4K PL"                   title="(?=Stingray\s*Festival(\s*TV)?(\s*UHD|\s*4K)(\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Stopklatka TV PL"                         	title="(?=STOPKLATKA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Studio Med PL"                     		title="(?=Studio\s*Med(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Sundance TV PL"                           	title="(?=Sundance(\s*Channel)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Super Polsat PL"                          	title="(?=(Super\s*Polsat|Polsat\s*Super)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Superstacja PL"                           	title="(?=Super\s*Stacja(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TAGEN PL"                                 	title="(?=TAGEN(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TAWIZJA PL"                               	title="(?=TAWIZJA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TBN POLSKA PL"                            	title="(?=TBN(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TLC PL"                                   	title="(?=TLC(\s*Polska)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TNT PL"                                   	title="(?=TNT(\s*CHANNEL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TRWAM PL"                                 	title="(?=(TV\s*)?Trwam(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TTV PL"                                   	title="(?=TTV(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TUBA TV PL"                               	title="(?=TUBA(\s*TV)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TV 4 PL"                                  	title="(?=TV\s*4(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TV 6 PL"                                  	title="(?=(TV\s*6|SZOSTKA)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TV KUJAWY PL"                             	title="(?=(TV\s*)?KUJAWY(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TV OKAZJE PL"								title="(?=(TV\s*)?Okazje(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TV OKAZJE"                                 title="(?=OKAZJE(\s*24)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TV Puls PL"                               	title="(?=(TV\s*)?Puls(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TV Regionalna PL"                         	title="(?=(TV\s*)?Regionalna(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TV TORUN PL"                              	title="(?=(TV)?(\s*TORUN|\s*TORU.?)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TV ZGORZELEC PL"                          	title="(?=(TVT\s*)?Zgorzelec(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TV ZGORZELEC PL"                          	title="(?=(TV\s*)?ZGORZELEC(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVN 24 BiS PL"                            	title="(?=TVN\s*24\s*(BiS|Biznes\s*i\s*.*wiat)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVN 24 PL"                                	title="(?=(TVN\s*24|24\s*TVN)(\+|PLUS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVN 7 PL"                                 	title="(?=TVN\s*(7|Siedem)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVN Fabula PL"                            	title="(?=TVN\s*FABU.*A(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVN METEO PL"                             	title="(?=TVN\s*Meteo(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVN PL"                                   	title="(?=TVN(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVN Style PL"                             	title="(?=(TVN\s*Style|Style\s*TVN)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVN Turbo PL"                             	title="(?=(TVN(\s*|_)Turbo|Turbo\s*TVN)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 1 PL"                                 	title="(?=(TVP\s*1|1\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 2 PL"                                 	title="(?=(TVP\s*2|2\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Bialystok PL"                       	title="(?=TVP(\s*3)?(\s*Bialystok|\s*Bia.?ystok)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Bydgoszcz PL"                       	title="(?=TVP(\s*3)?\s*Bydgoszcz(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Gdansk PL"                          	title="(?=TVP(\s*3)?(\s*Gdansk|\s*Gda.?sk)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Gorzow Wielkopolski PL"             	title="(?=TVP(\s*3)?(\s*Gorzow\s*Wielkopolski|\s*Gorz.?w\s*Wielkopolski)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Katowice PL"                        	title="(?=TVP(\s*3)?(\s*Katowice|\s*Katowice\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Kielce PL"                          	title="(?=TVP(\s*3)?\s*Kielce(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Krakow PL"                          	title="(?=TVP(\s*3)?(\s*Krak.?w|\s*Krakow|\s*Krakow\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Lodz PL"                            	title="(?=TVP(\s*3)?\s*Lodz(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Lublin PL"                          	title="(?=TVP(\s*3)?\s*Lublin(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Olsztyn PL"                         	title="(?=TVP(\s*3)?\s*Olsztyn(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Opole PL"                           	title="(?=TVP(\s*3)?\s*Opole(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Poznan PL"                          	title="(?=TVP(\s*3)?(\s*Poznan|\s*Pozna.?)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Rzeszow PL"                         	title="(?=TVP(\s*3)?(\s*Rzeszow|\s*Rzesz.?w)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Szczecin PL"                        	title="(?=TVP(\s*3)?\s*Szczecin(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Warszawa PL"                        	title="(?=(TVP(\s*3|\s*Warszawa)+|(\s*3|\s*Warszawa)+\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Wroclaw PL"                         	title="(?=TVP(\s*3)?(\s*Wroclaw|\s*Wroc.?aw)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 4K PL"                                	title="(?=TVP(\s*TV)?(\s*UHD|s*4K)(\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP ABC PL"                               	title="(?=(TVP\s*ABC|ABC\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP Dokument PL"                          	title="(?=(TVP\s*Dokument|Dokument\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP HD PL"                                	title="(?=TVP(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP Historia PL"                          	title="(?=(TVP\s*Historia|Historia\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP Info PL"                              	title="(?=(TVP\s*Info|Info\s*TVP)(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP Kultura PL"                           	title="(?=(TVP\s*Kultura|Kultura\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP Polonia PL"                           	title="(?=(TVP\s*Polonia|Polonia\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP Rozrywka PL"                          	title="(?=(TVP\s*Rozrywka|Rozrywka\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP Seriale PL"                           	title="(?=(TVP\s*Seriale|Seriale\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP Sport PL"                             	title="(?=(TVP\s*Sport|Sport\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVR PL"                                   	title="(?=TVR(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVS PL"                                   	title="(?=TVS(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TWOJA TV PL"                              	title="(?=Twoja(\.)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Tele 5 PL"                                	title="(?=Tele\s*5(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Teletoon PL"                              	title="(?=Teletoon\s*(\+|PLUS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Tenis 1 Premium PL"                       	title="(?=Tenis\s*1(\s*Premium)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Tenis 2 Premium PL"                       	title="(?=Tenis\s*2(\s*Premium)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="To!TV PL"                                 	title="(?=TO(!)?\s*TV(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Top Kids PL"                              	title="(?=Top\s*Kids(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Toya PL"                                  	title="(?=Toya(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Trace Urban PL"                           	title="(?=Trace(\s*Urban)?(\s*Muzik)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Travel Channel PL"                        	title="(?=TRAVEL(\s*CHANNEL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Travel XP PL"                             	title="(?=TRAVEL(\s*XP)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Twoja Telewizja Morska PL"                	title="(?=(TTM|Twoja\s*Telewisja\s*Morska)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="ULTRA TV 4K PL"                   			title="(?=ULTRA(\s*TV)?(\s*UHD|\s*4K)(\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Universal Channel PL"                     	title="(?=Universal\s*(Channel)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="VEVO PL"                                  	title="(?=VEVO(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="VEVO TV FLOW PL"                          	title="(?=Vevo\s*TV\s*Flow(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="VEVO TV HITS PL"                          	title="(?=Vevo\s*TV\s*Hits(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="VH1 Classic PL"                           	title="(?=VH1\s*Classic(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="VH1 PL"                                   	title="(?=VH1(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="VIVA Polska PL"                           	title="(?=VIVA(\s*Polska)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Vox Music TV PL"                          	title="(?=(Music\s*VOX|VOX\s*Music)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="WATER PLANET PL"                          	title="(?=Water(\s*PL)?anet(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="WAWA TV PL"                               	title="(?=WAWA(\s*TV)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="WP PL"                                    	title="(?=(Telewizja\s*)?WP(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="WTK PL"                                   	title="(?=WTK(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="ZOOM TV PL"                               	title="(?=ZOOM(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="nsport+ PL"                               	title="(?=n\s*Sport\s*(\+|PLUS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="wPolsce.pl PL"                            	title="(?=w\s*Polsce[\s.]*(pl)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+<!--<channel id="Canal+ Discovery PL"                      	title="(?=(Canal|C)\s*(\+|PLUS)?\s*Discovery(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>-->
+<!--<channel id="Wellbeing Network PL"                     	title="(?=Well\s*being(\s*Network)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>-->
+
+<!--<.pl>-->
+	<channel id="1 HD.pl"                                  	title="(?=1(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="13 Ulica.pl"                              	title="(?=13(th)?\s*(Ulica|STREET)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="360 TUNEBOX HD.pl"                         title="(?=360\s*TUNE\s*BOX(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="360 TUNEBOX.pl"                            title="(?=360\s*TUNE\s*BOX(\s*TV)?(\s*SD)?(\s*PL)?$)" strm=""/>
+	<channel id="4 Fun Dance.pl"                           	title="(?=4\s*Fun(\s*Fit)?\s*(and|&amp;)?\s*Dance(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="4fun Gold.pl"                             	title="(?=4\s*Fun\s*Gold(\s*Hits)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="4fun Hits.pl"                             	title="(?=4\s*Fun\s*Hits(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="4fun Kids.pl"                             	title="(?=4\s*Fun\s*Kids(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="4fun TV.pl"                               	title="(?=4\s*FUN[\s.]*(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="4music.pl"                                	title="(?=4\s*music(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="8TV.pl"                                   	title="(?=(8\s*TV|TV\s*8)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="AMC.pl"                                   	title="(?=AMC(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="ASTA TV.pl"                               	title="(?=(TV\s*)?ASTA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="ATM Rozrywka.pl"                          	title="(?=(ATM)?\s*ROZRYWKA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="AXN Black.pl"                             	title="(?=AXN\s*Black(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="AXN Spin.pl"                              	title="(?=AXN\s*Spin(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="AXN White.pl"                             	title="(?=AXN\s*White(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="AXN.pl"                                   	title="(?=AXN(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Active Family.pl"                         	title="(?=Active\s*Family(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Adventure.pl"                             	title="(?=Adventure(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Ale Kino+.pl"                             	title="(?=Ale\s*Kino\s*(\+|PLUS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Amazing.pl"                               	title="(?=Amazing(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Animal Planet.pl"                         	title="(?=Animal((\s*PL)?anet)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Atomic.pl"                                	title="(?=Atomic(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="BBC Brit.pl"                              	title="(?=BBC\s*Brit(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="BBC CBeebies.pl"                          	title="(?=(BBC\s*)?CBeebies(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="BBC Earth.pl"                             	title="(?=BBC\s*Earth(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="BBC First.pl"                             	title="(?=BBC(\s*First)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="BBC Lifestyle.pl"                         	title="(?=BBC\s*Lifestyle(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="BBC World News.pl"                        	title="(?=BBC\s*(World|Word)\s*News(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="BBC World.pl"                             	title="(?=BBC\s*World(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Baby TV.pl"                               	title="(?=Baby(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Biznes 24.pl"                              title="(?=Biznes\s*24(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Boomerang.pl"                             	title="(?=Boomerang(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="CBS Action.pl"                            	title="(?=CBS\s*Action(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="CBS Europa.pl"                            	title="(?=CBS\s*Europa(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="CBS REALITY DRAMA.pl"                     	title="(?=CBS(\s*Reality)?\s*DRAMA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="CBS REALITY POLSKA.pl"                    	title="(?=CBS\s*Reality(\s*Polska)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="CNBC.pl"                                  	title="(?=CNBC(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="CNN.pl"                                   	title="(?=CNN(\s*International)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="CT SPORT.pl"                              	title="(?=CT\s*SPORT(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="CW24 TV.pl"                               	title="(?=CW24(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="CZWORKA POLSKIE RADIO.pl"                 	title="(?=CZW.*RKA\s*POLSKIE\s*RADIO(\s*LIVE)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Camido.pl"                                	title="(?=Camido(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+ 4K.pl"                             	title="(?=(Canal|C)\s*(\+|PLUS)?(\s*TV)?(\s*UHD|\s*4K)(\s*UHD)?(\s*Ultra)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+ Dokument.pl"                      	title="(?=(Canal|C)\s*(\+|PLUS)?\s*(Dokument|Discovery)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+ Family.pl"                         	title="(?=(Canal|C)\s*(\+|PLUS)?\s*Family(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+ Film.pl"                           	title="(?=(Canal|C)\s*(\+|PLUS)?\s*Film(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+ Now.pl"                            	title="(?=(Canal|C)\s*(\+|PLUS)?\s*Now(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+ Seriale.pl"                        	title="(?=(Canal|C)\s*(\+|PLUS)?\s*Seriale(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+ Sport 2.pl"                        	title="(?=(Canal|C)\s*(\+|PLUS)?\s*SPORT\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+ Sport 3.pl"                        	title="(?=(Canal|C)\s*(\+|PLUS)?\s*SPORT\s*3(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+ Sport 4.pl"                        	title="(?=(Canal|C)\s*(\+|PLUS)?\s*SPORT\s*4(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+ Sport.pl"                          	title="(?=(CANAL|C)\s*(\+|PLUS)?\s*SPORT(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+.pl"                                	title="(?=(Canal|C)\s*(\+|PLUS)?(\s*PREMIUM)?(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+1.pl"                               	title="(?=(Canal|C)\s*(\+|PLUS)?\s*1(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Cartoon Network.pl"                       	title="(?=Carto(o)?n(\s*Network)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Cinemax 2.pl"                             	title="(?=Cinemax\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Cinemax.pl"                               	title="(?=Cinemax(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Comedy Central Family.pl"                 	title="(?=(Comedy\s*Central|CC)\s*(Family|Extra\s*Polsat)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Comedy Central.pl"                        	title="(?=(Comedy\s*(Central|CENTERAL|Center)?|CC)(\s*Polska)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>	
+	<channel id="DLA CIEBIE.pl"                            	title="(?=DLA\s*CIEBIE(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="DOCUBOX.pl"                               	title="(?=Docu\s*Box(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="DTX.pl"                                   	title="(?=((Discover(y)?)?\s*Turbo\s*(Xtra|EXTRA|EX)|DTX|Xtra)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Da Vinci Learning.pl"                     	title="(?=DA\s*VINCI(\s*LEARNING)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Disco Polo Music.pl"                      	title="(?=Disco\s*Polo(\s*Music)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Discovery Channel.pl"                     	title="(?=Discovery(\s*Channel)?(\s*HD|\s*UHD)?(\s*HD|\s*UHD)?(\s*Showcase)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Discovery Historia.pl"                    	title="(?=Discovery\s*(Historia|HISTORY)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Discovery Life.pl"                        	title="(?=Discovery\s*Life(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Discovery Science.pl"                     	title="(?=(D(\.)?|Discovery)\s*Science(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Disney Channel.pl"                        	title="(?=DISNEY((\s*|-)(CHANNEL|Polska))?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Disney Junior.pl"                         	title="(?=DISNEY\s*Junior(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Disney XD.pl"                             	title="(?=DISNEY\s*XD(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Domo+.pl"                                 	title="(?=DOMO\s*(\+|PLUS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Duck TV.pl"                               	title="(?=Duck(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="E! Entertainment.pl"                      	title="(?=E(!)?(\s*Entertainment)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="ECHO 24.pl"                               	title="(?=ECHO\s*24(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="ESKA PARTY TV.pl"                         	title="(?=ESKA\s*(PARTY|GO)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="ETV.pl"                                   	title="(?=ETV(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="EURONEWS.pl"                              	title="(?=Euro\s*news(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eleven Sports 1 4K.pl"                     title="(?=(Eleven|11)(\s*Sport(s)?)?(\s*1)?(\s*UHD|s*4K)(\s*TV)?(\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eleven Sports 1.pl"                       	title="(?=(Eleven|11)(\s*Sport(s)?)?(\s*1)?(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eleven Sports 2.pl"                       	title="(?=(Eleven|11|E)(\s*Sport)(s)?(\s*2)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eleven Sports 3.pl"                       	title="(?=(Eleven|11|E)\s*(Sport(s)?(\s*3)|Extra)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eleven Sports 4.pl"                       	title="(?=(Eleven|11|E)\s*Sport(s)?(\s*4)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Epic Drama.pl"                            	title="(?=Epic\s*Drama(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eska Best Music.pl"                       	title="(?=Eska\s*Best\s*Music(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eska Rock TV.pl"                          	title="(?=(Eskarock|Eska\s*Rock)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eska TV Extra.pl"                         	title="(?=Eska\s*(\s*TV)?\s*Extra(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eska TV.pl"                               	title="(?=Eska\s*(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eurochannel.pl"                           	title="(?=Euro\s*channel(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eurosport 2.pl"                           	title="(?=(Euro\s*sport\s*2|EUTOSPORT\s*2)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eurosport 4K.pl"                           title="(?=Euro\s*sport(\s*1)?(\s*TV)?(\s*UHD|\s*4K)?(\s*PL)?$)" strm=""/>
+	<channel id="Eurosport.pl"                             	title="(?=Euro\s*sport(\s*1)?(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="Extreme Sports Channel.pl"                	title="(?=(Extreme|EXTREM)(\s*Sport(s)?)?(\s*Channel)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="FASHIONBOX.pl"                            	title="(?=FASHIONBOX(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="FASTBOX AND FUN.pl"						title="(?=(FAST)\s*(BOX)?(and|&amp;)?(FUN)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="FIGHTKLUB.pl"                             	title="(?=FIGHT\s*KLUB(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="FOX Comedy.pl"                            	title="(?=FOX\s*Comedy(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="FOX Life.pl"                              	title="(?=FOX\s*Life(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="FOX.pl"                                   	title="(?=FOX(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Family Sport.pl"                          	title="(?=Family\s*Sport(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Fashion One.pl"                           	title="(?=Fashion\s*(One|1)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Fashion TV.pl"                            	title="(?=Fashion(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Fight Channel.pl"                         	title="(?=Fight\s*Channel(\s*World)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="FightBox.pl"                              	title="(?=Fight\s*Box(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="FilmBox Action.pl"                        	title="(?=FilmBox\s*Action(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Filmbox Arthouse.pl"                      	title="(?=Filmbox\s*Arthouse(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Filmbox Extra HD.pl"                      	title="(?=Filmbox\s*Extra(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Filmbox Family.pl"                        	title="(?=FILMBOX\s*FAMILY(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Filmbox Premium.pl"                       	title="(?=FILM\s*BOX\s*PREMIUM(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="FofaTV.pl"                                	title="(?=FofaTV(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Fokus TV.pl"                              	title="(?=Fo(k|c)us(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Food Network.pl"                          	title="(?=(Polsat\s*)?Food(\s*Network)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Formula 1.pl"                             	title="(?=Formula\s*1(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="FunBox 4K.pl"                             	title="(?=Fun\s*Box(\s*TV)?(\s*UHD|\s*4K)(\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Game Show.pl"                             	title="(?=Game\s*Show(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Gametoon.pl"                              	title="(?=Gametoon(\s*E)?(sport)?(s)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Ginx TV.pl"                               	title="(?=Ginx(\s*E)?(sport)?(s)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Golf Channel.pl"                          	title="(?=Golf(\s*Channel)?(\s*Polska)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="HBO.pl"                                   	title="(?=HBO(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="HBO2.pl"                                  	title="(?=HBO\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="HBO3.pl"                                  	title="(?=HBO\s*(3|COMEDY)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="HGTV.pl"                                  	title="(?=(HGTV|TVN\s*METEO\s*Active)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="History 2.pl"                             	title="(?=(H|History)\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="History.pl"                               	title="(?=History(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="ID.pl"                                    	title="(?=(DISCOVERY\s*)?(INVESTIGATION|ID)(\s*DISCOVERY)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="JimJam Polsat.pl"                         	title="(?=(Polsat\s*)?Jim\s*Jam(\s*Polsat)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="KSW.pl"                                   	title="(?=.*KSW.*(\s*PL)?$)" strm=""/>
+	<channel id="Kino Polska International.pl"             	title="(?=Kino\s*Polska\s*Int(ernational)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Kino Polska Muzyka International.pl"      	title="(?=Kino(\s*Polska)?\s*Muzyka\s*Int(ernational)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Kino Polska Muzyka.pl"                    	title="(?=Kino(\s*Polska)?\s*Muzyka(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Kino Polska.pl"                           	title="(?=Kino(\s*Polska)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Kino TV.pl"                               	title="(?=(Filmbox|Kino)\s*TV(\s*\(FILMBOX\))?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Kuchnia+.pl"                              	title="(?=Kuchnia\s*(\+|PLUS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="LECH TV.pl"                               	title="(?=Lech(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="LUBELSKA TV.pl"                           	title="(?=LUBELSKA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Lifetime.pl"                              	title="(?=Life\s*time(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Love TV.pl"                               	title="(?=Love(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MANGO.pl"                                 	title="(?=MANGO(\s*24)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MC Play.pl"                               	title="(?=MC(\s*PL)?ay(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="METRO.pl"                                 	title="(?=METRO(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MEZZO.pl"                                 	title="(?=MEZZO(\s*Live)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MGM.pl"                                   	title="(?=MGM(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV 80s.pl"                                title="(?=MTV.*(80(s)?)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV 90s.pl"                                title="(?=MTV.*(90(s)?)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV Base.pl"                              	title="(?=MTV\s*Base(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV Club.pl"                               title="(?=MTV\s*Club(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV Dance.pl"                             	title="(?=MTV\s*Dance(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV Dance.pl"                             	title="(?=MTV\s*Dance(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV Hits.pl"                              	title="(?=MTV\s*Hits(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV Hits.pl"                               title="(?=MTV\s*Hits(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV Live HD.pl"                           	title="(?=MTV\s*Live(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV Music 24.pl"                          	title="(?=MTV\s*Music\s*24(\s*PL)?$)" strm=""/>
+	<channel id="MTV Music.pl"                             	title="(?=MTV\s*Music(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV Polska.pl"                            	title="(?=MTV(\s*Music)?(\s*Polska)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV Rocks.pl"                             	title="(?=MTV\s*Rocks(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MUSIC VOX TV 2.pl"                        	title="(?=MUSIC\s*VOX(\s*TV)?\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Miejska TV.pl"                            	title="(?=Miejska(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Minimini+.pl"                             	title="(?=MINI\s*MINI\s*(\+|PLUS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Motowizja.pl"                             	title="(?=(Motowizja|Motorwizja)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="NOVELA TV.pl"                             	title="(?=NOVELA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="NOWA TV.pl"                               	title="(?=NOWA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="NTL Radomsko.pl"                          	title="(?=NTL(\s*Radomsko)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Nat Geo People.pl"                        	title="(?=(Nat|National)\s*(Geo|Geographic)\s*People(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="National Geographic Channel.pl"           	title="(?=(Nat|National)\s*(Geo|Geographic)(\s*CHANNEL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="National Geographic Wild.pl"              	title="(?=(Nat|National)\s*(Geo|Geographic)\s*Wild(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Nick Jr..pl"                              	title="(?=Nick(elodeon)?\s*(Jr|JUNIOR)(\.)?(Polska)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Nickelodeon HD.pl"                        	title="(?=Nickelodeon(\s*Polska)?(\s*TV)?\s*HD(\s*PL)?$)" strm=""/>
+	<channel id="Nickelodeon.pl"                           	title="(?=Nickelodeon(\s*Polska)?(\s*TV)?(\s*PL)?$)" strm=""/>
+	<channel id="Nicktoons.pl"                             	title="(?=Nicktoons(\s*Polska)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Nobox TV.pl"                              	title="(?=Nobox(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Nuta TV.pl"                               	title="(?=Nuta(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="OPOKA TV.pl"                              	title="(?=OPOKA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Ocko.pl"                                  	title="(?=Ocko(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Orange Sport.pl"                          	title="(?=Orange\s*Sport(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="POLO PARTY TV.pl"                         	title="(?=POLO\s*PARTY(\s*TV)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="POLSAT NEWS 2.pl"                         	title="(?=Polsat\s*NEWS\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="POLSAT ROMANS.pl"                         	title="(?=Polsat\s*Romans(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="POLSAT Viasat Explore.pl"                 	title="(?=(Polsat\s*)?Viasat\s*Explore(R)?(\s*Polsat)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="POMERANIA.pl"                             	title="(?=POMERANIA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="POMORSKA.pl"                              	title="(?=POMORSKA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="POWER TV.pl"                              	title="(?=Power(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Paramount Channel.pl"                     	title="(?=Paramount(\s*Channel)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Planete+.pl"                              	title="(?=PLANET(E)?\s*(\+|PLUS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polo TV.pl"                               	title="(?=Polo(\s*TV)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polonia 1.pl"                             	title="(?=(TV\s*)?Polonia(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat 2.pl"                              	title="(?=Polsat\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Cafe.pl"                           	title="(?=Polsat\s*Caf(e)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Comedy Central Extra.pl"            title="(?=(Polsat)?(\s*Comedy\s*(Central|CENTERAL|Center)?|CC)\s*Extra(\s*Polsat)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Crime.pl"                          	title="(?=(CI|Crime(\s*and|\s*\+|\s*PLUS)?\s*Investigation)(\s*Polsat)?(\s*Crime)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Doku.pl"                           	title="(?=Polsat\s*Doku(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Film.pl"                           	title="(?=Polsat\s*Film(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Games.pl"                          	title="(?=Polsat\s*Games(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Music.pl"                          	title="(?=(Muzo(\.)?(\s*TV)?|Polsat\s*Music)(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat News.pl"                           	title="(?=Polsat\s*News(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat One.pl"                            	title="(?=Polsat\s*(One|1)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Play.pl"                           	title="(?=Polsat(\s*PL)?ay(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Rodzina.pl"                        	title="(?=Polsat\s*Rodzina(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Seriale.pl" 						title="(?=Polsat\s*Seriale(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>	
+	<channel id="Polsat Sport 2.pl"                        	title="(?=Polsat\s*Sport\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Sport 3.pl"                        	title="(?=Polsat\s*SPORT\s*3(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Sport Extra.pl"                    	title="(?=Polsat\s*Sport\s*Extra(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Sport Fight.pl"                    	title="(?=Polsat\s*Sport\s*Fight(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Sport News.pl"                     	title="(?=Polsat\s*Sport\s*News(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Sport Premium 1.pl"                	title="(?=Polsat\s*Sport\s*(Prem|Premium)(\s*1)?(\s*PPV)?(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*SPORTS)?(\s*PL)?(\s*SPORTS)?$|pspremium1(\s*PL)?|PPV(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Sport Premium 2.pl"                	title="(?=Polsat\s*Sport\s*(Prem|Premium)(\s*2\s*PPV|\s*PPV\s*2|\s*2)(\s*TV)?(\s*HD|\s*UHD)?(\s*SPORTS)?(\s*PL)?(\s*SPORTS)?$|pspremium2(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Sport Premium 3.pl"                	title="(?=Polsat\s*Sport\s*(Prem|Premium)(\s*3\s*PPV|\s*PPV\s*3|\s*3)(\s*TV)?(\s*HD|\s*UHD)?(\s*SPORTS)?(\s*PL)?(\s*SPORTS)?$|pspremium3(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Sport Premium 4.pl"                	title="(?=Polsat\s*Sport\s*(Prem|Premium)(\s*4\s*PPV|\s*PPV\s*4|\s*4)(\s*TV)?(\s*HD|\s*UHD)?(\s*SPORTS)?(\s*PL)?(\s*SPORTS)?$|pspremium4(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Sport Premium 5.pl"                	title="(?=Polsat\s*Sport\s*(Prem|Premium)(\s*5\s*PPV|\s*PPV\s*5|\s*5)(\s*TV)?(\s*HD|\s*UHD)?(\s*SPORTS)?(\s*PL)?(\s*SPORTS)?$|pspremium5(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Sport Premium 6.pl"                	title="(?=Polsat\s*Sport\s*(Prem|Premium)(\s*6\s*PPV|\s*PPV\s*6|\s*6)(\s*TV)?(\s*HD|\s*UHD)?(\s*SPORTS)?(\s*PL)?(\s*SPORTS)?$|pspremium6(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Sport.pl"                          	title="(?=Polsat\s*Sport(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Viasat History.pl"                 	title="(?=(Polsat\s*)?Viasat\s*History(\s*Polsat)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Viasat Nature.pl"                  	title="(?=(Polsat\s*)?Viasat\s*Nature(\s*Polsat)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat.pl"                                	title="(?=Polsat(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Puls 2.pl"                                	title="(?=(TV|TVP)?\s*Puls\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="ROMANCE TV.pl"                            	title="(?=ROMANCE(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Red Carpet TV.pl"                         	title="(?=(Edusat|Red\s*Carpet)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Republika TV.pl"                          	title="(?=(TV\s*)?Republika(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="STELLA.pl"                                	title="(?=STELLA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Scifi Universal.pl"                       	title="(?=Sci(-|\s*)Fi(\s*Universal)?(\s*Channel)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Sfera TV.pl"                              	title="(?=SFERA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Sportklub.pl"                             	title="(?=SPORT\s*KLUB(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Sportowa TV.pl"                           	title="(?=Sportowa(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Stars TV.pl"                              	title="(?=STAR(S)?[\s.]*(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Stingray Brava.pl"                        	title="(?=Stingray\s*Brava(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Stingray Djazz.pl"                        	title="(?=Stingray\s*Djazz(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Stingray Festival 4K.pl"                   title="(?=Stingray\s*Festival(\s*TV)?(\s*UHD|\s*4K)(\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Stopklatka TV.pl"                         	title="(?=STOPKLATKA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Studio Med.pl"                     		title="(?=Studio\s*Med(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Sundance TV.pl"                           	title="(?=Sundance(\s*Channel)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Super Polsat.pl"                          	title="(?=(Super\s*Polsat|Polsat\s*Super)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Superstacja.pl"                           	title="(?=Super\s*Stacja(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TAGEN.pl"                                 	title="(?=TAGEN(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TAWIZJA.pl"                               	title="(?=TAWIZJA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TBN POLSKA.pl"                            	title="(?=TBN(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TLC.pl"                                   	title="(?=TLC(\s*Polska)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TNT.pl"                                   	title="(?=TNT(\s*CHANNEL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TRWAM.pl"                                 	title="(?=(TV\s*)?Trwam(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TTV.pl"                                   	title="(?=TTV(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TUBA TV.pl"                               	title="(?=TUBA(\s*TV)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TV 4.pl"                                  	title="(?=TV\s*4(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TV 6.pl"                                  	title="(?=(TV\s*6|SZOSTKA)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TV KUJAWY.pl"                             	title="(?=(TV\s*)?KUJAWY(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TV OKAZJE"                                 title="(?=OKAZJE(\s*24)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TV OKAZJE.pl"								title="(?=(TV\s*)?Okazje(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TV Puls.pl"                               	title="(?=(TV\s*)?Puls(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TV Regionalna.pl"                         	title="(?=(TV\s*)?Regionalna(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TV TORUN.pl"                              	title="(?=(TV)?(\s*TORUN|\s*TORU.?)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TV ZGORZELEC.pl"                          	title="(?=(TVT\s*)?Zgorzelec(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TV ZGORZELEC.pl"                          	title="(?=(TV\s*)?ZGORZELEC(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVN 24 BiS.pl"                            	title="(?=TVN\s*24\s*(BiS|Biznes\s*i\s*.*wiat)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVN 24.pl"                                	title="(?=(TVN\s*24|24\s*TVN)(\+|PLUS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVN 7.pl"                                 	title="(?=TVN\s*(7|Siedem)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVN Fabula.pl"                            	title="(?=TVN\s*FABU.*A(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVN METEO.pl"                             	title="(?=TVN\s*Meteo(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVN Style.pl"                             	title="(?=(TVN\s*Style|Style\s*TVN)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVN Turbo.pl"                             	title="(?=(TVN(\s*|_)Turbo|Turbo\s*TVN)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVN.pl"                                   	title="(?=TVN(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 1.pl"                                 	title="(?=(TVP\s*1|1\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 2.pl"                                 	title="(?=(TVP\s*2|2\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Bialystok.pl"                       	title="(?=TVP(\s*3)?(\s*Bialystok|\s*Bia.?ystok)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Bydgoszcz.pl"                       	title="(?=TVP(\s*3)?\s*Bydgoszcz(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Gdansk.pl"                          	title="(?=TVP(\s*3)?(\s*Gdansk|\s*Gda.?sk)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Gorzow Wielkopolski.pl"             	title="(?=TVP(\s*3)?(\s*Gorzow\s*Wielkopolski|\s*Gorz.?w\s*Wielkopolski)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Katowice.pl"                        	title="(?=TVP(\s*3)?(\s*Katowice|\s*Katowice\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Kielce.pl"                          	title="(?=TVP(\s*3)?\s*Kielce(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Krakow.pl"                          	title="(?=TVP(\s*3)?(\s*Krak.?w|\s*Krakow|\s*Krakow\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Lodz.pl"                            	title="(?=TVP(\s*3)?(\s*Lodz|\s*.?d.?)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Lublin.pl"                          	title="(?=TVP(\s*3)?\s*Lublin(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Olsztyn.pl"                         	title="(?=TVP(\s*3)?\s*Olsztyn(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Opole.pl"                           	title="(?=TVP(\s*3)?\s*Opole(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Poznan.pl"                          	title="(?=TVP(\s*3)?(\s*Poznan|\s*Pozna.?)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Rzeszow.pl"                         	title="(?=TVP(\s*3)?(\s*Rzeszow|\s*Rzesz.?w)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Szczecin.pl"                        	title="(?=TVP(\s*3)?\s*Szczecin(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Warszawa.pl"                        	title="(?=(TVP(\s*3|\s*Warszawa)+|(\s*3|\s*Warszawa)+\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Wroclaw.pl"                         	title="(?=TVP(\s*3)?(\s*Wroclaw|\s*Wroc.?aw)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 4K.pl"                                	title="(?=TVP(\s*TV)?(\s*UHD|s*4K)(\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP ABC.pl"                               	title="(?=(TVP\s*ABC|ABC\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP Dokument.pl"                          	title="(?=(TVP\s*Dokument|Dokument\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP HD.pl"                                	title="(?=TVP(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP Historia.pl"                          	title="(?=(TVP\s*Historia|Historia\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP Info.pl"                              	title="(?=(TVP\s*Info|Info\s*TVP)(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP Kultura.pl"                           	title="(?=(TVP\s*Kultura|Kultura\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP Polonia.pl"                           	title="(?=(TVP\s*Polonia|Polonia\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP Rozrywka.pl"                          	title="(?=(TVP\s*Rozrywka|Rozrywka\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP Seriale.pl"                           	title="(?=(TVP\s*Seriale|Seriale\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP Sport.pl"                             	title="(?=(TVP\s*Sport|Sport\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVR.pl"                                   	title="(?=TVR(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVS.pl"                                   	title="(?=TVS(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TWOJA TV.pl"                              	title="(?=Twoja(\.)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Tele 5.pl"                                	title="(?=Tele\s*5(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Teletoon.pl"                              	title="(?=Teletoon\s*(\+|PLUS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Tenis 1 Premium.pl"                       	title="(?=Tenis\s*1(\s*Premium)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Tenis 2 Premium.pl"                       	title="(?=Tenis\s*2(\s*Premium)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="To!TV.pl"                                 	title="(?=TO(!)?\s*TV(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Top Kids.pl"                              	title="(?=Top\s*Kids(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Toya.pl"                                  	title="(?=Toya(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Trace Urban.pl"                           	title="(?=Trace(\s*Urban)?(\s*Muzik)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Travel Channel.pl"                        	title="(?=TRAVEL(\s*CHANNEL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Travel XP.pl"                             	title="(?=TRAVEL(\s*XP)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Twoja Telewizja Morska.pl"                	title="(?=(TTM|Twoja\s*Telewisja\s*Morska)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="ULTRA TV 4K.pl"                   			title="(?=ULTRA(\s*TV)?(\s*UHD|\s*4K)(\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Universal Channel.pl"                     	title="(?=Universal\s*(Channel)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="VEVO TV FLOW.pl"                          	title="(?=Vevo\s*TV\s*Flow(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="VEVO TV HITS.pl"                          	title="(?=Vevo\s*TV\s*Hits(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="VEVO.pl"                                  	title="(?=VEVO(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="VH1 Classic.pl"                           	title="(?=VH1\s*Classic(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="VH1.pl"                                   	title="(?=VH1(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="VIVA Polska.pl"                           	title="(?=VIVA(\s*Polska)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Vox Music TV.pl"                          	title="(?=(Music\s*VOX|VOX\s*Music)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="WATER PLANET.pl"                          	title="(?=Water(\s*PL)?anet(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="WAWA TV.pl"                               	title="(?=WAWA(\s*TV)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="WP.pl"                                    	title="(?=(Telewizja\s*)?WP(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="WTK.pl"                                   	title="(?=WTK(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="ZOOM TV.pl"                               	title="(?=ZOOM(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="nsport+.pl"                               	title="(?=n\s*Sport\s*(\+|PLUS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="wPolsce.pl.pl"                            	title="(?=w\s*Polsce[\s.]*(pl)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+<!--<channel id="Canal+ Discovery.pl"                      	title="(?=(Canal|C)\s*(\+|PLUS)?\s*Discovery(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>-->
+<!--<channel id="Wellbeing Network.pl"                     	title="(?=Well\s*being(\s*Network)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>-->
+
+<!--<None>-->
+	<channel id="1 HD"                                  	title="(?=1(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="13 Ulica"                              	title="(?=13(th)?\s*(Ulica|STREET)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="360 TUNEBOX HD"                        	title="(?=360\s*TUNE\s*BOX(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="360 TUNEBOX"                           	title="(?=360\s*TUNE\s*BOX(\s*TV)?(\s*SD)?(\s*PL)?$)" strm=""/>
+	<channel id="4 Fun Dance"                           	title="(?=4\s*Fun(\s*Fit)?\s*(and|&amp;)?\s*Dance(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="4fun Gold"                             	title="(?=4\s*Fun\s*Gold(\s*Hits)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="4fun Hits"                             	title="(?=4\s*Fun\s*Hits(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="4fun Kids"                             	title="(?=4\s*Fun\s*Kids(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="4fun TV"                               	title="(?=4\s*FUN[\s.]*(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="4music"                                	title="(?=4\s*music(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="8TV"                                   	title="(?=(8\s*TV|TV\s*8)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="AMC"                                   	title="(?=AMC(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="ASTA TV"                               	title="(?=(TV\s*)?ASTA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="ATM Rozrywka"                          	title="(?=(ATM)?\s*ROZRYWKA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="AXN Black"                             	title="(?=AXN\s*Black(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="AXN Spin"                              	title="(?=AXN\s*Spin(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="AXN White"                             	title="(?=AXN\s*White(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="AXN"                                   	title="(?=AXN(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Active Family"                         	title="(?=Active\s*Family(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Adventure"                             	title="(?=Adventure(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Ale Kino+"                             	title="(?=Ale\s*Kino\s*(\+|PLUS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Amazing"                               	title="(?=Amazing(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Animal Planet"                         	title="(?=Animal((\s*PL)?anet)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Atomic"                                	title="(?=Atomic(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="BBC Brit"                              	title="(?=BBC\s*Brit(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="BBC CBeebies"                          	title="(?=(BBC\s*)?CBeebies(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="BBC Earth"                             	title="(?=BBC\s*Earth(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="BBC First"                             	title="(?=BBC(\s*First)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="BBC Lifestyle"                         	title="(?=BBC\s*Lifestyle(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="BBC World News"                        	title="(?=BBC\s*(World|Word)\s*News(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="BBC World"                             	title="(?=BBC\s*World(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Baby TV"                               	title="(?=Baby(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Biznes 24"                     			title="(?=Biznes\s*24(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Boomerang"                             	title="(?=Boomerang(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="CBS Action"                            	title="(?=CBS\s*Action(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="CBS Europa"                            	title="(?=CBS\s*Europa(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="CBS REALITY DRAMA"                     	title="(?=CBS(\s*Reality)?\s*DRAMA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="CBS REALITY POLSKA"                    	title="(?=CBS\s*Reality(\s*Polska)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="CNBC"                                  	title="(?=CNBC(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="CNN"                                   	title="(?=CNN(\s*International)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="CT SPORT"                              	title="(?=CT\s*SPORT(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="CW24 TV"                               	title="(?=CW24(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="CZWORKA POLSKIE RADIO"                 	title="(?=CZW.*RKA\s*POLSKIE\s*RADIO(\s*LIVE)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Camido"                                	title="(?=Camido(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+ 4K"                             	title="(?=(Canal|C)\s*(\+|PLUS)?(\s*TV)?(\s*UHD|\s*4K)(\s*UHD)?(\s*Ultra)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+ Dokument"                      		title="(?=(Canal|C)\s*(\+|PLUS)?\s*(Dokument|Discovery)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+ Dokument"                      		title="(?=(Canal|C)\s*(\+|PLUS)?\s*Dokument(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+ Family"                         	title="(?=(Canal|C)\s*(\+|PLUS)?\s*Family(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+ Film"                           	title="(?=(Canal|C)\s*(\+|PLUS)?\s*Film(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+ Now"                            	title="(?=(Canal|C)\s*(\+|PLUS)?\s*Now(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+ Seriale"                        	title="(?=(Canal|C)\s*(\+|PLUS)?\s*Seriale(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+ Sport 2"                        	title="(?=(Canal|C)\s*(\+|PLUS)?\s*SPORT\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+ Sport"                          	title="(?=(CANAL|C)\s*(\+|PLUS)?\s*SPORT(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+"                                	title="(?=(Canal|C)\s*(\+|PLUS)?(\s*PREMIUM)?(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+1"                               	title="(?=(Canal|C)\s*(\+|PLUS)?\s*1(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Cartoon Network"                       	title="(?=Carto(o)?n(\s*Network)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Cinemax 2"                             	title="(?=Cinemax\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Cinemax"                               	title="(?=Cinemax(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Comedy Central Family"                 	title="(?=(Comedy\s*Central|CC)\s*Family(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Comedy Central"                        	title="(?=(Comedy\s*(Central|CENTERAL|Center)?|CC)(\s*Polska)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>	
+	<channel id="DLA CIEBIE"                            	title="(?=DLA\s*CIEBIE(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="DOCUBOX"                               	title="(?=Docu\s*Box(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="DTX"                                   	title="(?=((Discover(y)?)?\s*Turbo\s*(Xtra|EXTRA|EX)|DTX|Xtra)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Da Vinci Learning"                     	title="(?=DA\s*VINCI(\s*LEARNING)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Disco Polo Music"                      	title="(?=Disco\s*Polo(\s*Music)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Discovery Channel"                     	title="(?=Discovery(\s*Channel)?(\s*HD|\s*UHD)?(\s*HD|\s*UHD)?(\s*Showcase)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Discovery Historia"                    	title="(?=Discovery\s*(Historia|HISTORY)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Discovery Life"                        	title="(?=Discovery\s*Life(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Discovery Science"                     	title="(?=Discovery\s*Science(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Disney Channel"                        	title="(?=DISNEY((\s*|-)(CHANNEL|Polska))?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Disney Junior"                         	title="(?=DISNEY\s*Junior(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Disney XD"                             	title="(?=DISNEY\s*XD(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Domo+"                                 	title="(?=DOMO\s*(\+|PLUS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Duck TV"                               	title="(?=Duck(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="E! Entertainment"                      	title="(?=E(!)?(\s*Entertainment)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="ECHO 24"                               	title="(?=ECHO\s*24(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="ESKA PARTY TV"                         	title="(?=ESKA\s*(PARTY|GO)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="ETV"                                   	title="(?=ETV(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="EURONEWS"                              	title="(?=Euro\s*news(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eleven Sports 1 4K"                     	title="(?=(Eleven|11)(\s*Sport(s)?)?(\s*1)?(\s*UHD|s*4K)(\s*TV)?(\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eleven Sports 1"                       	title="(?=(Eleven|11)(\s*Sport(s)?)?(\s*1)?(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eleven Sports 2"                       	title="(?=(Eleven|11|E)(\s*Sport)(s)?(\s*2)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eleven Sports 3"                       	title="(?=(Eleven|11|E)\s*(Sport(s)?(\s*3)|Extra)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eleven Sports 4"                       	title="(?=(Eleven|11|E)\s*Sport(s)?(\s*4)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Epic Drama"                            	title="(?=Epic\s*Drama(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eska Best Music"                       	title="(?=Eska\s*Best\s*Music(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eska Rock TV"                          	title="(?=(Eskarock|Eska\s*Rock)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eska TV Extra"                         	title="(?=Eska\s*(\s*TV)?\s*Extra(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eska TV"                               	title="(?=Eska\s*(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eurochannel"                           	title="(?=Euro\s*channel(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eurosport 2"                           	title="(?=(Euro\s*sport\s*2|EUTOSPORT\s*2)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Eurosport 4K"                           	title="(?=Euro\s*sport(\s*1)?(\s*TV)?(\s*UHD|\s*4K)?(\s*PL)?$)" strm=""/>
+	<channel id="Eurosport"                             	title="(?=Euro\s*sport(\s*1)?(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="Extreme Sports Channel"                	title="(?=(Extreme|EXTREM)(\s*Sport(s)?)?(\s*Channel)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="FASHIONBOX"                            	title="(?=FASHIONBOX(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="FASTBOX AND FUN"							title="(?=(FAST)\s*(BOX)?(and|&amp;)?(FUN)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="FIGHTKLUB"                             	title="(?=FIGHT\s*KLUB(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="FOX Comedy"                            	title="(?=FOX\s*Comedy(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="FOX Life"                              	title="(?=FOX\s*Life(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="FOX"                                   	title="(?=FOX(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Family Sport"                          	title="(?=Family\s*Sport(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Fashion One"                           	title="(?=Fashion\s*(One|1)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Fashion TV"                            	title="(?=Fashion(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Fight Channel"                         	title="(?=Fight\s*Channel(\s*World)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="FightBox"                              	title="(?=Fight\s*Box(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="FilmBox Action"                        	title="(?=FilmBox\s*Action(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Filmbox Arthouse"                      	title="(?=Filmbox\s*Arthouse(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Filmbox Extra HD"                      	title="(?=Filmbox\s*Extra(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Filmbox Family"                        	title="(?=FILMBOX\s*FAMILY(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Filmbox Premium"                       	title="(?=FILM\s*BOX\s*PREMIUM(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="FofaTV"                                	title="(?=FofaTV(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Fokus TV"                              	title="(?=Fo(k|c)us(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Food Network"                          	title="(?=(Polsat\s*)?Food(\s*Network)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Formula 1"                             	title="(?=Formula\s*1(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="FunBox 4K"                             	title="(?=Fun\s*Box(\s*TV)?(\s*UHD|\s*4K)(\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Game Show"                             	title="(?=Game\s*Show(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Gametoon"                              	title="(?=Gametoon(\s*E)?(sport)?(s)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Ginx TV"                               	title="(?=Ginx(\s*E)?(sport)?(s)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Golf Channel"                          	title="(?=Golf(\s*Channel)?(\s*Polska)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="HBO"                                   	title="(?=HBO(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="HBO2"                                  	title="(?=HBO\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="HBO3"                                  	title="(?=HBO\s*(3|COMEDY)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="HGTV"                                  	title="(?=(HGTV|TVN\s*METEO\s*Active)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="History 2"                             	title="(?=(H|History)\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="History"                               	title="(?=History(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="ID"                                    	title="(?=(DISCOVERY\s*)?(INVESTIGATION|ID)(\s*DISCOVERY)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="JimJam Polsat"                         	title="(?=(Polsat\s*)?Jim\s*Jam(\s*Polsat)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="KSW"                                   	title="(?=.*KSW.*(\s*PL)?$)" strm=""/>
+	<channel id="Kino Polska International"             	title="(?=Kino\s*Polska\s*Int(ernational)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Kino Polska Muzyka International"      	title="(?=Kino(\s*Polska)?\s*Muzyka\s*Int(ernational)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Kino Polska Muzyka"                    	title="(?=Kino(\s*Polska)?\s*Muzyka(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Kino Polska"                           	title="(?=Kino(\s*Polska)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Kino TV"                               	title="(?=(Filmbox|Kino)\s*TV(\s*\(FILMBOX\))?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Kuchnia+"                              	title="(?=Kuchnia\s*(\+|PLUS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="LECH TV"                               	title="(?=Lech(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="LUBELSKA TV"                           	title="(?=LUBELSKA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Lifetime"                              	title="(?=Life\s*time(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Love TV"                               	title="(?=Love(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MANGO"                                 	title="(?=MANGO(\s*24)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MC Play"                               	title="(?=MC(\s*PL)?ay(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="METRO"                                 	title="(?=METRO(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MEZZO"                                 	title="(?=MEZZO(\s*Live)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MGM"                                   	title="(?=MGM(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV 80s"                                	title="(?=MTV.*(80(s)?)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV 90s"                                	title="(?=MTV.*(90(s)?)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV Base"                              	title="(?=MTV\s*Base(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV Club"                              	title="(?=MTV\s*Club(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV Dance"                             	title="(?=MTV\s*Dance(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV Dance"                             	title="(?=MTV\s*Dance(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV Hits"                              	title="(?=MTV\s*Hits(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV Hits"                               	title="(?=MTV\s*Hits(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV Live HD"                           	title="(?=MTV\s*Live(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV Music 24"                          	title="(?=MTV\s*Music\s*24(\s*PL)?$)" strm=""/>
+	<channel id="MTV Music"                             	title="(?=MTV\s*Music(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV Polska"                            	title="(?=MTV(\s*Polska)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV Rocks"                             	title="(?=MTV\s*Rocks(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MUSIC VOX TV 2"                        	title="(?=MUSIC\s*VOX(\s*TV)?\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Miejska TV"                            	title="(?=Miejska(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Minimini+"                             	title="(?=MINI\s*MINI\s*(\+|PLUS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Motowizja"                             	title="(?=(Motowizja|Motorwizja)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="NOVELA TV"                             	title="(?=NOVELA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="NOWA TV"                               	title="(?=NOWA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="NTL Radomsko"                          	title="(?=NTL(\s*Radomsko)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Nat Geo People"                        	title="(?=(Nat|National)\s*(Geo|Geographic)\s*People(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="National Geographic Channel"           	title="(?=(Nat|National)\s*(Geo|Geographic)(\s*CHANNEL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="National Geographic Wild"              	title="(?=(Nat|National)\s*(Geo|Geographic)\s*Wild(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Nick Jr."                              	title="(?=Nick(elodeon)?\s*(Jr|JUNIOR)(\.)?(Polska)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Nickelodeon HD"                        	title="(?=Nickelodeon(\s*Polska)?(\s*TV)?\s*HD(\s*PL)?$)" strm=""/>
+	<channel id="Nickelodeon"                           	title="(?=Nickelodeon(\s*Polska)?(\s*TV)?(\s*PL)?$)" strm=""/>
+	<channel id="Nicktoons"                             	title="(?=Nicktoons(\s*Polska)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Nobox TV"                              	title="(?=Nobox(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Nuta TV"                               	title="(?=Nuta(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="OPOKA TV"                              	title="(?=OPOKA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Ocko"                                  	title="(?=Ocko(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Orange Sport"                          	title="(?=Orange\s*Sport(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="POLO PARTY TV"                         	title="(?=POLO\s*PARTY(\s*TV)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="POLSAT NEWS 2"                         	title="(?=Polsat\s*NEWS\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="POLSAT ROMANS"                         	title="(?=Polsat\s*Romans(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="POLSAT Viasat Explore"                 	title="(?=(Polsat\s*)?Viasat\s*Explore(R)?(\s*Polsat)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="POMERANIA"                             	title="(?=POMERANIA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="POMORSKA"                              	title="(?=POMORSKA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="POWER TV"                              	title="(?=Power(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Paramount Channel"                     	title="(?=Paramount(\s*Channel)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Planete+"                              	title="(?=PLANET(E)?\s*(\+|PLUS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polo TV"                               	title="(?=Polo(\s*TV)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polonia 1"                             	title="(?=(TV\s*)?Polonia(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat 2 HD"                              	title="(?=Polsat\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat 2"                              	title="(?=Polsat\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Cafe"                           	title="(?=Polsat\s*Caf(e)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Comedy Central Extra"               title="(?=(Polsat)?(\s*Comedy\s*(Central|CENTERAL|Center)?|CC)\s*Extra(\s*Polsat)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Crime"                          	title="(?=(CI|Crime(\s*and|\s*\+|\s*PLUS)?\s*Investigation)(\s*Polsat)?(\s*Crime)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Doku"                           	title="(?=Polsat\s*Doku(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Film"                           	title="(?=Polsat\s*Film(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Games"                          	title="(?=Polsat\s*Games(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat HD"                                	title="(?=Polsat(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Music"                          	title="(?=(Muzo(\.)?(\s*TV)?|Polsat\s*Music)(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat News"                           	title="(?=Polsat\s*News(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat One"                            	title="(?=Polsat\s*(One|1)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Play"                           	title="(?=Polsat(\s*PL)?ay(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Rodzina"                        	title="(?=Polsat\s*Rodzina(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Seriale" 							title="(?=Polsat\s*Seriale(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>	
+	<channel id="Polsat Sport 2"                        	title="(?=Polsat\s*Sport\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Sport 3"                        	title="(?=Polsat\s*SPORT\s*3(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Sport Extra"                    	title="(?=Polsat\s*Sport\s*Extra(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Sport Fight"                    	title="(?=Polsat\s*Sport\s*Fight(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Sport News"                     	title="(?=Polsat\s*Sport\s*News(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Sport Premium 1"                	title="(?=Polsat\s*Sport\s*Premium(\s*1)?(\s*PPV)?(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*SPORTS)?(\s*PL)?(\s*SPORTS)?$|pspremium1(\s*PL)?|PPV(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Sport Premium 2"                	title="(?=Polsat\s*Sport\s*Premium(\s*2\s*PPV|\s*PPV\s*2|\s*2)(\s*TV)?(\s*HD|\s*UHD)?(\s*SPORTS)?(\s*PL)?(\s*SPORTS)?$|pspremium2(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Sport Premium 3"                	title="(?=Polsat\s*Sport\s*Premium(\s*3\s*PPV|\s*PPV\s*3|\s*3)(\s*TV)?(\s*HD|\s*UHD)?(\s*SPORTS)?(\s*PL)?(\s*SPORTS)?$|pspremium3(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Sport Premium 4"                	title="(?=Polsat\s*Sport\s*Premium(\s*4\s*PPV|\s*PPV\s*4|\s*4)(\s*TV)?(\s*HD|\s*UHD)?(\s*SPORTS)?(\s*PL)?(\s*SPORTS)?$|pspremium4(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Sport Premium 5"                	title="(?=Polsat\s*Sport\s*Premium(\s*5\s*PPV|\s*PPV\s*5|\s*5)(\s*TV)?(\s*HD|\s*UHD)?(\s*SPORTS)?(\s*PL)?(\s*SPORTS)?$|pspremium5(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Sport Premium 6"                	title="(?=Polsat\s*Sport\s*Premium(\s*6\s*PPV|\s*PPV\s*6|\s*6)(\s*TV)?(\s*HD|\s*UHD)?(\s*SPORTS)?(\s*PL)?(\s*SPORTS)?$|pspremium6(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Sport"                          	title="(?=Polsat\s*Sport(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Viasat History"                 	title="(?=(Polsat\s*)?Viasat\s*History(\s*Polsat)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat Viasat Nature"                  	title="(?=(Polsat\s*)?Viasat\s*Nature(\s*Polsat)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Polsat"                                	title="(?=Polsat(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Puls 2"                                	title="(?=(TV|TVP)?\s*Puls\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="ROMANCE TV"                            	title="(?=ROMANCE(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Red Carpet TV"                         	title="(?=(Edusat|Red\s*Carpet)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Republika TV"                          	title="(?=(TV\s*)?Republika(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="STELLA"                                	title="(?=STELLA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Scifi Universal"                       	title="(?=Sci(-|\s*)Fi(\s*Universal)?(\s*Channel)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Sfera TV"                              	title="(?=SFERA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Sportklub"                             	title="(?=SPORT\s*KLUB(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Sportowa TV"                           	title="(?=Sportowa(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Stars TV"                              	title="(?=STAR(S)?[\s.]*(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Stingray Brava"                        	title="(?=Stingray\s*Brava(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Stingray Djazz"                        	title="(?=Stingray\s*Djazz(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Stingray Festival 4K"                   	title="(?=Stingray\s*Festival(\s*TV)?(\s*UHD|\s*4K)(\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Stopklatka TV"                         	title="(?=STOPKLATKA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Studio Med"                     			title="(?=Studio\s*Med(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Sundance TV"                           	title="(?=Sundance(\s*Channel)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Super Polsat"                          	title="(?=(Super\s*Polsat|Polsat\s*Super)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Superstacja"                           	title="(?=Super\s*Stacja(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TAGEN"                                 	title="(?=TAGEN(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TAWIZJA"                               	title="(?=TAWIZJA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TBN POLSKA"                            	title="(?=TBN(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TLC"                                   	title="(?=TLC(\s*Polska)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TNT"                                   	title="(?=TNT(\s*CHANNEL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TRWAM"                                 	title="(?=(TV\s*)?Trwam(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TTV"                                   	title="(?=TTV(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TUBA TV"                               	title="(?=TUBA(\s*TV)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TV 4"                                  	title="(?=TV\s*4(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TV 6"                                  	title="(?=(TV\s*6|SZOSTKA)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TV KUJAWY"                             	title="(?=(TV\s*)?KUJAWY(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TV OKAZJE"									title="(?=(TV\s*)?Okazje(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TV Puls"                               	title="(?=(TV\s*)?Puls(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TV Regionalna"                         	title="(?=(TV\s*)?Regionalna(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TV TORUN"                              	title="(?=(TV)?(\s*TORUN|\s*TORU.?)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TV ZGORZELEC"                          	title="(?=(TVT\s*)?Zgorzelec(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TV ZGORZELEC"                          	title="(?=(TV\s*)?ZGORZELEC(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVN 24 BiS"                            	title="(?=TVN\s*24\s*(BiS|Biznes\s*i\s*.*wiat)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVN 24"                                	title="(?=(TVN\s*24|24\s*TVN)(\+|PLUS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVN 7"                                 	title="(?=TVN\s*(7|Siedem)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVN Fabula"                            	title="(?=TVN\s*FABU.*A(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVN METEO"                             	title="(?=TVN\s*Meteo(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVN Style"                             	title="(?=(TVN\s*Style|Style\s*TVN)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVN Turbo"                             	title="(?=(TVN(\s*|_)Turbo|Turbo\s*TVN)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVN"                                   	title="(?=TVN(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 1"                                 	title="(?=(TVP\s*1|1\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 2"                                 	title="(?=(TVP\s*2|2\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Bialystok"                       	title="(?=TVP(\s*3)?(\s*Bialystok|\s*Bia.?ystok)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Bydgoszcz"                       	title="(?=TVP(\s*3)?\s*Bydgoszcz(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Gdansk"                          	title="(?=TVP(\s*3)?(\s*Gdansk|\s*Gda.?sk)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Gorzow Wielkopolski"             	title="(?=TVP(\s*3)?(\s*Gorzow\s*Wielkopolski|\s*Gorz.?w\s*Wielkopolski)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Katowice"                        	title="(?=TVP(\s*3)?(\s*Katowice|\s*Katowice\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Kielce"                          	title="(?=TVP(\s*3)?\s*Kielce(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Krakow"                          	title="(?=TVP(\s*3)?(\s*Krak.?w|\s*Krakow|\s*Krakow\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Lodz"                            	title="(?=TVP(\s*3)?(\s*Lodz|\s*.?d.?)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Lublin"                          	title="(?=TVP(\s*3)?\s*Lublin(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Olsztyn"                         	title="(?=TVP(\s*3)?\s*Olsztyn(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Opole"                           	title="(?=TVP(\s*3)?\s*Opole(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Poznan"                          	title="(?=TVP(\s*3)?(\s*Poznan|\s*Pozna.?)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Rzeszow"                         	title="(?=TVP(\s*3)?(\s*Rzeszow|\s*Rzesz.?w)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Szczecin"                        	title="(?=TVP(\s*3)?\s*Szczecin(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Warszawa"                        	title="(?=(TVP(\s*3|\s*Warszawa)+|(\s*3|\s*Warszawa)+\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 Wroclaw"                         	title="(?=TVP(\s*3)?(\s*Wroclaw|\s*Wroc.?aw)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 4K"                                	title="(?=TVP(\s*TV)?(\s*UHD|s*4K)(\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP ABC"                               	title="(?=(TVP\s*ABC|ABC\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP Dokument"                          	title="(?=(TVP\s*Dokument|Dokument\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP HD"                                	title="(?=TVP(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP Historia"                          	title="(?=(TVP\s*Historia|Historia\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP Info"                              	title="(?=(TVP\s*Info|Info\s*TVP)(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP Kultura"                           	title="(?=(TVP\s*Kultura|Kultura\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP Polonia"                           	title="(?=(TVP\s*Polonia|Polonia\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP Rozrywka"                          	title="(?=(TVP\s*Rozrywka|Rozrywka\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP Seriale"                           	title="(?=(TVP\s*Seriale|Seriale\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP Sport"                             	title="(?=(TVP\s*Sport|Sport\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVR"                                   	title="(?=TVR(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVS"                                   	title="(?=TVS(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TWOJA TV"                              	title="(?=Twoja(\.)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Tele 5"                                	title="(?=Tele\s*5(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Teletoon"                              	title="(?=Teletoon\s*(\+|PLUS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Tenis 1 Premium"                       	title="(?=Tenis\s*1(\s*Premium)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Tenis 2 Premium"                       	title="(?=Tenis\s*2(\s*Premium)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="To!TV"                                 	title="(?=TO(!)?\s*TV(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Top Kids"                              	title="(?=Top\s*Kids(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Toya"                                  	title="(?=Toya(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Trace Urban"                           	title="(?=Trace(\s*Urban)?(\s*Muzik)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Travel Channel"                        	title="(?=TRAVEL(\s*CHANNEL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Travel XP"                             	title="(?=TRAVEL(\s*XP)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Twoja Telewizja Morska"                	title="(?=(TTM|Twoja\s*Telewisja\s*Morska)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="ULTRA TV 4K"                   			title="(?=ULTRA(\s*TV)?(\s*UHD|\s*4K)(\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Universal Channel"                     	title="(?=Universal\s*(Channel)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="VEVO TV FLOW"                          	title="(?=Vevo\s*TV\s*Flow(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="VEVO TV HITS"                          	title="(?=Vevo\s*TV\s*Hits(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="VEVO"                                  	title="(?=VEVO(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="VH1 Classic"                           	title="(?=VH1\s*Classic(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="VH1"                                   	title="(?=VH1(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="VIVA Polska"                           	title="(?=VIVA(\s*Polska)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Vox Music TV"                          	title="(?=(Music\s*VOX|VOX\s*Music)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="WATER PLANET"                          	title="(?=Water(\s*PL)?anet(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="WAWA TV"                               	title="(?=WAWA(\s*TV)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="WP"                                    	title="(?=(Telewizja\s*)?WP(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="WTK"                                   	title="(?=WTK(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="ZOOM TV"                               	title="(?=ZOOM(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="nsport+"                               	title="(?=n\s*Sport\s*(\+|PLUS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="wPolsce.pl"                            	title="(?=w\s*Polsce[\s.]*(pl)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+<!--<channel id="Canal+ Discovery"                      	title="(?=(Canal|C)\s*(\+|PLUS)?\s*Discovery(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>-->
+<!--<channel id="Wellbeing Network"                     	title="(?=Well\s*being(\s*Network)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>-->
+	
+	<category name="Movie" 									tags="Czarna|Dramat|Film|Filmy|Horror|Impresja|Kino|Komedia|Komediodramat|Komediowy|Melodramat|Musical|Romans|Thriller|Western"/>
+	<category name="Series" 								tags="Odcinek|Programy|Seria|Serial|Seriale|Telenowela"/>
+	<category name="Information" 							tags="Cykl|Debata|Dziennik|Felieton|Główna|Informacja|Informator|Kronika|Kurs|Magazyn|Newsy|Pasmo|Podsumowanie|Poranek|Reportaż|Rozmowy|Rozmowa|Serwis|Studio|Telewizyjny|Transmisja|Wiadomości|Wieczorna|Wieczorny|Wydanie|Wywiad"/>
+	<category name="Entertainment" 							tags="Audycja|Balet|Blok|Ceremonia|Chochliki|Classical|Concert|Codzienny|Dance|Docu-reality|Flesz|Gala|Kabaret|Koncert|Koncerty|Lista|Lifestyle|Opera|Pokaz|Program|Program / Muzyczny|Reality|Relacja|Rozrywka|Talk-show|Taniec|Teledyski|Teleturniej|Widowisko|Wielki|World Music"/>
+	<category name="Document" 								tags="Dokument|Etiuda|Filozofia|Historia|Kultura|Militaria|Motoryzacja|Przyroda|Program dokumentalny|Socjologia|Sztuka|Technika"/>
+	<category name="Kids" 									tags="Baśń|Dla dzieci|Program dla dzieci"/>
+	<category name="Sport" 									tags="Badminton|Biatlon|Biegi|Bilard|Boks|Formuła|Gimnastyka|Golf|Hokej|Jeździectwo|Kajakarstwo|Kolarstwo|Koszykówka|Lekkoatletyka|Łyżwiarstwo|Narciarstwo|Olimpiada|Piłka|Pływanie|Poker|Rajdy|Rugby|Rzutki|Saneczkarstwo|Siatkówka|Skoki|Sport|Sporty|Szermierka|Tenis|Tenis squash|Triatlon|Wyścigi|Zapowiedź|Żeglarstwo|Żużel"/>
+	<category name="Interactive Entertainment" 				tags="Extra|Interaktywne|Interaktywny|Interaktywny Program Rozrywkowy|Kulinaria|Magazy|Magazyn Mody|Medycyna|Opera|Program Familijny|Spektakl|Świętokrzyski|Telezakupy|Turystyka|Usa"/>
+</map>

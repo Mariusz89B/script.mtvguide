@@ -1,0 +1,2067 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window type="dialog"> 
+	<allowoverlay>no</allowoverlay>
+	<aspectratio>scale</aspectratio>
+	<coordinates>
+		<system>1</system><posx>0</posx><posy>0</posy>
+	</coordinates>
+	<controls>
+		
+		<!-- Category colors -->
+		<control type="image">
+            <posx>-10000</posx>
+            <posy>-10000</posy>
+            <width>1</width>
+            <height>1</height>
+			<texture>1.png</texture>
+		</control>
+		<control type="image">
+            <posx>-10000</posx>
+            <posy>-10000</posy>
+            <width>1</width>
+            <height>1</height>
+			<texture>2.png</texture>
+		</control>
+		<control type="image">
+            <posx>-10000</posx>
+            <posy>-10000</posy>
+            <width>1</width>
+            <height>1</height>
+			<texture>3.png</texture>
+		</control>
+		<control type="image">
+            <posx>-10000</posx>
+            <posy>-10000</posy>
+            <width>1</width>
+            <height>1</height>
+			<texture>4.png</texture>
+		</control>
+		<control type="image">
+            <posx>-10000</posx>
+            <posy>-10000</posy>
+            <width>1</width>
+            <height>1</height>
+			<texture>5.png</texture>
+		</control>
+		<control type="image">
+            <posx>-10000</posx>
+            <posy>-10000</posy>
+            <width>1</width>
+            <height>1</height>
+			<texture>6.png</texture>
+		</control>
+		<control type="image">
+            <posx>-10000</posx>
+            <posy>-10000</posy>
+            <width>1</width>
+            <height>1</height>
+			<texture>7.png</texture>
+		</control>
+		<control type="image">
+            <posx>-10000</posx>
+            <posy>-10000</posy>
+            <width>1</width>
+            <height>1</height>
+			<texture>8.png</texture>
+		</control>
+		<control type="image">
+            <posx>-10000</posx>
+            <posy>-10000</posy>
+            <width>1</width>
+            <height>1</height>
+			<texture>9.png</texture>
+		</control>
+		<control type="image">
+            <posx>-10000</posx>
+            <posy>-10000</posy>
+            <width>1</width>
+            <height>1</height>
+			<texture>10.png</texture>
+		</control>
+		<control type="image">
+            <posx>-10000</posx>
+            <posy>-10000</posy>
+            <width>1</width>
+            <height>1</height>
+			<texture>11.png</texture>
+		</control>
+		<control type="image">
+            <posx>-10000</posx>
+            <posy>-10000</posy>
+            <width>1</width>
+            <height>1</height>
+			<texture>12.png</texture>
+		</control>
+		<control type="image">
+            <posx>-10000</posx>
+            <posy>-10000</posy>
+            <width>1</width>
+            <height>1</height>
+			<texture>13.png</texture>
+		</control>
+		<control type="image">
+            <posx>-10000</posx>
+            <posy>-10000</posy>
+            <width>1</width>
+            <height>1</height>
+			<texture>14.png</texture>
+		</control>
+		<control type="image">
+            <posx>-10000</posx>
+            <posy>-10000</posy>
+            <width>1</width>
+            <height>1</height>
+			<texture>15.png</texture>
+		</control>
+		<control type="image">
+            <posx>-10000</posx>
+            <posy>-10000</posy>
+            <width>1</width>
+            <height>1</height>
+			<texture>16.png</texture>
+		</control>
+		<control type="image">
+            <posx>-10000</posx>
+            <posy>-10000</posy>
+            <width>1</width>
+            <height>1</height>
+			<texture>live.png</texture>
+		</control>
+		
+		<!-- Focus colors -->
+		<control type="image">
+            <posx>-10000</posx>
+            <posy>-10000</posy>
+            <width>1</width>
+            <height>1</height>
+			<texture>focus/defaults.png</texture>
+		</control>
+		
+		<control type="image">
+            <posx>-10000</posx>
+            <posy>-10000</posy>
+            <width>1</width>
+            <height>1</height>
+			<texture>focus/brown.png</texture>
+		</control>
+		
+		<control type="image">
+            <posx>-10000</posx>
+            <posy>-10000</posy>
+            <width>1</width>
+            <height>1</height>
+			<texture>focus/charcoal.png</texture>
+		</control>
+		
+		<control type="image">
+            <posx>-10000</posx>
+            <posy>-10000</posy>
+            <width>1</width>
+            <height>1</height>
+			<texture>focus/chartreuse.png</texture>
+		</control>
+		
+		<control type="image">
+            <posx>-10000</posx>
+            <posy>-10000</posy>
+            <width>1</width>
+            <height>1</height>
+			<texture>focus/concrete.png</texture>
+		</control>
+		
+		<control type="image">
+            <posx>-10000</posx>
+            <posy>-10000</posy>
+            <width>1</width>
+            <height>1</height>
+			<texture>focus/gold.png</texture>
+		</control>
+		
+		<control type="image">
+            <posx>-10000</posx>
+            <posy>-10000</posy>
+            <width>1</width>
+            <height>1</height>
+			<texture>focus/green.png</texture>
+		</control>
+		
+		<control type="image">
+            <posx>-10000</posx>
+            <posy>-10000</posy>
+            <width>1</width>
+            <height>1</height>
+			<texture>focus/midnight.png</texture>
+		</control>
+		
+		<control type="image">
+            <posx>-10000</posx>
+            <posy>-10000</posy>
+            <width>1</width>
+            <height>1</height>
+			<texture>focus/orange.png</texture>
+		</control>
+		
+		<control type="image">
+            <posx>-10000</posx>
+            <posy>-10000</posy>
+            <width>1</width>
+            <height>1</height>
+			<texture>focus/pink.png</texture>
+		</control>
+		
+		<control type="image">
+            <posx>-10000</posx>
+            <posy>-10000</posy>
+            <width>1</width>
+            <height>1</height>
+			<texture>focus/red.png</texture>
+		</control>
+		
+		<control type="image">
+            <posx>-10000</posx>
+            <posy>-10000</posy>
+            <width>1</width>
+            <height>1</height>
+			<texture>focus/rose.png</texture>
+		</control>
+		
+		<control type="image">
+            <posx>-10000</posx>
+            <posy>-10000</posy>
+            <width>1</width>
+            <height>1</height>
+			<texture>focus/teal.png</texture>
+		</control>
+		
+		<control type="image">
+            <posx>-10000</posx>
+            <posy>-10000</posy>
+            <width>1</width>
+            <height>1</height>
+			<texture>focus/violet.png</texture>
+		</control>
+		
+		<control type="button" id="1000">
+			<texture></texture>
+		</control>
+		
+		<control type="image" id="4500">
+			<description>Dynamic colors control</description>
+		</control>
+				
+		<!-- Background -->
+		<control type="image" id="4600">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1920</width>
+			<height>1080</height>
+			<texture fallback="tvguide-background-default.jpg" colordiffuse="primary_background">$INFO[Skin.String(CustomDefaultBackground.path)]</texture>
+			<aspectratio>scale</aspectratio>
+			<!--<colordiffuse>FF000000</colordiffuse>-->
+			<animation type="Conditional" condition="Control.IsVisible(5000)">
+				<effect type="fade" start="100" end="0" time="0"/>
+			</animation>
+		</control>
+		
+		<control type="image">
+			<depth>DepthBackground</depth>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1920</width>
+			<height>1080</height>
+			<aspectratio>scale</aspectratio>
+			<texture colordiffuse="secondary_background" fallback="special://skin/extras/backgrounds/pattern1.jpg">$INFO[Skin.String(background_overlay),special://skin/extras/backgrounds/pattern,.jpg]</texture>
+			<animation type="Conditional" condition="Control.IsVisible(5000)">
+				<effect type="fade" start="100" end="0" time="0"/>
+			</animation>
+		</control>
+		
+		<!-- Video Background -->
+		<control type="image">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1920</width>
+			<height>1080</height>
+			<texture>osd/black.png</texture>
+			<animation type="Conditional" condition="!Control.IsVisible(5000)">
+			</animation>
+			<visible>Player.HasVideo</visible>
+		</control>	
+		
+		<control type="videowindow">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1920</width>
+			<height>1080</height>
+			<animation type="Conditional" condition="!Control.IsVisible(5000)">
+			</animation>
+			<visible>Player.HasVideo</visible>
+		</control>
+		
+		<!-- Background video -->
+		<control type="image">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1920</width>
+			<height>1080</height>
+			<aspectratio>scale</aspectratio>
+			<texture colordiffuse="E5181818">osd/white.png</texture>
+			<aspectratio>scale</aspectratio>
+			<!--<colordiffuse>FF000000</colordiffuse>-->
+			<animation type="Conditional" condition="!Control.IsVisible(5000)">
+			</animation>
+			<visible>Player.HasVideo + !Control.IsVisible(5000)</visible>
+		</control>
+
+		<control type="image">
+			<left>0</left>
+			<top>130</top>
+			<width>100%</width>
+			<height>615</height>
+			<texture colordiffuse="E6FFFFFF">dialogs/dialog-bg-nobo.png</texture>
+			<!--<animation type="WindowOpen">
+				<effect type="fade" start="0" end="100" time="300" tween="sine" easing="out"/>
+				<effect type="slide" start="320" end="0" time="400" tween="cubic" easing="out" />
+			</animation>
+			<animation type="WindowClose">
+				<effect type="fade" start="100" end="0" time="300" tween="sine" easing="out" />
+				<effect type="slide" start="0" end="320" time="300" tween="cubic" easing="out" />
+			</animation>-->
+			<visible>!Control.IsVisible(5000)</visible>
+		</control>
+		
+		<!-- InfoBar -->
+		<control type="image">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>100%</width>
+			<height>130</height>
+			<texture colordiffuse="">dialogs/infobar.png</texture>
+			<visible>!Control.IsVisible(5000)</visible>
+			</control>
+		<control type="image">
+			<posx>0</posx>
+			<posy>965</posy>
+			<width>100%</width>
+			<height>115</height>
+			<texture flipy="true" colordiffuse="">dialogs/infobar.png</texture>
+			<visible>!Control.IsVisible(5000)</visible>
+		</control>
+		
+		<!-- Top logo -->	
+		<control type="group">
+			<depth>DepthBars</depth>
+			<animation effect="slide" end="0,-90" time="300" tween="sine" easing="inout" condition="$EXP[infodialog_active]">conditional</animation>
+			<animation effect="fade" start="0" end="100" time="300">WindowOpen</animation>
+			<animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
+			<top>30</top>
+			<left>90</left>
+			<visible>!Control.IsVisible(5000)</visible>
+			
+			<control type="image">
+				<aspectratio>keep</aspectratio>
+				<width>56</width>
+				<height>56</height>
+				<texture colordiffuse="button_focus">dialogs/mk_logo.png</texture>
+			</control>
+			<control type="image">
+				<left>40</left>
+				<top>10</top>
+				<aspectratio>keep</aspectratio>
+				<width>192</width>
+				<height>36</height>
+				<texture>dialogs/logo-text.png</texture>
+			</control>
+		</control>
+		
+		<control type="label" id="4230">	
+			<visible>hidden</visible>
+		</control>
+		<control type="label" id="4232">	
+			<visible>hidden</visible>
+		</control>
+		<control type="label" id="4952">	
+			<visible>hidden</visible>
+		</control>
+		<control type="label" id="4953">	
+			<visible>hidden</visible>
+		</control>
+		<control type="label" id="4954">	
+			<visible>hidden</visible>
+		</control>
+		<control type="label" id="4955">	
+			<visible>hidden</visible>
+		</control>
+		
+		<control type="image">	
+			<posx>1324</posx>
+			<posy>8</posy>
+			<width>50</width>
+			<height>52</height>
+			<texture colordiffuse="button_focus">dialogs/mk_play.png</texture>
+			<visible>!Player.Paused + !Control.IsVisible(5000) + Player.HasVideo</visible>
+		</control>
+		
+		<control type="image">	
+			<posx>1324</posx>
+			<posy>8</posy>
+			<width>50</width>
+			<height>52</height>
+			<texture colordiffuse="button_focus">dialogs/mk_pause.png</texture>
+			<visible>!Player.Playing + !Control.IsVisible(5000) + Player.HasVideo</visible>
+		</control>
+		
+		<control type="label">	
+			<posx>1371</posx>
+			<posy>14</posy>
+			<width>220</width>
+			<height>36</height>
+			<label>$INFO[Control.GetLabel(4953)]</label>
+			<font>font27</font>
+			<textcolor>FFF0F0F0</textcolor>
+			<visible>!Control.IsVisible(5000) + Player.HasVideo</visible>
+		</control>
+		
+		<control type="label" id="4919">	
+			<visible>hidden</visible>
+		</control>
+		
+		<control type="label">	
+			<posx>1372</posx>
+			<posy>44</posy>
+			<width>220</width>
+			<height>36</height>
+			<label>([COLOR button_focus]$INFO[Control.GetLabel(4955)][/COLOR]) [UPPERCASE]$INFO[Control.GetLabel(4952)][/UPPERCASE]</label>
+			<font>font12</font>
+			<textcolor>FFA0A0A0</textcolor>
+			<visible>!Control.IsVisible(5000) + Player.HasVideo</visible>
+		</control>
+		
+		<control type="label" id="5000">
+			<description>visibility marker for TV Guide group</description>
+		</control>
+		<control type="group">
+			<description>TV Guide group</description>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1920</width>
+			<height>1080</height>
+			<!--<animation type="WindowOpen">
+				<effect type="fade" start="0" end="100" time="300" tween="sine" easing="out"/>
+				<effect type="slide" start="320" end="0" time="400" tween="cubic" easing="out" />
+			</animation>
+			<animation type="WindowClose">
+				<effect type="fade" start="100" end="0" time="300" tween="sine" easing="out" />
+				<effect type="slide" start="0" end="320" time="300" tween="cubic" easing="out" />
+			</animation>-->
+			<visible>!Control.IsVisible(5000)</visible>
+			
+		<control type="button" id="5001">
+			<description>marker for EPG data view - should be Hidden!</description>
+			<top>250</top>
+			<left>352</left>
+			<width>1548</width>
+			<height>488</height>
+			<visible>hidden</visible>
+		</control>
+		
+		<control type="image" id="4100">
+			<top>247</top>
+			<left>0</left>
+			<width>auto</width>
+			<height>497</height>
+			<texture colordiffuse="BF4d4d4d">tvguide-timebar.png</texture>	
+			<animation type="Hidden" reversible="true">
+				<effect type="fade" start="0" end="100" delay="0"/>
+			</animation>
+			<visible>!Control.IsVisible(4200) | Control.IsVisible(4199)</visible>
+		</control>
+		
+		<control type="image" id="4101">
+			<top>247</top>
+			<left>352</left>
+			<width>auto</width>
+			<height>497</height>
+			<texture colordiffuse="button_focus">osd/back.png</texture>	
+			<animation type="Hidden" reversible="true">
+				<effect type="fade" start="0" end="100" delay="0"/>
+			</animation>
+			<visible>!Control.IsVisible(4200) | Control.IsVisible(4199)</visible>
+		</control>
+					
+			<!-- Date and time row -->
+				<control type="group">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>1920</width>
+					<height>1080</height>
+					<visible>!Control.IsVisible(5000)</visible>
+				
+				<control type="label">
+					<description>Time</description>
+					<top>0</top>
+					<align>right</align>
+					<right>20</right>
+					<orientation>horizontal</orientation>
+					<font>font_clock</font>
+					<textcolor>FFF0F0F0</textcolor>
+					<shadowcolor>22000000</shadowcolor>
+					<height>96.5</height>
+					<width>900</width>
+					<label>$INFO[System.Time]</label>
+					<animation effect="slide" end="0,-90" time="300" tween="sine" easing="inout" condition="Window.IsActive(DialogInfo.xml)|Window.IsVisible(extendedprogressdialog)">conditional</animation>
+					<animation type="WindowOpen">
+					<effect type="fade" start="0" end="100" time="200" tween="sine" easing="out"/>
+					</animation>
+				</control>
+				
+				<control type="label" id="4960">
+					<visible>hidden</visible>
+				</control>
+				
+				<control type="label" id="4961">
+					<visible>hidden</visible>
+				</control>
+				
+				<control type="label">
+					<description>Date label</description>
+					<posx>10</posx>
+					<posy>195</posy>
+					<width>350</width>
+					<height>50</height>
+					<align>left</align>
+					<aligny>center</aligny>
+					<font>font12</font>
+					<textcolor>button_focus</textcolor>
+					<label>$INFO[Control.GetLabel(4960)], $INFO[Control.GetLabel(4961)]</label>
+					<visible>!String.IsEmpty(Control.GetLabel(4960)) | !String.IsEmpty(Control.GetLabel(4961))</visible>
+					<!--<animation type="WindowOpen">
+						<effect type="fade" start="0" end="100" time="300" tween="sine" easing="out"/>
+						<effect type="slide" start="320" end="0" time="400" tween="cubic" easing="out" />
+					</animation>
+					<animation type="WindowClose">
+						<effect type="fade" start="100" end="0" time="300" tween="sine" easing="out" />
+						<effect type="slide" start="0" end="320" time="300" tween="cubic" easing="out" />
+					</animation>-->
+					</control>
+					
+				<control type="label" id="4000">
+					<visible>hidden</visible>
+				</control>
+					</control>
+				
+				<control type="label" id="4001">
+					<description>1st half hour column</description>
+					<posx>350</posx>
+					<posy>195</posy>
+					<width>270</width>
+					<height>50</height>
+					<textcolor>button_focus</textcolor>
+					<font>font12</font>
+					<aligny>center</aligny>
+					<!--<animation type="WindowOpen">
+						<effect type="fade" start="0" end="100" time="300" tween="sine" easing="out"/>
+						<effect type="slide" start="320" end="0" time="400" tween="cubic" easing="out" />
+					</animation>
+					<animation type="WindowClose">
+						<effect type="fade" start="100" end="0" time="300" tween="sine" easing="out" />
+						<effect type="slide" start="0" end="320" time="300" tween="cubic" easing="out" />
+					</animation>-->
+					<visible>!Control.IsVisible(5000)</visible>
+				</control>
+				<control type="label" id="4002">
+					<description>2nd half hour column</description>
+					<posx>736</posx>
+					<posy>195</posy>
+					<width>270</width>
+					<height>50</height>
+					<textcolor>button_focus</textcolor>
+					<font>font12</font>
+					<aligny>center</aligny>
+					<!--<animation type="WindowOpen">
+						<effect type="fade" start="0" end="100" time="300" tween="sine" easing="out"/>
+						<effect type="slide" start="320" end="0" time="400" tween="cubic" easing="out" />
+					</animation>
+					<animation type="WindowClose">
+						<effect type="fade" start="100" end="0" time="300" tween="sine" easing="out" />
+						<effect type="slide" start="0" end="320" time="300" tween="cubic" easing="out" />
+					</animation>-->
+					<visible>!Control.IsVisible(5000)</visible>
+				</control>
+				<control type="label" id="4003">
+					<description>3rd half hour column</description>
+					<posx>1120</posx>
+					<posy>195</posy>
+					<width>270</width>
+					<height>50</height>
+					<textcolor>button_focus</textcolor>
+					<font>font12</font>
+					<aligny>center</aligny>
+					<!--<animation type="WindowOpen">
+						<effect type="fade" start="0" end="100" time="300" tween="sine" easing="out"/>
+						<effect type="slide" start="320" end="0" time="400" tween="cubic" easing="out" />
+					</animation>
+					<animation type="WindowClose">
+						<effect type="fade" start="100" end="0" time="300" tween="sine" easing="out" />
+						<effect type="slide" start="0" end="320" time="300" tween="cubic" easing="out" />
+					</animation>-->
+					<visible>!Control.IsVisible(5000)</visible>
+				</control>
+				<control type="label" id="4004">
+					<description>4th half hour column</description>
+					<posx>1508</posx>
+					<posy>195</posy>
+					<width>270</width>
+					<height>50</height>
+					<textcolor>button_focus</textcolor>
+					<font>font12</font>
+					<aligny>center</aligny>
+					<!--<animation type="WindowOpen">
+						<effect type="fade" start="0" end="100" time="300" tween="sine" easing="out"/>
+						<effect type="slide" start="320" end="0" time="400" tween="cubic" easing="out" />
+					</animation>
+					<animation type="WindowClose">
+						<effect type="fade" start="100" end="0" time="300" tween="sine" easing="out" />
+						<effect type="slide" start="0" end="320" time="300" tween="cubic" easing="out" />
+					</animation>-->
+					<visible>!Control.IsVisible(5000)</visible>
+				</control>
+				
+				<control type="button" id="4203">
+					<visible>hidden</visible>
+				</control>
+			
+			<!-- Categories bar -->
+				<control type="group">
+					<top>140</top>
+					<depth>DepthContentPanel</depth>
+					<visible>!Control.IsVisible(5000)</visible>
+					
+					<control type="image">
+						<left>0</left>
+						<top>0</top>
+						<width>100%</width>
+						<height>50</height>
+						<texture colordiffuse="border_alpha">osd/white50.png</texture>
+					</control>
+					<control type="image">
+						<left>42</left>
+						<top>0</top>
+						<width>364</width>
+						<height>50</height>
+						<texture colordiffuse="button_focus">osd/white.png</texture>
+						<visible>Control.HasFocus(7900)</visible>
+					</control>
+					<control type="image">
+						<left>10</left>
+						<top>10</top>
+						<width>20</width>
+						<height>30</height>
+						<texture>keyboard/arrowleft.png</texture>
+						<animation effect="fade" start="0" end="100" time="150">VisibleChange</animation>
+						<visible>Control.HasFocus(7900)</visible>
+					</control>
+					<control type="image">
+						<right>10</right>
+						<top>10</top>
+						<width>20</width>
+						<height>30</height>
+						<texture>keyboard/arrowright.png</texture>
+						<animation effect="fade" start="0" end="100" time="150">VisibleChange</animation>
+						<visible>Control.HasFocus(7900)</visible>
+					</control>
+				</control>
+					
+				<control type="fixedlist" id="7900">
+					<description>Categories</description>
+					<left>40</left>
+					<posy>140</posy>
+					<width>100%</width>
+					<height>50</height>
+					<visible>true</visible>
+					<viewtype label="3D list">list</viewtype>
+					<orientation>horizontal</orientation>
+					<scrolltime>200</scrolltime>
+					<visible>!Control.IsVisible(5000)</visible>
+					<itemlayout height="50" width="368">
+						<control type="image">
+							<left>1</left>
+							<top>0</top>
+							<width>366</width>
+							<height>49</height>
+							<texture colordiffuse="60FFFFFF">osd/white50.png</texture>
+						</control>
+						<control type="label">
+							<left>5</left>
+							<width>358</width>
+							<height>48</height>
+							<align>center</align>
+							<aligny>center</aligny>
+							<label>$INFO[ListItem.Label]</label>
+							<textcolor>lightgrey</textcolor>
+						</control>
+					</itemlayout>
+					<focusedlayout height="50" width="368">
+						<control type="image">
+							<left>1</left>
+							<top>0</top>
+							<width>366</width>
+							<height>50</height>
+							<texture colordiffuse="button_focus">osd/white.png</texture>
+							<animation effect="fade" end="30" condition="true">Conditional</animation>
+						</control>
+						<control type="label">
+							<left>5</left>
+							<width>358</width>
+							<height>48</height>
+							<align>center</align>
+							<aligny>center</aligny>
+							<scroll>true</scroll>
+							<label>$INFO[ListItem.Label]</label>
+						</control>
+					</focusedlayout>
+				</control>
+		
+				<!-- Bottom menu -->
+				<control type="group">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>1920</width>
+					<height>1080</height>
+					<animation effect="slide" end="0,90" time="300" tween="sine" easing="inout" condition="Window.IsActive(DialogInfo.xml)">conditional</animation>
+					<visible>Control.IsVisible(4300)</visible>
+					
+				<control type="button" id="4301">
+					<description>Options</description>
+					<posx>12</posx>
+					<posy>1024</posy>
+					<width>36</width>
+					<height>36</height>
+					<colordiffuse>FFF0F0F0</colordiffuse>
+					<texturefocus colordiffuse="button_focus">dialogs/menu.png</texturefocus>
+					<texturenofocus colordiffuse="">dialogs/menu.png</texturenofocus>
+					<label>$LOCALIZE[33063]</label>
+					<wrapmultiline>false</wrapmultiline>
+					<font>font13</font>
+					<textcolor>FFF0F0F0</textcolor>
+					<focusedcolor>FFF0F0F0</focusedcolor>
+					<disabledcolor>80FFFFFF</disabledcolor>
+					<invalidcolor>FFF0F0F0</invalidcolor>
+					<align>left</align>
+					<aligny>center</aligny>
+					<textoffsetx>58</textoffsetx>
+					<textwidth>300</textwidth>
+					<onclick>Action(ContextMenu)</onclick>
+					<onfocus></onfocus>
+					<onunfocus></onunfocus>
+					<onup></onup>
+					<ondown></ondown>
+					<animation type="WindowOpen">
+						<effect type="fade" start="0" end="100" time="200" tween="sine" easing="out"/>
+					</animation>
+				</control>
+				
+				<control type="button" id="4203">
+					<description>Exit</description>
+					<posx>1874</posx>
+					<posy>1024</posy>
+					<width>33</width>
+					<height>33</height>
+					<colordiffuse>FFF0F0F0</colordiffuse>
+					<texturefocus colordiffuse="button_focus">dialogs/power.png</texturefocus>
+					<texturenofocus colordiffuse="">dialogs/power.png</texturenofocus>
+					<label>$ADDON[script.mtvguide 30308]</label>
+					<wrapmultiline>false</wrapmultiline>
+					<font>font13</font>
+					<textcolor>FFF0F0F0</textcolor>
+					<focusedcolor>FFF0F0F0</focusedcolor>
+					<disabledcolor>80FFFFFF</disabledcolor>
+					<invalidcolor>FFF0F0F0</invalidcolor>
+					<align>right</align>
+					<aligny>center</aligny>
+					<textoffsetx>58</textoffsetx>
+					<textwidth>300</textwidth>
+					<onclick>Close</onclick>
+					<onfocus></onfocus>
+					<onunfocus></onunfocus>
+					<onup></onup>
+					<ondown></ondown>
+					<animation type="WindowOpen">
+						<effect type="fade" start="0" end="100" time="200" tween="sine" easing="out"/>
+					</animation>
+				</control>
+			</control>
+				
+				<!-- Channels column -->
+				<control type="group">
+					<posx>0</posx>
+					<posy>60</posy>
+					<width>1920</width>
+					<height>1080</height>
+					<!--<animation type="WindowOpen">
+						<effect type="fade" start="0" end="100" time="300" tween="sine" easing="out"/>
+						<effect type="slide" start="320" end="0" time="400" tween="cubic" easing="out" />
+					</animation>
+					<animation type="WindowClose">
+						<effect type="fade" start="100" end="0" time="300" tween="sine" easing="out" />
+						<effect type="slide" start="0" end="320" time="300" tween="cubic" easing="out" />
+					</animation>-->
+					<visible>!Control.IsVisible(5000)</visible>
+					
+					<!-- Logo buttons -->
+				<control type="button" id="9010">
+					<description>1st channel</description>
+					<posx>0</posx>
+					<posy>190</posy>
+					<width>350</width>
+					<height>53</height>
+					<texturefocus colordiffuse="button_focus">osd/grey.png</texturefocus>
+					<texturenofocus></texturenofocus>
+				</control>
+				<control type="button" id="9011">
+					<description>2nd channel</description>
+					<posx>0</posx>
+					<posy>251</posy>
+					<width>350</width>
+					<height>53</height>
+					<texturefocus colordiffuse="button_focus">osd/grey.png</texturefocus>
+					<texturenofocus></texturenofocus>
+				</control>
+				<control type="button" id="9012">
+					<description>3rd channel</description>
+					<posx>0</posx>
+					<posy>312</posy>
+					<width>350</width>
+					<height>53</height>
+					<texturefocus colordiffuse="button_focus">osd/grey.png</texturefocus>
+					<texturenofocus></texturenofocus>
+				</control>
+				<control type="button" id="9013">
+					<description>4th channel</description>
+					<posx>0</posx>
+					<posy>373</posy>
+					<width>350</width>
+					<height>53</height>
+					<texturefocus colordiffuse="button_focus">osd/grey.png</texturefocus>
+					<texturenofocus></texturenofocus>
+				</control>
+				<control type="button" id="9014">
+					<description>5th channel</description>
+					<posx>0</posx>
+					<posy>434</posy>
+					<width>350</width>
+					<height>53</height>
+					<texturefocus colordiffuse="button_focus">osd/grey.png</texturefocus>
+					<texturenofocus></texturenofocus>
+				</control>
+				<control type="button" id="9015">
+					<description>6th channel</description>
+					<posx>0</posx>
+					<posy>495</posy>
+					<width>350</width>
+					<height>53</height>
+					<texturefocus colordiffuse="button_focus">osd/grey.png</texturefocus>
+					<texturenofocus></texturenofocus>
+				</control>
+				<control type="button" id="9016">
+					<description>7th channel</description>
+					<posx>0</posx>
+					<posy>556</posy>
+					<width>350</width>
+					<height>53</height>
+					<texturefocus colordiffuse="button_focus">osd/grey.png</texturefocus>
+					<texturenofocus></texturenofocus>
+				</control>
+				<control type="button" id="9017">
+					<description>8th channel</description>
+					<posx>0</posx>
+					<posy>617</posy>
+					<width>350</width>
+					<height>53</height>
+					<texturefocus colordiffuse="button_focus">osd/grey.png</texturefocus>
+					<texturenofocus></texturenofocus>
+				</control>
+
+				<!-- Text labels -->
+				<control type="label" id="4010">
+					<description>1st channel</description>
+					<posx>80</posx>
+					<posy>190</posy>
+					<width>260</width>
+					<height>53</height>
+					<font>font12</font>
+					<textcolor>FFF0F0F0</textcolor>
+					<aligny>center</aligny>
+					<scroll>true</scroll>
+					<visible>String.IsEqual(Control.GetLabel(4110),)</visible>
+				</control>
+				<control type="label" id="4510">
+					<description>1st channel</description>
+					<posx>20</posx>
+					<posy>190</posy>
+					<width>260</width>
+					<height>53</height>
+					<font>font12</font>
+					<textcolor>FFF0F0F0</textcolor>
+					<aligny>center</aligny>
+					<scroll>true</scroll>
+					<visible>String.IsEqual(Control.GetLabel(4210),)</visible>
+				</control>
+				<control type="label" id="4011">
+					<description>2nd channel</description>
+					<posx>80</posx>
+					<posy>251</posy>
+					<width>260</width>
+					<height>53</height>
+					<font>font12</font>
+					<textcolor>FFF0F0F0</textcolor>
+					<aligny>center</aligny>
+					<scroll>true</scroll>
+					<visible>String.IsEqual(Control.GetLabel(4111),)</visible>
+				</control>
+				<control type="label" id="4511">
+					<description>2nd channel</description>
+					<posx>20</posx>
+					<posy>251</posy>
+					<width>260</width>
+					<height>53</height>
+					<font>font12</font>
+					<textcolor>FFF0F0F0</textcolor>
+					<aligny>center</aligny>
+					<scroll>true</scroll>
+					<visible>String.IsEqual(Control.GetLabel(4211),)</visible>
+				</control>
+				<control type="label" id="4012">
+					<description>3rd channel</description>
+					<posx>80</posx>
+					<posy>312</posy>
+					<width>260</width>
+					<height>53</height>
+					<font>font12</font>
+					<textcolor>FFF0F0F0</textcolor>
+					<aligny>center</aligny>
+					<scroll>true</scroll>
+					<visible>String.IsEqual(Control.GetLabel(4112),)</visible>
+				</control>
+				<control type="label" id="4512">
+					<description>3rd channel</description>
+					<posx>20</posx>
+					<posy>312</posy>
+					<width>260</width>
+					<height>53</height>
+					<font>font12</font>
+					<textcolor>FFF0F0F0</textcolor>
+					<aligny>center</aligny>
+					<scroll>true</scroll>
+					<visible>String.IsEqual(Control.GetLabel(4212),)</visible>
+				</control>
+				<control type="label" id="4013">
+					<description>4th channel</description>
+					<posx>80</posx>
+					<posy>373</posy>
+					<width>260</width>
+					<height>53</height>
+					<font>font12</font>
+					<textcolor>FFF0F0F0</textcolor>
+					<aligny>center</aligny>
+					<scroll>true</scroll>
+					<visible>String.IsEqual(Control.GetLabel(4113),)</visible>
+				</control>
+				<control type="label" id="4513">
+					<description>4th channel</description>
+					<posx>20</posx>
+					<posy>373</posy>
+					<width>260</width>
+					<height>53</height>
+					<font>font12</font>
+					<textcolor>FFF0F0F0</textcolor>
+					<aligny>center</aligny>
+					<scroll>true</scroll>
+					<visible>String.IsEqual(Control.GetLabel(4213),)</visible>
+				</control>
+				<control type="label" id="4014">
+					<description>5th channel</description>
+					<posx>80</posx>
+					<posy>434</posy>
+					<width>260</width>
+					<height>53</height>
+					<font>font12</font>
+					<textcolor>FFF0F0F0</textcolor>
+					<aligny>center</aligny>
+					<scroll>true</scroll>
+					<visible>String.IsEqual(Control.GetLabel(4114),)</visible>
+				</control>
+				<control type="label" id="4514">
+					<description>5th channel</description>
+					<posx>20</posx>
+					<posy>434</posy>
+					<width>260</width>
+					<height>53</height>
+					<font>font12</font>
+					<textcolor>FFF0F0F0</textcolor>
+					<aligny>center</aligny>
+					<scroll>true</scroll>
+					<visible>String.IsEqual(Control.GetLabel(4214),)</visible>
+				</control>
+				<control type="label" id="4015">
+					<description>6th channel</description>
+					<posx>80</posx>
+					<posy>495</posy>
+					<width>260</width>
+					<height>53</height>
+					<font>font12</font>
+					<textcolor>FFF0F0F0</textcolor>
+					<aligny>center</aligny>
+					<scroll>true</scroll>
+					<visible>String.IsEqual(Control.GetLabel(4115),)</visible>
+				</control>
+				<control type="label" id="4515">
+					<description>6th channel</description>
+					<posx>20</posx>
+					<posy>495</posy>
+					<width>260</width>
+					<height>53</height>
+					<font>font12</font>
+					<textcolor>FFF0F0F0</textcolor>
+					<aligny>center</aligny>
+					<scroll>true</scroll>
+					<visible>String.IsEqual(Control.GetLabel(4215),)</visible>
+				</control>
+				<control type="label" id="4016">
+					<description>7th channel</description>
+					<posx>80</posx>
+					<posy>556</posy>
+					<width>260</width>
+					<height>60</height>
+					<font>font12</font>
+					<textcolor>FFF0F0F0</textcolor>
+					<aligny>center</aligny>
+					<scroll>true</scroll>
+					<visible>String.IsEqual(Control.GetLabel(4116),)</visible>
+				</control>
+				<control type="label" id="4516">
+					<description>7th channel</description>
+					<posx>20</posx>
+					<posy>556</posy>
+					<width>260</width>
+					<height>60</height>
+					<font>font12</font>
+					<textcolor>FFF0F0F0</textcolor>
+					<aligny>center</aligny>
+					<scroll>true</scroll>
+					<visible>String.IsEqual(Control.GetLabel(4216),)</visible>
+				</control>
+				<control type="label" id="4017">
+					<description>8th channel</description>
+					<posx>80</posx>
+					<posy>617</posy>
+					<width>260</width>
+					<height>60</height>
+					<font>font12</font>
+					<textcolor>FFF0F0F0</textcolor>
+					<aligny>center</aligny>
+					<scroll>true</scroll>
+					<visible>String.IsEqual(Control.GetLabel(4117),)</visible>
+				</control>
+				<control type="label" id="4517">
+					<description>8th channel</description>
+					<posx>20</posx>
+					<posy>617</posy>
+					<width>260</width>
+					<height>60</height>
+					<font>font12</font>
+					<textcolor>FFF0F0F0</textcolor>
+					<aligny>center</aligny>
+					<scroll>true</scroll>
+					<visible>String.IsEqual(Control.GetLabel(4217),)</visible>
+				</control>
+				
+					<!-- Logo images -->
+				<control type="image" id="4110">
+					<description>1st channel</description>
+					<posx>137</posx>
+					<posy>190</posy>
+					<width>150</width>
+					<height>53</height>
+					<align>center</align>
+					<aligny>center</aligny>
+					<aspectratio>keep</aspectratio>
+					<visible>!String.IsEqual(Control.GetLabel(4110),)</visible>
+				</control>
+				<control type="image" id="4210">
+					<description>1st channel</description>
+					<posx>100</posx>
+					<posy>190</posy>
+					<width>150</width>
+					<height>53</height>
+					<align>center</align>
+					<aligny>center</aligny>
+					<aspectratio>keep</aspectratio>
+					<visible>!String.IsEqual(Control.GetLabel(4210),)</visible>
+				</control>
+				<control type="image" id="4111">
+					<description>2nd channel</description>
+					<posx>137</posx>
+					<posy>251</posy>
+					<width>150</width>
+					<height>53</height>
+					<align>center</align>
+					<aligny>center</aligny>
+					<aspectratio>keep</aspectratio>
+					<visible>!String.IsEqual(Control.GetLabel(4111),)</visible>
+				</control>
+				<control type="image" id="4211">
+					<description>2nd channel</description>
+					<posx>100</posx>
+					<posy>251</posy>
+					<width>150</width>
+					<height>53</height>
+					<align>center</align>
+					<aligny>center</aligny>
+					<aspectratio>keep</aspectratio>
+					<visible>!String.IsEqual(Control.GetLabel(4211),)</visible>
+				</control>
+				<control type="image" id="4112">
+					<description>3rd channel</description>
+					<posx>137</posx>
+					<posy>312</posy>
+					<width>150</width>
+					<height>53</height>
+					<align>center</align>
+					<aligny>center</aligny>
+					<aspectratio>keep</aspectratio>
+					<visible>!String.IsEqual(Control.GetLabel(4112),)</visible>
+				</control>
+				<control type="image" id="4212">
+					<description>3rd channel</description>
+					<posx>100</posx>
+					<posy>312</posy>
+					<width>150</width>
+					<height>53</height>
+					<align>center</align>
+					<aligny>center</aligny>
+					<aspectratio>keep</aspectratio>
+					<visible>!String.IsEqual(Control.GetLabel(4212),)</visible>
+				</control>
+				<control type="image" id="4113">
+					<description>4th channel</description>
+					<posx>137</posx>
+					<posy>373</posy>
+					<width>150</width>
+					<height>53</height>
+					<align>center</align>
+					<aligny>center</aligny>
+					<aspectratio>keep</aspectratio>
+					<visible>!String.IsEqual(Control.GetLabel(4113),)</visible>
+				</control>
+				<control type="image" id="4213">
+					<description>4th channel</description>
+					<posx>100</posx>
+					<posy>373</posy>
+					<width>150</width>
+					<height>53</height>
+					<align>center</align>
+					<aligny>center</aligny>
+					<aspectratio>keep</aspectratio>
+					<visible>!String.IsEqual(Control.GetLabel(4213),)</visible>
+				</control>
+				<control type="image" id="4114">
+					<description>5th channel</description>
+					<posx>137</posx>
+					<posy>434</posy>
+					<width>150</width>
+					<height>53</height>
+					<align>center</align>
+					<aligny>center</aligny>
+					<aspectratio>keep</aspectratio>
+					<visible>!String.IsEqual(Control.GetLabel(4114),)</visible>
+				</control>
+				<control type="image" id="4214">
+					<description>5th channel</description>
+					<posx>100</posx>
+					<posy>434</posy>
+					<width>150</width>
+					<height>53</height>
+					<align>center</align>
+					<aligny>center</aligny>
+					<aspectratio>keep</aspectratio>
+					<visible>!String.IsEqual(Control.GetLabel(4214),)</visible>
+				</control>
+				<control type="image" id="4115">
+					<description>6th channel</description>
+					<posx>137</posx>
+					<posy>495</posy>
+					<width>150</width>
+					<height>53</height>
+					<align>center</align>
+					<aligny>center</aligny>
+					<aspectratio>keep</aspectratio>
+					<visible>!String.IsEqual(Control.GetLabel(4115),)</visible>
+				</control>
+				<control type="image" id="4215">
+					<description>6th channel</description>
+					<posx>100</posx>
+					<posy>495</posy>
+					<width>150</width>
+					<height>53</height>
+					<align>center</align>
+					<aligny>center</aligny>
+					<aspectratio>keep</aspectratio>
+					<visible>!String.IsEqual(Control.GetLabel(4215),)</visible>
+				</control>
+				<control type="image" id="4116">
+					<description>7th channel</description>
+					<posx>137</posx>
+					<posy>556</posy>
+					<width>150</width>
+					<height>53</height>
+					<align>center</align>
+					<aligny>center</aligny>
+					<aspectratio>keep</aspectratio>
+					<visible>!String.IsEqual(Control.GetLabel(4116),)</visible>
+				</control>
+				<control type="image" id="4216">
+					<description>7th channel</description>
+					<posx>100</posx>
+					<posy>556</posy>
+					<width>150</width>
+					<height>53</height>
+					<align>center</align>
+					<aligny>center</aligny>
+					<aspectratio>keep</aspectratio>
+					<visible>!String.IsEqual(Control.GetLabel(4216),)</visible>
+				</control>
+				<control type="image" id="4117">
+					<description>8th channel</description>
+					<posx>137</posx>
+					<posy>617</posy>
+					<width>150</width>
+					<height>53</height>
+					<align>center</align>
+					<aligny>center</aligny>
+					<aspectratio>keep</aspectratio>
+					<visible>!String.IsEqual(Control.GetLabel(4117),)</visible>
+				</control>
+				<control type="image" id="4217">
+					<description>8th channel</description>
+					<posx>100</posx>
+					<posy>617</posy>
+					<width>150</width>
+					<height>53</height>
+					<align>center</align>
+					<aligny>center</aligny>
+					<aspectratio>keep</aspectratio>
+					<visible>!String.IsEqual(Control.GetLabel(4217),)</visible>
+				</control>
+				
+					<!-- Channel index -->
+                <control type="label" id="4410">
+                    <description>1st channel</description>
+                    <left>2</left>
+					<posy>190</posy>
+					<width>75</width>
+					<height>53</height>
+					<textcolor>FFF0F0F0</textcolor>
+					<font>font32_title</font>
+					<align>center</align>
+					<aligny>center</aligny>
+                    <visible>true</visible>
+                </control>
+                <control type="label" id="4411">
+                    <description>2nd channel</description>
+                    <left>2</left>
+					<posy>251</posy>
+					<width>75</width>
+					<height>53</height>
+					<textcolor>FFF0F0F0</textcolor>
+					<font>font32_title</font>
+					<align>center</align>
+					<aligny>center</aligny>
+                    <visible>true</visible>
+                </control>
+                <control type="label" id="4412">
+                    <description>3rd channel</description>
+                    <left>2</left>
+					<posy>312</posy>
+					<width>75</width>
+					<height>53</height>
+					<textcolor>FFF0F0F0</textcolor>
+					<font>font32_title</font>
+					<align>center</align>
+					<aligny>center</aligny>
+                    <visible>true</visible>
+                </control>
+                <control type="label" id="4413">
+                    <description>4th channel</description>
+                    <left>2</left>
+					<posy>373</posy>
+					<width>75</width>
+					<height>53</height>
+					<textcolor>FFF0F0F0</textcolor>
+					<font>font32_title</font>
+					<align>center</align>
+					<aligny>center</aligny>
+                    <visible>true</visible>
+                </control>
+                <control type="label" id="4414">
+                    <description>5th channel</description>
+                    <left>2</left>
+					<posy>434</posy>
+					<width>75</width>
+					<height>53</height>
+					<textcolor>FFF0F0F0</textcolor>
+					<font>font32_title</font>
+					<align>center</align>
+					<aligny>center</aligny>
+                    <visible>true</visible>
+                </control>
+                <control type="label" id="4415">
+                    <description>6th channel</description>
+                    <left>2</left>
+					<posy>495</posy>
+					<width>75</width>
+					<height>53</height>
+					<textcolor>FFF0F0F0</textcolor>
+					<font>font32_title</font>
+					<align>center</align>
+					<aligny>center</aligny>
+                    <visible>true</visible>
+                </control>
+                <control type="label" id="4416">
+                    <description>7th channel</description>
+                    <left>2</left>
+					<posy>556</posy>
+					<width>75</width>
+					<height>53</height>
+					<textcolor>FFF0F0F0</textcolor>
+					<font>font32_title</font>
+					<align>center</align>
+					<aligny>center</aligny>
+                    <visible>true</visible>
+                </control>
+                <control type="label" id="4417">
+                    <description>8th channel</description>
+                    <left>2</left>
+					<posy>617</posy>
+					<width>75</width>
+					<height>53</height>
+					<textcolor>FFF0F0F0</textcolor>
+					<font>font32_title</font>
+					<align>center</align>
+					<aligny>center</aligny>
+                    <visible>true</visible>
+                </control>
+			</control>
+			
+			<control type="label" id="4920">
+				<description>Program title</description>
+				<visible>hidden</visible>
+			</control>
+			<control type="textbox" id="4925">
+				<description>Program episode</description>
+				<visible>hidden</visible>
+			</control>
+			<control type="textbox" id="4926">
+				<description>Program genre</description>
+				<visible>hidden</visible>
+			</control>
+			<control type="textbox" id="4928">
+				<description>Program actors</description>
+				<visible>hidden</visible>
+			</control>
+			<control type="textbox" id="4929">
+				<description>Program date</description>
+				<visible>hidden</visible>
+			</control>
+			<control type="textbox" id="4930">
+				<description>Program director</description>
+				<visible>hidden</visible>
+			</control>
+			<control type="image" id="4932">
+				<description>Program age</description>
+				<visible>hidden</visible>
+			</control>
+			
+			<control type="label">
+				<description>Program title</description>
+				<left>350</left>
+				<posy>750</posy>
+				<right>30</right>
+				<width min="20" max="350">auto</width>
+				<height>30</height>
+				<textcolor>FFF0F0F0</textcolor>
+				<font>font13</font>
+				<align>left</align>
+				<label>[B]$INFO[Control.GetLabel(4919)][/B]</label>
+			</control>
+			
+			<control type="grouplist">
+				<left>350</left>
+				<posy>785</posy>
+				<right>30</right>
+				<width>1920</width>
+				<height>1080</height>
+				<itemgap>10</itemgap>
+				<fadetime>400</fadetime>
+				<usecontrolcoords>true</usecontrolcoords>
+				<orientation>horizontal</orientation>
+				<align>left</align>
+			
+			<control type="label">
+				<left>0</left>
+				<posy>0</posy>
+				<right>0</right>
+				<width min="20" max="350">auto</width>
+				<height>30</height>
+				<textcolor>FFA0A0A0</textcolor>
+				<font>font13</font>
+				<align>left</align>
+				<label>[I]$INFO[Control.GetLabel(4925)]:[/I]</label>
+				<visible>!String.IsEqual(Control.GetLabel(4925),)</visible>
+			</control>
+			
+			<control type="label">
+				<left>0</left>
+				<posy>0</posy>
+				<right>0</right>
+				<width min="20" max="780">auto</width>
+				<height>30</height>
+				<textcolor>FFF0F0F0</textcolor>
+				<font>font13</font>
+				<align>left</align>
+				<label>[I]$INFO[Control.GetLabel(4920)][/I]</label>
+			</control>
+		</control>
+			
+			<control type="grouplist">
+				<posy>750</posy>
+				<right>30</right>
+				<align>right</align>
+				<width>1920</width>
+				<height>1080</height>
+				<itemgap>10</itemgap>
+				<usecontrolcoords>true</usecontrolcoords>
+				<orientation>horizontal</orientation>
+				<!--<animation type="WindowOpen">
+					<effect type="fade" start="0" end="100" time="300" tween="sine" easing="out"/>
+					<effect type="slide" start="320" end="0" time="400" tween="cubic" easing="out" />
+				</animation>
+				<animation type="WindowClose">
+					<effect type="fade" start="100" end="0" time="300" tween="sine" easing="out" />
+					<effect type="slide" start="0" end="320" time="300" tween="cubic" easing="out" />
+				</animation>-->
+				
+				
+				<control type="label">
+					<description>Time</description>
+					<left>0</left>
+					<posy>0</posy>
+					<width min="20" max="230">auto</width>
+					<height>30</height>
+					<textcolor>FFA0A0A0</textcolor>
+					<font>font13</font>
+					<label>$LOCALIZE[142]</label>
+				</control>
+
+				<control type="label" id="4921">
+					<description>Program time</description>
+					<left>0</left>
+					<posy>0</posy>
+					<width min="20" max="300">auto</width>
+					<height>30</height>
+					<textcolor>button_focus</textcolor>
+					<font>font13</font>
+				</control>
+			</control>
+			
+			<control type="grouplist">
+				<posy>785</posy>
+				<right>30</right>
+				<align>right</align>
+				<width>1920</width>
+				<height>1080</height>
+				<itemgap>10</itemgap>
+				<usecontrolcoords>true</usecontrolcoords>
+				<orientation>horizontal</orientation>
+				<!--<animation type="WindowOpen">
+					<effect type="fade" start="0" end="100" time="300" tween="sine" easing="out"/>
+					<effect type="slide" start="320" end="0" time="400" tween="cubic" easing="out" />
+				</animation>
+				<animation type="WindowClose">
+					<effect type="fade" start="100" end="0" time="300" tween="sine" easing="out" />
+					<effect type="slide" start="0" end="320" time="300" tween="cubic" easing="out" />
+				</animation>-->
+				
+				<control type="label">
+					<description>Genre</description>
+					<left>0</left>
+					<posy>0</posy>
+					<width min="0" max="230">auto</width>
+					<height>30</height>
+					<textcolor>FFA0A0A0</textcolor>
+					<font>font13</font>
+					<label>$ADDON[script.mtvguide 30505]:</label>
+				</control>
+				<control type="label">
+					<description>Program genre</description>
+					<left>0</left>
+					<posy>0</posy>
+					<width min="0" max="500">auto</width>
+					<height>30</height>
+					<textcolor>FFF0F0F0</textcolor>
+					<font>font13</font>
+					<label>$INFO[Control.GetLabel(4926)]</label>
+				</control>
+			</control>				
+				
+				<control type="image" id="4924">
+					<description>Channel logo</description>
+					<visible>hidden</visible>
+				</control>
+				
+				<control type="image" id="4944">
+					<description>Live</description>
+					<posx>1600</posx>
+					<posy>1024</posy>
+					<width>90</width>
+					<height>35</height>
+					<aspectratio>keep</aspectratio>
+					<!--<animation type="WindowOpen">
+						<effect type="fade" start="0" end="100" time="300" tween="sine" easing="out"/>
+						<effect type="slide" start="320" end="0" time="400" tween="cubic" easing="out" />
+					</animation>
+					<animation type="WindowClose">
+						<effect type="fade" start="100" end="0" time="300" tween="sine" easing="out" />
+						<effect type="slide" start="0" end="320" time="300" tween="cubic" easing="out" />
+					</animation>-->
+					<visible>!Control.IsVisible(5000)</visible>
+				</control>
+				<control type="textbox" id="4922">
+					<description>Program description</description>
+					<left>350</left>
+					<posy>835</posy>
+					<width>1520</width>
+					<height>170</height>
+					<align>justify</align>
+					<textcolor>FFF0F0F0</textcolor>
+					<shadowcolor>22000000</shadowcolor>
+					<autoscroll delay="10000" time="3000" repeat="10000">true</autoscroll>
+					<scrolltime tween="quadratic" easing="out">200</scrolltime>
+					<wrapmultiline>true</wrapmultiline>
+					<!--<animation type="WindowOpen">
+						<effect type="fade" start="0" end="100" time="300" tween="sine" easing="out"/>
+						<effect type="slide" start="320" end="0" time="400" tween="cubic" easing="out" />
+					</animation>
+					<animation type="WindowClose">
+						<effect type="fade" start="100" end="0" time="300" tween="sine" easing="out" />
+						<effect type="slide" start="0" end="320" time="300" tween="cubic" easing="out" />
+					</animation>-->
+					<visible>!Control.IsVisible(5000)</visible>
+				</control>
+				<control type="image" id="4923">
+					<description>Program logo / Source logo</description>
+					<posx>28</posx>
+					<posy>788</posy>
+					<width>300</width>
+					<height>167</height>
+					<texture>tvguide-logo-epg.png</texture>
+					<aspectratio align="center" aligny="center">keep</aspectratio>
+					<!--<animation type="WindowOpen">
+						<effect type="fade" start="0" end="100" time="300" tween="sine" easing="out"/>
+						<effect type="slide" start="320" end="0" time="400" tween="cubic" easing="out" />
+					</animation>
+					<animation type="WindowClose">
+						<effect type="fade" start="100" end="0" time="300" tween="sine" easing="out" />
+						<effect type="slide" start="0" end="320" time="300" tween="cubic" easing="out" />
+					</animation>-->
+					<visible>!Control.IsVisible(5000)</visible>
+				</control>
+			</control>
+					
+				<control type="label" id="4199">
+					<description>Visibility marker for loading background</description>
+				</control>
+					
+				<control type="label" id="4200">
+					<description>visibility marker for loading group</description>
+				</control>
+				
+				<control type="group">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>1920</width>
+					<height>1080</height>
+				
+				<!-- Background screen -->
+				<control type="image">
+					<description>Splash</description>
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>1920</width>
+					<height>1080</height>
+					<texture fallback="tvguide-background-default.jpg" colordiffuse="primary_background">$INFO[Skin.String(CustomDefaultBackground.path)]</texture>
+					<aspectratio>scale</aspectratio>
+					<!--<colordiffuse>FF000000</colordiffuse>-->
+					<visible>!Player.HasVideo + [!Control.IsVisible(4200) | Control.IsVisible(4199)]</visible>
+					<animation start="0" end="100" delay="300" effect="fade">Visible</animation>
+				</control>
+				
+				<control type="image">
+					<depth>DepthBackground</depth>
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>1920</width>
+					<height>1080</height>
+					<aspectratio>scale</aspectratio>
+					<texture colordiffuse="secondary_background" fallback="special://skin/extras/backgrounds/pattern1.jpg">$INFO[Skin.String(background_overlay),special://skin/extras/backgrounds/pattern,.jpg]</texture>
+					<visible>!Player.HasVideo + [!Control.IsVisible(4200) | Control.IsVisible(4199)]</visible>
+					<animation start="0" end="100" delay="300" effect="fade">Visible</animation>
+				</control>
+				
+				<!-- InfoBar -->
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>100%</width>
+					<height>130</height>
+					<texture colordiffuse="">dialogs/infobar.png</texture>
+					<visible>!Player.HasVideo + !Control.IsVisible(4200) | Control.IsVisible(4199)</visible>
+					<animation start="0" end="100" delay="300" effect="fade">Visible</animation>
+					</control>
+				<control type="image">
+					<posx>0</posx>
+					<posy>965</posy>
+					<width>100%</width>
+					<height>115</height>
+					<texture flipy="true" colordiffuse="">dialogs/infobar.png</texture>
+					<visible>!Player.HasVideo + !Control.IsVisible(4200) | Control.IsVisible(4199)</visible>
+					<animation start="0" end="100" delay="300" effect="fade">Visible</animation>
+				</control>
+				
+				<!-- Loading screen -->
+				<control type="image">
+					<description>Splash</description>
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>1920</width>
+					<height>1080</height>
+					<texture fallback="tvguide-background-default.jpg" colordiffuse="primary_background">$INFO[Skin.String(CustomDefaultBackground.path)]</texture>
+					<aspectratio>scale</aspectratio>
+					<!--<colordiffuse>FF000000</colordiffuse>-->
+					<visible>!Player.HasVideo + !Control.IsVisible(4200)</visible>
+					<animation start="0" end="100" delay="500" effect="fade">Visible</animation>
+				</control>	
+				
+				<control type="image">
+					<depth>DepthBackground</depth>
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>1920</width>
+					<height>1080</height>
+					<aspectratio>scale</aspectratio>
+					<texture colordiffuse="secondary_background" fallback="special://skin/extras/backgrounds/pattern1.jpg">$INFO[Skin.String(background_overlay),special://skin/extras/backgrounds/pattern,.jpg]</texture>
+					<visible>!Player.HasVideo + !Control.IsVisible(4200)</visible>
+					<animation start="0" end="100" delay="500" effect="fade">Visible</animation>
+				</control>	
+				
+				<!-- InfoBar -->
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>100%</width>
+					<height>130</height>
+					<texture colordiffuse="">dialogs/infobar.png</texture>
+					<visible>!Player.HasVideo + !Control.IsVisible(4200)</visible>
+					<animation start="0" end="100" delay="500" effect="fade">Visible</animation>
+					</control>
+				<control type="image">
+					<posx>0</posx>
+					<posy>965</posy>
+					<width>100%</width>
+					<height>115</height>
+					<texture flipy="true" colordiffuse="">dialogs/infobar.png</texture>
+					<visible>!Player.HasVideo + !Control.IsVisible(4200)</visible>
+					<animation start="0" end="100" delay="500" effect="fade">Visible</animation>
+				</control>
+				
+				<!-- Spinner -->
+				<control type="image">
+					<description>Spinner</description>
+					<left>920</left>
+					<top>513</top>
+					<width>80</width>
+					<height>80</height>
+					<aspectratio>keep</aspectratio>
+					<animation effect="rotate" end="-45" center="auto" time="200" delay="600" loop="true" reversible="false" condition="true">Conditional</animation>
+					<texture colordiffuse="button_focus">spinner-estuary.png</texture>
+					<visible>!Player.HasVideo + !Control.IsVisible(4200)</visible>
+					<animation start="0" end="100" time="200" delay="500" effect="fade">Visible</animation>
+				</control>
+				<control type="image">
+					<description>SpinnerRev</description>
+					<left>935</left>
+					<top>528</top>
+					<width>50</width>
+					<height>50</height>
+					<aspectratio>keep</aspectratio>
+					<animation effect="rotate" end="45" center="auto" time="200" delay="600" loop="true" reversible="false" condition="true">Conditional</animation>
+					<texture flipx="true" colordiffuse="button_focus">spinner-estuary.png</texture>
+					<visible>!Player.HasVideo + !Control.IsVisible(4200)</visible>
+					<animation start="0" end="100" time="200" delay="500" effect="fade">Visible</animation>
+				</control>
+				
+				<!-- Logo -->	
+				<control type="image">
+					<left>130</left>
+					<top>40</top>
+					<aspectratio>keep</aspectratio>
+					<width>192</width>
+					<height>36</height>
+					<texture>dialogs/logo-text.png</texture>
+					<visible>!Player.HasVideo + !Control.IsVisible(4200) | Control.IsVisible(4199)</visible>
+					<animation start="0" end="100" delay="300" effect="fade">Visible</animation>
+				</control>
+				
+				<control type="image">
+					<top>30</top>
+					<left>90</left>
+					<aspectratio>keep</aspectratio>
+					<width>56</width>
+					<height>56</height>
+					<texture colordiffuse="button_focus">dialogs/mk_logo.png</texture>
+					<visible>!Player.HasVideo + !Control.IsVisible(4200) | Control.IsVisible(4199)</visible>
+					<animation start="0" end="100" delay="300" effect="fade">Visible</animation>
+				</control>
+				
+				<!-- Time -->
+				<control type="label">
+					<description>Time</description>
+					<top>0</top>
+					<align>right</align>
+					<right>20</right>
+					<orientation>horizontal</orientation>
+					<font>font_clock</font>
+					<textcolor>FFF0F0F0</textcolor>
+					<shadowcolor>22000000</shadowcolor>
+					<height>96.5</height>
+					<width>900</width>
+					<label>$INFO[System.Time]</label>
+					<animation effect="slide" end="0,-90" time="300" tween="sine" easing="inout" condition="Window.IsActive(DialogInfo.xml)">conditional</animation>
+					<visible>!Player.HasVideo + !Control.IsVisible(4200) | Control.IsVisible(4199)</visible>
+					<animation start="0" end="100" delay="100" effect="fade">Visible</animation>
+				</control>
+			</control>
+			
+			<!-- Video Background -->
+				<control type="image">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>1920</width>
+					<height>1080</height>
+					<texture>../../skin.default/media/osd/black.png</texture>
+					<animation start="0" end="100" delay="500" effect="fade">Visible</animation>
+					<visible>Player.HasVideo + !Control.IsVisible(4200)</visible>
+				</control>	
+				
+				<control type="videowindow">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>1920</width>
+					<height>1080</height>
+					<animation start="0" end="100" delay="500" effect="fade">Visible</animation>
+					<visible>Player.HasVideo + !Control.IsVisible(4200)</visible>
+				</control>
+				
+				<!-- Progress -->
+				<control type="group">
+					<depth>DepthMax</depth>
+					<top>85</top>
+					<right>0</right>
+					<width>640</width>
+					<animation type="Conditional" condition="!Control.IsVisible(4200)">
+						<effect type="fade" end="100" time="200" delay="300" />
+						<effect type="fade" start="0" end="100" time="300" delay="300" tween="sine" easing="out" />
+						<effect type="slide" start="320" end="0" time="400" delay="300" tween="cubic" easing="out" />
+					</animation>
+					<animation type="Conditional" condition="Control.IsVisible(4200)">
+						<effect type="fade" start="100" end="0" time="200" delay="300" />
+						<effect type="fade" start="100" end="0" time="300" delay="300" tween="sine" easing="out" />
+						<effect type="slide" start="0" end="320" time="300" delay="300" tween="cubic" easing="out" />
+					</animation>
+					
+					<control type="progress" id="4201">
+						<left>0</left>
+						<top>0</top>
+						<width>0</width>
+						<height>0</height>
+						<visible>hidden</visible>
+					</control>
+
+					<control type="image">
+						<left>0</left>
+						<top>0</top>
+						<width>640</width>
+						<height>160</height>
+						<texture>dialogs/dialog-bg-nobo.png</texture>
+						<bordertexture border="21">dialogs/shadow.png</bordertexture>
+						<bordersize>20</bordersize>
+						<visible>!Window.IsActive(notification)</visible>
+					</control>
+					<control type="image">
+						<description>avatar</description>
+						<left>25</left>
+						<top>25</top>
+						<width>110</width>
+						<height>110</height>
+						<aspectratio>stretch</aspectratio>
+						<texture>dialogs/defaulticoninfo.png</texture>
+						<visible>!Window.IsActive(notification)</visible>
+					</control>
+					<control type="label" >
+						<description>Line 1 Label</description>
+						<left>150</left>
+						<top>40</top>
+						<width>450</width>
+						<height>18</height>
+						<font>font37</font>
+						<aligny>center</aligny>
+						<textcolor>FFF0F0F0</textcolor>
+						<shadowcolor>22000000</shadowcolor>
+						<label>$ADDON[script.mtvguide 55015]</label>
+						<visible>!Window.IsActive(notification)</visible>
+					</control>
+					<control type="label" id="4202">
+						<description>Line 2 Label</description>
+						<left>151</left>
+						<top>68</top>
+						<width>450</width>
+						<height>60</height>
+						<font>font27_narrow</font>
+						<aligny>center</aligny>
+						<textcolor>FFF0F0F0</textcolor>
+						<shadowcolor>22000000</shadowcolor>
+						<visible>!Window.IsActive(notification)</visible>
+					</control>
+				</control>
+				
+				<control type="button">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>0</width>
+					<height>0</height>
+					<label></label>
+					<texturefocus></texturefocus>
+					<texturenofocus></texturenofocus>
+					<visible>hidden</visible>
+				</control>
+
+				<!-- Mouse control panel -->
+				<control type="label" id="4300">
+					<description>visibility marker for mouse control group</description>
+				</control>
+				
+				<control type="group">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>1920</width>
+					<height>1080</height>
+					<animation effect="slide" end="0,90" time="300" tween="sine" easing="inout" condition="Window.IsActive(DialogInfo.xml) | Window.IsActive(script-tvguide-menu.xml) | Window.IsActive(selectdialog)">Conditional</animation>
+					<animation effect="slide" start="0,90" time="300" tween="sine" easing="inout">Visible</animation>
+					<animation start="100" end="100" delay="100" time="0" effect="fade">Hidden</animation>
+					<visible>!Control.IsVisible(4300)+ Control.IsVisible(4200)</visible>
+
+					<control type="image">
+						<description>Background</description>
+						<posx>0</posx>
+						<posy>1032</posy>
+						<width>1920</width>
+						<height>48</height>
+						<texture>osd/black.png</texture>
+					</control>
+					
+					<control type="button">
+						<description>EPG</description>
+						<visible>hidden</visible>
+					</control>
+					
+					<control type="button" id="4302">
+						<description>Navigate left</description>
+						<posx>765</posx>
+						<posy>1032</posy>
+						<width>48</width>
+						<height>48</height>
+						<texturefocus flipx="true" colordiffuse="button_focus">buttons/nav_le.png</texturefocus>
+						<texturenofocus flipx="true" colordiffuse="">buttons/nav_le.png</texturenofocus>
+						<animation effect="fade" start="0" end="100" time="500" >WindowOpen</animation>
+						<animation effect="fade" start="100" end="0" time="100" >WindowClose</animation>
+						<animation effect="fade" start="0" end="100" time="500" >Visible</animation>
+						<animation effect="fade" start="100" end="0" time="100" >Hidden</animation>
+						
+					</control>
+					<control type="button" id="4303">
+						<description>Navigate up</description>
+						<posx>889</posx>
+						<posy>1032</posy>
+						<width>48</width>
+						<height>48</height>
+						<texturefocus flipy="true" colordiffuse="button_focus">buttons/nav_do.png</texturefocus>
+						<texturenofocus flipy="true" colordiffuse="">buttons/nav_do.png</texturenofocus>
+						<animation effect="fade" start="0" end="100" time="500" >WindowOpen</animation>
+						<animation effect="fade" start="100" end="0" time="100" >WindowClose</animation>
+						<animation effect="fade" start="0" end="100" time="500" >Visible</animation>
+						<animation effect="fade" start="100" end="0" time="100" >Hidden</animation>
+					</control>
+					<control type="button" id="4304">
+						<description>Navigate down</description>
+						<posx>1022</posx>
+						<posy>1032</posy>
+						<width>48</width>
+						<height>48</height>
+						<texturefocus flipy="false" colordiffuse="button_focus">buttons/nav_do.png</texturefocus>
+						<texturenofocus flipy="false" colordiffuse="">buttons/nav_do.png</texturenofocus>
+						<animation effect="fade" start="0" end="100" time="500" >WindowOpen</animation>
+						<animation effect="fade" start="100" end="0" time="100" >WindowClose</animation>
+						<animation effect="fade" start="0" end="100" time="500" >Visible</animation>
+						<animation effect="fade" start="100" end="0" time="100" >Hidden</animation>
+					</control>
+					<control type="button" id="4305">
+						<description>Navigate right</description>
+						<posx>1146</posx>
+						<posy>1032</posy>
+						<width>48</width>
+						<height>48</height>
+						<texturefocus flipx="false" colordiffuse="button_focus">buttons/nav_le.png</texturefocus>
+						<texturenofocus flipx="false" colordiffuse="">buttons/nav_le.png</texturenofocus>
+						<animation effect="fade" start="0" end="100" time="500" >WindowOpen</animation>
+						<animation effect="fade" start="100" end="0" time="100" >WindowClose</animation>
+						<animation effect="fade" start="0" end="100" time="500" >Visible</animation>
+						<animation effect="fade" start="100" end="0" time="100" >Hidden</animation>
+					</control>
+					<control type="button" id="4311">
+						<description>Settings</description>
+						<posx>641</posx>
+						<posy>1032</posy>
+						<width>48</width>
+						<height>48</height>
+						<texturefocus flipx="false" colordiffuse="button_focus">buttons/nav_set.png</texturefocus>
+						<texturenofocus flipx="false" colordiffuse="">buttons/nav_set.png</texturenofocus>
+						<animation effect="fade" start="0" end="100" time="500" >WindowOpen</animation>
+						<animation effect="fade" start="100" end="0" time="100" >WindowClose</animation>
+						<animation effect="fade" start="0" end="100" time="500" >Visible</animation>
+						<animation effect="fade" start="100" end="0" time="100" >Hidden</animation>
+					</control>
+					<control type="button" id="4306">
+						<description>Exit</description>
+						<posx>1270</posx>
+						<posy>1032</posy>
+						<width>48</width>
+						<height>48</height>
+						<texturefocus flipx="false" colordiffuse="button_focus">buttons/nav_ex.png</texturefocus>
+						<texturenofocus flipx="false" colordiffuse="">buttons/nav_ex.png</texturenofocus>
+						<animation effect="fade" start="0" end="100" time="500" >WindowOpen</animation>
+						<animation effect="fade" start="100" end="0" time="100" >WindowClose</animation>
+						<animation effect="fade" start="0" end="100" time="500" >Visible</animation>
+						<animation effect="fade" start="100" end="0" time="100" >Hidden</animation>
+					</control>
+				</control>
+
+				<control type="label" id="6000">
+					<description>visibility marker for OSD Info bar</description>
+				</control>
+				<control type="group">
+					<description>OSD Info bar</description>
+					<posx>0</posx>
+					<posy>500</posy>
+					<width>1920</width>
+					<height>220</height>
+					<visible>!Control.IsVisible(6000)</visible>
+					<animation effect="fade" start="0" end="100" time="500">VisibleChange</animation>
+
+				<control type="image">
+					<left>90</left>
+					<top>650</top>
+					<width>509</width>
+					<height>258</height>
+					<texture border="22">dialogs/dialog-bg-back.png</texture>
+				</control>
+
+				<!-- Program description -->
+				<control type="label" id="6001">
+					<description>Program title</description>
+					<posx>570</posx>
+					<posy>702</posy>
+					<width>430</width>
+					<height>50</height>
+					<label>18:00 - 20:00</label>
+					<textcolor>FFA0A0A0</textcolor>
+					<font>font12</font>
+					<aligny>center</aligny>
+				</control>
+				<control type="label" id="6002">
+					<description>Program time</description>
+					<posx>550</posx>
+					<posy>702</posy>
+					<width>340</width>
+					<height>50</height>
+					<label>18:00 - 20:00</label>
+					<textcolor>button_focus</textcolor>
+					<font>font12</font>
+					<align>right</align>
+					<aligny>center</aligny>
+				</control>
+				<control type="textbox" id="6003">
+					<description>Program description</description>
+					<posx>400</posx>
+					<posy>746</posy>
+					<width>1340</width>
+					<height>150</height>
+					<textcolor>FFF0F0F0</textcolor>
+					<font>font10</font>
+					<wrapmultiline>true</wrapmultiline>
+					<autoscroll time="4500" delay="10000" repeat="10000">true</autoscroll>
+				</control>
+				<control type="image" id="6004">
+					<description>Program channel logo</description>
+					<posx>1100</posx>
+					<posy>155</posy>
+					<width>160</width>
+					<height>45</height>
+					<aspectratio>keep</aspectratio>
+				</control>
+				<control type="label" id="6005">
+					<description>Program channel text</description>
+					<posx>110</posx>
+					<posy>155</posy>
+					<width>160</width>
+					<height>45</height>
+					<textcolor>FFF0F0F0</textcolor>
+					<font>font10</font>
+					<align>center</align>
+					<visible>String.IsEqual(Control.GetLabel(6004),)</visible>
+				</control>
+			</control>
+			<control type="image">
+				<description>Channel number input bg</description>
+				<posx>1588</posx>
+				<posy>25</posy>
+				<width>220</width>
+				<height>160</height>
+				<texture flipx="false">dialogs/panel.png</texture>
+				<bordertexture border="21">dialogs/shadow.png</bordertexture>
+				<bordersize>20</bordersize>
+				<visible>!String.IsEqual(Control.GetLabel(9999),)</visible>
+			</control>
+			<control type="label" id="9999">
+                <description>Channel number input</description>
+                <posx>1628</posx>
+                <posy>25</posy>
+				<width>140</width>
+				<height>160</height>
+                <textcolor>FFF0F0F0</textcolor>
+				<font>font_MainMenu</font>
+				<align>center</align>
+				<aligny>center</aligny>
+				<visible>!Control.IsVisible(5000)</visible>
+            </control>
+	</controls>
+</window>

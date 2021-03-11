@@ -1,0 +1,2569 @@
+# XBMC Media Center language file
+# Addon Name: m-TVGuide
+# Addon id: script.mtvguide
+# Addon Provider: mods-kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Swedish (http://www.transifex.com/projects/p/xbmc-addons/language/sv/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sv\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "This channel is missing epg data."
+msgstr "Den här kanalen saknar epg data."
+
+msgctxt "#30001"
+msgid "[B]Loading...[/B]"
+msgstr "[B]Laddar...[/B]"
+
+msgctxt "#30002"
+msgid "Calculating remaning time..."
+msgstr "Beräknar återstående tid..."
+
+msgctxt "#30003"
+msgid "Approximately {} seconds left..."
+msgstr "Ungefär {} sekunder kvar..."
+
+msgctxt "#30004"
+msgid "Loading of data already in progress..."
+msgstr "Laddning av data pågår redan..."
+
+msgctxt "#30005"
+msgid "Mouse control"
+msgstr "Muskontroll"
+
+msgctxt "#30006"
+msgid "Now"
+msgstr "Nu"
+
+msgctxt "#30007"
+msgid "[B]Tip![/B] You can also use the scroll wheel"
+msgstr "[B]Tips![/B]Du kan också använda skrollhjulet"
+
+msgctxt "#30008"
+msgid "Cancel"
+msgstr "Avbryt"
+
+msgctxt "#30009"
+msgid "Enter captcha"
+msgstr "Ange captcha"
+
+msgctxt "#30100"
+msgid "General"
+msgstr "Allmänt"
+
+msgctxt "#30101"
+msgid "EPG"
+msgstr "EPG"
+
+msgctxt "#30102"
+msgid "Show channels from category"
+msgstr "Visa kanaler från kategori"
+
+msgctxt "#30103"
+msgid "XMLTV file"
+msgstr "XMLTV Fil"
+
+msgctxt "#30104"
+msgid "Clear cache..."
+msgstr "Rensa buffert..."
+
+msgctxt "#30105"
+msgid "Done!"
+msgstr "Avslutat!"
+
+msgctxt "#30106"
+msgid "Show service notification"
+msgstr "Visa servicemeddelande"
+
+msgctxt "#30108"
+msgid "Clear all reminders..."
+msgstr "Rensa alla påminnelser..."
+
+msgctxt "#30109"
+msgid "Clear all planed recordings..."
+msgstr "Rensa alla planerade inspelningar..."
+
+msgctxt "#30110"
+msgid "Update program information on KODI startup"
+msgstr "Uppdatera program information vid uppstart"
+
+msgctxt "#30111"
+msgid "[COLOR]Enter the url address or provide a path to your EPG files[/COLOR]"
+msgstr "[COLOR]Ange url adressen eller ange en sökväg till dina EPG filer[/COLOR]"
+
+msgctxt "#30116"
+msgid "Search for channel logos in"
+msgstr "Sök efter kanal logotyper i"
+
+msgctxt "#30117"
+msgid "[COLOR]Premium EPG[/COLOR]"
+msgstr "[COLOR]Premium EPG[/COLOR]"
+
+msgctxt "#30118"
+msgid "Main"
+msgstr "Allmän"
+
+msgctxt "#30119"
+msgid "Additional"
+msgstr "Extra"
+
+msgctxt "#30120"
+msgid "Additional"
+msgstr "Extra"
+
+msgctxt "#30149"
+msgid "does not exist. Default will be set!"
+msgstr "existerar inte. Standard kommer att tillämpas!"
+
+msgctxt "#30150"
+msgid "Sorry, an error has occurred"
+msgstr "Tyvärr, ett fel har uppstått!"
+
+msgctxt "#30151"
+msgid "Error initializing EPG file:"
+msgstr "Fel vid inläsning av EPG fil:"
+
+msgctxt "#30152"
+msgid "[CR]Error loading EPG (electronic program guide). Please check if EPG url is correct or if internet connection is available and try again."
+msgstr "[CR]Fel vid inläsning av EPG (elektronisk programguide). Kontrollera om EPG url är korrekt eller om internetanslutning är tillgänglig, och försök igen."
+
+msgctxt "#30153"
+msgid "because the settings are invalid!"
+msgstr "eftersom inställningarna är ogiltiga!"
+
+msgctxt "#30154"
+msgid "It looks like your current skin"
+msgstr "Det ser ut som ditt nuvarande skal"
+
+msgctxt "#30155"
+msgid "is not supported by current version of m-TVGuide"
+msgstr "stöds inte av nuvarande version utav m-TVGuide"
+
+msgctxt "#30156"
+msgid "Please try with a different skin..."
+msgstr "Var god försök med ett annat skal..."
+
+msgctxt "#30157"
+msgid "It looks like the TV Guide database is broken."
+msgstr "Det verkar som m-TVGuide databasen är trasig."
+
+msgctxt "#30158"
+msgid "Please remove database file using option in plugin settings "Database settings""
+msgstr "Ta bort databasfilen i inställningarna under fliken "Databas""
+
+msgctxt "#30159"
+msgid "Channel configuration is unfortunately lost."
+msgstr "Kanalkonfiguration m.m. förloras tyvärr."
+
+msgctxt "#30160"
+msgid "Error is not critical and addon will start but please fix the issue!"
+msgstr "Felet är inte kritiskt och tillägget startar, radera felaktig länk!"
+
+msgctxt "#30161"
+msgid "Error is critical and programs won't be visible, please fix EPG (electronic program guide) url!"
+msgstr "Felet är kritiskt och programmen kommer inte till att vara synliga, vänligen åtgärda EPG (elektronisk programguide) url adressen!"
+
+msgctxt "#30162"
+msgid "No description"
+msgstr "Ingen beskrivning"
+
+msgctxt "#30163"
+msgid "Missing genre"
+msgstr "Ingen genre"
+
+msgctxt "#30164"
+msgid "No available information"
+msgstr "Ingen tillgänglig information"
+
+msgctxt "#30200"
+msgid "on [B]{}[/B] in 5 minutes..."
+msgstr "På [B]{}[/B] om 5 minuter..."
+
+msgctxt "#30201"
+msgid "on [B]{}[/B] is starting now..."
+msgstr "På [B]{}[/B] startar nu..."
+
+msgctxt "#30202"
+msgid "Starting scheduled program"
+msgstr "Startar det schemalagda programmet"
+
+msgctxt "#30203"
+msgid "Start scheduled program"
+msgstr "Starta schemalagt program"
+
+msgctxt "#30204"
+msgid "Cancel"
+msgstr "Avbryt"
+
+msgctxt "#30205"
+msgid "On screen display"
+msgstr "On screen display"
+
+msgctxt "#30206"
+msgid "Display current time during playback"
+msgstr "Visa aktuell tid under uppspelning"
+
+msgctxt "#30300"
+msgid "Watch {}"
+msgstr "Titta på {}"
+
+msgctxt "#30301"
+msgid "Remind"
+msgstr "Påminn"
+
+msgctxt "#30302"
+msgid "Don't remind"
+msgstr "Påminn inte"
+
+msgctxt "#30303"
+msgid "Cancel recording"
+msgstr "Avbryt inspelning"
+
+msgctxt "#30304"
+msgid "Choose stream"
+msgstr "Välj ström"
+
+msgctxt "#30305"
+msgid "You can choose your own .strm file."
+msgstr "Du kan välja din egna .strm-fil att spela, när du vill se på denna kanal."
+
+msgctxt "#30306"
+msgid "Remove stream"
+msgstr "Ta bort ström"
+
+msgctxt "#30307"
+msgid "Channels"
+msgstr "Kanaler"
+
+msgctxt "#30308"
+msgid "Exit"
+msgstr "Avsluta"
+
+msgctxt "#30309"
+msgid "Lists"
+msgstr "Listor"
+
+msgctxt "#30310"
+msgid "Channel listing"
+msgstr "Kanallista"
+
+msgctxt "#30311"
+msgid "Now"
+msgstr "Nu"
+
+msgctxt "#30312"
+msgid "Next"
+msgstr "Nästa"
+
+msgctxt "#30313"
+msgid "Start"
+msgstr "Start"
+
+msgctxt "#30314"
+msgid "Length"
+msgstr "Längd"
+
+msgctxt "#30315"
+msgid "Search"
+msgstr "Sök"
+
+msgctxt "#30316"
+msgid "Title"
+msgstr "Titel"
+
+msgctxt "#30317"
+msgid "Synopsis"
+msgstr "Synopsis"
+
+msgctxt "#30318"
+msgid "Category"
+msgstr "Kategori"
+
+msgctxt "#30319"
+msgid "Channel"
+msgstr "Kanal"
+
+msgctxt "#30320"
+msgid "New search"
+msgstr "Ny sökning"
+
+msgctxt "#30321"
+msgid "Remove search"
+msgstr "Ta bort sökning"
+
+msgctxt "#30322"
+msgid "Program search"
+msgstr "Program sökning"
+
+msgctxt "#30323"
+msgid "Synopsis search"
+msgstr "Synopsis sökning"
+
+msgctxt "#30324"
+msgid "Program category search"
+msgstr "Sökning av programkategori"
+
+msgctxt "#30325"
+msgid "All channels"
+msgstr "Alla kanaler"
+
+msgctxt "#30326"
+msgid "Channel search"
+msgstr "Kanal sökning"
+
+msgctxt "#30327"
+msgid "Program search: [COLOR gold][B]{}[/B][/COLOR]"
+msgstr "Program sökning: [COLOR gold][B]{}[/B][/COLOR]"
+
+msgctxt "#30328"
+msgid "Synopsis search:"
+msgstr "Synopsis sökning:"
+
+msgctxt "#30329"
+msgid "Today"
+msgstr "Idag"
+
+msgctxt "#30330"
+msgid "Tomorrow"
+msgstr "Imorgon"
+
+msgctxt "#30331"
+msgid "Yesterday"
+msgstr "Igår"
+
+msgctxt "#30332"
+msgid "in {} days"
+msgstr "om {} dagar"
+
+msgctxt "#30333"
+msgid "in {} day"
+msgstr "om {} dag"
+
+msgctxt "#30334"
+msgid "in {} hours"
+msgstr "om {} timmar"
+
+msgctxt "#30335"
+msgid "in {} min"
+msgstr "om {} min"
+
+msgctxt "#30336"
+msgid "Reminders"
+msgstr "Påminnelser"
+
+msgctxt "#30337"
+msgid "Recordings"
+msgstr "Inspelningar"
+
+msgctxt "#30338"
+msgid "List view"
+msgstr "List visning"
+
+msgctxt "#30339"
+msgid "List future days"
+msgstr "Lista framtida dagar"
+
+msgctxt "#30340"
+msgid "List previous hours"
+msgstr "Lista föregående timmar"
+
+msgctxt "#30341"
+msgid "Sort list by time"
+msgstr "Sortera lista efter tid"
+
+msgctxt "#30342"
+msgid "Include synopsis in title search"
+msgstr "Inkludera synopsis i titelsökning"
+
+msgctxt "#30343"
+msgid "Category list"
+msgstr "Kategori lista"
+
+msgctxt "#30344"
+msgid "Category search"
+msgstr "Kategori sökning"
+
+msgctxt "#30345"
+msgid "Category search:"
+msgstr "Kategori sökning:"
+
+msgctxt "#30346"
+msgid "Go to channel"
+msgstr "Gå till kanal"
+
+msgctxt "#30347"
+msgid "Determining order of channels"
+msgstr "Bestäm kanalordning"
+
+msgctxt "#30348"
+msgid "Enable channel order by number"
+msgstr "Aktivera kanalorder efter nummer"
+
+msgctxt "#30349"
+msgid "Play on select"
+msgstr "Vid valt nummer"
+
+msgctxt "#30350"
+msgid "Don't play"
+msgstr "Ingen uppspelning"
+
+msgctxt "#30351"
+msgid "Play only in TV mode"
+msgstr "Uppspelning endast i TV läge"
+
+msgctxt "#30352"
+msgid "Play"
+msgstr "Uppspelning"
+
+msgctxt "#30353"
+msgid "Error"
+msgstr "Fel"
+
+msgctxt "#30354"
+msgid "Please enable channel order by number in settings"
+msgstr "Vänligen aktivera kanalorder efter nummer i inställningar"
+
+msgctxt "#30355"
+msgid "Show channel logos"
+msgstr "Visa kanallogotyper"
+
+msgctxt "#30356"
+msgid "Extended information"
+msgstr "Utökad information"
+
+msgctxt "#30357"
+msgid "Search as movie"
+msgstr "Sök som film"
+
+msgctxt "#30358"
+msgid "Search as TV show"
+msgstr "Sök som TV program"
+
+msgctxt "#30359"
+msgid "Search extended information"
+msgstr "Sök utökad information"
+
+msgctxt "#30360"
+msgid "Search as all"
+msgstr "Sök som alla"
+
+msgctxt "#30361"
+msgid "Search could not be found: {}"
+msgstr "Det gick inte att hitta sökning: {}"
+
+msgctxt "#30362"
+msgid "No such movie: {}"
+msgstr "Ingen sådan film: {}"
+
+msgctxt "#30363"
+msgid "No such TV program: {}"
+msgstr "Inget sådant TV program: {}"
+
+msgctxt "#30364"
+msgid "Show program thumbnail"
+msgstr "Visa program miniatyrbild"
+
+msgctxt "#30365"
+msgid "Time [CR](Attention! Reseting database required)"
+msgstr "Tid [CR](Observera! Återställning av databas krävs)"
+
+msgctxt "#30366"
+msgid "Adjust timebar (min)"
+msgstr "Justera tidsfältet (min)"
+
+msgctxt "#30367"
+msgid "Fullscreen window size animation"
+msgstr "Helskärmsfönster animering"
+
+msgctxt "#30368"
+msgid "Site"
+msgstr "Webbplats"
+
+msgctxt "#30369"
+msgid "Login with TV provider"
+msgstr "Logga in med TV-leverantören"
+
+msgctxt "#30370"
+msgid "Operator"
+msgstr "Operatör"
+
+msgctxt "#30371"
+msgid "Reset login credentials"
+msgstr "Återställ inloggningsuppgifter"
+
+msgctxt "#30372"
+msgid "Login credentials have been reset"
+msgstr "Inloggningsuppgifter har återställts"
+
+msgctxt "#30500"
+msgid "Edit channel order and visibility"
+msgstr "Redigera kanalordning och synlighet"
+
+msgctxt "#30501"
+msgid "Press context button to set channel order, move up and down to change position. Enable and disable channels with select button."
+msgstr "Tryck på kontext knappen för att ställa in kanalorder, flytta upp och ner för att ändra position. Aktivera och inaktivera kanaler med väljarknappen."
+
+msgctxt "#30502"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#30503"
+msgid "Cancel"
+msgstr "Avbryt"
+
+msgctxt "#30504"
+msgid "Notification from mods-kodi.pl"
+msgstr "Notifiering ifrån mods-kodi.pl"
+
+msgctxt "#30505"
+msgid "Genre"
+msgstr "Genre"
+
+msgctxt "#30506"
+msgid "Episode"
+msgstr "Avsnitt"
+
+msgctxt "#30507"
+msgid "Actors"
+msgstr "Skådespelare"
+
+msgctxt "#30508"
+msgid "Year"
+msgstr "År"
+
+msgctxt "#30509"
+msgid "Director"
+msgstr "Regissör"
+
+msgctxt "#30510"
+msgid "Plot"
+msgstr "Handling"
+
+msgctxt "#30511"
+msgid "Duration"
+msgstr "Varaktighet"
+
+msgctxt "#30512"
+msgid "Rating"
+msgstr "År"
+
+msgctxt "#30400"
+msgid "CHANNELS LIST"
+msgstr "KANAL LISTA"
+
+msgctxt "#30401"
+msgid "EXIT"
+msgstr "AVSLUTA"
+
+msgctxt "#30402"
+msgid "ADDON SETTINGS"
+msgstr "TILLÄGGS INSTÄLLNINGAR"
+
+msgctxt "#30403"
+msgid "REMIND"
+msgstr "PÅMINN"
+
+msgctxt "#30404"
+msgid "PROGRAM"
+msgstr "PROGRAM"
+
+msgctxt "#30405"
+msgid "CHANNEL SETTINGS"
+msgstr "KANAL INSTÄLLNINGAR"
+
+msgctxt "#30406"
+msgid "DON'T REMIND"
+msgstr "PÅMINN INTE"
+
+msgctxt "#30407"
+msgid "CHOOSE STREAM"
+msgstr "VÄLJ STRÖM"
+
+msgctxt "#30408"
+msgid "REMOVE STREAM"
+msgstr "TA BORT STRÖM"
+
+msgctxt "#30600"
+msgid "Setup stream"
+msgstr "Ställ in ström"
+
+msgctxt "#30601"
+msgid "Stream file"
+msgstr "Ström fil"
+
+msgctxt "#30602"
+msgid "Favourites"
+msgstr "Favoriter"
+
+msgctxt "#30603"
+msgid "Addons"
+msgstr "Tillägg"
+
+msgctxt "#30604"
+msgid "Preview"
+msgstr "Förhandsvisa"
+
+msgctxt "#30605"
+msgid "Save"
+msgstr "Spara"
+
+msgctxt "#30606"
+msgid "Cancel"
+msgstr "Avbryt"
+
+msgctxt "#30607"
+msgid "Stop preview"
+msgstr "Stoppa förhandsvisning"
+
+msgctxt "#30610"
+msgid "Browse..."
+msgstr "Bläddra..."
+
+msgctxt "#30611"
+msgid "Click [B]Browse[/B] below and navigate to your stream file.[CR]When you have chosen your file you can preview the stream to test if it works in KODI."
+msgstr "Klicka på [B]Bläddra[/B] nedan och navigera till din ström-fil.[CR]När du har valt din fil kan du förhandsvisa strömmen för att prova att det fungerar i KODI."
+
+msgctxt "#30620"
+msgid "Choose a favourite. Only [B]PlayMedia[/B] favourites are supported."
+msgstr "Välj en favorit nedan. Endast [B]PlayMedia[/B] favoriter stödjs."
+
+msgctxt "#30621"
+msgid "Live, schedule recording or download program.[CR]Add a task, use time-shift to urge or delay start of recording / download."
+msgstr "Inspelning av direktsända, schemalagda eller nedladdade program.[CR]Lägg till en inspelning, använd time-shift för att påskynda eller fördröja starten på inspelningen / nedladdningen."
+
+msgctxt "#30700"
+msgid "Multiple addons provide this channels.[CR]Choose one to watch the stream."
+msgstr "Flera tillägg tillhandahåller dessa kanaler.[CR]Välj ett för att titta på strömmen."
+
+msgctxt "#30701"
+msgid "Source: "
+msgstr "Källa: "
+
+msgctxt "#30702"
+msgid "Appearance"
+msgstr "Utseende"
+
+msgctxt "#30703"
+msgid "Automatically assign streams"
+msgstr "Tillsätt strömmar automatiskt"
+
+msgctxt "#30704"
+msgid "Use zipped epg"
+msgstr "Använd nerpackad EPG"
+
+msgctxt "#30705"
+msgid "Show only programs with stream assigned"
+msgstr "Visa endast program med tilldelad ström"
+
+msgctxt "#30706"
+msgid "Auto detect EPG change"
+msgstr "Detektera automatiskt EPG förändringar"
+
+msgctxt "#30707"
+msgid "Show info notification"
+msgstr "Visa allmän info"
+
+msgctxt "#30708"
+msgid "Use fast EPG parser"
+msgstr "Använd snabb EPG parser"
+
+msgctxt "#30709"
+msgid "Skin updated"
+msgstr "Skal uppdaterad"
+
+msgctxt "#30710"
+msgid "Update"
+msgstr "Uppdatera"
+
+msgctxt "#30711"
+msgid "Get more..."
+msgstr "Hämta fler..."
+
+msgctxt "#30712"
+msgid "All online skins are already installed!"
+msgstr "Alla nedladdade skal är redan installerade!"
+
+msgctxt "#30713"
+msgid "Failed to download skin!"
+msgstr "Det gick inte att hämta skalet!"
+
+msgctxt "#30714"
+msgid "Delete all skins"
+msgstr "Radera alla skal"
+
+msgctxt "#30715"
+msgid "Enable adult channels"
+msgstr "Aktivera vuxen kanaler"
+
+msgctxt "#30716"
+msgid "Enable swedish channels"
+msgstr "Aktivera svenska kanaler"
+
+msgctxt "#30717"
+msgid "EPG - XXX"
+msgstr "EPG - XXX"
+
+msgctxt "#30718"
+msgid "EPG - Swedish"
+msgstr "EPG - Svensk"
+
+msgctxt "#30719"
+msgid "Disable"
+msgstr "Inaktivera"
+
+msgctxt "#30720"
+msgid "Disabled"
+msgstr "Inaktiverad"
+
+msgctxt "#30721"
+msgid "Enabled"
+msgstr "Aktiverad"
+
+msgctxt "#30722"
+msgid "Enable"
+msgstr "Aktivera"
+
+msgctxt "#30723"
+msgid "Password for adult channels taken from mods-kodi"
+msgstr "Ange lösenord ifrån mods-kodi för att låsa upp vuxen kanaler"
+
+msgctxt "#30724"
+msgid "Incorrect password!"
+msgstr "Fel lösenord!"
+
+msgctxt "#30725"
+msgid "Enable english channels"
+msgstr "Aktivera engelska kanaler"
+
+msgctxt "#30726"
+msgid "EPG - English"
+msgstr "EPG - Engelsk"
+
+msgctxt "#30727"
+msgid "Enable danish channels"
+msgstr "Aktivera danska kanaler"
+
+msgctxt "#30728"
+msgid "EPG - Danish"
+msgstr "EPG - Dansk"
+
+msgctxt "#30729"
+msgid "Enable french channels"
+msgstr "Aktivera franska kanaler"
+
+msgctxt "#30730"
+msgid "EPG - French"
+msgstr "EPG - Fransk"
+
+msgctxt "#30731"
+msgid "Enable german channels"
+msgstr "Aktivera tyska kanaler"
+
+msgctxt "#30732"
+msgid "EPG - German"
+msgstr "EPG - Tysk"
+
+msgctxt "#30733"
+msgid "Enable croatian channels"
+msgstr "Aktivera kroatiska kanaler"
+
+msgctxt "#30734"
+msgid "EPG - Croatian"
+msgstr "EPG - Kroatisk"
+
+msgctxt "#30735"
+msgid "Enable serbian channels"
+msgstr "Aktivera serbiska kanaler"
+
+msgctxt "#30736"
+msgid "EPG - Serbian"
+msgstr "EPG - Serbisk"
+
+msgctxt "#30737"
+msgid "Enable norwegian channels"
+msgstr "Aktivera norska kanaler"
+
+msgctxt "#30738"
+msgid "EPG - Norwegian"
+msgstr "EPG - Norsk"
+
+msgctxt "#30739"
+msgid "Show all regions"
+msgstr "Visa alla regioner"
+
+msgctxt "#30740"
+msgid "[COLOR]Select EPG[/COLOR]"
+msgstr "[COLOR]Välj EPG[/COLOR]"
+
+msgctxt "#30741"
+msgid "Adult channels"
+msgstr "Vuxen kanaler"
+
+msgctxt "#30742"
+msgid "Timezone"
+msgstr "Tidszon"
+
+msgctxt "#30743"
+msgid "Enable benelux channels"
+msgstr "Aktivera benelux kanaler"
+
+msgctxt "#30744"
+msgid "EPG - Benelux"
+msgstr "EPG - Benelux"
+
+msgctxt "#30745"
+msgid "Enable vod channels"
+msgstr "Aktivera vod kanaler"
+
+msgctxt "#30746"
+msgid "Video on demand channels"
+msgstr "Video on demand kanaler"
+
+msgctxt "#30747"
+msgid "adult channels"
+msgstr "vuxen kanaler"
+
+msgctxt "#30748"
+msgid "vod channels"
+msgstr "vod kanaler"
+
+msgctxt "#30749"
+msgid "Enable radio channels"
+msgstr "Aktivera radio kanaler"
+
+msgctxt "#30750"
+msgid "EPG - Radio"
+msgstr "EPG - Radio"
+
+msgctxt "#30751"
+msgid "Radio channels"
+msgstr "Radio kanaler"
+
+msgctxt "#30752"
+msgid "EPG - Czech"
+msgstr "EPG - Tjeckisk"
+
+msgctxt "#30753"
+msgid "Enable czech channels"
+msgstr "Aktivera tjeckiska kanaler"
+
+msgctxt "#30754"
+msgid "EPG - US"
+msgstr "EPG - US"
+
+msgctxt "#30755"
+msgid "Enable american channels"
+msgstr "Aktivera amerikanska kanaler"
+
+msgctxt "#30756"
+msgid "EPG - Italian"
+msgstr "EPG - Italiensk"
+
+msgctxt "#30757"
+msgid "Enable italian channels"
+msgstr "Aktivera italienska kanaler"
+
+msgctxt "#30758"
+msgid "Polish channels"
+msgstr "Polska kanaler"
+
+msgctxt "#30759"
+msgid "Enable polish channels [COLOR disabled](Use main EPG)[/COLOR]"
+msgstr "Aktivera polska kanaler [COLOR disabled](Använd allmän EPG)[/COLOR]"
+
+msgctxt "#30760"
+msgid "Enable subtitles"
+msgstr "Aktivera undertexter"
+
+msgctxt "#30802"
+msgid "m-TVGuide is configured to stream using"
+msgstr "m-TVGuide är konfigurerat att strömma med hjälp av"
+
+msgctxt "#30803"
+msgid "addon which is not installed."
+msgstr "tillägg som inte är installerat."
+
+msgctxt "#30804"
+msgid "Streaming using that addon is now disabled."
+msgstr "Strömning med det tillägget är nu inaktiverat."
+
+msgctxt "#30901"
+msgid "Update"
+msgstr "Uppdatera"
+
+msgctxt "#30902"
+msgid "Update now"
+msgstr "Uppdatera nu"
+
+msgctxt "#30904"
+msgid "[COLOR]Telia Play[/COLOR]"
+msgstr "[COLOR]Telia Play[/COLOR]"
+
+msgctxt "#30905"
+msgid "Advertisement"
+msgstr "Reklam"
+
+msgctxt "#30910"
+msgid "Enable navigation panel for mouse or touch"
+msgstr "Aktivera navigeringspanel för mus eller touch"
+
+msgctxt "#30911"
+msgid "Timezone UTC (+00:00 GMT)"
+msgstr "Tidszon UTC (+00:00 GMT)"
+
+msgctxt "#59904"
+msgid "Enable"
+msgstr "Aktivera"
+
+msgctxt "#59905"
+msgid "[COLOR]Playlists M3U[/COLOR]"
+msgstr "[COLOR]Spellistor M3U[/COLOR]"
+
+msgctxt "#59906"
+msgid "Link"
+msgstr "Länk"
+
+msgctxt "#59907"
+msgid "Source"
+msgstr "Källa"
+
+msgctxt "#59908"
+msgid "File"
+msgstr "Fil"
+
+msgctxt "#59909"
+msgid "Multisession"
+msgstr "Multisession"
+
+msgctxt "#59910"
+msgid "Use free account"
+msgstr "Använd gratis konto"
+
+msgctxt "#59911"
+msgid "[COLOR]Playlist 1[/COLOR]"
+msgstr "[COLOR]Spellista 1[/COLOR]"
+
+msgctxt "#59912"
+msgid "[COLOR]Playlist 2[/COLOR]"
+msgstr "[COLOR]Spellista 2[/COLOR]"
+
+msgctxt "#59913"
+msgid "[COLOR]Playlist 3[/COLOR]"
+msgstr "[COLOR]Spellista 3[/COLOR]"
+
+msgctxt "#59914"
+msgid "Display name"
+msgstr "Visnings namn"
+
+msgctxt "#59915"
+msgid "Loading service"
+msgstr "Laddar"
+
+msgctxt "#59916"
+msgid "Number of playlists"
+msgstr "Antal spellistor"
+
+msgctxt "#59917"
+msgid "[COLOR]Playlist 4[/COLOR]"
+msgstr "[COLOR]Spellista 4[/COLOR]"
+
+msgctxt "#59918"
+msgid "[COLOR]Playlist 5[/COLOR]"
+msgstr "[COLOR]Spellista 5[/COLOR]"
+
+msgctxt "#59919"
+msgid "Url"
+msgstr "Url"
+
+msgctxt "#59920"
+msgid "[COLOR]C More[/COLOR]"
+msgstr "C More"
+
+msgctxt "#59921"
+msgid "[COLOR]Cyfrowy Polsat GO[/COLOR]"
+msgstr "Cyfrowy Polsat GO"
+
+msgctxt "#59922"
+msgid "[COLOR]FranceTV[/COLOR]"
+msgstr "FranceTV"
+
+msgctxt "#59923"
+msgid "[COLOR]nc+ GO[/COLOR]"
+msgstr "nc+ GO"
+
+msgctxt "#59924"
+msgid "Configuration tutorial"
+msgstr "Konfigurationshandledning"
+
+msgctxt "#59925"
+msgid "Belgium"
+msgstr "Belgien"
+
+msgctxt "#59926"
+msgid "Czech"
+msgstr "Tjeckien"
+
+msgctxt "#59927"
+msgid "Germany"
+msgstr "Tyskland"
+
+msgctxt "#59928"
+msgid "Denmark"
+msgstr "Danmark"
+
+msgctxt "#59929"
+msgid "France"
+msgstr "Frankrike"
+
+msgctxt "#59930"
+msgid "Croatia"
+msgstr "Kroatien"
+
+msgctxt "#59931"
+msgid "Italy"
+msgstr "Italien"
+
+msgctxt "#59932"
+msgid "Norway"
+msgstr "Norge"
+
+msgctxt "#59933"
+msgid "Poland"
+msgstr "Polen"
+
+msgctxt "#59934"
+msgid "Sweden"
+msgstr "Sverige"
+
+msgctxt "#59935"
+msgid "Serbia"
+msgstr "Serbien"
+
+msgctxt "#59936"
+msgid "Great Britain"
+msgstr "Storbritannien"
+
+msgctxt "#59937"
+msgid "United States"
+msgstr "Förenta staterna"
+
+msgctxt "#59938"
+msgid "Would you like to end setup configuration?"
+msgstr "Vill du avsluta installationskonfigurationen?"
+
+msgctxt "#59939"
+msgid "Return"
+msgstr "Återgå"
+
+msgctxt "#59940"
+msgid "Select electronic program guide (EPG) type"
+msgstr "Välj elektronisk programguide (EPG)"
+
+msgctxt "#59941"
+msgid "Enter URL link to your electronic program guide (EPG)"
+msgstr "Ange URL länk till din elektroniska programguide (EPG)"
+
+msgctxt "#59942"
+msgid "Select your electronic program guide (EPG) file"
+msgstr "Välj din elektroniska programguide (EPG) fil"
+
+msgctxt "#59943"
+msgid "Select regions"
+msgstr "Välj regioner"
+
+msgctxt "#59944"
+msgid "Would you like to add an extra electronic program guide (EPG) for {} channels?"
+msgstr "Vill du lägga till en extra elektronisk programguide (EPG) för {} kanaler?"
+
+msgctxt "#59945"
+msgid "Enter URL link to your electronic program guide (EPG) for {} channels"
+msgstr "Ange URL länk till din elektroniska programguide (EPG) för {} kanaler"
+
+msgctxt "#59946"
+msgid "Select TV service or M3U playlist"
+msgstr "Välj TV tjänst eller M3U spellista"
+
+msgctxt "#59947"
+msgid "TV services"
+msgstr "TV tjänster"
+
+msgctxt "#59948"
+msgid "M3U Playlist"
+msgstr "M3U spellista"
+
+msgctxt "#59949"
+msgid "Select TV services"
+msgstr "Välj TV tjänster"
+
+msgctxt "#59950"
+msgid "Enter login credentials for {}."
+msgstr "Ange inloggningsuppgifter för {}."
+
+msgctxt "#59951"
+msgid "Would you like to login with a TV operator?"
+msgstr "Vill du logga in med en TV operatör?"
+
+msgctxt "#59952"
+msgid "Username"
+msgstr "Användarnamn"
+
+msgctxt "#59953"
+msgid "Password"
+msgstr "Lösenord"
+
+msgctxt "#59954"
+msgid "Select M3U playlist type."
+msgstr "Välj M3U spelliststyp."
+
+msgctxt "#59955"
+msgid "Enter M3U playlist URL link"
+msgstr "Ange M3U spellistans URL länk"
+
+msgctxt "#59956"
+msgid "Select M3U playlist file"
+msgstr "Välj M3U spellista"
+
+msgctxt "#59957"
+msgid "Would you like to setup recording service?"
+msgstr "Vill du ställa in inspelningstjänsten?"
+
+msgctxt "#59958"
+msgid "Select a storage location for your recordings"
+msgstr "Välj en lagringsplats för dina inspelningar"
+
+msgctxt "#59959"
+msgid "Would you like to start a configuration tutorial for m-TVGuide?"
+msgstr "Vill du starta konfigurationshandledning för m-TVGuide?"
+
+msgctxt "#59960"
+msgid "• Select electronic program guide (EPG). [COLOR grey]Supported program guides are URL link and/or .xml, .gz and .zip file extensions.[/COLOR][CR]• Select regions that are supported by the provided EPG.[CR]• Select a TV service and/or M3U playlist."
+msgstr "• Välj elektronisk programguide (EPG). [COLOR grey]Programguider som stöds är URL länk och/eller .xml, .gz och .zip filändelser.[/COLOR][CR]• Välj regioner som stöds av den medföljande EPG.[CR]• Välj en TV-tjänst och/eller M3U spellista."
+
+msgctxt "#59961"
+msgid "All settings are now configurated, you can now start m-TVGuide."
+msgstr "Alla inställningar är nu konfigurerade, du kan nu starta m-TVGuide."
+
+msgctxt "#59962"
+msgid "Would you like to add an extra EPG?"
+msgstr "Vill du lägga till en extra EPG?"
+
+msgctxt "#59963"
+msgid "Belgian"
+msgstr "Belgiska"
+
+msgctxt "#59964"
+msgid "Czech"
+msgstr "Tjeckiska"
+
+msgctxt "#59965"
+msgid "German"
+msgstr "Tyska"
+
+msgctxt "#59966"
+msgid "Danish"
+msgstr "Danska"
+
+msgctxt "#59967"
+msgid "French"
+msgstr "Franska"
+
+msgctxt "#59968"
+msgid "Croatian"
+msgstr "Kroatiska"
+
+msgctxt "#59969"
+msgid "Italian"
+msgstr "Italienska"
+
+msgctxt "#59970"
+msgid "Norwegian"
+msgstr "Norska"
+
+msgctxt "#59971"
+msgid "Polish"
+msgstr "Polska"
+
+msgctxt "#59972"
+msgid "Swedish"
+msgstr "Svenska"
+
+msgctxt "#59973"
+msgid "Serbian"
+msgstr "Serbiska"
+
+msgctxt "#59974"
+msgid "English"
+msgstr "Engelska"
+
+msgctxt "#59975"
+msgid "American"
+msgstr "Amerikanska"
+
+msgctxt "#59976"
+msgid "Catchup"
+msgstr "Timeshift"
+
+msgctxt "#59977"
+msgid "Query format string"
+msgstr "Sträng format"
+
+msgctxt "#59978"
+msgid "Enable catchup"
+msgstr "Aktivera tidsförskjutning"
+
+msgctxt "#59979"
+msgid "Wrong timeshift format."
+msgstr "Fel timeshift format"
+
+msgctxt "#59980"
+msgid "No available catchup playback."
+msgstr "Ingen tillgänglig timeshift uppspelning."
+
+msgctxt "#59981"
+msgid "- Buffer before program start (min)"
+msgstr "- Buffra före programstart (min)"
+
+msgctxt "#59982"
+msgid "- Buffer after program end (min)"
+msgstr "- Buffra efter programslut (min)"
+
+msgctxt "#59983"
+msgid "Other settings"
+msgstr "Övriga inställningar"
+
+msgctxt "#59984"
+msgid "Catchup only finished programmes"
+msgstr "Timeshift endast tillgängligt för avslutade program"
+
+msgctxt "#59985"
+msgid "Downloading:"
+msgstr "Laddar ner:"
+
+msgctxt "#59986"
+msgid "Finished downloading:"
+msgstr "Nerladdning avslutad:"
+
+msgctxt "#59987"
+msgid "No download available for this program."
+msgstr "Ingen nedladdning tilgänglig för detta program"
+
+msgctxt "#59988"
+msgid "Catchup window days"
+msgstr "Tidskift fönster dagar"
+
+msgctxt "#59989"
+msgid "Catchup type"
+msgstr "Timeshift typ"
+
+msgctxt "#59990"
+msgid "Append"
+msgstr "Append"
+
+msgctxt "#59991"
+msgid "Add channel from EPG (Electronic program guide)"
+msgstr "Lägg till kanal från EPG (Elektronisk programguide)"
+
+msgctxt "#59992"
+msgid "Add stream to selected channel"
+msgstr "Lägg till ström till vald kanal"
+
+msgctxt "#59993"
+msgid "Added channel [B]{}[/B]. Restart required for changes to take place."
+msgstr "Tillagd kanal [B]{}[/B]. Omstart krävs för att ändringar ska äga rum."
+
+msgctxt "#59994"
+msgid "Select which channels to display"
+msgstr "Välj vilka kanaler som ska visas"
+
+msgctxt "#59995"
+msgid "Missing channels"
+msgstr "Saknade kanaler"
+
+msgctxt "#59996"
+msgid "Xtream Codes"
+msgstr "Xtream Codes"
+
+msgctxt "#59997"
+msgid "Sort by selected character"
+msgstr "Sortera efter vald bokstav"
+
+msgctxt "#59998"
+msgid "Only one download session at once allowed."
+msgstr "Endast en nedladdningssession åt gång tillåten."
+
+msgctxt "#59999"
+msgid "Shift"
+msgstr "Shift"
+
+msgctxt "#60000"
+msgid "Auto"
+msgstr "Auto"
+
+msgctxt "#60001"
+msgid "Manual"
+msgstr "Manuell"
+
+msgctxt "#60002"
+msgid "Catchup window"
+msgstr "Tidskift fönster"
+
+msgctxt "#60003"
+msgid "Add single URL value"
+msgstr "Lägg till ett URL värde"
+
+msgctxt "#60004"
+msgid "Add multiple URL values"
+msgstr "Lägg till flera URL värden"
+
+msgctxt "#60005"
+msgid "Delete added channels"
+msgstr "Ta bort tillagda kanaler"
+
+msgctxt "#60006"
+msgid "Select channels to delete"
+msgstr "Välj kanaler att radera"
+
+msgctxt "#60007"
+msgid "Channels has been deleted. Restart required for changes to take place."
+msgstr "Kanaler har tagits bort. Omstart krävs för att ändringar ska äga rum."
+
+msgctxt "#60008"
+msgid "Save playlist to local drive"
+msgstr "Spara spellista till lokal disk"
+
+msgctxt "#60009"
+msgid "Update playlist (days)"
+msgstr "Uppdatera spellista (dagar)"
+
+msgctxt "#30913"
+msgid "Settings"
+msgstr "Inställningar"
+
+msgctxt "#30914"
+msgid "Skin"
+msgstr "Skal"
+
+msgctxt "#30915"
+msgid "Enable add-on autostart"
+msgstr "Aktivera automatisk uppstart"
+
+msgctxt "#30916"
+msgid "Database"
+msgstr "Databas"
+
+msgctxt "#30917"
+msgid "Fullscreen window size animation"
+msgstr "Helskärmsfönster animering"
+
+msgctxt "#30918"
+msgid "OSD on select"
+msgstr "OSD vid välj"
+
+msgctxt "#30919"
+msgid "Enable automatic channel playback"
+msgstr "Aktivera automatisk uppspelning av kanal"
+
+msgctxt "#30920"
+msgid "By channel number"
+msgstr "Efter kanalnummer"
+
+msgctxt "#30921"
+msgid "Last seen channel"
+msgstr "Senast sedd kanal"
+
+msgctxt "#30930"
+msgid "Colours"
+msgstr "Färg"
+
+msgctxt "#30931"
+msgid "[COLOR]Category colours[/COLOR]"
+msgstr "[COLOR]Kategorifärger[/COLOR]"
+
+msgctxt "#30932"
+msgid "Movies"
+msgstr "Filmer"
+
+msgctxt "#30933"
+msgid "TV series"
+msgstr "TV serier"
+
+msgctxt "#30934"
+msgid "Current events"
+msgstr "Aktuella händelser"
+
+msgctxt "#30935"
+msgid "Entertainment"
+msgstr "Underhållning"
+
+msgctxt "#30936"
+msgid "Documentaries"
+msgstr "Dokumentärer"
+
+msgctxt "#30937"
+msgid "Childrens programme"
+msgstr "Barn program"
+
+msgctxt "#30938"
+msgid "Sports"
+msgstr "Sport"
+
+msgctxt "#30939"
+msgid "Interactive entertainment"
+msgstr "Interaktiv underhållning"
+
+msgctxt "#30940"
+msgid "[COLOR]Default colors[/COLOR]"
+msgstr "[COLOR]Standard färger[/COLOR]"
+
+msgctxt "#30941"
+msgid "Default color"
+msgstr "Standard färg"
+
+msgctxt "#30942"
+msgid "Focus colour"
+msgstr "Fokus färg"
+
+msgctxt "#30943"
+msgid "Schedule colour"
+msgstr "Påminelse färg"
+
+msgctxt "#30944"
+msgid "Recording colour"
+msgstr "Inspelnings färg"
+
+msgctxt "#30950"
+msgid "Clear database"
+msgstr "Rensa databas"
+
+msgctxt "#30951"
+msgid "Database cleared"
+msgstr "Databas rensad"
+
+msgctxt "#30952"
+msgid "Delete custom streams"
+msgstr "Ta bort speciella strömmar"
+
+msgctxt "#30953"
+msgid "Export settings"
+msgstr "Exportera inställningar"
+
+msgctxt "#30954"
+msgid "Import settings"
+msgstr "Importera inställningar"
+
+msgctxt "#30955"
+msgid "Delete database file"
+msgstr "Ta bort databas fil"
+
+msgctxt "#30956"
+msgid "[COLOR]MojeFilmy[/COLOR]"
+msgstr "[COLOR]MojeFilmy[/COLOR]"
+
+msgctxt "#30957"
+msgid "Username"
+msgstr "Användarnamn"
+
+msgctxt "#30958"
+msgid "Max service startup time (sec)"
+msgstr "Max tid för uppstart av tjänst (sek)"
+
+msgctxt "#30959"
+msgid "Playlist URL"
+msgstr "Spellista URL"
+
+msgctxt "#30960"
+msgid "Reconnect broken stream"
+msgstr "Återanslut bruten ström"
+
+msgctxt "#30961"
+msgid "Max number of reattempts"
+msgstr "Max antal återanslutningsförsök"
+
+msgctxt "#30962"
+msgid "Reattempt delay (ms)"
+msgstr "Återanslutningsförsök fördröjning (ms)"
+
+msgctxt "#30963"
+msgid "Exit"
+msgstr "Avsluta"
+
+msgctxt "#30964"
+msgid "Press one more time to exit"
+msgstr "Tryck en gång till för att avsluta"
+
+msgctxt "#30965"
+msgid "Currently broadcast service"
+msgstr "Vald sändningstjänst"
+
+msgctxt "#30966"
+msgid "Movies (Interia)"
+msgstr ""
+
+msgctxt "#30967"
+msgid "TV series (Interia)"
+msgstr ""
+
+msgctxt "#30968"
+msgid "Magazine"
+msgstr "Magasin"
+
+msgctxt "#30969"
+msgid "File has been deleted"
+msgstr "Databasfilen har raderats"
+
+msgctxt "#30970"
+msgid "Assigned streams has been deleted"
+msgstr "Tilldelade strömmar har tagits bort"
+
+msgctxt "#30971"
+msgid "Reminders has been cleared"
+msgstr "Påminnelser har rensats"
+
+msgctxt "#30972"
+msgid "Scheduled recording has been cleared"
+msgstr "Schemalagd inspelning har raderats"
+
+msgctxt "#30973"
+msgid "Delete all settings"
+msgstr "Radera alla inställningar"
+
+msgctxt "#30974"
+msgid "Stop playback while switching stream"
+msgstr "Stoppa uppspelning under ström byte"
+
+msgctxt "#30975"
+msgid "Prefer HD-streams"
+msgstr "Föredra HD-ström"
+
+msgctxt "#30976"
+msgid "Refresh EPG table periodically"
+msgstr "Uppdatera EPG tabellen regelbundet"
+
+msgctxt "#30977"
+msgid "Max stream startup time (sec)"
+msgstr "Max starttid för ström (sek)"
+
+msgctxt "#30978"
+msgid "Database updated"
+msgstr "Databas uppdaterad"
+
+msgctxt "#30979"
+msgid "m-TVGuide restart required"
+msgstr "Vänligen starta om m-TVGuide"
+
+msgctxt "#30980"
+msgid "[COLOR]**WARNING!**[CR]Resetting your database will cause losing all settings![/COLOR]"
+msgstr "[COLOR]**VARNING!**[CR]En återställning av din databas kommer att radera alla inställningar![/COLOR]"
+
+msgctxt "#30981"
+msgid "Do you really want to exit"
+msgstr "Vill du verkligen avsluta"
+
+msgctxt "#30982"
+msgid "Ask on exit"
+msgstr "Fråga vid avslut"
+
+msgctxt "#30983"
+msgid "Click twice to exit"
+msgstr "Klicka två gånger för att avsluta"
+
+msgctxt "#30984"
+msgid "Add favorites"
+msgstr "Lägg till favoriter"
+
+msgctxt "#30985"
+msgid "Add"
+msgstr "Lägg till"
+
+msgctxt "#30986"
+msgid "Remove"
+msgstr "Ta bort"
+
+msgctxt "#30987"
+msgid "Clear"
+msgstr "Rensa"
+
+msgctxt "#30988"
+msgid "Sort in alphabetic order"
+msgstr "Sortera i alfabetisk ordning"
+
+msgctxt "#30989"
+msgid "Add channels to group [COLOR gold][B]{}[/B][/COLOR]"
+msgstr "Lägg till kanaler i grupp [COLOR gold][B]{}[/B][/COLOR]"
+
+msgctxt "#30990"
+msgid "Remove channels from group [COLOR gold][B]{}[/B][/COLOR]"
+msgstr "Ta bort kanaler från gruppen [COLOR gold][B]{}[/B][/COLOR]"
+
+msgctxt "#30991"
+msgid "Channel options"
+msgstr "Kanal inställningar"
+
+msgctxt "#30992"
+msgid "Group"
+msgstr "Grupp"
+
+msgctxt "#30993"
+msgid "Remember list of favorites"
+msgstr "Kom ihåg favoritlista"
+
+msgctxt "#30994"
+msgid "Help - m-TVGuide [COLOR gold]EPG[/COLOR]"
+msgstr "Hjälp - m-TVGuide [COLOR gold]EPG[/COLOR]"
+
+msgctxt "#30995"
+msgid "TV Group"
+msgstr "TV Group"
+
+msgctxt "#30996"
+msgid "There is no space for this device. Swap it with one of those already available on your account?"
+msgstr "Det finns inget utrymme för den här enheten. Byt det med en av de som redan finns på ditt konto?"
+
+msgctxt "#30997"
+msgid "Select a device to replace"
+msgstr "Välj en enhet som ska bytas ut"
+
+msgctxt "#30998"
+msgid "Catchup - m-TVGuide [COLOR gold]EPG[/COLOR]"
+msgstr "Timeshift - m-TVGuide [COLOR gold]EPG[/COLOR]"
+
+msgctxt "#30999"
+msgid "Would you like to start program [B]{}[/B] from the beginning?"
+msgstr "Vill du starta programmet [B]{}[/B] från början?"
+
+msgctxt "#31000"
+msgid "Would you like to download program [B]{}[/B]?"
+msgstr "Vill du ladda ner programmet [B]{}[/B]?"
+
+msgctxt "#58000"
+msgid "Programme information"
+msgstr "Programinformation"
+
+msgctxt "#58001"
+msgid "Select destination folder"
+msgstr "Välj målmapp"
+
+msgctxt "#58002"
+msgid "Export settings"
+msgstr "Exportera inställningar"
+
+msgctxt "#58003"
+msgid "Import settings"
+msgstr "Importera inställningar"
+
+msgctxt "#58004"
+msgid "Failure - no settings to export!"
+msgstr "Fel - inga inställningar att exportera!"
+
+msgctxt "#58005"
+msgid "Settings exported successfully"
+msgstr "Inställningar har exporteras framgångsrikt"
+
+msgctxt "#58006"
+msgid "Failure - please check if you have write permissions to that path"
+msgstr "Fel - kontrollera om du har skrivbehörighet till lokaliseringen"
+
+msgctxt "#58007"
+msgid "Select settings backup file"
+msgstr "Välj inställningar backup-fil"
+
+msgctxt "#58008"
+msgid "Settings imported successfully"
+msgstr "Inställningar har importerats framgångsrikt"
+
+msgctxt "#58009"
+msgid "Failed to import settings"
+msgstr "Det gick inte att importera inställningar"
+
+msgctxt "#58010"
+msgid "Please check if chosen file is a correct settings backup"
+msgstr "Kontrollera om vald fil är en korrekt inställnings backup"
+
+msgctxt "#58011"
+msgid "locked"
+msgstr "Låst"
+
+msgctxt "#31001"
+msgid "Enable OSD"
+msgstr "Aktivera OSD-meny"
+
+msgctxt "#31002"
+msgid "Set keys"
+msgstr "Tillsätt tangenter"
+
+msgctxt "#31003"
+msgid "SET"
+msgstr "Välj"
+
+msgctxt "#31004"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#31005"
+msgid "Home"
+msgstr "Hem"
+
+msgctxt "#31006"
+msgid "Prog -"
+msgstr "Prog -"
+
+msgctxt "#31007"
+msgid "Prog +"
+msgstr "Prog +"
+
+msgctxt "#31008"
+msgid "Stop"
+msgstr "Stop"
+
+msgctxt "#31009"
+msgid "Information"
+msgstr "Information"
+
+msgctxt "#31010"
+msgid "Context"
+msgstr "Context"
+
+msgctxt "#31011"
+msgid "Record"
+msgstr "Inspelning"
+
+msgctxt "#31012"
+msgid "Reset"
+msgstr "Reset"
+
+msgctxt "#31013"
+msgid "Defaults"
+msgstr "Standard"
+
+msgctxt "#31014"
+msgid "Change stream"
+msgstr "Byt ström"
+
+msgctxt "#31015"
+msgid "Vol +"
+msgstr "Vol +"
+
+msgctxt "#31016"
+msgid "Vol -"
+msgstr "Vol -"
+
+msgctxt "#31017"
+msgid "Switch to last seen channel"
+msgstr "Byt till senast sedd kanal"
+
+msgctxt "#31018"
+msgid "Lists"
+msgstr "Lista"
+
+msgctxt "#31019"
+msgid "Stream failed to start, aborting playback"
+msgstr "Strömen misslyckades med att starta, uppspelning avbryts"
+
+msgctxt "#31020"
+msgid "Reached reconnection limit, aborting playback"
+msgstr "Uppnådd gräns för återanslutning, uppspelning avbryts"
+
+msgctxt "#31021"
+msgid "Missing add-on: {}"
+msgstr "Tillägg saknas: {}"
+
+msgctxt "#310010"
+msgid ""
+msgstr ""
+
+msgctxt "#310011"
+msgid "Stop playback using navi back button"
+msgstr "Stoppa uppspelning i menyn"
+
+msgctxt "#310012"
+msgid "Recorded program"
+msgstr "Inspelat program"
+
+msgctxt "#310013"
+msgid "Start recorded program"
+msgstr "Starta inspelat program"
+
+msgctxt "#310014"
+msgid "Save plugin settings!"
+msgstr "Spara plugin inställningar!"
+
+msgctxt "#55001"
+msgid "Change User-Agent"
+msgstr "Ändra User-Agent"
+
+msgctxt "#55002"
+msgid "Username"
+msgstr "Användarnamn"
+
+msgctxt "#55003"
+msgid "Password"
+msgstr "Lösenord"
+
+msgctxt "#55005"
+msgid "Prefer high quality"
+msgstr "Föredra hög kvalité"
+
+msgctxt "#55007"
+msgid "TV services"
+msgstr "TV tjänster"
+
+msgctxt "#55008"
+msgid "Assign also the streams of low- quality / backup"
+msgstr "Tilldela även strömmar av låg- kvalitet / backup"
+
+msgctxt "#55010"
+msgid "0 Lowest"
+msgstr "0 Lägst"
+
+msgctxt "#55011"
+msgid "1 Very Low"
+msgstr "1 Väldigt Låg"
+
+msgctxt "#55017"
+msgid "2 Very Low"
+msgstr "2 Väldigt Låg"
+
+msgctxt "#55012"
+msgid "3 Low"
+msgstr "3 Låg"
+
+msgctxt "#55018"
+msgid "4 Low"
+msgstr "4 Låg"
+
+msgctxt "#55013"
+msgid "5 Mid"
+msgstr "5 Mellan"
+
+msgctxt "#55019"
+msgid "6 Mid"
+msgstr "6 Mellan"
+
+msgctxt "#55014"
+msgid "7 High"
+msgstr "7 Hög"
+
+msgctxt "#55020"
+msgid "8 High"
+msgstr "8 Hög"
+
+msgctxt "#55021"
+msgid "9 Very High"
+msgstr "9 Väldigt Hög"
+
+msgctxt "#55022"
+msgid "10 Very High"
+msgstr "10 Väldigt Hög"
+
+msgctxt "#55023"
+msgid "11 Highest"
+msgstr "11 Högsta"
+
+msgctxt "#55015"
+msgid "Working"
+msgstr "Startar"
+
+msgctxt "#55016"
+msgid "Now Playing"
+msgstr "Nu spelas"
+
+msgctxt "#89000"
+msgid "Select quality"
+msgstr "Välj kvalitet"
+
+msgctxt "#89001"
+msgid "Enable sleep timer"
+msgstr "Aktivera insomningstimern"
+
+msgctxt "#89002"
+msgid "Timeout action"
+msgstr "Timeout åtgärd"
+
+msgctxt "#89003"
+msgid "Timeout value (min)"
+msgstr "Timeout värde (min)"
+
+msgctxt "#89004"
+msgid "Stop playback"
+msgstr "Stoppa uppspelning"
+
+msgctxt "#89005"
+msgid "Exit Kodi"
+msgstr "Avsluta Kodi"
+
+msgctxt "#89006"
+msgid "Shutdown"
+msgstr "Stäng av"
+
+msgctxt "#89007"
+msgid "Hibernate"
+msgstr "Strömsparläge"
+
+msgctxt "#89008"
+msgid ""
+msgstr ""
+
+msgctxt "#89009"
+msgid ""
+msgstr ""
+
+msgctxt "#55009"
+msgid "Priority"
+msgstr "Prioritet"
+
+msgctxt "#57001"
+msgid "API error"
+msgstr "API fel"
+
+msgctxt "#57002"
+msgid "Could not connect to website"
+msgstr "Det gick inte att ansluta till webbsidan"
+
+msgctxt "#57003"
+msgid "Check your network connection."
+msgstr "Kontrollera nätverksanslutningen."
+
+msgctxt "#57009"
+msgid "Script error."
+msgstr "Script fel."
+
+msgctxt "#57010"
+msgid "Error on method getJsonFromAPI."
+msgstr "Fel på metod getJsonFromAPI."
+
+msgctxt "#57011"
+msgid "API connection didn't get any data."
+msgstr "API anslutning får inte några uppgifter."
+
+msgctxt "#57012"
+msgid "It could be network connection problem."
+msgstr "Det kan vara nätverksanslutnings problem."
+
+msgctxt "#57013"
+msgid "or wrong website API adress."
+msgstr "eller fel webbplats API adress."
+
+msgctxt "#57014"
+msgid "Error! (API: setPlayer)"
+msgstr "Fel! (API: setPlayer)"
+
+msgctxt "#57015"
+msgid "Could not get authorization data."
+msgstr "Det gick inte att få behörighetsdata."
+
+msgctxt "#57018"
+msgid "Playing error!"
+msgstr "Spelar fel!"
+
+msgctxt "#57019"
+msgid "Exceeded the limit of free viewing, or too many users."
+msgstr "Överskridit gränsen för gratis visning, eller för många användare."
+
+msgctxt "#57020"
+msgid "Buy premium account now to watch unlimited!"
+msgstr "Köp premium konto nu för att titta obegränsat!"
+
+msgctxt "#57021"
+msgid "Playing has been stopped."
+msgstr "Spelning har stoppats."
+
+msgctxt "#57022"
+msgid "Wrong video adress. Playing has been stopped."
+msgstr "Fel video adress. Spelning har stoppats."
+
+msgctxt "#57027"
+msgid "Server has closed connection for unknown reason! Please try again."
+msgstr "Server har stängt anslutningen pga av okänd anledning! Var god försök igen."
+
+msgctxt "#57028"
+msgid "Playing has been stopped."
+msgstr "Spelningen har stoppats."
+
+msgctxt "#57034"
+msgid "Information about user account"
+msgstr "Information om användarkonto"
+
+msgctxt "#57036"
+msgid "You do not have a premium account. Starting a sponsored broadcast."
+msgstr "Du behöver inte ha ett premiumkonto. Starta en sponsrad sändning."
+
+msgctxt "#57037"
+msgid "To purchase a premium right now go to:"
+msgstr "Om du vill köpa premium just nu gå till:"
+
+msgctxt "#57038"
+msgid "http://mods-kodi.pl/"
+msgstr "http://mods-kodi.pl/"
+
+msgctxt "#57039"
+msgid "Content is not included in your service"
+msgstr "Innehållet ingår inte i ditt paket"
+
+msgctxt "#57042"
+msgid "Error connection with website!"
+msgstr "Fel anslutning till webbplatsen!"
+
+msgctxt "#57043"
+msgid "Selected channel does not exist!"
+msgstr "Valda kanalen existerar inte!"
+
+msgctxt "#57044"
+msgid "No channel selected!"
+msgstr "Ingen kanal vald!"
+
+msgctxt "#57045"
+msgid "No active server! We are sorry."
+msgstr "Ingen aktiv server! Vi är ledsna."
+
+msgctxt "#57046"
+msgid "Rules are not accepted!"
+msgstr "Regler accepteras inte!"
+
+msgctxt "#57047"
+msgid "Go to http://mods-kodi.pl/ and accept it, to use service."
+msgstr "Gå till http://mods-kodi.pl/ och accepterar den, att använda tjänsten."
+
+msgctxt "#57048"
+msgid "Login incorrect"
+msgstr "Inloggningen misslyckades"
+
+msgctxt "#57049"
+msgid "Configured"
+msgstr "Konfiguerad"
+
+msgctxt "#57050"
+msgid "URL is incorrect!"
+msgstr "URL adressen är felaktig!"
+
+msgctxt "#57051"
+msgid "m-TVGuide"
+msgstr "m-TVGuide"
+
+msgctxt "#57052"
+msgid "Addon is already running - can't be started again"
+msgstr "Tillägget körs redan - kan inte startas igen"
+
+msgctxt "#57053"
+msgid "Asset playback blocked due to VPN/proxy"
+msgstr "Tillgång till uppspelning blockerad på grund av VPN/proxy"
+
+msgctxt "#57054"
+msgid "Service is unavailable in your location"
+msgstr "Tjänsten är inte tillgänglig i denna region"
+
+msgctxt "#57055"
+msgid "Maximum number of devices have been reached"
+msgstr "Maximalt antal enheter har lagts till"
+
+msgctxt "#68000"
+msgid "Plot"
+msgstr "Handling"
+
+msgctxt "#68001"
+msgid "Press [B]OK[/B] to show plot"
+msgstr "Tryck på [B]OK[/B] för att visa handling"
+
+msgctxt "#68002"
+msgid "Switch"
+msgstr "Byt"
+
+msgctxt "#68003"
+msgid "Play programme"
+msgstr "Spela programmet"
+
+msgctxt "#68004"
+msgid "Search YouTube"
+msgstr "YouTube sökning"
+
+msgctxt "#68005"
+msgid "Options"
+msgstr "Alternativ"
+
+msgctxt "#68006"
+msgid "Time:"
+msgstr "Tid:"
+
+msgctxt "#68007"
+msgid "Context menu"
+msgstr "Innehållsmeny"
+
+msgctxt "#68008"
+msgid "Sections"
+msgstr "Sektioner"
+
+msgctxt "#68009"
+msgid "View options"
+msgstr "Vyalternativ"
+
+msgctxt "#68010"
+msgid "Browse for playlist"
+msgstr "Bläddra efter spellista"
+
+msgctxt "#68011"
+msgid "Previous"
+msgstr "Föregående"
+
+msgctxt "#68012"
+msgid "Subtitles"
+msgstr "Undertexter"
+
+msgctxt "#68013"
+msgid "Audio language"
+msgstr "Ljudspråk"
+
+msgctxt "#68014"
+msgid "Numeric Input"
+msgstr "Numerisk Inmatning"
+
+msgctxt "#68015"
+msgid "Ends at"
+msgstr "Slutar"
+
+msgctxt "#68016"
+msgid "Not available"
+msgstr "Inte tillgänglig"
+
+msgctxt "#68017"
+msgid "Time"
+msgstr "Tid"
+
+msgctxt "#68018"
+msgid "Date"
+msgstr "Datum"
+
+msgctxt "#69000"
+msgid "Recording"
+msgstr "Inspelning"
+
+msgctxt "#69001"
+msgid "Import RTMPDUMP"
+msgstr "Importera RTMPDUMP"
+
+msgctxt "#69002"
+msgid "Import FFMPEG"
+msgstr "Importera FFMPEG"
+
+msgctxt "#69003"
+msgid "Record destination"
+msgstr "Inspelnings destination"
+
+msgctxt "#69004"
+msgid "Recording:"
+msgstr "Inspelning:"
+
+msgctxt "#69005"
+msgid "Finished recording:"
+msgstr "Inspelning avslutad:"
+
+msgctxt "#69006"
+msgid "Not existing record destination directory - record canceled!"
+msgstr "Inget valt inspelnings mål - inspelning avbruten!"
+
+msgctxt "#69007"
+msgid "Record error!"
+msgstr "Inspelnings fel!"
+
+msgctxt "#69008"
+msgid "Can't record due to not configured record application: "
+msgstr "Det går inte att spela in på grund av att följande inspelnings program saknas: "
+
+msgctxt "#69009"
+msgid "Record already scheduled - cancel?"
+msgstr "Inspelning redan planerad - Avbryt?"
+
+msgctxt "#69010"
+msgid "Schedule program record: "
+msgstr "Schemalägg inspelning: "
+
+msgctxt "#69011"
+msgid "Cancel ongoing recording?"
+msgstr "Avbryt pågående inspelning?"
+
+msgctxt "#69012"
+msgid "Import record app"
+msgstr "Importera inspelnings program"
+
+msgctxt "#69013"
+msgid "successfully imported"
+msgstr "Framgångsrikt importerat"
+
+msgctxt "#69014"
+msgid "FFMPEG record format"
+msgstr "FFMPEG inspelnings format"
+
+msgctxt "#69015"
+msgid "Exit despite of scheduled recording?"
+msgstr "Avsluta trots planerad inspelninging?"
+
+msgctxt "#69016"
+msgid "Use FFMPEG to record RTMP instead of RTMPDUMP"
+msgstr "Välj FFMPEG för inspelning utav RTMP istället för RTMPDUMP"
+
+msgctxt "#69017"
+msgid "Install recording applications"
+msgstr "Installera inspelnings applikationer"
+
+msgctxt "#69018"
+msgid "m-TVGuide is downloading files, Please press OK and wait until installation finishes."
+msgstr "m-TVGuide laddar ner filer. Tryck på OK och vänta tills installationen är klar."
+
+msgctxt "#69019"
+msgid "An error has occurred - try again or install manualy"
+msgstr "Ett fel har uppstått - Försök igen eller installera manuellt"
+
+msgctxt "#69020"
+msgid "Debug log"
+msgstr "Debug log"
+
+msgctxt "#69021"
+msgid "Can't find FFMPEG or RTMPDUMP in system - please try to install by packet manager RTMPDUMP, FFMPEG or libav-tools or install manualy"
+msgstr "Det går inte att hitta FFMPEG eller RTMPDUMP i systemet - försök att installera genom paket manager RTMPDUMP, FFMPEG eller libav-verktyg eller installera manuellt"
+
+msgctxt "#69022"
+msgid "Error during automatic import - try importing files manually"
+msgstr "Fel vid automatisk import - försök att importera filer manuellt"
+
+msgctxt "#69023"
+msgid "Choose OS"
+msgstr "Välj OS"
+
+msgctxt "#69024"
+msgid "Maximum number of attempts to resume recording"
+msgstr "Maximalt antal försök att återuppta inspelninging"
+
+msgctxt "#69025"
+msgid "Delete watched recordings"
+msgstr "Radera sedda inspelningingar"
+
+msgctxt "#69026"
+msgid "Delete recording"
+msgstr "Radera inspelninging"
+
+msgctxt "#69027"
+msgid "Delete watched recording"
+msgstr "Radera sedd inspelninging"
+
+msgctxt "#69028"
+msgid "Do nothing"
+msgstr "Gör ingenting"
+
+msgctxt "#69029"
+msgid "Ask"
+msgstr "Fråga"
+
+msgctxt "#69030"
+msgid "Auto delete"
+msgstr "Radera automatiskt"
+
+msgctxt "#69031"
+msgid "[COLOR]FLV format does not work on OpenELEC/LibreELEC systems[/COLOR]"
+msgstr "[COLOR]Använd endast alternativet asf för OpenELEC system[/COLOR]"
+
+msgctxt "#69032"
+msgid "[COLOR]Record application for common systems[/COLOR]"
+msgstr "[COLOR]Inspelning applikation för allmänna system[/COLOR]"
+
+msgctxt "#69033"
+msgid "Log uploaded to: "
+msgstr "Log-fil uppladdad till: "
+
+msgctxt "#69034"
+msgid "Failed to upload log"
+msgstr "Det gick inte att överföra log-fil"
+
+msgctxt "#69035"
+msgid "Upload Kodi log"
+msgstr "Ladda upp Kodi log-fil"
+
+msgctxt "#69036"
+msgid "Current EPG url is: "
+msgstr "Den aktuella EPG url är: "
+
+msgctxt "#69037"
+msgid "No free stream available in service "
+msgstr "Igen gratis ström tillgänglig"
+
+msgctxt "#69038"
+msgid "Stop player when recording is started"
+msgstr "Stoppa uppspelning vid påbörjad inspelning"
+
+msgctxt "#69039"
+msgid "Record"
+msgstr "Spela in"
+
+msgctxt "#69040"
+msgid "Video"
+msgstr "Video"
+
+msgctxt "#69041"
+msgid "Navigating in OSD previous, next program"
+msgstr "Navigering i OSD föregående, nästa program"
+
+msgctxt "#69042"
+msgid "Show extra buttons on OSD"
+msgstr "Visa extra knappar på OSD-meny"
+
+msgctxt "#69043"
+msgid "Display auto OSD on play"
+msgstr "Visa automatiskt OSD-meny vid uppspelning"
+
+msgctxt "#69044"
+msgid "Auto OSD display time (sec)"
+msgstr "OSD-meny visnings tid vid auto läge (sek)"
+
+msgctxt "#69045"
+msgid "OSD display time (sec)"
+msgstr "OSD-meny visnings tid (sek)"
+
+msgctxt "#69046"
+msgid "Show OSD on stream change"
+msgstr "Visa OSD-meny vid ström byte"
+
+msgctxt "#69047"
+msgid "Show service name in OSD"
+msgstr "Visa vald sändningstjänst i OSD-meny"
+
+msgctxt "#69048"
+msgid "Current time during playback"
+msgstr "Aktuell tid under uppspelning"
+
+msgctxt "#69049"
+msgid "Position"
+msgstr "Position"
+
+msgctxt "#69050"
+msgid "Top left"
+msgstr "Överst till vänster"
+
+msgctxt "#69051"
+msgid "Top right"
+msgstr "Överst till höger"
+
+msgctxt "#69052"
+msgid "Bottom left"
+msgstr "Nederst till vänster"
+
+msgctxt "#69053"
+msgid "Bottom right"
+msgstr "Nederst till höger"
+
+msgctxt "#69054"
+msgid "Size"
+msgstr "Storlek"
+
+msgctxt "#69055"
+msgid "[CR][CR]Link copied to clipboard"
+msgstr "[CR][CR]Länk kopierad till urklipp"
+
+msgctxt "#69056"
+msgid "Download"
+msgstr "Ladda ner"
+
+msgctxt "#69057"
+msgid "Cancel download"
+msgstr "Avbryt nedladdning"
+
+msgctxt "#70000"
+msgid "Program title"
+msgstr "Program"
+
+msgctxt "#70001"
+msgid "Channel"
+msgstr "Kanal"
+
+msgctxt "#70002"
+msgid "Start time"
+msgstr "Start tid"
+
+msgctxt "#70003"
+msgid "Record length"
+msgstr "Inspelnings längd"
+
+msgctxt "#70004"
+msgid "Start record time-shift (min)"
+msgstr "Starta inspelning time-shift (min)"
+
+msgctxt "#70005"
+msgid "End record time-shift (min)"
+msgstr "Avsluta inspelning time-shift (min)"
+
+msgctxt "#70006"
+msgid "Task settings"
+msgstr "Inspelnings inställningar"
+
+msgctxt "#70008"
+msgid "Aqua"
+msgstr "Akvamarin"
+
+msgctxt "#70009"
+msgid "Blue"
+msgstr "Blå"
+
+msgctxt "#70010"
+msgid "Green"
+msgstr "Grön"
+
+msgctxt "#70011"
+msgid "Red"
+msgstr "Röd"
+
+msgctxt "#70012"
+msgid "Purple"
+msgstr "Lila"
+
+msgctxt "#70013"
+msgid "Yellow"
+msgstr "Gul"
+
+msgctxt "#70014"
+msgid "Violet"
+msgstr "Violett"
+
+msgctxt "#70015"
+msgid "Orange"
+msgstr "Orange"
+
+msgctxt "#70007"
+msgid "Default"
+msgstr "Standard"
+
+msgctxt "#70016"
+msgid "Default focus"
+msgstr "Standard fokus"
+
+msgctxt "#70017"
+msgid "Default remind"
+msgstr "Standard påminnelse"
+
+msgctxt "#70018"
+msgid "Default record"
+msgstr "Standard inspelning"
+
+msgctxt "#70019"
+msgid "Full blue"
+msgstr "Full blå"
+
+msgctxt "#70020"
+msgid "Full red"
+msgstr "Full röd"
+
+msgctxt "#70021"
+msgid "Full orange"
+msgstr "Full orange"
+
+msgctxt "#70022"
+msgid "Dark focus"
+msgstr "Mörk fokus"
+
+msgctxt "#70100"
+msgid "Add-on Install"
+msgstr "Installera tillägg"
+
+msgctxt "#70101"
+msgid "Missing fonts. Please change skin or install font pack."
+msgstr "Saknar teckensnitt. Byt skal eller installera teckensnitt paket."
+
+msgctxt "#70102"
+msgid "Installation has finished. Kodi will now exit."
+msgstr "Installationen är klar. Kodi kommer nu att avslutas."
+
+msgctxt "#70103"
+msgid "Installation has failed. m-TVGuide will now exit."
+msgstr "Installation har misslyckats. m-TVGuide kommer nu att avslutas."
+
+msgctxt "#70104"
+msgid "Change skin"
+msgstr "Byt skal"
+
+msgctxt "#70105"
+msgid "Install font pack"
+msgstr "Installera teckensnittpaket"
+
+msgctxt "#70106"
+msgid "Would you like to replace Kodi skin fonts? This option may break your skin and is not reversible."
+msgstr "Vill du byta ut Kodi skalets teckensnitt? Det här alternativet kan ha sönder skalet och kan inte återställas."
+
+msgctxt "#70107"
+msgid "Kodi skin is missing, please download and install: {}"
+msgstr "Kodi skal saknas, ladda ner och installera: {}"
+
+msgctxt "#70108"
+msgid "Skin replacement or font installation is required to start m-TVGuide."
+msgstr "Skal byte eller font installation krävs för att starta m-TVGuide."
+
+msgctxt "#70109"
+msgid "Monday"
+msgstr "Måndag"
+
+msgctxt "#70110"
+msgid "Tuesday"
+msgstr "Tisdag"
+
+msgctxt "#70111"
+msgid "Wednesday"
+msgstr "Onsdag"
+
+msgctxt "#70112"
+msgid "Thursday"
+msgstr "Torsdag"
+
+msgctxt "#70113"
+msgid "Friday"
+msgstr "Fredag"
+
+msgctxt "#70114"
+msgid "Saturday"
+msgstr "Lördag"
+
+msgctxt "#70115"
+msgid "Sunday"
+msgstr "Söndag"
+
+msgctxt "#70116"
+msgid "Add channel"
+msgstr "Lägg till kanal"
+
+msgctxt "#70117"
+msgid "List"
+msgstr "Lista"
+
+msgctxt "#70118"
+msgid "Non-writeable {} in use. Need to make a copy in userdata folder so we can install fonts. Would you like to continue?"
+msgstr "Icke skrivbart {} i användning. Behöver skapa en kopia i userdata mappen så att vi kan installera teckensnitt. Vill du fortsätta?"
+
+msgctxt "#80005"
+msgid "[COLOR]WP Pilot[/COLOR]"
+msgstr "[COLOR]WP Pilot[/COLOR]"
+
+msgctxt "#80006"
+msgid "[COLOR]Ipla[/COLOR]"
+msgstr "[COLOR]Ipla[/COLOR]"
+
+msgctxt "#90000"
+msgid "Server"
+msgstr "Server"
+
+msgctxt "#90001"
+msgid "Getting started"
+msgstr "Hjälp"
+
+msgctxt "#90002"
+msgid "Help"
+msgstr "Kom igång"
+
+msgctxt "#90003"
+msgid "Readme"
+msgstr "Redogörelse"
+
+msgctxt "#90004"
+msgid "Credits"
+msgstr "Credits"

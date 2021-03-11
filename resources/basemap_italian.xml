@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map id="base italian" version="1.0" strm="">	
+	<channel id="AXN +1 IT" 								title="(?=AXN(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="AXN HD IT" 								title="(?=AXN(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="AXN Sci-Fi IT" 							title="(?=AXN\s*Sci(-|\s*)Fi(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Animal Planet IT" 							title="(?=Animal\s*Planet(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Automoto TV IT" 							title="(?=Automoto(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Baby TV IT" 								title="(?=Baby(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Bike Channel HD IT" 						title="(?=Bike(\s*Channel)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Bloomberg IT" 								title="(?=Bloomberg(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Boing IT" 									title="(?=Boing(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Boomerang +1 IT" 							title="(?=Boomerang(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Boomerang IT" 								title="(?=Boomerang(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="CI Crime+ Investigation HD IT" 			title="(?=(CI|Criminal|Crime)(\s*\+|Plus)?(\s*Investigation)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="CNBC IT" 									title="(?=CNBC(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="CNN Intl IT" 								title="(?=CNN(\s*Intl|\s*International)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Caccia e Pesca IT" 						title="(?=Caccia\s*e\s*Pesca(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Canale 5 DTT IT" 							title="(?=Canale\s*5(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Cartoon Network +1 IT" 					title="(?=Cartoon\s*Network(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Cartoon Network IT" 						title="(?=Cartoon\s*Network(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Cartoonito IT" 							title="(?=Cartoonito(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Cielo DTT IT" 								title="(?=Cielo(\s*DTT)?(\s*TV)?\s*IT$)" strm=""/>
+	<channel id="Cielo HD IT" 								title="(?=Cielo(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Class Horse TV IT" 						title="(?=Class\s*Horse\s*TV(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Class-Cnbc IT" 							title="(?=Class(-|\s*)Cnbc(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Classica HD IT" 							title="(?=Classica(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Comedy Central +1 IT" 						title="(?=Comedy\s*Central(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Comedy Central IT" 						title="(?=Comedy\s*Central(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="DMAX +1 IT" 								title="(?=DMAX(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="DMAX DTT IT" 								title="(?=DMAX(\s*DTT)?(\s*TV)?\s*IT$)" strm=""/>
+	<channel id="DMAX HD IT" 								title="(?=DMAX(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="DeA Junior IT" 							title="(?=DeA\s*Junior(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="DeAKids +1 IT" 							title="(?=DeAKids(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="DeAKids IT" 								title="(?=DeAKids(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Deejay TV  NOVE IT" 						title="(?=Deejay\s*TV\s*\s*NOVE(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Deejay TV NOVE DTT IT" 					title="(?=Deejay\s*TV\s*NOVE(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Discovery Channel +1 IT" 					title="(?=(Discovery|Disc.)(\s*Channel)?(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Discovery Channel HD IT" 					title="(?=(Discovery|Disc.)(\s*Channel)?(\s*HD)?(\s*IT)$)" strm=""/>
+	<channel id="Discovery Science HD IT" 					title="(?=(Discovery|Disc.)\s*Science(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Discovery Travel &amp; Living HD IT" 		title="(?=(Discovery|Disc.)\s*Travel(\s*&amp;\s*Living)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Disney Channel +1 IT" 						title="(?=Disney\s*Channel(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Disney Channel +2 IT" 						title="(?=Disney\s*Channel(\s*\+2)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Disney Channel HD IT" 						title="(?=Disney\s*Channel(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Disney Junior +1 IT" 						title="(?=Disney\s*Junior(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Disney Junior IT" 							title="(?=Disney\s*Junior(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Disney XD +1 IT" 							title="(?=Disney\s*XD(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Disney XD +2 IT" 							title="(?=Disney\s*XD(\s*\+2)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Disney XD HD IT" 							title="(?=Disney\s*XD\s*HD(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Disney in English IT" 						title="(?=Disney(\s*in\s*English)?(\s*TV)?(\s*HD)?\s*(IT|UK)$)" strm=""/>
+	<channel id="Doctors Life IT" 							title="(?=Doctors\s*Life(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Dove IT" 									title="(?=Dove(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Euronews IT" 								title="(?=Euronews(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Eurosport 2 HD IT" 						title="(?=Eurosport\s*2\s*HD(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Eurosport HD IT" 							title="(?=Eurosport(\s*1)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Focus DTT IT" 								title="(?=Focus(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Focus Tv IT" 								title="(?=Focus\s*Tv(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Fox +1 IT" 								title="(?=Fox(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Fox Animation HD IT" 						title="(?=Fox\s*Animation\s*HD(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Fox Business IT" 							title="(?=Fox\s*Business(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Fox Comedy HD IT" 							title="(?=Fox\s*Comedy\s*HD(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Fox Crime +1 IT" 							title="(?=Fox\s*Crime(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Fox Crime Europe IT" 						title="(?=Fox\s*Crime\s*Europe(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Fox Crime HD IT" 							title="(?=Fox\s*Crime(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Fox HD IT" 								title="(?=Fox(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Fox Life +1 IT" 							title="(?=Fox\s*Life(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Fox Life HD IT" 							title="(?=Fox\s*Life(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Fox News IT" 								title="(?=Fox\s*News(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Fox Sports HD IT" 							title="(?=Fox\s*Sports(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="France 24 DTT IT" 							title="(?=France\s*24(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="France 24 English IT" 						title="(?=France\s*24\s*English(\s*TV)?(\s*HD)?\s*(IT|UK)$)" strm=""/>
+	<channel id="France 24 IT" 								title="(?=France\s*24(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Frisbee DTT IT" 							title="(?=Frisbee(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Frisbee IT" 								title="(?=Frisbee(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="GIALLO DTT IT" 							title="(?=GIALLO(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Gambero Rosso HD IT" 						title="(?=Gambero\s*Rosso\s*HD(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Giallo IT" 								title="(?=Giallo(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Hip Hop TV IT" 							title="(?=Hip\s*Hop\s*TV(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="History Channel +1 IT" 					title="(?=History(\s*Channel)?(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="History Channel HD IT" 					title="(?=History(\s*Channel)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="I24news IT" 								title="(?=I24news(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Inter Channel IT" 							title="(?=Inter(\s*Channel)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Iris IT" 									title="(?=Iris(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Italia 1 DTT IT" 							title="(?=Italia(\s*1)?(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Juventus TV IT" 							title="(?=Juventus(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="K2 IT" 									title="(?=K2(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="K2 Kids TV DTT IT" 						title="(?=K2\s*Kids(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="LEI +1 IT" 								title="(?=LEI(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="La Sposa IT" 								title="(?=La\s*Sposa(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="La3 IT" 									title="(?=La\s*3(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="La5 IT" 									title="(?=La\s*5(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="La7 DTT IT" 								title="(?=La\s*7(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="La7 IT" 									title="(?=La\s*7(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="La7D IT" 									title="(?=La\s*7D(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Laeffe IT" 								title="(?=Laeffe(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Lazio Style Channel IT" 					title="(?=Lazio\s*Style(\s*Channel)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Lei IT" 									title="(?=Lei(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="MAN-GA IT" 								title="(?=MAN(-|\s*)GA(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="MTV HD IT" 								title="(?=MTV(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="MTV Hits IT" 								title="(?=MTV\s*Hits(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="MTV Music DTT IT" 							title="(?=MTV\s*Music(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="MTV Music IT" 								title="(?=MTV\s*Music(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="MTV Rocks IT" 								title="(?=MTV\s*Rocks(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Mediaset Extra IT" 						title="(?=Mediaset\s*Extra(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Mediaset Italia Due DTT IT" 				title="(?=Mediaset\s*Italia\s*Due(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Milan TV HD IT" 							title="(?=Milan(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="My Deejay IT" 								title="(?=My\s*Deejay(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Nat Geo People HD IT" 						title="(?=(Nat|National)(\s*Geo|Geographic)\s*People\s*HD\s*IT$)" strm=""/>
+	<channel id="Nat Geo Wild +1 IT" 						title="(?=(Nat|National)(\s*Geo|Geographic)\s*Wild(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Nat Geo Wild HD IT" 						title="(?=(Nat|National)(\s*Geo|Geographic)\s*Wild\s*HD(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="National Geo +1 IT" 						title="(?=(Nat|National)(\s*Geo|Geographic)(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="National Geo HD IT" 						title="(?=(Nat|National)(\s*Geo|Geographic)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Nick Junior +1 IT" 						title="(?=Nick\s*(Jr|Jr.)(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Nick Junior IT" 							title="(?=Nick\s*(Jr|Jr.)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Nickelodeon +1 IT" 						title="(?=(Nick|Nickelodeon)(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Nickelodeon IT" 							title="(?=(Nick|Nickelodeon)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Pesca e Caccia IT" 						title="(?=Pesca\s*e\s*Caccia(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="PokerItalia24 IT" 							title="(?=Poker\s*Italia\s*24(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 1 IT" 							title="(?=Primafila(\s*1)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 10 IT" 							title="(?=Primafila\s*10(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 11 IT" 							title="(?=Primafila\s*11(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 12 IT" 							title="(?=Primafila\s*12(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 13 IT" 							title="(?=Primafila\s*13(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 14 IT" 							title="(?=Primafila\s*14(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 15 IT" 							title="(?=Primafila\s*15(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 16 IT" 							title="(?=Primafila\s*16(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 17 IT" 							title="(?=Primafila\s*17(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 18 IT" 							title="(?=Primafila\s*18(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 19 IT" 							title="(?=Primafila\s*19(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 2 IT" 							title="(?=Primafila\s*2(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 3 HD IT" 						title="(?=Primafila\s*3\s*HD(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 4 IT" 							title="(?=Primafila\s*4(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 5 IT" 							title="(?=Primafila\s*5(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 6 IT" 							title="(?=Primafila\s*6(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 7 HD IT" 						title="(?=Primafila\s*7\s*HD(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 8 IT" 							title="(?=Primafila\s*8(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 9 IT" 							title="(?=Primafila\s*9(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="QVC DTT IT" 								title="(?=QVC(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="QVC IT" 									title="(?=QVC(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="RT Doc HD IT" 								title="(?=RT\s*Doc(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="RTL 102.5 TV DTT IT" 						title="(?=RTL\s*102(\.)5(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="RTL 102.5 TV IT" 							title="(?=RTL\s*102(\.)5(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Radio Italia TV IT" 						title="(?=Radio\s*Italia(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Radionorba TV IT" 							title="(?=Radionorba\s*TV(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai 1 DTT IT" 								title="(?=Rai(\s*1|\s*Uno)?(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai 2 DTT IT" 								title="(?=Rai\s*(2|Due)(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai 3 DTT IT" 								title="(?=Rai\s*(3|Tre)(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai 4 DTT IT" 								title="(?=Rai\s*(4|Quattro)(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai 4 IT" 									title="(?=Rai\s*(4|Quattro)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai 5 IT" 									title="(?=Rai\s*(5|Cinque)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai Due IT" 								title="(?=Rai\s*(2|Due)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai Gulp IT" 								title="(?=Rai\s*Gulp(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai Movie IT" 								title="(?=Rai\s*Movie(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai News DTT IT" 							title="(?=Rai\s*News(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai News IT" 								title="(?=Rai\s*News(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai Premium IT" 							title="(?=Rai\s*Premium(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai Sport 1 DTT IT" 						title="(?=Rai\s*Sport\s*1(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai Sport 1 IT" 							title="(?=Rai\s*Sport\s*1(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai Sport 2 DTT IT" 						title="(?=Rai\s*Sport\s*2(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai Sport 2 IT" 							title="(?=Rai\s*Sport\s*2(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai Storia IT" 							title="(?=Rai\s*Storia(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai Tre IT" 								title="(?=Rai\s*(3|Tre)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai Uno IT" 								title="(?=Rai\s*(1|Uno)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai Yoyo IT" 								title="(?=Rai\s*Yoyo(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Real Time +1 IT" 							title="(?=Real\s*Time(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Real Time DTT IT" 							title="(?=Real\s*Time(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Real Time HD IT" 							title="(?=Real\s*Time(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rete 4 DTT IT" 							title="(?=Rete\s*(4|Quattro)(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Reteconomy IT" 							title="(?=Reteconomy(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rock TV IT" 								title="(?=Rock\s*TV(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Roma TV IT" 								title="(?=Roma\s*TV(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Russia Today IT" 							title="(?=Russia\s*Today(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="SMtv San Marino IT" 						title="(?=SM\s*tv(\s*San\s*Marino)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky 3D - Ch 150 IT" 						title="(?=Sky\s*3D\s*-\s*(Ch|Channel)\s*150(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky 3D - Ch 209 IT" 						title="(?=Sky\s*3D\s*-\s*(Ch|Channel)\s*209(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky 3D - Ch 321 IT" 						title="(?=Sky\s*3D\s*-\s*(Ch|Channel)\s*321(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Arte HD IT" 							title="(?=Sky\s*Arte(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Arte HD-400 IT" 						title="(?=Sky\s*Arte(\s*TV)?(\s*HD)?\s*(-|\s*)400\s*IT$)" strm=""/>
+	<channel id="Sky Atlantic HD IT" 						title="(?=Sky\s*Atlantic(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Calcio 1 HD IT" 						title="(?=Sky\s*Calcio(\s*1)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Calcio 10 IT" 							title="(?=Sky\s*Calcio\s*10(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Calcio 11 IT" 							title="(?=Sky\s*Calcio\s*11(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Calcio 12 IT" 							title="(?=Sky\s*Calcio\s*12(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Calcio 13 IT" 							title="(?=Sky\s*Calcio\s*13(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Calcio 2 HD IT" 						title="(?=Sky\s*Calcio\s*2(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Calcio 3 HD IT" 						title="(?=Sky\s*Calcio\s*3(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Calcio 4 HD IT" 						title="(?=Sky\s*Calcio\s*4(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Calcio 5 HD IT" 						title="(?=Sky\s*Calcio\s*5(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Calcio 6 HD IT" 						title="(?=Sky\s*Calcio\s*6(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Calcio 7 HD IT" 						title="(?=Sky\s*Calcio\s*7(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Calcio 8 HD IT" 						title="(?=Sky\s*Calcio\s*8(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Calcio 9 IT" 							title="(?=Sky\s*Calcio\s*9(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Cinema +1 HD IT" 						title="(?=Sky\s*Cinema(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Cinema +24 HD IT" 						title="(?=Sky\s*Cinema\s*\+24(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Cinema Classics HD IT" 				title="(?=Sky\s*Cinema\s*Classics(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Cinema Comedy HD IT" 					title="(?=Sky\s*Cinema\s*Comedy(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Cinema Cult HD IT" 					title="(?=Sky\s*Cinema\s*Cult(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Cinema Family +1 HD IT" 				title="(?=Sky\s*Cinema\s*Family(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Cinema Family HD IT" 					title="(?=Sky\s*Cinema\s*Family(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Cinema Hits HD IT" 					title="(?=Sky\s*Cinema\s*Hits(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Cinema Max +1 HD IT" 					title="(?=Sky\s*Cinema\s*Max(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Cinema Max HD IT" 						title="(?=Sky\s*Cinema\s*Max(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Cinema Passion HD IT" 					title="(?=Sky\s*Cinema\s*Passion(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Cinema Uno HD IT" 						title="(?=Sky\s*Cinema\s*Uno(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Generation HD IT" 						title="(?=Sky\s*Generation(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Music IT" 								title="(?=Sky\s*Music(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky News IT" 								title="(?=Sky\s*News(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Radio IT" 								title="(?=Sky\s*Radio(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Sport 1 HD IT" 						title="(?=Sky\s*Sport(\s*1)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Sport 2 HD IT" 						title="(?=Sky\s*Sport\s*2(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Sport 3 HD IT" 						title="(?=Sky\s*Sport\s*3(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Sport F1 HD IT" 						title="(?=Sky\s*Sport\s*F1(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Sport Mix HD IT" 						title="(?=Sky\s*Sport\s*Mix(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Sport MotoGP HD IT" 					title="(?=Sky\s*Sport\s*MotoGP(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Sport Plus HD IT" 						title="(?=Sky\s*Sport\s*Plus(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Sport24 HD IT" 						title="(?=Sky\s*Sport\s*24(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Supercalcio HD IT" 					title="(?=Sky\s*Supercalcio(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky TG24 Meteo IT" 						title="(?=Sky\s*TG\s*24\s*Meteo(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky TG24 HD IT" 							title="(?=Sky\s*TG\s*24(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky TG24 DTT +2 IT" 						title="(?=Sky\s*TG\s*24(\s*DTT)(\s*\+2)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Uno HD IT" 							title="(?=Sky\s*Uno(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Uno +1 HD IT" 							title="(?=Sky\s*Uno(\s*\+1)\s*HD(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Uno HD IT" 							title="(?=Sky\s*Uno(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sportitalia IT" 							title="(?=Sportitalia(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Super DTT IT" 								title="(?=Super(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Super IT" 									title="(?=Super(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="SuperTennis DTT IT" 						title="(?=Super\s*Tennis(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="SuperTennis HD IT" 						title="(?=Super\s*Tennis\s*HD(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="TG Norba24 IT" 							title="(?=TG\s*Norba\s*24(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="TG24 Eventi IT" 							title="(?=TG\s*24\s*Eventi(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="TG24 Primo Piano IT" 						title="(?=TG\s*24\s*Primo\s*Piano(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="TG24 Rassegne IT" 							title="(?=TG\s*24\s*Rassegne(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="TRM h24 IT" 								title="(?=TRM\s*h24(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="TV2000 DTT IT" 							title="(?=TV\s*2000(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="TV2000 IT" 								title="(?=TV\s*2000(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="TV8 DTT IT" 								title="(?=TV\s*8(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="TV8 IT" 									title="(?=TV\s*8(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="TeenNick IT" 								title="(?=Teen\s*Nick(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Top Crime IT" 								title="(?=Top\s*Crime(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="eXplora HD IT" 							title="(?=eXplora(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	
+<!--<.it>-->
+	
+	<channel id="AXN +1.it" 								title="(?=AXN(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="AXN HD.it" 								title="(?=AXN(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="AXN Sci-Fi.it" 							title="(?=AXN\s*Sci(-|\s*)Fi(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Animal Planet.it" 							title="(?=Animal\s*Planet(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Automoto TV.it" 							title="(?=Automoto(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Baby TV.it" 								title="(?=Baby(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Bike Channel HD.it" 						title="(?=Bike(\s*Channel)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Bloomberg.it" 								title="(?=Bloomberg(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Boing.it" 									title="(?=Boing(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Boomerang +1.it" 							title="(?=Boomerang(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Boomerang.it" 								title="(?=Boomerang(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="CI Crime+ Investigation HD.it" 			title="(?=(CI|Criminal|Crime)(\s*\+|Plus)?(\s*Investigation)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="CNBC.it" 									title="(?=CNBC(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="CNN Intl.it" 								title="(?=CNN(\s*Intl|\s*International)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Caccia e Pesca.it" 						title="(?=Caccia\s*e\s*Pesca(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Canale 5 DTT.it" 							title="(?=Canale\s*5(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Cartoon Network +1.it" 					title="(?=Cartoon\s*Network(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Cartoon Network.it" 						title="(?=Cartoon\s*Network(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Cartoonito.it" 							title="(?=Cartoonito(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Cielo DTT.it" 								title="(?=Cielo(\s*DTT)?(\s*TV)?\s*IT$)" strm=""/>
+	<channel id="Cielo HD.it" 								title="(?=Cielo(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Class Horse TV.it" 						title="(?=Class\s*Horse\s*TV(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Class-Cnbc.it" 							title="(?=Class(-|\s*)Cnbc(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Classica HD.it" 							title="(?=Classica(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Comedy Central +1.it" 						title="(?=Comedy\s*Central(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Comedy Central.it" 						title="(?=Comedy\s*Central(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="DMAX +1.it" 								title="(?=DMAX(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="DMAX DTT.it" 								title="(?=DMAX(\s*DTT)?(\s*TV)?\s*IT$)" strm=""/>
+	<channel id="DMAX HD.it" 								title="(?=DMAX(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="DeA Junior.it" 							title="(?=DeA\s*Junior(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="DeAKids +1.it" 							title="(?=DeAKids(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="DeAKids.it" 								title="(?=DeAKids(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Deejay TV  NOVE.it" 						title="(?=Deejay\s*TV\s*\s*NOVE(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Deejay TV NOVE DTT.it" 					title="(?=Deejay\s*TV\s*NOVE(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Discovery Channel +1.it" 					title="(?=(Discovery|Disc.)(\s*Channel)?(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Discovery Channel HD.it" 					title="(?=(Discovery|Disc.)(\s*Channel)?(\s*HD)?(\s*IT)$)" strm=""/>
+	<channel id="Discovery Science HD.it" 					title="(?=(Discovery|Disc.)\s*Science(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Discovery Travel &amp; Living HD.it" 		title="(?=(Discovery|Disc.)\s*Travel(\s*&amp;\s*Living)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Disney Channel +1.it" 						title="(?=Disney\s*Channel(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Disney Channel +2.it" 						title="(?=Disney\s*Channel(\s*\+2)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Disney Channel HD.it" 						title="(?=Disney\s*Channel(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Disney Junior +1.it" 						title="(?=Disney\s*Junior(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Disney Junior.it" 							title="(?=Disney\s*Junior(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Disney XD +1.it" 							title="(?=Disney\s*XD(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Disney XD +2.it" 							title="(?=Disney\s*XD(\s*\+2)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Disney XD HD.it" 							title="(?=Disney\s*XD\s*HD(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Disney in English.it" 						title="(?=Disney(\s*in\s*English)?(\s*TV)?(\s*HD)?\s*(IT|UK)$)" strm=""/>
+	<channel id="Doctors Life.it" 							title="(?=Doctors\s*Life(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Dove.it" 									title="(?=Dove(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Euronews.it" 								title="(?=Euronews(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Eurosport 2 HD.it" 						title="(?=Eurosport\s*2\s*HD(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Eurosport HD.it" 							title="(?=Eurosport(\s*1)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Focus DTT.it" 								title="(?=Focus(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Focus Tv.it" 								title="(?=Focus\s*Tv(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Fox +1.it" 								title="(?=Fox(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Fox Animation HD.it" 						title="(?=Fox\s*Animation\s*HD(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Fox Business.it" 							title="(?=Fox\s*Business(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Fox Comedy HD.it" 							title="(?=Fox\s*Comedy\s*HD(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Fox Crime +1.it" 							title="(?=Fox\s*Crime(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Fox Crime Europe.it" 						title="(?=Fox\s*Crime\s*Europe(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Fox Crime HD.it" 							title="(?=Fox\s*Crime(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Fox HD.it" 								title="(?=Fox(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Fox Life +1.it" 							title="(?=Fox\s*Life(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Fox Life HD.it" 							title="(?=Fox\s*Life(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Fox News.it" 								title="(?=Fox\s*News(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Fox Sports HD.it" 							title="(?=Fox\s*Sports(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="France 24 DTT.it" 							title="(?=France\s*24(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="France 24 English.it" 						title="(?=France\s*24\s*English(\s*TV)?(\s*HD)?\s*(IT|UK)$)" strm=""/>
+	<channel id="France 24.it" 								title="(?=France\s*24(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Frisbee DTT.it" 							title="(?=Frisbee(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Frisbee.it" 								title="(?=Frisbee(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="GIALLO DTT.it" 							title="(?=GIALLO(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Gambero Rosso HD.it" 						title="(?=Gambero\s*Rosso\s*HD(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Giallo.it" 								title="(?=Giallo(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Hip Hop TV.it" 							title="(?=Hip\s*Hop\s*TV(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="History Channel +1.it" 					title="(?=History(\s*Channel)?(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="History Channel HD.it" 					title="(?=History(\s*Channel)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="I24news.it" 								title="(?=I24news(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Inter Channel.it" 							title="(?=Inter(\s*Channel)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Iris.it" 									title="(?=Iris(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Italia 1 DTT.it" 							title="(?=Italia(\s*1)?(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Juventus TV.it" 							title="(?=Juventus(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="K2.it" 									title="(?=K2(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="K2 Kids TV DTT.it" 						title="(?=K2\s*Kids(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="LEI +1.it" 								title="(?=LEI(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="La Sposa.it" 								title="(?=La\s*Sposa(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="La3.it" 									title="(?=La\s*3(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="La5.it" 									title="(?=La\s*5(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="La7 DTT.it" 								title="(?=La\s*7(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="La7.it" 									title="(?=La\s*7(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="La7D.it" 									title="(?=La\s*7D(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Laeffe.it" 								title="(?=Laeffe(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Lazio Style Channel.it" 					title="(?=Lazio\s*Style(\s*Channel)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Lei.it" 									title="(?=Lei(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="MAN-GA.it" 								title="(?=MAN(-|\s*)GA(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="MTV HD.it" 								title="(?=MTV(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="MTV Hits.it" 								title="(?=MTV\s*Hits(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="MTV Music DTT.it" 							title="(?=MTV\s*Music(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="MTV Music.it" 								title="(?=MTV\s*Music(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="MTV Rocks.it" 								title="(?=MTV\s*Rocks(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Mediaset Extra.it" 						title="(?=Mediaset\s*Extra(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Mediaset Italia Due DTT.it" 				title="(?=Mediaset\s*Italia\s*Due(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Milan TV HD.it" 							title="(?=Milan(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="My Deejay.it" 								title="(?=My\s*Deejay(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Nat Geo People HD.it" 						title="(?=(Nat|National)(\s*Geo|Geographic)\s*People\s*HD\s*IT$)" strm=""/>
+	<channel id="Nat Geo Wild +1.it" 						title="(?=(Nat|National)(\s*Geo|Geographic)\s*Wild(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Nat Geo Wild HD.it" 						title="(?=(Nat|National)(\s*Geo|Geographic)\s*Wild\s*HD(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="National Geo +1.it" 						title="(?=(Nat|National)(\s*Geo|Geographic)(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="National Geo HD.it" 						title="(?=(Nat|National)(\s*Geo|Geographic)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Nick Junior +1.it" 						title="(?=Nick\s*(Jr|Jr.)(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Nick Junior.it" 							title="(?=Nick\s*(Jr|Jr.)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Nickelodeon +1.it" 						title="(?=(Nick|Nickelodeon)(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Nickelodeon.it" 							title="(?=(Nick|Nickelodeon)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Pesca e Caccia.it" 						title="(?=Pesca\s*e\s*Caccia(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="PokerItalia24.it" 							title="(?=Poker\s*Italia\s*24(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 1.it" 							title="(?=Primafila(\s*1)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 10.it" 							title="(?=Primafila\s*10(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 11.it" 							title="(?=Primafila\s*11(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 12.it" 							title="(?=Primafila\s*12(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 13.it" 							title="(?=Primafila\s*13(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 14.it" 							title="(?=Primafila\s*14(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 15.it" 							title="(?=Primafila\s*15(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 16.it" 							title="(?=Primafila\s*16(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 17.it" 							title="(?=Primafila\s*17(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 18.it" 							title="(?=Primafila\s*18(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 19.it" 							title="(?=Primafila\s*19(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 2.it" 							title="(?=Primafila\s*2(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 3 HD.it" 						title="(?=Primafila\s*3\s*HD(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 4.it" 							title="(?=Primafila\s*4(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 5.it" 							title="(?=Primafila\s*5(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 6.it" 							title="(?=Primafila\s*6(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 7 HD.it" 						title="(?=Primafila\s*7\s*HD(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 8.it" 							title="(?=Primafila\s*8(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Primafila 9.it" 							title="(?=Primafila\s*9(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="QVC DTT.it" 								title="(?=QVC(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="QVC.it" 									title="(?=QVC(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="RT Doc HD.it" 								title="(?=RT\s*Doc(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="RTL 102.5 TV DTT.it" 						title="(?=RTL\s*102(\.)5(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="RTL 102.5 TV.it" 							title="(?=RTL\s*102(\.)5(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Radio Italia TV.it" 						title="(?=Radio\s*Italia(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Radionorba TV.it" 							title="(?=Radionorba\s*TV(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai 1 DTT.it" 								title="(?=Rai(\s*1|\s*Uno)?(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai 2 DTT.it" 								title="(?=Rai\s*(2|Due)(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai 3 DTT.it" 								title="(?=Rai\s*(3|Tre)(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai 4 DTT.it" 								title="(?=Rai\s*(4|Quattro)(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai 4.it" 									title="(?=Rai\s*(4|Quattro)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai 5.it" 									title="(?=Rai\s*(5|Cinque)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai Due.it" 								title="(?=Rai\s*(2|Due)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai Gulp.it" 								title="(?=Rai\s*Gulp(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai Movie.it" 								title="(?=Rai\s*Movie(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai News DTT.it" 							title="(?=Rai\s*News(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai News.it" 								title="(?=Rai\s*News(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai Premium.it" 							title="(?=Rai\s*Premium(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai Sport 1 DTT.it" 						title="(?=Rai\s*Sport\s*1(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai Sport 1.it" 							title="(?=Rai\s*Sport\s*1(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai Sport 2 DTT.it" 						title="(?=Rai\s*Sport\s*2(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai Sport 2.it" 							title="(?=Rai\s*Sport\s*2(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai Storia.it" 							title="(?=Rai\s*Storia(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai Tre.it" 								title="(?=Rai\s*(3|Tre)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai Uno.it" 								title="(?=Rai\s*(1|Uno)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rai Yoyo.it" 								title="(?=Rai\s*Yoyo(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Real Time +1.it" 							title="(?=Real\s*Time(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Real Time DTT.it" 							title="(?=Real\s*Time(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Real Time HD.it" 							title="(?=Real\s*Time(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rete 4 DTT.it" 							title="(?=Rete\s*(4|Quattro)(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Reteconomy.it" 							title="(?=Reteconomy(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Rock TV.it" 								title="(?=Rock\s*TV(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Roma TV.it" 								title="(?=Roma\s*TV(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Russia Today.it" 							title="(?=Russia\s*Today(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="SMtv San Marino.it" 						title="(?=SM\s*tv(\s*San\s*Marino)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky 3D - Ch 150.it" 						title="(?=Sky\s*3D\s*-\s*(Ch|Channel)\s*150(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky 3D - Ch 209.it" 						title="(?=Sky\s*3D\s*-\s*(Ch|Channel)\s*209(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky 3D - Ch 321.it" 						title="(?=Sky\s*3D\s*-\s*(Ch|Channel)\s*321(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Arte HD.it" 							title="(?=Sky\s*Arte(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Arte HD-400.it" 						title="(?=Sky\s*Arte(\s*TV)?(\s*HD)?\s*(-|\s*)400\s*IT$)" strm=""/>
+	<channel id="Sky Atlantic HD.it" 						title="(?=Sky\s*Atlantic(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Calcio 1 HD.it" 						title="(?=Sky\s*Calcio(\s*1)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Calcio 10.it" 							title="(?=Sky\s*Calcio\s*10(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Calcio 11.it" 							title="(?=Sky\s*Calcio\s*11(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Calcio 12.it" 							title="(?=Sky\s*Calcio\s*12(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Calcio 13.it" 							title="(?=Sky\s*Calcio\s*13(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Calcio 2 HD.it" 						title="(?=Sky\s*Calcio\s*2(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Calcio 3 HD.it" 						title="(?=Sky\s*Calcio\s*3(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Calcio 4 HD.it" 						title="(?=Sky\s*Calcio\s*4(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Calcio 5 HD.it" 						title="(?=Sky\s*Calcio\s*5(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Calcio 6 HD.it" 						title="(?=Sky\s*Calcio\s*6(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Calcio 7 HD.it" 						title="(?=Sky\s*Calcio\s*7(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Calcio 8 HD.it" 						title="(?=Sky\s*Calcio\s*8(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Calcio 9.it" 							title="(?=Sky\s*Calcio\s*9(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Cinema +1 HD.it" 						title="(?=Sky\s*Cinema(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Cinema +24 HD.it" 						title="(?=Sky\s*Cinema\s*\+24(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Cinema Classics HD.it" 				title="(?=Sky\s*Cinema\s*Classics(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Cinema Comedy HD.it" 					title="(?=Sky\s*Cinema\s*Comedy(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Cinema Cult HD.it" 					title="(?=Sky\s*Cinema\s*Cult(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Cinema Family +1 HD.it" 				title="(?=Sky\s*Cinema\s*Family(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Cinema Family HD.it" 					title="(?=Sky\s*Cinema\s*Family(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Cinema Hits HD.it" 					title="(?=Sky\s*Cinema\s*Hits(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Cinema Max +1 HD.it" 					title="(?=Sky\s*Cinema\s*Max(\s*\+1)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Cinema Max HD.it" 						title="(?=Sky\s*Cinema\s*Max(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Cinema Passion HD.it" 					title="(?=Sky\s*Cinema\s*Passion(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Cinema Uno HD.it" 						title="(?=Sky\s*Cinema\s*Uno(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Generation HD.it" 						title="(?=Sky\s*Generation(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Music.it" 								title="(?=Sky\s*Music(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky News.it" 								title="(?=Sky\s*News(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Radio.it" 								title="(?=Sky\s*Radio(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Sport 1 HD.it" 						title="(?=Sky\s*Sport(\s*1)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Sport 2 HD.it" 						title="(?=Sky\s*Sport\s*2(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Sport 3 HD.it" 						title="(?=Sky\s*Sport\s*3(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Sport F1 HD.it" 						title="(?=Sky\s*Sport\s*F1(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Sport Mix HD.it" 						title="(?=Sky\s*Sport\s*Mix(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Sport MotoGP HD.it" 					title="(?=Sky\s*Sport\s*MotoGP(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Sport Plus HD.it" 						title="(?=Sky\s*Sport\s*Plus(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Sport24 HD.it" 						title="(?=Sky\s*Sport\s*24(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Supercalcio HD.it" 					title="(?=Sky\s*Supercalcio(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky TG24 Meteo.it" 						title="(?=Sky\s*TG\s*24\s*Meteo(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky TG24 HD.it" 							title="(?=Sky\s*TG\s*24(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky TG24 DTT +2.it" 						title="(?=Sky\s*TG\s*24(\s*DTT)(\s*\+2)(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Uno HD.it" 							title="(?=Sky\s*Uno(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Uno +1 HD.it" 							title="(?=Sky\s*Uno(\s*\+1)\s*HD(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sky Uno HD.it" 							title="(?=Sky\s*Uno(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Sportitalia.it" 							title="(?=Sportitalia(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Super DTT.it" 								title="(?=Super(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Super.it" 									title="(?=Super(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="SuperTennis DTT.it" 						title="(?=Super\s*Tennis(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="SuperTennis HD.it" 						title="(?=Super\s*Tennis\s*HD(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="TG Norba24.it" 							title="(?=TG\s*Norba\s*24(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="TG24 Eventi.it" 							title="(?=TG\s*24\s*Eventi(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="TG24 Primo Piano.it" 						title="(?=TG\s*24\s*Primo\s*Piano(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="TG24 Rassegne.it" 							title="(?=TG\s*24\s*Rassegne(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="TRM h24.it" 								title="(?=TRM\s*h24(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="TV2000 DTT.it" 							title="(?=TV\s*2000(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="TV2000.it" 								title="(?=TV\s*2000(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="TV8 DTT.it" 								title="(?=TV\s*8(\s*DTT)?(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="TV8.it" 									title="(?=TV\s*8(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="TeenNick.it" 								title="(?=Teen\s*Nick(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="Top Crime.it" 								title="(?=Top\s*Crime(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	<channel id="eXplora HD.it" 							title="(?=eXplora(\s*TV)?(\s*HD)?\s*IT$)" strm=""/>
+	
+	<category name="Movie" 									tags="Animazione|Avventura|Azione|Cinema|Commedia|Corto|Drammatico|Fantascienza|Fiction|Film|Film Animazione|Film per Adulti|Erotico|Horror|Romantico|Telefilm|Thriller|Western"/>
+	<category name="Series" 								tags="Miniserie|Sit Com|Soap Opera|Telenovela"/>
+	<category name="Information" 							tags="Economia|Meteo|News|Notiziario|Reportage"/>
+	<category name="Entertainment" 							tags="Comico|Danza|Giochi|Intrattenimento|Lifestyle|Magazine|Magazine Cinema|Magazine Cultura|Magazine Natura|Magazine Scienza|Magazine Viaggi|Moda|Musica|Musicale|Quiz|Reality Show|Show|Spettacolo|Talk Show|Teatro"/>
+	<category name="Document" 								tags="Arte e Cultura|Attualita|Biografico|Docu-Fiction|Documentario|Educational|Guerra|Mondi e culture|Motori|Natura|Religione|Scienza|Storia|Tecnologia"/>
+	<category name="Kids" 									tags="Bambini|Cartoni Animati"/>
+	<category name="Sport" 									tags="Atletica|Basket|Caccia|Calcio|Ciclismo|Equestri|Golf|Pesca|Rugby|Sci|Sport|Sport Invernali|Tennis|Vela|Volley|Wrestling"/>
+	<category name="Interactive Entertainment" 				tags="Altri|Altri Canali|Cucina|Fantastico|Poliziesco|Popoli|Shopping|Societa|Viaggi|Videoclip"/>
+</map>

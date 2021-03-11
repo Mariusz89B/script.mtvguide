@@ -1,0 +1,2569 @@
+# XBMC Media Center language file
+# Addon Name: m-TVGuide
+# Addon id: script.mtvguide
+# Addon Provider: mods-kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Croatian (http://www.transifex.com/projects/p/xbmc-addons/language/hr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hr\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+msgctxt "#30000"
+msgid "This channel is missing epg data."
+msgstr "Ovaj kanal nema epg podataka."
+
+msgctxt "#30001"
+msgid "[B]Loading...[/B]"
+msgstr "[B]Učitavanje...[/B]"
+
+msgctxt "#30002"
+msgid "Calculating remaning time..."
+msgstr "Izračunavanje vremena zadržavanja..."
+
+msgctxt "#30003"
+msgid "Approximately {} seconds left..."
+msgstr "Otprilike {} sekundi..."
+
+msgctxt "#30004"
+msgid "Loading of data already in progress..."
+msgstr "Učitavanje podataka koji su već u tijeku..."
+
+msgctxt "#30005"
+msgid "Mouse control"
+msgstr "Kontrola miša"
+
+msgctxt "#30006"
+msgid "Now"
+msgstr "Sad"
+
+msgctxt "#30007"
+msgid "[B]Tip![/B] You can also use the scroll wheel"
+msgstr "[B]Savjet![/B] Također možete koristiti kotačić za upravljanje"
+
+msgctxt "#30008"
+msgid "Cancel"
+msgstr "Otkazati"
+
+msgctxt "#30009"
+msgid "Enter captcha"
+msgstr "Unesite captcha"
+
+msgctxt "#30100"
+msgid "General"
+msgstr "Općenito"
+
+msgctxt "#30101"
+msgid "EPG"
+msgstr "EPG"
+
+msgctxt "#30102"
+msgid "Show channels from category"
+msgstr "Prikaži kanale iz kategorije"
+
+msgctxt "#30103"
+msgid "XMLTV file"
+msgstr "XMLTV datoteku"
+
+msgctxt "#30104"
+msgid "Clear cache..."
+msgstr "Očisti predmemoriju..."
+
+msgctxt "#30105"
+msgid "Done!"
+msgstr "Gotovo!"
+
+msgctxt "#30106"
+msgid "Show service notification"
+msgstr "Prikaži obavijest o usluzi"
+
+msgctxt "#30108"
+msgid "Clear all reminders..."
+msgstr "Izbriši sve podsjetnike..."
+
+msgctxt "#30109"
+msgid "Clear all planed recordings..."
+msgstr "Izbrišite sve zabilježene snimke..."
+
+msgctxt "#30110"
+msgid "Update program information on KODI startup"
+msgstr "Ažurirajte informacije o programu za pokretanje KODI-a"
+
+msgctxt "#30111"
+msgid "[COLOR]Enter the url address or provide a path to your EPG files[/COLOR]"
+msgstr "[COLOR]Unesite url adresu ili navedite put do vaših EPG datoteka[/COLOR]"
+
+msgctxt "#30116"
+msgid "Search for channel logos in"
+msgstr "Potražite logotip kanala u"
+
+msgctxt "#30117"
+msgid "[COLOR]Premium EPG[/COLOR]"
+msgstr "[COLOR]Premium EPG[/COLOR]"
+
+msgctxt "#30118"
+msgid "Main"
+msgstr "Glavni"
+
+msgctxt "#30119"
+msgid "Additional"
+msgstr "Dodatni"
+
+msgctxt "#30120"
+msgid "Additional"
+msgstr "Dodatni"
+
+msgctxt "#30149"
+msgid "does not exist. Default will be set!"
+msgstr "ne postoji. Zadano će biti postavljeno!"
+
+msgctxt "#30150"
+msgid "Sorry, an error has occurred"
+msgstr "Nažalost, došlo je do pogreške"
+
+msgctxt "#30151"
+msgid "Error initializing EPG file:"
+msgstr "Pogreška prilikom učitavanja EPG datoteke:"
+
+msgctxt "#30152"
+msgid "[CR]Error loading EPG (electronic program guide). Please check if EPG url is correct or if internet connection is available and try again."
+msgstr "[CR]Pogreška pri učitavanju EPG-a (elektronički programski vodič). Molimo provjerite je li url EPG točan ili je internetska veza dostupna i pokušajte ponovo."
+
+msgctxt "#30153"
+msgid "because the settings are invalid!"
+msgstr "jer su postavke nevažeće!"
+
+msgctxt "#30154"
+msgid "It looks like your current skin"
+msgstr "Izgleda kao vaša trenutačna koža"
+
+msgctxt "#30155"
+msgid "is not supported by current version of m-TVGuide"
+msgstr "nije podržana u trenutnoj verziji m-TVGuide"
+
+msgctxt "#30156"
+msgid "Please try with a different skin..."
+msgstr "Pokušajte s drugom kožom..."
+
+msgctxt "#30157"
+msgid "It looks like the TV Guide database is broken."
+msgstr "Izgleda da je baza TV vodiča slomljena."
+
+msgctxt "#30158"
+msgid "Please remove database file using option in plugin settings "Database settings""
+msgstr "Uklonite datoteku baze podataka pomoću opcije u postavkama dodataka \"Postavke baze podataka\""
+
+msgctxt "#30159"
+msgid "Channel configuration is unfortunately lost."
+msgstr "Nažalost, konfiguracija kanala je izgubljena."
+
+msgctxt "#30160"
+msgid "Error is not critical and addon will start but please fix the issue!"
+msgstr "Pogreška nije kritična i dodat će se, ali riješite problem!"
+
+msgctxt "#30161"
+msgid "Error is critical and programs won't be visible, please fix EPG (electronic program guide) url!"
+msgstr "Pogreška je kritična i programi neće biti vidljivi, ispravite EPG (electronic program guide) url!"
+
+msgctxt "#30162"
+msgid "No description"
+msgstr "Nema informacija"
+
+msgctxt "#30163"
+msgid "Missing genre"
+msgstr "Nedostaje žanr"
+
+msgctxt "#30164"
+msgid "No available information"
+msgstr "Nema dostupnih informacija"
+
+msgctxt "#30200"
+msgid "on [B]{}[/B] in 5 minutes..."
+msgstr "na [B]{}[/B] za 5 minuta..."
+
+msgctxt "#30201"
+msgid "on [B]{}[/B] is starting now..."
+msgstr "na [B]{}[/B] počinje sada..."
+
+msgctxt "#30202"
+msgid "Starting scheduled program"
+msgstr "Pokretanje zakazanog programa"
+
+msgctxt "#30203"
+msgid "Start scheduled program"
+msgstr "Pokreni zakazani program"
+
+msgctxt "#30204"
+msgid "Cancel"
+msgstr "Otkazati"
+
+msgctxt "#30205"
+msgid "On screen display"
+msgstr "On screen display"
+
+msgctxt "#30206"
+msgid "Display current time during playback"
+msgstr "Prikaz trenutnog vremena tijekom reprodukcije"
+
+msgctxt "#30300"
+msgid "Watch {}"
+msgstr "Pogledajte {}"
+
+msgctxt "#30301"
+msgid "Remind"
+msgstr "Podsjetiti"
+
+msgctxt "#30302"
+msgid "Don't remind"
+msgstr "Ne podsjećaj"
+
+msgctxt "#30303"
+msgid "Cancel recording"
+msgstr "Odustani od snimanja"
+
+msgctxt "#30304"
+msgid "Choose stream"
+msgstr "Odaberite stream"
+
+msgctxt "#30305"
+msgid "You can choose your own .strm file."
+msgstr "Možete odabrati vlastitu .strm datoteku."
+
+msgctxt "#30306"
+msgid "Remove stream"
+msgstr "Ukloni stream"
+
+msgctxt "#30307"
+msgid "Channels"
+msgstr "Kanali"
+
+msgctxt "#30308"
+msgid "Exit"
+msgstr "Izlaz"
+
+msgctxt "#30309"
+msgid "Lists"
+msgstr "Lista"
+
+msgctxt "#30310"
+msgid "Channel listing"
+msgstr "Lista kanala"
+
+msgctxt "#30311"
+msgid "Now"
+msgstr "Sada"
+
+msgctxt "#30312"
+msgid "Next"
+msgstr "Na sljedećem"
+
+msgctxt "#30313"
+msgid "Start"
+msgstr "Početak"
+
+msgctxt "#30314"
+msgid "Length"
+msgstr "Dužina"
+
+msgctxt "#30315"
+msgid "Search"
+msgstr "Traži"
+
+msgctxt "#30316"
+msgid "Title"
+msgstr "Titula"
+
+msgctxt "#30317"
+msgid "Synopsis"
+msgstr "Sinopsis"
+
+msgctxt "#30318"
+msgid "Category"
+msgstr "Kategorija"
+
+msgctxt "#30319"
+msgid "Channel"
+msgstr "Kanal"
+
+msgctxt "#30320"
+msgid "New search"
+msgstr "Nova pretraga"
+
+msgctxt "#30321"
+msgid "Remove search"
+msgstr "Ukloni pretraživanje"
+
+msgctxt "#30322"
+msgid "Program search"
+msgstr "Traženje programa"
+
+msgctxt "#30323"
+msgid "Synopsis search"
+msgstr "Traženje sinopsisa"
+
+msgctxt "#30324"
+msgid "Program category search"
+msgstr "Pretraživanje kategorije programa"
+
+msgctxt "#30325"
+msgid "All channels"
+msgstr "Svi kanali"
+
+msgctxt "#30326"
+msgid "Channel search"
+msgstr "Pretraživanje kanala"
+
+msgctxt "#30327"
+msgid "Program search: [COLOR gold][B]{}[/B][/COLOR]"
+msgstr "Traženje programa: [COLOR gold][B]{}[/B][/COLOR]"
+
+msgctxt "#30328"
+msgid "Synopsis search:"
+msgstr "Traženje sinopsisa:"
+
+msgctxt "#30329"
+msgid "Today"
+msgstr "Danas"
+
+msgctxt "#30330"
+msgid "Tomorrow"
+msgstr "Sutra"
+
+msgctxt "#30331"
+msgid "Yesterday"
+msgstr "Jučer"
+
+msgctxt "#30332"
+msgid "in {} days"
+msgstr "za {} dana"
+
+msgctxt "#30333"
+msgid "in {} day"
+msgstr "za {} dan"
+
+msgctxt "#30334"
+msgid "in {} hours"
+msgstr "za {} sata"
+
+msgctxt "#30335"
+msgid "in {} min"
+msgstr "za {} min"
+
+msgctxt "#30336"
+msgid "Reminders"
+msgstr "Podsjetnici"
+
+msgctxt "#30337"
+msgid "Recordings"
+msgstr "Snimke"
+
+msgctxt "#30338"
+msgid "List view"
+msgstr "Prikaz popisa"
+
+msgctxt "#30339"
+msgid "List future days"
+msgstr "Popis budućih dana"
+
+msgctxt "#30340"
+msgid "List previous hours"
+msgstr "Navedite prethodne sate"
+
+msgctxt "#30341"
+msgid "Sort list by time"
+msgstr "Sortiraj popis po vremenu"
+
+msgctxt "#30342"
+msgid "Include synopsis in title search"
+msgstr "Uključi sinopsis u pretraživanje naslova"
+
+msgctxt "#30343"
+msgid "Category list"
+msgstr "Popis kategorija"
+
+msgctxt "#30344"
+msgid "Category search"
+msgstr "Traženje kategorija"
+
+msgctxt "#30345"
+msgid "Category search:"
+msgstr "Traženje kategorija:"
+
+msgctxt "#30346"
+msgid "Go to channel"
+msgstr "Idi na program"
+
+msgctxt "#30347"
+msgid "Determining order of channels"
+msgstr "Odredite narudžbu kanala"
+
+msgctxt "#30348"
+msgid "Enable channel order by number"
+msgstr "Omogućite redoslijed kanala prema broju"
+
+msgctxt "#30349"
+msgid "Play on select"
+msgstr "Na odabranom broju"
+
+msgctxt "#30350"
+msgid "Don't play"
+msgstr "Nemojte igrati"
+
+msgctxt "#30351"
+msgid "Play only in TV mode"
+msgstr "Igrati samo u TV modu"
+
+msgctxt "#30352"
+msgid "Play"
+msgstr "Igrati"
+
+msgctxt "#30353"
+msgid "Error"
+msgstr "Greška"
+
+msgctxt "#30354"
+msgid "Please enable channel order by number in settings"
+msgstr "Omogućite poredak kanala prema broju u postavkama"
+
+msgctxt "#30355"
+msgid "Show channel logos"
+msgstr "Pokazivanje logotipa kanala"
+
+msgctxt "#30356"
+msgid "Extended information"
+msgstr "Proširene informacije"
+
+msgctxt "#30357"
+msgid "Search as movie"
+msgstr "Pretražujte kao film"
+
+msgctxt "#30358"
+msgid "Search as TV show"
+msgstr "Pretražujte kao TV emisiju"
+
+msgctxt "#30359"
+msgid "Search extended information"
+msgstr "Tražite proširene informacije"
+
+msgctxt "#30360"
+msgid "Search as all"
+msgstr "Pretražujte kao sve"
+
+msgctxt "#30361"
+msgid "Search could not be found: {}"
+msgstr "Traženje nije moguće pronaći: {}"
+
+msgctxt "#30362"
+msgid "No such movie: {}"
+msgstr "Nema takvog filma: {}"
+
+msgctxt "#30363"
+msgid "No such TV program: {}"
+msgstr "Nema takvih TV programa: {}"
+
+msgctxt "#30364"
+msgid "Show program thumbnail"
+msgstr "Prikaži sličicu programa"
+
+msgctxt "#30365"
+msgid "Time [CR](Attention! Reseting database required)"
+msgstr "Vrijeme [CR](Napomena! Ponovno postavljanje baze podataka)"
+
+msgctxt "#30366"
+msgid "Adjust timebar (min)"
+msgstr "Podesite vremensku traku (min)"
+
+msgctxt "#30367"
+msgid "Fullscreen window size animation"
+msgstr "Animacija veličine prozora na cijelom zaslonu"
+
+msgctxt "#30368"
+msgid "Site"
+msgstr "Mjesto"
+
+msgctxt "#30369"
+msgid "Login with TV provider"
+msgstr "Prijavite se putem TV davatelja"
+
+msgctxt "#30370"
+msgid "Operator"
+msgstr "Operater"
+
+msgctxt "#30371"
+msgid "Reset login credentials"
+msgstr "Ponovno postavljanje vjerodajnica za prijavu"
+
+msgctxt "#30372"
+msgid "Login credentials have been reset"
+msgstr "Akreditivi za prijavu su vraćeni"
+
+msgctxt "#30500"
+msgid "Edit channel order and visibility"
+msgstr "Uredite redoslijed kanala i vidljivost"
+
+msgctxt "#30501"
+msgid "Press context button to set channel order, move up and down to change position. Enable and disable channels with select button."
+msgstr "Pritisnite tipku konteksta za postavljanje redoslijeda kanala, pomicanje gore i dolje za promjenu položaja. Omogućite i onemogućite kanale pomoću gumba za odabir."
+
+msgctxt "#30502"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#30503"
+msgid "Cancel"
+msgstr "Otkazati"
+
+msgctxt "#30504"
+msgid "Notification from mods-kodi.pl"
+msgstr "Obavijest od mods-kodi.pl"
+
+msgctxt "#30505"
+msgid "Genre"
+msgstr "Žanr"
+
+msgctxt "#30506"
+msgid "Episode"
+msgstr "Epizoda"
+
+msgctxt "#30507"
+msgid "Actors"
+msgstr "Glumci"
+
+msgctxt "#30508"
+msgid "Year"
+msgstr "Godina"
+
+msgctxt "#30509"
+msgid "Director"
+msgstr "Režiser"
+
+msgctxt "#30510"
+msgid "Plot"
+msgstr "Zaplet"
+
+msgctxt "#30511"
+msgid "Duration"
+msgstr "Trajanje"
+
+msgctxt "#30512"
+msgid "Rating"
+msgstr "Procjena"
+
+msgctxt "#30400"
+msgid "CHANNELS LIST"
+msgstr "LISTA KANALA"
+
+msgctxt "#30401"
+msgid "EXIT"
+msgstr "IZLAZ"
+
+msgctxt "#30402"
+msgid "ADDON SETTINGS"
+msgstr "POSTAVKE DODATAK"
+
+msgctxt "#30403"
+msgid "REMIND"
+msgstr "PODSJETITI"
+
+msgctxt "#30404"
+msgid "PROGRAM"
+msgstr "PROGRAM"
+
+msgctxt "#30405"
+msgid "CHANNEL SETTINGS"
+msgstr "POSTAVKE KANALE"
+
+msgctxt "#30406"
+msgid "DON'T REMIND"
+msgstr "NE ZABORAVITE"
+
+msgctxt "#30407"
+msgid "CHOOSE STREAM"
+msgstr "ODABERITE STREAM"
+
+msgctxt "#30408"
+msgid "REMOVE STREAM"
+msgstr "UKLONITI STREAM"
+
+msgctxt "#30600"
+msgid "Setup stream"
+msgstr "Postavi stream"
+
+msgctxt "#30601"
+msgid "Stream file"
+msgstr "Stream datoteka"
+
+msgctxt "#30602"
+msgid "Favourites"
+msgstr "Favoriti"
+
+msgctxt "#30603"
+msgid "Addons"
+msgstr "Dodatki"
+
+msgctxt "#30604"
+msgid "Preview"
+msgstr "Pregled"
+
+msgctxt "#30605"
+msgid "Save"
+msgstr "Spremi"
+
+msgctxt "#30606"
+msgid "Cancel"
+msgstr "Otkazati"
+
+msgctxt "#30607"
+msgid "Stop preview"
+msgstr "Zaustavi pregled"
+
+msgctxt "#30610"
+msgid "Browse..."
+msgstr "Pregledaj"
+
+msgctxt "#30611"
+msgid "Click [B]Browse[/B] below and navigate to your stream file.[CR]When you have chosen your file you can preview the stream to test if it works in KODI."
+msgstr "Kliknite [B]Pregledajte[/B] u nastavku i prijeđite na datoteku streama.[CR]Kada ste odabrali datoteku, možete pregledati stream kako biste provjerili radi li se u KODI-u."
+
+msgctxt "#30620"
+msgid "Choose a favourite. Only [B]PlayMedia[/B] favourites are supported."
+msgstr "Odaberite omiljenu. Podržane su samo [B]PlayMedia[/B] favoriti."
+
+msgctxt "#30621"
+msgid "Live, schedule recording or download program.[CR]Add a task, use time-shift to urge or delay start of recording / download."
+msgstr "Uživo, zakažite snimanje ili preuzmite program.[CR]Dodajte zadatak, upotrijebite pomak vremena da biste potakli ili odgodili početak snimanja / preuzimanja."
+
+msgctxt "#30700"
+msgid "Multiple addons provide this channels.[CR]Choose one to watch the stream."
+msgstr "Više kanala pruža ove kanale.[CR]Izaberite jedan za gledanje streama."
+
+msgctxt "#30701"
+msgid "Source: "
+msgstr "Izvor "
+
+msgctxt "#30702"
+msgid "Appearance"
+msgstr "Izgled"
+
+msgctxt "#30703"
+msgid "Automatically assign streams"
+msgstr "Automatski dodijeli streamove"
+
+msgctxt "#30704"
+msgid "Use zipped epg"
+msgstr "Koristite zipnu epg"
+
+msgctxt "#30705"
+msgid "Show only programs with stream assigned"
+msgstr "Prikaži samo programe s dodijeljenim streamom"
+
+msgctxt "#30706"
+msgid "Auto detect EPG change"
+msgstr "Automatski prepoznaje promjenu EPG-a"
+
+msgctxt "#30707"
+msgid "Show info notification"
+msgstr "Prikaži obavijest o obavijesti"
+
+msgctxt "#30708"
+msgid "Use fast EPG parser"
+msgstr "Upotrijebite brz EPG analizator"
+
+msgctxt "#30709"
+msgid "Skin updated"
+msgstr "Skin je ažuriran"
+
+msgctxt "#30710"
+msgid "Update"
+msgstr "Ažuriraj"
+
+msgctxt "#30711"
+msgid "Get more..."
+msgstr "Dobavite više"
+
+msgctxt "#30712"
+msgid "All online skins are already installed!"
+msgstr "Svi online skinovi već su instalirani!"
+
+msgctxt "#30713"
+msgid "Failed to download skin!"
+msgstr "Nije uspjelo preuzimanje kože!"
+
+msgctxt "#30714"
+msgid "Delete all skins"
+msgstr "Izbriši sve kože"
+
+msgctxt "#30715"
+msgid "Enable adult channels"
+msgstr "Omogući kanale za odrasle"
+
+msgctxt "#30716"
+msgid "Enable swedish channels"
+msgstr "Omogućite švedske kanale"
+
+msgctxt "#30717"
+msgid "EPG - XXX"
+msgstr "EPG - XXX"
+
+msgctxt "#30718"
+msgid "EPG - Swedish"
+msgstr "EPG - Švedski"
+
+msgctxt "#30719"
+msgid "Disable"
+msgstr "Onemogući"
+
+msgctxt "#30720"
+msgid "Disabled"
+msgstr "Onemogućeno"
+
+msgctxt "#30721"
+msgid "Enabled"
+msgstr "Omogućeno"
+
+msgctxt "#30722"
+msgid "Enable"
+msgstr "Omogući"
+
+msgctxt "#30723"
+msgid "Password for adult channels taken from mods-kodi"
+msgstr "Unesite lozinku za kanale za odrasle preuzete iz mods-koda"
+
+msgctxt "#30724"
+msgid "Incorrect password!"
+msgstr "Netočna lozinka!"
+
+msgctxt "#30725"
+msgid "Enable english channels"
+msgstr "Omogući engleske kanale"
+
+msgctxt "#30726"
+msgid "EPG - English"
+msgstr "EPG - Engleski"
+
+msgctxt "#30727"
+msgid "Enable danish channels"
+msgstr "Omogući danske kanale"
+
+msgctxt "#30728"
+msgid "EPG - Danish"
+msgstr "EPG - Danski"
+
+msgctxt "#30729"
+msgid "Enable french channels"
+msgstr "Omogućite francuske kanale"
+
+msgctxt "#30730"
+msgid "EPG - French"
+msgstr "EPG - Francuski"
+
+msgctxt "#30731"
+msgid "Enable german channels"
+msgstr "Omogući njemačke kanale"
+
+msgctxt "#30732"
+msgid "EPG - German"
+msgstr "EPG - Njemački"
+
+msgctxt "#30733"
+msgid "Enable croatian channels"
+msgstr "Omogući hrvatske kanale"
+
+msgctxt "#30734"
+msgid "EPG - Croatian"
+msgstr "EPG - Hrvatski"
+
+msgctxt "#30735"
+msgid "Enable serbian channels"
+msgstr "Omogući srpske kanale"
+
+msgctxt "#30736"
+msgid "EPG - Serbian"
+msgstr "EPG - Srpski"
+
+msgctxt "#30737"
+msgid "Enable norwegian channels"
+msgstr "Omogući norveških kanale"
+
+msgctxt "#30738"
+msgid "EPG - Norwegian"
+msgstr "EPG - Norveški"
+
+msgctxt "#30739"
+msgid "Show all regions"
+msgstr "Prikaži sve regije"
+
+msgctxt "#30740"
+msgid "[COLOR]Select EPG[/COLOR]"
+msgstr "[COLOR]Odaberite EPG[/COLOR]"
+
+msgctxt "#30741"
+msgid "Adult channels"
+msgstr "Kanali za odrasle"
+
+msgctxt "#30742"
+msgid "Timezone"
+msgstr "Vremenska zona"
+
+msgctxt "#30743"
+msgid "Enable benelux channels"
+msgstr "Omogući benelux kanale"
+
+msgctxt "#30744"
+msgid "EPG - Benelux"
+msgstr "EPG - Benelux"
+
+msgctxt "#30745"
+msgid "Enable vod channels"
+msgstr "Omogući vod kanale"
+
+msgctxt "#30746"
+msgid "Video on demand channels"
+msgstr "Kanali video on demand"
+
+msgctxt "#30747"
+msgid "adult channels"
+msgstr "odrasle kanale"
+
+msgctxt "#30748"
+msgid "vod channels"
+msgstr "vod kanale"
+
+msgctxt "#30749"
+msgid "Enable radio channels"
+msgstr "Omogući radio kanale"
+
+msgctxt "#30750"
+msgid "EPG - Radio"
+msgstr "EPG - Radio"
+
+msgctxt "#30751"
+msgid "Radio channels"
+msgstr "Kanali radio"
+
+msgctxt "#30752"
+msgid "EPG - Czech"
+msgstr "EPG - Češki"
+
+msgctxt "#30753"
+msgid "Enable czech channels"
+msgstr "Omogući češki kanale"
+
+msgctxt "#30754"
+msgid "EPG - US"
+msgstr "EPG - US"
+
+msgctxt "#30755"
+msgid "Enable american channels"
+msgstr "Omogući američki kanale"
+
+msgctxt "#30756"
+msgid "EPG - Italian"
+msgstr "EPG - Talijanski"
+
+msgctxt "#30757"
+msgid "Enable italian channels"
+msgstr "Omogući talijanske kanale"
+
+msgctxt "#30758"
+msgid "Polish channels"
+msgstr "Poljski kanali"
+
+msgctxt "#30759"
+msgid "Enable polish channels [COLOR disabled](Use main EPG)[/COLOR]"
+msgstr "Omogući poljske kanale [COLOR disabled](Koristite glavni EPG)[/COLOR]"
+
+msgctxt "#30760"
+msgid "Enable subtitles"
+msgstr "Omogući titlove"
+
+msgctxt "#30802"
+msgid "m-TVGuide is configured to stream using"
+msgstr "TV vodič konfiguriran je za streaming"
+
+msgctxt "#30803"
+msgid "addon which is not installed."
+msgstr "addon koji nije instaliran."
+
+msgctxt "#30804"
+msgid "Streaming using that addon is now disabled."
+msgstr "Streaming pomoću tog dodavanja sada je onemogućen."
+
+msgctxt "#30901"
+msgid "Update"
+msgstr "Ažuriraj"
+
+msgctxt "#30902"
+msgid "Update now"
+msgstr "Ažurirati sada"
+
+msgctxt "#30904"
+msgid "[COLOR]Telia Play[/COLOR]"
+msgstr "[COLOR]Telia Play[/COLOR]"
+
+msgctxt "#30905"
+msgid "Advertisement"
+msgstr "Reklama"
+
+msgctxt "#30910"
+msgid "Enable navigation panel for mouse or touch"
+msgstr "Omogućite navi ploču za miša ili dodirnite"
+
+msgctxt "#30911"
+msgid "Timezone UTC (+00:00 GMT)"
+msgstr "Vremenska zona UTC (+00: 00 GMT)"
+
+msgctxt "#59904"
+msgid "Enable"
+msgstr "Omogućeno"
+
+msgctxt "#59905"
+msgid "[COLOR]Playlists M3U[/COLOR]"
+msgstr "[COLOR]Playlists M3U[/COLOR]"
+
+msgctxt "#59906"
+msgid "Link"
+msgstr "Veza"
+
+msgctxt "#59907"
+msgid "Source"
+msgstr "Izvor"
+
+msgctxt "#59908"
+msgid "File"
+msgstr "Datoteka"
+
+msgctxt "#59909"
+msgid "Multisession"
+msgstr "Multisession"
+
+msgctxt "#59910"
+msgid "Use free account"
+msgstr "Koristite besplatni račun"
+
+msgctxt "#59911"
+msgid "[COLOR]Playlist 1[/COLOR]"
+msgstr "[COLOR]Playlista 1[/COLOR]"
+
+msgctxt "#59912"
+msgid "[COLOR]Playlist 2[/COLOR]"
+msgstr "[COLOR]Popis za reprodukciju 2[/COLOR]"
+
+msgctxt "#59913"
+msgid "[COLOR]Playlist 3[/COLOR]"
+msgstr "[COLOR]Popis za reprodukciju 3[/COLOR]"
+
+msgctxt "#59914"
+msgid "Display name"
+msgstr "Naziv za prikaz"
+
+msgctxt "#59915"
+msgid "Loading service"
+msgstr "Učitavanje usluge"
+
+msgctxt "#59916"
+msgid "Number of playlists"
+msgstr "Broj popisa za reprodukciju"
+
+msgctxt "#59917"
+msgid "[COLOR]Playlist 4[/COLOR]"
+msgstr "[COLOR]Popis za reprodukciju 4[/COLOR]"
+
+msgctxt "#59918"
+msgid "[COLOR]Playlist 5[/COLOR]"
+msgstr "[COLOR]Playlista 5[/COLOR]"
+
+msgctxt "#59919"
+msgid "Url"
+msgstr "Url"
+
+msgctxt "#59920"
+msgid "[COLOR]C More[/COLOR]"
+msgstr "C More"
+
+msgctxt "#59921"
+msgid "[COLOR]Cyfrowy Polsat GO[/COLOR]"
+msgstr "Cyfrowy Polsat GO"
+
+msgctxt "#59922"
+msgid "[COLOR]FranceTV[/COLOR]"
+msgstr "FranceTV"
+
+msgctxt "#59923"
+msgid "[COLOR]nc+ GO[/COLOR]"
+msgstr "nc+ GO"
+
+msgctxt "#59924"
+msgid "Configuration tutorial"
+msgstr "Vodič za konfiguraciju"
+
+msgctxt "#59925"
+msgid "Belgium"
+msgstr "Belgija"
+
+msgctxt "#59926"
+msgid "Czech"
+msgstr "Čeh"
+
+msgctxt "#59927"
+msgid "Germany"
+msgstr "Njemačka"
+
+msgctxt "#59928"
+msgid "Denmark"
+msgstr "Danska"
+
+msgctxt "#59929"
+msgid "France"
+msgstr "Francuska"
+
+msgctxt "#59930"
+msgid "Croatia"
+msgstr "Hrvatska"
+
+msgctxt "#59931"
+msgid "Italy"
+msgstr "Italija"
+
+msgctxt "#59932"
+msgid "Norway"
+msgstr "Norveška"
+
+msgctxt "#59933"
+msgid "Poland"
+msgstr "Poljska"
+
+msgctxt "#59934"
+msgid "Sweden"
+msgstr "Švedska"
+
+msgctxt "#59935"
+msgid "Serbia"
+msgstr "Srbija"
+
+msgctxt "#59936"
+msgid "Great Britain"
+msgstr "Velika Britanija"
+
+msgctxt "#59937"
+msgid "United States"
+msgstr "Sjedinjene Države"
+
+msgctxt "#59938"
+msgid "Would you like to end setup configuration?"
+msgstr "Želite li napustiti konfiguraciju postavljanja?"
+
+msgctxt "#59939"
+msgid "Return"
+msgstr "Vratiti se"
+
+msgctxt "#59940"
+msgid "Select electronic program guide (EPG) type"
+msgstr "Odaberite vrstu elektroničkog vodiča programa (EPG)"
+
+msgctxt "#59941"
+msgid "Enter URL link to your electronic program guide (EPG)"
+msgstr "Unesite URL vezu do vašeg elektroničkog vodiča programa (EPG)"
+
+msgctxt "#59942"
+msgid "Select your electronic program guide (EPG) file"
+msgstr "Odaberite datoteku za elektronički programski vodič (EPG)"
+
+msgctxt "#59943"
+msgid "Select regions"
+msgstr "Odaberite regije"
+
+msgctxt "#59944"
+msgid "Would you like to add an extra electronic program guide (EPG) for {} channels?"
+msgstr "Želite li dodati dodatni elektronički vodič programa (EPG) za {} kanale?"
+
+msgctxt "#59945"
+msgid "Enter URL link to your electronic program guide (EPG) for {} channels"
+msgstr "Unesite URL vezu do vašeg elektroničkog vodiča programa (EPG) za {} kanale"
+
+msgctxt "#59946"
+msgid "Select TV service or M3U playlist"
+msgstr "Odaberite TV uslugu ili M3U playlista"
+
+msgctxt "#59947"
+msgid "TV services"
+msgstr "TV usluge"
+
+msgctxt "#59948"
+msgid "M3U Playlist"
+msgstr "Playlista M3U"
+
+msgctxt "#59949"
+msgid "Select TV services"
+msgstr "Odaberite TV usluge"
+
+msgctxt "#59950"
+msgid "Enter login credentials for {}."
+msgstr "Unesite vjerodajnice za prijavu za {}"
+
+msgctxt "#59951"
+msgid "Would you like to login with a TV operator?"
+msgstr "Želite li se prijaviti kod TV operatera?"
+
+msgctxt "#59952"
+msgid "Username"
+msgstr "Korisničko ime"
+
+msgctxt "#59953"
+msgid "Password"
+msgstr "Lozinka"
+
+msgctxt "#59954"
+msgid "Select M3U playlist type."
+msgstr "Odaberite vrstu playlista M3U."
+
+msgctxt "#59955"
+msgid "Enter M3U playlist URL link"
+msgstr "Unesite M3U playlista URL link"
+
+msgctxt "#59956"
+msgid "Select M3U playlist file"
+msgstr "Odaberite datoteku playlista M3U"
+
+msgctxt "#59957"
+msgid "Would you like to setup recording service?"
+msgstr "Želite li postaviti uslugu snimanja?"
+
+msgctxt "#59958"
+msgid "Select a storage location for your recordings"
+msgstr "Odaberite mjesto pohrane za vaše snimke"
+
+msgctxt "#59959"
+msgid "Would you like to start a configuration tutorial for m-TVGuide?"
+msgstr "Želite li pokrenuti vodič za konfiguraciju za m-TVGuide?"
+
+msgctxt "#59960"
+msgid "• Select electronic program guide (EPG). [COLOR grey]Supported program guides are URL link and/or .xml, .gz and .zip file extensions.[/COLOR][CR]• Select regions that are supported by the provided EPG.[CR]• Select a TV service and/or M3U playlist."
+msgstr "• Odaberite elektronički vodič programa (EPG). [COLOR grey] Podržani programski vodiči su URL adresa i/ili .xml, .gz i .zip ekstenzije. [/COLOR][CR]• Odaberite regije koje su podržane osigurati EPG.[CR]• Odaberite TV uslugu i/ili M3U playlista."
+
+msgctxt "#59961"
+msgid "All settings are now configurated, you can now start m-TVGuide."
+msgstr "Sve su postavke sada konfigurirane, sada možete pokrenuti m-TVGuide."
+
+msgctxt "#59962"
+msgid "Would you like to add an extra EPG?"
+msgstr "Želite li dodati dodatni EPG?"
+
+msgctxt "#59963"
+msgid "Belgian"
+msgstr "Belgijski"
+
+msgctxt "#59964"
+msgid "Czech"
+msgstr "Češki"
+
+msgctxt "#59965"
+msgid "German"
+msgstr "Njemački"
+
+msgctxt "#59966"
+msgid "Danish"
+msgstr "Danski"
+
+msgctxt "#59967"
+msgid "French"
+msgstr "Francuski"
+
+msgctxt "#59968"
+msgid "Croatian"
+msgstr "Hrvatski"
+
+msgctxt "#59969"
+msgid "Italian"
+msgstr "Talijanski"
+
+msgctxt "#59970"
+msgid "Norwegian"
+msgstr "Norveški"
+
+msgctxt "#59971"
+msgid "Polish"
+msgstr "Poljski"
+
+msgctxt "#59972"
+msgid "Swedish"
+msgstr "Švedski"
+
+msgctxt "#59973"
+msgid "Serbian"
+msgstr "Srpski"
+
+msgctxt "#59974"
+msgid "English"
+msgstr "Engleski"
+
+msgctxt "#59975"
+msgid "American"
+msgstr "Američki"
+
+msgctxt "#59976"
+msgid "Catchup"
+msgstr "Timeshift"
+
+msgctxt "#59977"
+msgid "Query format string"
+msgstr "String formata"
+
+msgctxt "#59978"
+msgid "Enable catchup"
+msgstr "Omogući timeshift"
+
+msgctxt "#59979"
+msgid "Wrong timeshift format."
+msgstr "Pogrešan format timeshift."
+
+msgctxt "#59980"
+msgid "No available catchup playback."
+msgstr "Nema dostupne reprodukcije timeshift."
+
+msgctxt "#59981"
+msgid "- Buffer before program start (min)"
+msgstr "- Tampon prije početka programa (min)"
+
+msgctxt "#59982"
+msgid "- Buffer after program end (min)"
+msgstr "- Tampon nakon završetka programa (min)"
+
+msgctxt "#59983"
+msgid "Other settings"
+msgstr "Ostale postavke"
+
+msgctxt "#59984"
+msgid "Catchup only finished programmes"
+msgstr "Timeshift dostupan samo na gotovim programima"
+
+msgctxt "#59985"
+msgid "Downloading:"
+msgstr "Preuzimanje:"
+
+msgctxt "#59986"
+msgid "Finished downloading:"
+msgstr "Preuzimanje je završeno:"
+
+msgctxt "#59987"
+msgid "No download available for this program."
+msgstr "Nije dostupno preuzimanje za ovaj program."
+
+msgctxt "#59988"
+msgid "Catchup window days"
+msgstr "Timeshift prozor dana"
+
+msgctxt "#59989"
+msgid "Catchup type"
+msgstr "Timeshift tip"
+
+msgctxt "#59990"
+msgid "Append"
+msgstr "Append"
+
+msgctxt "#59991"
+msgid "Add channel from EPG (Electronic program guide)"
+msgstr "Dodaj kanal iz EPG-a (Elektronski programski vodič)"
+
+msgctxt "#59992"
+msgid "Add stream to selected channel"
+msgstr "Dodaj stream u odabrani kanal"
+
+msgctxt "#59993"
+msgid "Added channel [B]{}[/B]. Restart required for changes to take place."
+msgstr "Dodan kanal [B]{}[/B]. Potrebno je ponovno pokretanje da bi se dogodile promjene."
+
+msgctxt "#59994"
+msgid "Select which channels to display"
+msgstr "Odaberite koji će se kanali prikazati"
+
+msgctxt "#59995"
+msgid "Missing channels"
+msgstr "Nedostaju kanali"
+
+msgctxt "#59996"
+msgid "Xtream Codes"
+msgstr "Xtream Codes"
+
+msgctxt "#59997"
+msgid "Sort by selected character"
+msgstr "Poredaj po odabranom slovu"
+
+msgctxt "#59998"
+msgid "Only one download session at once allowed."
+msgstr "Dopuštena je samo jedna sesija preuzimanja odjednom."
+
+msgctxt "#59999"
+msgid "Shift"
+msgstr "Shift"
+
+msgctxt "#60000"
+msgid "Auto"
+msgstr "Automatski"
+
+msgctxt "#60001"
+msgid "Manual"
+msgstr "Manual"
+
+msgctxt "#60002"
+msgid "Catchup window"
+msgstr "Timeshift prozor"
+
+msgctxt "#60003"
+msgid "Add single URL value"
+msgstr "Dodajte vrijednost jednog URL-a"
+
+msgctxt "#60004"
+msgid "Add multiple URL values"
+msgstr "Dodajte više vrijednosti URL-a"
+
+msgctxt "#60005"
+msgid "Delete added channels"
+msgstr "Izbriši dodane kanale"
+
+msgctxt "#60006"
+msgid "Select channels to delete"
+msgstr "Odaberite kanale za brisanje"
+
+msgctxt "#60007"
+msgid "Channels has been deleted. Restart required for changes to take place."
+msgstr "Kanali su izbrisani. Potrebno je ponovno pokretanje da bi se dogodile promjene."
+
+msgctxt "#60008"
+msgid "Save playlist to local drive"
+msgstr "Spremi popis za reprodukciju na lokalni disk"
+
+msgctxt "#60009"
+msgid "Update playlist (days)"
+msgstr "Ažuriraj popis pjesama (dana)"
+
+msgctxt "#30913"
+msgid "Settings"
+msgstr "Postavke"
+
+msgctxt "#30914"
+msgid "Skin"
+msgstr "Koža"
+
+msgctxt "#30915"
+msgid "Enable add-on autostart"
+msgstr "Omogući automatsko pokretanje dodatka"
+
+msgctxt "#30916"
+msgid "Database"
+msgstr "Baze podataka"
+
+msgctxt "#30917"
+msgid "Fullscreen window size animation"
+msgstr "Animacija veličine prozora na cijelom zaslonu"
+
+msgctxt "#30918"
+msgid "OSD on select"
+msgstr "OSD na odabir"
+
+msgctxt "#30919"
+msgid "Enable automatic channel playback"
+msgstr "Omogući automatsku reprodukciju kanala"
+
+msgctxt "#30920"
+msgid "By channel number"
+msgstr "Po broju kanala"
+
+msgctxt "#30921"
+msgid "Last seen channel"
+msgstr "Zadnji put viđen kanal"
+
+msgctxt "#30930"
+msgid "Colours"
+msgstr "Boje"
+
+msgctxt "#30931"
+msgid "[COLOR]Category colours[/COLOR]"
+msgstr "[COLOR]Boje kategorija[/COLOR]"
+
+msgctxt "#30932"
+msgid "Movies"
+msgstr "Filmovi"
+
+msgctxt "#30933"
+msgid "TV series"
+msgstr "TV serije"
+
+msgctxt "#30934"
+msgid "Current events"
+msgstr "Tekuće događaje"
+
+msgctxt "#30935"
+msgid "Entertainment"
+msgstr "Zabava"
+
+msgctxt "#30936"
+msgid "Documentaries"
+msgstr "Dokumentarni"
+
+msgctxt "#30937"
+msgid "Childrens programme"
+msgstr "Za djecu"
+
+msgctxt "#30938"
+msgid "Sports"
+msgstr "Sport"
+
+msgctxt "#30939"
+msgid "Interactive entertainment"
+msgstr "Interaktivna zabava"
+
+msgctxt "#30940"
+msgid "[COLOR]Default colors[/COLOR]"
+msgstr "[COLOR]Zadane boje[/COLOR]"
+
+msgctxt "#30941"
+msgid "Default color"
+msgstr "Zadana boja"
+
+msgctxt "#30942"
+msgid "Focus colour"
+msgstr "Boja fokusa"
+
+msgctxt "#30943"
+msgid "Schedule colour"
+msgstr "Boja obavijesti"
+
+msgctxt "#30944"
+msgid "Recording colour"
+msgstr "Boja snimanja"
+
+msgctxt "#30950"
+msgid "Clear database"
+msgstr "Izbriši bazu podataka"
+
+msgctxt "#30951"
+msgid "Database cleared"
+msgstr "Baza podataka je izbrisana"
+
+msgctxt "#30952"
+msgid "Delete custom streams"
+msgstr "Izbriši prilagođene streamove"
+
+msgctxt "#30953"
+msgid "Export settings"
+msgstr "Postavke izvoza"
+
+msgctxt "#30954"
+msgid "Import settings"
+msgstr "Postavke uvoza"
+
+msgctxt "#30955"
+msgid "Delete database file"
+msgstr "Brisanje datoteke baze podataka"
+
+msgctxt "#30956"
+msgid "[COLOR]MojeFilmy[/COLOR]"
+msgstr "[COLOR]MojeFilmy[/COLOR]"
+
+msgctxt "#30957"
+msgid "Username"
+msgstr "Korisničko ime"
+
+msgctxt "#30958"
+msgid "Max service startup time (sec)"
+msgstr "Maksimalno vrijeme pokretanja usluge (sek)"
+
+msgctxt "#30959"
+msgid "Playlist URL"
+msgstr "URL popisa za reprodukciju"
+
+msgctxt "#30960"
+msgid "Reconnect broken stream"
+msgstr "Ponovno spojite slomljeni tok"
+
+msgctxt "#30961"
+msgid "Max number of reattempts"
+msgstr "Najveći broj ponovnih pokušaja"
+
+msgctxt "#30962"
+msgid "Reattempt delay (ms)"
+msgstr "Kašnjenje zadršavanja (ms)"
+
+msgctxt "#30963"
+msgid "Exit"
+msgstr "Izlaz"
+
+msgctxt "#30964"
+msgid "Press one more time to exit"
+msgstr "Pritisnite još jednom za izlaz"
+
+msgctxt "#30965"
+msgid "Currently broadcast service"
+msgstr "Trenutačno emitira uslugu"
+
+msgctxt "#30966"
+msgid "Movies (Interia)"
+msgstr "Filmovi (Interia)"
+
+msgctxt "#30967"
+msgid "TV series (Interia)"
+msgstr "TV serije (Interia)"
+
+msgctxt "#30968"
+msgid "Magazine"
+msgstr "Časopis"
+
+msgctxt "#30969"
+msgid "File has been deleted"
+msgstr "Datoteka je izbrisana"
+
+msgctxt "#30970"
+msgid "Assigned streams has been deleted"
+msgstr "Izbrisane su dodijeljene streamove"
+
+msgctxt "#30971"
+msgid "Reminders has been cleared"
+msgstr "Podsjetnici su izbrisani"
+
+msgctxt "#30972"
+msgid "Scheduled recording has been cleared"
+msgstr "Planirana snimka je uklonjena"
+
+msgctxt "#30973"
+msgid "Delete all settings"
+msgstr "Izbriši sve postavke"
+
+msgctxt "#30974"
+msgid "Stop playback while switching stream"
+msgstr "Zaustavite reprodukciju tijekom prebacivanja streama"
+
+msgctxt "#30975"
+msgid "Prefer HD-streams"
+msgstr "Preferiraju HD streamove"
+
+msgctxt "#30976"
+msgid "Refresh EPG table periodically"
+msgstr "Povremeno osvježite EPG tablicu"
+
+msgctxt "#30977"
+msgid "Max stream startup time (sec)"
+msgstr "Maks. Vrijeme pokretanja streama (sek)"
+
+msgctxt "#30978"
+msgid "Database updated"
+msgstr "Baza podataka je ažurirana"
+
+msgctxt "#30979"
+msgid "m-TVGuide restart required"
+msgstr "m-TVGuide potrebno je ponovno pokretanje"
+
+msgctxt "#30980"
+msgid "[COLOR]**WARNING!**[CR]Resetting your database will cause losing all settings![/COLOR]"
+msgstr "[COLOR]**UPOZORENJE!**[CR]Resetiranje baze podataka će uzrokovati gubitak svih postavki![/COLOR]"
+
+msgctxt "#30981"
+msgid "Do you really want to exit"
+msgstr "Doista želite izaći"
+
+msgctxt "#30982"
+msgid "Ask on exit"
+msgstr "Pitajte na izlazu"
+
+msgctxt "#30983"
+msgid "Click twice to exit"
+msgstr "Dvaput kliknite za izlazak"
+
+msgctxt "#30984"
+msgid "Add favorites"
+msgstr "Dodaj favorite"
+
+msgctxt "#30985"
+msgid "Add"
+msgstr "Dodaj"
+
+msgctxt "#30986"
+msgid "Remove"
+msgstr "Ukloni"
+
+msgctxt "#30987"
+msgid "Clear"
+msgstr "Obriši"
+
+msgctxt "#30988"
+msgid "Sort in alphabetic order"
+msgstr "Poredaj po abecednom redu"
+
+msgctxt "#30989"
+msgid "Add channels to group [COLOR gold][B]{}[/B][/COLOR]"
+msgstr "Dodavanje kanala grupi [COLOR gold][B]{}[/B][/COLOR]"
+
+msgctxt "#30990"
+msgid "Remove channels from group [COLOR gold][B]{}[/B][/COLOR]"
+msgstr "Uklanjanje kanala iz grupe [COLOR gold][B]{}[/B][/COLOR]"
+
+msgctxt "#30991"
+msgid "Channel options"
+msgstr "Opcije kanala"
+
+msgctxt "#30992"
+msgid "Group"
+msgstr "Grupa"
+
+msgctxt "#30993"
+msgid "Remember list of favorites"
+msgstr "Zapamtite popis omiljenih"
+
+msgctxt "#30994"
+msgid "Help - m-TVGuide [COLOR gold]EPG[/COLOR]"
+msgstr "Upomoć - m-TVGuide [COLOR gold]EPG[/COLOR]"
+
+msgctxt "#30995"
+msgid "TV Group"
+msgstr "TV Grupa"
+
+msgctxt "#30996"
+msgid "There is no space for this device. Swap it with one of those already available on your account?"
+msgstr "Za ovaj uređaj nema mjesta. Zamijenite ga s jednim od onih koji su već dostupni na vašem računu?"
+
+msgctxt "#30997"
+msgid "Select a device to replace"
+msgstr "Odaberite uređaj koji želite zamijeniti"
+
+msgctxt "#30998"
+msgid "Catchup - m-TVGuide [COLOR gold]EPG[/COLOR]"
+msgstr "Timeshift - m-TVGuide [COLOR gold]EPG[/COLOR]"
+
+msgctxt "#30999"
+msgid "Would you like to start program [B]{}[/B] from the beginning?"
+msgstr "Želite li pokrenuti program [B]{}[/B] od početka?"
+
+msgctxt "#31000"
+msgid "Would you like to download program [B]{}[/B]?"
+msgstr "Želite li preuzeti program [B]{}[/B]?"
+
+msgctxt "#58000"
+msgid "Programme information"
+msgstr "Informacije programa"
+
+msgctxt "#58001"
+msgid "Select destination folder"
+msgstr "Odaberite odredišnu mapu"
+
+msgctxt "#58002"
+msgid "Export settings"
+msgstr "Postavke izvoza"
+
+msgctxt "#58003"
+msgid "Import settings"
+msgstr "Postavke uvoza"
+
+msgctxt "#58004"
+msgid "Failure - no settings to export!"
+msgstr "Neuspjeh - nema postavki za izvoz!"
+
+msgctxt "#58005"
+msgid "Settings exported successfully"
+msgstr "Postavke su uspješno izvezene"
+
+msgctxt "#58006"
+msgid "Failure - please check if you have write permissions to that path"
+msgstr "Neuspjeh - provjerite imate li dopuštenja za pisanje na tom putu"
+
+msgctxt "#58007"
+msgid "Select settings backup file"
+msgstr "Odaberite datoteku sigurnosnih kopija postavki"
+
+msgctxt "#58008"
+msgid "Settings imported successfully"
+msgstr "Postavke su uspješno uvezene"
+
+msgctxt "#58009"
+msgid "Failed to import settings"
+msgstr "Uvoz postavki nije uspio"
+
+msgctxt "#58010"
+msgid "Please check if chosen file is a correct settings backup"
+msgstr "Provjerite je li datoteka odabrana ispravna sigurnosna kopija postavki"
+
+msgctxt "#58011"
+msgid "locked"
+msgstr "Blokirana"
+
+msgctxt "#31001"
+msgid "Enable OSD"
+msgstr "Omogući OSD"
+
+msgctxt "#31002"
+msgid "Set keys"
+msgstr "Postavi tipke"
+
+msgctxt "#31003"
+msgid "SET"
+msgstr "SET"
+
+msgctxt "#31004"
+msgid "OK"
+msgstr "U redu"
+
+msgctxt "#31005"
+msgid "Home"
+msgstr "Početna"
+
+msgctxt "#31006"
+msgid "Prog -"
+msgstr "Prog -"
+
+msgctxt "#31007"
+msgid "Prog +"
+msgstr "Prog +"
+
+msgctxt "#31008"
+msgid "Stop"
+msgstr "Zaustavi"
+
+msgctxt "#31009"
+msgid "Information"
+msgstr "Informacije"
+
+msgctxt "#31010"
+msgid "Context"
+msgstr "Kontekst"
+
+msgctxt "#31011"
+msgid "Record"
+msgstr "Snimi"
+
+msgctxt "#31012"
+msgid "Reset"
+msgstr "Nanovo naoštriti"
+
+msgctxt "#31013"
+msgid "Defaults"
+msgstr "Zadano"
+
+msgctxt "#31014"
+msgid "Change stream"
+msgstr "Promjena streama"
+
+msgctxt "#31015"
+msgid "Vol +"
+msgstr "Vol +"
+
+msgctxt "#31016"
+msgid "Vol -"
+msgstr "Vol -"
+
+msgctxt "#31017"
+msgid "Switch to last seen channel"
+msgstr "Prijeđi na zadnji put viđen kanal"
+
+msgctxt "#31018"
+msgid "Lists"
+msgstr "Lista"
+
+msgctxt "#31019"
+msgid "Stream failed to start, aborting playback"
+msgstr "Pokretanje nije uspjelo, prekid reprodukcije"
+
+msgctxt "#31020"
+msgid "Reached reconnection limit, aborting playback"
+msgstr "Dosegnuto ograničenje ponovnog povezivanja, prekid reprodukcije"
+
+msgctxt "#31021"
+msgid "Missing add-on: {}"
+msgstr "Nedostaje dodatak: {}"
+
+msgctxt "#310010"
+msgid ""
+msgstr ""
+
+msgctxt "#310011"
+msgid "Stop playback using navi back button"
+msgstr "Zaustavite reprodukciju pomoću gumba za navigaciju"
+
+msgctxt "#310012"
+msgid "Recorded program"
+msgstr "Snimljeni program"
+
+msgctxt "#310013"
+msgid "Start recorded program"
+msgstr "Pokrenite snimljeni program"
+
+msgctxt "#310014"
+msgid "Save plugin settings!"
+msgstr "Spremi postavke dodataka!"
+
+msgctxt "#55001"
+msgid "Change User-Agent"
+msgstr "Promjena User-Agent"
+
+msgctxt "#55002"
+msgid "Username"
+msgstr "Korisničko ime"
+
+msgctxt "#55003"
+msgid "Password"
+msgstr "Lozinka"
+
+msgctxt "#55005"
+msgid "Prefer high quality"
+msgstr "Prednost visoku kvalitetu"
+
+msgctxt "#55007"
+msgid "TV services"
+msgstr "Servisi TV"
+
+msgctxt "#55008"
+msgid "Assign also the streams of low- quality / backup"
+msgstr "Dodijelite i struje niske kvalitete/sigurnosne kopije"
+
+msgctxt "#55010"
+msgid "0 Lowest"
+msgstr "0 Najniže"
+
+msgctxt "#55011"
+msgid "1 Very Low"
+msgstr "1 vrlo niska"
+
+msgctxt "#55017"
+msgid "2 Very Low"
+msgstr "2 vrlo nizak"
+
+msgctxt "#55012"
+msgid "3 Low"
+msgstr "Nizak"
+
+msgctxt "#55018"
+msgid "4 Low"
+msgstr "Nizak"
+
+msgctxt "#55013"
+msgid "5 Mid"
+msgstr "5 Sredina"
+
+msgctxt "#55019"
+msgid "6 Mid"
+msgstr "6 Sredina"
+
+msgctxt "#55014"
+msgid "7 High"
+msgstr "Visok"
+
+msgctxt "#55020"
+msgid "8 High"
+msgstr "Visok"
+
+msgctxt "#55021"
+msgid "9 Very High"
+msgstr "9 Vrlo visoka"
+
+msgctxt "#55022"
+msgid "10 Very High"
+msgstr "10 Vrlo visoka"
+
+msgctxt "#55023"
+msgid "11 Highest"
+msgstr "11 Najviši"
+
+msgctxt "#55015"
+msgid "Working"
+msgstr "Radi"
+
+msgctxt "#55016"
+msgid "Now Playing"
+msgstr "Trenutno svira"
+
+msgctxt "#89000"
+msgid "Select quality"
+msgstr "Odaberite kvalitetu"
+
+msgctxt "#89001"
+msgid "Enable sleep timer"
+msgstr "Omogućivanje brojača za spavanje"
+
+msgctxt "#89002"
+msgid "Timeout action"
+msgstr "Akcija vremenskog ograničenja"
+
+msgctxt "#89003"
+msgid "Timeout value (min)"
+msgstr "Vrijednost vremenskog ograničenja (min)"
+
+msgctxt "#89004"
+msgid "Stop playback"
+msgstr "Zaustavite reprodukciju"
+
+msgctxt "#89005"
+msgid "Exit Kodi"
+msgstr "Izlazni kôd"
+
+msgctxt "#89006"
+msgid "Shutdown"
+msgstr "Ugasiti"
+
+msgctxt "#89007"
+msgid "Hibernate"
+msgstr "hibernirati"
+
+msgctxt "#89008"
+msgid ""
+msgstr ""
+
+msgctxt "#89009"
+msgid ""
+msgstr ""
+
+msgctxt "#55009"
+msgid "Priority"
+msgstr "Prioritet"
+
+msgctxt "#57001"
+msgid "API error"
+msgstr "Pogreška API-ja"
+
+msgctxt "#57002"
+msgid "Could not connect to website"
+msgstr "Povezivanje s web-lokacijom nije uspjelo"
+
+msgctxt "#57003"
+msgid "Check your network connection."
+msgstr "Provjerite mrežnu vezu."
+
+msgctxt "#57009"
+msgid "Script error."
+msgstr "Pogreška skripte."
+
+msgctxt "#57010"
+msgid "Error on method getJsonFromAPI."
+msgstr "Pogreška na metodi getJsonFromAPI."
+
+msgctxt "#57011"
+msgid "API connection didn't get any data."
+msgstr "API veza nije dobila nikakve podatke."
+
+msgctxt "#57012"
+msgid "It could be network connection problem."
+msgstr "Moglo bi biti problem s mrežnom vezom."
+
+msgctxt "#57013"
+msgid "or wrong website API adress."
+msgstr "ili pogrešno dodijeljen URL web stranice."
+
+msgctxt "#57014"
+msgid "Error! (API: setPlayer)"
+msgstr "Greška! (API: setPlayer)"
+
+msgctxt "#57015"
+msgid "Could not get authorization data."
+msgstr "Nije bilo moguće dobiti podatke o autorizaciji."
+
+msgctxt "#57018"
+msgid "Playing error!"
+msgstr "Pogreška pri igranju!"
+
+msgctxt "#57019"
+msgid "Exceeded the limit of free viewing, or too many users."
+msgstr "Premašen je ograničenje besplatnog gledanja ili previše korisnika."
+
+msgctxt "#57020"
+msgid "Buy premium account now to watch unlimited!"
+msgstr "Kupi premium račun sada gledati neograničeno!"
+
+msgctxt "#57021"
+msgid "Playing has been stopped."
+msgstr "Reprodukcija je zaustavljena."
+
+msgctxt "#57022"
+msgid "Wrong video adress. Playing has been stopped."
+msgstr "Pogrešna video adresa. Reprodukcija je zaustavljena."
+
+msgctxt "#57027"
+msgid "Server has closed connection for unknown reason! Please try again."
+msgstr "Poslužitelj je zatvorio vezu zbog nepoznatog razloga! Molim te pokušaj ponovno."
+
+msgctxt "#57028"
+msgid "Playing has been stopped."
+msgstr "Reprodukcija je zaustavljena."
+
+msgctxt "#57034"
+msgid "Information about user account"
+msgstr "Informacije o korisničkom računu"
+
+msgctxt "#57036"
+msgid "You do not have a premium account. Starting a sponsored broadcast."
+msgstr "Nemate račun za premije. Pokretanje sponzorirane emisije."
+
+msgctxt "#57037"
+msgid "To purchase a premium right now go to:"
+msgstr "Za kupnju premije sada idite na:"
+
+msgctxt "#57038"
+msgid "http://mods-kodi.pl/"
+msgstr "http://mods-kodi.pl/"
+
+msgctxt "#57039"
+msgid "Content is not included in your service"
+msgstr "Sadržaj nije uključen u vašu uslugu"
+
+msgctxt "#57042"
+msgid "Error connection with website!"
+msgstr "Pogreška pri povezivanju s web lokacijom!"
+
+msgctxt "#57043"
+msgid "Selected channel does not exist!"
+msgstr "Odabrani kanal ne postoji!"
+
+msgctxt "#57044"
+msgid "No channel selected!"
+msgstr "Nijedan kanal nije odabran!"
+
+msgctxt "#57045"
+msgid "No active server! We are sorry."
+msgstr "Nema aktivnog poslužitelja! Žao nam je."
+
+msgctxt "#57046"
+msgid "Rules are not accepted!"
+msgstr "Pravila se ne prihvaćaju!"
+
+msgctxt "#57047"
+msgid "Go to http://mods-kodi.pl/ and accept it, to use service."
+msgstr "Idite na http://mods-kodi.pl/ i prihvatite ga, da biste koristili uslugu."
+
+msgctxt "#57048"
+msgid "Login incorrect"
+msgstr "Netočna prijava"
+
+msgctxt "#57049"
+msgid "Configured"
+msgstr "konfiguriran"
+
+msgctxt "#57050"
+msgid "URL is incorrect!"
+msgstr "URL nije točan!"
+
+msgctxt "#57051"
+msgid "m-TVGuide"
+msgstr "m-TVGuide"
+
+msgctxt "#57052"
+msgid "Addon is already running - can't be started again"
+msgstr "Addon već radi - ne može se ponovno pokrenuti"
+
+msgctxt "#57053"
+msgid "Asset playback blocked due to VPN/proxy"
+msgstr "Pristup reprodukciji blokiran zbog VPN/proxyja"
+
+msgctxt "#57054"
+msgid "Service is unavailable in your location"
+msgstr "Usluga je nedostupna na vašoj lokaciji"
+
+msgctxt "#57055"
+msgid "Maximum number of devices have been reached"
+msgstr "Dostignut je najveći broj uređaja"
+
+msgctxt "#68000"
+msgid "Plot"
+msgstr "Kratak sadržaj"
+
+msgctxt "#68001"
+msgid "Press [B]OK[/B] to show plot"
+msgstr "Pritisnite [B]OK[/B] za prikaz kratak sadržaj"
+
+msgctxt "#68002"
+msgid "Switch"
+msgstr "Prebaci"
+
+msgctxt "#68003"
+msgid "Play programme"
+msgstr "Reproduciraj program"
+
+msgctxt "#68004"
+msgid "Search YouTube"
+msgstr "Pretražite YouTube"
+
+msgctxt "#68005"
+msgid "Options"
+msgstr "Mogućnosti"
+
+msgctxt "#68006"
+msgid "Time:"
+msgstr "Vrijeme"
+
+msgctxt "#68007"
+msgid "Context menu"
+msgstr "Sadržajni izbornik"
+
+msgctxt "#68008"
+msgid "Sections"
+msgstr "Sekcije"
+
+msgctxt "#68009"
+msgid "View options"
+msgstr "Mogućnosti prikaza"
+
+msgctxt "#68010"
+msgid "Browse for playlist"
+msgstr "Pregledaj popis izvođenja"
+
+msgctxt "#68011"
+msgid "Previous"
+msgstr "Prijašnje"
+
+msgctxt "#68012"
+msgid "Subtitles"
+msgstr "Podnaslovi"
+
+msgctxt "#68013"
+msgid "Audio language"
+msgstr "Jezik zvuka"
+
+msgctxt "#68014"
+msgid "Numeric Input"
+msgstr "Brojčani ulaz"
+
+msgctxt "#68015"
+msgid "Ends at"
+msgstr "Okončati"
+
+msgctxt "#68016"
+msgid "Not available"
+msgstr "Nije dostupno"
+
+msgctxt "#68017"
+msgid "Time"
+msgstr "Vrijeme"
+
+msgctxt "#68018"
+msgid "Date"
+msgstr "Datum"
+
+msgctxt "#69000"
+msgid "Recording"
+msgstr "Snimanje"
+
+msgctxt "#69001"
+msgid "Import RTMPDUMP"
+msgstr "Uvoz RTMPDUMP"
+
+msgctxt "#69002"
+msgid "Import FFMPEG"
+msgstr "Uvoz FFMPEG"
+
+msgctxt "#69003"
+msgid "Record destination"
+msgstr "Snimanje odredišta"
+
+msgctxt "#69004"
+msgid "Recording:"
+msgstr "Snimanje:"
+
+msgctxt "#69005"
+msgid "Finished recording:"
+msgstr "Završeno snimanje:"
+
+msgctxt "#69006"
+msgid "Not existing record destination directory - record canceled!"
+msgstr "Nema postojećeg odredišta za snimanje - rekord je otkazan!"
+
+msgctxt "#69007"
+msgid "Record error!"
+msgstr "Snimanje pogreške!"
+
+msgctxt "#69008"
+msgid "Can't record due to not configured record application: "
+msgstr "Nije moguće snimiti zbog ne konfiguriranog programa za snimanje: "
+
+msgctxt "#69009"
+msgid "Record already scheduled - cancel?"
+msgstr "Snimanje već zakazano - otkazati?"
+
+msgctxt "#69010"
+msgid "Schedule program record: "
+msgstr "Raspored zapisa programa: "
+
+msgctxt "#69011"
+msgid "Cancel ongoing recording?"
+msgstr "Otkazati trajno snimanje?"
+
+msgctxt "#69012"
+msgid "Import record app"
+msgstr "Uvezi aplikaciju za snimanje"
+
+msgctxt "#69013"
+msgid "successfully imported"
+msgstr "uspješno uvezeno"
+
+msgctxt "#69014"
+msgid "FFMPEG record format"
+msgstr "FFMPEG format zapisa"
+
+msgctxt "#69015"
+msgid "Exit despite of scheduled recording?"
+msgstr "Izađite unatoč zakazanom snimanju?"
+
+msgctxt "#69016"
+msgid "Use FFMPEG to record RTMP instead of RTMPDUMP"
+msgstr "Koristite FFMPEG za snimanje RTMP umjesto RTMPDUMP"
+
+msgctxt "#69017"
+msgid "Install recording applications"
+msgstr "Instaliraj programe za snimanje"
+
+msgctxt "#69018"
+msgid "m-TVGuide is downloading files, Please press OK and wait until installation finishes."
+msgstr "m-TVGuide preuzima datoteke, pritisnite U redu i pričekajte dok se instalacija ne završi."
+
+msgctxt "#69019"
+msgid "An error has occurred - try again or install manualy"
+msgstr "Došlo je do pogreške - pokušajte ponovo ili instalirajte manualno"
+
+msgctxt "#69020"
+msgid "Debug log"
+msgstr "Debug log"
+
+msgctxt "#69021"
+msgid "Can't find FFMPEG or RTMPDUMP in system - please try to install by packet manager RTMPDUMP, FFMPEG or libav-tools or install manualy"
+msgstr "Ne možete pronaći FFMPEG ili RTMPDUMP u sustavu - pokušajte instalirati paket upravitelja RTMPDUMP, FFMPEG ili libav-alata ili instalirati ručno"
+
+msgctxt "#69022"
+msgid "Error during automatic import - try importing files manually"
+msgstr "Pogreška prilikom automatskog uvoza - pokušajte ručno uvoziti datoteke"
+
+msgctxt "#69023"
+msgid "Choose OS"
+msgstr "Odaberite OS"
+
+msgctxt "#69024"
+msgid "Maximum number of attempts to resume recording"
+msgstr "Maksimalni broj pokušaja za nastavak snimanja"
+
+msgctxt "#69025"
+msgid "Delete watched recordings"
+msgstr "Izbriši gledane snimke"
+
+msgctxt "#69026"
+msgid "Delete recording"
+msgstr "Brisanje snimanja"
+
+msgctxt "#69027"
+msgid "Delete watched recording"
+msgstr "Brisanje gledanog snimanja"
+
+msgctxt "#69028"
+msgid "Do nothing"
+msgstr "Nemoj ništa učiniti"
+
+msgctxt "#69029"
+msgid "Ask"
+msgstr "Prodajna cijena"
+
+msgctxt "#69030"
+msgid "Auto delete"
+msgstr "Automatsko brisanje"
+
+msgctxt "#69031"
+msgid "[COLOR]FLV format does not work on OpenELEC/LibreELEC systems[/COLOR]"
+msgstr "[COLOR]FLV format ne radi na OpenELEC/LibreELEC sustavima[/COLOR]"
+
+msgctxt "#69032"
+msgid "[COLOR]Record application for common systems[/COLOR]"
+msgstr "[COLOR]Prijava aplikacije za zajedničke sustave[/COLOR]"
+
+msgctxt "#69033"
+msgid "Log uploaded to: "
+msgstr "Zapis je prenesen na: "
+
+msgctxt "#69034"
+msgid "Failed to upload log"
+msgstr "Prijenos zapisnika nije uspio"
+
+msgctxt "#69035"
+msgid "Upload Kodi log"
+msgstr "Prijenos zapisa kôda"
+
+msgctxt "#69036"
+msgid "Current EPG url is: "
+msgstr "Trenutačni EPG URL je: "
+
+msgctxt "#69037"
+msgid "No free stream available in service "
+msgstr "Nema dostupnog strujanja u službi "
+
+msgctxt "#69038"
+msgid "Stop player when recording is started"
+msgstr "Zaustavite reprodukciju kad započne snimanje"
+
+msgctxt "#69039"
+msgid "Record"
+msgstr "Snimi"
+
+msgctxt "#69040"
+msgid "Video"
+msgstr "Video"
+
+msgctxt "#69041"
+msgid "Navigating in OSD previous, next program"
+msgstr "Kretanje prethodnim OSD programom"
+
+msgctxt "#69042"
+msgid "Show extra buttons on OSD"
+msgstr "Prikažite dodatne gumbe na OSD-u"
+
+msgctxt "#69043"
+msgid "Display auto OSD on play"
+msgstr "Prikaz automatskog OSD-a na reprodukciji"
+
+msgctxt "#69044"
+msgid "Auto OSD display time (sec)"
+msgstr "Vrijeme automatskog prikazivanja OSD-a (sek)"
+
+msgctxt "#69045"
+msgid "OSD display time (sec)"
+msgstr "OSD vrijeme prikaza (sek)"
+
+msgctxt "#69046"
+msgid "Show OSD on stream change"
+msgstr "Prikaži OSD na promjenu streama"
+
+msgctxt "#69047"
+msgid "Show service name in OSD"
+msgstr "Prikaži naziv usluge u OSD-u"
+
+msgctxt "#69048"
+msgid "Current time during playback"
+msgstr "Trenutno vrijeme tijekom reprodukcije"
+
+msgctxt "#69049"
+msgid "Position"
+msgstr "Položaj"
+
+msgctxt "#69050"
+msgid "Top left"
+msgstr "Gore lijevo"
+
+msgctxt "#69051"
+msgid "Top right"
+msgstr "Gore desno"
+
+msgctxt "#69052"
+msgid "Bottom left"
+msgstr "Dolje lijevo"
+
+msgctxt "#69053"
+msgid "Bottom right"
+msgstr "Dolje desno"
+
+msgctxt "#69054"
+msgid "Size"
+msgstr "Veličina"
+
+msgctxt "#69055"
+msgid "[CR][CR]Link copied to clipboard"
+msgstr "[CR][CR]Veza je kopirana u međuspremnik"
+
+msgctxt "#69056"
+msgid "Download"
+msgstr "Preuzimanje datoteka"
+
+msgctxt "#69057"
+msgid "Cancel download"
+msgstr "Otkaži preuzimanje"
+
+msgctxt "#70000"
+msgid "Program title"
+msgstr "Naslov programa"
+
+msgctxt "#70001"
+msgid "Channel"
+msgstr "Kanal"
+
+msgctxt "#70002"
+msgid "Start time"
+msgstr "Vrijeme početka"
+
+msgctxt "#70003"
+msgid "Record length"
+msgstr "Dužina zapisa"
+
+msgctxt "#70004"
+msgid "Start record time-shift (min)"
+msgstr "Pokreni vremensku promjenu rekorda (min)"
+
+msgctxt "#70005"
+msgid "End record time-shift (min)"
+msgstr "Završetak vremenskog pomaka rekorda (min)"
+
+msgctxt "#70006"
+msgid "Task settings"
+msgstr "Postavke zadataka"
+
+msgctxt "#70008"
+msgid "Aqua"
+msgstr "Akvamarin"
+
+msgctxt "#70009"
+msgid "Blue"
+msgstr "Plava"
+
+msgctxt "#70010"
+msgid "Green"
+msgstr "Zelena"
+
+msgctxt "#70011"
+msgid "Red"
+msgstr "Crvena"
+
+msgctxt "#70012"
+msgid "Purple"
+msgstr "Purpuran"
+
+msgctxt "#70013"
+msgid "Yellow"
+msgstr "Žut"
+
+msgctxt "#70014"
+msgid "Violet"
+msgstr "Ljubičast"
+
+msgctxt "#70015"
+msgid "Orange"
+msgstr "Narančast"
+
+msgctxt "#70007"
+msgid "Default"
+msgstr "Zadano"
+
+msgctxt "#70016"
+msgid "Default focus"
+msgstr "Zadani fokus"
+
+msgctxt "#70017"
+msgid "Default remind"
+msgstr "Zadana podsjetnik"
+
+msgctxt "#70018"
+msgid "Default record"
+msgstr "Zadani zapis"
+
+msgctxt "#70019"
+msgid "Full blue"
+msgstr "Puna plava"
+
+msgctxt "#70020"
+msgid "Full red"
+msgstr "Puna crvena"
+
+msgctxt "#70021"
+msgid "Full orange"
+msgstr "Puna naranče"
+
+msgctxt "#70022"
+msgid "Dark focus"
+msgstr "Tamno fokus"
+
+msgctxt "#70100"
+msgid "Add-on Install"
+msgstr "Instalacija Dodatka"
+
+msgctxt "#70101"
+msgid "Missing fonts. Please change skin or install font pack."
+msgstr "Nedostaju fontovi. Promijenite kožu ili instalirajte paket fontova."
+
+msgctxt "#70102"
+msgid "Installation has finished. Kodi will now exit."
+msgstr "Instalacija je završena. Kodi će sada izaći."
+
+msgctxt "#70103"
+msgid "Installation has failed. m-TVGuide will now exit."
+msgstr "Instalacija nije uspjela. m-TVGuide će sada izaći."
+
+msgctxt "#70104"
+msgid "Change skin"
+msgstr "Promijenite kožu"
+
+msgctxt "#70105"
+msgid "Install font pack"
+msgstr "Ugradite paket fontova"
+
+msgctxt "#70106"
+msgid "Would you like to replace Kodi skin fonts? This option may break your skin and is not reversible."
+msgstr "Želite li zamijeniti Kodi fontove za kožu? Ova opcija može slomiti vašu kožu i nije reverzibilna."
+
+msgctxt "#70107"
+msgid "Kodi skin is missing, please download and install: {}"
+msgstr "Kodi kože nedostaje, preuzmite i instalirajte: {}"
+
+msgctxt "#70108"
+msgid "Skin replacement or font installation is required to start m-TVGuide."
+msgstr "Za pokretanje m-TVGuide potrebna je zamjena kože ili instalacija fonta."
+
+msgctxt "#70109"
+msgid "Monday"
+msgstr "Ponedjeljak"
+
+msgctxt "#70110"
+msgid "Tuesday"
+msgstr "Utorak"
+
+msgctxt "#70111"
+msgid "Wednesday"
+msgstr "Srijeda"
+
+msgctxt "#70112"
+msgid "Thursday"
+msgstr "Četvrtak"
+
+msgctxt "#70113"
+msgid "Friday"
+msgstr "Petak"
+
+msgctxt "#70114"
+msgid "Saturday"
+msgstr "Subota"
+
+msgctxt "#70115"
+msgid "Sunday"
+msgstr "Nedjelja"
+
+msgctxt "#70116"
+msgid "Add channel"
+msgstr "Dodajte kanal"
+
+msgctxt "#70117"
+msgid "List"
+msgstr "Popis"
+
+msgctxt "#70118"
+msgid "Non-writeable {} in use. Need to make a copy in userdata folder so we can install fonts. Would you like to continue?"
+msgstr "U upotrebi se ne može pisati {}. Trebate stvoriti kopiju u mapi s userdata podacima kako bismo mogli instalirati fontove. Želite li nastaviti?"
+
+msgctxt "#80005"
+msgid "[COLOR]WP Pilot[/COLOR]"
+msgstr "[COLOR]WP Pilot[/COLOR]"
+
+msgctxt "#80006"
+msgid "[COLOR]Ipla[/COLOR]"
+msgstr "[COLOR]Ipla[/COLOR]"
+
+msgctxt "#90000"
+msgid "Server"
+msgstr "Server"
+
+msgctxt "#90001"
+msgid "Getting started"
+msgstr "Pomoć"
+
+msgctxt "#90002"
+msgid "Help"
+msgstr "Početak rada"
+
+msgctxt "#90003"
+msgid "Readme"
+msgstr "Izjava"
+
+msgctxt "#90004"
+msgid "Credits"
+msgstr "Zasluga"

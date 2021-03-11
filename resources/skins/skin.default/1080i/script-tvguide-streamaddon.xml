@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window type="dialog">
+	<allowoverlay>no</allowoverlay>
+	<defaultcontrol always="true">1000</defaultcontrol>
+	<coordinates>
+		<system>1</system><posx>320</posx><posy>210</posy>
+	</coordinates>
+		<animation effect="fade" start="0" end="200" time="500">WindowOpen</animation>
+		<animation effect="fade" start="200" end="0" time="250">WindowClose</animation>
+	<controls>
+
+		<control type="image">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>640</width>
+			<height>300</height>
+			<texture>tvguide-glasspane.png</texture>
+		</control>
+		<control type="image">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>640</width>
+			<height>300</height>
+			<texture>tvguide-glasspane.png</texture>
+		</control>
+		<control type="label" id="4000">
+			<posx>0</posx>
+			<posy>20</posy>
+			<width>640</width>
+			<height>70</height>
+			<textcolor>yellow</textcolor>
+			<font>font12</font>
+			<align>center</align>
+			<label>[B]$ADDON[script.mtvguide 30700][/B]</label>
+			<wrapmultiline>true</wrapmultiline>
+		</control>
+
+		<control type="fixedlist" id="1000">
+			<posx>0</posx>
+			<posy>80</posy>
+			<width>640</width>
+			<height>200</height>
+			<visible>true</visible>
+			<viewtype label="list">list</viewtype>
+			<orientation>horizontal</orientation>
+			<focusposition>1</focusposition>
+			<itemlayout width="200" height="200">
+				<control type="image">
+					<posx>36</posx>
+					<posy>18</posy>
+					<width>128</width>
+					<height>128</height>
+					<info>ListItem.Icon</info>
+				</control>
+				<control type="label">
+					<posx>10</posx>
+					<posy>160</posy>
+					<width>180</width>
+					<height>22</height>
+					<font>font12</font>
+					<textcolor>gray</textcolor>
+					<align>center</align>
+					<info>ListItem.Label</info>
+				</control>
+			</itemlayout>
+			<focusedlayout width="200" height="200">
+				<control type="image">
+					<width>200</width>
+					<height>200</height>
+					<posx>0</posx>
+					<posy>0</posy>
+					<visible>Control.HasFocus(1000)</visible>
+					<texture>addon-focus.png</texture>
+				</control>
+				<control type="image">
+					<posx>36</posx>
+					<posy>18</posy>
+					<width>128</width>
+					<height>128</height>
+					<info>ListItem.Icon</info>
+				</control>
+				<control type="label">
+					<posx>10</posx>
+					<posy>160</posy>
+					<width>180</width>
+					<height>22</height>
+					<font>font12</font>
+					<align>center</align>
+					<info>ListItem.Label</info>
+				</control>
+			</focusedlayout>
+		</control>
+	</controls>
+</window>

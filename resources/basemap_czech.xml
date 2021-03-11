@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map id="base czech" version="1.0" strm="">	
+	<channel id="AMC HD CZ" 								title="(?=AMC(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Al Jazeera CZ" 							title="(?=Al\s*Jazeera(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Animal Planet HD CZ" 						title="(?=Animal\s*Planet(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="BBC World News CZ" 						title="(?=BBC(\s*World)?\s*News(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Bloomberg CZ" 								title="(?=Bloomberg(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Boomerang CZ" 								title="(?=Boomerang(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="CH1 Russia CZ" 							title="(?=CH\s*1(\s*Russia)?(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="CNN CZ" 									title="(?=CNN(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="CRo Radio Wave CZ" 						title="(?=(.?Ro|CRo)\s*Radio(\s*Wave)?(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="CRo Radiozurnal CZ" 						title="(?=(.?Ro|CRo)\s*(Radio.?urn.?l|Radiozurnal)(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="CS Film CZ" 								title="(?=CS\s*Film(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="CT D HD / CT art HD CZ" 					title="(?=(.?T|CT)\s*(Art|D)(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="CT sport HD CZ" 							title="(?=(.?T|CT)\s*Sport(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="CT1 HD CZ" 								title="(?=(.?T|CT)(\s*1)?(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="CT1 Jih CZ" 								title="(?=(.?T|CT)(\s*1)?\s*Jih(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="CT1 Sever CZ" 								title="(?=(.?T|CT)(\s*1)?\s*Sever(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="CT2 HD CZ" 								title="(?=(.?T|CT)\s*2(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="CT24 HD CZ" 								title="(?=(.?T|CT)\s*24(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Cartoon Network CZ" 						title="(?=Cartoon\s*Network(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Ceskoslovensko / Be2Can HD CZ" 			title="(?=Ceskoslovensko(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Cinemax 2 HD CZ" 							title="(?=Cinemax\s*2(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Cinemax HD CZ" 							title="(?=Cinemax(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Discovery HD Showcase CZ" 					title="(?=(Discovery|Disc)(.)?(\s*HD)?\s*Showcase(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Discovery Science CZ" 						title="(?=(Discovery|Disc)(.)?\s*Science(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Discovery CZ" 								title="(?=(Discovery|Disc)(.)?\s*Channel\s*HD\s*CZ$)" strm=""/>
+	<channel id="Disney Channel CZ" 						title="(?=Disney\s*Channel(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Duck TV CZ" 								title="(?=Duck(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Epic Drama HD CZ" 							title="(?=Epic\s*Drama(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Eurosport 1 HD CZ" 						title="(?=Eurosport(\s*1)?(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Eurosport 2 HD CZ" 						title="(?=Eurosport\s*2(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="FRANCE 24 CZ" 								title="(?=France\s*24(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Fashion TV CZ" 							title="(?=Fashion(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Film Europe HD CZ" 						title="(?=Film(\s*Europe)?(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Film+ HD CZ" 								title="(?=Film(\+|PLUS)(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="FilmBox CZ" 								title="(?=FilmBox(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="FilmBox Extra HD CZ" 						title="(?=FilmBox\s*Extra(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="FilmBox Family CZ" 						title="(?=FilmBox\s*Family(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="FilmBox Plus CZ" 							title="(?=FilmBox\s*Plus(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="FilmBox Premium HD CZ" 					title="(?=FilmBox\s*Premium(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Fishing and Hunting CZ" 					title="(?=Fishing\s*(and|&amp;)?\s*Hunting(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Food network CZ" 							title="(?=Food\s*Network(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="GINX Esports TV HD CZ" 					title="(?=GINX(\s*Esport(s)?)?(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Golf Channel HD CZ" 						title="(?=Golf\s*Channel(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="HBO HD CZ" 								title="(?=HBO(\s*1)?(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="HBO2 HD CZ" 								title="(?=HBO\s*2(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="HBO3 HD CZ" 								title="(?=HBO\s*3(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="HOROR FILM CZ" 							title="(?=HOROR\s*FILM(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="History CZ" 								title="(?=History(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Investigation Discovery CZ" 				title="(?=(DISCOVERY\s*)?(INVESTIGATION|ID)(\s*DISCOVERY)?(\s*TV)?(\s*HD)?(\s*CZ)?$)" strm=""/>
+	<channel id="Jednotka CZ" 								title="(?=Jednotka(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="JimJam CZ" 								title="(?=Jim\s*Jam(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="JoJ Cinema HD CZ" 							title="(?=JoJ\s*Cinema(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="JoJ Family HD CZ" 							title="(?=JoJ\s*Family(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="KRB CZ" 									title="(?=KRB(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Kino Barrandov CZ" 						title="(?=Kino\s*Barrandov(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Krimi Barrandov CZ" 						title="(?=Krimi\s*Barrandov(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="MTV Dance CZ" 								title="(?=MTV\s*Dance(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="MTV Rocks CZ" 								title="(?=MTV\s*Rocks(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="MTV CZ" 									title="(?=MTV(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Megamax CZ" 								title="(?=Megamax(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Mezzo CZ" 									title="(?=Mezzo(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Minimax CZ" 								title="(?=Minimax(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Mnam TV CZ" 								title="(?=(M.?am|Mnam)(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Nat Geo WILD HD CZ" 						title="(?=(Nat|National)\s*(Geo|Geographic)\s*WILD(\s*TV)?(\s*HD)?(\s*CZ)?$)" strm=""/>
+	<channel id="National Geographic HD CZ" 				title="(?=(Nat|National)\s*(Geo|Geographic)(\s*CHANNEL)?(\s*TV)?(\s*HD)(\s*CZ)?$)" strm=""/>
+	<channel id="National Geographic CZ" 					title="(?=(Nat|National)\s*(Geo|Geographic)(\s*CHANNEL)?(\s*TV)?(\s*CZ)?$)" strm=""/>
+	<channel id="NetViet VT 10 CZ" 							title="(?=Net\s*Viet(\s*VT)?(\s*10)?(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Nick Jr. CZ" 								title="(?=Nick(elodeon)?\s*(Jr|JUNIOR)(\.)?(\s*TV)?(\s*HD)?(\s*CZ)?$)" strm=""/>
+	<channel id="Nickelodeon CZ" 							title="(?=Nick(elodeon)?(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Nova 2 HD CZ" 								title="(?=Nova\s*2(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Nova ACTION HD CZ" 						title="(?=Nova\s*Action(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Nova Cinema HD CZ" 						title="(?=Nova\s*Cinema(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Nova GOLD HD CZ" 							title="(?=Nova\s*Gold(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Nova HD CZ" 								title="(?=Nova(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Nova Sport 1 HD CZ" 						title="(?=Nova\s*Sport(\s*1)?(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Nova Sport 2 HD CZ" 						title="(?=Nova\s*Sport\s*2(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="O2TV Fotbal HD CZ" 						title="(?=O2(TV)?\s*Fotbal(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="O2TV Info HD CZ" 							title="(?=O2(TV)?\s*Info(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="O2TV Sport HD CZ" 							title="(?=O2(TV)?\s*Sport(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="O2TV Sport1 HD CZ" 						title="(?=O2(TV)?\s*Sport\s*1(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="O2TV Sport2 HD CZ" 						title="(?=O2(TV)?\s*Sport\s*2(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="O2TV Sport3 HD CZ" 						title="(?=O2(TV)?\s*Sport\s*3(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="O2TV Sport4 HD CZ" 						title="(?=O2(TV)?\s*Sport\s*4(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="O2TV Sport5 HD CZ" 						title="(?=O2(TV)?\s*Sport\s*5(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="O2TV Sport6 HD CZ" 						title="(?=O2(TV)?\s*Sport\s*6(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="O2TV Sport7 HD CZ" 						title="(?=O2(TV)?\s*Sport\s*7(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="O2TV Sport8 HD CZ" 						title="(?=O2(TV)?\s*Sport\s*8(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="O2TV Tenis HD CZ" 							title="(?=O2(TV)?\s*Tenis(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Ocko Expres CZ" 							title="(?=(.?.?ko|Ocko)\s*Expres(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Ocko Star CZ" 								title="(?=(.?.?ko|Ocko)\s*Star(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Ocko CZ" 									title="(?=(.?.?ko|Ocko)(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Praha TV CZ" 								title="(?=Praha(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Prima Comedy Central CZ" 					title="(?=(Prima\s*)Comedy\s*Central(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Prima Cool HD CZ" 							title="(?=Prima\s*Cool(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Prima HD CZ" 								title="(?=Prima(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Prima Krimi HD CZ" 						title="(?=Prima\s*Krimi(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Prima LOVE HD CZ" 							title="(?=Prima\s*LOVE(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Prima MAX HD CZ" 							title="(?=Prima\s*MAX(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Prima ZOOM HD CZ" 							title="(?=Prima\s*ZOOM(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="RAI 1 CZ" 									title="(?=RAI(\s*1)?(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="REBEL 2 Slusnej kanal CZ" 					title="(?=REBEL\s*2(\s*Slu.?nej)?(\s*kan.?l)?(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="RTL II CZ" 								title="(?=RTL\s*(2|II)(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="RTL CZ" 									title="(?=RTL(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Rebel CZ" 									title="(?=Rebel(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Relax CZ" 									title="(?=Relax(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Retro Music TV CZ" 						title="(?=Retro\s*Music(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="STINGRAY CMUSIC CZ" 						title="(?=CHANNEL(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Slagr TV CZ" 								title="(?=Slagr(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Spektrum HD CZ" 							title="(?=Spektrum(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Spektrum HOME CZ" 							title="(?=Spektrum\s*Home(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Sport1 HD CZ" 								title="(?=Sport(\s*1)?(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Sport2 HD CZ" 								title="(?=Sport\s*2(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Sport3 CZ" 								title="(?=Sport\s*3(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Sport5 CZ" 								title="(?=Sport\s*5(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="TA3 CZ" 									title="(?=TA\s*3(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="TLC CZ" 									title="(?=TLC(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="TNT CZ" 									title="(?=TNT(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="TV Barrandov HD CZ" 						title="(?=(TV\s*)?Barrandov(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="TV JOJ CZ" 								title="(?=(TV\s*)?JOJ(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="TV Noe CZ" 								title="(?=(TV\s*)?Noe(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="TV Paprika CZ" 							title="(?=(TV\s*)?Paprika(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="TV1000 Ruskoe Kino CZ" 					title="(?=TV1000(\s*Ruskoe)?(\s*Kino)?(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="TV5 Monde CZ" 								title="(?=TV5\s*Monde(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="TVE CZ" 									title="(?=TVE(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="TVP Polonia CZ" 							title="(?=TVP\s*Polonia(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Televize Seznam HD CZ" 					title="(?=Televize\s*Seznam(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Up Network CZ" 							title="(?=Up\s*Network(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="VH1 Classic CZ" 							title="(?=VH1\s*Classic(\s*TV)?(\s*HD)?(\s*CZ)?$)" strm=""/>
+	<channel id="VH1 CZ" 									title="(?=VH1(\s*TV)?(\s*HD)?(\s*CZ)?$)" strm=""/>
+	<channel id="VOX CZ" 									title="(?=VOX(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="VTV 1 CZ" 									title="(?=VTV(\s*1)?(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="VTV 3 CZ" 									title="(?=VTV\s*3(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Viasat Explore CZ" 						title="(?=Viasat\s*Explore(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Viasat History CZ" 						title="(?=Viasat\s*History(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Viasat Nature CZ" 							title="(?=Viasat\s*Nature(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	
+<!--<.cz>-->
+	
+	<channel id="AMC HD.cz" 								title="(?=AMC(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Al Jazeera.cz" 							title="(?=Al\s*Jazeera(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Animal Planet HD.cz" 						title="(?=Animal\s*Planet(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="BBC World News.cz" 						title="(?=BBC(\s*World)?\s*News(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Bloomberg.cz" 								title="(?=Bloomberg(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Boomerang.cz" 								title="(?=Boomerang(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="CH1 Russia.cz" 							title="(?=CH\s*1(\s*Russia)?(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="CNN.cz" 									title="(?=CNN(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="CRo Radio Wave.cz" 						title="(?=(.?Ro|CRo)\s*Radio(\s*Wave)?(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="CRo Radiozurnal.cz" 						title="(?=(.?Ro|CRo)\s*(Radio.?urn.?l|Radiozurnal)(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="CS Film.cz" 								title="(?=CS\s*Film(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="CT D HD / CT art HD.cz" 					title="(?=(.?T|CT)\s*(Art|D)(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="CT sport HD.cz" 							title="(?=(.?T|CT)\s*Sport(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="CT1 HD.cz" 								title="(?=(.?T|CT)(\s*1)?(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="CT1 Jih.cz" 								title="(?=(.?T|CT)(\s*1)?\s*Jih(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="CT1 Sever.cz" 								title="(?=(.?T|CT)(\s*1)?\s*Sever(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="CT2 HD.cz" 								title="(?=(.?T|CT)\s*2(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="CT24 HD.cz" 								title="(?=(.?T|CT)\s*24(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Cartoon Network.cz" 						title="(?=Cartoon\s*Network(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Ceskoslovensko / Be2Can HD.cz" 			title="(?=Ceskoslovensko(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Cinemax 2 HD.cz" 							title="(?=Cinemax\s*2(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Cinemax HD.cz" 							title="(?=Cinemax(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Discovery HD Showcase.cz" 					title="(?=(Discovery|Disc)(.)?(\s*HD)?\s*Showcase(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Discovery Science.cz" 						title="(?=(Discovery|Disc)(.)?\s*Science(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Discovery.cz" 								title="(?=(Discovery|Disc)(.)?\s*Channel\s*HD\s*CZ$)" strm=""/>
+	<channel id="Disney Channel.cz" 						title="(?=Disney\s*Channel(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Duck TV.cz" 								title="(?=Duck(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Epic Drama HD.cz" 							title="(?=Epic\s*Drama(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Eurosport 1 HD.cz" 						title="(?=Eurosport(\s*1)?(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Eurosport 2 HD.cz" 						title="(?=Eurosport\s*2(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="FRANCE 24.cz" 								title="(?=France\s*24(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Fashion TV.cz" 							title="(?=Fashion(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Film Europe HD.cz" 						title="(?=Film(\s*Europe)?(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Film+ HD.cz" 								title="(?=Film(\+|PLUS)(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="FilmBox.cz" 								title="(?=FilmBox(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="FilmBox Extra HD.cz" 						title="(?=FilmBox\s*Extra(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="FilmBox Family.cz" 						title="(?=FilmBox\s*Family(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="FilmBox Plus.cz" 							title="(?=FilmBox\s*Plus(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="FilmBox Premium HD.cz" 					title="(?=FilmBox\s*Premium(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Fishing and Hunting.cz" 					title="(?=Fishing\s*(and|&amp;)?\s*Hunting(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Food network.cz" 							title="(?=Food\s*Network(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="GINX Esports TV HD.cz" 					title="(?=GINX(\s*Esport(s)?)?(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Golf Channel HD.cz" 						title="(?=Golf\s*Channel(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="HBO HD.cz" 								title="(?=HBO(\s*1)?(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="HBO2 HD.cz" 								title="(?=HBO\s*2(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="HBO3 HD.cz" 								title="(?=HBO\s*3(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="HOROR FILM.cz" 							title="(?=HOROR\s*FILM(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="History.cz" 								title="(?=History(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Investigation Discovery.cz" 				title="(?=(DISCOVERY\s*)?(INVESTIGATION|ID)(\s*DISCOVERY)?(\s*TV)?(\s*HD)?(\s*CZ)?$)" strm=""/>
+	<channel id="Jednotka.cz" 								title="(?=Jednotka(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="JimJam.cz" 								title="(?=Jim\s*Jam(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="JoJ Cinema HD.cz" 							title="(?=JoJ\s*Cinema(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="JoJ Family HD.cz" 							title="(?=JoJ\s*Family(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="KRB.cz" 									title="(?=KRB(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Kino Barrandov.cz" 						title="(?=Kino\s*Barrandov(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Krimi Barrandov.cz" 						title="(?=Krimi\s*Barrandov(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="MTV Dance.cz" 								title="(?=MTV\s*Dance(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="MTV Rocks.cz" 								title="(?=MTV\s*Rocks(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="MTV.cz" 									title="(?=MTV(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Megamax.cz" 								title="(?=Megamax(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Mezzo.cz" 									title="(?=Mezzo(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Minimax.cz" 								title="(?=Minimax(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Mnam TV.cz" 								title="(?=(M.?am|Mnam)(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Nat Geo WILD HD.cz" 						title="(?=(Nat|National)\s*(Geo|Geographic)\s*WILD(\s*TV)?(\s*HD)?(\s*CZ)?$)" strm=""/>
+	<channel id="National Geographic HD.cz" 				title="(?=(Nat|National)\s*(Geo|Geographic)(\s*CHANNEL)?(\s*TV)?(\s*HD)(\s*CZ)?$)" strm=""/>
+	<channel id="National Geographic.cz" 					title="(?=(Nat|National)\s*(Geo|Geographic)(\s*CHANNEL)?(\s*TV)?(\s*CZ)?$)" strm=""/>
+	<channel id="NetViet VT 10.cz" 							title="(?=Net\s*Viet(\s*VT)?(\s*10)?(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Nick Jr..cz" 								title="(?=Nick(elodeon)?\s*(Jr|JUNIOR)(\.)?(\s*TV)?(\s*HD)?(\s*CZ)?$)" strm=""/>
+	<channel id="Nickelodeon.cz" 							title="(?=Nick(elodeon)?(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Nova 2 HD.cz" 								title="(?=Nova\s*2(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Nova ACTION HD.cz" 						title="(?=Nova\s*Action(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Nova Cinema HD.cz" 						title="(?=Nova\s*Cinema(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Nova GOLD HD.cz" 							title="(?=Nova\s*Gold(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Nova HD.cz" 								title="(?=Nova(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Nova Sport 1 HD.cz" 						title="(?=Nova\s*Sport(\s*1)?(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Nova Sport 2 HD.cz" 						title="(?=Nova\s*Sport\s*2(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="O2TV Fotbal HD.cz" 						title="(?=O2(TV)?\s*Fotbal(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="O2TV Info HD.cz" 							title="(?=O2(TV)?\s*Info(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="O2TV Sport HD.cz" 							title="(?=O2(TV)?\s*Sport(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="O2TV Sport1 HD.cz" 						title="(?=O2(TV)?\s*Sport\s*1(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="O2TV Sport2 HD.cz" 						title="(?=O2(TV)?\s*Sport\s*2(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="O2TV Sport3 HD.cz" 						title="(?=O2(TV)?\s*Sport\s*3(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="O2TV Sport4 HD.cz" 						title="(?=O2(TV)?\s*Sport\s*4(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="O2TV Sport5 HD.cz" 						title="(?=O2(TV)?\s*Sport\s*5(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="O2TV Sport6 HD.cz" 						title="(?=O2(TV)?\s*Sport\s*6(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="O2TV Sport7 HD.cz" 						title="(?=O2(TV)?\s*Sport\s*7(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="O2TV Sport8 HD.cz" 						title="(?=O2(TV)?\s*Sport\s*8(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="O2TV Tenis HD.cz" 							title="(?=O2(TV)?\s*Tenis(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Ocko Expres.cz" 							title="(?=(.?.?ko|Ocko)\s*Expres(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Ocko Star.cz" 								title="(?=(.?.?ko|Ocko)\s*Star(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Ocko.cz" 									title="(?=(.?.?ko|Ocko)(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Praha TV.cz" 								title="(?=Praha(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Prima Comedy Central.cz" 					title="(?=(Prima\s*)Comedy\s*Central(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Prima Cool HD.cz" 							title="(?=Prima\s*Cool(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Prima HD.cz" 								title="(?=Prima(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Prima Krimi HD.cz" 						title="(?=Prima\s*Krimi(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Prima LOVE HD.cz" 							title="(?=Prima\s*LOVE(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Prima MAX HD.cz" 							title="(?=Prima\s*MAX(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Prima ZOOM HD.cz" 							title="(?=Prima\s*ZOOM(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="RAI 1.cz" 									title="(?=RAI(\s*1)?(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="REBEL 2 Slusnej kanal.cz" 					title="(?=REBEL\s*2(\s*Slu.?nej)?(\s*kan.?l)?(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="RTL II.cz" 								title="(?=RTL\s*(2|II)(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="RTL.cz" 									title="(?=RTL(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Rebel.cz" 									title="(?=Rebel(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Relax.cz" 									title="(?=Relax(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Retro Music TV.cz" 						title="(?=Retro\s*Music(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="STINGRAY CMUSIC.cz" 						title="(?=CHANNEL(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Slagr TV.cz" 								title="(?=Slagr(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Spektrum HD.cz" 							title="(?=Spektrum(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Spektrum HOME.cz" 							title="(?=Spektrum\s*Home(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Sport1 HD.cz" 								title="(?=Sport(\s*1)?(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Sport2 HD.cz" 								title="(?=Sport\s*2(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Sport3.cz" 								title="(?=Sport\s*3(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Sport5.cz" 								title="(?=Sport\s*5(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="TA3.cz" 									title="(?=TA\s*3(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="TLC.cz" 									title="(?=TLC(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="TNT.cz" 									title="(?=TNT(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="TV Barrandov HD.cz" 						title="(?=(TV\s*)?Barrandov(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="TV JOJ.cz" 								title="(?=(TV\s*)?JOJ(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="TV Noe.cz" 								title="(?=(TV\s*)?Noe(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="TV Paprika.cz" 							title="(?=(TV\s*)?Paprika(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="TV1000 Ruskoe Kino.cz" 					title="(?=TV1000(\s*Ruskoe)?(\s*Kino)?(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="TV5 Monde.cz" 								title="(?=TV5\s*Monde(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="TVE.cz" 									title="(?=TVE(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="TVP Polonia.cz" 							title="(?=TVP\s*Polonia(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Televize Seznam HD.cz" 					title="(?=Televize\s*Seznam(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Up Network.cz" 							title="(?=Up\s*Network(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="VH1 Classic.cz" 							title="(?=VH1\s*Classic(\s*TV)?(\s*HD)?(\s*CZ)?$)" strm=""/>
+	<channel id="VH1.cz" 									title="(?=VH1(\s*TV)?(\s*HD)?(\s*CZ)?$)" strm=""/>
+	<channel id="VOX.cz" 									title="(?=VOX(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="VTV 1.cz" 									title="(?=VTV(\s*1)?(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="VTV 3.cz" 									title="(?=VTV\s*3(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Viasat Explore.cz" 						title="(?=Viasat\s*Explore(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Viasat History.cz" 						title="(?=Viasat\s*History(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	<channel id="Viasat Nature.cz" 							title="(?=Viasat\s*Nature(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
+	
+	<category name="Movie" 									tags="Akční|Dobrodružný|Drama|Erotický|Fantasy|Horor|Komedie|Krimi|Romantický|Sci-Fi|Thriller"/>
+	<category name="Series" 								tags="Rodinný"/>
+	<category name="Information" 							tags="Zpravodajství|živý přenos"/>
+	<category name="Entertainment" 							tags="Hudební|Poker|Publicistický|Reality-TV|RealityTV|Talk-show|TalkShow"/>
+	<category name="Document" 								tags="Dokument|Dokumentární|Historický|Psychologický"/>
+	<category name="Kids" 									tags="Animovaný|Krátkometrážní|Pohádka"/>
+	<category name="Sport" 									tags="Americký fotbal|Basketbal|Bojové sporty|Box|Coupe de France|Cyklistika|Extrémní sporty|FORTUNA:LIGA|Florbal|Formule|Fotbal|Fusion Fight Night|Futsal|Golf|Hokej|Házená|Jezdectví|Judo|MLB|Motorismus|Olympijské hry|Ragby|Rally|Snooker|Snowboarding|Sportovní|Tenis|Volejbal"/>
+	<category name="Interactive Entertainment" 				tags="Experimentální|Oktagon|Soutěžní|Česká ulička"/>
+</map>

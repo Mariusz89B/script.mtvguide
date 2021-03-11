@@ -1,0 +1,2569 @@
+# XBMC Media Center language file
+# Addon Name: m-TVGuide
+# Addon id: script.mtvguide
+# Addon Provider: mods-kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: French (http://www.transifex.com/projects/p/xbmc-addons/language/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgctxt "#30000"
+msgid "This channel is missing epg data."
+msgstr "Ce canal ne contient pas les données epg."
+
+msgctxt "#30001"
+msgid "[B]Loading...[/B]"
+msgstr "[B]Chargement en cours...[/B]"
+
+msgctxt "#30002"
+msgid "Calculating remaning time..."
+msgstr "Calcul du temps de ré-initialisation..."
+
+msgctxt "#30003"
+msgid "Approximately {} seconds left..."
+msgstr "Approx {} secondes restantes..."
+
+msgctxt "#30004"
+msgid "Loading of data already in progress..."
+msgstr "Chargement de données déjà en cours..."
+
+msgctxt "#30005"
+msgid "Mouse control"
+msgstr "Contrôle de la souris"
+
+msgctxt "#30006"
+msgid "Now"
+msgstr "Maintenant"
+
+msgctxt "#30007"
+msgid "[B]Tip![/B] You can also use the scroll wheel"
+msgstr "[B]Astuce![/B] Vous pouvez également utiliser la molette de défilement"
+
+msgctxt "#30008"
+msgid "Cancel"
+msgstr "Annuler"
+
+msgctxt "#30009"
+msgid "Enter captcha"
+msgstr "Entrez captcha"
+
+msgctxt "#30100"
+msgid "General"
+msgstr "Général"
+
+msgctxt "#30101"
+msgid "EPG"
+msgstr "EPG"
+
+msgctxt "#30102"
+msgid "Show channels from category"
+msgstr "Afficher canaux de la catégorie"
+
+msgctxt "#30103"
+msgid "XMLTV file"
+msgstr "Fichier XMLTV"
+
+msgctxt "#30104"
+msgid "Clear cache..."
+msgstr "Vider le cache..."
+
+msgctxt "#30105"
+msgid "Done!"
+msgstr "Fait!"
+
+msgctxt "#30106"
+msgid "Show service notification"
+msgstr "Afficher la notification de service"
+
+msgctxt "#30108"
+msgid "Clear all reminders..."
+msgstr "Effacer tous les rappels..."
+
+msgctxt "#30109"
+msgid "Clear all planed recordings..."
+msgstr "Effacer tous les enregistrements planifiés..."
+
+msgctxt "#30110"
+msgid "Update program information on KODI startup"
+msgstr "Mettre à jour les informations sur le programme de démarrage de KODI"
+
+msgctxt "#30111"
+msgid "[COLOR]Enter the url address or provide a path to your EPG files[/COLOR]"
+msgstr "[COLOR]Entrez l'adresse url ou indiquez le chemin d'accès à vos fichiers EPG[/COLOR]"
+
+msgctxt "#30116"
+msgid "Search for channel logos in"
+msgstr "Recherchez les logos des canaux dans"
+
+msgctxt "#30117"
+msgid "[COLOR]Premium EPG[/COLOR]"
+msgstr "[COLOR]EPG Premium[/COLOR]"
+
+msgctxt "#30118"
+msgid "Main"
+msgstr "Principal"
+
+msgctxt "#30119"
+msgid "Additional"
+msgstr "Supplémentaire"
+
+msgctxt "#30120"
+msgid "Additional"
+msgstr "Supplémentaire"
+
+msgctxt "#30149"
+msgid "does not exist. Default will be set!"
+msgstr "n'existe pas. La valeur par défaut sera définie!"
+
+msgctxt "#30150"
+msgid "Sorry, an error has occurred"
+msgstr "Désolé, une erreur est survenue"
+
+msgctxt "#30151"
+msgid "Error initializing EPG file:"
+msgstr "Erreur lors du chargement du fichier EPG:"
+
+msgctxt "#30152"
+msgid "[CR]Error loading EPG (electronic program guide). Please check if EPG url is correct or if internet connection is available and try again."
+msgstr "[CR]Erreur lors du chargement de l'EPG (guide électronique des programmes). Veuillez vérifier si l'url EPG est correcte ou si une connexion Internet est disponible et réessayer."
+
+msgctxt "#30153"
+msgid "because the settings are invalid!"
+msgstr "car les paramètres sont invalide!"
+
+msgctxt "#30154"
+msgid "It looks like your current skin"
+msgstr "Il ressemble à votre peau actuelle"
+
+msgctxt "#30155"
+msgid "is not supported by current version of m-TVGuide"
+msgstr "n'est pas supporté par la version actuelle de m-TVGuide"
+
+msgctxt "#30156"
+msgid "Please try with a different skin..."
+msgstr "S'il vous plaît essayez avec une peau différente..."
+
+msgctxt "#30157"
+msgid "It looks like the TV Guide database is broken."
+msgstr "Il ressemble à la télévision La base de données du guide est cassée."
+
+msgctxt "#30158"
+msgid "Please remove database file using option in plugin settings "Database settings""
+msgstr "Veuillez supprimer le fichier de base de données en utilisant l'option dans les paramètres du plugin "Paramètres de base de données""
+
+msgctxt "#30159"
+msgid "Channel configuration is unfortunately lost."
+msgstr "La configuration du canal est malheureusement perdue."
+
+msgctxt "#30160"
+msgid "Error is not critical and addon will start but please fix the issue!"
+msgstr "L'erreur n'est pas critique et addon va commencer, mais s'il vous plaît résoudre le problème!"
+
+msgctxt "#30161"
+msgid "Error is critical and programs won't be visible, please fix EPG (electronic program guide) url!"
+msgstr "L'erreur est critique et les programmes gagnés ne sont pas visibles, veuillez corriger l'url EPG (electronic program guide)!"
+
+msgctxt "#30162"
+msgid "No description"
+msgstr "Pas de description"
+
+msgctxt "#30163"
+msgid "Missing genre"
+msgstr "Aucune catégorie"
+
+msgctxt "#30164"
+msgid "No available information"
+msgstr "Aucune information disponible"
+
+msgctxt "#30200"
+msgid "on [B]{}[/B] in 5 minutes..."
+msgstr "sur [B] {}[/B] en 5 minutes..."
+
+msgctxt "#30201"
+msgid "on [B]{}[/B] is starting now..."
+msgstr "sur [B] {}[/B] commence maintenant..."
+
+msgctxt "#30202"
+msgid "Starting scheduled program"
+msgstr "Début du programme programmé"
+
+msgctxt "#30203"
+msgid "Start scheduled program"
+msgstr "Démarrer le programme programmé"
+
+msgctxt "#30204"
+msgid "Cancel"
+msgstr "Annuler"
+
+msgctxt "#30205"
+msgid "On screen display"
+msgstr "On screen display"
+
+msgctxt "#30206"
+msgid "Display current time during playback"
+msgstr "Afficher l'heure actuelle pendant la lecture"
+
+msgctxt "#30300"
+msgid "Watch {}"
+msgstr "Regarder {}"
+
+msgctxt "#30301"
+msgid "Remind"
+msgstr "Rappeler"
+
+msgctxt "#30302"
+msgid "Don't remind"
+msgstr "Ne me rappelle pas"
+
+msgctxt "#30303"
+msgid "Cancel recording"
+msgstr "Annuler l'enregistrement"
+
+msgctxt "#30304"
+msgid "Choose stream"
+msgstr "Choisir le flux"
+
+msgctxt "#30305"
+msgid "You can choose your own .strm file."
+msgstr "Vous pouvez choisir votre propre fichier de flux."
+
+msgctxt "#30306"
+msgid "Remove stream"
+msgstr "Supprimer le flux"
+
+msgctxt "#30307"
+msgid "Channels"
+msgstr "Canaux"
+
+msgctxt "#30308"
+msgid "Exit"
+msgstr "Quitter"
+
+msgctxt "#30309"
+msgid "Lists"
+msgstr "Des listes"
+
+msgctxt "#30310"
+msgid "Channel listing"
+msgstr "Liste des canaux"
+
+msgctxt "#30311"
+msgid "Now"
+msgstr "Maintenant"
+
+msgctxt "#30312"
+msgid Next"
+msgstr "À côté"
+
+msgctxt "#30313"
+msgid "Start"
+msgstr "Début"
+
+msgctxt "#30314"
+msgid "Length"
+msgstr "Durée"
+
+msgctxt "#30315"
+msgid "Search"
+msgstr "Chercher"
+
+msgctxt "#30316"
+msgid "Title"
+msgstr "Titre"
+
+msgctxt "#30317"
+msgid "Synopsis"
+msgstr "Synopsis"
+
+msgctxt "#30318"
+msgid "Category"
+msgstr "Catégorie"
+
+msgctxt "#30319"
+msgid "Channel"
+msgstr "Canal"
+
+msgctxt "#30320"
+msgid "New search"
+msgstr "Nouvelle recherche"
+
+msgctxt "#30321"
+msgid "Remove search"
+msgstr "Supprimer la recherche"
+
+msgctxt "#30322"
+msgid "Program search"
+msgstr "Recherche de programme"
+
+msgctxt "#30323"
+msgid "Synopsis search"
+msgstr "Synopsis recherche"
+
+msgctxt "#30324"
+msgid "Program category search"
+msgstr "Recherche par catégorie de programme"
+
+msgctxt "#30325"
+msgid "All channels"
+msgstr "Toutes canaux"
+
+msgctxt "#30326"
+msgid "Channel search"
+msgstr "Recherche de canal"
+
+msgctxt "#30327"
+msgid "Program search: [COLOR gold][B]{}[/B][/COLOR]"
+msgstr "Recherche de programme: [COLOR gold][B]{}[/B][/COLOR]"
+
+msgctxt "#30328"
+msgid "Synopsis search:"
+msgstr "Synopsis recherche:"
+
+msgctxt "#30329"
+msgid "Today"
+msgstr "Aujourd'hui"
+
+msgctxt "#30330"
+msgid "Tomorrow"
+msgstr "Demain"
+
+msgctxt "#30331"
+msgid "Yesterday"
+msgstr "Hier"
+
+msgctxt "#30332"
+msgid "in {} days"
+msgstr "dans {} jours"
+
+msgctxt "#30333"
+msgid "in {} day"
+msgstr "en {} jour"
+
+msgctxt "#30334"
+msgid "in {} hours"
+msgstr "dans {} heures"
+
+msgctxt "#30335"
+msgid "in {} min"
+msgstr "en {} min"
+
+msgctxt "#30336"
+msgid "Reminders"
+msgstr "Rappels"
+
+msgctxt "#30337"
+msgid "Recordings"
+msgstr "Enregistrements"
+
+msgctxt "#30338"
+msgid "List view"
+msgstr "Vue liste"
+
+msgctxt "#30339"
+msgid "List future days"
+msgstr "Liste des prochains jours"
+
+msgctxt "#30340"
+msgid "List previous hours"
+msgstr "Liste des heures précédentes"
+
+msgctxt "#30341"
+msgid "Sort list by time"
+msgstr "Trier la liste par heure"
+
+msgctxt "#30342"
+msgid "Include synopsis in title search"
+msgstr "Inclure un synopsis dans la recherche de titres"
+
+msgctxt "#30343"
+msgid "Category list"
+msgstr "Liste des catégories"
+
+msgctxt "#30344"
+msgid "Category search"
+msgstr "Recherche par catégorie"
+
+msgctxt "#30345"
+msgid "Category search:"
+msgstr "Recherche par catégorie:"
+
+msgctxt "#30346"
+msgid "Go to channel"
+msgstr "Aller à la chaîne"
+
+msgctxt "#30347"
+msgid "Determining order of channels"
+msgstr "Déterminer l'ordre des canaux"
+
+msgctxt "#30348"
+msgid "Enable channel order by number"
+msgstr "Activer le classement des chaînes par numéro"
+
+msgctxt "#30349"
+msgid "Play on select"
+msgstr "Au nombre choisi"
+
+msgctxt "#30350"
+msgid "Don't play"
+msgstr "Pas de lecture"
+
+msgctxt "#30351"
+msgid "Play only in TV mode"
+msgstr "Lecture uniquement en mode TV"
+
+msgctxt "#30352"
+msgid "Play"
+msgstr "Lecture"
+
+msgctxt "#30353"
+msgid "Error"
+msgstr "Erreur"
+
+msgctxt "#30354"
+msgid "Please enable channel order by number in settings"
+msgstr "Veuillez activer l'ordre des chaînes par numéro dans les paramètres"
+
+msgctxt "#30355"
+msgid "Show channel logos"
+msgstr "Voir les logos de la chaîne"
+
+msgctxt "#30356"
+msgid "Extended information"
+msgstr "Informations étendues"
+
+msgctxt "#30357"
+msgid "Search as movie"
+msgstr "Rechercher comme film"
+
+msgctxt "#30358"
+msgid "Search as TV show"
+msgstr "Rechercher comme émission de télévision"
+
+msgctxt "#30359"
+msgid "Search extended information"
+msgstr "Rechercher des informations étendues"
+
+msgctxt "#30360"
+msgid "Search as all"
+msgstr "Rechercher comme tous"
+
+msgctxt "#30361"
+msgid "Search could not be found: {}"
+msgstr "Recherche introuvable: {}"
+
+msgctxt "#30362"
+msgid "No such movie: {}"
+msgstr "Aucun tel film: {}"
+
+msgctxt "#30363"
+msgid "No such TV program: {}"
+msgstr "Aucun programme de télévision: {}"
+
+msgctxt "#30364"
+msgid "Show program thumbnail"
+msgstr "Voir les vignette du programme"
+
+msgctxt "#30365"
+msgid "Time [CR](Attention! Reseting database required)"
+msgstr "Heure [CR](Remarque! Réinitialisation de la base de données requise)"
+
+msgctxt "#30366"
+msgid "Adjust timebar (min)"
+msgstr "Ajuster la barre de temps (min)"
+
+msgctxt "#30367"
+msgid "Fullscreen window size animation"
+msgstr "Animation de taille de fenêtre plein écran"
+
+msgctxt "#30368"
+msgid "Site"
+msgstr "Site"
+
+msgctxt "#30369"
+msgid "Login with TV provider"
+msgstr "Connectez-vous avec le fournisseur de télévision"
+
+msgctxt "#30370"
+msgid "Operator"
+msgstr "Opérateur"
+
+msgctxt "#30371"
+msgid "Reset login credentials"
+msgstr "Réinitialiser les informations de connexion"
+
+msgctxt "#30372"
+msgid "Login credentials have been reset"
+msgstr "Les informations de connexion ont été réinitialisées"
+
+msgctxt "#30500"
+msgid "Edit channel order and visibility"
+msgstr "Modifier l'ordre des canaux et la visibilité"
+
+msgctxt "#30501"
+msgid "Press context button to set channel order, move up and down to change position. Enable and disable channels with select button."
+msgstr "Appuyez sur le bouton contextuel pour définir l'ordre des canaux, déplacez-vous de haut en bas pour changer de position. Activer et désactiver les chaînes avec le bouton de sélection."
+
+msgctxt "#30502"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#30503"
+msgid "Cancel"
+msgstr "Annuler"
+
+msgctxt "#30504"
+msgid "Notification from mods-kodi.pl"
+msgstr "Notification de mods-kodi.pl"
+
+msgctxt "#30505"
+msgid "Genre"
+msgstr "Genre"
+
+msgctxt "#30506"
+msgid "Episode"
+msgstr "Episode"
+
+msgctxt "#30507"
+msgid "Actors"
+msgstr "Acteurs"
+
+msgctxt "#30508"
+msgid "Year"
+msgstr "Année"
+
+msgctxt "#30509"
+msgid "Director"
+msgstr "Directeur"
+
+msgctxt "#30510"
+msgid "Plot"
+msgstr "Parcelle"
+
+msgctxt "#30511"
+msgid "Duration"
+msgstr "Durée"
+
+msgctxt "#30512"
+msgid "Rating"
+msgstr "Pendant des années"
+
+msgctxt "#30400"
+msgid "CHANNELS LIST"
+msgstr "LISTE DES CANAUX"
+
+msgctxt "#30401"
+msgid "EXIT"
+msgstr "SORTIE"
+
+msgctxt "#30402"
+msgid "ADDON SETTINGS"
+msgstr "REGLAGES ADDON"
+
+msgctxt "#30403"
+msgid "REMIND"
+msgstr "RAPPEL"
+
+msgctxt "#30404"
+msgid "PROGRAM"
+msgstr "PROGRAMME"
+
+msgctxt "#30405"
+msgid "CHANNEL SETTINGS"
+msgstr "RÉGLAGES DE CANAL"
+
+msgctxt "#30406"
+msgid "DON'T REMIND"
+msgstr "NE PAS RAPPELER"
+
+msgctxt "#30407"
+msgid "CHOOSE STREAM"
+msgstr "CHOISIR LE FLUX"
+
+msgctxt "#30408"
+msgid "REMOVE STREAM"
+msgstr "SUPPRIMER LE FLUX"
+
+msgctxt "#30600"
+msgid "Setup stream"
+msgstr "Flux de configuration"
+
+msgctxt "#30601"
+msgid "Stream file"
+msgstr "Fichier de flux"
+
+msgctxt "#30602"
+msgid "Favourites"
+msgstr "Favoris"
+
+msgctxt "#30603"
+msgid "Addons"
+msgstr "Extensions"
+
+msgctxt "#30604"
+msgid "Preview"
+msgstr "Aperçu"
+
+msgctxt "#30605"
+msgid "Save"
+msgstr "Enregistrer"
+
+msgctxt "#30606"
+msgid "Cancel"
+msgstr "Annuler"
+
+msgctxt "#30607"
+msgid "Stop preview"
+msgstr "Arrêt de prévisualisation"
+
+msgctxt "#30610"
+msgid "Browse..."
+msgstr "Parcourir..."
+
+msgctxt "#30611"
+msgid "Click [B]Browse[/B] below and navigate to your stream file.[CR]When you have chosen your file you can preview the stream to test if it works in KODI."
+msgstr "Cliquer [B]Parcourir[/B] ci-dessous et accédez à votre fichier de flux.[CR]Lorsque vous avez choisi votre fichier, vous pouvez prévisualiser le flux pour tester s'il fonctionne dans KODI."
+
+msgctxt "#30620"
+msgid "Choose a favourite. Only [B]PlayMedia[/B] favourites are supported."
+msgstr "Choisissez un favori. Seuls les favoris [B]PlayMedia[/B] sont pris en charge."
+
+msgctxt "#30621"
+msgid "Live, schedule recording or download program.[CR]Add a task, use time-shift to urge or delay start of recording / download."
+msgstr "En direct, programmez l'enregistrement ou téléchargez le programme.[CR]Ajoutez une tâche, utilisez le décalage horaire pour demander ou retarder le démarrage de l'enregistrement / du téléchargement."
+
+msgctxt "#30700"
+msgid "Multiple addons provide this channels.[CR]Choose one to watch the stream."
+msgstr "Plusieurs addons fournissent ces canaux.[CR]Choisissez-en un pour regarder le flux."
+
+msgctxt "#30701"
+msgid "Source: "
+msgstr "Origine:"
+
+msgctxt "#30702"
+msgid "Appearance"
+msgstr "Apparence"
+
+msgctxt "#30703"
+msgid "Automatically assign streams"
+msgstr "Attribuer automatiquement les flux"
+
+msgctxt "#30704"
+msgid "Use zipped epg"
+msgstr "Utilisez zg epg"
+
+msgctxt "#30705"
+msgid "Show only programs with stream assigned"
+msgstr "Afficher uniquement les programmes avec le flux assigné"
+
+msgctxt "#30706"
+msgid "Auto detect EPG change"
+msgstr "Auto-détection changement EPG"
+
+msgctxt "#30707"
+msgid "Show info notification"
+msgstr "Afficher la notification d'information"
+
+msgctxt "#30708"
+msgid "Use fast EPG parser"
+msgstr "Utiliser l'analyseur EPG rapide"
+
+msgctxt "#30709"
+msgid "Skin updated"
+msgstr "Skin mis à jour"
+
+msgctxt "#30710"
+msgid "Update"
+msgstr "Mise à jour"
+
+msgctxt "#30711"
+msgid "Get more..."
+msgstr "Obtenez plus..."
+
+msgctxt "#30712"
+msgid "All online skins are already installed!"
+msgstr "Tous les peaux en ligne sont déjà installés!"
+
+msgctxt "#30713"
+msgid "Failed to download skin!"
+msgstr "Impossible de télécharger la peau!"
+
+msgctxt "#30714"
+msgid "Delete all skins"
+msgstr "Supprimer tous les peaux"
+
+msgctxt "#30715"
+msgid "Enable adult channels"
+msgstr "Activer canaux adultes"
+
+msgctxt "#30716"
+msgid "Enable swedish channels"
+msgstr "Activer canaux suédoises"
+
+msgctxt "#30717"
+msgid "EPG - XXX"
+msgstr "EPG - XXX"
+
+msgctxt "#30718"
+msgid "EPG - Swedish"
+msgstr "EPG - Suédois"
+
+msgctxt "#30719"
+msgid "Disable"
+msgstr "Désactiver"
+
+msgctxt "#30720"
+msgid "Disabled"
+msgstr "Désactivé"
+
+msgctxt "#30721"
+msgid "Enabled"
+msgstr "Activé"
+
+msgctxt "#30722"
+msgid "Enable"
+msgstr "Activer"
+
+msgctxt "#30723"
+msgid "Password for adult channels taken from mods-kodi"
+msgstr "Entrer le mot de passe pour canaux adultes prises à partir de mods-kodi"
+
+msgctxt "#30724"
+msgid "Incorrect password!"
+msgstr "Mot de passe incorrect!"
+
+msgctxt "#30725"
+msgid "Enable english channels"
+msgstr "Activer canaux anglaises"
+
+msgctxt "#30726"
+msgid "EPG - English"
+msgstr "EPG - Anglais"
+
+msgctxt "#30727"
+msgid "Enable danish channels"
+msgstr "Activer canaux danoises"
+
+msgctxt "#30728"
+msgid "EPG - Danish"
+msgstr "EPG - Danois"
+
+msgctxt "#30729"
+msgid "Enable french channels"
+msgstr "Activer canaux françaises"
+
+msgctxt "#30730"
+msgid "EPG - French"
+msgstr "EPG - Français"
+
+msgctxt "#30731"
+msgid "Enable german channels"
+msgstr "Activer canaux allemandes"
+
+msgctxt "#30732"
+msgid "EPG - German"
+msgstr "EPG - Allemand"
+
+msgctxt "#30733"
+msgid "Enable croatian channels"
+msgstr "Activer canaux croates"
+
+msgctxt "#30734"
+msgid "EPG - Croatian"
+msgstr "EPG - Croate"
+
+msgctxt "#30735"
+msgid "Enable serbian channels"
+msgstr "Activer canaux serbes"
+
+msgctxt "#30736"
+msgid "EPG - Serbian"
+msgstr "EPG - Serbe"
+
+msgctxt "#30737"
+msgid "Enable norwegian channels"
+msgstr "Activer canaux norvégiennes"
+
+msgctxt "#30738"
+msgid "EPG - Norwegian"
+msgstr "EPG - Norvégien"
+
+msgctxt "#30739"
+msgid "Show all regions"
+msgstr "Afficher toutes les régions"
+
+msgctxt "#30740"
+msgid "[COLOR]Select EPG[/COLOR]"
+msgstr "[COLOR]Sélectionnez EPG[/COLOR]"
+
+msgctxt "#30741"
+msgid "Adult channels"
+msgstr "Canaux adultes"
+
+msgctxt "#30742"
+msgid "Timezone"
+msgstr "Fuseau horaire"
+
+msgctxt "#30743"
+msgid "Enable benelux channels"
+msgstr "Activer canaux benelux"
+
+msgctxt "#30744"
+msgid "EPG - Benelux"
+msgstr "EPG - Benelux"
+
+msgctxt "#30745"
+msgid "Enable vod channels"
+msgstr "Activer canaux vod"
+
+msgctxt "#30746"
+msgid "Video on demand channels"
+msgstr "Canaux video on demand"
+
+msgctxt "#30747"
+msgid "adult channels"
+msgstr "canaux pour adultes"
+
+msgctxt "#30748"
+msgid "vod channels"
+msgstr "canaux vod"
+
+msgctxt "#30749"
+msgid "Enable radio channels"
+msgstr "Activer canaux radio"
+
+msgctxt "#30750"
+msgid "EPG - Radio"
+msgstr "EPG - Radio"
+
+msgctxt "#30751"
+msgid "Radio channels"
+msgstr "Canaux radio"
+
+msgctxt "#30752"
+msgid "EPG - Czech"
+msgstr "EPG - Tchèque"
+
+msgctxt "#30753"
+msgid "Enable czech channels"
+msgstr "Activer canaux tchèques"
+
+msgctxt "#30754"
+msgid "EPG - US"
+msgstr "EPG - US"
+
+msgctxt "#30755"
+msgid "Enable american channels"
+msgstr "Activer canaux américaines"
+
+msgctxt "#30756"
+msgid "EPG - Italian"
+msgstr "EPG - Italien"
+
+msgctxt "#30757"
+msgid "Enable italian channels"
+msgstr "Activer canaux italiennes"
+
+msgctxt "#30758"
+msgid "Polish channels"
+msgstr "Canaux polonaises"
+
+msgctxt "#30759"
+msgid "Enable polish channels [COLOR disabled](Use main EPG)[/COLOR]"
+msgstr "Activer canaux polonais [COLOR disabled](Utiliser l'EPG principal)[/COLOR]"
+
+msgctxt "#30760"
+msgid "Enable subtitles"
+msgstr "Activer les sous-titres"
+
+msgctxt "#30802"
+msgid "m-TVGuide is configured to stream using"
+msgstr "m-TVGuide est configuré pour diffuser en utilisant"
+
+msgctxt "#30803"
+msgid "addon which is not installed."
+msgstr "addon qui n'est pas installé."
+
+msgctxt "#30804"
+msgid "Streaming using that addon is now disabled."
+msgstr "Le streaming en utilisant cet addon est maintenant désactivé."
+
+msgctxt "#30901"
+msgid "Update"
+msgstr "Mise à jour"
+
+msgctxt "#30902"
+msgid "Update now"
+msgstr "Mettre à jour maintenant"
+
+msgctxt "#30904"
+msgid "[COLOR]Telia Play[/COLOR]"
+msgstr "[COLOR]Telia Play[/COLOR]"
+
+msgctxt "#30905"
+msgid "Advertisement"
+msgstr "Publicité"
+
+msgctxt "#30910"
+msgid "Enable navigation panel for mouse or touch"
+msgstr "Activer le panneau de navi pour la souris ou le toucher"
+
+msgctxt "#30911"
+msgid "Timezone UTC (+00:00 GMT)"
+msgstr "Fuseau horaire UTC (+00:00 GMT)"
+
+msgctxt "#59904"
+msgid "Enable"
+msgstr "Activée"
+
+msgctxt "#59905"
+msgid "[COLOR]Playlists M3U[/COLOR]"
+msgstr "[COLOR]Playlists M3U[/COLOR]"
+
+msgctxt "#59906"
+msgid "Link"
+msgstr "Lien"
+
+msgctxt "#59907"
+msgid "Source"
+msgstr "Origine"
+
+msgctxt "#59908"
+msgid "File"
+msgstr "Fichier"
+
+msgctxt "#59909"
+msgid "Multisession"
+msgstr "Multisession"
+
+msgctxt "#59910"
+msgid "Use free account"
+msgstr "Utiliser un compte gratuit"
+
+msgctxt "#59911"
+msgid "[COLOR]Playlist 1[/COLOR]"
+msgstr "[COLOR]Liste de lecture 1[/COLOR]"
+
+msgctxt "#59912"
+msgid "[COLOR]Playlist 2[/COLOR]"
+msgstr "[COLOR]Liste de lecture 2[/COLOR]"
+
+msgctxt "#59913"
+msgid "[COLOR]Playlist 3[/COLOR]"
+msgstr "[COLOR]Liste de lecture 3[/COLOR]"
+
+msgctxt "#59914"
+msgid "Display name"
+msgstr "Afficher le nom"
+
+msgctxt "#59915"
+msgid "Loading service"
+msgstr "Chargement du service"
+
+msgctxt "#59916"
+msgid "Number of playlists"
+msgstr "Number de listes de lecture"
+
+msgctxt "#59917"
+msgid "[COLOR]Playlist 4[/COLOR]"
+msgstr "[COLOR]Liste de lecture 4[/COLOR]"
+
+msgctxt "#59918"
+msgid "[COLOR]Playlist 5[/COLOR]"
+msgstr "[COLOR]Liste de lecture 5[/COLOR]"
+
+msgctxt "#59919"
+msgid "Url"
+msgstr "Url"
+
+msgctxt "#59920"
+msgid "[COLOR]C More[/COLOR]"
+msgstr "C More"
+
+msgctxt "#59921"
+msgid "[COLOR]Cyfrowy Polsat GO[/COLOR]"
+msgstr "Cyfrowy Polsat GO"
+
+msgctxt "#59922"
+msgid "[COLOR]FranceTV[/COLOR]"
+msgstr "FranceTV"
+
+msgctxt "#59923"
+msgid "[COLOR]nc+ GO[/COLOR]"
+msgstr "nc+ GO"
+
+msgctxt "#59924"
+msgid "Configuration tutorial"
+msgstr "Tutoriel de configuration"
+
+msgctxt "#59925"
+msgid "Belgium"
+msgstr "Belgique"
+
+msgctxt "#59926"
+msgid "Czech"
+msgstr "Tchèque"
+
+msgctxt "#59927"
+msgid "Germany"
+msgstr "Allemagne"
+
+msgctxt "#59928"
+msgid "Denmark"
+msgstr "Danemark"
+
+msgctxt "#59929"
+msgid "France"
+msgstr "France"
+
+msgctxt "#59930"
+msgid "Croatia"
+msgstr "Croatie"
+
+msgctxt "#59931"
+msgid "Italy"
+msgstr "Italie"
+
+msgctxt "#59932"
+msgid "Norway"
+msgstr "Norvège"
+
+msgctxt "#59933"
+msgid "Poland"
+msgstr "Pologne"
+
+msgctxt "#59934"
+msgid "Sweden"
+msgstr "Suède"
+
+msgctxt "#59935"
+msgid "Serbia"
+msgstr "Serbie"
+
+msgctxt "#59936"
+msgid "Great Britain"
+msgstr "Grande Bretagne"
+
+msgctxt "#59937"
+msgid "United States"
+msgstr "États Unis"
+
+msgctxt "#59938"
+msgid "Would you like to end setup configuration?"
+msgstr "Voulez-vous quitter la configuration de l'installation?"
+
+msgctxt "#59939"
+msgid "Return"
+msgstr "Retourner"
+
+msgctxt "#59940"
+msgid "Select electronic program guide (EPG) type"
+msgstr "Sélectionnez le type de guide électronique des programmes (EPG)"
+
+msgctxt "#59941"
+msgid "Enter URL link to your electronic program guide (EPG)"
+msgstr "Entrez le lien URL vers votre guide électronique des programmes (EPG)"
+
+msgctxt "#59942"
+msgid "Select your electronic program guide (EPG) file"
+msgstr "Sélectionnez votre fichier de guide électronique des programmes (EPG)"
+
+msgctxt "#59943"
+msgid "Select regions"
+msgstr "Sélectionnez les régions"
+
+msgctxt "#59944"
+msgid "Would you like to add an extra electronic program guide (EPG) for {} channels?"
+msgstr "Souhaitez-vous ajouter un guide électronique supplémentaire des programmes (EPG) pour {} chaînes?"
+
+msgctxt "#59945"
+msgid "Enter URL link to your electronic program guide (EPG) for {} channels"
+msgstr "Entrez le lien URL vers votre guide électronique des programmes (EPG) pour {} chaînes"
+
+msgctxt "#59946"
+msgid "Select TV service or M3U playlist"
+msgstr "Sélectionnez le service TV ou la liste de lecture M3U"
+
+msgctxt "#59947"
+msgid "TV services"
+msgstr "Services TV"
+
+msgctxt "#59948"
+msgid "M3U Playlist"
+msgstr "Liste de lecture M3U"
+
+msgctxt "#59949"
+msgid "Select TV services"
+msgstr "Sélectionnez les services de télévision"
+
+msgctxt "#59950"
+msgid "Enter login credentials for {}."
+msgstr "Saisissez les informations de connexion pour {}."
+
+msgctxt "#59951"
+msgid "Would you like to login with a TV operator?"
+msgstr "Voulez-vous vous connecter avec un opérateur TV?"
+
+msgctxt "#59952"
+msgid "Username"
+msgstr "Nom d'utilisateur"
+
+msgctxt "#59953"
+msgid "Password"
+msgstr "Mot de passe"
+
+msgctxt "#59954"
+msgid "Select M3U playlist type."
+msgstr "Sélectionnez le type de liste de lecture M3U."
+
+msgctxt "#59955"
+msgid "Enter M3U playlist URL link"
+msgstr "Entrez le lien URL de la liste de lecture M3U"
+
+msgctxt "#59956"
+msgid "Select M3U playlist file"
+msgstr "Sélectionnez le fichier de liste de lecture M3U"
+
+msgctxt "#59957"
+msgid "Would you like to setup recording service?"
+msgstr "Souhaitez-vous configurer le service d'enregistrement?"
+
+msgctxt "#59958"
+msgid "Select a storage location for your recordings"
+msgstr "Sélectionnez un emplacement de stockage pour vos enregistrements"
+
+msgctxt "#59959"
+msgid "Would you like to start a configuration tutorial for m-TVGuide?"
+msgstr "Souhaitez-vous lancer un didacticiel de configuration pour m-TVGuide?"
+
+msgctxt "#59960"
+msgid "• Select electronic program guide (EPG). [COLOR grey]Supported program guides are URL link and/or .xml, .gz and .zip file extensions.[/COLOR][CR]• Select regions that are supported by the provided EPG.[CR]• Select a TV service and/or M3U playlist."
+msgstr "• Sélectionnez le guide électronique des programmes (EPG). [COLOR grey]Les guides de programmes pris en charge sont le lien URL et/ou les extensions de fichier .xml, .gz et .zip.[/COLOR][CR]• Sélectionnez les régions pris en charge par l'EPG fourni.[CR]• Sélectionnez un service TV et/ou liste de lecture M3U."
+
+msgctxt "#59961"
+msgid "All settings are now configurated, you can now start m-TVGuide."
+msgstr "Tous les paramètres sont maintenant configurés, vous pouvez maintenant démarrer m-TVGuide."
+
+msgctxt "#59962"
+msgid "Would you like to add an extra EPG?"
+msgstr "Souhaitez-vous ajouter un EPG supplémentaire?"
+
+msgctxt "#59963"
+msgid "Belgian"
+msgstr "Belges"
+
+msgctxt "#59964"
+msgid "Czech"
+msgstr "Tchèques"
+
+msgctxt "#59965"
+msgid "German"
+msgstr "Allemandes"
+
+msgctxt "#59966"
+msgid "Danish"
+msgstr "Danoises"
+
+msgctxt "#59967"
+msgid "French"
+msgstr "Françaises"
+
+msgctxt "#59968"
+msgid "Croatian"
+msgstr "Croates"
+
+msgctxt "#59969"
+msgid "Italian"
+msgstr "Italiennes"
+
+msgctxt "#59970"
+msgid "Norwegian"
+msgstr "Norvégiennes"
+
+msgctxt "#59971"
+msgid "Polish"
+msgstr "Polonaises"
+
+msgctxt "#59972"
+msgid "Swedish"
+msgstr "Suédoises"
+
+msgctxt "#59973"
+msgid "Serbian"
+msgstr "Serbes"
+
+msgctxt "#59974"
+msgid "English"
+msgstr "Anglaises"
+
+msgctxt "#59975"
+msgid "American"
+msgstr "Américaines"
+
+msgctxt "#59976"
+msgid "Catchup"
+msgstr "Timeshift"
+
+msgctxt "#59977"
+msgid "Query format string"
+msgstr "Format de chaîne"
+
+msgctxt "#59978"
+msgid "Enable catchup"
+msgstr "Activer timeshift"
+
+msgctxt "#59979"
+msgid "Wrong timeshift format."
+msgstr "Format Timeshift incorrect."
+
+msgctxt "#59980"
+msgid "No available catchup playback."
+msgstr "Pas de lecture timeshift disponible."
+
+msgctxt "#59981"
+msgid "- Buffer before program start (min)"
+msgstr "- Tampon avant le début du programme (min)"
+
+msgctxt "#59982"
+msgid "- Buffer after program end (min)"
+msgstr "- Tampon après la fin du programme (min)"
+
+msgctxt "#59983"
+msgid "Other settings"
+msgstr "Autres réglages"
+
+msgctxt "#59984"
+msgid "Catchup only finished programmes"
+msgstr "Timeshift uniquement disponible sur les programmes terminés"
+
+msgctxt "#59985"
+msgid "Downloading:"
+msgstr "Téléchargement:"
+
+msgctxt "#59986"
+msgid "Finished downloading:"
+msgstr "Téléchargement terminé:"
+
+msgctxt "#59987"
+msgid "No download available for this program."
+msgstr "Aucun téléchargement disponible pour ce programme."
+
+msgctxt "#59988"
+msgid "Catchup window days"
+msgstr "Fenêtre de décalage horaire journées"
+
+msgctxt "#59989"
+msgid "Catchup type"
+msgstr "Timeshift type"
+
+msgctxt "#59990"
+msgid "Append"
+msgstr "Append"
+
+msgctxt "#59991"
+msgid "Add channel from EPG (Electronic program guide)"
+msgstr "Ajouter une chaîne depuis EPG (guide électronique des programmes)"
+
+msgctxt "#59992"
+msgid "Add stream to selected channel"
+msgstr "Ajouter un flux à la chaîne sélectionnée"
+
+msgctxt "#59993"
+msgid "Added channel [B]{}[/B]. Restart required for changes to take place."
+msgstr "Ajout de la chaîne [B]{}[/B]. Redémarrage requis pour que les modifications aient lieu."
+
+msgctxt "#59994"
+msgid "Select which channels to display"
+msgstr "Sélectionnez les canaux à afficher"
+
+msgctxt "#59995"
+msgid "Missing channels"
+msgstr "Chaînes manquantes"
+
+msgctxt "#59996"
+msgid "Xtream Codes"
+msgstr "Xtream Codes"
+
+msgctxt "#59997"
+msgid "Sort by selected character"
+msgstr "Trier par lettre sélectionnée"
+
+msgctxt "#59998"
+msgid "Only one download session at once allowed."
+msgstr "Une seule session de téléchargement à la fois autorisée."
+
+msgctxt "#59999"
+msgid "Shift"
+msgstr "Shift"
+
+msgctxt "#60000"
+msgid "Auto"
+msgstr "Auto"
+
+msgctxt "#60001"
+msgid "Manual"
+msgstr "Manuel"
+
+msgctxt "#60002"
+msgid "Catchup window"
+msgstr "Fenêtre de décalage horaire"
+
+msgctxt "#60003"
+msgid "Add single URL value"
+msgstr "Ajouter une valeur d'URL unique"
+
+msgctxt "#60004"
+msgid "Add multiple URL values"
+msgstr "Ajouter plusieurs valeurs d'URL"
+
+msgctxt "#60005"
+msgid "Delete added channels"
+msgstr "Supprimer les chaînes ajoutées"
+
+msgctxt "#60006"
+msgid "Select channels to delete"
+msgstr "Sélectionnez les chaînes à supprimer"
+
+msgctxt "#60007"
+msgid "Channels has been deleted. Restart required for changes to take place."
+msgstr "Les chaînes ont été supprimées. Redémarrage requis pour que les modifications aient lieu."
+
+msgctxt "#60008"
+msgid "Save playlist to local drive"
+msgstr "Enregistrer la playlist sur le disque local"
+
+msgctxt "#60009"
+msgid "Update playlist (days)"
+msgstr "Mettre à jour la playlist (jours)"
+
+msgctxt "#30913"
+msgid "Settings"
+msgstr "Paramètres"
+
+msgctxt "#30914"
+msgid "Skin"
+msgstr "Peau"
+
+msgctxt "#30915"
+msgid "Enable add-on autostart"
+msgstr "Activer le démarrage automatique du module complémentaire"
+
+msgctxt "#30916"
+msgid "Database"
+msgstr "Base de données"
+
+msgctxt "#30917"
+msgid "Fullscreen window size animation"
+msgstr "Animation de taille de fenêtre plein écran"
+
+msgctxt "#30918"
+msgid "OSD on select"
+msgstr "OSD sur select"
+
+msgctxt "#30919"
+msgid "Enable automatic channel playback"
+msgstr "Activer la lecture automatique des chaînes"
+
+msgctxt "#30920"
+msgid "By channel number"
+msgstr "Par numéro de chaîne"
+
+msgctxt "#30921"
+msgid "Last seen channel"
+msgstr "Dernière chaîne vue"
+
+msgctxt "#30930"
+msgid "Colours"
+msgstr "Couleurs"
+
+msgctxt "#30931"
+msgid "[COLOR]Category colours[/COLOR]"
+msgstr "[COLOR]Couleurs de la catégorie[/COLOR]"
+
+msgctxt "#30932"
+msgid "Movies"
+msgstr "Films"
+
+msgctxt "#30933"
+msgid "TV series"
+msgstr "Séries TV"
+
+msgctxt "#30934"
+msgid "Current events"
+msgstr "Événements actuels"
+
+msgctxt "#30935"
+msgid "Entertainment"
+msgstr "Divertissement"
+
+msgctxt "#30936"
+msgid "Documentaries"
+msgstr "Documentaires"
+
+msgctxt "#30937"
+msgid "Childrens programme"
+msgstr "Pour les enfants"
+
+msgctxt "#30938"
+msgid "Sports"
+msgstr "Sport"
+
+msgctxt "#30939"
+msgid "Interactive entertainment"
+msgstr "Divertissement interactif"
+
+msgctxt "#30940"
+msgid "[COLOR]Default colors[/COLOR]"
+msgstr "[COLOR]Couleurs par défaut[/COLOR]"
+
+msgctxt "#30941"
+msgid "Default color"
+msgstr "Couleur par défaut"
+
+msgctxt "#30942"
+msgid "Focus colour"
+msgstr "Couleur de mise au point"
+
+msgctxt "#30943"
+msgid "Schedule colour"
+msgstr "Couleur du calendrier"
+
+msgctxt "#30944"
+msgid "Recording colour"
+msgstr "Couleur d'enregistrement"
+
+msgctxt "#30950"
+msgid "Clear database"
+msgstr "Effacer la base de données"
+
+msgctxt "#30951"
+msgid "Database cleared"
+msgstr "Base de données effacée"
+
+msgctxt "#30952"
+msgid "Delete custom streams"
+msgstr "Supprimer les flux personnalisés"
+
+msgctxt "#30953"
+msgid "Export settings"
+msgstr "Paramètres d'exportation"
+
+msgctxt "#30954"
+msgid "Import settings"
+msgstr "Paramètres d'importation"
+
+msgctxt "#30955"
+msgid "Delete database file"
+msgstr "Supprimer le fichier de base de données"
+
+msgctxt "#30956"
+msgid "[COLOR]MojeFilmy[/COLOR]"
+msgstr "[COLOR]MojeFilmy[/COLOR]"
+
+msgctxt "#30957"
+msgid "Username"
+msgstr "Nom d'utilisateur"
+
+msgctxt "#30958"
+msgid "Max service startup time (sec)"
+msgstr "Temps de démarrage du service max (sec)"
+
+msgctxt "#30959"
+msgid "Playlist URL"
+msgstr "URL de la playlist"
+
+msgctxt "#30960"
+msgid "Reconnect broken stream"
+msgstr "Reconnecter le flux interrompu"
+
+msgctxt "#30961"
+msgid "Max number of reattempts"
+msgstr "Nombre maximum de ré-essais"
+
+msgctxt "#30962"
+msgid "Reattempt delay (ms)"
+msgstr "Délai de réapparition (ms)"
+
+msgctxt "#30963"
+msgid "Exit"
+msgstr "Quitter"
+
+msgctxt "#30964"
+msgid "Press one more time to exit"
+msgstr "Appuyez une fois de plus pour quitter"
+
+msgctxt "#30965"
+msgid "Currently broadcast service"
+msgstr "Service de diffusion actuel"
+
+msgctxt "#30966"
+msgid "Movies (Interia)"
+msgstr "Films (Interia)"
+
+msgctxt "#30967"
+msgid "TV series (Interia)"
+msgstr "TV série (Interia)"
+
+msgctxt "#30968"
+msgid "Magazine"
+msgstr "Magazine"
+
+msgctxt "#30969"
+msgid "File has been deleted"
+msgstr "Le fichier a été supprimé"
+
+msgctxt "#30970"
+msgid "Assigned streams has been deleted"
+msgstr "Les flux assignés ont été supprimés"
+
+msgctxt "#30971"
+msgid "Reminders has been cleared"
+msgstr "Les rappels ont été effacés"
+
+msgctxt "#30972"
+msgid "Scheduled recording has been cleared"
+msgstr "L'enregistrement planifié a été effacé"
+
+msgctxt "#30973"
+msgid "Delete all settings"
+msgstr "Supprimer tous les paramètres"
+
+msgctxt "#30974"
+msgid "Stop playback while switching stream"
+msgstr "Arrêter la lecture tout en changeant de flux"
+
+msgctxt "#30975"
+msgid "Prefer HD-streams"
+msgstr "Préférer les flux HD"
+
+msgctxt "#30976"
+msgid "Refresh EPG table periodically"
+msgstr "Actualiser la table EPG périodiquement"
+
+msgctxt "#30977"
+msgid "Max stream startup time (sec)"
+msgstr "Temps de démarrage maximum du flux (sec)"
+
+msgctxt "#30978"
+msgid "Database updated"
+msgstr "Base de données mise à jour"
+
+msgctxt "#30979"
+msgid "m-TVGuide restart required"
+msgstr "m-TVGuide redémarrage requis"
+
+msgctxt "#30980"
+msgid "[COLOR]**WARNING!**[CR]Resetting your database will cause losing all settings![/COLOR]"
+msgstr "[COLOR]**AVERTISSEMENT!**[CR]La réinitialisation de votre base de données entraînera la perte de tous les paramètres![/COLOR]"
+
+msgctxt "#30981"
+msgid "Do you really want to exit"
+msgstr "Voulez vous vraiment quitter"
+
+msgctxt "#30982"
+msgid "Ask on exit"
+msgstr "Demander à la quitter"
+
+msgctxt "#30983"
+msgid "Click twice to exit"
+msgstr "Cliquez deux fois pour quitter"
+
+msgctxt "#30984"
+msgid "Add favorites"
+msgstr "Ajouter des favoris"
+
+msgctxt "#30985"
+msgid "Add"
+msgstr "Ajouter"
+
+msgctxt "#30986"
+msgid "Remove"
+msgstr "Supprimer"
+
+msgctxt "#30987"
+msgid "Clear"
+msgstr "Désactiver"
+
+msgctxt "#30988"
+msgid "Sort in alphabetic order"
+msgstr "Trier par ordre alphabétique"
+
+msgctxt "#30989"
+msgid "Add channels to group [COLOR gold][B]{}[/B][/COLOR]"
+msgstr "Ajouter des canaux au groupe [COLOR gold][B]{}[/B][/COLOR]"
+
+msgctxt "#30990"
+msgid "Remove channels from group [COLOR gold][B]{}[/B][/COLOR]"
+msgstr "Supprimer les canaux du groupe [COLOR gold][B]{}[/B][/COLOR]"
+
+msgctxt "#30991"
+msgid "Channel options"
+msgstr "Options de chaîne"
+
+msgctxt "#30992"
+msgid "Group"
+msgstr "Groupe"
+
+msgctxt "#30993"
+msgid "Remember list of favorites"
+msgstr "Se souvenir de la liste de favoris"
+
+msgctxt "#30994"
+msgid "Help - m-TVGuide [COLOR gold]EPG[/COLOR]"
+msgstr "Assistance - m-TVGuide [COLOR gold]EPG[/COLOR]"
+
+msgctxt "#30995"
+msgid "TV Group"
+msgstr "TV Group"
+
+msgctxt "#30996"
+msgid "There is no space for this device. Swap it with one of those already available on your account?"
+msgstr "Il n'y a pas d'espace pour cet appareil. Échangez-le avec l'un de ceux déjà disponibles sur votre compte?"
+
+msgctxt "#30997"
+msgid "Select a device to replace"
+msgstr "Sélectionnez un appareil à remplacer"
+
+msgctxt "#30998"
+msgid "Catchup - m-TVGuide [COLOR gold]EPG[/COLOR]"
+msgstr "Timeshift - m-TVGuide [COLOR gold]EPG[/COLOR]"
+
+msgctxt "#30999"
+msgid "Would you like to start program [B]{}[/B] from the beginning?"
+msgstr "Voulez-vous commencer le programme[B]{}[/B] depuis le début?"
+
+msgctxt "#31000"
+msgid "Would you like to download program [B]{}[/B]?"
+msgstr "Souhaitez-vous télécharger le programme [B]{}[/B]?"
+
+msgctxt "#58000"
+msgid "Programme information"
+msgstr "Informations du programme"
+
+msgctxt "#58001"
+msgid "Select destination folder"
+msgstr "Sélectionner le dossier de destination"
+
+msgctxt "#58002"
+msgid "Export settings"
+msgstr "Paramètres d'exportation"
+
+msgctxt "#58003"
+msgid "Import settings"
+msgstr "Paramètres d'importation"
+
+msgctxt "#58004"
+msgid "Failure - no settings to export!"
+msgstr "Échec - pas de paramètres à exporter!"
+
+msgctxt "#58005"
+msgid "Settings exported successfully"
+msgstr "Paramètres exportés avec succès"
+
+msgctxt "#58006"
+msgid "Failure - please check if you have write permissions to that path"
+msgstr "Échec - veuillez vérifier si vous avez des droits d'écriture sur ce chemin"
+
+msgctxt "#58007"
+msgid "Select settings backup file"
+msgstr "Sélectionnez les paramètres fichier de sauvegarde"
+
+msgctxt "#58008"
+msgid "Settings imported successfully"
+msgstr "Paramètres importés avec succès"
+
+msgctxt "#58009"
+msgid "Failed to import settings"
+msgstr "Échec de l'importation paramètres"
+
+msgctxt "#58010"
+msgid "Please check if chosen file is a correct settings backup"
+msgstr "S'il vous plaît vérifier si le fichier choisi est un paramètres de sauvegarde correcte"
+
+msgctxt "#58011"
+msgid "locked"
+msgstr "verrouillé"
+
+msgctxt "#31001"
+msgid "Enable OSD"
+msgstr "Activer OSD"
+
+msgctxt "#31002"
+msgid "Set keys"
+msgstr "Définir les clés"
+
+msgctxt "#31003"
+msgid "SET"
+msgstr "SET"
+
+msgctxt "#31004"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#31005"
+msgid "Home"
+msgstr "Accueil"
+
+msgctxt "#31006"
+msgid "Prog -"
+msgstr "Prog -"
+
+msgctxt "#31007"
+msgid "Prog +"
+msgstr "Prog +"
+
+msgctxt "#31008"
+msgid "Stop"
+msgstr "Arrêt"
+
+msgctxt "#31009"
+msgid "Information"
+msgstr "Information"
+
+msgctxt "#31010"
+msgid "Context"
+msgstr "Contexte"
+
+msgctxt "#31011"
+msgid "Record"
+msgstr "Record"
+
+msgctxt "#31012"
+msgid "Reset"
+msgstr "Réinitialiser"
+
+msgctxt "#31013"
+msgid "Defaults"
+msgstr "Défaut"
+
+msgctxt "#31014"
+msgid "Change stream"
+msgstr "Modifier le flux"
+
+msgctxt "#31015"
+msgid "Vol +"
+msgstr "Vol +"
+
+msgctxt "#31016"
+msgid "Vol -"
+msgstr "Vol -"
+
+msgctxt "#31017"
+msgid "Switch to last seen channel"
+msgstr "Passer à la dernière chaîne visionnée"
+
+msgctxt "#31018"
+msgid "Lists"
+msgstr "Liste"
+
+msgctxt "#31019"
+msgid "Stream failed to start, aborting playback"
+msgstr "Impossible de démarrer le flux, abandon de la lecture"
+
+msgctxt "#31020"
+msgid "Reached reconnection limit, aborting playback"
+msgstr "Limite de reconnexion atteinte, interruption de la lecture"
+
+msgctxt "#31021"
+msgid "Missing add-on: {}"
+msgstr "Add-on manquant: {}"
+
+msgctxt "#310010"
+msgid ""
+msgstr ""
+
+msgctxt "#310011"
+msgid "Stop playback using navi back button"
+msgstr "Arrêtez la lecture en utilisant le bouton de retour navi"
+
+msgctxt "#310012"
+msgid "Recorded program"
+msgstr "Programme enregistré"
+
+msgctxt "#310013"
+msgid "Start recorded program"
+msgstr "Démarrer le programme enregistré"
+
+msgctxt "#310014"
+msgid "Save plugin settings!"
+msgstr "Enregistrer les paramètres du plugin!"
+
+msgctxt "#55001"
+msgid "Change User-Agent"
+msgstr "Modifier User-Agent"
+
+msgctxt "#55002"
+msgid "Username"
+msgstr "Nom d'utilisateur"
+
+msgctxt "#55003"
+msgid "Password"
+msgstr "Mot de passe"
+
+msgctxt "#55005"
+msgid "Prefer high quality"
+msgstr "Préférez de haute qualité"
+
+msgctxt "#55007"
+msgid "TV services"
+msgstr "TV services"
+
+msgctxt "#55008"
+msgid "Assign also the streams of low- quality / backup"
+msgstr "Affectez également les flux de faible qualité / sauvegarde"
+
+msgctxt "#55010"
+msgid "0 Lowest"
+msgstr "0 Plus bas"
+
+msgctxt "#55011"
+msgid "1 Very Low"
+msgstr "1 Très faible"
+
+msgctxt "#55017"
+msgid "2 Very Low"
+msgstr "2 Très faible"
+
+msgctxt "#55012"
+msgid "3 Low"
+msgstr "3 Faible"
+
+msgctxt "#55018"
+msgid "4 Low"
+msgstr "4 Faible"
+
+msgctxt "#55013"
+msgid "5 Mid"
+msgstr "5 Moyenne"
+
+msgctxt "#55019"
+msgid "6 Mid"
+msgstr "6 Moyenne"
+
+msgctxt "#55014"
+msgid "7 High"
+msgstr "7 Élevé"
+
+msgctxt "#55020"
+msgid "8 High"
+msgstr "8 Élevé"
+
+msgctxt "#55021"
+msgid "9 Very High"
+msgstr "9 Très élevé"
+
+msgctxt "#55022"
+msgid "10 Very High"
+msgstr "10 Très élevé"
+
+msgctxt "#55023"
+msgid "11 Highest"
+msgstr "11 Élevé"
+
+msgctxt "#55015"
+msgid "Working"
+msgstr "Travail"
+
+msgctxt "#55016"
+msgid "Now Playing"
+msgstr "Lecture en cours"
+
+msgctxt "#89000"
+msgid "Select quality"
+msgstr "Sélectionnez la qualité"
+
+msgctxt "#89001"
+msgid "Enable sleep timer"
+msgstr "Activer la minuterie de sommeil"
+
+msgctxt "#89002"
+msgid "Timeout action"
+msgstr "Délai d'attente"
+
+msgctxt "#89003"
+msgid "Timeout value (min)"
+msgstr "Valeur du délai (min)"
+
+msgctxt "#89004"
+msgid "Stop playback"
+msgstr "Arrêter la lecture"
+
+msgctxt "#89005"
+msgid "Exit Kodi"
+msgstr "Quitter Kodi"
+
+msgctxt "#89006"
+msgid "Shutdown"
+msgstr "Arrêt"
+
+msgctxt "#89007"
+msgid "Hibernate"
+msgstr "Hibernation"
+
+msgctxt "#89008"
+msgid ""
+msgstr ""
+
+msgctxt "#89009"
+msgid ""
+msgstr ""
+
+msgctxt "#55009"
+msgid "Priority"
+msgstr "Priorité"
+
+msgctxt "#57001"
+msgid "API error"
+msgstr "Erreur API"
+
+msgctxt "#57002"
+msgid "Could not connect to website"
+msgstr "Impossible de connectez-vous au site Web"
+
+msgctxt "#57003"
+msgid "Check your network connection."
+msgstr "Vérifiez votre connexion réseau."
+
+msgctxt "#57009"
+msgid "Script error."
+msgstr "Erreur de script."
+
+msgctxt "#57010"
+msgid "Error on method getJsonFromAPI."
+msgstr "Erreur sur la méthode getJsonFromAPI."
+
+msgctxt "#57011"
+msgid "API connection didn't get any data."
+msgstr "Connexion à l'API didn &amp;apos; t obtenir des données."
+
+msgctxt "#57012"
+msgid "It could be network connection problem."
+msgstr "Il pourrait être un problème de connexion réseau."
+
+msgctxt "#57013"
+msgid "or wrong website API adress."
+msgstr "ou mauvaise adresse de l'API du site."
+
+msgctxt "#57014"
+msgid "Error! (API: setPlayer)"
+msgstr "Erreur! (API: setPlayer)"
+
+msgctxt "#57015"
+msgid "Could not get authorization data."
+msgstr "Impossible d'obtenir les données d'autorisation."
+
+msgctxt "#57018"
+msgid "Playing error!"
+msgstr "Erreur de lecture!"
+
+msgctxt "#57019"
+msgid "Exceeded the limit of free viewing, or too many users."
+msgstr "Dépassé la limite de visualisation gratuite, ou trop d'utilisateurs."
+
+msgctxt "#57020"
+msgid "Buy premium account now to watch unlimited!"
+msgstr "Acheter un compte premium maintenant pour regarder illimité!"
+
+msgctxt "#57021"
+msgid "Playing has been stopped."
+msgstr "Le jeu a été arrêté."
+
+msgctxt "#57022"
+msgid "Wrong video adress. Playing has been stopped."
+msgstr "Mauvaise adresse vidéo. Le jeu a été arrêté."
+
+msgctxt "#57027"
+msgid "Server has closed connection for unknown reason! Please try again."
+msgstr "Le serveur a fermé la connexion pour une raison inconnue! Veuillez réessayer."
+
+msgctxt "#57028"
+msgid "Playing has been stopped."
+msgstr "Le jeu a été arrêté."
+
+msgctxt "#57034"
+msgid "Information about user account"
+msgstr "Informations sur le compte d'utilisateur"
+
+msgctxt "#57036"
+msgid "You do not have a premium account. Starting a sponsored broadcast."
+msgstr "Vous n'avez pas de compte premium. Démarrer une diffusion sponsorisée"
+
+msgctxt "#57037"
+msgid "To purchase a premium right now go to:"
+msgstr "Pour acheter une prime dès maintenant, allez à:"
+
+msgctxt "#57038"
+msgid "http://mods-kodi.pl/"
+msgstr "http://mods-kodi.pl/"
+
+msgctxt "#57039"
+msgid "Content is not included in your service"
+msgstr "Contenu n'est pas inclus dans votre service"
+
+msgctxt "#57042"
+msgid "Error connection with website!"
+msgstr "Erreur de connexion avec le site Web!"
+
+msgctxt "#57043"
+msgid "Selected channel does not exist!"
+msgstr "La chaîne sélectionnée n'existe pas!"
+
+msgctxt "#57044"
+msgid "No channel selected!"
+msgstr "Aucun canal sélectionné!"
+
+msgctxt "#57045"
+msgid "No active server! We are sorry."
+msgstr "Pas de serveur actif! Nous sommes désolés."
+
+msgctxt "#57046"
+msgid "Rules are not accepted!"
+msgstr "Les règles ne sont pas acceptées!"
+
+msgctxt "#57047"
+msgid "Go to http://mods-kodi.pl/ and accept it, to use service."
+msgstr "Allez sur http://mods-kodi.pl/ et acceptez-le, pour utiliser le service."
+
+msgctxt "#57048"
+msgid "Login incorrect"
+msgstr "Login incorrect"
+
+msgctxt "#57049"
+msgid "Configured"
+msgstr "Configuré"
+
+msgctxt "#57050"
+msgid "URL is incorrect!"
+msgstr "L'URL est incorrecte!"
+
+msgctxt "#57051"
+msgid "m-TVGuide"
+msgstr "m-TVGuide"
+
+msgctxt "#57052"
+msgid "Addon is already running - can't be started again"
+msgstr "L'addon est déjà en cours d'exécution - ne peut pas être redémarré"
+
+msgctxt "#57053"
+msgid "Asset playback blocked due to VPN/proxy"
+msgstr "L'accès à la lecture est bloqué en raison d'un VPN/proxy"
+
+msgctxt "#57054"
+msgid "Service is unavailable in your location"
+msgstr "Service n'est pas disponible dans votre région"
+
+msgctxt "#57055"
+msgid "Maximum number of devices have been reached"
+msgstr "Le nombre maximal d'appareils a été atteint"
+
+msgctxt "#68000"
+msgid "Plot"
+msgstr "Intrigue"
+
+msgctxt "#68001"
+msgid "Press [B]OK[/B] to show plot"
+msgstr "Appuyer sur [B]OK[/B] pour afficher le résumé"
+
+msgctxt "#68002"
+msgid "Switch"
+msgstr "Changer"
+
+msgctxt "#68003"
+msgid "Play programme"
+msgstr "Programme de lecture"
+
+msgctxt "#68004"
+msgid "Search YouTube"
+msgstr "Rechercher sur YouTube"
+
+msgctxt "#68005"
+msgid "Options"
+msgstr "Options"
+
+msgctxt "#68006"
+msgid "Time:"
+msgstr "Heure:"
+
+msgctxt "#68007"
+msgid "Context menu"
+msgstr "Menu contextuel"
+
+msgctxt "#68008"
+msgid "Sections"
+msgstr "Sections"
+
+msgctxt "#68009"
+msgid "View options"
+msgstr "Options de vue"
+
+msgctxt "#68010"
+msgid "Browse for playlist"
+msgstr "Rechercher une liste de lecture"
+
+msgctxt "#68011"
+msgid "Previous"
+msgstr "Précédent"
+
+msgctxt "#68012"
+msgid "Subtitles"
+msgstr "Sous-titres"
+
+msgctxt "#68013"
+msgid "Audio language"
+msgstr "Langue audio"
+
+msgctxt "#68014"
+msgid "Numeric Input"
+msgstr "Entrée numérique"
+
+msgctxt "#68015"
+msgid "Ends at"
+msgstr "Termine à"
+
+msgctxt "#68016"
+msgid "Not available"
+msgstr "Indisponible"
+
+msgctxt "#68017"
+msgid "Time"
+msgstr "Heure"
+
+msgctxt "#68018"
+msgid "Date"
+msgstr "Date"
+
+msgctxt "#69000"
+msgid "Recording"
+msgstr "Enregistrement"
+
+msgctxt "#69001"
+msgid "Import RTMPDUMP"
+msgstr "Importer RTMPDUMP"
+
+msgctxt "#69002"
+msgid "Import FFMPEG"
+msgstr "Importer FFMPEG"
+
+msgctxt "#69003"
+msgid "Record destination"
+msgstr "Enregistrer la destination"
+
+msgctxt "#69004"
+msgid "Recording:"
+msgstr "Enregistrement:"
+
+msgctxt "#69005"
+msgid "Finished recording:"
+msgstr "Enregistrement terminé:"
+
+msgctxt "#69006"
+msgid "Not existing record destination directory - record canceled!"
+msgstr "Enregistrement inexistant répertoire de destination - enregistrement annulé!"
+
+msgctxt "#69007"
+msgid "Record error!"
+msgstr "Erreur d'enregistrement!"
+
+msgctxt "#69008"
+msgid "Can't record due to not configured record application: "
+msgstr "Enregistrement impossible en raison d'une application d'enregistrement non configurée:"
+
+msgctxt "#69009"
+msgid "Record already scheduled - cancel?"
+msgstr "Enregistrement déjà programmé - annuler?"
+
+msgctxt "#69010"
+msgid "Schedule program record: "
+msgstr "Programmer l'enregistrement du programme:"
+
+msgctxt "#69011"
+msgid "Cancel ongoing recording?"
+msgstr "Annuler l'enregistrement en cours?"
+
+msgctxt "#69012"
+msgid "Import record app"
+msgstr "Importer une application d'enregistrement"
+
+msgctxt "#69013"
+msgid "successfully imported"
+msgstr "importée avec succès"
+
+msgctxt "#69014"
+msgid "FFMPEG record format"
+msgstr "Format d'enregistrement FFMPEG"
+
+msgctxt "#69015"
+msgid "Exit despite of scheduled recording?"
+msgstr "Sortir malgré un enregistrement programmé?"
+
+msgctxt "#69016"
+msgid "Use FFMPEG to record RTMP instead of RTMPDUMP"
+msgstr "Utiliser FFMPEG pour enregistrer RTMP au lieu de RTMPDUMP"
+
+msgctxt "#69017"
+msgid "Install recording applications"
+msgstr "Installer des applications d'enregistrement"
+
+msgctxt "#69018"
+msgid "m-TVGuide is downloading files, Please press OK and wait until installation finishes."
+msgstr "m-TVGuide télécharge des fichiers, veuillez appuyer sur OK et attendez que l'installation se termine."
+
+msgctxt "#69019"
+msgid "An error has occurred - try again or install manualy"
+msgstr "Une erreur est survenue - essayez à nouveau ou installer manualy"
+
+msgctxt "#69020"
+msgid "Debug log"
+msgstr "Journal de débogage"
+
+msgctxt "#69021"
+msgid "Can't find FFMPEG or RTMPDUMP in system - please try to install by packet manager RTMPDUMP, FFMPEG or libav-tools or install manualy"
+msgstr "Impossible de trouver FFMPEG ou RTMPDUMP dans le système - veuillez essayer d'installer par le gestionnaire de paquets RTMPDUMP, FFMPEG ou libav-tools ou installer manuellement"
+
+msgctxt "#69022"
+msgid "Error during automatic import - try importing files manually"
+msgstr "Erreur lors de l'importation automatique - essayez d'importer les fichiers manuellement"
+
+msgctxt "#69023"
+msgid "Choose OS"
+msgstr "Choisissez OS"
+
+msgctxt "#69024"
+msgid "Maximum number of attempts to resume recording"
+msgstr "Nombre maximum de tentatives pour reprendre l'enregistrement"
+
+msgctxt "#69025"
+msgid "Delete watched recordings"
+msgstr "Supprimer les enregistrements regardés"
+
+msgctxt "#69026"
+msgid "Delete recording"
+msgstr "Supprimer l'enregistrement"
+
+msgctxt "#69027"
+msgid "Delete watched recording"
+msgstr "Supprimer l'enregistrement surveillé"
+
+msgctxt "#69028"
+msgid "Do nothing"
+msgstr "Ne rien faire"
+
+msgctxt "#69029"
+msgid "Ask"
+msgstr "Demander"
+
+msgctxt "#69030"
+msgid "Auto delete"
+msgstr "Suppression automatique"
+
+msgctxt "#69031"
+msgid "[COLOR]FLV format does not work on OpenELEC/LibreELEC systems[/COLOR]"
+msgstr "[COLOR]Le format flv ne fonctionne pas sur les systèmes OpenELEC/LibreELEC[/COLOR]"
+
+msgctxt "#69032"
+msgid "[COLOR]Record application for common systems[/COLOR]"
+msgstr "[COLOR]Enregistrer l'application pour les systèmes communs[/COLOR]"
+
+msgctxt "#69033"
+msgid "Log uploaded to: "
+msgstr "Journal envoyé à:"
+
+msgctxt "#69034"
+msgid "Failed to upload log"
+msgstr "Impossible de télécharger le journal"
+
+msgctxt "#69035"
+msgid "Upload Kodi log"
+msgstr "Télécharger le journal Kodi"
+
+msgctxt "#69036"
+msgid "Current EPG url is: "
+msgstr "L'URL actuelle de l'EPG est :"
+
+msgctxt "#69037"
+msgid "No free stream available in service "
+msgstr "Pas de flux libre disponible en service"
+
+msgctxt "#69038"
+msgid "Stop player when recording is started"
+msgstr "Arrêter le lecteur lorsque l'enregistrement est commencé"
+
+msgctxt "#69039"
+msgid "Record"
+msgstr "Record"
+
+msgctxt "#69040"
+msgid "Video"
+msgstr "Vidéo"
+
+msgctxt "#69041"
+msgid "Navigating in OSD previous, next program"
+msgstr "Naviguer dans OSD programme précédent, suivant"
+
+msgctxt "#69042"
+msgid "Show extra buttons on OSD"
+msgstr "Afficher les boutons supplémentaires sur l'OSD"
+
+msgctxt "#69043"
+msgid "Display auto OSD on play"
+msgstr "Afficher l'OSD automatique sur la lecture"
+
+msgctxt "#69044"
+msgid "Auto OSD display time (sec)"
+msgstr "Heure de l'affichage OSD automatique (sec)"
+
+msgctxt "#69045"
+msgid "OSD display time (sec)"
+msgstr "Affichage de l'OSD (sec)"
+
+msgctxt "#69046"
+msgid "Show OSD on stream change"
+msgstr "Afficher l'OSD lors du changement de flux"
+
+msgctxt "#69047"
+msgid "Show service name in OSD"
+msgstr "Afficher Nom du service dans OSD"
+
+msgctxt "#69048"
+msgid "Current time during playback"
+msgstr "Heure actuelle pendant la lecture"
+
+msgctxt "#69049"
+msgid "Position"
+msgstr "Position"
+
+msgctxt "#69050"
+msgid "Top left"
+msgstr "En haut à gauche"
+
+msgctxt "#69051"
+msgid "Top right"
+msgstr "En haut à droite"
+
+msgctxt "#69052"
+msgid "Bottom left"
+msgstr "En bas à gauche"
+
+msgctxt "#69053"
+msgid "Bottom right"
+msgstr "En bas à droite"
+
+msgctxt "#69054"
+msgid "Size"
+msgstr "Taille"
+
+msgctxt "#69055"
+msgid "[CR][CR]Link copied to clipboard"
+msgstr "[CR][CR]Lien copié dans le presse-papier"
+
+msgctxt "#69056"
+msgid "Download"
+msgstr "Download"
+
+msgctxt "#69057"
+msgid "Cancel download"
+msgstr "Annuler le download"
+
+msgctxt "#70000"
+msgid "Program title"
+msgstr "Titre du programme"
+
+msgctxt "#70001"
+msgid "Channel"
+msgstr "Canal"
+
+msgctxt "#70002"
+msgid "Start time"
+msgstr "Heure de début"
+
+msgctxt "#70003"
+msgid "Record length"
+msgstr "Longueur de l'enregistrement"
+
+msgctxt "#70004"
+msgid "Start record time-shift (min)"
+msgstr "Début du décalage horaire (min)"
+
+msgctxt "#70005"
+msgid "End record time-shift (min)"
+msgstr "Fin record time-shift (min)"
+
+msgctxt "#70006"
+msgid "Task settings"
+msgstr "Paramètres de la tâche"
+
+msgctxt "#70008"
+msgid "Aqua"
+msgstr "Aigue marine"
+
+msgctxt "#70009"
+msgid "Blue"
+msgstr "Bleu"
+
+msgctxt "#70010"
+msgid "Green"
+msgstr "Vert"
+
+msgctxt "#70011"
+msgid "Red"
+msgstr "Rouge"
+
+msgctxt "#70012"
+msgid "Purple"
+msgstr "Pourpre"
+
+msgctxt "#70013"
+msgid "Yellow"
+msgstr "Jaune"
+
+msgctxt "#70014"
+msgid "Violet"
+msgstr "Violet"
+
+msgctxt "#70015"
+msgid "Orange"
+msgstr "Orange"
+
+msgctxt "#70007"
+msgid "Default"
+msgstr "Défaut"
+
+msgctxt "#70016"
+msgid "Default focus"
+msgstr "Focus par défaut"
+
+msgctxt "#70017"
+msgid "Default remind"
+msgstr "Par défaut rappeler"
+
+msgctxt "#70018"
+msgid "Default record"
+msgstr "Enregistrement par défaut"
+
+msgctxt "#70019"
+msgid "Full blue"
+msgstr "Plein bleu"
+
+msgctxt "#70020"
+msgid "Full red"
+msgstr "Plein rouge"
+
+msgctxt "#70021"
+msgid "Full orange"
+msgstr "Plein orange"
+
+msgctxt "#70022"
+msgid "Dark focus"
+msgstr "Mise au point sombre"
+
+msgctxt "#70100"
+msgid "Add-on Install"
+msgstr "Extension installer"
+
+msgctxt "#70101"
+msgid "Missing fonts. Please change skin or install font pack."
+msgstr "Polices manquantes. Veuillez changer d'habillage ou installer le pack de polices."
+
+msgctxt "#70102"
+msgid "Installation has finished. Kodi will now exit."
+msgstr "L'installation est terminée. Kodi va maintenant sortir."
+
+msgctxt "#70103"
+msgid "Installation has failed. m-TVGuide will now exit."
+msgstr "L'installation a échoué. m-TVGuide va maintenant sortir."
+
+msgctxt "#70104"
+msgid "Change skin"
+msgstr "Changer de skin"
+
+msgctxt "#70105"
+msgid "Install font pack"
+msgstr "Installer le pack de polices"
+
+msgctxt "#70106"
+msgid "Would you like to replace Kodi skin fonts? This option may break your skin and is not reversible."
+msgstr "Souhaitez-vous remplacer les polices de skin Kodi? Cette option peut vous casser la skin et n'est pas réversible."
+
+msgctxt "#70107"
+msgid "Kodi skin is missing, please download and install: {}"
+msgstr "Le skin Kodi est manquant, veuillez télécharger et installer: {}"
+
+msgctxt "#70108"
+msgid "Skin replacement or font installation is required to start m-TVGuide."
+msgstr "Le remplacement de la peau ou l'installation de polices est requis pour démarrer m-TVGuide."
+
+msgctxt "#70109"
+msgid "Monday"
+msgstr "Lundi"
+
+msgctxt "#70110"
+msgid "Tuesday"
+msgstr "Mardi"
+
+msgctxt "#70111"
+msgid "Wednesday"
+msgstr "Mercredi"
+
+msgctxt "#70112"
+msgid "Thursday"
+msgstr "Jeudi"
+
+msgctxt "#70113"
+msgid "Friday"
+msgstr "Vendredi"
+
+msgctxt "#70114"
+msgid "Saturday"
+msgstr "Samedi"
+
+msgctxt "#70115"
+msgid "Sunday"
+msgstr "Dimanche"
+
+msgctxt "#70116"
+msgid "Add channel"
+msgstr "Ajouter une chaîne"
+
+msgctxt "#70117"
+msgid "List"
+msgstr "Liste"
+
+msgctxt "#70118"
+msgid "Non-writeable {} in use. Need to make a copy in userdata folder so we can install fonts. Would you like to continue?"
+msgstr "Non inscriptible {} en cours d'utilisation. Besoin de créer une copie dans le dossier de données utilisateur afin que nous puissions installer des polices. Voulez-vous continuer?"
+
+msgctxt "#80005"
+msgid "[COLOR]WP Pilot[/COLOR]"
+msgstr "[COLOR]WP Pilot[/COLOR]"
+
+msgctxt "#80006"
+msgid "[COLOR]Ipla[/COLOR]"
+msgstr "[COLOR]Ipla[/COLOR]"
+
+msgctxt "#90000"
+msgid "Server"
+msgstr "Server"
+
+msgctxt "#90001"
+msgid "Getting started"
+msgstr "Aidez"
+
+msgctxt "#90002"
+msgid "Help"
+msgstr "Commencer"
+
+msgctxt "#90003"
+msgid "Readme"
+msgstr "Le prédicat"
+
+msgctxt "#90004"
+msgid "Credits"
+msgstr "Crédits"

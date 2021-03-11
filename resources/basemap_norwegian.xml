@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map id="base norwegian" version="1.0" strm="">	
+	<channel id="Al Jazeera NO"								title="(?=AL\s*JAZEERA(\s*ENGLISH)?(\s*HD)?(\s*NO|DK|SE|UK|ARB)$)" strm=""/>
+	<channel id="Animal Planet HD NO"						title="(?=ANIMAL\s*PLANET(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="BBC Brit NO"								title="(?=BBC\s*BRIT(\s*HD)?(\s*NO|DK|SE|UK)$)" strm=""/>
+	<channel id="BBC Earth NO"								title="(?=BBC\s*EARTH(\s*HD)?(\s*NO|DK|SE|UK)$)" strm=""/>
+	<channel id="BBC World News NO"							title="(?=BBC\s*WORLD\s*NEWS(\s*HD)?(\s*NO|DK|SE|UK)$)" strm=""/>
+	<channel id="Boomerang NO"								title="(?=BOOMERANG(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="CNBC NO"									title="(?=CNBC(\s*HD)?(\s*NO|DK|SE|UK|US)$)" strm=""/>
+	<channel id="CNN NO"									title="(?=CNN(\s*HD)?(\s*NO|DK|SE|UK)$)" strm=""/>
+	<channel id="Cartoon Network NO"						title="(?=CARTOON\s*NETWORK(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="DR1 Danmark NO"							title="(?=DR\s*1(\s*HD)?(\s*DK)$)" strm=""/>
+	<channel id="DR2 Danmark NO"							title="(?=DR\s*2(\s*HD)?(\s*DK)$)" strm=""/>
+	<channel id="Discovery Channel HD NO"					title="(?=(Discovery|Disc)(.)?(\s*CHANNEL)?(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="Discovery Science NO"						title="(?=(Discovery|Disc)(.)?\s*SCIENCE(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Discovery World NO"						title="(?=(Discovery|Disc)(.)?\s*WORLD(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Disney Channel NO"							title="(?=DISNEY\s*CHANNEL(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="Disney Junior NO"							title="(?=DISNEY\s*JUNIOR(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Disney XD NO"								title="(?=DISNEY\s*XD(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Eurosport NO"								title="(?=EURO\s*SPORT(\s*1)?(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Extreme Sports NO"							title="(?=EXTREME\s*SPORT(S)?(\s*HD)?(\s*NO|DK|SE|UK)$)" strm=""/>
+	<channel id="FEM NO"									title="(?=FEM(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="FOX NO"									title="(?=FOX(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="Fashion TV NO"								title="(?=(F|FASHION)(\s*TV)?(\s*HD)?(\s*NO|DK|SE|PT)$)" strm=""/>
+	<channel id="Fight Sports NO"							title="(?=FIGHT\s*SPORT(S)?(\s*TV)?(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Ginx eSports NO"							title="(?=GINX\s*ESPORT(S)?(\s*TV)?(\s*HD)?(\s*NO|DK|SE|UK)$)" strm=""/>
+	<channel id="Gospel Channel NO"							title="(?=GOSPEL\s*CHANNEL(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="H2 HD NO"									title="(?=(H|History)\s*2(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="History HD NO"								title="(?=HISTORY(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Investigation Discovery NO"				title="(?=(Discovery\s*)?(Investigation|ID)(\s*Discovery)?(\s*TV)?(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="MAX NO"									title="(?=MAX(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="MTV NO"									title="(?=MTV(\s*Norge)?(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Matkanalen NO"								title="(?=Matkanalen(\s*TV)?(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Motorsport.tv NO"							title="(?=(Motorsport.TV|Motors)(\s*TV)?(\s*HD)?(\s*NO|DK|SE|UK)$)" strm=""/>
+	<channel id="NRK Super NO"								title="(?=NRK\s*Super(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="NRK1 NO"									title="(?=NRK\s*1(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="NRK2 NO"									title="(?=NRK\s*2(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="NRK3 NO"									title="(?=NRK(\s*3|SUPER)(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="Nat Geo Wild HD NO"						title="(?=Nat\s*Geo\s*Wild(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="National Geographic HD NO"					title="(?=National\s*Geographic(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Nickelodeon NO"							title="(?=Nickelodeon(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Outdoor Channel NO"						title="(?=Outdoor(\s*Channel)?(\s*HD)?(\s*NO|DK|SE|UK|US)$)" strm=""/>
+	<channel id="SF-Kanalen NO"								title="(?=SF(\s*\-)?\s*KANALEN(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="SVT1 Sverige NO"							title="(?=SVT\s*1(\s*HD)?(\s*SE)$)" strm=""/>
+	<channel id="SVT2 Sverige NO"							title="(?=SVT\s*2(\s*HD)?(\s*SE)$)" strm=""/>
+	<channel id="Sky News NO"								title="(?=Sky\s*News(\s*HD)?(\s*NO|DK|SE|UK)$)" strm=""/>
+	<channel id="TLC NO"									title="(?=TLC(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="TNT NO"									title="(?=TNT(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="TV 2 Danmark NO"							title="(?=TV\s*2(\s*HD)?(\s*DK)$)" strm=""/>
+	<channel id="TV 2 Humor NO"								title="(?=TV\s*2\s*HUMOR(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="TV 2 Livsstil NO"							title="(?=TV\s*2\s*LIVSSTIL(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="TV 2 NO"									title="(?=TV\s*2(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="TV 2 Nyhetskanalen NO"						title="(?=TV\s*2\s*NYHETSKANALEN(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="TV 2 Sport Premium 2 NO"					title="(?=TV\s*2\s*SPORT\s*PREMIUM\s*2(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="TV 2 Sport Premium 3 NO"					title="(?=TV\s*2\s*SPORT\s*PREMIUM\s*3(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="TV 2 Sport Premium NO"						title="(?=TV\s*2\s*SPORT\s*PREMIUM(\s*1)?(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="TV 2 Sportskanalen NO"						title="(?=TV\s*2\s*SPORTSKANALEN(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="TV 2 Zebra NO"								title="(?=TV\s*2\s*ZEBRA(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="TV3 NO"									title="(?=TV\s*3(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="TV4 Sverige NO"							title="(?=TV\s*4(\s*HD)?(\s*SE)$)" strm=""/>
+	<channel id="TV6 NO"									title="(?=TV\s*6(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="TVNorge NO"								title="(?=TV\s*NORGE(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="Travel Channel NO"							title="(?=TRAVEL\s*CHANNEL(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="VG NO"										title="(?=VG(\s*TV)?(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="VH1 Classic NO"							title="(?=VH1\s*Classic(\s*TV)?(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="VH1 NO"									title="(?=VH1(\s*TV)?(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="VOX NO"									title="(?=VOX(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="Viasat 4 NO"								title="(?=(TV|Viasat)\s*4(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="Viasat Explore NO"							title="(?=(Viasat\s*Explore)(r)?(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Viasat Film Action NO"						title="(?=Viasat\s*Film\s*Action(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Viasat Film Classic NO"					title="(?=Viasat\s*Film\s*Classic(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Viasat Film Comedy NO"						title="(?=Viasat\s*Film\s*Comedy(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Viasat Film Drama NO"						title="(?=Viasat\s*Film\s*Drama(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Viasat Film Family NO"						title="(?=Viasat\s*Film\s*Family(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Viasat Film Premiere NO"					title="(?=Viasat\s*Film\s*Premiere(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Viasat Golf NO"							title="(?=Viasat\s*Golf(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Viasat History NO"							title="(?=Viasat\s*History(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Viasat Nature NO"							title="(?=(Viasat\s*Nature)(\s*Nature/Crime/Playboy)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Viasat Sport 1 NO"							title="(?=Viasat\s*Sport(\s*1)?(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Viasat Sport 2 NO"							title="(?=Viasat\s*Sport\s*2(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Viasat Sport 3 NO"							title="(?=Viasat\s*Sport\s*3(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Viasat Sport Plus NO"						title="(?=Viasat\s*Sport\s*\+|PLUS(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="Visjon Norge NO"							title="(?=(TV)?\s*Visjon(\s*Norge)?(\s*HD)?(\s*NO)$)" strm=""/>
+	
+<!--<.no>-->
+	
+	<channel id="Al Jazeera.no"								title="(?=AL\s*JAZEERA(\s*ENGLISH)?(\s*HD)?(\s*NO|DK|SE|UK|ARB)$)" strm=""/>
+	<channel id="Animal Planet HD.no"						title="(?=ANIMAL\s*PLANET(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="BBC Brit.no"								title="(?=BBC\s*BRIT(\s*HD)?(\s*NO|DK|SE|UK)$)" strm=""/>
+	<channel id="BBC Earth.no"								title="(?=BBC\s*EARTH(\s*HD)?(\s*NO|DK|SE|UK)$)" strm=""/>
+	<channel id="BBC World News.no"							title="(?=BBC\s*WORLD\s*NEWS(\s*HD)?(\s*NO|DK|SE|UK)$)" strm=""/>
+	<channel id="Boomerang.no"								title="(?=BOOMERANG(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="CNBC.no"									title="(?=CNBC(\s*HD)?(\s*NO|DK|SE|UK|US)$)" strm=""/>
+	<channel id="CNN.no"									title="(?=CNN(\s*HD)?(\s*NO|DK|SE|UK)$)" strm=""/>
+	<channel id="Cartoon Network.no"						title="(?=CARTOON\s*NETWORK(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="DR1 Danmark.no"							title="(?=DR\s*1(\s*HD)?(\s*DK)$)" strm=""/>
+	<channel id="DR2 Danmark.no"							title="(?=DR\s*2(\s*HD)?(\s*DK)$)" strm=""/>
+	<channel id="Discovery Channel HD.no"					title="(?=(Discovery|Disc)(.)?(\s*CHANNEL)?(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="Discovery Science.no"						title="(?=(Discovery|Disc)(.)?\s*SCIENCE(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Discovery World.no"						title="(?=(Discovery|Disc)(.)?\s*WORLD(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Disney Channel.no"							title="(?=DISNEY\s*CHANNEL(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="Disney Junior.no"							title="(?=DISNEY\s*JUNIOR(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Disney XD.no"								title="(?=DISNEY\s*XD(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Eurosport.no"								title="(?=EURO\s*SPORT(\s*1)?(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Extreme Sports.no"							title="(?=EXTREME\s*SPORT(S)?(\s*HD)?(\s*NO|DK|SE|UK)$)" strm=""/>
+	<channel id="FEM.no"									title="(?=FEM(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="FOX.no"									title="(?=FOX(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="Fashion TV.no"								title="(?=(F|FASHION)(\s*TV)?(\s*HD)?(\s*NO|DK|SE|PT)$)" strm=""/>
+	<channel id="Fight Sports.no"							title="(?=FIGHT\s*SPORT(S)?(\s*TV)?(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Ginx eSports.no"							title="(?=GINX\s*ESPORT(S)?(\s*TV)?(\s*HD)?(\s*NO|DK|SE|UK)$)" strm=""/>
+	<channel id="Gospel Channel.no"							title="(?=GOSPEL\s*CHANNEL(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="H2 HD.no"									title="(?=(H|History)\s*2(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="History HD.no"								title="(?=HISTORY(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Investigation Discovery.no"				title="(?=(Discovery\s*)?(Investigation|ID)(\s*Discovery)?(\s*TV)?(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="MAX.no"									title="(?=MAX(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="MTV.no"									title="(?=MTV(\s*Norge)?(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Matkanalen.no"								title="(?=Matkanalen(\s*TV)?(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Motorsport.tv.no"							title="(?=(Motorsport.TV|Motors)(\s*TV)?(\s*HD)?(\s*NO|DK|SE|UK)$)" strm=""/>
+	<channel id="NRK Super.no"								title="(?=NRK\s*Super(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="NRK1.no"									title="(?=NRK\s*1(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="NRK2.no"									title="(?=NRK\s*2(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="NRK3.no"									title="(?=NRK(\s*3|SUPER)(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="Nat Geo Wild HD.no"						title="(?=Nat\s*Geo\s*Wild(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="National Geographic HD.no"					title="(?=National\s*Geographic(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Nickelodeon.no"							title="(?=Nickelodeon(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Outdoor Channel.no"						title="(?=Outdoor(\s*Channel)?(\s*HD)?(\s*NO|DK|SE|UK|US)$)" strm=""/>
+	<channel id="SF-Kanalen.no"								title="(?=SF(\s*\-)?\s*KANALEN(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="SVT1 Sverige.no"							title="(?=SVT\s*1(\s*HD)?(\s*SE)$)" strm=""/>
+	<channel id="SVT2 Sverige.no"							title="(?=SVT\s*2(\s*HD)?(\s*SE)$)" strm=""/>
+	<channel id="Sky News.no"								title="(?=Sky\s*News(\s*HD)?(\s*NO|DK|SE|UK)$)" strm=""/>
+	<channel id="TLC.no"									title="(?=TLC(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="TNT.no"									title="(?=TNT(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="TV 2 Danmark.no"							title="(?=TV\s*2(\s*HD)?(\s*DK)$)" strm=""/>
+	<channel id="TV 2 Humor.no"								title="(?=TV\s*2\s*HUMOR(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="TV 2 Livsstil.no"							title="(?=TV\s*2\s*LIVSSTIL(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="TV 2.no"									title="(?=TV\s*2(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="TV 2 Nyhetskanalen.no"						title="(?=TV\s*2\s*NYHETSKANALEN(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="TV 2 Sport Premium 2.no"					title="(?=TV\s*2\s*SPORT\s*PREMIUM\s*2(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="TV 2 Sport Premium 3.no"					title="(?=TV\s*2\s*SPORT\s*PREMIUM\s*3(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="TV 2 Sport Premium.no"						title="(?=TV\s*2\s*SPORT\s*PREMIUM(\s*1)?(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="TV 2 Sportskanalen.no"						title="(?=TV\s*2\s*SPORTSKANALEN(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="TV 2 Zebra.no"								title="(?=TV\s*2\s*ZEBRA(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="TV3.no"									title="(?=TV\s*3(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="TV4 Sverige.no"							title="(?=TV\s*4(\s*HD)?(\s*SE)$)" strm=""/>
+	<channel id="TV6.no"									title="(?=TV\s*6(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="TVNorge.no"								title="(?=TV\s*NORGE(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="Travel Channel.no"							title="(?=TRAVEL\s*CHANNEL(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="VG.no"										title="(?=VG(\s*TV)?(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="VH1 Classic.no"							title="(?=VH1\s*Classic(\s*TV)?(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="VH1.no"									title="(?=VH1(\s*TV)?(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="VOX.no"									title="(?=VOX(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="Viasat 4.no"								title="(?=(TV|Viasat)\s*4(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="Viasat Explore.no"							title="(?=(Viasat\s*Explore)(r)?(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Viasat Film Action.no"						title="(?=Viasat\s*Film\s*Action(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Viasat Film Classic.no"					title="(?=Viasat\s*Film\s*Classic(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Viasat Film Comedy.no"						title="(?=Viasat\s*Film\s*Comedy(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Viasat Film Drama.no"						title="(?=Viasat\s*Film\s*Drama(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Viasat Film Family.no"						title="(?=Viasat\s*Film\s*Family(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Viasat Film Premiere.no"					title="(?=Viasat\s*Film\s*Premiere(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Viasat Golf.no"							title="(?=Viasat\s*Golf(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Viasat History.no"							title="(?=Viasat\s*History(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Viasat Nature.no"							title="(?=(Viasat\s*Nature)(\s*Nature/Crime/Playboy)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Viasat Sport 1.no"							title="(?=Viasat\s*Sport(\s*1)?(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Viasat Sport 2.no"							title="(?=Viasat\s*Sport\s*2(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Viasat Sport 3.no"							title="(?=Viasat\s*Sport\s*3(\s*HD)?(\s*NO|DK|SE)$)" strm=""/>
+	<channel id="Viasat Sport Plus.no"						title="(?=Viasat\s*Sport\s*\+|PLUS(\s*HD)?(\s*NO)$)" strm=""/>
+	<channel id="Visjon Norge.no"							title="(?=(TV)?\s*Visjon(\s*Norge)?(\s*HD)?(\s*NO)$)" strm=""/>
+
+	<category name="Movie" 									tags="Action|Dokudrama|Drama|Dramakomedie|Eventyr|Fantasi|Grøsser|Historisk drama|Komedie|Krig|Krim|Krimdrama|Lov og rett|Musikalsk komedie|Mystikk|Paranormal|Romantikk|Romantisk komedie|Science fiction|Svart komedie|Thriller|Western"/>
+	<category name="Series" 								tags="Miniserie|Sitcom|Såpe"/>
+	<category name="Information" 							tags="Debatt|Intervju|Nyheter|Nyhetsmagasin|Politikk|Vær|Økonomi"/>
+	<category name="Entertainment" 							tags="Dans|Event|Game show|Gaming|Musikal|Musikk|Reality|Scenekunst|Standup|Talkshow|Underholdning"/>
+	<category name="Document" 								tags="Antologi|Auksjon|Biografi|Dokumentar|Historie|Kunst/håndverk|Kunst|Luftfart|Militær|Natur|Religiøs|Samleobjekter|Teknologi|Utdanning|Vitenskap"/>
+	<category name="Kids" 									tags="Animert|Barneprogram"/>
+	<category name="Sport" 									tags="Actionsport|Alpint|Ballet|Sykling|Drift racing|Fisking|Fotball|Freestyle skiidrett|Golf|Hockey|Håndball|Kampsport|Langrenn|Mma|Mixed martial arts|Motor|Motorsport|Motorsykkel|Motorsykkelracing|Olympics|Ski|Skiskyting|Snooker|Sportstalkshow|Summer Olympics|Surfing|Vannsport"/>
+	<category name="Interactive Entertainment" 				tags="Dyr|Ferie|Forbruker|Foreldre|Gospel|Helse|How-to|Hus og hage|Jakt|Kjæledyr|Matlaging|Medisinsk|Miljø|Mote|Offentlig administrasjon|Oppussing|Personlig utvikling|Reise|Samfunn|Spesial|Utendørs|Variete"/>
+</map>

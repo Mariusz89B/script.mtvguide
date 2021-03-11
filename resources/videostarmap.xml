@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<map id="videostar" version="1.0" strm="service=WP\sPilot&amp;cid=%s">
+	<channel id="France 24 FR"								title="(?=France\s*24(\s*HD)?\s*FR$)" strm=""/>
+	<channel id="France 24 UK"								title="(?=France\s*24(\s*English)?(\s*HD)?\s*UK$)" strm=""/>
+
+	<category name="Movie" 									tags="Czarna|Dramat|Film|Filmy|Horror|Impresja|Kino|Komedia|Komediodramat|Komediowy|Melodramat|Musical|Romans|Thriller|Western"/>
+	<category name="Series" 								tags="Odcinek|Programy|Seria|Serial|Seriale|Telenowela"/>
+	<category name="Information" 							tags="Cykl|Debata|Dziennik|Felieton|Główna|Informacja|Informator|Kronika|Kurs|Magazyn|Newsy|Pasmo|Podsumowanie|Poranek|Reportaż|Rozmowy|Rozmowa|Serwis|Studio|Telewizyjny|Transmisja|Wiadomości|Wieczorna|Wieczorny|Wydanie|Wywiad"/>
+	<category name="Entertainment" 							tags="Audycja|Balet|Blok|Ceremonia|Chochliki|Classical|Concert|Codzienny|Dance|Docu-reality|Flesz|Gala|Kabaret|Koncert|Koncerty|Lista|Lifestyle|Opera|Pokaz|Program|Program / Muzyczny|Reality|Relacja|Rozrywka|Talk-show|Taniec|Teledyski|Teleturniej|Widowisko|Wielki|World Music"/>
+	<category name="Document" 								tags="Dokument|Etiuda|Filozofia|Historia|Kultura|Militaria|Motoryzacja|Przyroda|Program dokumentalny|Socjologia|Sztuka|Technika"/>
+	<category name="Kids" 									tags="Baśń|Dla dzieci|Program dla dzieci"/>
+	<category name="Sport" 									tags="Badminton|Biatlon|Biegi|Bilard|Boks|Formuła|Gimnastyka|Golf|Hokej|Jeździectwo|Kajakarstwo|Kolarstwo|Koszykówka|Lekkoatletyka|Łyżwiarstwo|Narciarstwo|Olimpiada|Piłka|Pływanie|Poker|Rajdy|Rugby|Rzutki|Saneczkarstwo|Siatkówka|Skoki|Sport|Sporty|Szermierka|Tenis|Tenis squash|Triatlon|Wyścigi|Zapowiedź|Żeglarstwo|Żużel"/>
+	<category name="Interactive Entertainment" 				tags="Extra|Interaktywne|Interaktywny|Interaktywny Program Rozrywkowy|Kulinaria|Magazy|Magazyn Mody|Medycyna|Opera|Program Familijny|Spektakl|Świętokrzyski|Telezakupy|Turystyka|Usa"/>
+</map>

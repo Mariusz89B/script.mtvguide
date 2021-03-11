@@ -1,0 +1,2569 @@
+# XBMC Media Center language file
+# Addon Name: m-TVGuide
+# Addon id: script.mtvguide
+# Addon Provider: mods-kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: Dutch (http://www.transifex.com/projects/p/xbmc-addons/language/nl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: nl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "This channel is missing epg data."
+msgstr "Dit kanaal mist epg-gegevens."
+
+msgctxt "#30001"
+msgid "[B]Loading...[/B]"
+msgstr "[B]Loading...[/ B]"
+
+msgctxt "#30002"
+msgid "Calculating remaning time..."
+msgstr "Resterende tijd berekenen..."
+
+msgctxt "#30003"
+msgid "Approximately {} seconds left..."
+msgstr "Ongeveer {} seconden over..."
+
+msgctxt "#30004"
+msgid "Loading of data already in progress..."
+msgstr "Bezig met laden van gegevens die al in uitvoering zijn..."
+
+msgctxt "#30005"
+msgid "Mouse control"
+msgstr "Muis controle"
+
+msgctxt "#30006"
+msgid "Now"
+msgstr "Nu"
+
+msgctxt "#30007"
+msgid "[B]Tip![/B] You can also use the scroll wheel"
+msgstr "[B]Tip![/B] Je kunt ook het scrollwiel gebruiken"
+
+msgctxt "#30008"
+msgid "Cancel"
+msgstr "Annuleer"
+
+msgctxt "#30009"
+msgid "Enter captcha"
+msgstr "Vul captcha in"
+
+msgctxt "#30100"
+msgid "General"
+msgstr "Algemeen"
+
+msgctxt "#30101"
+msgid "EPG"
+msgstr "EPG"
+
+msgctxt "#30102"
+msgid "Show channels from category"
+msgstr "Toon kanalen uit categorie"
+
+msgctxt "#30103"
+msgid "XMLTV file"
+msgstr "XMLTV-bestand"
+
+msgctxt "#30104"
+msgid "Clear cache..."
+msgstr "Cache wissen..."
+
+msgctxt "#30105"
+msgid "Done!"
+msgstr "Gedaan!"
+
+msgctxt "#30106"
+msgid "Show service notification"
+msgstr "Servicemelding weergeven"
+
+msgctxt "#30108"
+msgid "Clear all reminders..."
+msgstr "Wis alle herinneringen..."
+
+msgctxt "#30109"
+msgid "Clear all planed recordings..."
+msgstr "Wis alle geschaafde opnames..."
+
+msgctxt "#30110"
+msgid "Update program information on KODI startup"
+msgstr "Update programma-informatie over KODI-startup"
+
+msgctxt "#30111"
+msgid "[COLOR]Enter the url address or provide a path to your EPG files[/COLOR]"
+msgstr "[COLOR]Voer het url adres in of verstrek het pad naar uw EPG bestanden[/COLOR]"
+
+msgctxt "#30116"
+msgid "Search for channel logos in"
+msgstr "Zoeken naar kanaallogo's in"
+
+msgctxt "#30117"
+msgid "[COLOR]Premium EPG[/COLOR]"
+msgstr "[COLOR]Premium EPG[/COLOR]"
+
+msgctxt "#30118"
+msgid "Main"
+msgstr "Hoofd"
+
+msgctxt "#30119"
+msgid "Additional"
+msgstr "Extra"
+
+msgctxt "#30120"
+msgid "Additional"
+msgstr "Extra"
+
+msgctxt "#30149"
+msgid "does not exist. Default will be set!"
+msgstr "bestaat niet. Standaard wordt ingesteld!"
+
+msgctxt "#30150"
+msgid "Sorry, an error has occurred"
+msgstr "Sorry, er is een fout opgetreden"
+
+msgctxt "#30151"
+msgid "Error initializing EPG file:"
+msgstr "Fout bij laden van EPG bestand:"
+
+msgctxt "#30152"
+msgid "[CR]Error loading EPG (electronic program guide). Please check if EPG url is correct or if internet connection is available and try again."
+msgstr "[CR]Fout bij het laden van EPG (elektronische programmagids). Controleer of de EPG url correct is of dat er een internetverbinding beschikbaar is en probeer het opnieuw."
+
+msgctxt "#30153"
+msgid "because the settings are invalid!"
+msgstr "omdat de instellingen ongeldig zijn!"
+
+msgctxt "#30154"
+msgid "It looks like your current skin"
+msgstr "Het lijkt op je huidige huid"
+
+msgctxt "#30155"
+msgid "is not supported by current version of m-TVGuide"
+msgstr "wordt niet ondersteund door de huidige versie van m-TVGuide"
+
+msgctxt "#30156"
+msgid "Please try with a different skin..."
+msgstr "Probeer het met een andere skin..."
+
+msgctxt "#30157"
+msgid "It looks like the TV Guide database is broken."
+msgstr "Het lijkt erop dat de database met tv-gidsen kapot is."
+
+msgctxt "#30158"
+msgid "Please remove database file using option in plugin settings "Database settings""
+msgstr "Verwijder het databasebestand met behulp van de optie in plugin-instellingen "Database-instellingen""
+
+msgctxt "#30159"
+msgid "Channel configuration is unfortunately lost."
+msgstr "Kanaalconfiguratie is helaas verloren gegaan."
+
+msgctxt "#30160"
+msgid "Error is not critical and addon will start but please fix the issue!"
+msgstr "Fout is niet kritisch en addon zal starten, maar los het probleem alstublieft op!"
+
+msgctxt "#30161"
+msgid "Error is critical and programs won't be visible, please fix EPG (electronic program guide) url!"
+msgstr "Fout is kritiek en programma's zijn niet zichtbaar, corrigeer EPG (electronic program guide) url!"
+
+msgctxt "#30162"
+msgid "No description"
+msgstr "Geen beschrijving"
+
+msgctxt "#30163"
+msgid "Missing genre"
+msgstr "Ontbrekend genre"
+
+msgctxt "#30164"
+msgid "No available information"
+msgstr "Geen beschikbare informatie"
+
+msgctxt "#30200"
+msgid "on [B]{}[/B] in 5 minutes..."
+msgstr "op [B]{}[/B] in 5 minuten..."
+
+msgctxt "#30201"
+msgid "on [B]{}[/B] is starting now..."
+msgstr "op [B]{}[/B] begint nu..."
+
+msgctxt "#30202"
+msgid "Starting scheduled program"
+msgstr "Gepland programma starten"
+
+msgctxt "#30203"
+msgid "Start scheduled program"
+msgstr "Start gepland programma"
+
+msgctxt "#30204"
+msgid "Cancel"
+msgstr "Annuleer"
+
+msgctxt "#30205"
+msgid "On screen display"
+msgstr "On screen display"
+
+msgctxt "#30206"
+msgid "Display current time during playback"
+msgstr "Geef de huidige tijd weer tijdens het afspelen"
+
+msgctxt "#30300"
+msgid "Watch {}"
+msgstr "Bekijk {}"
+
+msgctxt "#30301"
+msgid "Remind"
+msgstr "Herinneren"
+
+msgctxt "#30302"
+msgid "Don't remind"
+msgstr "Vergeet het niet"
+
+msgctxt "#30303"
+msgid "Cancel recording"
+msgstr "Annuleer de opname"
+
+msgctxt "#30304"
+msgid "Choose stream"
+msgstr "Kies streamen"
+
+msgctxt "#30305"
+msgid "You can choose your own .strm file."
+msgstr "U kunt uw eigen .strm bestand kiezen."
+
+msgctxt "#30306"
+msgid "Remove stream"
+msgstr "Stream verwijderen"
+
+msgctxt "#30307"
+msgid "Channels"
+msgstr "Kanalen"
+
+msgctxt "#30308"
+msgid "Exit"
+msgstr "Afsluiten"
+
+msgctxt "#30309"
+msgid "Lists"
+msgstr "Lijsten"
+
+msgctxt "#30310"
+msgid "Channel listing"
+msgstr "Kanaaloverzicht"
+
+msgctxt "#30311"
+msgid Now"
+msgstr "Op dit moment"
+
+msgctxt "#30312"
+msgid "Next"
+msgstr "De volgende"
+
+msgctxt "#30313"
+msgid "Start"
+msgstr "Begin"
+
+msgctxt "#30314"
+msgid "Length"
+msgstr "Lengte"
+
+msgctxt "#30315"
+msgid "Search"
+msgstr "Zoeken"
+
+msgctxt "#30316"
+msgid "Title"
+msgstr "Titel"
+
+msgctxt "#30317"
+msgid "Synopsis"
+msgstr "Synopsis"
+
+msgctxt "#30318"
+msgid "Category"
+msgstr "Categorie"
+
+msgctxt "#30319"
+msgid "Channel"
+msgstr "Kanaal"
+
+msgctxt "#30320"
+msgid "New search"
+msgstr "Nieuwe zoekopdracht"
+
+msgctxt "#30321"
+msgid "Remove search"
+msgstr "Zoekopdracht verwijderen"
+
+msgctxt "#30322"
+msgid "Program search"
+msgstr "Programma zoeken"
+
+msgctxt "#30323"
+msgid "Synopsis search"
+msgstr "Synopsis zoeken"
+
+msgctxt "#30324"
+msgid "Program category search"
+msgstr "Zoeken in programmacategorieën"
+
+msgctxt "#30325"
+msgid "All channels"
+msgstr "Alle kanalen"
+
+msgctxt "#30326"
+msgid "Channel search"
+msgstr "Kanalen zoeken"
+
+msgctxt "#30327"
+msgid "Program search: [COLOR gold][B]{}[/B][/COLOR]"
+msgstr "Programma zoeken: [COLOR gold][B]{}[/B][/COLOR]"
+
+msgctxt "#30328"
+msgid "Synopsis search:"
+msgstr "Synopsis zoeken:"
+
+msgctxt "#30329"
+msgid "Today"
+msgstr "Vandaag"
+
+msgctxt "#30330"
+msgid "Tomorrow"
+msgstr "Morgen"
+
+msgctxt "#30331"
+msgid "Yesterday"
+msgstr "Gisteren"
+
+msgctxt "#30332"
+msgid "in {} days"
+msgstr "binnen {} dagen"
+
+msgctxt "#30333"
+msgid "in {} day"
+msgstr "over {} dag"
+
+msgctxt "#30334"
+msgid "in {} hours"
+msgstr "over {} uur"
+
+msgctxt "#30335"
+msgid "in {} min"
+msgstr "in {} min"
+
+msgctxt "#30336"
+msgid "Reminders"
+msgstr "Herinneringen"
+
+msgctxt "#30337"
+msgid "Recordings"
+msgstr "Recordings"
+
+msgctxt "#30338"
+msgid "List view"
+msgstr "Lijstweergave"
+
+msgctxt "#30339"
+msgid "List future days"
+msgstr "Maak een lijst van toekomstige dagen"
+
+msgctxt "#30340"
+msgid "List previous hours"
+msgstr "Lijst vorige uren"
+
+msgctxt "#30341"
+msgid "Sort list by time"
+msgstr "Sorteer lijst op tijd"
+
+msgctxt "#30342"
+msgid "Include synopsis in title search"
+msgstr "Neem de synopsis op in het zoeken naar titels"
+
+msgctxt "#30343"
+msgid "Category list"
+msgstr "Categorie lijst"
+
+msgctxt "#30344"
+msgid "Category search"
+msgstr "Categorie zoeken"
+
+msgctxt "#30345"
+msgid "Category search:"
+msgstr "Categorie zoeken:"
+
+msgctxt "#30346"
+msgid "Go to channel"
+msgstr "Ga naar kanaal"
+
+msgctxt "#30347"
+msgid "Determining order of channels"
+msgstr "Bepaal de kanaalvolgorde"
+
+msgctxt "#30348"
+msgid "Enable channel order by number"
+msgstr "Kanaalvolgorde op nummer inschakelen"
+
+msgctxt "#30349"
+msgid "Play on select"
+msgstr "Op het gekozen nummer"
+
+msgctxt "#30350"
+msgid "Don't play"
+msgstr "Speel niet"
+
+msgctxt "#30351"
+msgid "Play only in TV mode"
+msgstr "Afspelen alleen in TV modus"
+
+msgctxt "#30352"
+msgid "Play"
+msgstr "Spelen"
+
+msgctxt "#30353"
+msgid "Error"
+msgstr "Fout"
+
+msgctxt "#30354"
+msgid "Please enable channel order by number in settings"
+msgstr "Activeer de volgorde van de kanalen op nummer in de instellingen"
+
+msgctxt "#30355"
+msgid "Show channel logos"
+msgstr "Bekijk kanaallogo's"
+
+msgctxt "#30356"
+msgid "Extended information"
+msgstr "Uitgebreide informatie"
+
+msgctxt "#30357"
+msgid "Search as movie"
+msgstr "Zoek als film"
+
+msgctxt "#30358"
+msgid "Search as TV show"
+msgstr "Zoeken als TV programma"
+
+msgctxt "#30359"
+msgid "Search extended information"
+msgstr "Zoek uitgebreide informatie"
+
+msgctxt "#30360"
+msgid "Search as all"
+msgstr "Zoek als allemaal"
+
+msgctxt "#30361"
+msgid "Search could not be found: {}"
+msgstr "Zoeken kan niet worden gevonden: {}"
+
+msgctxt "#30362"
+msgid "No such movie: {}"
+msgstr "Geen dergelijke film: {}"
+
+msgctxt "#30363"
+msgid "No such TV program: {}"
+msgstr "Geen TV programma: {}"
+
+msgctxt "#30364"
+msgid "Show program thumbnail"
+msgstr "Toon Programmaminiatuur"
+
+msgctxt "#30365"
+msgid "Time [CR](Attention! Reseting database required)"
+msgstr "Tijd [CR](Opmerking! Reset van de database vereist)"
+
+msgctxt "#30366"
+msgid "Adjust timebar (min)"
+msgstr "Pas de tijdbalk aan (min)"
+
+msgctxt "#30367"
+msgid "Fullscreen window size animation"
+msgstr "Animatie van vensterformaat op volledig scherm"
+
+msgctxt "#30368"
+msgid "Site"
+msgstr "Plaats"
+
+msgctxt "#30369"
+msgid "Login with TV provider"
+msgstr "Inloggen bij TV aanbieder"
+
+msgctxt "#30370"
+msgid "Operator"
+msgstr "Operator"
+
+msgctxt "#30371"
+msgid "Reset login credentials"
+msgstr "Inloggegevens opnieuw instellen"
+
+msgctxt "#30372"
+msgid "Login credentials have been reset"
+msgstr "Inloggegevens zijn opnieuw ingesteld"
+
+msgctxt "#30500"
+msgid "Edit channel order and visibility"
+msgstr "Kanaalvolgorde en zichtbaarheid bewerken"
+
+msgctxt "#30501"
+msgid "Press context button to set channel order, move up and down to change position. Enable and disable channels with select button."
+msgstr "Druk op de contextknop om de volgorde van kanalen in te stellen, omhoog en omlaag om de positie te wijzigen. Schakel kanalen in en uit met de selectieknop."
+
+msgctxt "#30502"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#30503"
+msgid "Cancel"
+msgstr "Annuleer"
+
+msgctxt "#30504"
+msgid "Notification from mods-kodi.pl"
+msgstr "Melding van mods-kodi.pl"
+
+msgctxt "#30505"
+msgid "Genre"
+msgstr "Genre"
+
+msgctxt "#30506"
+msgid "Episode"
+msgstr "Aflevering"
+
+msgctxt "#30507"
+msgid "Actors"
+msgstr "Acteurs"
+
+msgctxt "#30508"
+msgid "Year"
+msgstr "Jaar"
+
+msgctxt "#30509"
+msgid "Director"
+msgstr "Regisseur"
+
+msgctxt "#30510"
+msgid "Plot"
+msgstr "plot"
+
+msgctxt "#30511"
+msgid "Duration"
+msgstr "Looptijd"
+
+msgctxt "#30512"
+msgid "Rating"
+msgstr "Beoordeling"
+
+msgctxt "#30400"
+msgid "CHANNELS LIST"
+msgstr "KANALENLIJST"
+
+msgctxt "#30401"
+msgid "EXIT"
+msgstr "UITGANG"
+
+msgctxt "#30402"
+msgid "ADDON SETTINGS"
+msgstr "TOEVOEGEN INSTELLINGEN"
+
+msgctxt "#30403"
+msgid "REMIND"
+msgstr "HERINNEREN"
+
+msgctxt "#30404"
+msgid "PROGRAM"
+msgstr "PROGRAMMA"
+
+msgctxt "#30405"
+msgid "CHANNEL SETTINGS"
+msgstr "KANAALINSTELLINGEN"
+
+msgctxt "#30406"
+msgid "DON'T REMIND"
+msgstr "NIET NODIG"
+
+msgctxt "#30407"
+msgid "CHOOSE STREAM"
+msgstr "KIES STREAM"
+
+msgctxt "#30408"
+msgid "REMOVE STREAM"
+msgstr "VERWIJDER STREAM"
+
+msgctxt "#30600"
+msgid "Setup stream"
+msgstr "Stel stream in"
+
+msgctxt "#30601"
+msgid "Stream file"
+msgstr "Stream bestand"
+
+msgctxt "#30602"
+msgid "Favourites"
+msgstr "Favorieten"
+
+msgctxt "#30603"
+msgid "Addons"
+msgstr "Addons"
+
+msgctxt "#30604"
+msgid "Preview"
+msgstr "Voorbeeld"
+
+msgctxt "#30605"
+msgid "Save"
+msgstr "Opslaan"
+
+msgctxt "#30606"
+msgid "Cancel"
+msgstr "Annuleer"
+
+msgctxt "#30607"
+msgid "Stop preview"
+msgstr "Stop het voorbeeld"
+
+msgctxt "#30610"
+msgid "Browse..."
+msgstr "Bladeren..."
+
+msgctxt "#30611"
+msgid "Click [B]Browse[/B] below and navigate to your stream file.[CR]When you have chosen your file you can preview the stream to test if it works in KODI."
+msgstr "Klik hieronder op [B]Bladeren[/B] en ga naar uw streambestand.[CR]Wanneer u uw bestand hebt gekozen, kunt u een voorbeeld van de stream bekijken om te testen of deze in KODI werkt."
+
+msgctxt "#30620"
+msgid "Choose a favourite. Only [B]PlayMedia[/B] favourites are supported."
+msgstr "Kies een favoriet. Alleen [B]PlayMedia[/B] -favorieten worden ondersteund."
+
+msgctxt "#30621"
+msgid "Live, schedule recording or download program.[CR]Add a task, use time-shift to urge or delay start of recording / download."
+msgstr "Live, plan opname of download programma.[CR]Voeg een taak toe, gebruik tijdverschuiving om de start van opname / download aan te sporen of uit te stellen."
+
+msgctxt "#30700"
+msgid "Multiple addons provide this channels.[CR]Choose one to watch the stream."
+msgstr "Meerdere add-ons bieden deze kanalen.[CR]Kies er een om de stream te bekijken."
+
+msgctxt "#30701"
+msgid "Source: "
+msgstr "Bron: "
+
+msgctxt "#30702"
+msgid "Appearance"
+msgstr "Uiterlijk"
+
+msgctxt "#30703"
+msgid "Automatically assign streams"
+msgstr "Wijs automatisch streams toe"
+
+msgctxt "#30704"
+msgid "Use zipped epg"
+msgstr "Gebruik gecomprimeerde epg"
+
+msgctxt "#30705"
+msgid "Show only programs with stream assigned"
+msgstr "Toon alleen programma's waaraan stroom is toegewezen"
+
+msgctxt "#30706"
+msgid "Auto detect EPG change"
+msgstr "Automatische detectie van EPG wijziging"
+
+msgctxt "#30707"
+msgid "Show info notification"
+msgstr "Toon info melding"
+
+msgctxt "#30708"
+msgid "Use fast EPG parser"
+msgstr "Gebruik een snelle EPG parser"
+
+msgctxt "#30709"
+msgid "Skin updated"
+msgstr "Huid bijgewerkt"
+
+msgctxt "#30710"
+msgid "Update"
+msgstr "Bijwerken"
+
+msgctxt "#30711"
+msgid "Get more..."
+msgstr "Haal meer..."
+
+msgctxt "#30712"
+msgid "All online skins are already installed!"
+msgstr "Alle online skins zijn al geïnstalleerd!"
+
+msgctxt "#30713"
+msgid "Failed to download skin!"
+msgstr "Downloaden van de skin is mislukt!"
+
+msgctxt "#30714"
+msgid "Delete all skins"
+msgstr "Verwijder alle skins"
+
+msgctxt "#30715"
+msgid "Enable adult channels"
+msgstr "Schakel volwassen kanalen"
+
+msgctxt "#30716"
+msgid "Enable swedish channels"
+msgstr "Schakel zweedse kanalen"
+
+msgctxt "#30717"
+msgid "EPG - XXX"
+msgstr "EPG - XXX"
+
+msgctxt "#30718"
+msgid "EPG - Swedish"
+msgstr "EPG - Zweeds"
+
+msgctxt "#30719"
+msgid "Disable"
+msgstr "onbruikbaar maken"
+
+msgctxt "#30720"
+msgid "Disabled"
+msgstr "Gedeactiveerd"
+
+msgctxt "#30721"
+msgid "Enabled"
+msgstr "Geactiveerd"
+
+msgctxt "#30722"
+msgid "Enable"
+msgstr "in staat stellen"
+
+msgctxt "#30723"
+msgid "Password for adult channels taken from mods-kodi"
+msgstr "Voer een wachtwoord in voor kanalen voor volwassenen van mods-kodi"
+
+msgctxt "#30724"
+msgid "Incorrect password!"
+msgstr "Incorrect wachtwoord!"
+
+msgctxt "#30725"
+msgid "Enable english channels"
+msgstr "Schakel engelse kanalen"
+
+msgctxt "#30726"
+msgid "EPG - English"
+msgstr "EPG - Engels"
+
+msgctxt "#30727"
+msgid "Enable danish channels"
+msgstr "Schakel deense kanalen"
+
+msgctxt "#30728"
+msgid "EPG - Danish"
+msgstr "EPG - Deens"
+
+msgctxt "#30729"
+msgid "Enable french channels"
+msgstr "Schakel franse kanalen"
+
+msgctxt "#30730"
+msgid "EPG - French"
+msgstr "EPG - Frans"
+
+msgctxt "#30731"
+msgid "Enable german channels"
+msgstr "Schakel duitse kanalen"
+
+msgctxt "#30732"
+msgid "EPG - German"
+msgstr "EPG - Duits"
+
+msgctxt "#30733"
+msgid "Enable croatian channels"
+msgstr "Schakel kroatische kanalen"
+
+msgctxt "#30734"
+msgid "EPG - Croatian"
+msgstr "EPG - Kroatisch"
+
+msgctxt "#30735"
+msgid "Enable serbian channels"
+msgstr "Schakel servische kanalen"
+
+msgctxt "#30736"
+msgid "EPG - Serbian"
+msgstr "EPG - Servisch"
+
+msgctxt "#30737"
+msgid "Enable norwegian channels"
+msgstr "Schakel noorse kanalen"
+
+msgctxt "#30738"
+msgid "EPG - Norwegian"
+msgstr "EPG - Noors"
+
+msgctxt "#30739"
+msgid "Show all regions"
+msgstr "Toon alle regio's"
+
+msgctxt "#30740"
+msgid "[COLOR]Select EPG[/COLOR]"
+msgstr "[COLOR]Selecteer EPG[/COLOR]"
+
+msgctxt "#30741"
+msgid "Adult channels"
+msgstr "Volwassen kanalen"
+
+msgctxt "#30742"
+msgid "Timezone"
+msgstr "Tijdzone"
+
+msgctxt "#30743"
+msgid "Enable benelux channels"
+msgstr "Schakel benelux kanalen"
+
+msgctxt "#30744"
+msgid "EPG - Benelux"
+msgstr "EPG - Benelux"
+
+msgctxt "#30745"
+msgid "Enable vod channels"
+msgstr "Schakel vod kanalen"
+
+msgctxt "#30746"
+msgid "Video on demand channels"
+msgstr "Video on demand kanalen"
+
+msgctxt "#30747"
+msgid "adult channels"
+msgstr "volwassen kanalen"
+
+msgctxt "#30748"
+msgid "vod channels"
+msgstr "vod kanalen"
+
+msgctxt "#30749"
+msgid "Enable radio channels"
+msgstr "Schakel radio kanalen"
+
+msgctxt "#30750"
+msgid "EPG - Radio"
+msgstr "EPG - Radio"
+
+msgctxt "#30751"
+msgid "Radio channels"
+msgstr "Radio kanalen"
+
+msgctxt "#30752"
+msgid "EPG - Czech"
+msgstr "EPG - Tsjechisch"
+
+msgctxt "#30753"
+msgid "Enable czech channels"
+msgstr "Schakel tsjechische kanalen"
+
+msgctxt "#30754"
+msgid "EPG - US"
+msgstr "EPG - US"
+
+msgctxt "#30755"
+msgid "Enable american channels"
+msgstr "Schakel amerikaanse kanalen"
+
+msgctxt "#30756"
+msgid "EPG - Italian"
+msgstr "EPG - Italiaans"
+
+msgctxt "#30757"
+msgid "Enable italian channels"
+msgstr "Schakel Italiaanse kanalen"
+
+msgctxt "#30758"
+msgid "Polish channels"
+msgstr "Poolse kanalen"
+
+msgctxt "#30759"
+msgid "Enable polish channels [COLOR disabled](Use main EPG)[/COLOR]"
+msgstr "Schakel Poolse kanalen [COLOR disabled](Gebruik de hoofd EPG)[/COLOR]"
+
+msgctxt "#30760"
+msgid "Enable subtitles"
+msgstr "Schakel ondertitels in"
+
+msgctxt "#30802"
+msgid "m-TVGuide is configured to stream using"
+msgstr "m-TVGuide is geconfigureerd om te streamen via"
+
+msgctxt "#30803"
+msgid "addon which is not installed."
+msgstr "add-on die niet is geïnstalleerd."
+
+msgctxt "#30804"
+msgid "Streaming using that addon is now disabled."
+msgstr "Streamen met die add-on is nu uitgeschakeld."
+
+msgctxt "#30901"
+msgid "Update"
+msgstr "Bijwerken"
+
+msgctxt "#30902"
+msgid "Update now"
+msgstr "Update nu"
+
+msgctxt "#30904"
+msgid "[COLOR]Telia Play[/COLOR]"
+msgstr "[COLOR]Telia Play[/COLOR]"
+
+msgctxt "#30905"
+msgid "Advertisement"
+msgstr "Advertentie"
+
+msgctxt "#30910"
+msgid "Enable navigation panel for mouse or touch"
+msgstr "Schakel navigatiepaneel voor muis of aanraken"
+
+msgctxt "#30911"
+msgid "Timezone UTC (+00:00 GMT)"
+msgstr "Tijdzone UTC (+00:00 GMT)"
+
+msgctxt "#59904"
+msgid "Enable"
+msgstr "Geactiveerd"
+
+msgctxt "#59905"
+msgid "[COLOR]Playlists M3U[/COLOR]"
+msgstr "[COLOR]Afspeellijsten M3U[/COLOR]"
+
+msgctxt "#59906"
+msgid "Link"
+msgstr "Link"
+
+msgctxt "#59907"
+msgid "Source"
+msgstr "Bron"
+
+msgctxt "#59908"
+msgid "File"
+msgstr "Het dossier"
+
+msgctxt "#59909"
+msgid "Multisession"
+msgstr "Multisession"
+
+msgctxt "#59910"
+msgid "Use free account"
+msgstr "Gebruik gratis account"
+
+msgctxt "#59911"
+msgid "[COLOR]Playlist 1[/COLOR]"
+msgstr "[COLOR]Afspeellijst 1[/COLOR]"
+
+msgctxt "#59912"
+msgid "[COLOR]Playlist 2[/COLOR]"
+msgstr "[COLOR]Afspeellijst 2[/COLOR]"
+
+msgctxt "#59913"
+msgid "[COLOR]Playlist 3[/COLOR]"
+msgstr "[COLOR]Afspeellijst 3[/COLOR]"
+
+msgctxt "#59914"
+msgid "Display name"
+msgstr "Weergavenaam"
+
+msgctxt "#59915"
+msgid "Loading service"
+msgstr "Laadservice"
+
+msgctxt "#59916"
+msgid "Number of playlists"
+msgstr "Aantal afspeellijsten"
+
+msgctxt "#59917"
+msgid "[COLOR]Playlist 4[/COLOR]"
+msgstr "[COLOR]Afspeellijst 4[/COLOR]"
+
+msgctxt "#59918"
+msgid "[COLOR]Playlist 5[/COLOR]"
+msgstr "[COLOR]Afspeellijst 5[/COLOR]"
+
+msgctxt "#59919"
+msgid "Url"
+msgstr "Url"
+
+msgctxt "#59920"
+msgid "[COLOR]C More[/COLOR]"
+msgstr "C More"
+
+msgctxt "#59921"
+msgid "[COLOR]Cyfrowy Polsat GO[/COLOR]"
+msgstr "Cyfrowy Polsat GO"
+
+msgctxt "#59922"
+msgid "[COLOR]FranceTV[/COLOR]"
+msgstr "FranceTV"
+
+msgctxt "#59923"
+msgid "[COLOR]nc+ GO[/COLOR]"
+msgstr "nc+ GO"
+
+msgctxt "#59924"
+msgid "Configuration tutorial"
+msgstr "Configuratie instructies"
+
+msgctxt "#59925"
+msgid "Belgium"
+msgstr "België"
+
+msgctxt "#59926"
+msgid "Czech"
+msgstr "Tsjechische Republiek"
+
+msgctxt "#59927"
+msgid "Germany"
+msgstr "Duitsland"
+
+msgctxt "#59928"
+msgid "Denmark"
+msgstr "Denemarken"
+
+msgctxt "#59929"
+msgid "France"
+msgstr "Frankrijk"
+
+msgctxt "#59930"
+msgid "Croatia"
+msgstr "Kroatië"
+
+msgctxt "#59931"
+msgid "Italy"
+msgstr "Italië"
+
+msgctxt "#59932"
+msgid "Norway"
+msgstr "Noorwegen"
+
+msgctxt "#59933"
+msgid "Poland"
+msgstr "Polen"
+
+msgctxt "#59934"
+msgid "Sweden"
+msgstr "Zweden"
+
+msgctxt "#59935"
+msgid "Serbia"
+msgstr "Servië"
+
+msgctxt "#59936"
+msgid "Great Britain"
+msgstr "Groot Brittanië"
+
+msgctxt "#59937"
+msgid "United States"
+msgstr "Verenigde Staten"
+
+msgctxt "#59938"
+msgid "Would you like to end setup configuration?"
+msgstr "Wilt u de configuratie van de installatie beëindigen?"
+
+msgctxt "#59939"
+msgid "Return"
+msgstr "Ga terug"
+
+msgctxt "#59940"
+msgid "Select electronic program guide (EPG) type"
+msgstr "Selecteer het type elektronische programmagids (EPG)"
+
+msgctxt "#59941"
+msgid "Enter URL link to your electronic program guide (EPG)"
+msgstr "Voer URL link in naar uw elektronische programmagids (EPG)"
+
+msgctxt "#59942"
+msgid "Select your electronic program guide (EPG) file"
+msgstr "Selecteer uw elektronische programmagids (EPG) bestand"
+
+msgctxt "#59943"
+msgid "Select regions"
+msgstr "Selecteer regio's"
+
+msgctxt "#59944"
+msgid "Would you like to add an extra electronic program guide (EPG) for {} channels?"
+msgstr "Wil je een extra elektronische programmagids (EPG) toevoegen voor {} kanalen?"
+
+msgctxt "#59945"
+msgid "Enter URL link to your electronic program guide (EPG) for {} channels"
+msgstr "Voer de URL link in naar uw elektronische programmagids (EPG) voor {} kanalen"
+
+msgctxt "#59946"
+msgid "Select TV service or M3U playlist"
+msgstr "Selecteer TV service of M3U afspeellijst"
+
+msgctxt "#59947"
+msgid "TV services"
+msgstr "Tv diensten"
+
+msgctxt "#59948"
+msgid "M3U Playlist"
+msgstr "M3U afspeellijst"
+
+msgctxt "#59949"
+msgid "Select TV services"
+msgstr "Selecteer ´TV services"
+
+msgctxt "#59950"
+msgid "Enter login credentials for {}."
+msgstr "Voer inloggegevens in voor {}."
+
+msgctxt "#59951"
+msgid "Would you like to login with a TV operator?"
+msgstr "Wilt u inloggen met een TV operator?"
+
+msgctxt "#59952"
+msgid "Username"
+msgstr "Gebruikersnaam"
+
+msgctxt "#59953"
+msgid "Password"
+msgstr "Wachtwoord"
+
+msgctxt "#59954"
+msgid "Select M3U playlist type."
+msgstr "Selecteer het type M3U afspeellijst."
+
+msgctxt "#59955"
+msgid "Enter M3U playlist URL link"
+msgstr "Voer de URL link van de M3U afspeellijst in"
+
+msgctxt "#59956"
+msgid "Select M3U playlist file"
+msgstr "Selecteer M3U afspeellijstbestand"
+
+msgctxt "#59957"
+msgid "Would you like to setup recording service?"
+msgstr "Wilt u een opnameservice instellen?"
+
+msgctxt "#59958"
+msgid "Select a storage location for your recordings"
+msgstr "Selecteer een opslaglocatie voor uw opnamen"
+
+msgctxt "#59959"
+msgid "Would you like to start a configuration tutorial for m-TVGuide?"
+msgstr "Wilt u een configuratiehandleiding voor m-TVGuide starten?"
+
+msgctxt "#59960"
+msgid "• Select electronic program guide (EPG). [COLOR grey]Supported program guides are URL link and/or .xml, .gz and .zip file extensions.[/COLOR][CR]• Select regions that are supported by the provided EPG.[CR]• Select a TV service and/or M3U playlist."
+msgstr "• Selecteer elektronische programmagids (EPG). [COLOR grey]Ondersteunde programmagidsen zijn URL-koppeling en/of .xml-, .gz- en .zip bestandsextensies.[/COLOR][CR]• Selecteer regio's die worden ondersteund door de geleverde EPG.[CR]• Selecteer een tv-service en/of M3U-afspeellijst."
+
+msgctxt "#59961"
+msgid "All settings are now configurated, you can now start m-TVGuide."
+msgstr "Alle instellingen zijn nu geconfigureerd, u kunt nu m-TVGuide starten."
+
+msgctxt "#59962"
+msgid "Would you like to add an extra EPG?"
+msgstr "Wilt u een extra EPG toevoegen?"
+
+msgctxt "#59963"
+msgid "Belgian"
+msgstr "Belgische"
+
+msgctxt "#59964"
+msgid "Czech"
+msgstr "Tsjechische"
+
+msgctxt "#59965"
+msgid "German"
+msgstr "Duitse"
+
+msgctxt "#59966"
+msgid "Danish"
+msgstr "Deense"
+
+msgctxt "#59967"
+msgid "French"
+msgstr "Franse"
+
+msgctxt "#59968"
+msgid "Croatian"
+msgstr "Kroatische"
+
+msgctxt "#59969"
+msgid "Italian"
+msgstr "Italiaanse"
+
+msgctxt "#59970"
+msgid "Norwegian"
+msgstr "Noorse"
+
+msgctxt "#59971"
+msgid "Polish"
+msgstr "Poolse"
+
+msgctxt "#59972"
+msgid "Swedish"
+msgstr "Zweedse"
+
+msgctxt "#59973"
+msgid "Serbian"
+msgstr "Servische"
+
+msgctxt "#59974"
+msgid "English"
+msgstr "Engelse"
+
+msgctxt "#59975"
+msgid "American"
+msgstr "Amerikaanse"
+
+msgctxt "#59976"
+msgid "Catchup"
+msgstr "Tijdsverschuiving"
+
+msgctxt "#59977"
+msgid "Query format string"
+msgstr "String formaat"
+
+msgctxt "#59978"
+msgid "Enable catchup"
+msgstr "Schakel tijdsverschuiving in"
+
+msgctxt "#59979"
+msgid "Wrong timeshift format."
+msgstr "Verkeerd timeshift formaat."
+
+msgctxt "#59980"
+msgid "No available catchup playback."
+msgstr "Geen beschikbare tijdsverschuiving weergave."
+
+msgctxt "#59981"
+msgid "- Buffer before program start (min)"
+msgstr "- Buffer voor programmastart (min)"
+
+msgctxt "#59982"
+msgid "- Buffer after program end (min)"
+msgstr "- Buffer na programma einde (min)"
+
+msgctxt "#59983"
+msgid "Other settings"
+msgstr "Andere instellingen"
+
+msgctxt "#59984"
+msgid "Catchup only finished programmes"
+msgstr "Timeshift is alleen beschikbaar voor voltooide programma's"
+
+msgctxt "#59985"
+msgid "Downloading:"
+msgstr "Downloaden:"
+
+msgctxt "#59986"
+msgid "Finished downloading:"
+msgstr "Het downloaden is voltooid:"
+
+msgctxt "#59987"
+msgid "No download available for this program."
+msgstr "Geen download beschikbaar voor dit programma."
+
+msgctxt "#59988"
+msgid "Catchup window days"
+msgstr "Tijdverschuivingsvenster dagen"
+
+msgctxt "#59989"
+msgid "Catchup type"
+msgstr "Timeshift type"
+
+msgctxt "#59990"
+msgid "Append"
+msgstr "Append"
+
+msgctxt "#59991"
+msgid "Add channel from EPG (Electronic program guide)"
+msgstr "Kanaal toevoegen vanuit EPG (elektronische programmagids)"
+
+msgctxt "#59992"
+msgid "Add stream to selected channel"
+msgstr "Voeg stream toe aan geselecteerd kanaal"
+
+msgctxt "#59993"
+msgid "Added channel [B]{}[/B]. Restart required for changes to take place."
+msgstr "Kanaal toegevoegd [B]{}[/B]. Opnieuw opstarten vereist om wijzigingen door te voeren."
+
+msgctxt "#59994"
+msgid "Select which channels to display"
+msgstr "Selecteer welke kanalen moeten worden weergegeven"
+
+msgctxt "#59995"
+msgid "Missing channels"
+msgstr "Ontbrekende kanalen"
+
+msgctxt "#59996"
+msgid "Xtream Codes"
+msgstr "Xtream Codes"
+
+msgctxt "#59997"
+msgid "Sort by selected character"
+msgstr "Sorteer op geselecteerde letter"
+
+msgctxt "#59998"
+msgid "Only one download session at once allowed."
+msgstr "Slechts één download sessie tegelijk toegestaan."
+
+msgctxt "#59999"
+msgid "Shift"
+msgstr "Shift"
+
+msgctxt "#60000"
+msgid "Auto"
+msgstr "Auto"
+
+msgctxt "#60001"
+msgid "Manual"
+msgstr "Handmatig"
+
+msgctxt "#60002"
+msgid "Catchup window"
+msgstr "Tijdverschuivingsvenster"
+
+msgctxt "#60003"
+msgid "Add single URL value"
+msgstr "Voeg een enkele URL waarde toe"
+
+msgctxt "#60004"
+msgid "Add multiple URL values"
+msgstr "Voeg meerdere URL waarden toe"
+
+msgctxt "#60005"
+msgid "Delete added channels"
+msgstr "Verwijder toegevoegde kanalen"
+
+msgctxt "#60006"
+msgid "Select channels to delete"
+msgstr "Selecteer kanalen om te verwijderen"
+
+msgctxt "#60007"
+msgid "Channels has been deleted. Restart required for changes to take place."
+msgstr "Kanalen zijn verwijderd. Opnieuw opstarten vereist om wijzigingen door te voeren."
+
+msgctxt "#60008"
+msgid "Save playlist to local drive"
+msgstr "Afspeellijst opslaan op lokale schijf"
+
+msgctxt "#60009"
+msgid "Update playlist (days)"
+msgstr "Update afspeellijst (dagen)"
+
+msgctxt "#30913"
+msgid "Settings"
+msgstr "Instellingen"
+
+msgctxt "#30914"
+msgid "Skin"
+msgstr "Huid"
+
+msgctxt "#30915"
+msgid "Enable add-on autostart"
+msgstr "Add-on autostart inschakelen"
+
+msgctxt "#30916"
+msgid "Database"
+msgstr "Database"
+
+msgctxt "#30917"
+msgid "Fullscreen window size animation"
+msgstr "Animatie van vensterformaat op volledig scherm"
+
+msgctxt "#30918"
+msgid "OSD on select"
+msgstr "OSD bij selecteren"
+
+msgctxt "#30919"
+msgid "Enable automatic channel playback"
+msgstr "Schakel automatische kanaalweergave in"
+
+msgctxt "#30920"
+msgid "By channel number"
+msgstr "Op kanaalnummer"
+
+msgctxt "#30921"
+msgid "Last seen channel"
+msgstr "Laatst gezien kanaal"
+
+msgctxt "#30930"
+msgid "Colours"
+msgstr "Kleuren"
+
+msgctxt "#30931"
+msgid "[COLOR]Category colours[/COLOR]"
+msgstr "[COLOR]Categorie kleuren[/COLOR]"
+
+msgctxt "#30932"
+msgid "Movies"
+msgstr "Films"
+
+msgctxt "#30933"
+msgid "TV series"
+msgstr "TV series"
+
+msgctxt "#30934"
+msgid "Current events"
+msgstr "Actuele gebeurtenissen"
+
+msgctxt "#30935"
+msgid "Entertainment"
+msgstr "Vermaak"
+
+msgctxt "#30936"
+msgid "Documentaries"
+msgstr "Documentaires"
+
+msgctxt "#30937"
+msgid "Childrens programme"
+msgstr "Kinderprogramma"
+
+msgctxt "#30938"
+msgid "Sports"
+msgstr "Sport"
+
+msgctxt "#30939"
+msgid "Interactive entertainment"
+msgstr "Interactief entertainment"
+
+msgctxt "#30940"
+msgid "[COLOR]Default colors[/COLOR]"
+msgstr "[COLOR]Standaardkleuren[/COLOR]"
+
+msgctxt "#30941"
+msgid "Default color"
+msgstr "Standaard kleur"
+
+msgctxt "#30942"
+msgid "Focus colour"
+msgstr "Focus kleur"
+
+msgctxt "#30943"
+msgid "Schedule colour"
+msgstr "Kleur plannen"
+
+msgctxt "#30944"
+msgid "Recording colour"
+msgstr "Kleur opnemen"
+
+msgctxt "#30950"
+msgid "Clear database"
+msgstr "Duidelijke database"
+
+msgctxt "#30951"
+msgid "Database cleared"
+msgstr "Database gewist"
+
+msgctxt "#30952"
+msgid "Delete custom streams"
+msgstr "Aangepaste streams verwijderen"
+
+msgctxt "#30953"
+msgid "Export settings"
+msgstr "Exporteer instellingen"
+
+msgctxt "#30954"
+msgid "Import settings"
+msgstr "Instellingen importeren"
+
+msgctxt "#30955"
+msgid "Delete database file"
+msgstr "Verwijder databasebestand"
+
+msgctxt "#30956"
+msgid "[COLOR]MojeFilmy[/COLOR]"
+msgstr "[COLOR]MojeFilmy[/COLOR]"
+
+msgctxt "#30957"
+msgid "Username"
+msgstr "Gebruikersnaam"
+
+msgctxt "#30958"
+msgid "Max service startup time (sec)"
+msgstr "Max. Opstarttijd van de service (sec)"
+
+msgctxt "#30959"
+msgid "Playlist URL"
+msgstr "URL afspeellijst"
+
+msgctxt "#30960"
+msgid "Reconnect broken stream"
+msgstr "Verbreek de gebroken stroom opnieuw"
+
+msgctxt "#30961"
+msgid "Max number of reattempts"
+msgstr "Max aantal herpogingen"
+
+msgctxt "#30962"
+msgid "Reattempt delay (ms)"
+msgstr "Wachttijdvertraging (ms)"
+
+msgctxt "#30963"
+msgid "Exit"
+msgstr "Afsluiten"
+
+msgctxt "#30964"
+msgid "Press one more time to exit"
+msgstr "Druk nog een keer op om af te sluiten"
+
+msgctxt "#30965"
+msgid "Currently broadcast service"
+msgstr "Momenteel uitzenddienst"
+
+msgctxt "#30966"
+msgid "Movies (Interia)"
+msgstr "Films (Interia)"
+
+msgctxt "#30967"
+msgid "TV series (Interia)"
+msgstr "Tv-serie (Interia)"
+
+msgctxt "#30968"
+msgid "Magazine"
+msgstr "Tijdschrift"
+
+msgctxt "#30969"
+msgid "File has been deleted"
+msgstr "Bestand is verwijderd"
+
+msgctxt "#30970"
+msgid "Assigned streams has been deleted"
+msgstr "Toegewezen streams zijn verwijderd"
+
+msgctxt "#30971"
+msgid "Reminders has been cleared"
+msgstr "Herinneringen zijn gewist"
+
+msgctxt "#30972"
+msgid "Scheduled recording has been cleared"
+msgstr "Geplande opname is gewist"
+
+msgctxt "#30973"
+msgid "Delete all settings"
+msgstr "Verwijder alle instellingen"
+
+msgctxt "#30974"
+msgid "Stop playback while switching stream"
+msgstr "Stop het afspelen tijdens het wisselen van stream"
+
+msgctxt "#30975"
+msgid "Prefer HD-streams"
+msgstr "Geef de voorkeur aan HD-streams"
+
+msgctxt "#30976"
+msgid "Refresh EPG table periodically"
+msgstr "Vernieuw de EPG tabel regelmatig"
+
+msgctxt "#30977"
+msgid "Max stream startup time (sec)"
+msgstr "Max stroom opstarttijd (sec)"
+
+msgctxt "#30978"
+msgid "Database updated"
+msgstr "Database bijgewerkt"
+
+msgctxt "#30979"
+msgid "m-TVGuide restart required"
+msgstr "m-TVGuide opnieuw opstarten vereist"
+
+msgctxt "#30980"
+msgid "[COLOR]**WARNING!**[CR]Resetting your database will cause losing all settings![/COLOR]"
+msgstr "[COLOR]**WAARSCHUWING!**[CR]Als u uw database opnieuw instelt, gaan alle instellingen verloren![/COLOR]"
+
+msgctxt "#30981"
+msgid "Do you really want to exit"
+msgstr "Wil je echt weggaan"
+
+msgctxt "#30982"
+msgid "Ask on exit"
+msgstr "Vraag bij afsluiten"
+
+msgctxt "#30983"
+msgid "Click twice to exit"
+msgstr "Klik tweemaal om af te sluiten"
+
+msgctxt "#30984"
+msgid "Add favorites"
+msgstr "Favorieten toevoegen"
+
+msgctxt "#30985"
+msgid "Add"
+msgstr "Toevoegen"
+
+msgctxt "#30986"
+msgid "Remove"
+msgstr "Verwijder"
+
+msgctxt "#30987"
+msgid "Clear"
+msgstr "Wissen"
+
+msgctxt "#30988"
+msgid "Sort in alphabetic order"
+msgstr "Sorteer in alfabetische volgorde"
+
+msgctxt "#30989"
+msgid "Add channels to group [COLOR gold][B]{}[/B][/COLOR]"
+msgstr "Voeg kanalen toe aan groep [COLOR gold][B]{}[/B][/COLOR]"
+
+msgctxt "#30990"
+msgid "Remove channels from group [COLOR gold][B]{}[/B][/COLOR]"
+msgstr "Verwijder kanalen uit groep [COLOR gold][B]{}[/B][/COLOR]"
+
+msgctxt "#30991"
+msgid "Channel options"
+msgstr "Kanaal opties"
+
+msgctxt "#30992"
+msgid "Group"
+msgstr "Groep"
+
+msgctxt "#30993"
+msgid "Remember list of favorites"
+msgstr "Onthoud favorieten lijst"
+
+msgctxt "#30994"
+msgid "Help - m-TVGuide [COLOR gold]EPG[/COLOR]"
+msgstr "Helpen - m-TVGuide [COLOR gold]EPG[/COLOR]"
+
+msgctxt "#30995"
+msgid "TV Group"
+msgstr "TV Group"
+
+msgctxt "#30996"
+msgid "There is no space for this device. Swap it with one of those already available on your account?"
+msgstr "Er is geen ruimte voor dit apparaat. Wilt u het ruilen met een van de reeds beschikbare in uw account?"
+
+msgctxt "#30997"
+msgid "Select a device to replace"
+msgstr "Selecteer een apparaat om te vervangen"
+
+msgctxt "#30998"
+msgid "Catchup - m-TVGuide [COLOR gold]EPG[/COLOR]"
+msgstr "Tijdsverschuiving - m-TVGuide [COLOR gold]EPG[/COLOR]"
+
+msgctxt "#30999"
+msgid "Would you like to start program [B]{}[/B] from the beginning?"
+msgstr "Wil je programma [B]{}[/B] vanaf het begin starten?"
+
+msgctxt "#31000"
+msgid "Would you like to download program [B]{}[/B]?"
+msgstr "Wilt u programma downloaden [B]{}[/B]?"
+
+msgctxt "#58000"
+msgid "Programme information"
+msgstr "Programma informatie"
+
+msgctxt "#58001"
+msgid "Select destination folder"
+msgstr "Selecteer de doelmap"
+
+msgctxt "#58002"
+msgid "Export settings"
+msgstr "Exporteer instellingen"
+
+msgctxt "#58003"
+msgid "Import settings"
+msgstr "Instellingen importeren"
+
+msgctxt "#58004"
+msgid "Failure - no settings to export!"
+msgstr "Fout - geen instellingen om te exporteren!"
+
+msgctxt "#58005"
+msgid "Settings exported successfully"
+msgstr "Instellingen succesvol geëxporteerd"
+
+msgctxt "#58006"
+msgid "Failure - please check if you have write permissions to that path"
+msgstr "Fout - controleer of u schrijfrechten voor dat pad hebt"
+
+msgctxt "#58007"
+msgid "Select settings backup file"
+msgstr "Selecteer instellingen back-upbestand"
+
+msgctxt "#58008"
+msgid "Settings imported successfully"
+msgstr "Instellingen succesvol geïmporteerd"
+
+msgctxt "#58009"
+msgid "Failed to import settings"
+msgstr "Instellingen kunnen niet worden geïmporteerd"
+
+msgctxt "#58010"
+msgid "Please check if chosen file is a correct settings backup"
+msgstr "Controleer of het gekozen bestand een juiste instellingenback up is"
+
+msgctxt "#58011"
+msgid "locked"
+msgstr "op slot"
+
+msgctxt "#31001"
+msgid "Enable OSD"
+msgstr "Schakel OSD in"
+
+msgctxt "#31002"
+msgid "Set keys"
+msgstr "Stel de toetsen in"
+
+msgctxt "#31003"
+msgid "SET"
+msgstr "SET"
+
+msgctxt "#31004"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#31005"
+msgid "Home"
+msgstr "Huis"
+
+msgctxt "#31006"
+msgid "Prog -"
+msgstr "Prog -"
+
+msgctxt "#31007"
+msgid "Prog +"
+msgstr "Prog +"
+
+msgctxt "#31008"
+msgid "Stop"
+msgstr "Hou op"
+
+msgctxt "#31009"
+msgid "Information"
+msgstr "Informatie"
+
+msgctxt "#31010"
+msgid "Context"
+msgstr "Context"
+
+msgctxt "#31011"
+msgid "Record"
+msgstr "Optekening"
+
+msgctxt "#31012"
+msgid "Reset"
+msgstr "Reset"
+
+msgctxt "#31013"
+msgid "Defaults"
+msgstr "Standaard"
+
+msgctxt "#31014"
+msgid "Change stream"
+msgstr "Wijzig stream"
+
+msgctxt "#31015"
+msgid "Vol +"
+msgstr "Vol +"
+
+msgctxt "#31016"
+msgid "Vol -"
+msgstr "Vol -"
+
+msgctxt "#31017"
+msgid "Switch to last seen channel"
+msgstr "Schakel over naar het laatst geziene kanaal"
+
+msgctxt "#31018"
+msgid "Lists"
+msgstr "Lijst"
+
+msgctxt "#31019"
+msgid "Stream failed to start, aborting playback"
+msgstr "Stream kan niet starten, afspelen wordt afgebroken"
+
+msgctxt "#31020"
+msgid "Reached reconnection limit, aborting playback"
+msgstr "Limiet voor opnieuw verbinden bereikt, afspelen wordt afgebroken"
+
+msgctxt "#31021"
+msgid "Missing add-on: {}"
+msgstr "Ontbrekende add-on: {}"
+
+msgctxt "#310010"
+msgid ""
+msgstr ""
+
+msgctxt "#310011"
+msgid "Stop playback using navi back button"
+msgstr "Stop het afspelen met de navi terugknop"
+
+msgctxt "#310012"
+msgid "Recorded program"
+msgstr "Opgenomen programma"
+
+msgctxt "#310013"
+msgid "Start recorded program"
+msgstr "Start opgenomen programma"
+
+msgctxt "#310014"
+msgid "Save plugin settings!"
+msgstr "Sla plugin-instellingen op!"
+
+msgctxt "#55001"
+msgid "Change User-Agent"
+msgstr "Wijzig User-Agent"
+
+msgctxt "#55002"
+msgid "Username"
+msgstr "Gebruikersnaam"
+
+msgctxt "#55003"
+msgid "Password"
+msgstr "Wachtwoord"
+
+msgctxt "#55005"
+msgid "Prefer high quality"
+msgstr "Liever hoge kwaliteit"
+
+msgctxt "#55007"
+msgid "TV services"
+msgstr "TV diensten"
+
+msgctxt "#55008"
+msgid "Assign also the streams of low- quality / backup"
+msgstr "Wijs ook de streams van lage kwaliteit / back-up toe"
+
+msgctxt "#55010"
+msgid "0 Lowest"
+msgstr "0 Laagste"
+
+msgctxt "#55011"
+msgid "1 Very Low"
+msgstr "1 Zeer laag"
+
+msgctxt "#55017"
+msgid "2 Very Low"
+msgstr "2 Zeer laag"
+
+msgctxt "#55012"
+msgid "3 Low"
+msgstr "3 Laag"
+
+msgctxt "#55018"
+msgid "4 Low"
+msgstr "4 Laag"
+
+msgctxt "#55013"
+msgid "5 Mid"
+msgstr "5 Mid"
+
+msgctxt "#55019"
+msgid "6 Mid"
+msgstr "6 Mid"
+
+msgctxt "#55014"
+msgid "7 High"
+msgstr "7 Hoog"
+
+msgctxt "#55020"
+msgid "8 High"
+msgstr "8 Hoog"
+
+msgctxt "#55021"
+msgid "9 Very High"
+msgstr "9 Heel hoog"
+
+msgctxt "#55022"
+msgid "10 Very High"
+msgstr "10 Heel hoog"
+
+msgctxt "#55023"
+msgid "11 Highest"
+msgstr "11 Hoogste"
+
+msgctxt "#55015"
+msgid "Working"
+msgstr "Werken"
+
+msgctxt "#55016"
+msgid "Now Playing"
+msgstr "Nu aan het spelen"
+
+msgctxt "#89000"
+msgid "Select quality"
+msgstr "Selecteer kwaliteit"
+
+msgctxt "#89001"
+msgid "Enable sleep timer"
+msgstr "Sleep timer inschakelen"
+
+msgctxt "#89002"
+msgid "Timeout action"
+msgstr "Timeoutactie"
+
+msgctxt "#89003"
+msgid "Timeout value (min)"
+msgstr "Timeoutwaarde (min)"
+
+msgctxt "#89004"
+msgid "Stop playback"
+msgstr "Stop het afspelen"
+
+msgctxt "#89005"
+msgid "Exit Kodi"
+msgstr "Verlaat Kodi"
+
+msgctxt "#89006"
+msgid "Shutdown"
+msgstr "Afsluiten"
+
+msgctxt "#89007"
+msgid "Hibernate"
+msgstr "Overwinteren"
+
+msgctxt "#89008"
+msgid ""
+msgstr ""
+
+msgctxt "#89009"
+msgid ""
+msgstr ""
+
+msgctxt "#55009"
+msgid "Priority"
+msgstr "Prioriteit"
+
+msgctxt "#57001"
+msgid "API error"
+msgstr "API fout"
+
+msgctxt "#57002"
+msgid "Could not connect to website"
+msgstr "Kon geen verbinding maken met de website"
+
+msgctxt "#57003"
+msgid "Check your network connection."
+msgstr "Controleer uw netwerkverbinding."
+
+msgctxt "#57009"
+msgid "Script error."
+msgstr "Script fout."
+
+msgctxt "#57010"
+msgid "Error on method getJsonFromAPI."
+msgstr "Fout bij methode getJsonFromAPI."
+
+msgctxt "#57011"
+msgid "API connection didn't get any data."
+msgstr "API-verbinding kreeg geen gegevens."
+
+msgctxt "#57012"
+msgid "It could be network connection problem."
+msgstr "Dit kan een netwerkverbindingsprobleem zijn."
+
+msgctxt "#57013"
+msgid "or wrong website API adress."
+msgstr "of een verkeerd API-adres van de website."
+
+msgctxt "#57014"
+msgid "Error! (API: setPlayer)"
+msgstr "Fout! (API: setPlayer)"
+
+msgctxt "#57015"
+msgid "Could not get authorization data."
+msgstr "Kon autorisatiegegevens niet krijgen."
+
+msgctxt "#57018"
+msgid "Playing error!"
+msgstr "Fout bij spelen!"
+
+msgctxt "#57019"
+msgid "Exceeded the limit of free viewing, or too many users."
+msgstr "De limiet van gratis weergave of te veel gebruikers overschreden."
+
+msgctxt "#57020"
+msgid "Buy premium account now to watch unlimited!"
+msgstr "Koop nu een premium account om onbeperkt te kunnen kijken!"
+
+msgctxt "#57021"
+msgid "Playing has been stopped."
+msgstr "Het spel is gestopt."
+
+msgctxt "#57022"
+msgid "Wrong video adress. Playing has been stopped."
+msgstr "Verkeerd video-adres. Het spel is gestopt."
+
+msgctxt "#57027"
+msgid "Server has closed connection for unknown reason! Please try again."
+msgstr "Server heeft om onbekende reden verbinding verbroken! Probeer het opnieuw."
+
+msgctxt "#57028"
+msgid "Playing has been stopped."
+msgstr "Het spel is gestopt."
+
+msgctxt "#57034"
+msgid "Information about user account"
+msgstr "Informatie over gebruikersaccount"
+
+msgctxt "#57036"
+msgid "You do not have a premium account. Starting a sponsored broadcast."
+msgstr "U hebt geen premium account. Een gesponsorde uitzending starten."
+
+msgctxt "#57037"
+msgid "To purchase a premium right now go to:"
+msgstr "Om nu een premie te kopen ga naar:"
+
+msgctxt "#57038"
+msgid "http://mods-kodi.pl/"
+msgstr "http://mods-kodi.pl/"
+
+msgctxt "#57039"
+msgid "Content is not included in your service"
+msgstr "Inhoud is niet inbegrepen in uw service"
+
+msgctxt "#57042"
+msgid "Error connection with website!"
+msgstr "Fout in de verbinding met de website!"
+
+msgctxt "#57043"
+msgid "Selected channel does not exist!"
+msgstr "Geselecteerd kanaal bestaat niet!"
+
+msgctxt "#57044"
+msgid "No channel selected!"
+msgstr "Geen kanaal geselecteerd!"
+
+msgctxt "#57045"
+msgid "No active server! We are sorry."
+msgstr "Geen actieve server! We vinden het jammer."
+
+msgctxt "#57046"
+msgid "Rules are not accepted!"
+msgstr "Regels worden niet geaccepteerd!"
+
+msgctxt "#57047"
+msgid "Go to http://mods-kodi.pl/ and accept it, to use service."
+msgstr "Ga naar http://mods-kodi.pl/ en accepteer deze om service te gebruiken."
+
+msgctxt "#57048"
+msgid "Login incorrect"
+msgstr "Login fout"
+
+msgctxt "#57049"
+msgid "Configured"
+msgstr "geconfigureerd"
+
+msgctxt "#57050"
+msgid "URL is incorrect!"
+msgstr "URL is onjuist!"
+
+msgctxt "#57051"
+msgid "m-TVGuide"
+msgstr "m-TVGuide"
+
+msgctxt "#57052"
+msgid "Addon is already running - can't be started again"
+msgstr "Addon is al actief - kan niet opnieuw worden gestart"
+
+msgctxt "#57053"
+msgid "Asset playback blocked due to VPN/proxy"
+msgstr "Toegang tot afspelen geblokkeerd vanwege VPN/proxy"
+
+msgctxt "#57054"
+msgid "Service is unavailable in your location"
+msgstr "Service is niet beschikbaar op jouw locatie"
+
+msgctxt "#57055"
+msgid "Maximum number of devices have been reached"
+msgstr "Het maximale aantal apparaten is bereikt"
+
+msgctxt "#68000"
+msgid "Plot"
+msgstr "Plot"
+
+msgctxt "#68001"
+msgid "Press [B]OK[/B] to show plot"
+msgstr "Druk op [B]OK[/B] om de plot te tonen"
+
+msgctxt "#68002"
+msgid "Switch"
+msgstr "Wisselen"
+
+msgctxt "#68003"
+msgid "Play programme"
+msgstr "Speel het programma af"
+
+msgctxt "#68004"
+msgid "Search YouTube"
+msgstr "Zoek op YouTube"
+
+msgctxt "#68005"
+msgid "Options"
+msgstr "Opties"
+
+msgctxt "#68006"
+msgid "Time:"
+msgstr "Tijd:"
+
+msgctxt "#68007"
+msgid "Context menu"
+msgstr "Contextmenu"
+
+msgctxt "#68008"
+msgid "Sections"
+msgstr "Secties"
+
+msgctxt "#68009"
+msgid "View options"
+msgstr "Weergaveopties"
+
+msgctxt "#68010"
+msgid "Browse for playlist"
+msgstr "Bladeren naar afspeellijst"
+
+msgctxt "#68011"
+msgid "Previous"
+msgstr "Vorige"
+
+msgctxt "#68012"
+msgid "Subtitles"
+msgstr "Ondertiteling"
+
+msgctxt "#68013"
+msgid "Audio language"
+msgstr "Audiotaal"
+
+msgctxt "#68014"
+msgid "Numeric Input"
+msgstr "Numerieke invoer"
+
+msgctxt "#68015"
+msgid "Ends at"
+msgstr "Eindigt bij"
+
+msgctxt "#68016"
+msgid "Not available"
+msgstr "Niet beschikbaar"
+
+msgctxt "#68017"
+msgid "Time"
+msgstr "Tijd"
+
+msgctxt "#68018"
+msgid "Date"
+msgstr "Datum"
+
+msgctxt "#69000"
+msgid "Recording"
+msgstr "Opname"
+
+msgctxt "#69001"
+msgid "Import RTMPDUMP"
+msgstr "Importeer RTMPDUMP"
+
+msgctxt "#69002"
+msgid "Import FFMPEG"
+msgstr "Importeer FFMPEG"
+
+msgctxt "#69003"
+msgid "Record destination"
+msgstr "Bestemming opnemen"
+
+msgctxt "#69004"
+msgid "Recording:"
+msgstr "Opname:"
+
+msgctxt "#69005"
+msgid "Finished recording:"
+msgstr "Voltooide opname:"
+
+msgctxt "#69006"
+msgid "Not existing record destination directory - record canceled!"
+msgstr "Bestaande optekeningbestemmingsdirectory niet - optekening geannuleerd!"
+
+msgctxt "#69007"
+msgid "Record error!"
+msgstr "Opname fout!"
+
+msgctxt "#69008"
+msgid "Can't record due to not configured record application: "
+msgstr "Kan niet opnemen vanwege niet geconfigureerde optekeningtoepassing: "
+
+msgctxt "#69009"
+msgid "Record already scheduled - cancel?"
+msgstr "Optekening al gepland - annuleren?"
+
+msgctxt "#69010"
+msgid "Schedule program record: "
+msgstr "Programma-optekening plannen: "
+
+msgctxt "#69011"
+msgid "Cancel ongoing recording?"
+msgstr "Doorlopende opname annuleren?"
+
+msgctxt "#69012"
+msgid "Import record app"
+msgstr "Importeer optekening-app"
+
+msgctxt "#69013"
+msgid "successfully imported"
+msgstr "succesvol geïmporteerd"
+
+msgctxt "#69014"
+msgid "FFMPEG record format"
+msgstr "FFMPEG-optekeningformaat"
+
+msgctxt "#69015"
+msgid "Exit despite of scheduled recording?"
+msgstr "Afsluiten ondanks geprogrammeerde opname?"
+
+msgctxt "#69016"
+msgid "Use FFMPEG to record RTMP instead of RTMPDUMP"
+msgstr "Gebruik FFMPEG om RTMP op te nemen in plaats van RTMPDUMP"
+
+msgctxt "#69017"
+msgid "Install recording applications"
+msgstr "Installeer opnametoepassingen"
+
+msgctxt "#69018"
+msgid "m-TVGuide is downloading files, Please press OK and wait until installation finishes."
+msgstr "m-TVGuide is bestanden aan het downloaden. Druk op OK en wacht tot de installatie is voltooid."
+
+msgctxt "#69019"
+msgid "An error has occurred - try again or install manualy"
+msgstr "Er is een fout opgetreden - probeer het opnieuw of installeer handmatig"
+
+msgctxt "#69020"
+msgid "Debug log"
+msgstr "Foutopsporingslogboek"
+
+msgctxt "#69021"
+msgid "Can't find FFMPEG or RTMPDUMP in system - please try to install by packet manager RTMPDUMP, FFMPEG or libav-tools or install manualy"
+msgstr "Kan FFMPEG of RTMPDUMP niet vinden in het systeem - probeer te installeren door pakketbeheerder RTMPDUMP, FFMPEG of libav-tools of manueel te installeren"
+
+msgctxt "#69022"
+msgid "Error during automatic import - try importing files manually"
+msgstr "Fout tijdens automatisch importeren - probeer bestanden handmatig te importeren"
+
+msgctxt "#69023"
+msgid "Choose OS"
+msgstr "Kies OS"
+
+msgctxt "#69024"
+msgid "Maximum number of attempts to resume recording"
+msgstr "Maximum aantal pogingen om de opname te hervatten"
+
+msgctxt "#69025"
+msgid "Delete watched recordings"
+msgstr "Verwijder bekeken opnames"
+
+msgctxt "#69026"
+msgid "Delete recording"
+msgstr "Wis opname"
+
+msgctxt "#69027"
+msgid "Delete watched recording"
+msgstr "Verwijder bekeken opnames"
+
+msgctxt "#69028"
+msgid "Do nothing"
+msgstr "Niets doen"
+
+msgctxt "#69029"
+msgid "Ask"
+msgstr "Vragen"
+
+msgctxt "#69030"
+msgid "Auto delete"
+msgstr "Automatisch verwijderen"
+
+msgctxt "#69031"
+msgid "[COLOR]FLV format does not work on OpenELEC/LibreELEC systems[/COLOR]"
+msgstr "[COLOR]FLV-indeling werkt niet op OpenELEC / LibreELEC-systemen[/COLOR]"
+
+msgctxt "#69032"
+msgid "[COLOR]Record application for common systems[/COLOR]"
+msgstr "[COLOR]Optekeningtoepassing voor gangbare systemen[/COLOR]"
+
+msgctxt "#69033"
+msgid "Log uploaded to: "
+msgstr "Log geüpload naar: "
+
+msgctxt "#69034"
+msgid "Failed to upload log"
+msgstr "Uploaden van logbestand mislukt"
+
+msgctxt "#69035"
+msgid "Upload Kodi log"
+msgstr "Upload kodi logboek"
+
+msgctxt "#69036"
+msgid "Current EPG url is: "
+msgstr "De huidige EPG url is: "
+
+msgctxt "#69037"
+msgid "No free stream available in service "
+msgstr "Geen gratis stream beschikbaar tijdens gebruik "
+
+msgctxt "#69038"
+msgid "Stop player when recording is started"
+msgstr "Stop de speler wanneer de opname is gestart"
+
+msgctxt "#69039"
+msgid "Record"
+msgstr "Optekening"
+
+msgctxt "#69040"
+msgid "Video"
+msgstr "Video"
+
+msgctxt "#69041"
+msgid "Navigating in OSD previous, next program"
+msgstr "Navigeren in het OSD-menu vorige, volgende programma"
+
+msgctxt "#69042"
+msgid "Show extra buttons on OSD"
+msgstr "Toon extra knoppen op het OSD"
+
+msgctxt "#69043"
+msgid "Display auto OSD on play"
+msgstr "Geef automatische OSD weer tijdens het afspelen"
+
+msgctxt "#69044"
+msgid "Auto OSD display time (sec)"
+msgstr "Automatische OSD-weergavetijd (sec)"
+
+msgctxt "#69045"
+msgid "OSD display time (sec)"
+msgstr "OSD weergavetijd (sec)"
+
+msgctxt "#69046"
+msgid "Show OSD on stream change"
+msgstr "Toon OSD bij stroomverandering"
+
+msgctxt "#69047"
+msgid "Show service name in OSD"
+msgstr "Toon servicenaam in OSD"
+
+msgctxt "#69048"
+msgid "Current time during playback"
+msgstr "Huidige tijd tijdens afspelen"
+
+msgctxt "#69049"
+msgid "Position"
+msgstr "Positie"
+
+msgctxt "#69050"
+msgid "Top left"
+msgstr "Linksboven"
+
+msgctxt "#69051"
+msgid "Top right"
+msgstr "Rechtsboven"
+
+msgctxt "#69052"
+msgid "Bottom left"
+msgstr "Linksonder"
+
+msgctxt "#69053"
+msgid "Bottom right"
+msgstr "Rechts onder"
+
+msgctxt "#69054"
+msgid "Size"
+msgstr "Grootte"
+
+msgctxt "#69055"
+msgid "[CR][CR]Link copied to clipboard"
+msgstr "[CR][CR]Link gekopieerd naar klembord"
+
+msgctxt "#69056"
+msgid "Download"
+msgstr "Downloaden"
+
+msgctxt "#69057"
+msgid "Cancel download"
+msgstr "Download annuleren"
+
+msgctxt "#70000"
+msgid "Program title"
+msgstr "Programma titel"
+
+msgctxt "#70001"
+msgid "Channel"
+msgstr "Kanaal"
+
+msgctxt "#70002"
+msgid "Start time"
+msgstr "Starttijd"
+
+msgctxt "#70003"
+msgid "Record length"
+msgstr "Optekening lengte"
+
+msgctxt "#70004"
+msgid "Start record time-shift (min)"
+msgstr "Begin opnametijdshift (min)"
+
+msgctxt "#70005"
+msgid "End record time-shift (min)"
+msgstr "Einde opname time-shift (min)"
+
+msgctxt "#70006"
+msgid "Task settings"
+msgstr "Taakinstellingen"
+
+msgctxt "#70008"
+msgid "Aqua"
+msgstr "Aquamarijn"
+
+msgctxt "#70009"
+msgid "Blue"
+msgstr "Blauw"
+
+msgctxt "#70010"
+msgid "Green"
+msgstr "Groen"
+
+msgctxt "#70011"
+msgid "Red"
+msgstr "Rood"
+
+msgctxt "#70012"
+msgid "Purple"
+msgstr "Purper"
+
+msgctxt "#70013"
+msgid "Yellow"
+msgstr "Geel"
+
+msgctxt "#70014"
+msgid "Violet"
+msgstr "Paars"
+
+msgctxt "#70015"
+msgid "Orange"
+msgstr "Oranje"
+
+msgctxt "#70007"
+msgid "Default"
+msgstr "Standaard"
+
+msgctxt "#70016"
+msgid "Default focus"
+msgstr "Standaard focus"
+
+msgctxt "#70017"
+msgid "Default remind"
+msgstr "Standaard herinneren"
+
+msgctxt "#70018"
+msgid "Default record"
+msgstr "Standaard optekening"
+
+msgctxt "#70019"
+msgid "Full blue"
+msgstr "Volledig blauw"
+
+msgctxt "#70020"
+msgid "Full red"
+msgstr "Volledig rood"
+
+msgctxt "#70021"
+msgid "Full orange"
+msgstr "Volledig oranje"
+
+msgctxt "#70022"
+msgid "Dark focus"
+msgstr "Donkere focus"
+
+msgctxt "#70100"
+msgid "Add-on Install"
+msgstr "Add-on Installeren"
+
+msgctxt "#70101"
+msgid "Missing fonts. Please change skin or install font pack."
+msgstr "Ontbrekende lettertypen. Wijzig de skin of installeer het fontpakket."
+
+msgctxt "#70102"
+msgid "Installation has finished. Kodi will now exit."
+msgstr "De installatie is voltooid. Kodi zal nu afsluiten."
+
+msgctxt "#70103"
+msgid "Installation has failed. m-TVGuide will now exit."
+msgstr "Installatie is mislukt. m-TVGuide zal nu afsluiten."
+
+msgctxt "#70104"
+msgid "Change skin"
+msgstr "Verander skin"
+
+msgctxt "#70105"
+msgid "Install font pack"
+msgstr "Installeer lettertypepakket"
+
+msgctxt "#70106"
+msgid "Would you like to replace Kodi skin fonts? This option may break your skin and is not reversible."
+msgstr "Wilt u Kodi skin lettertypen vervangen? Deze optie kan uw skin breken en is niet omkeerbaar."
+
+msgctxt "#70107"
+msgid "Kodi skin is missing, please download and install: {}"
+msgstr "Kodi skin ontbreekt, download en installeer: {}"
+
+msgctxt "#70108"
+msgid "Skin replacement or font installation is required to start m-TVGuide."
+msgstr "Skin vervanging of lettertype installatie is vereist om m-TVGuide te starten."
+
+msgctxt "#70109"
+msgid "Monday"
+msgstr "Maandag"
+
+msgctxt "#70110"
+msgid "Tuesday"
+msgstr "Dinsdag"
+
+msgctxt "#70111"
+msgid "Wednesday"
+msgstr "Woensdag"
+
+msgctxt "#70112"
+msgid "Thursday"
+msgstr "Donderdag"
+
+msgctxt "#70113"
+msgid "Friday"
+msgstr "Vrijdag"
+
+msgctxt "#70114"
+msgid "Saturday"
+msgstr "Zaterdag"
+
+msgctxt "#70115"
+msgid "Sunday"
+msgstr "Zondag"
+
+msgctxt "#70116"
+msgid "Add channel"
+msgstr "Kanaal toevoegen"
+
+msgctxt "#70117"
+msgid "List"
+msgstr "Lijst"
+
+msgctxt "#70118"
+msgid "Non-writeable {} in use. Need to make a copy in userdata folder so we can install fonts. Would you like to continue?"
+msgstr "Niet beschrijfbaar {} in gebruik. U moet een kopie maken in de map met userdata, zodat we lettertypen kunnen installeren. Wil je doorgaan?"
+
+msgctxt "#80005"
+msgid "[COLOR]WP Pilot[/COLOR]"
+msgstr "[COLOR]WP Pilot[/COLOR]"
+
+msgctxt "#80006"
+msgid "[COLOR]Ipla[/COLOR]"
+msgstr "[COLOR]Ipla[/COLOR]"
+
+msgctxt "#90000"
+msgid "Server"
+msgstr "Server"
+
+msgctxt "#90001"
+msgid "Getting started"
+msgstr "Help"
+
+msgctxt "#90002"
+msgid "Help"
+msgstr "Ermee beginnen"
+
+msgctxt "#90003"
+msgid "Readme"
+msgstr "Oordeel"
+
+msgctxt "#90004"
+msgid "Credits"
+msgstr "Credits"

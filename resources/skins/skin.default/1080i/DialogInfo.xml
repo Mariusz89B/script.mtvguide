@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window type="dialog">
+	<defaultcontrol always="true">9000</defaultcontrol>
+	<aspectratio>scale</aspectratio>
+	<coordinates>
+		<system>1</system><posx>0</posx><posy>0</posy>
+	</coordinates>
+	<controls>
+	
+		<control type="group">
+			<animation effect="fade" start="0" end="100" time="100">WindowOpen</animation>
+			<animation effect="fade" start="100" end="0" time="100">WindowClose</animation>
+	
+			<!-- Background -->
+			<control type="image">
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>1920</width>
+				<height>1080</height>
+				<aspectratio>scale</aspectratio>
+				<texture fallback="tvguide-background-default.jpg" colordiffuse="primary_background">$INFO[Skin.String(CustomDefaultBackground.path)]</texture>
+			</control>
+			
+			<control type="image">
+				<depth>DepthBackground</depth>
+				<posx>0</posx>
+				<posy>0</posy>
+				<width>1920</width>
+				<height>1080</height>
+				<aspectratio>scale</aspectratio>
+				<texture colordiffuse="secondary_background" fallback="special://skin/extras/backgrounds/pattern1.jpg">$INFO[Skin.String(background_overlay),special://skin/extras/backgrounds/pattern,.jpg]</texture>
+			</control>
+		</control>
+		
+			<control type="label" id="4919">
+				<visible>hidden</visible>
+			</control>
+			
+			<control type="label" id="4920">
+				<visible>hidden</visible>
+			</control>	
+			
+			<control type="label" id="4921">
+				<visible>hidden</visible>
+			</control>
+			
+			<control type="textbox" id="4922">
+				<visible>hidden</visible>
+			</control>
+			
+			<control type="image" id="4932">
+				<description>Program age</description>
+			</control>
+			
+			<control type="textbox" id="4926">
+				<visible>hidden</visible>
+			</control>
+			
+			<control type="textbox" id="4928">
+				<visible>hidden</visible>
+			</control>
+			
+			<control type="textbox" id="4929">
+				<description>Program genre</description>
+				<visible>hidden</visible>
+			</control>
+			
+			<control type="textbox" id="4930">
+				<visible>hidden</visible>
+			</control>
+		
+	<control type="group">
+		<animation effect="fade" end="100" delay="300" time="300">WindowOpen</animation>
+		<animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
+		
+		<control type="label">
+			<top>40</top>
+			<left>100</left>
+			<width>1720</width>
+			<height>75</height>
+			<width>1200</width>
+			<textcolor>FFF0F0F0</textcolor>
+			<shadowcolor>22000000</shadowcolor>
+			<font>font52_title</font>
+			<align>center</align>
+			<label>$INFO[Control.getLabel(4920)]</label>
+		</control>
+		
+		<control type="textbox" id="4925">
+			<visible>hidden</visible>
+		</control>
+		
+		<control type="label">
+			<top>105</top>
+			<left>100</left>
+			<width>1720</width>
+			<height>75</height>
+			<textcolor>FFF0F0F0</textcolor>
+			<shadowcolor>22000000</shadowcolor>
+			<font>font13</font>
+			<align>center</align>
+			<label>[COLOR FFA0A0A0]$INFO[Control.getLabel(4925)]:[/COLOR] [B]$INFO[Control.getLabel(4920)][/B]</label>
+			<visible>!String.IsEmpty(Control.GetLabel(4925))</visible>
+		</control>
+		
+		<control type="label">
+			<top>105</top>
+			<left>100</left>
+			<width>1720</width>
+			<height>75</height>
+			<textcolor>FFF0F0F0</textcolor>
+			<shadowcolor>22000000</shadowcolor>
+			<font>font13</font>
+			<align>center</align>
+			<label>[B]$INFO[Control.getLabel(4920)][/B]</label>
+			<visible>String.IsEmpty(Control.GetLabel(4925))</visible>
+		</control>
+	</control>
+	
+		<control type="group">
+			<centertop>50%</centertop>
+			<height>1080</height>
+			<centerleft>50%</centerleft>
+			<width>1920</width>
+			<animation effect="fade" start="100" end="0" time="200" tween="sine" condition="Window.IsVisible(script-script.extendedinfo-DialogVideoInfo.xml) | Window.IsVisible(script-script.extendedinfo-DialogInfo.xml) | Window.IsVisible(script-script.extendedinfo-VideoList.xml)">Conditional</animation>
+			
+			<!-- Dialog left top -->
+		<control type="group">
+			<left>114</left>
+			<top>236</top>			
+			<animation type="WindowOpen">
+				<effect type="fade" end="100" time="200" />
+				<effect type="fade" start="0" end="100" time="300" tween="sine" easing="out" />
+				<effect type="slide" start="-320" end="0" time="400" tween="cubic" easing="out" />
+			</animation>
+			<animation type="WindowClose">
+				<effect type="fade" start="100" end="0" time="200" />
+				<effect type="fade" start="100" end="0" time="300" tween="sine" easing="out" />
+				<effect type="slide" start="0" end="-320" time="300" tween="cubic" easing="out" />
+			</animation>
+			
+			<control type="image" id="4923">
+				<description>Program logo</description>
+				<left>0</left>
+				<top>0</top>
+				<width>461</width>
+				<height>461</height>
+				<texture>dialogs/mk_defaulttvshows.png</texture>
+				<aspectratio align="center" aligny="center">keep</aspectratio>
+			</control>
+		</control>
+		
+			<!-- Dialog right -->
+			<control type="group">
+				<left>0</left>
+				<top>-30</top>					
+				<animation type="WindowOpen">
+					<effect type="fade" end="100" time="200" />
+					<effect type="fade" start="0" end="100" time="300" tween="sine" easing="out" />
+					<effect type="slide" start="320" end="0" time="400" tween="cubic" easing="out" />
+				</animation>
+				<animation type="WindowClose">
+					<effect type="fade" start="100" end="0" time="200" />
+					<effect type="fade" start="100" end="0" time="300" tween="sine" easing="out" />
+					<effect type="slide" start="0" end="320" time="300" tween="cubic" easing="out" />
+				</animation>
+			
+			<control type="group">
+				<top>260</top>
+				<left>50</left>
+				<control type="button" id="61">
+					<left>600</left>
+					<top>-18</top>
+					<width>1170</width>
+					<height>509</height>
+					<font></font>
+					<onleft>61</onleft>
+					<onright>61</onright>
+					<ondown>9000</ondown>
+					<onup>9000</onup>
+					<textcolor>FFF0F0F0</textcolor>
+					<shadowcolor>22000000</shadowcolor>
+					<onclick>SetProperty(TextViewer_Header,$ADDON[script.mtvguide 68000],home)</onclick>
+					<onclick>SetProperty(TextViewer_Text,$ESCINFO[Control.getLabel(4922)],home)</onclick>
+					<onclick>ActivateWindow(1102)</onclick>
+					<texturefocus colordiffuse="button_focus" border="21">dialogs/button-fo.png</texturefocus>
+					<texturenofocus border="21">dialogs/dialog-bg.png</texturenofocus>
+				</control>
+				
+				<control type="label" id="4960">
+					<visible>hidden</visible>
+				</control>
+				
+				<control type="label" id="4961">
+					<visible>hidden</visible>
+				</control>
+				
+				<control type="textbox">
+					<left>660</left>
+					<top>20</top>
+					<width>1050</width>
+					<height>425</height>
+					<align>justify</align>
+					<textcolor>FFF0F0F0</textcolor>
+					<shadowcolor>22000000</shadowcolor>
+					<label>$INFO[Control.getLabel(4919),[B],[/B][CR]][COLOR FFA0A0A0]$ADDON[script.mtvguide 68018]:[/COLOR] $INFO[Control.getLabel(4960)] $INFO[Control.getLabel(4961)][CR]$INFO[Control.getLabel(4921),[COLOR FFA0A0A0]$ADDON[script.mtvguide 30511]:[/COLOR] ,[CR]]$VAR[ExpirationDateTimeLabel]$INFO[Control.getLabel(4926),[COLOR FFA0A0A0]$ADDON[script.mtvguide 30505]:[/COLOR] ,[CR]]$INFO[Control.getLabel(4929),[COLOR FFA0A0A0]$ADDON[script.mtvguide 30508]:[/COLOR] ,[CR]]$INFO[Control.getLabel(4930),[COLOR FFA0A0A0]$ADDON[script.mtvguide 30509]:[/COLOR] ,[CR]]$INFO[Control.getLabel(4928),[COLOR FFA0A0A0]$ADDON[script.mtvguide 30507]:[/COLOR] ,[CR]][CR]$INFO[Control.getLabel(4922)]</label>
+					<autoscroll time="3000" delay="4000" repeat="5000">Skin.HasSetting(AutoScroll)</autoscroll>
+				</control>
+			</control>		
+
+				<!-- Radio buttons -->
+			<control type="grouplist" id="9000">
+				<left>150</left>
+				<top>860</top>
+				<width>1520</width>
+				<height>160</height>
+				<itemgap>10</itemgap>
+				<align>center</align>
+				<orientation>horizontal</orientation>
+				<defaultcontrol>5</defaultcontrol>
+				<onleft>9000</onleft>
+				<onright>9000</onright>
+				<onup>61</onup>
+				<ondown>61</ondown>
+				
+			<control type="radiobutton" id="7200">
+				<width>275</width>
+				<height>142</height>
+				<align>center</align>
+				<aligny>top</aligny>
+				<texturefocus border="21" colordiffuse="button_focus">dialogs/button-fo.png</texturefocus>
+				<texturenofocus border="21">dialogs/button-nofo.png</texturenofocus>
+				<textoffsetx>35</textoffsetx>
+				<textoffsety>78</textoffsety>
+				<radioposx>108</radioposx>
+				<radioposy>26</radioposy>
+				<radiowidth>48</radiowidth>
+				<radioheight>48</radioheight>
+				<font>font12</font>
+				<textureradioonfocus colordiffuse="D0FFFFFF">icons/launch.png</textureradioonfocus>
+				<textureradioonnofocus colordiffuse="D0FFFFFF">icons/launch.png</textureradioonnofocus>
+				<textureradioofffocus colordiffuse="D0FFFFFF">icons/launch.png</textureradioofffocus>
+				<textureradiooffnofocus colordiffuse="D0FFFFFF">icons/launch.png</textureradiooffnofocus>
+				<textureradiooffdisabled colordiffuse="40FFFFFF">icons/launch.png</textureradiooffdisabled>
+				<textureradioondisabled colordiffuse="40FFFFFF">icons/launch.png</textureradioondisabled>
+				<label>$ADDON[script.mtvguide 68002]</label>
+				<textcolor>FFF0F0F0</textcolor>
+				<focusedcolor>FFF0F0F0</focusedcolor>
+				<disabledcolor>40FFFFFF</disabledcolor>
+				<onclick>Action(close)</onclick>
+				<animation effect="fade" start="100" end="0" time="300" delay="300">Hidden</animation>
+			</control>
+			
+			<control type="radiobutton" id="7201">
+				<width>275</width>
+				<height>142</height>
+				<align>center</align>
+				<aligny>top</aligny>
+				<texturefocus border="21" colordiffuse="button_focus">dialogs/button-fo.png</texturefocus>
+				<texturenofocus border="21">dialogs/button-nofo.png</texturenofocus>
+				<textoffsetx>35</textoffsetx>
+				<textoffsety>78</textoffsety>
+				<radioposx>108</radioposx>
+				<radioposy>26</radioposy>
+				<radiowidth>48</radiowidth>
+				<radioheight>48</radioheight>
+				<font>font12</font>
+				<textureradioonfocus colordiffuse="D0FFFFFF">icons/cinema.png</textureradioonfocus>
+				<textureradioonnofocus colordiffuse="D0FFFFFF">icons/cinema.png</textureradioonnofocus>
+				<textureradioofffocus colordiffuse="D0FFFFFF">icons/cinema.png</textureradioofffocus>
+				<textureradiooffnofocus colordiffuse="D0FFFFFF">icons/cinema.png</textureradiooffnofocus>
+				<textureradiooffdisabled colordiffuse="40FFFFFF">icons/cinema.png</textureradiooffdisabled>
+				<textureradioondisabled colordiffuse="40FFFFFF">icons/cinema.png</textureradioondisabled>
+				<label>$ADDON[script.mtvguide 68003]</label>
+				<textcolor>FFF0F0F0</textcolor>
+				<focusedcolor>FFF0F0F0</focusedcolor>
+				<disabledcolor>40FFFFFF</disabledcolor>
+				<onclick>Action(close)</onclick>
+				<animation effect="fade" start="100" end="0" time="300" delay="300">Hidden</animation>
+				<visible>!Player.HasVideo</visible>
+			</control>
+			
+			<control type="radiobutton" id="8201">
+				<width>275</width>
+				<height>142</height>
+				<align>center</align>
+				<aligny>top</aligny>
+				<texturefocus border="21" colordiffuse="button_focus">dialogs/button-fo.png</texturefocus>
+				<texturenofocus border="21">dialogs/button-nofo.png</texturenofocus>
+				<textoffsetx>35</textoffsetx>
+				<textoffsety>78</textoffsety>
+				<radioposx>108</radioposx>
+				<radioposy>26</radioposy>
+				<radiowidth>48</radiowidth>
+				<radioheight>48</radioheight>
+				<font>font12</font>
+				<textureradioonfocus colordiffuse="40FFFFFF">icons/cinema.png</textureradioonfocus>
+				<textureradioonnofocus colordiffuse="40FFFFFF">icons/cinema.png</textureradioonnofocus>
+				<textureradioofffocus colordiffuse="40FFFFFF">icons/cinema.png</textureradioofffocus>
+				<textureradiooffnofocus colordiffuse="40FFFFFF">icons/cinema.png</textureradiooffnofocus>
+				<textureradiooffdisabled colordiffuse="40FFFFFF">icons/cinema.png</textureradiooffdisabled>
+				<textureradioondisabled colordiffuse="40FFFFFF">icons/cinema.png</textureradioondisabled>
+				<label>$ADDON[script.mtvguide 68003]</label>
+				<textcolor>40FFFFFF</textcolor>
+				<focusedcolor>40FFFFFF</focusedcolor>
+				<disabledcolor>40FFFFFF</disabledcolor>
+				<animation effect="fade" start="100" end="0" time="300" delay="300">Hidden</animation>
+				<visible>Player.HasVideo</visible>
+			</control>
+			
+			<control type="radiobutton" id="7202">
+				<width>275</width>
+				<height>142</height>
+				<align>center</align>
+				<aligny>top</aligny>
+				<texturefocus border="21" colordiffuse="button_focus">dialogs/button-fo.png</texturefocus>
+				<texturenofocus border="21">dialogs/button-nofo.png</texturenofocus>
+				<textoffsetx>35</textoffsetx>
+				<textoffsety>78</textoffsety>
+				<radioposx>108</radioposx>
+				<radioposy>26</radioposy>
+				<radiowidth>48</radiowidth>
+				<radioheight>48</radioheight>
+				<font>font12</font>
+				<textureradioonfocus colordiffuse="D0FFFFFF">icons/record.png</textureradioonfocus>
+				<textureradioonnofocus colordiffuse="D0FFFFFF">icons/record.png</textureradioonnofocus>
+				<textureradioofffocus colordiffuse="D0FFFFFF">icons/record.png</textureradioofffocus>
+				<textureradiooffnofocus colordiffuse="D0FFFFFF">icons/record.png</textureradiooffnofocus>
+				<textureradiooffdisabled colordiffuse="40FFFFFF">icons/record.png</textureradiooffdisabled>
+				<textureradioondisabled colordiffuse="40FFFFFF">icons/record.png</textureradioondisabled>
+				<label>$ADDON[script.mtvguide 69039]</label>
+				<textcolor>FFF0F0F0</textcolor>
+				<focusedcolor>FFF0F0F0</focusedcolor>
+				<disabledcolor>40FFFFFF</disabledcolor>
+				<onclick>Action(close)</onclick>
+				<animation effect="fade" start="100" end="0" time="300" delay="300">Hidden</animation>
+			</control>
+			
+			<control type="radiobutton" id="7203">
+				<width>275</width>
+				<height>142</height>
+				<align>center</align>
+				<aligny>top</aligny>
+				<texturefocus border="21" colordiffuse="button_focus">dialogs/button-fo.png</texturefocus>
+				<texturenofocus border="21">dialogs/button-nofo.png</texturenofocus>
+				<textoffsetx>35</textoffsetx>
+				<textoffsety>78</textoffsety>
+				<radioposx>108</radioposx>
+				<radioposy>26</radioposy>
+				<radiowidth>48</radiowidth>
+				<radioheight>48</radioheight>
+				<font>font12</font>
+				<textureradioonfocus colordiffuse="D0FFFFFF">icons/timer.png</textureradioonfocus>
+				<textureradioonnofocus colordiffuse="D0FFFFFF">icons/timer.png</textureradioonnofocus>
+				<textureradioofffocus colordiffuse="D0FFFFFF">icons/timer.png</textureradioofffocus>
+				<textureradiooffnofocus colordiffuse="D0FFFFFF">icons/timer.png</textureradiooffnofocus>
+				<textureradiooffdisabled colordiffuse="40FFFFFF">icons/timer.png</textureradiooffdisabled>
+				<textureradioondisabled colordiffuse="40FFFFFF">icons/timer.png</textureradioondisabled>
+				<label>$ADDON[script.mtvguide 30301]</label>
+				<textcolor>FFF0F0F0</textcolor>
+				<focusedcolor>FFF0F0F0</focusedcolor>
+				<disabledcolor>40FFFFFF</disabledcolor>
+				<onclick>Action(close)</onclick>
+				<animation effect="fade" start="100" end="0" time="300" delay="300">Hidden</animation>
+			</control>
+			
+			<control type="radiobutton" id="7204">
+				<width>275</width>
+				<height>142</height>
+				<align>center</align>
+				<aligny>top</aligny>
+				<texturefocus border="21" colordiffuse="button_focus">dialogs/button-fo.png</texturefocus>
+				<texturenofocus border="21">dialogs/button-nofo.png</texturenofocus>
+				<textoffsetx>35</textoffsetx>
+				<textoffsety>78</textoffsety>
+				<radioposx>108</radioposx>
+				<radioposy>26</radioposy>
+				<radiowidth>48</radiowidth>
+				<radioheight>48</radioheight>
+				<font>font12</font>
+				<textureradioonfocus colordiffuse="D0FFFFFF">icons/similar.png</textureradioonfocus>
+				<textureradioonnofocus colordiffuse="D0FFFFFF">icons/similar.png</textureradioonnofocus>
+				<textureradioofffocus colordiffuse="D0FFFFFF">icons/similar.png</textureradioofffocus>
+				<textureradiooffnofocus colordiffuse="D0FFFFFF">icons/similar.png</textureradiooffnofocus>
+				<textureradiooffdisabled colordiffuse="40FFFFFF">icons/similar.png</textureradiooffdisabled>
+				<textureradioondisabled colordiffuse="40FFFFFF">icons/similar.png</textureradioondisabled>
+				<label>$ADDON[script.mtvguide 30359]</label>
+				<textcolor>FFF0F0F0</textcolor>
+				<focusedcolor>FFF0F0F0</focusedcolor>
+				<disabledcolor>40FFFFFF</disabledcolor>
+				<onclick>Action(close)</onclick>
+				<animation effect="fade" start="100" end="0" time="300" delay="300">Hidden</animation>
+				<visible>Control.IsEnabled(7204)</visible>
+			</control>
+			
+			<control type="radiobutton" id="440">
+				<width>275</width>
+				<height>142</height>
+				<align>center</align>
+				<aligny>top</aligny>
+				<texturefocus border="21" colordiffuse="button_focus">dialogs/button-fo.png</texturefocus>
+				<texturenofocus border="21">dialogs/button-nofo.png</texturenofocus>
+				<textoffsetx>35</textoffsetx>
+				<textoffsety>78</textoffsety>
+				<radioposx>108</radioposx>
+				<radioposy>26</radioposy>
+				<radiowidth>48</radiowidth>
+				<radioheight>48</radioheight>
+				<font>font12</font>
+				<textureradioonfocus colordiffuse="D0FFFFFF">icons/youtube.png</textureradioonfocus>
+				<textureradioonnofocus colordiffuse="D0FFFFFF">icons/youtube.png</textureradioonnofocus>
+				<textureradioofffocus colordiffuse="D0FFFFFF">icons/youtube.png</textureradioofffocus>
+				<textureradiooffnofocus colordiffuse="D0FFFFFF">icons/youtube.png</textureradiooffnofocus>
+				<textureradiooffdisabled colordiffuse="40FFFFFF">icons/youtube.png</textureradiooffdisabled>
+				<textureradioondisabled colordiffuse="40FFFFFF">icons/youtube.png</textureradioondisabled>
+				<label>$ADDON[script.mtvguide 68004]</label>
+				<textcolor>FFF0F0F0</textcolor>
+				<focusedcolor>FFF0F0F0</focusedcolor>
+				<disabledcolor>40FFFFFF</disabledcolor>
+				<onclick>Action(close)</onclick>
+				<onclick>RunScript(script.extendedinfo,info=youtubebrowser,id=$INFO[Control.getLabel(4920)])</onclick>
+				<animation effect="fade" start="100" end="0" time="300" delay="300">Hidden</animation>
+				<visible>System.hasAddon(script.extendedinfo)</visible>
+			</control>
+		</control>
+	</control>
+				
+				<control type="image" id="4924">
+					<description>Channel logo</description>
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>0</width>
+					<height>0</height>
+					<visible>hidden</visible>
+				</control>
+				<control type="image" id="4944">
+					<description>Live</description>
+					<posx>1666</posx>
+					<posy>759</posy>
+					<width>120</width>
+					<height>37</height>
+					<animation type="WindowOpen">
+						<effect type="fade" end="100" time="200" />
+						<effect type="fade" start="0" end="100" time="300" tween="sine" easing="out" />
+						<effect type="slide" start="320" end="0" time="400" tween="cubic" easing="out" />
+					</animation>
+					<animation type="WindowClose">
+						<effect type="fade" start="100" end="0" time="200" />
+						<effect type="fade" start="100" end="0" time="300" tween="sine" easing="out" />
+						<effect type="slide" start="0" end="320" time="300" tween="cubic" easing="out" />
+					</animation>
+				</control>
+				
+				<control type="progress" id="4998">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>0</width>
+					<height>0</height>
+					<visible>hidden</visible>
+				</control>
+				
+				<control type="progress" id="4999">
+					<posx>0</posx>
+					<posy>0</posy>
+					<width>0</width>
+					<height>0</height>
+					<visible>hidden</visible>
+				</control>
+				
+				<control type="group">
+				<posx>1724</posx>
+				<posy>1020</posy>
+				<animation effect="fade" end="100" delay="300" time="300">WindowOpen</animation>
+				<animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
+				<visible>hidden</visible>
+				
+				<control type="image">
+					<width>176</width>
+					<height>50</height>
+					<top>0</top>
+					<texture>dialogs/mk_time.png</texture>
+				</control>
+				
+				<control type="label" id="4232">
+					<width>119</width>
+					<top>-1</top>
+					<height>50</height>
+					<posx>54</posx>
+					<align>center</align>
+					<aligny>center</aligny>
+					<font>font_flag</font>
+					<textcolor>FFF0F0F0</textcolor>
+				</control>
+			</control>
+		</control>
+	</controls>
+</window>

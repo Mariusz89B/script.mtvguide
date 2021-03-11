@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map id="vod" version="1.0" strm="">
+	<channel id="VOD Cyfrowy Polsat" 						title="(?=(VOD)?Cyfrowy\s*Polsat(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="VOD Pay per view" 							title="(?=(PPV|Pay\s*per\s*view)(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="VOD 200" 									title="(?=(Polsat\s*)?(VOD\s*200|Film)(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="VOD 201" 									title="(?=(Polsat\s*)?(VOD\s*201|Film\s*1)(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="VOD 202" 									title="(?=(Polsat\s*)?(VOD\s*202|Film\s*3)(\s*a04y)?(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="VOD 203" 									title="(?=(Polsat\s*)?(VOD\s*203|Film\s*3)(\s*a04z)?(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="VOD 204" 									title="(?=(Polsat\s*)?(VOD\s*204|Film\s*4)(\s*a050)?(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="VOD 205" 									title="(?=(Polsat\s*)?(VOD\s*205|Film\s*5)(\s*a051)?(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="VOD 206" 									title="(?=(Polsat\s*)?(VOD\s*206|Film\s*6)(\s*a052)?(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="VOD 207" 									title="(?=(Polsat\s*)?(VOD\s*207|Film\s*7)(\s*a053)?(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="VOD 208" 									title="(?=(Polsat\s*)?(VOD\s*208|Film\s*8)(\s*a054)?(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="VOD 209" 									title="(?=(Polsat\s*)?(VOD\s*209|Film\s*9)(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="VOD 210" 									title="(?=(Polsat\s*)?(VOD\s*210|Film\s*10)(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="VOD 211" 									title="(?=(Polsat\s*)?(VOD\s*211|Film\s*11)(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="VOD 212" 									title="(?=(Polsat\s*)?(VOD\s*212|Film\s*12)(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="KSW TV" 									title="(?=(.*KSW.*|.*MMA.*)(\s*PL)?$)" strm=""/>
+	<channel id="Big Brother 1" 							title="(?=(TEST(\:)?\s*)?BIG\s*BROTHER(\s*1)?(\s*TV)?(\s*PPV)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="Big Brother 2" 							title="(?=(TEST(\:)?\s*)?BIG\s*BROTHER\s*2(\s*TV)?(\s*PPV)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="Big Brother 3" 							title="(?=(TEST(\:)?\s*)?BIG\s*BROTHER\s*3(\s*TV)?(\s*PPV)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	
+	
+	<category name="Movie" 									tags="Film"/>
+	<category name="Series" 								tags="Serial"/>
+	<category name="Information" 							tags="Informacje"/>
+	<category name="Entertainment" 							tags="Video on demand|Pay per view"/>
+	<category name="Document" 								tags="Dokument"/>
+	<category name="Kids" 									tags="Dla dzieci"/>
+	<category name="Sport" 									tags="Sport"/>
+	<category name="Interactive Entertainment" 				tags="Interaktywne"/>
+</map>

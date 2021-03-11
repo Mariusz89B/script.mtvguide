@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map id="base_extra" version="1.0" strm="">
+	<!--<channel id="BASE"                                  title="(?=BASE$)" strm=""/>-->
+		
+	<category name="Movie" 									tags=""/>
+	<category name="Series" 								tags=""/>
+	<category name="Information" 							tags=""/>
+	<category name="Entertainment" 							tags=""/>
+	<category name="Document" 								tags=""/>
+	<category name="Kids" 									tags=""/>
+	<category name="Sport" 									tags=""/>
+	<category name="Interactive Entertainment" 				tags=""/>
+</map>

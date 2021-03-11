@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map id="base radio" version="1.0" strm="">	
+	<channel id="Antyradio"									title="(?=Anty\s*(Radio)?$)" strm=""/>
+	<channel id="Chilli Zet"								title="(?=Chilli\s*Zet(\s*Radio)?$)" strm=""/>
+	<channel id="MUZO FM"									title="(?=MUZO(\.|\s*)FM(\s*Radio)?$)" strm=""/>
+	<channel id="Meloradio"									title="(?=Melo\s*radio(\s*Radio)?$)" strm=""/>
+	<channel id="Nc Radio Plus"								title="(?=(Radio\s*)?Nc\s*(Plus|\+)(\s*Radio)?$)" strm=""/>
+	<channel id="Polskie Radio 1"							title="(?=Polskie\s*Radio(\s*1)?(\s*\-\s*)?(\s*1|\s*Jedynka)?(\s*Radio)?$)" strm=""/>
+	<channel id="Polskie Radio 2"							title="(?=Polskie\s*Radio(\s*2)?(\s*\-)?(\s*2|\s*Dw.?jka|\s*Dwojka)?(\s*Radio)?$)" strm=""/>
+	<channel id="Polskie Radio 24"							title="(?=Polskie\s*Radio\s*24(\s*Radio)?$)" strm=""/>
+	<channel id="Polskie Radio 3"							title="(?=Polskie\s*Radio(\s*3)?(\s*\-)?(\s*3|\s*Tr.?jka|\s*Trojka)?(\s*Radio)?$)" strm=""/>
+	<channel id="Polskie Radio 4"							title="(?=Polskie\s*Radio(\s*4)?(\s*\-)?(\s*4|\s*Czw.?rka|\s*Czworka)?(\s*Radio)?$)" strm=""/>
+	<channel id="RMF Classic"								title="(?=RMF(\s*FM)?\s*Classic(\s*Radio)?$)" strm=""/>
+	<channel id="RMF FM"									title="(?=RMF\s*FM(\s*Radio)?$)" strm=""/>
+	<channel id="RMF Hip Hop"								title="(?=RMF(\s*FM)?\s*Hip\s*Hop(\s*Radio)?$)" strm=""/>
+	<channel id="RMF Maxxx"									title="(?=RMF(\s*FM)?\s*Maxxx(\s*Radio)?$)" strm=""/>
+	<channel id="Radio FaMa"								title="(?=(Radio\s*Fama\s*100.?8|\s*8)(\s*Radio)?$)" strm=""/>
+	<channel id="Radio Jasna Gora"							title="(?=(Radio\s*)?Jasna(\s*G.?ra|\s*Gora)(\s*Radio)?$)" strm=""/>
+	<channel id="Radio WAWA"								title="(?=(Radio\s*)?WAWA(\s*Radio)?$)" strm=""/>
+	<channel id="Radio ZET Hits"							title="(?=(Radio\s*)?ZET\s*Hits(\s*Radio)?$)" strm=""/>
+	<channel id="Radio ZET Hot"								title="(?=(Radio\s*)?ZET\s*Hot(\s*Radio)?$)" strm=""/>
+	<channel id="Radio ZET Polskie"							title="(?=(Radio\s*)?ZET\s*Polskie(\s*Radio)?$)" strm=""/>
+	<channel id="Radio ZET"									title="(?=(Radio\s*)?ZET(\s*Radio)?$)" strm=""/>
+	<channel id="TOK FM"									title="(?=TOK\s*FM(\s*Radio)?$)" strm=""/>
+	<channel id="VOX FM"									title="(?=VOX\s*FM(\s*Radio)?$)" strm=""/>
+
+	<category name="Movie" 									tags="Czarna|Dramat|Film|Filmy|Horror|Impresja|Kino|Komedia|Komediodramat|Komediowy|Melodramat|Musical|Romans|Thriller|Western"/>
+	<category name="Series" 								tags="Programy|Seria|Serial|Seriale|Telenowela"/>
+	<category name="Information" 							tags="Cykl|Debata|Dziennik|Felieton|Informacja|Informator|Kronika|Kurs|Magazyn|Pasmo|Podsumowanie|Poranek|Reportaż|Rozmowy|Rozmowa|Serwis|Studio|Telewizyjny|Transmisja|Wiadomości|Wydanie|Wywiad"/>
+	<category name="Entertainment" 							tags="Audycja|Balet|Blok|Blok muzyczny|Ceremonia|Chochliki|Classical|Concert|Codzienny|Dance|Kabaret|Koncert|Koncerty|Lista|Lifestyle|Opera|Pokaz|Program|Program / Muzyczny|Radio|Reality|Relacja|Rozrywka|Talk-show|Taniec|Teledyski|Teleturniej|Widowisko|World Music"/>
+	<category name="Document" 								tags="Dokument|Etiuda|Historia|Kultura|Militaria|Motoryzacja|Program dokumentalny|Socjologia|Sztuka|Technika"/>
+	<category name="Kids" 									tags="Baśń|Dla dzieci|Program dla dzieci"/>
+	<category name="Sport" 									tags="Badminton|Biatlon|Bilard|Boks|Formuła|Gimnastyka|Golf|Hokej|Kajakarstwo|Kolarstwo|Koszykówka|Lekkoatletyka|Olimpiada|Piłka|Pływanie|Poker|Rajdy|Rugby|Rzutki|Siatkówka|Skoki|Sport|Sporty|Szermierka|Tenis|Tenis squash|Triatlon|Wyścigi|Żeglarstwo|Żużel"/>
+	<category name="Interactive Entertainment" 				tags="Interaktywne|Interaktywny|Interaktywny Program Rozrywkowy|Kulinaria|Magazy|Magazyn Mody|Opera|Program Familijny|Spektakl|Telezakupy|Turystyka|Usa"/>
+</map>

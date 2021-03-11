@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map id="base benelux" version="1.0" strm="">
+	<channel id="24Kitchen BE" 								title="(?=24\s*Kitchen(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="3voor12 BE" 								title="(?=3\s*voor\s*12(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="AB Moteurs BE" 							title="(?=AB\s*Moteurs(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="AB3 BE" 									title="(?=AB\s*3(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="ACTION BE" 								title="(?=ACTION(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="AMC BE" 									title="(?=AMC(\s*HD|\s*UHD)?\s*(BE|NL|FR|UK|US|)$)" strm=""/>
+	<channel id="Al Jazeera BE" 							title="(?=Al\s*Jazeera(\s*English)?(\s*International|Int)?(\s*HD|\s*UHD)?\s*(BE|NL|FR|UK|US|ARB|)$)" strm=""/>
+	<channel id="Animal Planet BE" 							title="(?=Animal\s*Planet(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Animaux BE" 								title="(?=Animaux(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Arte Belgique BE" 							title="(?=Arte(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="BBC Entertainment BE" 						title="(?=BBC\s*Entertainment(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="BBC First BE" 								title="(?=BBC\s*First(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="BBC World News BE" 						title="(?=BBC\s*World(\s*News)?(\s*HD|\s*UHD)?\s*(BE|NL|FR|UK|US|)$)" strm=""/>
+	<channel id="BRUZZ BE" 									title="(?=Bruzz(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="BX1 BE" 									title="(?=BX\s*1(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Baby TV Francais BE" 						title="(?=BABY(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Baby TV Nederlandse BE" 					title="(?=BABY(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Be Cine BE" 								title="(?=Be\s*Cin.?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Be Series BE" 								title="(?=Be\s*S.?ries(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Bel RTL BE" 								title="(?=Bel\s*RTL(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Boomerang Francais BE" 					title="(?=Boomerang(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Boomerang Nederlandse BE" 					title="(?=Boomerang(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="CAZ BE" 									title="(?=CAZ(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="CNN BE" 									title="(?=CNN(\s*HD|\s*UHD)?\s*((BE|NL)|FR|UK|US|)$)" strm=""/>
+	<channel id="Canal J BE" 								title="(?=Canal\s*J(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Canal Z BE" 								title="(?=Canal\s*Z(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Canvas BE" 								title="(?=Canvas(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Cartoon Network BE" 						title="(?=Cartoon\s*Network(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Cine+ Classic BE" 							title="(?=Cin.?\s*(\+|PLUS)?\s*Classic(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Cine+ Frisson BE" 							title="(?=Cin.?\s*(\+|PLUS)?\s*Frisson(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Cine+ Premier BE" 							title="(?=Cin.?\s*(\+|PLUS)?\s*Premier(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Club RTL BE" 								title="(?=Club\s*RTL(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Comedy Central BE" 						title="(?=Comedy\s*Central(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="DOBBIT TV BE" 								title="(?=Dobbit(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Discovery Channel Francais BE" 			title="(?=Discovery(\s*Channel)?(\s*Francais)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Discovery Channel Nederlandse BE" 			title="(?=Discovery(\s*Channel)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Discovery Science BE" 						title="(?=Discovery\s*Science(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Discovery World BE" 						title="(?=Discovery\s*World(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Disney Channel Francais BE" 				title="(?=Disney(\s*Channel)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Disney Channel Nederlandse BE" 			title="(?=Disney(\s*Channel)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Disney Cinema BE" 							title="(?=Disney\s*Cinema(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Disney Junior BE" 							title="(?=Disney\s*Junior(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Disney XD Francais BE" 					title="(?=Disney\s*XD(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Disney XD Nederlandse BE" 					title="(?=(Veronica\s*)?(\/\s*)?Disney\s*XD(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="E! Entertainment Francais BE" 				title="(?=E(!)?(\s*Entertainment)?(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="E! Entertainment Nederlandse BE" 			title="(?=E(!)?(\s*Entertainment)?(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Eleven Francais BE" 						title="(?=(Eleven|11)(\s*HD|\s*UHD)?\s*FR$)" strm=""/>
+	<channel id="Eleven Nederlandse BE" 					title="(?=(Eleven|11)(\s*HD|\s*UHD)?\s*NL$)" strm=""/>
+	<channel id="Eleven Sports Francais BE" 				title="(?=(Eleven|11)\s*Sport(s)?(\s*1)?(\s*HD|\s*UHD)?\s*FR$)" strm=""/>
+	<channel id="Eleven Sports Nederlandse BE" 				title="(?=(Eleven|11)\s*Sport(s)?(\s*1)?(\s*HD|\s*UHD)?\s*NL$)" strm=""/>
+	<channel id="Eleven Sports 3 Francais BE" 				title="(?=(Eleven|11)\s*Sport(s)?\s*3(\s*HD|\s*UHD)?\s*FR$)" strm=""/>
+	<channel id="Eleven Sports 3 Nederlandse BE" 			title="(?=(Eleven|11)\s*Sport(s)?\s*3(\s*HD|\s*UHD)?\s*NL$)" strm=""/>
+	<channel id="Euronews BE" 								title="(?=Euronews(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Eurosport 1 Francais BE" 					title="(?=Euro\s*sport(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Eurosport 1 Nederlandse BE" 				title="(?=Euro\s*sport(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Eurosport 2 Francais BE" 					title="(?=Euro\s*sport\s*2(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Eurosport 2 Nederlandse BE" 				title="(?=Euro\s*sport\s*2(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Evenaar BE" 								title="(?=Evenaar(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Extreme Sports BE" 						title="(?=Extreme\s*Sports(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Een BE" 									title="(?=.?.?n(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="FOX BE" 									title="(?=FOX(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Fashion TV BE" 							title="(?=Fashion|FTV(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Film 1 Action BE" 							title="(?=Film\s*1\s*Action(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Film 1 Drama BE" 							title="(?=Film\s*1\s*Drama(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Film 1 Family BE" 							title="(?=Film\s*1\s*Family(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Film 1 Premiere BE" 						title="(?=Film\s*1\s*Premiere(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Film 1 Sundance BE" 						title="(?=Film\s*1\s*Sundance(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Food Network BE" 							title="(?=Food\s*Network(\s*HD|\s*UHD)?\s*(BE|NL|UK|)$)" strm=""/>
+	<channel id="Fox Sports 2 BE" 							title="(?=Fox\s*Sport(s)?\s*2(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Fox Sports 3 BE" 							title="(?=Fox\s*Sport(s)?\s*3(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Fox Sports 4 BE" 							title="(?=Fox\s*Sport(s)?\s*4(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Fox Sports Eredivisie BE" 					title="(?=Fox\s*Sport(s)?(\s*1)?(\s*Eredivisie)?(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="France 2 BE" 								title="(?=France\s*2(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="France 24 BE" 								title="(?=France\s*24(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="France 3 BE" 								title="(?=France\s*3(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="France 4 BE" 								title="(?=France\s*4(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="France 5 BE" 								title="(?=France\s*5(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Goed TV BE" 								title="(?=Goed(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Histoire BE" 								title="(?=HISTOIRE(\s*TV)?(\s*HD|\s*UHD)?\s*FR$)" strm=""/>
+	<channel id="History Channel BE" 						title="(?=(H|History)(\s*TV)?\s*HD\s*(BE|NL)$)" strm=""/>
+	<channel id="ID BE" 									title="(?=(Investigation|ID)(\s*Discovery)?(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="KADET BE" 									title="(?=KADET(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Kanaal Z BE" 								title="(?=Kanaal\s*Z(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Ketnet BE" 								title="(?=Ketnet(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="LCI BE" 									title="(?=La\s*Cha.?ne(\s*Info|Information)?(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="La Deux BE" 								title="(?=(A)?(\s*La)(\s*Carte)?(\s*Deux|2)(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="La Trois BE" 								title="(?=(A)?(\s*La)(\s*Carte)?(\s*Trois|3)(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="La Une BE" 								title="(?=(A)?(\s*La)(\s*Carte)?\s*Une|1(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="M6 Boutique BE" 							title="(?=M\s*6\s*Boutique(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="MENT TV BE" 								title="(?=MENT(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="MTV Francais BE" 							title="(?=MTV(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="MTV Live BE" 								title="(?=MTV\s*Live(\s*HD|\s*UHD)?\s*(NL|UK|)$)" strm=""/>
+	<channel id="MTV Nederlandse BE"						title="(?=MTV(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Mangas BE" 								title="(?=Mangas(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Melody BE" 								title="(?=M.?lody(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Mezzo TV BE" 								title="(?=Mezzo(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Motorvision BE" 							title="(?=Motorvision(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="NET 5 BE" 									title="(?=NET\s*5(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="NPO 1 BE" 									title="(?=NPO(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="NPO 1 Extra BE" 							title="(?=NPO(\s*1)?\s*Extra(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="NPO 2 BE" 									title="(?=NPO\s*2(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="NPO 2 Extra BE" 							title="(?=NPO\s*2\s*Extra(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="NPO 3 BE" 									title="(?=NPO\s*3(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="NPO 3 Extra BE" 							title="(?=NPO\s*3\s*Extra(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Nat Geo Wild BE" 							title="(?=(Nat|National)(\s*Geo|Geographic)\s*Wild\s*HD\s*(BE|NL)$)" strm=""/>
+	<channel id="National Geographic HD Francais BE" 		title="(?=National\s*Geographic(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="National Geographic HD Nederlandse BE" 	title="(?=National\s*Geographic(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Nick Jr. Francais BE" 						title="(?=(Nickelodeon|Nick)\s*(Jr|Jr.|Junior)(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Nick Jr. Nederlandse BE" 					title="(?=(Nickelodeon|Nick)\s*(Jr|Jr.|Junior)(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Nick Toons TV BE" 							title="(?=(Nicktoons|Nick\s*Toons)(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Nickelodeon BE" 							title="(?=(Nick|Nickelodeon)(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Nickelodeon Spike BE" 						title="(?=(Nick|Nickelodeon)(\s*\/)?\s*Spike(\s*Channel)?(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Njam! BE" 									title="(?=Njam(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Omroep Brabant BE" 						title="(?=(Omrop|Omroep)\s*Brabant(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Omroep Flevoland BE" 						title="(?=(Omrop|Omroep)\s*Flevoland(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Omroep Fryslan BE" 						title="(?=(Omrop|Omroep)\s*Frysl.?n(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Omroep Gelderland BE" 						title="(?=(Omrop|Omroep)\s*Gelderland(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Omroep Zeeland BE" 						title="(?=(Omrop|Omroep)\s*Zeeland(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Oranje TV BE" 								title="(?=(TV\s*)?Oranje(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="PlattelandsTv BE" 							title="(?=Platte\s*lands(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Plug RTL BE" 								title="(?=Plug\s*RTL(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="PureVision BE" 							title="(?=Pure\s*Vision(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Q2 BE" 									title="(?=Q\s*2(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="RFM BE" 									title="(?=RFM(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="RTL 4 BE" 									title="(?=RTL\s*4(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="RTL 5 BE" 									title="(?=RTL\s*5(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="RTL 7 BE" 									title="(?=RTL\s*7(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="RTL 8 BE" 									title="(?=RTL\s*8(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="RTL TVI BE" 								title="(?=RTL\s*TVI(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="RTL Z BE" 									title="(?=RTL\s*Z(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="RTV Drenthe BE" 							title="(?=RTV\s*Drenthe(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="RTV Noord Holland BE" 						title="(?=RTV\s*Noord(\s*Holland)?(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="RTV Oost BE" 								title="(?=RTV\s*Oo(o)?st(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="RTV Rijnmond BE" 							title="(?=RTV\s*Rijnmond(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="RTV Utrecht BE" 							title="(?=RTV\s*Utrecht(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="RTV West BE" 								title="(?=RTV\s*West(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Radio Contact Vision BE" 					title="(?=(Radio|R)\s*Contact\s*Vision(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="SBS 6 BE" 									title="(?=SBS\s*6(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="SBS 9 BE" 									title="(?=SBS\s*9(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Science &amp; Vie TV BE" 					title="(?=(SCIENCE)(\s*ET)?(\s*VIE)(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Stingray Specials BE" 						title="(?=Stingray(\s*Specials)?(\s*iConcerts)?(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Studio 100 TV Francais BE" 				title="(?=Studio\s*100(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Studio 100 TV Nederlandse BE" 				title="(?=Studio\s*100(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Sundance TV BE" 							title="(?=Sundance(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL|US|)$)" strm=""/>
+	<channel id="TCM Cinema BE" 							title="(?=TCM(\s*Cin.?ma)?(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="TF1 HD BE" 								title="(?=TF\s*1(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="TLC BE" 									title="(?=TLC(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="TV Breizh BE" 								title="(?=(\s*TV)?Breizh(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="TV5 Monde BE" 								title="(?=(\s*TV)?5\s*Monde(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Tiji BE" 									title="(?=Tiji(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Trace Urban BE" 							title="(?=Trace\s*Urban(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Travel Channel BE" 						title="(?=Travel(\s*Channel)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Ushuaia TV BE" 							title="(?=Ushua.?a(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="VH1 BE" 									title="(?=VH1(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="VIER BE" 									title="(?=VIER|4(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="VIJF BE" 									title="(?=VIJF(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="VTM BE" 									title="(?=VTM(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Viceland Francais BE" 						title="(?=Viceland(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Viceland Nederlandse BE" 					title="(?=Viceland(\s*TV)?(\s*HD|\s*UHD)?\s*NL$)" strm=""/>
+	<channel id="Vitaya BE" 								title="(?=Vitaya(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Voyage BE" 								title="(?=Voyage(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="ZES BE" 									title="(?=ZES(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Ziggo Sport BE" 							title="(?=Ziggo\s*Sport(s)?(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Ziggo Sport Golf BE" 						title="(?=Ziggo\s*Sport(s)?\s*Golf(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Ziggo Sport Racing BE" 					title="(?=Ziggo\s*Sport(s)?\s*Racing(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Ziggo Sport Select BE" 					title="(?=Ziggo\s*Sport(s)?\s*Select(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="vlaamsparlement.tv BE" 					title="(?=vlaams\s*parlement(\.)?(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="vtmKzoom BE" 								title="(?=vtm\s*K(a)?\s*zoom(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	
+<!--<.nl>-->
+	
+	<channel id="24Kitchen.nl" 								title="(?=24\s*Kitchen(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="3voor12.nl" 								title="(?=3\s*voor\s*12(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="AB Moteurs.nl" 							title="(?=AB\s*Moteurs(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="AB3.nl" 									title="(?=AB\s*3(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="ACTION.nl" 								title="(?=ACTION(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="AMC.nl" 									title="(?=AMC(\s*HD|\s*UHD)?\s*(BE|NL|FR|UK|US|)$)" strm=""/>
+	<channel id="Al Jazeera.nl" 							title="(?=Al\s*Jazeera(\s*English)?(\s*International|Int)?(\s*HD|\s*UHD)?\s*(BE|NL|FR|UK|US|ARB|)$)" strm=""/>
+	<channel id="Animal Planet.nl" 							title="(?=Animal\s*Planet(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Animaux.nl" 								title="(?=Animaux(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Arte Belgique.nl" 							title="(?=Arte(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="BBC Entertainment.nl" 						title="(?=BBC\s*Entertainment(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="BBC First.nl" 								title="(?=BBC\s*First(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="BBC World News.nl" 						title="(?=BBC\s*World(\s*News)?(\s*HD|\s*UHD)?\s*(BE|NL|FR|UK|US|)$)" strm=""/>
+	<channel id="BRUZZ.nl" 									title="(?=Bruzz(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="BX1.nl" 									title="(?=BX\s*1(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Baby TV Francais.nl" 						title="(?=BABY(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Baby TV Nederlandse.nl" 					title="(?=BABY(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Be Cine.nl" 								title="(?=Be\s*Cin.?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Be Series.nl" 								title="(?=Be\s*S.?ries(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Bel RTL.nl" 								title="(?=Bel\s*RTL(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Boomerang Francais.nl" 					title="(?=Boomerang(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Boomerang Nederlandse.nl" 					title="(?=Boomerang(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="CAZ.nl" 									title="(?=CAZ(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="CNN.nl" 									title="(?=CNN(\s*HD|\s*UHD)?\s*((BE|NL)|FR|UK|US|)$)" strm=""/>
+	<channel id="Canal J.nl" 								title="(?=Canal\s*J(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Canal Z.nl" 								title="(?=Canal\s*Z(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Canvas.nl" 								title="(?=Canvas(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Cartoon Network.nl" 						title="(?=Cartoon\s*Network(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Cine+ Classic.nl" 							title="(?=Cin.?\s*(\+|PLUS)?\s*Classic(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Cine+ Frisson.nl" 							title="(?=Cin.?\s*(\+|PLUS)?\s*Frisson(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Cine+ Premier.nl" 							title="(?=Cin.?\s*(\+|PLUS)?\s*Premier(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Club RTL.nl" 								title="(?=Club\s*RTL(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Comedy Central.nl" 						title="(?=Comedy\s*Central(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="DOBBIT TV.nl" 								title="(?=Dobbit(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Discovery Channel Francais.nl" 			title="(?=Discovery(\s*Channel)?(\s*Francais)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Discovery Channel Nederlandse.nl" 			title="(?=Discovery(\s*Channel)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Discovery Science.nl" 						title="(?=Discovery\s*Science(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Discovery World.nl" 						title="(?=Discovery\s*World(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Disney Channel Francais.nl" 				title="(?=Disney(\s*Channel)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Disney Channel Nederlandse.nl" 			title="(?=Disney(\s*Channel)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Disney Cinema.nl" 							title="(?=Disney\s*Cinema(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Disney Junior.nl" 							title="(?=Disney\s*Junior(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Disney XD Francais.nl" 					title="(?=Disney\s*XD(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Disney XD Nederlandse.nl" 					title="(?=(Veronica\s*)?(\/\s*)?Disney\s*XD(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="E! Entertainment Francais.nl" 				title="(?=E(!)?(\s*Entertainment)?(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="E! Entertainment Nederlandse.nl" 			title="(?=E(!)?(\s*Entertainment)?(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Eleven Francais.nl" 						title="(?=(Eleven|11)(\s*HD|\s*UHD)?\s*FR$)" strm=""/>
+	<channel id="Eleven Nederlandse.nl" 					title="(?=(Eleven|11)(\s*HD|\s*UHD)?\s*NL$)" strm=""/>
+	<channel id="Eleven Sports Francais.nl" 				title="(?=(Eleven|11)\s*Sport(s)?(\s*1)?(\s*HD|\s*UHD)?\s*FR$)" strm=""/>
+	<channel id="Eleven Sports Nederlandse.nl" 				title="(?=(Eleven|11)\s*Sport(s)?(\s*1)?(\s*HD|\s*UHD)?\s*NL$)" strm=""/>
+	<channel id="Eleven Sports 3 Francais.nl" 				title="(?=(Eleven|11)\s*Sport(s)?\s*3(\s*HD|\s*UHD)?\s*FR$)" strm=""/>
+	<channel id="Eleven Sports 3 Nederlandse.nl" 			title="(?=(Eleven|11)\s*Sport(s)?\s*3(\s*HD|\s*UHD)?\s*NL$)" strm=""/>
+	<channel id="Euronews.nl" 								title="(?=Euronews(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Eurosport 1 Francais.nl" 					title="(?=Euro\s*sport(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Eurosport 1 Nederlandse.nl" 				title="(?=Euro\s*sport(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Eurosport 2 Francais.nl" 					title="(?=Euro\s*sport\s*2(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Eurosport 2 Nederlandse.nl" 				title="(?=Euro\s*sport\s*2(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Evenaar.nl" 								title="(?=Evenaar(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Extreme Sports.nl" 						title="(?=Extreme\s*Sports(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Een.nl" 									title="(?=.?.?n(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="FOX.nl" 									title="(?=FOX(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Fashion TV.nl" 							title="(?=Fashion|FTV(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Film 1 Action.nl" 							title="(?=Film\s*1\s*Action(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Film 1 Drama.nl" 							title="(?=Film\s*1\s*Drama(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Film 1 Family.nl" 							title="(?=Film\s*1\s*Family(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Film 1 Premiere.nl" 						title="(?=Film\s*1\s*Premiere(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Film 1 Sundance.nl" 						title="(?=Film\s*1\s*Sundance(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Food Network.nl" 							title="(?=Food\s*Network(\s*HD|\s*UHD)?\s*(BE|NL|UK|)$)" strm=""/>
+	<channel id="Fox Sports 2.nl" 							title="(?=Fox\s*Sport(s)?\s*2(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Fox Sports 3.nl" 							title="(?=Fox\s*Sport(s)?\s*3(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Fox Sports 4.nl" 							title="(?=Fox\s*Sport(s)?\s*4(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Fox Sports Eredivisie.nl" 					title="(?=Fox\s*Sport(s)?(\s*1)?(\s*Eredivisie)?(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="France 2.nl" 								title="(?=France\s*2(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="France 24.nl" 								title="(?=France\s*24(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="France 3.nl" 								title="(?=France\s*3(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="France 4.nl" 								title="(?=France\s*4(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="France 5.nl" 								title="(?=France\s*5(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Goed TV.nl" 								title="(?=Goed(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Histoire.nl" 								title="(?=HISTOIRE(\s*TV)?(\s*HD|\s*UHD)?\s*FR$)" strm=""/>
+	<channel id="History Channel.nl" 						title="(?=(H|History)(\s*TV)?\s*HD\s*(BE|NL)$)" strm=""/>
+	<channel id="ID.nl" 									title="(?=(Investigation|ID)(\s*Discovery)?(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="KADET.nl" 									title="(?=KADET(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Kanaal Z.nl" 								title="(?=Kanaal\s*Z(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Ketnet.nl" 								title="(?=Ketnet(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="LCI.nl" 									title="(?=La\s*Cha.?ne(\s*Info|Information)?(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="La Deux.nl" 								title="(?=(A)?(\s*La)(\s*Carte)?(\s*Deux|2)(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="La Trois.nl" 								title="(?=(A)?(\s*La)(\s*Carte)?(\s*Trois|3)(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="La Une.nl" 								title="(?=(A)?(\s*La)(\s*Carte)?\s*Une|1(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="M6 Boutique.nl" 							title="(?=M\s*6\s*Boutique(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="MENT TV.nl" 								title="(?=MENT(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="MTV Francais.nl" 							title="(?=MTV(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="MTV Live.nl" 								title="(?=MTV\s*Live(\s*HD|\s*UHD)?\s*(NL|UK|)$)" strm=""/>
+	<channel id="MTV Nederlandse.nl"						title="(?=MTV(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Mangas.nl" 								title="(?=Mangas(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Melody.nl" 								title="(?=M.?lody(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Mezzo TV.nl" 								title="(?=Mezzo(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Motorvision.nl" 							title="(?=Motorvision(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="NET 5.nl" 									title="(?=NET\s*5(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="NPO 1.nl" 									title="(?=NPO(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="NPO 1 Extra.nl" 							title="(?=NPO(\s*1)?\s*Extra(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="NPO 2.nl" 									title="(?=NPO\s*2(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="NPO 2 Extra.nl" 							title="(?=NPO\s*2\s*Extra(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="NPO 3.nl" 									title="(?=NPO\s*3(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="NPO 3 Extra.nl" 							title="(?=NPO\s*3\s*Extra(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Nat Geo Wild.nl" 							title="(?=(Nat|National)(\s*Geo|Geographic)\s*Wild\s*HD\s*(BE|NL)$)" strm=""/>
+	<channel id="National Geographic HD Francais.nl" 		title="(?=National\s*Geographic(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="National Geographic HD Nederlandse.nl" 	title="(?=National\s*Geographic(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Nick Jr. Francais.nl" 						title="(?=(Nickelodeon|Nick)\s*(Jr|Jr.|Junior)(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Nick Jr. Nederlandse.nl" 					title="(?=(Nickelodeon|Nick)\s*(Jr|Jr.|Junior)(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Nick Toons TV.nl" 							title="(?=(Nicktoons|Nick\s*Toons)(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Nickelodeon.nl" 							title="(?=(Nick|Nickelodeon)(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Nickelodeon Spike.nl" 						title="(?=(Nick|Nickelodeon)(\s*\/)?\s*Spike(\s*Channel)?(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Njam!.nl" 									title="(?=Njam(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Omroep Brabant.nl" 						title="(?=(Omrop|Omroep)\s*Brabant(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Omroep Flevoland.nl" 						title="(?=(Omrop|Omroep)\s*Flevoland(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Omroep Fryslan.nl" 						title="(?=(Omrop|Omroep)\s*Frysl.?n(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Omroep Gelderland.nl" 						title="(?=(Omrop|Omroep)\s*Gelderland(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Omroep Zeeland.nl" 						title="(?=(Omrop|Omroep)\s*Zeeland(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Oranje TV.nl" 								title="(?=(TV\s*)?Oranje(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="PlattelandsTv.nl" 							title="(?=Platte\s*lands(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Plug RTL.nl" 								title="(?=Plug\s*RTL(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="PureVision.nl" 							title="(?=Pure\s*Vision(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Q2.nl" 									title="(?=Q\s*2(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="RFM.nl" 									title="(?=RFM(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="RTL 4.nl" 									title="(?=RTL\s*4(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="RTL 5.nl" 									title="(?=RTL\s*5(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="RTL 7.nl" 									title="(?=RTL\s*7(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="RTL 8.nl" 									title="(?=RTL\s*8(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="RTL TVI.nl" 								title="(?=RTL\s*TVI(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="RTL Z.nl" 									title="(?=RTL\s*Z(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="RTV Drenthe.nl" 							title="(?=RTV\s*Drenthe(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="RTV Noord Holland.nl" 						title="(?=RTV\s*Noord(\s*Holland)?(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="RTV Oost.nl" 								title="(?=RTV\s*Oo(o)?st(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="RTV Rijnmond.nl" 							title="(?=RTV\s*Rijnmond(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="RTV Utrecht.nl" 							title="(?=RTV\s*Utrecht(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="RTV West.nl" 								title="(?=RTV\s*West(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Radio Contact Vision.nl" 					title="(?=(Radio|R)\s*Contact\s*Vision(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="SBS 6.nl" 									title="(?=SBS\s*6(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="SBS 9.nl" 									title="(?=SBS\s*9(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Science &amp; Vie TV.nl" 					title="(?=(SCIENCE)(\s*ET)?(\s*VIE)(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Stingray Specials.nl" 						title="(?=Stingray(\s*Specials)?(\s*iConcerts)?(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Studio 100 TV Francais.nl" 				title="(?=Studio\s*100(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Studio 100 TV Nederlandse.nl" 				title="(?=Studio\s*100(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Sundance TV.nl" 							title="(?=Sundance(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL|US|)$)" strm=""/>
+	<channel id="TCM Cinema.nl" 							title="(?=TCM(\s*Cin.?ma)?(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="TF1 HD.nl" 								title="(?=TF\s*1(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="TLC.nl" 									title="(?=TLC(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="TV Breizh.nl" 								title="(?=(\s*TV)?Breizh(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="TV5 Monde.nl" 								title="(?=(\s*TV)?5\s*Monde(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Tiji.nl" 									title="(?=Tiji(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Trace Urban.nl" 							title="(?=Trace\s*Urban(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Travel Channel.nl" 						title="(?=Travel(\s*Channel)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Ushuaia TV.nl" 							title="(?=Ushua.?a(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="VH1.nl" 									title="(?=VH1(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="VIER.nl" 									title="(?=VIER|4(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="VIJF.nl" 									title="(?=VIJF(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="VTM.nl" 									title="(?=VTM(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Viceland Francais.nl" 						title="(?=Viceland(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="Viceland Nederlandse.nl" 					title="(?=Viceland(\s*TV)?(\s*HD|\s*UHD)?\s*NL$)" strm=""/>
+	<channel id="Vitaya.nl" 								title="(?=Vitaya(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Voyage.nl" 								title="(?=Voyage(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>
+	<channel id="ZES.nl" 									title="(?=ZES(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Ziggo Sport.nl" 							title="(?=Ziggo\s*Sport(s)?(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Ziggo Sport Golf.nl" 						title="(?=Ziggo\s*Sport(s)?\s*Golf(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Ziggo Sport Racing.nl" 					title="(?=Ziggo\s*Sport(s)?\s*Racing(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="Ziggo Sport Select.nl" 					title="(?=Ziggo\s*Sport(s)?\s*Select(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="vlaamsparlement.tv.nl" 					title="(?=vlaams\s*parlement(\.)?(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	<channel id="vtmKzoom.nl" 								title="(?=vtm\s*K(a)?\s*zoom(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
+	
+	<category name="Movie" 									tags="Actie|Actiekomedie|Action|Aventure|Avontuur|Bioscoop|Cinema|Cinéma|Comedy|Comedie|Comédie|Detective|Drama|Drame|Familie|Fantastique|Fantasy|Horreur|Horror|Jeugd|Komedie|Kortfilm|Melodrame|Misdaad|Occidental|Oorlog|Romance|Romantiek|Romantische komedie|Science-fiction|Thriller|Tragikomedie|Westelijke"/>
+	<category name="Series" 								tags="Actieserie|Comedyserie|Detectiveserie|Documentaireserie|Dramaserie|Horrorserie|Jeugdserie|Komische dramaserie|Misdaadserie|Series|Serie|Soap"/>
+	<category name="Information" 							tags="Actualiteiten|Affaires|Binnenlandse|Conseils|Dagelijks|Dienstmededeling|Discussieprogramma|Economie|Informations|Informatief programma|Interêt|Interviewprogramma|It|Juridisch programma|Le|Media|Medias|Nieuwsbulletin|Nieuwsprogramma|Praatprogramma|Previsions|Prévisions|Rechtstreeks verslag|Reportage|Sportnieuws|Verslag|Weerbericht"/>
+	<category name="Entertainment" 							tags="Amusement|Blues|Concours|Danse|Dating|Datingprogramma|Divertissement|Electronisch|Jeugdprogramma|Klusprogramma|Lifestyleprogramma|Mode|Musical|Musique|Muziek|Muziekprogramma|Opera|Opéra|Pop-rock|Quiz|Reality|Realityprogramma|Realityserie|Registratie|Sketches|Showbizz|Spel|Spelprogramma|Spelshow|Stand-up comedy|Talkshow|Theâtre|Wedstrijd"/>
+	<category name="Document" 								tags="Adviesprogramma|Arts|Auto|Biografie|Biographie|Culture|Cultuur|Dieren|Documentaire|Filosofie|Geschiedenis|Geschiedenisprogramma|Guerre|Histoire|Historique|Historisch|Huizen|Human|Intérêt|Kunsten|Kunst en cultuur|Kunstprogramma|Literatuur|Lus|Menswetenschappen|Nature|Natuur|Natuurprogramma|Portret|Ramp|Reizen|Religie|Religion|Religieus programma|Reportageserie|Science|Sciences|Technologie|Wetenschappen"/>
+	<category name="Kids" 									tags="Animatie|Animatieserie|Cine-mini|Ciné-mini|Kinderprogramma"/>
+	<category name="Sport" 									tags="Alpinisme|Autorace|Basket-ball|Basketbal|Course|Cyclisme|Danse sur glace|Football|Formule|Ijsdansen|Krijgskunst|Motorsport|Mountainbike|Paardensport|Rally|Snooker|Sport|Sportif|Sports|Sportprogramma|Tafeltennis|Vechtsporten|Voetbal|Volleybal|Wedstrijdzeilen|Wegrennen|Wintersport|Yatching|Zeilsport"/>
+	<category name="Interactive Entertainment" 				tags="Algemeen|Algemene|Aliments|Bakwedstrijd|Boucle|Buitenlandse|Consumentenprogramma|Culinair programma|Cuisiner|Doe|Drinken|Eigentijds|Erotiek|Erotique|Eten|Experimentele|Geneeskunde|Gezondheid|Interruption|Jardinage|Koken|Kookprogramma|Kookwedstrijd|Licht|Local|Loisirs|Lokaal|Maisons|Medisch|Medisch programma|Middle-of-the-road|Non-fiction|Overige|Ouderschap|Pancarte|Parentage|Personnel|Persoonlijk|Piscine|Programma|Programma volgt|Proprietary|Renovations|Reisprogramma|Samenvatting|Schoonheid|Trials|Tuinierprogramma|Vissen|Voyage|Vrije|Webcam|Zenderonderbreking|Woonprogramma"/>
+</map>

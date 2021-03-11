@@ -1,0 +1,3133 @@
+# XBMC Media Center language file
+# Addon Name: m-TVGuide
+# Addon id: script.mtvguide
+# Addon Provider: mods-kodi
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: English (http://www.transifex.com/projects/p/xbmc-addons/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "This channel is missing epg data."
+msgstr ""
+
+msgctxt "#30001"
+msgid "[B]Loading...[/B]"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Calculating remaning time..."
+msgstr ""
+
+msgctxt "#30003"
+msgid "Approximately {} seconds left..."
+msgstr ""
+
+msgctxt "#30004"
+msgid "Loading of data already in progress..."
+msgstr ""
+
+msgctxt "#30005"
+msgid "Mouse control"
+msgstr ""
+
+msgctxt "#30006"
+msgid "Now"
+msgstr ""
+
+msgctxt "#30007"
+msgid "[B]Tip![/B] You can also use the scroll wheel"
+msgstr ""
+
+msgctxt "#30008"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "#30009"
+msgid "Enter captcha"
+msgstr ""
+
+msgctxt "#30100"
+msgid "General"
+msgstr ""
+
+msgctxt "#30101"
+msgid "EPG"
+msgstr ""
+
+msgctxt "#30102"
+msgid "Show channels from category"
+msgstr ""
+
+msgctxt "#30103"
+msgid "XMLTV file"
+msgstr ""
+
+msgctxt "#30104"
+msgid "Clear cache..."
+msgstr ""
+
+msgctxt "#30105"
+msgid "Done!"
+msgstr ""
+
+msgctxt "#30106"
+msgid "Show service notification"
+msgstr ""
+
+msgctxt "#30108"
+msgid "Clear all reminders..."
+msgstr ""
+
+msgctxt "#30109"
+msgid "Clear all planed recordings..."
+msgstr ""
+
+msgctxt "#30110"
+msgid "Update program information on KODI startup"
+msgstr ""
+
+msgctxt "#30111"
+msgid "[COLOR]Enter the url address or provide a path to your EPG files[/COLOR]"
+msgstr ""
+
+msgctxt "#30116"
+msgid "Search for channel logos in"
+msgstr ""
+
+msgctxt "#30117"
+msgid "[COLOR]Premium EPG[/COLOR]"
+msgstr ""
+
+msgctxt "#30118"
+msgid "Main"
+msgstr ""
+
+msgctxt "#30119"
+msgid "Additional"
+msgstr ""
+
+msgctxt "#30120"
+msgid "Additional"
+msgstr ""
+
+msgctxt "#30149"
+msgid "does not exist. Default will be set!"
+msgstr ""
+
+msgctxt "#30150"
+msgid "Sorry, an error has occurred"
+msgstr ""
+
+msgctxt "#30151"
+msgid "Error initializing EPG file:"
+msgstr ""
+
+msgctxt "#30152"
+msgid "[CR]Error loading EPG (electronic program guide). Please check if EPG url is correct or if internet connection is available and try again."
+msgstr ""
+
+msgctxt "#30153"
+msgid "because the settings are invalid!"
+msgstr ""
+
+msgctxt "#30154"
+msgid "It looks like your current skin"
+msgstr ""
+
+msgctxt "#30155"
+msgid "is not supported by current version of m-TVGuide"
+msgstr ""
+
+msgctxt "#30156"
+msgid "Please try with a different skin..."
+msgstr ""
+
+msgctxt "#30157"
+msgid "It looks like the TV Guide database is broken."
+msgstr ""
+
+msgctxt "#30158"
+msgid "Please remove database file using option in plugin settings "Database settings""
+msgstr ""
+
+msgctxt "#30159"
+msgid "Channel configuration is unfortunately lost."
+msgstr ""
+
+msgctxt "#30160"
+msgid "Error is not critical and addon will start but please fix the issue!"
+msgstr ""
+
+msgctxt "#30161"
+msgid "Error is critical and programs won't be visible, please fix EPG (electronic program guide) url!"
+msgstr ""
+
+msgctxt "#30162"
+msgid "No description"
+msgstr ""
+
+msgctxt "#30163"
+msgid "Missing genre"
+msgstr ""
+
+msgctxt "#30164"
+msgid "No available information"
+msgstr ""
+
+msgctxt "#30200"
+msgid "on [B]{}[/B] in 5 minutes..."
+msgstr ""
+
+msgctxt "#30201"
+msgid "on [B]{}[/B] is starting now..."
+msgstr ""
+
+msgctxt "#30202"
+msgid "Starting scheduled program"
+msgstr ""
+
+msgctxt "#30203"
+msgid "Start scheduled program"
+msgstr ""
+
+msgctxt "#30204"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "#30205"
+msgid "On screen display"
+msgstr ""
+
+msgctxt "#30206"
+msgid "Display current time during playback"
+msgstr ""
+
+msgctxt "#30300"
+msgid "Watch {}"
+msgstr ""
+
+msgctxt "#30301"
+msgid "Remind"
+msgstr ""
+
+msgctxt "#30302"
+msgid "Don't remind"
+msgstr ""
+
+msgctxt "#30303"
+msgid "Cancel recording"
+msgstr ""
+
+msgctxt "#30304"
+msgid "Choose stream"
+msgstr ""
+
+msgctxt "#30305"
+msgid "You can choose your own .strm file."
+msgstr ""
+
+msgctxt "#30306"
+msgid "Remove stream"
+msgstr ""
+
+msgctxt "#30307"
+msgid "Channels"
+msgstr ""
+
+msgctxt "#30308"
+msgid "Exit"
+msgstr ""
+
+msgctxt "#30309"
+msgid "Lists"
+msgstr ""
+
+msgctxt "#30310"
+msgid "Channel listing"
+msgstr ""
+
+msgctxt "#30311"
+msgid "Now"
+msgstr ""
+
+msgctxt "#30312"
+msgid "Next"
+msgstr ""
+
+msgctxt "#30313"
+msgid "Start"
+msgstr ""
+
+msgctxt "#30314"
+msgid "Length"
+msgstr ""
+
+msgctxt "#30315"
+msgid "Search"
+msgstr ""
+
+msgctxt "#30316"
+msgid "Title"
+msgstr ""
+
+msgctxt "#30317"
+msgid "Synopsis"
+msgstr ""
+
+msgctxt "#30318"
+msgid "Category"
+msgstr ""
+
+msgctxt "#30319"
+msgid "Channel"
+msgstr ""
+
+msgctxt "#30320"
+msgid "New search"
+msgstr ""
+
+msgctxt "#30321"
+msgid "Remove search"
+msgstr ""
+
+msgctxt "#30322"
+msgid "Program search"
+msgstr ""
+
+msgctxt "#30323"
+msgid "Synopsis search"
+msgstr ""
+
+msgctxt "#30324"
+msgid "Program category search"
+msgstr ""
+
+msgctxt "#30325"
+msgid "All channels"
+msgstr ""
+
+msgctxt "#30326"
+msgid "Channel search"
+msgstr ""
+
+msgctxt "#30327"
+msgid "Program search: [COLOR gold][B]{}[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#30328"
+msgid "Synopsis search:"
+msgstr ""
+
+msgctxt "#30329"
+msgid "Today"
+msgstr ""
+
+msgctxt "#30330"
+msgid "Tomorrow"
+msgstr ""
+
+msgctxt "#30331"
+msgid "Yesterday"
+msgstr ""
+
+msgctxt "#30332"
+msgid "in {} days"
+msgstr ""
+
+msgctxt "#30333"
+msgid "in {} day"
+msgstr ""
+
+msgctxt "#30334"
+msgid "in {} hours"
+msgstr ""
+
+msgctxt "#30335"
+msgid "in {} min"
+msgstr ""
+
+msgctxt "#30336"
+msgid "Reminders"
+msgstr ""
+
+msgctxt "#30337"
+msgid "Recordings"
+msgstr ""
+
+msgctxt "#30338"
+msgid "List view"
+msgstr ""
+
+msgctxt "#30339"
+msgid "List future days"
+msgstr ""
+
+msgctxt "#30340"
+msgid "List previous hours"
+msgstr ""
+
+msgctxt "#30341"
+msgid "Sort list by time"
+msgstr ""
+
+msgctxt "#30342"
+msgid "Include synopsis in title search"
+msgstr ""
+
+msgctxt "#30343"
+msgid "Category list"
+msgstr ""
+
+msgctxt "#30344"
+msgid "Category search"
+msgstr ""
+
+msgctxt "#30345"
+msgid "Category search:"
+msgstr ""
+
+msgctxt "#30346"
+msgid "Go to channel"
+msgstr ""
+
+msgctxt "#30347"
+msgid "Determining order of channels"
+msgstr ""
+
+msgctxt "#30348"
+msgid "Enable channel order by number"
+msgstr ""
+
+msgctxt "#30349"
+msgid "Play on select"
+msgstr ""
+
+msgctxt "#30350"
+msgid "Don't play"
+msgstr ""
+
+msgctxt "#30351"
+msgid "Play only in TV mode"
+msgstr ""
+
+msgctxt "#30352"
+msgid "Play"
+msgstr ""
+
+msgctxt "#30353"
+msgid "Error"
+msgstr ""
+
+msgctxt "#30354"
+msgid "Please enable channel order by number in settings"
+msgstr ""
+
+msgctxt "#30355"
+msgid "Show channel logos"
+msgstr ""
+
+msgctxt "#30356"
+msgid "Extended information"
+msgstr ""
+
+msgctxt "#30357"
+msgid "Search as movie"
+msgstr ""
+
+msgctxt "#30358"
+msgid "Search as TV show"
+msgstr ""
+
+msgctxt "#30359"
+msgid "Search extended information"
+msgstr ""
+
+msgctxt "#30360"
+msgid "Search as all"
+msgstr ""
+
+msgctxt "#30361"
+msgid "Search could not be found: {}"
+msgstr ""
+
+msgctxt "#30362"
+msgid "No such movie: {}"
+msgstr ""
+
+msgctxt "#30363"
+msgid "No such TV program: {}"
+msgstr ""
+
+msgctxt "#30364"
+msgid "Show program thumbnail"
+msgstr ""
+
+msgctxt "#30365"
+msgid "Time [CR](Attention! Reseting database required)"
+msgstr ""
+
+msgctxt "#30366"
+msgid "Adjust timebar (min)"
+msgstr ""
+
+msgctxt "#30367"
+msgid "Fullscreen window size animation"
+msgstr ""
+
+msgctxt "#30368"
+msgid "Site"
+msgstr ""
+
+msgctxt "#30369"
+msgid "Login with TV provider"
+msgstr ""
+
+msgctxt "#30370"
+msgid "Operator"
+msgstr ""
+
+msgctxt "#30371"
+msgid "Reset login credentials"
+msgstr ""
+
+msgctxt "#30372"
+msgid "Login credentials have been reset"
+msgstr ""
+
+msgctxt "#30500"
+msgid "Edit channel order and visibility"
+msgstr ""
+
+msgctxt "#30501"
+msgid "Press context button to set channel order, move up and down to change position. Enable and disable channels with select button."
+msgstr ""
+
+msgctxt "#30502"
+msgid "OK"
+msgstr ""
+
+msgctxt "#30503"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "#30504"
+msgid "Notification from mods-kodi.pl"
+msgstr ""
+
+msgctxt "#30505"
+msgid "Genre"
+msgstr ""
+
+msgctxt "#30506"
+msgid "Episode"
+msgstr ""
+
+msgctxt "#30507"
+msgid "Actors"
+msgstr ""
+
+msgctxt "#30508"
+msgid "Year"
+msgstr ""
+
+msgctxt "#30509"
+msgid "Director"
+msgstr ""
+
+msgctxt "#30510"
+msgid "Plot"
+msgstr ""
+
+msgctxt "#30511"
+msgid "Duration"
+msgstr ""
+
+msgctxt "#30512"
+msgid "Rating"
+msgstr ""
+
+msgctxt "#30400"
+msgid "CHANNELS LIST"
+msgstr ""
+
+msgctxt "#30401"
+msgid "EXIT"
+msgstr ""
+
+msgctxt "#30402"
+msgid "ADDON SETTINGS"
+msgstr ""
+
+msgctxt "#30403"
+msgid "REMIND"
+msgstr ""
+
+msgctxt "#30404"
+msgid "PROGRAM"
+msgstr ""
+
+msgctxt "#30405"
+msgid "CHANNEL SETTINGS"
+msgstr ""
+
+msgctxt "#30406"
+msgid "DON'T REMIND"
+msgstr ""
+
+msgctxt "#30407"
+msgid "CHOOSE STREAM"
+msgstr ""
+
+msgctxt "#30408"
+msgid "REMOVE STREAM"
+msgstr ""
+
+msgctxt "#30600"
+msgid "Setup stream"
+msgstr ""
+
+msgctxt "#30601"
+msgid "Stream file"
+msgstr ""
+
+msgctxt "#30602"
+msgid "Favourites"
+msgstr ""
+
+msgctxt "#30603"
+msgid "Addons"
+msgstr ""
+
+msgctxt "#30604"
+msgid "Preview"
+msgstr ""
+
+msgctxt "#30605"
+msgid "Save"
+msgstr ""
+
+msgctxt "#30606"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "#30607"
+msgid "Stop preview"
+msgstr ""
+
+msgctxt "#30610"
+msgid "Browse..."
+msgstr ""
+
+msgctxt "#30611"
+msgid "Click [B]Browse[/B] below and navigate to your stream file.[CR]When you have chosen your file you can preview the stream to test if it works in KODI."
+msgstr ""
+
+msgctxt "#30620"
+msgid "Choose a favourite. Only [B]PlayMedia[/B] favourites are supported."
+msgstr ""
+
+msgctxt "#30621"
+msgid "Live, schedule recording or download program.[CR]Add a task, use time-shift to urge or delay start of recording / download."
+msgstr ""
+
+msgctxt "#30700"
+msgid "Multiple addons provide this channels.[CR]Choose one to watch the stream."
+msgstr ""
+
+msgctxt "#30701"
+msgid "Source: "
+msgstr ""
+
+msgctxt "#30702"
+msgid "Appearance"
+msgstr ""
+
+msgctxt "#30703"
+msgid "Automatically assign streams"
+msgstr ""
+
+msgctxt "#30704"
+msgid "Use zipped epg"
+msgstr ""
+
+msgctxt "#30705"
+msgid "Show only programs with stream assigned"
+msgstr ""
+
+msgctxt "#30706"
+msgid "Auto detect EPG change"
+msgstr ""
+
+msgctxt "#30707"
+msgid "Show info notification"
+msgstr ""
+
+msgctxt "#30708"
+msgid "Use fast EPG parser"
+msgstr ""
+
+msgctxt "#30709"
+msgid "Skin updated"
+msgstr ""
+
+msgctxt "#30710"
+msgid "Update"
+msgstr ""
+
+msgctxt "#30711"
+msgid "Get more..."
+msgstr ""
+
+msgctxt "#30712"
+msgid "All online skins are already installed!"
+msgstr ""
+
+msgctxt "#30713"
+msgid "Failed to download skin!"
+msgstr ""
+
+msgctxt "#30714"
+msgid "Delete all skins"
+msgstr ""
+
+msgctxt "#30715"
+msgid "Enable adult channels"
+msgstr ""
+
+msgctxt "#30716"
+msgid "Enable swedish channels"
+msgstr ""
+
+msgctxt "#30717"
+msgid "EPG - XXX"
+msgstr ""
+
+msgctxt "#30718"
+msgid "EPG - Swedish"
+msgstr ""
+
+msgctxt "#30719"
+msgid "Disable"
+msgstr ""
+
+msgctxt "#30720"
+msgid "Disabled"
+msgstr ""
+
+msgctxt "#30721"
+msgid "Enabled"
+msgstr ""
+
+msgctxt "#30722"
+msgid "Enable"
+msgstr ""
+
+msgctxt "#30723"
+msgid "Password for adult channels taken from mods-kodi"
+msgstr ""
+
+msgctxt "#30724"
+msgid "Incorrect password!"
+msgstr ""
+
+msgctxt "#30725"
+msgid "Enable english channels"
+msgstr ""
+
+msgctxt "#30726"
+msgid "EPG - English"
+msgstr ""
+
+msgctxt "#30727"
+msgid "Enable danish channels"
+msgstr ""
+
+msgctxt "#30728"
+msgid "EPG - Danish"
+msgstr ""
+
+msgctxt "#30729"
+msgid "Enable french channels"
+msgstr ""
+
+msgctxt "#30730"
+msgid "EPG - French"
+msgstr ""
+
+msgctxt "#30731"
+msgid "Enable german channels"
+msgstr ""
+
+msgctxt "#30732"
+msgid "EPG - German"
+msgstr ""
+
+msgctxt "#30733"
+msgid "Enable croatian channels"
+msgstr ""
+
+msgctxt "#30734"
+msgid "EPG - Croatian"
+msgstr ""
+
+msgctxt "#30735"
+msgid "Enable serbian channels"
+msgstr ""
+
+msgctxt "#30736"
+msgid "EPG - Serbian"
+msgstr ""
+
+msgctxt "#30737"
+msgid "Enable norwegian channels"
+msgstr ""
+
+msgctxt "#30738"
+msgid "EPG - Norwegian"
+msgstr ""
+
+msgctxt "#30739"
+msgid "Show all regions"
+msgstr ""
+
+msgctxt "#30740"
+msgid "[COLOR]Select EPG[/COLOR]"
+msgstr ""
+
+msgctxt "#30741"
+msgid "Adult channels"
+msgstr ""
+
+msgctxt "#30742"
+msgid "Timezone"
+msgstr ""
+
+msgctxt "#30743"
+msgid "Enable benelux channels"
+msgstr ""
+
+msgctxt "#30744"
+msgid "EPG - Benelux"
+msgstr ""
+
+msgctxt "#30745"
+msgid "Enable vod channels"
+msgstr ""
+
+msgctxt "#30746"
+msgid "Video on demand channels"
+msgstr ""
+
+msgctxt "#30747"
+msgid "adult channels"
+msgstr ""
+
+msgctxt "#30748"
+msgid "vod channels"
+msgstr ""
+
+msgctxt "#30749"
+msgid "Enable radio channels"
+msgstr ""
+
+msgctxt "#30750"
+msgid "EPG - Radio"
+msgstr ""
+
+msgctxt "#30751"
+msgid "Radio channels"
+msgstr ""
+
+msgctxt "#30752"
+msgid "EPG - Czech"
+msgstr ""
+
+msgctxt "#30753"
+msgid "Enable czech channels"
+msgstr ""
+
+msgctxt "#30754"
+msgid "EPG - US"
+msgstr ""
+
+msgctxt "#30755"
+msgid "Enable american channels"
+msgstr ""
+
+msgctxt "#30756"
+msgid "EPG - Italian"
+msgstr ""
+
+msgctxt "#30757"
+msgid "Enable italian channels"
+msgstr ""
+
+msgctxt "#30758"
+msgid "Polish channels"
+msgstr ""
+
+msgctxt "#30759"
+msgid "Enable polish channels [COLOR disabled](Use main EPG)[/COLOR]"
+msgstr ""
+
+msgctxt "#30760"
+msgid "Enable subtitles"
+msgstr ""
+
+msgctxt "#30802"
+msgid "m-TVGuide is configured to stream using"
+msgstr ""
+
+msgctxt "#30803"
+msgid "addon which is not installed."
+msgstr ""
+
+msgctxt "#30804"
+msgid "Streaming using that addon is now disabled."
+msgstr ""
+
+msgctxt "#30901"
+msgid "Update"
+msgstr ""
+
+msgctxt "#30902"
+msgid "Update now"
+msgstr ""
+
+msgctxt "#30903"
+msgid "[COLOR]PlayerPL[/COLOR]"
+msgstr ""
+
+msgctxt "#30904"
+msgid "[COLOR]Telia Play[/COLOR]"
+msgstr ""
+
+msgctxt "#30905"
+msgid "Advertisement"
+msgstr ""
+
+msgctxt "#30910"
+msgid "Enable navigation panel for mouse or touch"
+msgstr ""
+
+msgctxt "#30911"
+msgid "Timezone UTC (+00:00 GMT)"
+msgstr ""
+
+msgctxt "#59904"
+msgid "Enable"
+msgstr ""
+
+msgctxt "#59905"
+msgid "[COLOR]Playlists M3U[/COLOR]"
+msgstr ""
+
+msgctxt "#59906"
+msgid "Link"
+msgstr ""
+
+msgctxt "#59907"
+msgid "Source"
+msgstr ""
+
+msgctxt "#59908"
+msgid "File"
+msgstr ""
+
+msgctxt "#59909"
+msgid "Multisession"
+msgstr ""
+
+msgctxt "#59910"
+msgid "Use free account"
+msgstr ""
+
+msgctxt "#59911"
+msgid "[COLOR]Playlist 1[/COLOR]"
+msgstr ""
+
+msgctxt "#59912"
+msgid "[COLOR]Playlist 2[/COLOR]"
+msgstr ""
+
+msgctxt "#59913"
+msgid "[COLOR]Playlist 3[/COLOR]"
+msgstr ""
+
+msgctxt "#59914"
+msgid "Display name"
+msgstr ""
+
+msgctxt "#59915"
+msgid "Loading service"
+msgstr ""
+
+msgctxt "#59916"
+msgid "Number of playlists"
+msgstr ""
+
+msgctxt "#59917"
+msgid "[COLOR]Playlist 4[/COLOR]"
+msgstr ""
+
+msgctxt "#59918"
+msgid "[COLOR]Playlist 5[/COLOR]"
+msgstr ""
+
+msgctxt "#59919"
+msgid "Url"
+msgstr ""
+
+msgctxt "#59920"
+msgid "[COLOR]C More[/COLOR]"
+msgstr ""
+
+msgctxt "#59921"
+msgid "[COLOR]Cyfrowy Polsat GO[/COLOR]"
+msgstr ""
+
+msgctxt "#59922"
+msgid "[COLOR]FranceTV[/COLOR]"
+msgstr ""
+
+msgctxt "#59923"
+msgid "[COLOR]nc+ GO[/COLOR]"
+msgstr ""
+
+msgctxt "#59924"
+msgid "Configuration tutorial"
+msgstr ""
+
+msgctxt "#59925"
+msgid "Belgium"
+msgstr ""
+
+msgctxt "#59926"
+msgid "Czech"
+msgstr ""
+
+msgctxt "#59927"
+msgid "Germany"
+msgstr ""
+
+msgctxt "#59928"
+msgid "Denmark"
+msgstr ""
+
+msgctxt "#59929"
+msgid "France"
+msgstr ""
+
+msgctxt "#59930"
+msgid "Croatia"
+msgstr ""
+
+msgctxt "#59931"
+msgid "Italy"
+msgstr ""
+
+msgctxt "#59932"
+msgid "Norway"
+msgstr ""
+
+msgctxt "#59933"
+msgid "Poland"
+msgstr ""
+
+msgctxt "#59934"
+msgid "Sweden"
+msgstr ""
+
+msgctxt "#59935"
+msgid "Serbia"
+msgstr ""
+
+msgctxt "#59936"
+msgid "Great Britain"
+msgstr ""
+
+msgctxt "#59937"
+msgid "United States"
+msgstr ""
+
+msgctxt "#59938"
+msgid "Would you like to end setup configuration?"
+msgstr ""
+
+msgctxt "#59939"
+msgid "Return"
+msgstr ""
+
+msgctxt "#59940"
+msgid "Select electronic program guide (EPG) type"
+msgstr ""
+
+msgctxt "#59941"
+msgid "Enter URL link to your electronic program guide (EPG)"
+msgstr ""
+
+msgctxt "#59942"
+msgid "Select your electronic program guide (EPG) file"
+msgstr ""
+
+msgctxt "#59943"
+msgid "Select regions"
+msgstr ""
+
+msgctxt "#59944"
+msgid "Would you like to add an extra electronic program guide (EPG) for {} channels?"
+msgstr ""
+
+msgctxt "#59945"
+msgid "Enter URL link to your electronic program guide (EPG) for {} channels"
+msgstr ""
+
+msgctxt "#59946"
+msgid "Select TV service or M3U playlist"
+msgstr ""
+
+msgctxt "#59947"
+msgid "TV services"
+msgstr ""
+
+msgctxt "#59948"
+msgid "M3U Playlist"
+msgstr ""
+
+msgctxt "#59949"
+msgid "Select TV services"
+msgstr ""
+
+msgctxt "#59950"
+msgid "Enter login credentials for {}."
+msgstr ""
+
+msgctxt "#59951"
+msgid "Would you like to login with a TV operator?"
+msgstr ""
+
+msgctxt "#59952"
+msgid "Username"
+msgstr ""
+
+msgctxt "#59953"
+msgid "Password"
+msgstr ""
+
+msgctxt "#59954"
+msgid "Select M3U playlist type."
+msgstr ""
+
+msgctxt "#59955"
+msgid "Enter M3U playlist URL link"
+msgstr ""
+
+msgctxt "#59956"
+msgid "Select M3U playlist file"
+msgstr ""
+
+msgctxt "#59957"
+msgid "Would you like to setup recording service?"
+msgstr ""
+
+msgctxt "#59958"
+msgid "Select a storage location for your recordings"
+msgstr ""
+
+msgctxt "#59959"
+msgid "Would you like to start a configuration tutorial for m-TVGuide?"
+msgstr ""
+
+msgctxt "#59960"
+msgid "• Select electronic program guide (EPG). [COLOR grey]Supported program guides are URL link and/or .xml, .gz and .zip file extensions.[/COLOR][CR]• Select regions that are supported by the provided EPG.[CR]• Select a TV service and/or M3U playlist."
+msgstr ""
+
+msgctxt "#59961"
+msgid "All settings are now configurated, you can now start m-TVGuide."
+msgstr ""
+
+msgctxt "#59962"
+msgid "Would you like to add an extra EPG?"
+msgstr ""
+
+msgctxt "#59963"
+msgid "Belgian"
+msgstr ""
+
+msgctxt "#59964"
+msgid "Czech"
+msgstr ""
+
+msgctxt "#59965"
+msgid "German"
+msgstr ""
+
+msgctxt "#59966"
+msgid "Danish"
+msgstr ""
+
+msgctxt "#59967"
+msgid "French"
+msgstr ""
+
+msgctxt "#59968"
+msgid "Croatian"
+msgstr ""
+
+msgctxt "#59969"
+msgid "Italian"
+msgstr ""
+
+msgctxt "#59970"
+msgid "Norwegian"
+msgstr ""
+
+msgctxt "#59971"
+msgid "Polish"
+msgstr ""
+
+msgctxt "#59972"
+msgid "Swedish"
+msgstr ""
+
+msgctxt "#59973"
+msgid "Serbian"
+msgstr ""
+
+msgctxt "#59974"
+msgid "English"
+msgstr ""
+
+msgctxt "#59975"
+msgid "American"
+msgstr ""
+
+msgctxt "#59976"
+msgid "Catchup"
+msgstr ""
+
+msgctxt "#59977"
+msgid "Query format string"
+msgstr ""
+
+msgctxt "#59978"
+msgid "Enable catchup"
+msgstr ""
+
+msgctxt "#59979"
+msgid "Wrong timeshift format."
+msgstr ""
+
+msgctxt "#59980"
+msgid "No available catchup playback."
+msgstr ""
+
+msgctxt "#59981"
+msgid "- Buffer before program start (min)"
+msgstr ""
+
+msgctxt "#59982"
+msgid "- Buffer after program end (min)"
+msgstr ""
+
+msgctxt "#59983"
+msgid "Other settings"
+msgstr ""
+
+msgctxt "#59984"
+msgid "Catchup only finished programmes"
+msgstr ""
+
+msgctxt "#59985"
+msgid "Downloading:"
+msgstr ""
+
+msgctxt "#59986"
+msgid "Finished downloading:"
+msgstr ""
+
+msgctxt "#59987"
+msgid "No download available for this program."
+msgstr ""
+
+msgctxt "#59988"
+msgid "Catchup window days"
+msgstr ""
+
+msgctxt "#59989"
+msgid "Catchup type"
+msgstr ""
+
+msgctxt "#59990"
+msgid "Append"
+msgstr ""
+
+msgctxt "#59991"
+msgid "Add channel from EPG (Electronic program guide)"
+msgstr ""
+
+msgctxt "#59992"
+msgid "Add stream to selected channel"
+msgstr ""
+
+msgctxt "#59993"
+msgid "Added channel [B]{}[/B]. Restart required for changes to take place."
+msgstr ""
+
+msgctxt "#59994"
+msgid "Select which channels to display"
+msgstr ""
+
+msgctxt "#59995"
+msgid "Missing channels"
+msgstr ""
+
+msgctxt "#59996"
+msgid "Xtream Codes"
+msgstr ""
+
+msgctxt "#59997"
+msgid "Sort by selected character"
+msgstr ""
+
+msgctxt "#59998"
+msgid "Only one download session at once allowed."
+msgstr ""
+
+msgctxt "#59999"
+msgid "Shift"
+msgstr ""
+
+msgctxt "#60000"
+msgid "Auto"
+msgstr ""
+
+msgctxt "#60001"
+msgid "Manual"
+msgstr ""
+
+msgctxt "#60002"
+msgid "Catchup window"
+msgstr ""
+
+msgctxt "#60003"
+msgid "Add single URL value"
+msgstr ""
+
+msgctxt "#60004"
+msgid "Add multiple URL values"
+msgstr ""
+
+msgctxt "#60005"
+msgid "Delete added channels"
+msgstr ""
+
+msgctxt "#60006"
+msgid "Select channels to delete"
+msgstr ""
+
+msgctxt "#60007"
+msgid "Channels has been deleted. Restart required for changes to take place."
+msgstr ""
+
+msgctxt "#60008"
+msgid "Save playlist to local drive"
+msgstr ""
+
+msgctxt "#60009"
+msgid "Update playlist (days)"
+msgstr ""
+
+msgctxt "#30913"
+msgid "Settings"
+msgstr ""
+
+msgctxt "#30914"
+msgid "Skin"
+msgstr ""
+
+msgctxt "#30915"
+msgid "Enable add-on autostart"
+msgstr ""
+
+msgctxt "#30916"
+msgid "Database"
+msgstr ""
+
+msgctxt "#30917"
+msgid "Fullscreen window size animation"
+msgstr ""
+
+msgctxt "#30918"
+msgid "OSD on select"
+msgstr ""
+
+msgctxt "#30919"
+msgid "Enable automatic channel playback"
+msgstr ""
+
+msgctxt "#30920"
+msgid "By channel number"
+msgstr ""
+
+msgctxt "#30921"
+msgid "Last seen channel"
+msgstr ""
+
+msgctxt "#30930"
+msgid "Colours"
+msgstr ""
+
+msgctxt "#30931"
+msgid "[COLOR]Category colours[/COLOR]"
+msgstr ""
+
+msgctxt "#30932"
+msgid "Movies"
+msgstr ""
+
+msgctxt "#30933"
+msgid "TV series"
+msgstr ""
+
+msgctxt "#30934"
+msgid "Current events"
+msgstr ""
+
+msgctxt "#30935"
+msgid "Entertainment"
+msgstr ""
+
+msgctxt "#30936"
+msgid "Documentaries"
+msgstr ""
+
+msgctxt "#30937"
+msgid "Childrens programme"
+msgstr ""
+
+msgctxt "#30938"
+msgid "Sports"
+msgstr ""
+
+msgctxt "#30939"
+msgid "Interactive entertainment"
+msgstr ""
+
+msgctxt "#30940"
+msgid "[COLOR]Default colors[/COLOR]"
+msgstr ""
+
+msgctxt "#30941"
+msgid "Default color"
+msgstr ""
+
+msgctxt "#30942"
+msgid "Focus colour"
+msgstr ""
+
+msgctxt "#30943"
+msgid "Schedule colour"
+msgstr ""
+
+msgctxt "#30944"
+msgid "Recording colour"
+msgstr ""
+
+msgctxt "#30950"
+msgid "Clear database"
+msgstr ""
+
+msgctxt "#30951"
+msgid "Database cleared"
+msgstr ""
+
+msgctxt "#30952"
+msgid "Delete custom streams"
+msgstr ""
+
+msgctxt "#30953"
+msgid "Export settings"
+msgstr ""
+
+msgctxt "#30954"
+msgid "Import settings"
+msgstr ""
+
+msgctxt "#30955"
+msgid "Delete database file"
+msgstr ""
+
+msgctxt "#30956"
+msgid "[COLOR]MojeFilmy[/COLOR]"
+msgstr ""
+
+msgctxt "#30957"
+msgid "Username"
+msgstr ""
+
+msgctxt "#30958"
+msgid "Max service startup time (sec)"
+msgstr ""
+
+msgctxt "#30959"
+msgid "Playlist URL"
+msgstr ""
+
+msgctxt "#30960"
+msgid "Reconnect broken stream"
+msgstr ""
+
+msgctxt "#30961"
+msgid "Max number of reattempts"
+msgstr ""
+
+msgctxt "#30962"
+msgid "Reattempt delay (ms)"
+msgstr ""
+
+msgctxt "#30963"
+msgid "Exit"
+msgstr ""
+
+msgctxt "#30964"
+msgid "Press one more time to exit"
+msgstr ""
+
+msgctxt "#30965"
+msgid "Currently broadcast service"
+msgstr ""
+
+msgctxt "#30966"
+msgid "Movies (Interia)"
+msgstr ""
+
+msgctxt "#30967"
+msgid "TV series (Interia)"
+msgstr ""
+
+msgctxt "#30968"
+msgid "Magazine"
+msgstr ""
+
+msgctxt "#30969"
+msgid "File has been deleted"
+msgstr ""
+
+msgctxt "#30970"
+msgid "Assigned streams has been deleted"
+msgstr ""
+
+msgctxt "#30971"
+msgid "Reminders has been cleared"
+msgstr ""
+
+msgctxt "#30972"
+msgid "Scheduled recording has been cleared"
+msgstr ""
+
+msgctxt "#30973"
+msgid "Delete all settings"
+msgstr ""
+
+msgctxt "#30974"
+msgid "Stop playback while switching stream"
+msgstr ""
+
+msgctxt "#30975"
+msgid "Prefer HD-streams"
+msgstr ""
+
+msgctxt "#30976"
+msgid "Refresh EPG table periodically"
+msgstr ""
+
+msgctxt "#30977"
+msgid "Max stream startup time (sec)"
+msgstr ""
+
+msgctxt "#30978"
+msgid "Database updated"
+msgstr ""
+
+msgctxt "#30979"
+msgid "m-TVGuide restart required"
+msgstr ""
+
+msgctxt "#30980"
+msgid "[COLOR]**WARNING!**[CR]Resetting your database will cause losing all settings![/COLOR]"
+msgstr ""
+
+msgctxt "#30981"
+msgid "Do you really want to exit"
+msgstr ""
+
+msgctxt "#30982"
+msgid "Ask on exit"
+msgstr ""
+
+msgctxt "#30983"
+msgid "Click twice to exit"
+msgstr ""
+
+msgctxt "#30984"
+msgid "Add favorites"
+msgstr ""
+
+msgctxt "#30985"
+msgid "Add"
+msgstr ""
+
+msgctxt "#30986"
+msgid "Remove"
+msgstr ""
+
+msgctxt "#30987"
+msgid "Clear"
+msgstr ""
+
+msgctxt "#30988"
+msgid "Sort in alphabetic order"
+msgstr ""
+
+msgctxt "#30989"
+msgid "Add channels to group [COLOR gold][B]{}[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#30990"
+msgid "Remove channels from group [COLOR gold][B]{}[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#30991"
+msgid "Channel options"
+msgstr ""
+
+msgctxt "#30992"
+msgid "Group"
+msgstr ""
+
+msgctxt "#30993"
+msgid "Remember list of favorites"
+msgstr ""
+
+msgctxt "#30994"
+msgid "Help - m-TVGuide [COLOR gold]EPG[/COLOR]"
+msgstr ""
+
+msgctxt "#30995"
+msgid "TV Group"
+msgstr ""
+
+msgctxt "#30996"
+msgid "There is no space for this device. Swap it with one of those already available on your account?"
+msgstr ""
+
+msgctxt "#30997"
+msgid "Select a device to replace"
+msgstr ""
+
+msgctxt "#30998"
+msgid "Catchup - m-TVGuide [COLOR gold]EPG[/COLOR]"
+msgstr ""
+
+msgctxt "#30999"
+msgid "Would you like to start program [B]{}[/B] from the beginning?"
+msgstr ""
+
+msgctxt "#31000"
+msgid "Would you like to download program [B]{}[/B]?"
+msgstr ""
+
+msgctxt "#58000"
+msgid "Programme information"
+msgstr ""
+
+msgctxt "#58001"
+msgid "Select destination folder"
+msgstr ""
+
+msgctxt "#58002"
+msgid "Export settings"
+msgstr ""
+
+msgctxt "#58003"
+msgid "Import settings"
+msgstr ""
+
+msgctxt "#58004"
+msgid "Failure - no settings to export!"
+msgstr ""
+
+msgctxt "#58005"
+msgid "Settings exported successfully"
+msgstr ""
+
+msgctxt "#58006"
+msgid "Failure - please check if you have write permissions to that path"
+msgstr ""
+
+msgctxt "#58007"
+msgid "Select settings backup file"
+msgstr ""
+
+msgctxt "#58008"
+msgid "Settings imported successfully"
+msgstr ""
+
+msgctxt "#58009"
+msgid "Failed to import settings"
+msgstr ""
+
+msgctxt "#58010"
+msgid "Please check if chosen file is a correct settings backup"
+msgstr ""
+
+msgctxt "#58011"
+msgid "locked"
+msgstr ""
+
+msgctxt "#31001"
+msgid "Enable OSD"
+msgstr ""
+
+msgctxt "#31002"
+msgid "Set keys"
+msgstr ""
+
+msgctxt "#31003"
+msgid "SET"
+msgstr ""
+
+msgctxt "#31004"
+msgid "OK"
+msgstr ""
+
+msgctxt "#31005"
+msgid "Home"
+msgstr ""
+
+msgctxt "#31006"
+msgid "Prog -"
+msgstr ""
+
+msgctxt "#31007"
+msgid "Prog +"
+msgstr ""
+
+msgctxt "#31008"
+msgid "Stop"
+msgstr ""
+
+msgctxt "#31009"
+msgid "Information"
+msgstr ""
+
+msgctxt "#31010"
+msgid "Context"
+msgstr ""
+
+msgctxt "#31011"
+msgid "Record"
+msgstr ""
+
+msgctxt "#31012"
+msgid "Reset"
+msgstr ""
+
+msgctxt "#31013"
+msgid "Defaults"
+msgstr ""
+
+msgctxt "#31014"
+msgid "Change stream"
+msgstr ""
+
+msgctxt "#31015"
+msgid "Vol +"
+msgstr ""
+
+msgctxt "#31016"
+msgid "Vol -"
+msgstr ""
+
+msgctxt "#31017"
+msgid "Switch to last seen channel"
+msgstr ""
+
+msgctxt "#31018"
+msgid "Lists"
+msgstr ""
+
+msgctxt "#31019"
+msgid "Stream failed to start, aborting playback"
+msgstr ""
+
+msgctxt "#31020"
+msgid "Reached reconnection limit, aborting playback"
+msgstr ""
+
+msgctxt "#31021"
+msgid "Missing add-on: {}"
+msgstr ""
+
+msgctxt "#310010"
+msgid ""
+msgstr ""
+
+msgctxt "#310011"
+msgid "Stop playback using navi back button"
+msgstr ""
+
+msgctxt "#310012"
+msgid "Recorded program"
+msgstr ""
+
+msgctxt "#310013"
+msgid "Start recorded program"
+msgstr ""
+
+msgctxt "#310014"
+msgid "Save plugin settings!"
+msgstr ""
+
+msgctxt "#55001"
+msgid "Change User-Agent"
+msgstr ""
+
+msgctxt "#55002"
+msgid "Username"
+msgstr ""
+
+msgctxt "#55003"
+msgid "Password"
+msgstr ""
+
+msgctxt "#55005"
+msgid "Prefer high quality"
+msgstr ""
+
+msgctxt "#55007"
+msgid "TV services"
+msgstr ""
+
+msgctxt "#55008"
+msgid "Assign also the streams of low- quality / backup"
+msgstr ""
+
+msgctxt "#55010"
+msgid "0 Lowest"
+msgstr ""
+
+msgctxt "#55011"
+msgid "1 Very Low"
+msgstr ""
+
+msgctxt "#55017"
+msgid "2 Very Low"
+msgstr ""
+
+msgctxt "#55012"
+msgid "3 Low"
+msgstr ""
+
+msgctxt "#55018"
+msgid "4 Low"
+msgstr ""
+
+msgctxt "#55013"
+msgid "5 Mid"
+msgstr ""
+
+msgctxt "#55019"
+msgid "6 Mid"
+msgstr ""
+
+msgctxt "#55014"
+msgid "7 High"
+msgstr ""
+
+msgctxt "#55020"
+msgid "8 High"
+msgstr ""
+
+msgctxt "#55021"
+msgid "9 Very High"
+msgstr ""
+
+msgctxt "#55022"
+msgid "10 Very High"
+msgstr ""
+
+msgctxt "#55023"
+msgid "11 Highest"
+msgstr ""
+
+msgctxt "#55015"
+msgid "Working"
+msgstr ""
+
+msgctxt "#55016"
+msgid "Now Playing"
+msgstr ""
+
+msgctxt "#89000"
+msgid "Select quality"
+msgstr ""
+
+msgctxt "#89001"
+msgid "Enable sleep timer"
+msgstr ""
+
+msgctxt "#89002"
+msgid "Timeout action"
+msgstr ""
+
+msgctxt "#89003"
+msgid "Timeout value (min)"
+msgstr ""
+
+msgctxt "#89004"
+msgid "Stop playback"
+msgstr ""
+
+msgctxt "#89005"
+msgid "Exit Kodi"
+msgstr ""
+
+msgctxt "#89006"
+msgid "Shutdown"
+msgstr ""
+
+msgctxt "#89007"
+msgid "Hibernate"
+msgstr ""
+
+msgctxt "#89008"
+msgid ""
+msgstr ""
+
+msgctxt "#89009"
+msgid ""
+msgstr ""
+
+msgctxt "#55009"
+msgid "Priority"
+msgstr ""
+
+msgctxt "#57001"
+msgid "API error"
+msgstr ""
+
+msgctxt "#57002"
+msgid "Could not connect to website"
+msgstr ""
+
+msgctxt "#57003"
+msgid "Check your network connection."
+msgstr ""
+
+msgctxt "#57009"
+msgid "Script error."
+msgstr ""
+
+msgctxt "#57010"
+msgid "Error on method getJsonFromAPI."
+msgstr ""
+
+msgctxt "#57011"
+msgid "API connection didn't get any data."
+msgstr ""
+
+msgctxt "#57012"
+msgid "It could be network connection problem."
+msgstr ""
+
+msgctxt "#57013"
+msgid "or wrong website API adress."
+msgstr ""
+
+msgctxt "#57014"
+msgid "Error! (API: setPlayer)"
+msgstr ""
+
+msgctxt "#57015"
+msgid "Could not get authorization data."
+msgstr ""
+
+msgctxt "#57018"
+msgid "Playing error!"
+msgstr ""
+
+msgctxt "#57019"
+msgid "Exceeded the limit of free viewing, or too many users."
+msgstr ""
+
+msgctxt "#57020"
+msgid "Buy premium account now to watch unlimited!"
+msgstr ""
+
+msgctxt "#57021"
+msgid "Playing has been stopped."
+msgstr ""
+
+msgctxt "#57022"
+msgid "Wrong video adress. Playing has been stopped."
+msgstr ""
+
+msgctxt "#57027"
+msgid "Server has closed connection for unknown reason! Please try again."
+msgstr ""
+
+msgctxt "#57028"
+msgid "Playing has been stopped."
+msgstr ""
+
+msgctxt "#57034"
+msgid "Information about user account"
+msgstr ""
+
+msgctxt "#57036"
+msgid "You do not have a premium account. Starting a sponsored broadcast."
+msgstr ""
+
+msgctxt "#57037"
+msgid "To purchase a premium right now go to:"
+msgstr ""
+
+msgctxt "#57038"
+msgid "http://mods-kodi.pl/"
+msgstr ""
+
+msgctxt "#57039"
+msgid "Content is not included in your service"
+msgstr ""
+
+msgctxt "#57042"
+msgid "Error connection with website!"
+msgstr ""
+
+msgctxt "#57043"
+msgid "Selected channel does not exist!"
+msgstr ""
+
+msgctxt "#57044"
+msgid "No channel selected!"
+msgstr ""
+
+msgctxt "#57045"
+msgid "No active server! We are sorry."
+msgstr ""
+
+msgctxt "#57046"
+msgid "Rules are not accepted!"
+msgstr ""
+
+msgctxt "#57047"
+msgid "Go to http://mods-kodi.pl/ and accept it, to use service."
+msgstr ""
+
+msgctxt "#57048"
+msgid "Login incorrect"
+msgstr ""
+
+msgctxt "#57049"
+msgid "Configured"
+msgstr ""
+
+msgctxt "#57050"
+msgid "URL is incorrect!"
+msgstr ""
+
+msgctxt "#57051"
+msgid "m-TVGuide"
+msgstr ""
+
+msgctxt "#57052"
+msgid "Addon is already running - can't be started again"
+msgstr ""
+
+msgctxt "#57053"
+msgid "Asset playback blocked due to VPN/proxy"
+msgstr ""
+
+msgctxt "#57054"
+msgid "Service is unavailable in your location"
+msgstr ""
+
+msgctxt "#57055"
+msgid "Maximum number of devices have been reached"
+msgstr ""
+
+msgctxt "#57056"
+msgid "teliatv.dk"
+msgstr ""
+
+msgctxt "#57057"
+msgid "teliaplay.se"
+msgstr ""
+
+msgctxt "#68000"
+msgid "Plot"
+msgstr ""
+
+msgctxt "#68001"
+msgid "Press [B]OK[/B] to show plot"
+msgstr ""
+
+msgctxt "#68002"
+msgid "Switch"
+msgstr ""
+
+msgctxt "#68003"
+msgid "Play programme"
+msgstr ""
+
+msgctxt "#68004"
+msgid "Search YouTube"
+msgstr ""
+
+msgctxt "#68005"
+msgid "Options"
+msgstr ""
+
+msgctxt "#68006"
+msgid "Time:"
+msgstr ""
+
+msgctxt "#68007"
+msgid "Context menu"
+msgstr ""
+
+msgctxt "#68008"
+msgid "Sections"
+msgstr ""
+
+msgctxt "#68009"
+msgid "View options"
+msgstr ""
+
+msgctxt "#68010"
+msgid "Browse for playlist"
+msgstr ""
+
+msgctxt "#68011"
+msgid "Previous"
+msgstr ""
+
+msgctxt "#68012"
+msgid "Subtitles"
+msgstr ""
+
+msgctxt "#68013"
+msgid "Audio language"
+msgstr ""
+
+msgctxt "#68014"
+msgid "Numeric Input"
+msgstr ""
+
+msgctxt "#68015"
+msgid "Ends at"
+msgstr ""
+
+msgctxt "#68016"
+msgid "Not available"
+msgstr ""
+
+msgctxt "#68017"
+msgid "Time"
+msgstr ""
+
+msgctxt "#68018"
+msgid "Date"
+msgstr ""
+
+msgctxt "#69000"
+msgid "Recording"
+msgstr ""
+
+msgctxt "#69001"
+msgid "Import RTMPDUMP"
+msgstr ""
+
+msgctxt "#69002"
+msgid "Import FFMPEG"
+msgstr ""
+
+msgctxt "#69003"
+msgid "Record destination"
+msgstr ""
+
+msgctxt "#69004"
+msgid "Recording:"
+msgstr ""
+
+msgctxt "#69005"
+msgid "Finished recording:"
+msgstr ""
+
+msgctxt "#69006"
+msgid "Not existing record destination directory - record canceled!"
+msgstr ""
+
+msgctxt "#69007"
+msgid "Record error!"
+msgstr ""
+
+msgctxt "#69008"
+msgid "Can't record due to not configured record application: "
+msgstr ""
+
+msgctxt "#69009"
+msgid "Record already scheduled - cancel?"
+msgstr ""
+
+msgctxt "#69010"
+msgid "Schedule program record: "
+msgstr ""
+
+msgctxt "#69011"
+msgid "Cancel ongoing recording?"
+msgstr ""
+
+msgctxt "#69012"
+msgid "Import record app"
+msgstr ""
+
+msgctxt "#69013"
+msgid "successfully imported"
+msgstr ""
+
+msgctxt "#69014"
+msgid "FFMPEG record format"
+msgstr ""
+
+msgctxt "#69015"
+msgid "Exit despite of scheduled recording?"
+msgstr ""
+
+msgctxt "#69016"
+msgid "Use FFMPEG to record RTMP instead of RTMPDUMP"
+msgstr ""
+
+msgctxt "#69017"
+msgid "Install recording applications"
+msgstr ""
+
+msgctxt "#69018"
+msgid "m-TVGuide is downloading files, Please press OK and wait until installation finishes."
+msgstr ""
+
+msgctxt "#69019"
+msgid "An error has occurred - try again or install manualy"
+msgstr ""
+
+msgctxt "#69020"
+msgid "Debug log"
+msgstr ""
+
+msgctxt "#69021"
+msgid "Can't find FFMPEG or RTMPDUMP in system - please try to install by packet manager RTMPDUMP, FFMPEG or libav-tools or install manualy"
+msgstr ""
+
+msgctxt "#69022"
+msgid "Error during automatic import - try importing files manually"
+msgstr ""
+
+msgctxt "#69023"
+msgid "Choose OS"
+msgstr ""
+
+msgctxt "#69024"
+msgid "Maximum number of attempts to resume recording"
+msgstr ""
+
+msgctxt "#69025"
+msgid "Delete watched recordings"
+msgstr ""
+
+msgctxt "#69026"
+msgid "Delete recording"
+msgstr ""
+
+msgctxt "#69027"
+msgid "Delete watched recording"
+msgstr ""
+
+msgctxt "#69028"
+msgid "Do nothing"
+msgstr ""
+
+msgctxt "#69029"
+msgid "Ask"
+msgstr ""
+
+msgctxt "#69030"
+msgid "Auto delete"
+msgstr ""
+
+msgctxt "#69031"
+msgid "[COLOR]FLV format does not work on OpenELEC/LibreELEC systems[/COLOR]"
+msgstr ""
+
+msgctxt "#69032"
+msgid "[COLOR]Record application for common systems[/COLOR]"
+msgstr ""
+
+msgctxt "#69033"
+msgid "Log uploaded to: "
+msgstr ""
+
+msgctxt "#69034"
+msgid "Failed to upload log"
+msgstr ""
+
+msgctxt "#69035"
+msgid "Upload Kodi log"
+msgstr ""
+
+msgctxt "#69036"
+msgid "Current EPG url is: "
+msgstr ""
+
+msgctxt "#69037"
+msgid "No free stream available in service "
+msgstr ""
+
+msgctxt "#69038"
+msgid "Stop player when recording is started"
+msgstr ""
+
+msgctxt "#69039"
+msgid "Record"
+msgstr ""
+
+msgctxt "#69040"
+msgid "Video"
+msgstr ""
+
+msgctxt "#69041"
+msgid "Navigating in OSD previous, next program"
+msgstr ""
+
+msgctxt "#69042"
+msgid "Show extra buttons on OSD"
+msgstr ""
+
+msgctxt "#69043"
+msgid "Display auto OSD on play"
+msgstr ""
+
+msgctxt "#69044"
+msgid "Auto OSD display time (sec)"
+msgstr ""
+
+msgctxt "#69045"
+msgid "OSD display time (sec)"
+msgstr ""
+
+msgctxt "#69046"
+msgid "Show OSD on stream change"
+msgstr ""
+
+msgctxt "#69047"
+msgid "Show service name in OSD"
+msgstr ""
+
+msgctxt "#69048"
+msgid "Current time during playback"
+msgstr ""
+
+msgctxt "#69049"
+msgid "Position"
+msgstr ""
+
+msgctxt "#69050"
+msgid "Top left"
+msgstr ""
+
+msgctxt "#69051"
+msgid "Top right"
+msgstr ""
+
+msgctxt "#69052"
+msgid "Bottom left"
+msgstr ""
+
+msgctxt "#69053"
+msgid "Bottom right"
+msgstr ""
+
+msgctxt "#69054"
+msgid "Size"
+msgstr ""
+
+msgctxt "#69055"
+msgid "[CR][CR]Link copied to clipboard"
+msgstr ""
+
+msgctxt "#69056"
+msgid "Download"
+msgstr ""
+
+msgctxt "#69057"
+msgid "Cancel download"
+msgstr ""
+
+msgctxt "#70000"
+msgid "Program title"
+msgstr ""
+
+msgctxt "#70001"
+msgid "Channel"
+msgstr ""
+
+msgctxt "#70002"
+msgid "Start time"
+msgstr ""
+
+msgctxt "#70003"
+msgid "Record length"
+msgstr ""
+
+msgctxt "#70004"
+msgid "Start record time-shift (min)"
+msgstr ""
+
+msgctxt "#70005"
+msgid "End record time-shift (min)"
+msgstr ""
+
+msgctxt "#70006"
+msgid "Task settings"
+msgstr ""
+
+msgctxt "#70008"
+msgid "Aqua"
+msgstr ""
+
+msgctxt "#70009"
+msgid "Blue"
+msgstr ""
+
+msgctxt "#70010"
+msgid "Green"
+msgstr ""
+
+msgctxt "#70011"
+msgid "Red"
+msgstr ""
+
+msgctxt "#70012"
+msgid "Purple"
+msgstr ""
+
+msgctxt "#70013"
+msgid "Yellow"
+msgstr ""
+
+msgctxt "#70014"
+msgid "Violet"
+msgstr ""
+
+msgctxt "#70015"
+msgid "Orange"
+msgstr ""
+
+msgctxt "#70007"
+msgid "Default"
+msgstr ""
+
+msgctxt "#70016"
+msgid "Default focus"
+msgstr ""
+
+msgctxt "#70017"
+msgid "Default remind"
+msgstr ""
+
+msgctxt "#70018"
+msgid "Default record"
+msgstr ""
+
+msgctxt "#70019"
+msgid "Full blue"
+msgstr ""
+
+msgctxt "#70020"
+msgid "Full red"
+msgstr ""
+
+msgctxt "#70021"
+msgid "Full orange"
+msgstr ""
+
+msgctxt "#70022"
+msgid "Dark focus"
+msgstr ""
+
+msgctxt "#70100"
+msgid "Add-on Install"
+msgstr ""
+
+msgctxt "#70101"
+msgid "Missing fonts. Please change skin or install font pack."
+msgstr ""
+
+msgctxt "#70102"
+msgid "Installation has finished. Kodi will now exit."
+msgstr ""
+
+msgctxt "#70103"
+msgid "Installation has failed. m-TVGuide will now exit."
+msgstr ""
+
+msgctxt "#70104"
+msgid "Change skin"
+msgstr ""
+
+msgctxt "#70105"
+msgid "Install font pack"
+msgstr ""
+
+msgctxt "#70106"
+msgid "Would you like to replace Kodi skin fonts? This option may break your skin and is not reversible."
+msgstr ""
+
+msgctxt "#70107"
+msgid "Kodi skin is missing, please download and install: {}"
+msgstr ""
+
+msgctxt "#70108"
+msgid "Skin replacement or font installation is required to start m-TVGuide."
+msgstr ""
+
+msgctxt "#70109"
+msgid "Monday"
+msgstr ""
+
+msgctxt "#70110"
+msgid "Tuesday"
+msgstr ""
+
+msgctxt "#70111"
+msgid "Wednesday"
+msgstr ""
+
+msgctxt "#70112"
+msgid "Thursday"
+msgstr ""
+
+msgctxt "#70113"
+msgid "Friday"
+msgstr ""
+
+msgctxt "#70114"
+msgid "Saturday"
+msgstr ""
+
+msgctxt "#70115"
+msgid "Sunday"
+msgstr ""
+
+msgctxt "#70116"
+msgid "Add channel"
+msgstr ""
+
+msgctxt "#70117"
+msgid "List"
+msgstr ""
+
+msgctxt "#70118"
+msgid "Non-writeable {} in use. Need to make a copy in userdata folder so we can install fonts. Would you like to continue?"
+msgstr ""
+
+msgctxt "#80005"
+msgid "[COLOR]WP Pilot[/COLOR]"
+msgstr ""
+
+msgctxt "#80006"
+msgid "[COLOR]Ipla[/COLOR]"
+msgstr ""
+
+msgctxt "#90000"
+msgid "Server"
+msgstr ""
+
+msgctxt "#90001"
+msgid "Getting started"
+msgstr ""
+
+msgctxt "#90002"
+msgid "Help"
+msgstr ""
+
+msgctxt "#90003"
+msgid "Readme"
+msgstr ""
+
+msgctxt "#90004"
+msgid "Credits"
+msgstr ""
+
+msgctxt "#95000"
+msgid "General information about the add-on."
+msgstr ""
+
+msgctxt "#95001"
+msgid "Enabling this setting will activate a tutorial at startup that will simplify the setup process."
+msgstr ""
+
+msgctxt "#95002"
+msgid "Frequently asked questions and help section."
+msgstr ""
+
+msgctxt "#95003"
+msgid "Information about all add-on settings."
+msgstr ""
+
+msgctxt "#95004"
+msgid "Disclaimer and regulations statements."
+msgstr ""
+
+msgctxt "#95005"
+msgid "Public acknowledgement with contribution to the authors."
+msgstr ""
+
+msgctxt "#95006"
+msgid "Settings related to TV services."
+msgstr ""
+
+msgctxt "#95007"
+msgid "Enable television provider service."
+msgstr ""
+
+msgctxt "#95008"
+msgid "Select location of service."
+msgstr ""
+
+msgctxt "#95009"
+msgid "Choose to login with a C More supported television provider."
+msgstr ""
+
+msgctxt "#95010"
+msgid "Enter username for selected service."
+msgstr ""
+
+msgctxt "#95011"
+msgid "Enter password for selected service."
+msgstr ""
+
+msgctxt "#95012"
+msgid "Select priority of playback service with 0 being the lowest and 11 the highest (0-11)."
+msgstr ""
+
+msgctxt "#95013"
+msgid "Resets all C More login settings to thier default values."
+msgstr ""
+
+msgctxt "#95014"
+msgid "Select which client to use."
+msgstr ""
+
+msgctxt "#95015"
+msgid "Settings related to M3U resources."
+msgstr ""
+
+msgctxt "#95016"
+msgid "Select number of M3U resources."
+msgstr ""
+
+msgctxt "#95017"
+msgid "Enable M3U resource."
+msgstr ""
+
+msgctxt "#95018"
+msgid "Enter a display name for M3U resource."
+msgstr ""
+
+msgctxt "#95019"
+msgid "Select where to find the M3U resource. The options are: [File path] - A path to an M3U file whether it be on the device or the local network, [Url path] - A URL specifying the location of the M3U file."
+msgstr ""
+
+msgctxt "#95020"
+msgid "If location is [Url path] this setting must contain a valid URL."
+msgstr ""
+
+msgctxt "#95021"
+msgid "If location is [File path] this setting must contain a valid path."
+msgstr ""
+
+msgctxt "#95022"
+msgid "Stop playback while switching stream."
+msgstr ""
+
+msgctxt "#95023"
+msgid "Prefer the highest playback quality."
+msgstr ""
+
+msgctxt "#95024"
+msgid "Settings related to the EPG."
+msgstr ""
+
+msgctxt "#95025"
+msgid "Select where to find the XMLTV resource. The options are: [File path] - A path to an XMLTV file whether it be on the device or the local network, [Url path] - A URL specifying the location of the XMLTV file."
+msgstr ""
+
+msgctxt "#95026"
+msgid "Add actual streams automatically to each program."
+msgstr ""
+
+msgctxt "#95027"
+msgid "Show only assigned streams in the EPG list."
+msgstr ""
+
+msgctxt "#95028"
+msgid "If there are any changes to EPG on the server it will automatically be loaded into the add-on, else EPG will be renewed when generated days have been terminated."
+msgstr ""
+
+msgctxt "#95029"
+msgid "More extended information is being ruled out for faster loading times."
+msgstr ""
+
+msgctxt "#95030"
+msgid "If enabled program logos will be displayed instead of channel names."
+msgstr ""
+
+msgctxt "#95031"
+msgid "If enabled it will display program thumbnails instead of add-on logo."
+msgstr ""
+
+msgctxt "#95032"
+msgid "If location is [File Path] this setting should contain a valid path."
+msgstr ""
+
+msgctxt "#95033"
+msgid "Select a valid path with channel logos, if logos are missing."
+msgstr ""
+
+msgctxt "#95034"
+msgid "If location is [Url Path] this setting should contain a valid URL."
+msgstr ""
+
+msgctxt "#95035"
+msgid ""
+msgstr ""
+
+msgctxt "#95036"
+msgid "If enabled this will add possiblity to enter EPG for different regions, and enabling basemap for selected location."
+msgstr ""
+
+msgctxt "#95037"
+msgid "If enabled, foreign channels will be set and enabling basemap for selected location."
+msgstr ""
+
+msgctxt "#95038"
+msgid "If enabled this will add possiblity to enter EPG for radio channels."
+msgstr ""
+
+msgctxt "#95039"
+msgid "Show adult content."
+msgstr ""
+
+msgctxt "#95040"
+msgid "Show video on demand content."
+msgstr ""
+
+msgctxt "#95041"
+msgid "Select local time (Default is set to +01.00)."
+msgstr ""
+
+msgctxt "#95042"
+msgid "Settings including autostart, sleep timer and other properties."
+msgstr ""
+
+msgctxt "#95043"
+msgid "If enabled add-on will automatically start when Kodi is loaded."
+msgstr ""
+
+msgctxt "#95044"
+msgid "If enabled channel will automatically start playing on startup."
+msgstr ""
+
+msgctxt "#95045"
+msgid "Start playing last seen channel."
+msgstr ""
+
+msgctxt "#95046"
+msgid "Start playing selected channel by number."
+msgstr ""
+
+msgctxt "#95047"
+msgid "Adjust timebar offset."
+msgstr ""
+
+msgctxt "#95048"
+msgid "Recieve important system notifications."
+msgstr ""
+
+msgctxt "#95049"
+msgid "This setting makes add-on stop any playback if it exceeds a given playback time. If you have that awful habit of leaving the add-on playing live content after you fell asleep this might be for you. It gives extended control over the playback time."
+msgstr ""
+
+msgctxt "#95050"
+msgid "Put add-on to sleep after selected time (minutes)."
+msgstr ""
+
+msgctxt "#95051"
+msgid "Decide what action the add-on should preform when timeout is set."
+msgstr ""
+
+msgctxt "#95052"
+msgid "If enabled virtual buttons will be shown for mouse or touchpad support."
+msgstr ""
+
+msgctxt "#95053"
+msgid "Remember the last used favorite list."
+msgstr ""
+
+msgctxt "#95054"
+msgid "Set key shortcuts for different actions."
+msgstr ""
+
+msgctxt "#95055"
+msgid "If enabled you will be able to select a channel by number and display digits in the EPG."
+msgstr ""
+
+msgctxt "#95056"
+msgid "Decide what action to take when entering a number in the EPG."
+msgstr ""
+
+msgctxt "#95057"
+msgid "Select exit type for the add-on."
+msgstr ""
+
+msgctxt "#95058"
+msgid "Settings related to video playback."
+msgstr ""
+
+msgctxt "#95059"
+msgid "Selected time to startup stream service (seconds)."
+msgstr ""
+
+msgctxt "#95060"
+msgid "If enabled this setting will try to reconnect a broken stream."
+msgstr ""
+
+msgctxt "#95061"
+msgid "Select the number of tries to reconnect broken stream."
+msgstr ""
+
+msgctxt "#95062"
+msgid "Waiting time for stream to reconnect if first stream is broken (milliseconds)."
+msgstr ""
+
+msgctxt "#95063"
+msgid "Refresh the time table periodically to actual program."
+msgstr ""
+
+msgctxt "#95064"
+msgid "Maximum waiting time for stream to connect (seconds)."
+msgstr ""
+
+msgctxt "#95065"
+msgid "If enabled when a back button is pressed this will stop the playback and return to main screen, else it will work as a picture in picture function."
+msgstr ""
+
+msgctxt "#95066"
+msgid "Toggles fullscreen playback for video content. May improve performance on low-end systems."
+msgstr ""
+
+msgctxt "#95067"
+msgid "If enabled this setting will display an on screen display when a playback is started."
+msgstr ""
+
+msgctxt "#95068"
+msgid "Time how long the on screen display should be shown (seconds)."
+msgstr ""
+
+msgctxt "#95069"
+msgid "If enabled this setting will display a OSD when pressing select button, else a information dialog will show up."
+msgstr ""
+
+msgctxt "#95070"
+msgid "If enabled virtual buttons will be shown in the on screen display for easier navigation."
+msgstr ""
+
+msgctxt "#95071"
+msgid "Ability to navigate channels through out the on screen display."
+msgstr ""
+
+msgctxt "#95072"
+msgid "If enabled on screen display will be shown automatically when playback is started."
+msgstr ""
+
+msgctxt "#95073"
+msgid "Time how long the automatic on screen display should be shown (seconds)."
+msgstr ""
+
+msgctxt "#95074"
+msgid "If enabled the on screen display will be shown on stream change."
+msgstr ""
+
+msgctxt "#95075"
+msgid "If enabled a notification about the selected service provider will be displayed on playback startup."
+msgstr ""
+
+msgctxt "#95076"
+msgid "Display current time during playback."
+msgstr ""
+
+msgctxt "#95077"
+msgid "Select position on screen where current time should be displayed."
+msgstr ""
+
+msgctxt "#95078"
+msgid "Select size of displayed current time."
+msgstr ""
+
+msgctxt "#95079"
+msgid "Settings related to database and other advanced properties."
+msgstr ""
+
+msgctxt "#95080"
+msgid "Uploads your kodi.log file and returns an url you can post to seek help with an add-on issue. Be aware that this log file may contain sensitive information about your system."
+msgstr ""
+
+msgctxt "#95081"
+msgid "Clears all program reminders."
+msgstr ""
+
+msgctxt "#95082"
+msgid "Clears all program recordings."
+msgstr ""
+
+msgctxt "#95083"
+msgid "Export and create backup for add-on settings."
+msgstr ""
+
+msgctxt "#95084"
+msgid "Import backuped add-on settings."
+msgstr ""
+
+msgctxt "#95085"
+msgid "Delete all streams that have been manually assigned."
+msgstr ""
+
+msgctxt "#95086"
+msgid "Resetting the database will cause losing all settings, might be helpful in case of data have become corrupted."
+msgstr ""
+
+msgctxt "#95087"
+msgid "Delete the database file incase you would like to create a new one, might be helpful in case of data have become corrupted."
+msgstr ""
+
+msgctxt "#95088"
+msgid "Permanently delete all add-on settings."
+msgstr ""
+
+msgctxt "#95089"
+msgid "Settings related to playback recording."
+msgstr ""
+
+msgctxt "#95090"
+msgid "Install necessary applications in order to record playback."
+msgstr ""
+
+msgctxt "#95091"
+msgid "This setting should contain a valid path to your recordings location."
+msgstr ""
+
+msgctxt "#95092"
+msgid "If enabled FFMPEG software will be used to record Real-Time Messaging Protocol, else RTMPDUMP will apply."
+msgstr ""
+
+msgctxt "#95093"
+msgid "This setting should contain a valid path to RTMPDUMP software."
+msgstr ""
+
+msgctxt "#95094"
+msgid "This setting should contain a valid path to FFMPEG software."
+msgstr ""
+
+msgctxt "#95095"
+msgid "If enabled playback will be stopped if a recording is started."
+msgstr ""
+
+msgctxt "#95096"
+msgid "Maximum number of attempts to resume recording."
+msgstr ""
+
+msgctxt "#95097"
+msgid "If enabled a dialog popup will be prompted asking to delete watched recordings."
+msgstr ""
+
+msgctxt "#95098"
+msgid "Catchup settings for viewing archived live programmes. Allows the option of 'Play programme' when viewing EPG entry info."
+msgstr ""
+
+msgctxt "#95099"
+msgid "Should be enabled if there are channels supporting catchup in your M3U list."
+msgstr ""
+
+msgctxt "#95100"
+msgid "If enabled it is assumed that all channels support catchup using the selected mode if they do not have catchup tags. In this case the 'Query format string' and 'Catchup window' number of days will come from the add-on settings if needed. If this option is disabled then an M3U entry must have at least a 'catchup=' tag to enable catchup. The options for how to build the catch URL are: [Default] - Use catchup source as the full catchup URL, if there is no catchup source use Append mode; [Shift (SIPTV)] - Append the standard SIPTV catchup string to the channel URL; [Xtream codes] - Build an Xtream codes URL from the channel URL.; [Append] - Append the catchup source to the channel URL, if there is no catchup source using the 'Query format string'"
+msgstr ""
+
+msgctxt "#95101"
+msgid "A query format string (provider dependent) allowing timestamp information to be appended to a URL to denote when to catchup from. E.g. `&cutv={Y}-{m}-{d}T{H}:{M}:{S}`, which allows year, month, day, hour minute and second to be inserted to give: `&cutv=2019-11-26T22:00:32`. If the M3U entry using has a catchup mode of 'default' or 'append' and a 'catchup-source' tag is provided in the M3U entry this setting will be ignored."
+msgstr ""
+
+msgctxt "#95102"
+msgid "A number of days into the past in which it is possible to catchup on a programme. Auto mode will read the 'catchup=' tag in M3U list."
+msgstr ""
+
+msgctxt "#95103"
+msgid "Overrides auto mode setting and sets the catchup days manually (maximum 30 days)."
+msgstr ""
+
+msgctxt "#95104"
+msgid "When selected from the EPG the current live programme cannot be watched as catchup until finished."
+msgstr ""
+
+msgctxt "#95105"
+msgid "Settings related to listing view."
+msgstr ""
+
+msgctxt "#95106"
+msgid "Select how many future days to show in listing views."
+msgstr ""
+
+msgctxt "#95107"
+msgid "Select how many previous hours to show in listing views."
+msgstr ""
+
+msgctxt "#95108"
+msgid "Default listing views are sorted by time then channel."
+msgstr ""
+
+msgctxt "#95109"
+msgid "When searching for titles, description will also be included. This is what you would expect from most online searches."
+msgstr ""
+
+msgctxt "#95110"
+msgid "Settings related to appearance."
+msgstr ""
+
+msgctxt "#95111"
+msgid "Select desire add-on skin to change the appearance."
+msgstr ""
+
+msgctxt "#95112"
+msgid "Install font pack for selected add-on skin."
+msgstr ""
+
+msgctxt "#95113"
+msgid "Delete all installed add-on skins."
+msgstr ""
+
+msgctxt "#95114"
+msgid "Settings related to category colours."
+msgstr ""
+
+msgctxt "#95115"
+msgid "Select category colour for movies."
+msgstr ""
+
+msgctxt "#95116"
+msgid "Select category colour for TV series."
+msgstr ""
+
+msgctxt "#95117"
+msgid "Select category colour for current events."
+msgstr ""
+
+msgctxt "#95118"
+msgid "Select category colour for entertainment."
+msgstr ""
+
+msgctxt "#95119"
+msgid "Select category colour for documentaries."
+msgstr ""
+
+msgctxt "#95120"
+msgid "Select category colour for childrens programme."
+msgstr ""
+
+msgctxt "#95121"
+msgid "Select category colour for sports."
+msgstr ""
+
+msgctxt "#95122"
+msgid "Select category colour for interactive entertainment."
+msgstr ""
+
+msgctxt "#95123"
+msgid "Select background colour."
+msgstr ""
+
+msgctxt "#95124"
+msgid "Select program focus highlight colour."
+msgstr ""
+
+msgctxt "#95125"
+msgid "Select program schedule highlight colour."
+msgstr ""
+
+msgctxt "#95126"
+msgid "Select program recording highlight colour."
+msgstr ""
+
+msgctxt "#95127"
+msgid "Settings related to add-on update."
+msgstr ""
+
+msgctxt "#95128"
+msgid "Install latest available add-on update from the mods-kodi repository."
+msgstr ""
+
+msgctxt "#95129"
+msgid "Change User-Agent to modify stream string sent through HTTP headers."
+msgstr ""
+
+msgctxt "#95130"
+msgid "Provide EPG and select region basemap categories."
+msgstr ""
+
+msgctxt "#95131"
+msgid "Cache playlist to local drive for faster loading time."
+msgstr ""
+
+msgctxt "#95132"
+msgid "Adjust interval time for playlist update."
+msgstr ""
+
+msgctxt "#99995" 
+msgid "[COLOR gold][B]m-TVGuide[/B][/COLOR]\n\nThis is a Kodi add-on with support for an electronic tvguide (EPG) and that allows streaming content from licensed television provider services.\n\n[COLOR blue][B]List of available television providers[/B][/COLOR]\n\n[B]C More[/B] - C More Entertainment\n[B]Cyfrowy Polsat GO[/B] - Cyfrowy Polsat S.A.\n[B]FranceTV[/B] - France Télévisions\n[B]Ipla[/B] - Cyfrowy Polsat S.A.\n[B]nc+ GO[/B] - ITI Neovision S.A.\n[B]PlayerPL[/B] - TVN S.A.\n[B]Telia Play[/B] - Telia Company AB\n[B]WP Pilot[/B] - Wirtualna Polska Media S.A.\n__________________________________________________________________\n\n[COLOR gold][B]Disclaimer[/B][/COLOR]\n\nThis add-on is unoffical and is not endorsed or supported by any of the services provided in any way. Any trademarks used belong to their owning companies and organisations. \n \nLogging on to websites is done through the services of a television provider, through a standard application programming interface (API) request.\n__________________________________________________________________\n\n[COLOR gold][B]Regulations[/B][/COLOR]\n\nDetailed regulations of the television providers can be found on their websites.\n\n[B]C More[/B] - [I]https://www.cmore.se/artiklar/anvandarvillkor/[/I]\n[B]Cyfrowy Polsat GO[/B] - [I]https://www.cyfrowypolsat.pl/do-pobrania/regulanki-i-cenniki.cp/[/I]\n[B]FranceTV[/B] - [I]https://www.francetelevisions.fr/cgu/[/I]\n[B]Ipla[/B] - [I]https://www.ipla.tv/regulamins/[/I]\n[B]nc+ GO[/B] - [I]https://ncplusgo.pl/Cms/Page?codename=regulamin/[/I]\n[B]PlayerPL[/B] - [I]https://player.pl/regulamin.pdf[/I]\n[B]Telia Play[/B] - [I]https://www.telia.se/privat/om/villkor/villkor-mitt-telia/[/I]\n[B]WP Pilot[/B] - [I]https://pilot.wp.pl/pomoc/[/I]\n\nAccount registration takes place on the television provider website.\n\n[B]C More[/B] - [I]https://www.cmore.se/skapakonto/[/I]\n[B]Cyfrowy Polsat GO[/B] - [I]https://icok.cyfrowypolsat.pl/rejestracja.cp/[/I]\n[B]FranceTV[/B] - [I]https://www.francetelevisions.fr/[/I]\n[B]Ipla[/B] - [I]https://www.ipla.tv/register/[/I]\n[B]nc+ GO[/B] - [I]https://ncplusgo.pl/konto/rejestracja/[/I]\n[B]PlayerPL[/B] - [I]https://player.pl/[/I]\n[B]Telia Play[/B] - [I]https://www.telia.se/privat/mitt-telia/logga-in/[/I]\n[B]WP Pilot[/B] - [I]https://pilot.wp.pl/register/[/I]\n\nSubscription fees are made on the television providers website and are not linked to the add-on.\n\nMore information on licensed television providers is found here:\n\nFrance - Autorité de Régulation des Communications Électroniques et des Postes\n[I]https://www.arcep.fr/[/I]\n\nPoland - Krajowa Rada Radiofonii i Telewizji\n[I]http://www.krrit.gov.pl/[/I]\n\nSweden - Post- och telestyrelsen\n[I]https://www.pts.se/[/I]\n__________________________________________________________________\n\n[COLOR gold][B]DRM protected streams[/B][/COLOR]\n\nSome content is DRM protected and requires the proprietary decryption module Widevine CDM for playback. You will be prompted to install this if you're attempting to play a stream without the binary installed. \n \nMost Android devices have built-in support for Widevine DRM and doesn't require any additional binaries. You can see if your Android device supports Widevine DRM by using the DRM Info app available in Play Store.\n__________________________________________________________________\n\n[COLOR gold][B]License[/B][/COLOR]\n\nThis add-on is licensed under the GNU GENERAL PUBLIC LICENSE Version 3 and MIT LICENSE. \nPlease see the LICENSE.txt file for details.\n__________________________________________________________________\n\n[COLOR gold][B]Support[/B][/COLOR]\n\nPlease report any legal questions or issues to support@m-tvguide.pl. \n \nBug reports can be sent to mods-kodi administration on our website [I]http://mods-kodi.pl/[/I]. \nRemember to include a full, non-cut off Kodi debug log. \nSee the Kodi wiki page for more detailed instructions on how to obtain the log file. \n \nAdditional support/discussion about the add-on can be found on our website [I]http://mods-kodi.pl/[/I].\n\nThis statement is also available in polish language on http://m-tvguide.pl/regulamin/."
+msgstr ""
+
+msgctxt "#99996"
+msgid "[COLOR gold][B]EPG[/B][/COLOR]\n\n[UPPERCASE][COLOR FF0cbe24][B]•[/B][/COLOR][/UPPERCASE] Indicates that the program has timeshift and is available for download.\n[UPPERCASE][COLOR FF01cdfe][B]•[/B][/COLOR][/UPPERCASE] Indicates that the program is available for download.\n__________________________________________________________________\n\n[COLOR blue][B]Context menu[/B][/COLOR]\n\n- [B]Go to channel[/B]\nChoose a channel number.\n\n- [B]Programme information[/B]\n[I](Shortcut key [ I ] or [ INFO ])[/I]\nInformation from EPG about the selected program.\n\n- [B]Extended information[/B]\n[I](Shortcut key [ I ] or [ INFO ])[/I]\nExtended information from the ExtendedInfo Script plugin for the selected program.\n\n- [B]Remind[/B]\nEnables reminder notifications when the program is about to start. Reminders can be set for a single program or any occurence of that program name.\n\n- [B]Record[/B]\n[I](Shortcut key [ CUSTOM ])[/I]\nEnables recording or downloading of the selected program.\n\n- [B]Recordings[/B]\nOpens the saved recording location.\n\n- [B]Channels[/B]\nEdit the order and visibility of channels.\n\n- [B]Lists[/B]\n[I](Shortcut key [ CUSTOM ])[/I]\nListings views can be brought up by channel list, now, next, reminders, recordings and search engine.\n\n- [B]Options[/B]\nAddon settings.\n\n- [B]Favourites[/B]\nPlay favorite channels from other addons.\n\n- [B]Add favorites[/B]\nCreate a list of favorite programs that will be displayed in EPG.\n\n- [B]Add channel[/B]\nAdd stream to a channel available in EPG.\n\n- [B]Remove/Choose stream[/B]\nAbility to choose streams from favorites or import from different addons.\n\n- [B]Exit[/B]\nExit the m-TVGuide addon.\n__________________________________________________________________\n\n[COLOR blue][B]Playing content[/B][/COLOR]\n\n- [B]Switch stream[/B]\n[I](Shortcut key [ C ] or [ CONTEXT ])[/I]\nSwitch stream by selected priority.\n\n- [B]Programme information[/B]\n(Shortcut key [ I ] or [ INFO ])\nInformation from EPG about the selected program.\n__________________________________________________________________\n\n[COLOR blue][B]Gettings started[/B][/COLOR]\n\n- [B]Information[/B]\n(Options - Gettings started) Here you will find more information about the settings of m-TVGuide."
+msgstr ""
+
+msgctxt "#99997"
+msgid "[COLOR gold][B]Startup[/B][/COLOR]\n\nFirst time using m-TVGuide? Use the built in configuration tutorial by enabling it in the settings tab and then start the add-on, following the tutorial step by step will simplify the setup process.\n__________________________________________________________________\n\n[COLOR gold][B]EPG[/B][/COLOR]\n\n- [B]Electronic program guide[/B]\nProvide an electronic program guide for m-TVGuide to display all information regarding programs, without it m-TVGuide will not start. The EPG can be obtained by purchasing a premium account on our website: [I]http://www.mods-kodi.pl/[/I] \n\nUrl link to the EPG should be entered in EPG section in m-TVGuide settings. m-TVGuide also supports external EPG.\n__________________________________________________________________\n\n[COLOR gold][B]TV Services[/B][/COLOR]\n\n- [B]Playback service[/B]\nProvide a playback service for m-TVGuide to use. Usually you only need to enter your username and password to login to the selected service. It is also possible to add a M3U playback list from a source or from a local file. These credentials should be entered in the TV Service or Playlists M3U section in m-TVGuide settings.\n__________________________________________________________________\n\n[COLOR gold][B]FAQ[/B][/COLOR]\n\n- [B]EPG url link is invalid message[/B]\nThis usually means that the url link to EPG is incorrect, please make sure you provided a correct EPG url link. You can also try to reset the database in settings in case of multiple startup failures.\n\n- [B]Password for adult channels[/B] \nThe password is provided in the premium links section at:\n[I]http://mods-kodi.pl/infusions/time_group_panel/premium[/I]\n\n(Premium account required).\n\n- [B]Add-on has assigned channels but playback is not starting[/B]\nMake sure you provided a playback service for the add-on to use, see the services section above. If the playback service is not working, in first hand please contact the television service provider and make sure that the provided service is operational.\n\n- [B]Can't navigate with touch screen[/B]\nEnable navigation panel for mouse or touch in settings tab.\n\n- [B]Other issues[/B]\nIn the database tab select upload kodi log, the log will be sent to a external server and an individual url link will be given. Please provide the given url link to the mods-kodi administration to get help along with an error/bug in m-TVGuide.\n\n__________________________________________________________________\n\n[COLOR gold][B]Support[/B][/COLOR]\n\nAdditional support/discussion about the add-on can be found on our website [I]http://mods-kodi.pl/[/I]."
+msgstr ""
+
+msgctxt "#99998"
+msgid "[COLOR gold][B]m-TVGuide settings[/B][/COLOR]\n\nInformation about all settings in m-TVGuide. The code in brackets is either the internal setting name or the action that is performed. The instruction inside parentheses explain the preformed action of the setting.\n\n[COLOR gold][B]Getting started[/B][/COLOR]\n\n- [B]Configuration tutorial[/B] [COLOR dimgrey][tutorial][/COLOR]\n[I](Enabled, Disabled)[/I]\nEnabling this setting will activate a tutorial at startup that will simplify the setup process.\n\n- [B]Help[/B] [COLOR dimgrey][help][/COLOR]\nFrequently asked questions and help section.\n\n- [B]Readme[/B] [COLOR dimgrey][readme][/COLOR]\nInformation about all add-on settings.\n\n- [B]Credits[/B] [COLOR dimgrey][credits][/COLOR]\nDisclaimer and regulations statements.\n__________________________________________________________________\n\n[COLOR gold][B]TV services[/B][/COLOR]\n\n- [B]TV service provider[/B] [COLOR dimgrey][tvservice_enabled][/COLOR]\n[I](Enabled, Disabled)[/I]\nTelevision provider service capable of playing video content.\n__________________________________________________________________\n\n[COLOR gold][B]Playlists M3U[/B][/COLOR]\n\n- [B]Playlist M3U[/B] [COLOR dimgrey][playlist_enabled][/COLOR]\n[I](Enabled, Disabled)[/I]\nM3U resource capable of playing video content.\n__________________________________________________________________\n\n[COLOR blue][B]Playback settings[/B][/COLOR]\n\n- [B]Display name[/B] [COLOR dimgrey][playlist_display_name][/COLOR]\nEnter a display name for M3U resource.\n\n- [B]Save playlist to local drive[/B] [COLOR dimgrey][playlist_refr][/COLOR]\n[I](Enabled, Disabled)[/I]\nCache playlist to local drive for faster loading time.\n\n- [B]Update playlist (days)[/B] [COLOR dimgrey][playlist_refr_days][/COLOR]\nAdjust interval time for playlist update.\n\n- [B]Source[/B] [COLOR dimgrey][playlist_source][/COLOR]\nSelect where to find the M3U resource. The options are: [File path] - A path to an M3U file whether it be on the device or the local network, [Url path] - A URL specifying the location of the M3U file.\n \n- [B]Url[/B] [COLOR dimgrey][playlist_url][/COLOR] \nIf location is [Url path] this setting must contain a valid URL. \n \n- [B]File[/B] [COLOR dimgrey][playlist_file][/COLOR] \nIf location is [File path] this setting must contain a valid path. \n\n- [B]Stop playback while switching stream[/B] [COLOR dimgrey][playlist_stop_when_starting][/COLOR]\n[I](Enabled, Disabled)[/I]\nStop playback while switching stream.\n\n- [B]Prefer HD stream[/B] [COLOR dimgrey][playlist_high_prio_hd][/COLOR]\n[I](Enabled, Disabled)[/I]\nPrefer the highest playback quality.\n\n- [B]Priority[/B] [COLOR dimgrey][playlist_priority][/COLOR]\nSelect priority of playback service with 0 being the lowest and 11 the highest (0-11).\n__________________________________________________________________\n\n[COLOR gold][B]EPG[/B][/COLOR]\n\n- [B]Source[/B] [COLOR dimgrey][source][/COLOR]\n(Url, File)\nSelect where to find the XMLTV resource. The options are: [File path] - A path to an XMLTV file whether it be on the device or the local network, [Url path] - A URL specifying the location of the XMLTV file.\n__________________________________________________________________\n\n[COLOR blue][B]EPG[/B][/COLOR]\n\n- [B]Automatically assign streams[/B] [COLOR dimgrey][AutoUpdateCid][/COLOR]\n[I](Enabled, Disabled)[/I]\nAdd actual streams automatically to each program.\n\n- [B]Show only programs with streams assigned[/B] [COLOR dimgrey][OnlyChannelsWithStream][/COLOR]\n[I](Enabled, Disabled)[/I]\nShow only assigned streams in the EPG list.\n\n- [B]Auto detect EPG change[/B] [COLOR dimgrey][UpdateEPGOnModifiedDate][/COLOR]\n[I](Enabled, Disabled)[/I]\nIf there are any changes to EPG on the server it will automatically be loaded into the add-on, else EPG will be renewed when generated days have been terminated.\n\n- [B]Use fast EPG parser[/B] [COLOR dimgrey][useCustomParser][/COLOR]\n[I](Enabled, Disabled)[/I]\nMore extended information is being ruled out for faster loading times.\n\n- [B]Refresh EPG table periodically[/B] [COLOR dimgrey][refresh_streams][/COLOR]\nRefresh the time table periodically to actual program.\n\n- [B]Show channel logos[/B] [COLOR dimgrey][show_logo][/COLOR]\n[I](Enabled, Disabled)[/I]\nIf enabled program logos will be displayed instead of channel names.\n\n- [B]Show program thumbnail[/B] [COLOR dimgrey][show_program_logo][/COLOR]\n[I](Enabled, Disabled)[/I]\nIf enabled it will display program thumbnails instead of add-on logo. \n__________________________________________________________________ \n\n[COLOR blue][B]EPG[/B][/COLOR]\n\n- [B]Select EPG[/B] [COLOR dimgrey][countryChannels][/COLOR]\n[I](Select)[/I]\nProvide EPG and select basemap region categories. \n__________________________________________________________________ \n\n[COLOR blue][B]File[/B][/COLOR] \n \n- [B]XMLTV file[/B] [COLOR dimgrey][xmltv_file][/COLOR] \nIf location is [File Path] this setting should contain a valid path. \n \n- [B]Search for channel logos in[/B] [COLOR dimgrey][xmltv_logo_folder][/COLOR] \nSelect a valid path with channel logos, if logos are missing.\n__________________________________________________________________\n\n[COLOR blue][B]Url[/B][/COLOR]\n\n- [B]Main[/B] [COLOR dimgrey][m-TVGuide][/COLOR]\nIf location is [Url Path] this setting should contain a valid URL.\n\n- [B]Additional[/B] [COLOR dimgrey][m-TVGuide2][/COLOR]\nIf location is [Url Path] this setting should contain a valid URL.\n\n- [B]Additional[/B] [COLOR dimgrey][m-TVGuide3][/COLOR]\nIf location is [Url Path] this setting should contain a valid URL.\n\n- [B]Adult channels[/B] [COLOR dimgrey][showAdultChannels][/COLOR]\n[I](Enabled, Disabled, password)[/I]\nShow adult content.\n\n- [B]Vod channels[/B] [COLOR dimgrey][showVodChannels][/COLOR]\n[I](Enabled, Disabled)[/I]\nShow video on demand content. \n__________________________________________________________________\n\n- [B]Timezone UTC[/B] [COLOR dimgrey][time_zone][/COLOR]\nSelect local time (Default is set to +01.00).\n__________________________________________________________________\n\n[COLOR gold][B]Settings[/B][/COLOR]\n\n- [B]Enable add-on autostart[/B] [COLOR dimgrey][autostart_mtvguide][/COLOR]\n[I](Enabled, Disabled)[/I]\nIf enabled add-on will automatically start when Kodi is loaded.\n\n- [B]Enable automatic channel playback[/B] [COLOR dimgrey][autostart_channel][/COLOR]\n[I](Enabled, Disabled)[/I]\nIf enabled channel will automatically start playing on startup. \n__________________________________________________________________ \n \n[COLOR blue][B]Automatic channel playback[/B][/COLOR] \n \n- [B]Last seen channel[/B] [COLOR dimgrey][autostart_channel_last][/COLOR] \nStart playing last seen channel. \n \n- [B]By channel number[/B] [COLOR dimgrey][autostart_channel_number][/COLOR] \nStart playing selected channel by number. \n__________________________________________________________________\n \n- [B]Adjust timebar (min)[/B] [COLOR dimgrey][timebar_adjust][/COLOR] \nAdjust timebar offset. \n\n- [B]Show service notification[/B] [COLOR dimgrey][notifications_enabled][/COLOR]\n[I](Enabled, Disabled)[/I]\nRecieve important system notifications.\n__________________________________________________________________\n\n[COLOR blue][B]Sleep timer[/B][/COLOR]\n\n- [B]Enable sleep timer[/B] [COLOR dimgrey][sleep__enabled][/COLOR]\n[I](Enabled, Disabled)[/I]\nThis setting makes add-on stop any playback if it exceeds a given playback time. If you have that awful habit of leaving the add-on playing live content after you fell asleep this might be for you. It gives extended control over the playback time.\n\n- [B]Timeout value (min)[/B] [COLOR dimgrey][sleep_timer][/COLOR]\nPut add-on to sleep after selected time (minutes).\n\n- [B]Timeout action[/B] [COLOR dimgrey][sleep__action][/COLOR]\n[I](Stop playback, Exit Kodi, Hibernate, Shutdown)[/I]\nDecide what action the add-on should preform when timeout is set.\n__________________________________________________________________\n\n- [B]Enable navigation panel for mouse or touch[/B] [COLOR dimgrey][touch_panel][/COLOR]\n[I](Enabled, Disabled)[/I]\nIf enabled virtual buttons will be shown for mouse or touchpad support.\n\n- [B]Remember list of favorites[/B] [COLOR dimgrey][categories_remember][/COLOR]\n[I](Enabled, Disabled)[/I]\nRemember the last used favorite list.\n\n- [B]Set keys[/B] [COLOR dimgrey][RunScript($CWD/setkey.py)][/COLOR]\nSet key shortcuts for different actions.\n\n- [B]Enable channel order by number[/B] [COLOR dimgrey][channel_shortcut][/COLOR]\n[I](Enabled, Disabled)[/I]\nIf enabled you will be able to select a channel by number and display digits in the EPG.\n\n- [B]Play on select[/B] [COLOR dimgrey][channel_shortcut_behaviour][/COLOR]\n(Don't play, Play)\nDecide what action to take when entering a number in the EPG.\n\n- [B]Exit[/B] [COLOR dimgrey][exit][/COLOR]\n(Click twice to exit, Ask on exit)\nSelect exit type for the add-on.\n__________________________________________________________________\n\n[COLOR gold][B]Video[/B][/COLOR]\n\n- [B]Max service startup time (sec)[/B] [COLOR dimgrey][max_connection_time][/COLOR]\nSelected time to startup stream service (seconds).\n\n- [B]Reconnect broken stream[/B] [COLOR dimgrey][reconnect_stream][/COLOR]\n[I](Enabled, Disabled)[/I]\nIf enabled this setting will try to reconnect a broken stream.\n\n- [B]Max numbers of reattempts[/B] [COLOR dimgrey][max_reconnect_attempts][/COLOR]\nSelect the number of tries to reconnect broken stream.\n\n- [B]Reattempt delay (ms)[/B] [COLOR dimgrey][reconnect_delay][/COLOR]\nWaiting time for stream to reconnect if first stream is broken (milliseconds).\n\n- [B]Max stream startup time (sec)[/B] [COLOR dimgrey][max_wait_for_playback][/COLOR]\nMaximum waiting time for stream to connect (seconds).\n\n- [B]Stop playback using navi back button[/B] [COLOR dimgrey][navi_back_stop_play][/COLOR]\n[I](Enabled, Disabled)[/I]\nIf enabled when a back button is pressed this will stop the playback and return to main screen, else it will work as a picture in picture function.\n__________________________________________________________________\n\n[COLOR blue][B]Fullscreen window size animation[/B][/COLOR]\n\n- [B]Enable fullscreen window size animation[/B] [COLOR dimgrey][start_video_minimalized][/COLOR]\n[I](Enabled, Disabled)[/I]\nToggles fullscreen playback for video content. May improve performance on low-end systems.\n__________________________________________________________________\n\n[COLOR blue][B]OSD[/B][/COLOR]\n\n- [B]Enable OSD[/B] [COLOR dimgrey][info_osd][/COLOR]\n[I](Enabled, Disabled)[/I]\nIf enabled this setting will display an on screen display when a playback is started.\n\n- [B]OSD display time (sec)[/B] [COLOR dimgrey][osd_time][/COLOR]\n[I](Enabled, Disabled)[/I]\nTime how long the on screen display should be shown (seconds).\n__________________________________________________________________\n\n[COLOR blue][B]OSD buttons[/B][/COLOR]\n\n- [B]OSD on select[/B] [COLOR dimgrey][VidOSD_on_select][/COLOR]\n[I](Enabled, Disabled)[/I]\nIf enabled this setting will display a OSD when pressing select button, else a information dialog will show up.\n\n- [B]Shows extra buttons on OSD[/B] [COLOR dimgrey][show_osd_buttons][/COLOR]\n[I](Enabled, Disabled)[/I]\nIf enabled virtual buttons will be shown in the on screen display for easier navigation.\n\n- [B]Navigating in OSD previous, next program[/B] [COLOR dimgrey][key_right_left_show_next][/COLOR]\n[I](Enabled, Disabled)[/I]\nAbility to navigate channels through out the on screen display.\n__________________________________________________________________\n\n[COLOR blue][B]Auto OSD[/B][/COLOR]\n\n- [B]Display auto OSD on play[/B] [COLOR dimgrey][show_osd_on_play][/COLOR]\n[I](Enabled, Disabled)[/I]\nIf enabled on screen display will be shown automatically when playback is started.\n\n- [B]Auto OSD display time (sec)[/B] [COLOR dimgrey][osd_on_play_time][/COLOR]\nTime how long the automatic on screen display should be shown (seconds).\n\n- [B]Show OSD on stream change[/B] [COLOR dimgrey][osd_on_stream_change][/COLOR]\n[I](Enabled, Disabled)[/I]\nIf enabled the on screen display will be shown on stream change.\n__________________________________________________________________\n\n- [B]Show service name in OSD[/B] [COLOR dimgrey][show_service_name][/COLOR]\n[I](Enabled, Disabled)[/I]\nIf enabled a notification about the selected service provider will be displayed on playback startup.\n__________________________________________________________________\n\n[COLOR blue][B]Display current time during playback[/B][/COLOR]\n\n- [B]Display current time during playback[/B] [COLOR dimgrey][show_time][/COLOR]\n[I](Enabled, Disabled)[/I]\nDisplay current time during playback, even while OSD is not focused. \n\n- [B]Position[/B] [COLOR dimgrey][show_time_pos][/COLOR]\n[I](Top left, Top right, Bottom left, Bottom right)[/I]\nSelect position on screen where current time should be displayed.\n\n- [B]Size[/B] [COLOR dimgrey][show_time_size][/COLOR]\nSelect size of displayed current time.\n__________________________________________________________________\n\n[COLOR gold][B]Database[/B][/COLOR]\n\n- [B]Upload kodi log[/B] [COLOR dimgrey][RunScript($CWD/logUploader.py, primary)][/COLOR]\nUploads your kodi.log file and returns an url you can post to seek help with an add-on issue. Be aware that this log file may contain sensitive information about your system.\n\n- [B]Clear all reminders...[/B] [COLOR dimgrey][RunScript($CWD/notification.py)][/COLOR]\nClears all program reminders.\n\n- [B]Clear all planed recordings...[/B] [COLOR dimgrey][RunScript($CWD/cleardb.py, clearRecordings)][/COLOR]\nClears all program recordings.\n\n- [B]Export setings[/B] [COLOR dimgrey][RunScript($CWD/settingsImportExport.py, Export)][/COLOR]\nExport and create backup for add-on settings.\n\n- [B]Import setings[/B] [COLOR dimgrey][RunScript($CWD/settingsImportExport.py, Import)][/COLOR]\nImport backuped add-on settings.\n\n- [B]Delete custom streams[/B] [COLOR dimgrey][RunScript($CWD/cleardb.py, clearCustom)][/COLOR]\nDelete all streams that have been manually assigned.\n\n- [B]Clear database[/B] [COLOR dimgrey][RunScript($CWD/cleardb.py, clearAll)][/COLOR]\nResetting the database will cause losing all settings, might be helpful in case of data have become corrupted.\n\n- [B]Delete database file[/B] [COLOR dimgrey][RunScript($CWD/cleardb.py, deleteDbFile)][/COLOR]\nDelete the database file incase you would like to create a new one, might be helpful in case of data have become corrupted.\n\n- [B]Delete all settings[/B] [COLOR dimgrey][RunScript($CWD/cleardb.py, deleteAll)][/COLOR]\nPermanently delete all add-on settings.\n__________________________________________________________________\n\n[COLOR gold][B]Recording[/B][/COLOR]\n\n- [B]Install recording applications[/B] [COLOR dimgrey][download_record_app][/COLOR]\nInstall necessary applications in order to record playback.\n\n- [B]Record destination[/B] [COLOR dimgrey][record_folder][/COLOR]\nThis setting should contain a valid path to your recordings location. \n \n- [B]Use FFMPEG to record RTMP instead of RTMPDUMP[/B] [COLOR dimgrey][use_only_ffmpeg][/COLOR] \n[I](Enabled, Disabled)[/I] \nIf enabled FFMPEG software will be used to record Real-Time Messaging Protocol, else RTMPDUMP will apply.\n\n- [B]Import RTMPDUMP[/B] [COLOR dimgrey][rtmpdumpExe][/COLOR]\n[I](Select)[/I]\nThis setting should contain a valid path to RTMPDUMP software.\n\n- [B]Import FFMPEG[/B] [COLOR dimgrey][ffmpegExe][/COLOR]\n[I](Select)[/I] \nThis setting should contain a valid path to FFMPEG software.\n\n- [B]Stop player when recording is started[/B] [COLOR dimgrey][record_stop_playback][/COLOR]\n[I](Enabled, Disabled)[/I]\nIf enabled playback will be stopped if a recording is started.\n\n- [B]Maximum number of attempts to resume recording[/B] [COLOR dimgrey][max_reattempts][/COLOR]\nMaximum number of attempts to resume recording.\n\n- [B]Delete watched recordings[/B] [COLOR dimgrey][ask_to_delete_watched][/COLOR]\n[I](Ask, Auto delete, Do nothing)[/I]\nIf enabled a dialog popup will be prompted asking to delete watched recordings.\n__________________________________________________________________\n\n[COLOR gold][B]Catchup[/B][/COLOR]\n\n- [B]Enable Catchup[/B] [COLOR dimgrey][archive_support][/COLOR]\n[I](Enabled, Disabled)[/I]\nShould be enabled if there are channels supporting catchup in your M3U list.\n__________________________________________________________________\n\n[COLOR blue][B]Catchup type[/B][/COLOR]\n \n- [B]Catchup type[/B] [COLOR dimgrey][archive_type][/COLOR]\n[I](Default, Shift, Xtream Codes, Append, Disabled)[/I]\nIf enabled it is assumed that all channels support catchup using the selected mode if they do not have catchup tags. In this case the 'Query format string' and 'Catchup window' number of days will come from the add-on settings if needed. If this option is disabled then an M3U entry must have at least a 'catchup=' tag to enable catchup. The options for how to build the catch URL are: [Default] - Use catchup source as the full catchup URL, if there is no catchup source use Append mode; [Shift (SIPTV)] - Append the standard SIPTV catchup string to the channel URL; [Xtream codes] - Build an Xtream codes URL from the channel URL.; [Append] - Append the catchup source to the channel URL, if there is no catchup source using the 'Query format string'"\n\n- [B]Query format string[/B] [COLOR dimgrey][archive_string][/COLOR]\nA query format string (provider dependent) allowing timestamp information to be appended to a URL to denote when to catchup from. E.g. `&cutv={Y}-{m}-{d}T{H}:{M}:{S}`, which allows year, month, day, hour minute and second to be inserted to give: `&cutv=2019-11-26T22:00:32`. If the M3U entry using has a catchup mode of 'default' or 'append' and a 'catchup-source' tag is provided in the M3U entry this setting will be ignored.\n__________________________________________________________________\n\n- [B]Catchup window[/B] [COLOR dimgrey][archive_reverse_auto][/COLOR]\nA number of days into the past in which it is possible to catchup on a programme. Auto mode will read the 'catchup=' tag in M3U list. \n__________________________________________________________________ \n \n[COLOR blue][B]Catchup window manual mode[/B][/COLOR] \n \n- [B]Catchup window days[/B] [COLOR dimgrey][archive_manual_days][/COLOR] \nOverrides auto mode setting and sets the catchup days manually (maximum 30 days). \n__________________________________________________________________\n\n- [B]Catchup only finished programmes[/B] [COLOR dimgrey][archive_finished_program][/COLOR]\n[I](Enabled, Disabled)[/I]\nWhen selected from the EPG the current live programme cannot be watched as catchup until finished.\n__________________________________________________________________\n\n[COLOR gold][B]Lists[/B][/COLOR]\n\n- [B]List future days[/B] [COLOR dimgrey][listing_days][/COLOR]\nSelect how many future days to show in listing views.\n\n- [B]List previous hours[/B] [COLOR dimgrey][listing_hours][/COLOR]\nSelect how many previous hours to show in listing views.\n\n- [B]Sort list by time[/B] [COLOR dimgrey][listing_sort_time][/COLOR]\n[I](Enabled, Disabled)[/I]\nDefault listing views are sorted by time then channel. \n \n- [B]Include synopsis in title search[/B] [COLOR dimgrey][program_search_plot][/COLOR] \nWhen searching for titles, description will also be included. This is what you would expect from most online searches.\n__________________________________________________________________\n\n[COLOR gold][B]Appearance[/B][/COLOR]\n\n- [B]Skin[/B] [COLOR dimgrey][RunScript($CWD/skins.py, SelectSkin)][/COLOR]\nSelect desire add-on skin to change the appearance. \n \n- [B]Install font pack[/B] [COLOR dimgrey][skin_fontpack][/COLOR] \nInstall font pack for selected add-on skin.\n\n- [B]Delete all skins[/B] [COLOR dimgrey][RunScript($CWD/skins.py, DeleteSkins)][/COLOR]\nDelete all installed add-on skins.\n__________________________________________________________________\n\n[COLOR gold][B]Colours[/B][/COLOR]\n\n- [B]Category colours[/B] [COLOR dimgrey][color][/COLOR]\nSelect a colour for different category.\n\n- [B]Default colours[/B] [COLOR dimgrey][color][/COLOR]\nSelect a colour for default, focus, schedule and recording highlight.\n__________________________________________________________________\n\n[COLOR gold][B]Update[/B][/COLOR]\n\n- [B]Update now[/B] [COLOR dimgrey][UpdateAddonRepos][/COLOR]\nInstall latest available add-on update from the mods-kodi repository."
+msgstr ""
+
+msgctxt "#99999"
+msgid "[COLOR gold][B]m-TVGuide project[/B][/COLOR]\n\nWe created this project in 2013 trying to provide people with an even greater experiance watching TV. The project consisted in the modification of the TV-Guide plugin which was created by Twinther.\n \nm-TVGuide grew among the public being one of the most popular television guides for Kodi. We are continuing our work on improving the smallest details of our plugin and we hope that you will enjoy it as much as we do. Thank you for your support.\n\nVisit us on [COLOR ff4e71ba]Facebook[/COLOR]\n[I]https://www.facebook.com/modskodi/[/I]\n\n[COLOR dimgrey]Copyright mods-kodi.pl © 2013 - 2020[/COLOR]"
+msgstr ""
