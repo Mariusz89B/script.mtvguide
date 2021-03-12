@@ -1085,29 +1085,32 @@ class PlayService(xbmc.Player, BasePlayService):
 
 
     def checkConnection(self, url):
-        ctx = ssl.create_default_context()
-        ctx.check_hostname = False
-        ctx.verify_mode = ssl.CERT_NONE
+        if self.reconnectFailedStreams == 'true':
+            ctx = ssl.create_default_context()
+            ctx.check_hostname = False
+            ctx.verify_mode = ssl.CERT_NONE
 
-        status = 200
+            status = 200
 
-        timeout = int(ADDON.getSetting('max_wait_for_playback'))
+            timeout = int(ADDON.getSetting('max_wait_for_playback'))
 
-        try:
-            response = Request.urlopen(url, context=ctx, timeout=timeout)
-            status = response.code
-        except HTTPError as e:
-            deb('HTTP error: {}'.format(e.reason))
-            status = e.code
-        except URLError as e:
-            deb('URLError error: {}'.format(e.reason))
             try:
+                response = Request.urlopen(url, context=ctx, timeout=timeout)
+                status = response.code
+            except HTTPError as e:
+                deb('HTTP error: {}'.format(e.reason))
                 status = e.code
-            except:
-                status = 408
+            except URLError as e:
+                deb('URLError error: {}'.format(e.reason))
+                try:
+                    status = e.code
+                except:
+                    status = 408
 
-        if status >= 400:
-            xbmcgui.Dialog().notification(strings(57018) + ' Error: ' + str(status), strings(31019), xbmcgui.NOTIFICATION_ERROR)
+            if status >= 400:
+                xbmcgui.Dialog().notification(strings(57018) + ' Error: ' + str(status), strings(31019), xbmcgui.NOTIFICATION_ERROR)
+        else:
+            status = 200
 
         return status
 
