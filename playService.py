@@ -260,7 +260,6 @@ class PlayService(xbmc.Player, BasePlayService):
 
                 start_date = datetime.datetime.now()
                 for i in range(waitTime):
-
                     if self.terminating == True or strings2.M_TVGUIDE_CLOSING == True or self.userStoppedPlayback:
                         if strings2.M_TVGUIDE_CLOSING == True:
                             self.userStoppedPlayback = True
@@ -368,6 +367,9 @@ class PlayService(xbmc.Player, BasePlayService):
         res = False
         channels = None
         startWindowed = False
+        inputstream = self.CheckInputstreamInstalledAndEnabled()
+        ffmpegdirect = self.CheckFFmpegDirectInstalledAndEnabled()
+
         if ADDON.getSetting('start_video_minimalized') == 'true':
             startWindowed = True
 
@@ -886,7 +888,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                             m_catchupSource = strmUrl + '?utc={utc}&lutc={lutc}-{duration}'.format(utc=utc, lutc=lutc, duration=duration)
                                             strmUrl = m_catchupSource
 
-                        if sys.version_info[0] > 2:
+                        if inputstream:
                             streamType = ''
 
                             # MimeType
@@ -915,21 +917,25 @@ class PlayService(xbmc.Player, BasePlayService):
                             ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
                             
                             if streamType != '':
-                                ListItem.setProperty('inputstream', 'inputstream.ffmpegdirect')
+                                if ffmpegdirect:
+                                    ListItem.setProperty('inputstream', 'inputstream.ffmpegdirect')
 
                                 ListItem.setMimeType(mimeType)
                                 ListItem.setProperty('inputstream.adaptive.manifest_type', streamType)
+                                ListItem.setContentLookup(False)
 
                                 if streamType == 'hls' or streamType == 'ts':
-                                    ListItem.setProperty('inputstream.ffmpegdirect.stream_mode', 'timeshift')
-                                    ListItem.setProperty('inputstream.ffmpegdirect.is_realtime_stream', 'true')
-                                    ListItem.setProperty('inputstream.ffmpegdirect.manifest_type', 'hls')
+                                    if ffmpegdirect:
+                                        ListItem.setProperty('inputstream.ffmpegdirect.stream_mode', 'timeshift')
+                                        ListItem.setProperty('inputstream.ffmpegdirect.is_realtime_stream', 'true')
+                                        ListItem.setProperty('inputstream.ffmpegdirect.manifest_type', 'hls')
 
                                 if streamType == 'dash':
                                     ListItem.setProperty('inputstream.adaptive.manifest_update_parameter', 'full')
 
                                 if duration != '':
-                                    ListItem.setProperty('inputstream.ffmpegarchive.default_programme_duration', duration)
+                                    if ffmpegdirect:
+                                        ListItem.setProperty('inputstream.ffmpegarchive.default_programme_duration', duration)
                         else:
                             ListItem = xbmcgui.ListItem(path=strmUrl)
                             ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
@@ -1077,6 +1083,18 @@ class PlayService(xbmc.Player, BasePlayService):
             xbmcgui.Dialog().notification(strings(57018) + ' Error: ' + str(status), strings(31019), xbmcgui.NOTIFICATION_ERROR)
 
         return status
+
+    def CheckInputstreamInstalledAndEnabled(self):
+        if sys.version_info[0] > 2:
+            return xbmc.getCondVisibility('System.AddonIsEnabled({id})'.format(id='inputstream.adaptive'))
+        else:
+            return xbmc.getCondVisibility('System.HasAddon({id})'.format(id='inputstream.adaptive'))
+
+    def CheckFFmpegDirectInstalledAndEnabled(self):
+        if sys.version_info[0] > 2:
+            return xbmc.getCondVisibility('System.AddonIsEnabled({id})'.format(id='inputstream.ffmpegdirect'))
+        else:
+            return xbmc.getCondVisibility('System.HasAddon({id})'.format(id='inputstream.ffmpegdirect'))
 
     def getCurrentServiceString(self):
         service = ''
