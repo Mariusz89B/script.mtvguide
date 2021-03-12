@@ -199,7 +199,7 @@ class PlayService(xbmc.Player, BasePlayService):
         self.reconnectDelay         = int(ADDON.getSetting('reconnect_delay'))
         self.reconnectFailedStreams = ADDON.getSetting('reconnect_stream')
         self.maxStreamStartupTime   = int(ADDON.getSetting('max_wait_for_playback')) * 10
-        self.status                 = None
+        self.strmUrl                = None
 
     @contextmanager
     def busyDialog(self):
