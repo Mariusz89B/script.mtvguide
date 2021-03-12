@@ -199,7 +199,7 @@ class PlayService(xbmc.Player, BasePlayService):
         self.reconnectDelay         = int(ADDON.getSetting('reconnect_delay'))
         self.reconnectFailedStreams = ADDON.getSetting('reconnect_stream')
         self.maxStreamStartupTime   = int(ADDON.getSetting('max_wait_for_playback')) * 10
-        self.strmUrl                = None
+        self.status                 = None
 
     @contextmanager
     def busyDialog(self):
@@ -294,8 +294,7 @@ class PlayService(xbmc.Player, BasePlayService):
                 deb('_playUrlList exception: {}'.format(getExceptionString()))
 
         deb('PlayService _playUrlList non of streams started - stopping playback!')
-        if 'service=playlist' not in url:
-            xbmcgui.Dialog().notification(strings(57018), strings(31019), xbmcgui.NOTIFICATION_ERROR)
+        
         self.userStoppedPlayback = True
         xbmc.Player().stop()
 
@@ -326,7 +325,7 @@ class PlayService(xbmc.Player, BasePlayService):
             customPlugin = True
         elif url[0:7] == 'service':
             cid, service = self.parseUrl(url)
-            success = self.LoadVideoLink(cid, service)
+            success, self.strmUrl = self.LoadVideoLink(cid, service)
             if success:
                 self.getStreamQualityFromCid(cid)
         else:
@@ -423,13 +422,8 @@ class PlayService(xbmc.Player, BasePlayService):
                             thread = threading.Timer(3.0, self.reverse, args=[])
                             thread.start()
 
-                    status = self.checkConnection(strmUrl)
-
-                    if status < 400:
-                        xbmc.Player().play(item=str(strmUrl['manifestUrl']), listitem=ListItem, windowed=startWindowed)
-                        res = True
-                    else:
-                        res = False
+                    xbmc.Player().play(item=str(strmUrl['manifestUrl']), listitem=ListItem, windowed=startWindowed)
+                    res = True
 
                 except Exception as ex:
                     deb('Exception while trying to play video: {}'.format(getExceptionString()))
@@ -478,14 +472,9 @@ class PlayService(xbmc.Player, BasePlayService):
                         thread = threading.Thread(name='reverse', target=self.reverse, args=[])
                         thread = threading.Timer(3.0, self.reverse, args=[])
                         thread.start()
-
-                    status = self.checkConnection(strmUrl)
-
-                    if status < 400:
-                        xbmc.Player().play(item=strmUrl, listitem=ListItem, windowed=startWindowed)
-                        res = True
-                    else:
-                        res = False
+                        
+                    xbmc.Player().play(item=strmUrl, listitem=ListItem, windowed=startWindowed)
+                    res = True
 
                 except Exception as ex:
                     deb('Exception while trying to play video: {}'.format(getExceptionString()))
@@ -557,13 +546,8 @@ class PlayService(xbmc.Player, BasePlayService):
                         thread = threading.Timer(3.0, self.reverse, args=[])
                         thread.start()
 
-                    status = self.checkConnection(strmUrl)
-
-                    if status < 400:
-                        xbmc.Player().play(item=strmUrl, listitem=ListItem, windowed=startWindowed)
-                        res = True
-                    else:
-                        res = False
+                    xbmc.Player().play(item=strmUrl, listitem=ListItem, windowed=startWindowed)
+                    res = True
 
                 except Exception as ex:
                     deb('Exception while trying to play video: {}'.format(getExceptionString()))
@@ -616,13 +600,8 @@ class PlayService(xbmc.Player, BasePlayService):
                         thread = threading.Timer(3.0, self.reverse, args=[])
                         thread.start()
 
-                    status = self.checkConnection(strmUrl)
-
-                    if status < 400:
-                        xbmc.Player().play(item=strmUrl, listitem=ListItem, windowed=startWindowed)
-                        res = True
-                    else:
-                        res = False
+                    xbmc.Player().play(item=strmUrl, listitem=ListItem, windowed=startWindowed)
+                    res = True
 
                 except Exception as ex:
                     deb('Exception while trying to play video: {}'.format(getExceptionString()))
@@ -667,13 +646,8 @@ class PlayService(xbmc.Player, BasePlayService):
                         #thread = threading.Timer(3.0, self.reverse, args=[])
                         #thread.start()
 
-                    status = self.checkConnection(strmUrl)
-                    
-                    if status < 400:
-                        xbmc.Player().play(item=strmUrl, listitem=ListItem, windowed=startWindowed)
-                        res = True
-                    else:
-                        res = False
+                    xbmc.Player().play(item=strmUrl, listitem=ListItem, windowed=startWindowed)
+                    res = True
 
                 except Exception as ex:
                     deb('Exception while trying to play video: {}'.format(getExceptionString()))
@@ -712,13 +686,8 @@ class PlayService(xbmc.Player, BasePlayService):
                             ListItem.setProperty('inputstream.adaptive.manifest_type', 'mpd')
                             ListItem.setProperty('IsPlayable', 'true')
 
-                        status = self.checkConnection(strmUrl)
-
-                        if status < 400:
-                            xbmc.Player().play(item=strmUrl, listitem=ListItem, windowed=startWindowed)
-                            res = True
-                        else:
-                            res = False
+                        xbmc.Player().play(item=strmUrl, listitem=ListItem, windowed=startWindowed)
+                        res = True
 
                     except Exception as ex:
                         deb('Exception while trying to play video: {}'.format(getExceptionString()))
@@ -735,15 +704,11 @@ class PlayService(xbmc.Player, BasePlayService):
 
                         ListItem = xbmcgui.ListItem(channelInfo.title)
                         ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
+                        
+                        xbmc.Player().play(item=strmUrl, listitem=ListItem, windowed=startWindowed)
+                        xbmcgui.Dialog().notification('WP Pilot', strings(30965))
 
-                        status = self.checkConnection(strmUrl)
-
-                        if status < 400:
-                            xbmc.Player().play(item=strmUrl, listitem=ListItem, windowed=startWindowed)
-                            xbmcgui.Dialog().notification('WP Pilot', strings(30965))
-                            res = True
-                        else:
-                            res = False
+                        res = True
 
                     except Exception as ex:
                         deb('Exception while trying to play video: {}'.format(getExceptionString()))
@@ -969,13 +934,8 @@ class PlayService(xbmc.Player, BasePlayService):
                             ListItem = xbmcgui.ListItem(path=strmUrl)
                             ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
 
-                        status = self.checkConnection(strmUrl)
-
-                        if status < 400:
-                            xbmc.Player().play(strmUrl, ListItem, windowed=startWindowed)
-                            res = True
-                        else:
-                            res = False
+                        xbmc.Player().play(strmUrl, ListItem, windowed=startWindowed)
+                        res = True
 
                     except Exception as ex:
                         deb('Exception while trying to play video: {}'.format(getExceptionString()))
@@ -983,13 +943,14 @@ class PlayService(xbmc.Player, BasePlayService):
                         xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
         else:
             deb('LoadVideoLink ERROR channelInfo is None! service: {}'.format(service))
-        return res
+        return res, strmUrl
 
     def onPlayBackError(self):
         self.playbackStopped = True
         self.unlockCurrentlyPlayedService()
         self.sleepSupervisor.Stop()
         self.closeVideoOsd()
+        self.checkConnection(self.strmUrl)
 
     def onPlayBackStopped(self):
         self.playbackStopped = True
@@ -997,6 +958,7 @@ class PlayService(xbmc.Player, BasePlayService):
         self.sleepSupervisor.Stop()
         self.tryResummingPlayback()
         self.closeVideoOsd()
+        self.checkConnection(self.strmUrl)
 
     def onPlayBackEnded(self):
         self.playbackStopped = True
@@ -1004,6 +966,7 @@ class PlayService(xbmc.Player, BasePlayService):
         self.sleepSupervisor.Stop()
         self.tryResummingPlayback()
         self.closeVideoOsd()
+        self.checkConnection(self.strmUrl)
 
     def onPlayBackStarted(self):
         self.playbackStarted = True
@@ -1085,32 +1048,33 @@ class PlayService(xbmc.Player, BasePlayService):
 
 
     def checkConnection(self, url):
-        if self.reconnectFailedStreams == 'true':
-            ctx = ssl.create_default_context()
-            ctx.check_hostname = False
-            ctx.verify_mode = ssl.CERT_NONE
+        ctx = ssl.create_default_context()
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE
 
-            status = 200
+        status = 200
 
-            timeout = int(ADDON.getSetting('max_wait_for_playback'))
+        timeout = 3
 
+        try:
+            response = Request.urlopen(url, context=ctx, timeout=timeout)
+            status = response.code
+        except HTTPError as e:
+            deb('HTTP error: {}'.format(e.reason))
+            status = e.code
+        except URLError as e:
+            deb('URLError error: {}'.format(e.reason))
             try:
-                response = Request.urlopen(url, context=ctx, timeout=timeout)
-                status = response.code
-            except HTTPError as e:
-                deb('HTTP error: {}'.format(e.reason))
                 status = e.code
-            except URLError as e:
-                deb('URLError error: {}'.format(e.reason))
-                try:
-                    status = e.code
-                except:
-                    status = 408
+            except:
+                status = 408
 
-            if status >= 400:
-                xbmcgui.Dialog().notification(strings(57018) + ' Error: ' + str(status), strings(31019), xbmcgui.NOTIFICATION_ERROR)
-        else:
+        statusList = [406, 409]
+        if status in statusList:
             status = 200
+
+        if status >= 400:
+            xbmcgui.Dialog().notification(strings(57018) + ' Error: ' + str(status), strings(31019), xbmcgui.NOTIFICATION_ERROR)
 
         return status
 
