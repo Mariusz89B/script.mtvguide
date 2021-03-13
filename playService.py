@@ -364,6 +364,7 @@ class PlayService(xbmc.Player, BasePlayService):
 
     def LoadVideoLink(self, channel, service):
         #deb('LoadVideoLink {} service'.format(service))
+        strmUrl = None
         res = False
         channels = None
         startWindowed = False
@@ -1060,7 +1061,7 @@ class PlayService(xbmc.Player, BasePlayService):
 
         status = 200
 
-        timeout = 3
+        timeout = int(ADDON.getSetting('max_wait_for_playback'))
 
         try:
             response = Request.urlopen(url, context=ctx, timeout=timeout)

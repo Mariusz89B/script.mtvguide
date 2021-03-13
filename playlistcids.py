@@ -533,7 +533,7 @@ class PlaylistUpdater(baseServiceUpdater):
                 'Connection': 'Keep-Alive'
             }
 
-            timeout = 0.5
+            timeout = int(ADDON.getSetting('max_wait_for_playback')) / 10
             
             try:
                 if UA and not '_TS' in chann.cid:         
@@ -547,19 +547,19 @@ class PlaylistUpdater(baseServiceUpdater):
                     chann.strm = response.url
 
             except HTTPError as e:
-                deb('getChannelStream HTTPError: {}'.format(str(e)))
+                #deb('getChannelStream HTTPError: {}'.format(str(e)))
                 chann.strm
 
             except ConnectionError as e:
-                deb('getChannelStream ConnectionError: {}'.format(str(e)))
+                #deb('getChannelStream ConnectionError: {}'.format(str(e)))
                 chann.strm
 
             except Timeout as e:
-                deb('getChannelStream Timeout: {}'.format(str(e))) 
+                #deb('getChannelStream Timeout: {}'.format(str(e))) 
                 chann.strm
 
             except RequestException as e:
-                deb('getChannelStream RequestException: {}'.format(str(e))) 
+                #deb('getChannelStream RequestException: {}'.format(str(e))) 
                 chann.strm
 
             return chann
