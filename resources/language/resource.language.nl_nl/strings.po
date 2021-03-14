@@ -2389,12 +2389,12 @@ msgid "Record length"
 msgstr "Optekening lengte"
 
 msgctxt "#70004"
-msgid "Start record time-shift (min)"
-msgstr "Begin opnametijdshift (min)"
+msgid "Shifting recording start (min)"
+msgstr "De opnamestart verschuiven (min)"
 
 msgctxt "#70005"
-msgid "End record time-shift (min)"
-msgstr "Einde opname time-shift (min)"
+msgid "Shifting recording end (min)"
+msgstr "Het einde van de opname verschuiven (min)"
 
 msgctxt "#70006"
 msgid "Task settings"
@@ -2463,6 +2463,18 @@ msgstr "Volledig oranje"
 msgctxt "#70022"
 msgid "Dark focus"
 msgstr "Donkere focus"
+
+msgctxt "#70023"
+msgid "End time"
+msgstr "Eindtijd"
+
+msgctxt "#70024"
+msgid "Start date"
+msgstr "Startdatum"
+
+msgctxt "#70025"
+msgid "End date"
+msgstr "Einddatum"
 
 msgctxt "#70100"
 msgid "Add-on Install"

@@ -2389,12 +2389,12 @@ msgid "Record length"
 msgstr "Longueur de l'enregistrement"
 
 msgctxt "#70004"
-msgid "Start record time-shift (min)"
-msgstr "Début du décalage horaire (min)"
+msgid "Shifting recording start (min)"
+msgstr "Décalage du début de l'enregistrement (min)"
 
 msgctxt "#70005"
-msgid "End record time-shift (min)"
-msgstr "Fin record time-shift (min)"
+msgid "Shifting recording end (min)"
+msgstr "Décalage de la fin de l'enregistrement (min)"
 
 msgctxt "#70006"
 msgid "Task settings"
@@ -2463,6 +2463,18 @@ msgstr "Plein orange"
 msgctxt "#70022"
 msgid "Dark focus"
 msgstr "Mise au point sombre"
+
+msgctxt "#70023"
+msgid "End time"
+msgstr "Heure de fin"
+
+msgctxt "#70024"
+msgid "Start date"
+msgstr "Date de début"
+
+msgctxt "#70025"
+msgid "End date"
+msgstr "Date de fin"
 
 msgctxt "#70100"
 msgid "Add-on Install"

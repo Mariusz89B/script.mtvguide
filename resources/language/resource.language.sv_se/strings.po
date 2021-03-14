@@ -2382,19 +2382,19 @@ msgstr "Kanal"
 
 msgctxt "#70002"
 msgid "Start time"
-msgstr "Start tid"
+msgstr "Starttid"
 
 msgctxt "#70003"
 msgid "Record length"
 msgstr "Inspelnings längd"
 
 msgctxt "#70004"
-msgid "Start record time-shift (min)"
-msgstr "Starta inspelning time-shift (min)"
+msgid "Shifting recording start (min)"
+msgstr "Förskjutning av inspelningsstarten (min)"
 
 msgctxt "#70005"
-msgid "End record time-shift (min)"
-msgstr "Avsluta inspelning time-shift (min)"
+msgid "Shifting recording end (min)"
+msgstr "Förskjutning av inspelningens slut (min)"
 
 msgctxt "#70006"
 msgid "Task settings"
@@ -2463,6 +2463,18 @@ msgstr "Full orange"
 msgctxt "#70022"
 msgid "Dark focus"
 msgstr "Mörk fokus"
+
+msgctxt "#70023"
+msgid "End time"
+msgstr "Sluttid"
+
+msgctxt "#70024"
+msgid "Start date"
+msgstr "Startdatum"
+
+msgctxt "#70025"
+msgid "End date"
+msgstr "Slutdatum"
 
 msgctxt "#70100"
 msgid "Add-on Install"

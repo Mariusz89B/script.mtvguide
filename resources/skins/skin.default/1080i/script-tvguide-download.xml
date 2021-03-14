@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window type="dialog">
+	<allowoverlay>no</allowoverlay>
+	<defaultcontrol always="true">301</defaultcontrol>
+	<aspectratio>scale</aspectratio>
+	<coordinates>
+		<system>1</system><posx>0</posx><posy>0</posy>
+	</coordinates>
+		<animation type="WindowOpen" reversible="false">
+			<effect type="zoom" start="80" end="100" center="50%,50%" delay="160" tween="back" time="240" />
+			<effect type="fade" delay="160" end="100" time="240" />
+		</animation>
+		<animation type="WindowClose" reversible="false">
+			<effect type="zoom" start="100" end="80" center="50%,50%" easing="in" tween="back" time="240" />
+			<effect type="fade" start="100" end="0" time="240" />
+		</animation>
+	<controls>
+	
+		<control type="label" id="6001"><description>visibility marker for selection box</description></control>
+		
+		<control type="group">
+			<centertop>50%</centertop>
+			<height>900</height>
+			<centerleft>50%</centerleft>
+			<width>1820</width>
+			<animation type="Visible" reversible="false">
+				<effect type="zoom" start="80" end="100" center="50%,50%" delay="160" tween="back" time="240" />
+				<effect type="fade" delay="160" end="100" time="240" />
+			</animation>
+			<animation type="Hidden" reversible="false">
+				<effect type="zoom" start="100" end="80" center="50%,50%" easing="in" tween="back" time="240" />
+				<effect type="fade" start="100" end="0" time="240" />
+			</animation>
+			
+			<control type="image">
+				<left>-2000</left>
+				<top>-2000</top>
+				<width>6000</width>
+				<height>6000</height>
+				<texture colordiffuse="C2FFFFFF">osd/black.png</texture>
+			</control>
+				
+			<control type="group">
+				<width>1820</width>
+				<height>900</height>
+			
+					<control type="image">
+						<left>0</left>
+						<top>0</top>
+						<right>0</right>
+						<bottom>0</bottom>
+						<texture colordiffuse="dialog_tint">osd/white.png</texture>
+					</control>
+					
+					<control type="image">
+						<left>0</left>
+						<top>0</top>
+						<right>0</right>
+						<height>70</height>
+						<texture colordiffuse="button_focus" border="2">osd/white70.png</texture>
+					</control>
+					
+					<control type="image">
+						<left>0</left>
+						<top>0</top>
+						<right>0</right>
+						<height>70</height>
+						<texture colordiffuse="$VAR[GradientColorVar]" border="2">dialogs/focus-gradient.png</texture>
+						<visible>Skin.HasSetting(EnableGradientColor)</visible>
+					</control>
+					
+					<control type="label">
+						<description>Header label</description>
+						<left>40</left>
+						<top>0</top>
+						<height>70</height>
+						<font>font32_title</font>
+						<textcolor>FFF0F0F0</textcolor>
+						<shadowcolor>22000000</shadowcolor>
+						<label>$ADDON[script.mtvguide 70006] - m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]</label>
+						<aligny>center</aligny>
+						<scroll>true</scroll>
+					</control>
+					
+					<control type="button" id="1000">
+						<description>Close Window button</description>
+						<left>1755</left>
+						<top>11</top>
+						<width>48</width>
+						<height>48</height>
+						<onclick>Dialog.Close(all,true)</onclick>
+						<onclick>FullScreen</onclick>
+						<texturefocus colordiffuse="EEFFFFFF">dialogs/close.png</texturefocus>
+						<texturenofocus colordiffuse="EEFFFFFF">dialogs/mk_logo.png</texturenofocus>
+						<animation effect="fade" time="200">VisibleChange</animation>
+						<visible>true</visible>
+					</control>
+					
+				<control type="group">
+					<left>1510</left>
+					<top>92</top>
+			
+				<control type="button" id="301">
+					<description>Save</description>
+					<width>300</width>
+					<height>100</height>
+					<label>$ADDON[script.mtvguide 30502]</label>
+					<font>font25_title</font>
+					<textoffsetx>30</textoffsetx>
+					<onclick></onclick>
+					<wrapmultiline>false</wrapmultiline>
+					<align>center</align>
+					<texturefocus border="40" colordiffuse="button_focus">dialogs/dialogbutton-fo.png</texturefocus>
+					<texturenofocus border="40">dialogs/dialogbutton-nofo.png</texturenofocus>
+					<textcolor>FFF0F0F0</textcolor>
+					<focusedcolor>FFF0F0F0</focusedcolor>
+					<disabledcolor>40FFFFFF</disabledcolor>
+					<onup>303</onup>
+					<ondown>302</ondown>
+					<onleft>202</onleft>
+					<visible>true</visible>
+				</control>
+			
+				<control type="button" id="302">
+					<description>Cancel</description>
+					<top>90</top>
+					<width>300</width>
+					<height>100</height>
+					<label>$ADDON[script.mtvguide 30503]</label>
+					<font>font25_title</font>
+					<textoffsetx>30</textoffsetx>
+					<onclick></onclick>
+					<wrapmultiline>false</wrapmultiline>
+					<align>center</align>
+					<texturefocus border="40" colordiffuse="button_focus">dialogs/dialogbutton-fo.png</texturefocus>
+					<texturenofocus border="40">dialogs/dialogbutton-nofo.png</texturenofocus>
+					<textcolor>FFF0F0F0</textcolor>
+					<focusedcolor>FFF0F0F0</focusedcolor>
+					<disabledcolor>40FFFFFF</disabledcolor>
+					<onup>301</onup>
+					<ondown>303</ondown>
+					<onleft>202</onleft>
+					<visible>true</visible>
+				</control>
+				
+				<control type="button" id="303">
+					<description>Reset</description>
+					<top>180</top>
+					<width>300</width>
+					<height>100</height>
+					<label>$ADDON[script.mtvguide 31013]</label>
+					<font>font25_title</font>
+					<textoffsetx>30</textoffsetx>
+					<onclick></onclick>
+					<wrapmultiline>false</wrapmultiline>
+					<align>center</align>
+					<texturefocus border="40" colordiffuse="button_focus">dialogs/dialogbutton-fo.png</texturefocus>
+					<texturenofocus border="40">dialogs/dialogbutton-nofo.png</texturenofocus>
+					<textcolor>FFF0F0F0</textcolor>
+					<focusedcolor>FFF0F0F0</focusedcolor>
+					<disabledcolor>40FFFFFF</disabledcolor>
+					<onup>302</onup>
+					<ondown>301</ondown>
+					<onleft>202</onleft>
+					<visible>true</visible>
+				</control>
+			</control>
+		
+				<control type="button">
+					<description>Default Category Button</description>
+					<left>29</left>
+					<top>80</top>
+					<height>120</height>
+					<width>390</width>
+					<label>$ADDON[script.mtvguide 70006]</label>
+					<textoffsetx>40</textoffsetx>
+					<align>center</align>
+					<aligny>center</aligny>
+					<font>font25_title</font>
+					<onleft>6003</onleft>
+					<onright>6000</onright>
+					<onup></onup>
+					<ondown></ondown>
+					<texturefocus border="40" colordiffuse="button_focus">dialogs/dialogbutton-fo.png</texturefocus>
+					<texturenofocus border="40">dialogs/dialogbutton-nofo.png</texturenofocus>
+					<textcolor>FFF0F0F0</textcolor>
+					<focusedcolor>FFF0F0F0</focusedcolor>
+					<disabledcolor>40FFFFFF</disabledcolor>
+				</control>
+				
+				<control type="image">
+					<left>410</left>
+					<top>80</top>
+					<width>1100</width>
+					<height>810</height>
+					<texture border="40">dialogs/dialogbutton-nofo.png</texture>
+				</control>
+				
+				<control type="textbox">
+					<left>471</left>
+					<top>100</top>
+					<width>976</width>
+					<height>150</height>
+					<font>font13</font>
+					<textcolor>FFF0F0F0</textcolor>
+					<shadowcolor>22000000</shadowcolor>
+					<align>center</align>
+					<aligny>center</aligny>
+					<label>$ADDON[script.mtvguide 30621]</label>
+				</control>
+		
+				<control type="group">
+					<top>50</top>
+		
+					<control type="label">
+						<description>Label</description>
+						<left>471</left>
+						<top>250</top>
+						<width>976</width>
+						<height>60</height>
+						<align>left</align>
+						<aligny>center</aligny>
+						<font>font13</font>
+						<textcolor>FFF0F0F0</textcolor>
+						<shadowcolor>22000000</shadowcolor>
+						<label>$ADDON[script.mtvguide 70001]</label>
+					</control>
+					
+					<control type="label" id="201">
+						<description>Value</description>
+						<left>1018</left>
+						<top>250</top>
+						<width min="20" max="430">auto</width>
+						<height>60</height>
+						<align>right</align>
+						<aligny>center</aligny>
+						<font>font13</font>
+						<textcolor>FFF0F0F0</textcolor>
+						<shadowcolor>22000000</shadowcolor>
+						<label></label>
+					</control>
+					
+					<control type="edit" id="202">					
+						<description>Value</description>
+						<left>460</left>
+						<top>310</top>
+						<width>1000</width>
+						<height>60</height>
+						<visible>true</visible>
+						<aligny>center</aligny>
+						<font>font13</font>
+						<textoffsetx>10</textoffsetx>
+						<textcolor>FFF0F0F0</textcolor>
+						<disabledcolor>FF000000</disabledcolor>
+						<invalidcolor>FFFFFFFF</invalidcolor>
+						<texturefocus colordiffuse="button_focus">osd/grey.png</texturefocus>
+						<texturenofocus></texturenofocus>
+						<pulseonselect>yes</pulseonselect>
+						<onup>404</onup>
+						<ondown>401</ondown>
+						<onright>301</onright>
+					</control>
+					
+					<control type="label">
+						<description>Label</description>
+						<left>471</left>
+						<top>370</top>
+						<width>976</width>
+						<height>60</height>
+						<align>left</align>
+						<aligny>center</aligny>
+						<font>font13</font>
+						<textcolor>FFF0F0F0</textcolor>
+						<shadowcolor>22000000</shadowcolor>
+						<label>$ADDON[script.mtvguide 70003]</label>
+					</control>
+					
+					<control type="label" id="204">
+						<description>Value</description>
+						<left>471</left>
+						<top>370</top>
+						<width>976</width>
+						<height>60</height>
+						<align>right</align>
+						<aligny>center</aligny>
+						<font>font13</font>
+						<textcolor>FFF0F0F0</textcolor>
+						<shadowcolor>22000000</shadowcolor>
+						<label></label>
+					</control>
+					
+					<control type="edit" id="401">
+						  <description>Value</description>
+						  <left>460</left>
+						  <top>460</top>
+						  <width>1000</width>
+						  <height>60</height>
+						  <visible>true</visible>
+						  <aligny>center</aligny>
+						  <font>font13</font>
+						  <textoffsetx>10</textoffsetx>
+						  <textcolor>FFF0F0F0</textcolor>
+						  <disabledcolor>FF000000</disabledcolor>
+						  <invalidcolor>FFFFFFFF</invalidcolor>
+						  <texturefocus colordiffuse="button_focus">osd/grey.png</texturefocus>
+						  <texturenofocus></texturenofocus>
+						  <pulseonselect>yes</pulseonselect>
+						  <onup>202</onup>
+						  <ondown>403</ondown>
+						  <onright>301</onright>
+					</control>
+					
+					<control type="edit" id="403">
+						  <description>Value</description>
+						  <left>460</left>
+						  <top>520</top>
+						  <width>1000</width>
+						  <height>60</height>
+						  <visible>true</visible>
+						  <aligny>center</aligny>
+						  <font>font13</font>
+						  <textoffsetx>10</textoffsetx>
+						  <textcolor>FFF0F0F0</textcolor>
+						  <disabledcolor>FF000000</disabledcolor>
+						  <invalidcolor>FFFFFFFF</invalidcolor>
+						  <texturefocus colordiffuse="button_focus">osd/grey.png</texturefocus>
+						  <texturenofocus></texturenofocus>
+						  <pulseonselect>yes</pulseonselect>
+						  <onup>401</onup>
+						  <ondown>402</ondown>
+						  <onright>301</onright>
+					</control>
+					
+					<control type="edit" id="402">
+						  <description>Value</description>
+						  <left>460</left>
+						  <top>610</top>
+						  <width>1000</width>
+						  <height>60</height>
+						  <visible>true</visible>
+						  <align>center</align>
+						  <aligny>center</aligny>
+						  <font>font13</font>
+						  <textoffsetx>10</textoffsetx>
+						  <textcolor>FFF0F0F0</textcolor>
+						  <disabledcolor>FF000000</disabledcolor>
+						  <invalidcolor>FFFFFFFF</invalidcolor>
+						  <texturefocus colordiffuse="button_focus">osd/grey.png</texturefocus>
+						  <texturenofocus></texturenofocus>
+						  <pulseonselect>yes</pulseonselect>
+						  <onup>403</onup>
+						  <ondown>404</ondown>
+						  <onright>301</onright>
+					</control>
+					
+					<control type="edit" id="404">
+						  <description>Value</description>
+						  <left>460</left>
+						  <top>670</top>
+						  <width>1000</width>
+						  <height>60</height>
+						  <visible>true</visible>
+						  <aligny>center</aligny>
+						  <font>font13</font>
+						  <textoffsetx>10</textoffsetx>
+						  <textcolor>FFF0F0F0</textcolor>
+						  <disabledcolor>FF000000</disabledcolor>
+						  <invalidcolor>FFFFFFFF</invalidcolor>
+						  <texturefocus colordiffuse="button_focus">osd/grey.png</texturefocus>
+						  <texturenofocus></texturenofocus>
+						  <pulseonselect>yes</pulseonselect>
+						  <onup>402</onup>
+						  <ondown>202</ondown>
+						  <onright>301</onright>
+					</control>
+					
+					<control type="image">
+						<description>Separator Image</description>
+						<left>430</left>
+						<posy>450</posy>
+						<width>1058</width>
+						<height>3</height>
+						<texture colordiffuse="AAAAAAAA" border="3">dialogs/separator-grey.png</texture>
+					</control>
+					
+					<control type="image">
+						<description>Separator Image</description>
+						<left>430</left>
+						<posy>590</posy>
+						<width>1058</width>
+						<height>3</height>
+						<texture colordiffuse="AAAAAAAA" border="3">dialogs/separator-grey.png</texture>
+					</control>
+				</control>
+			</control>
+		</control>
+	</controls>
+</window>

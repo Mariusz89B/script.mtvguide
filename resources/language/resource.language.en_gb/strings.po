@@ -2401,11 +2401,11 @@ msgid "Record length"
 msgstr ""
 
 msgctxt "#70004"
-msgid "Start record time-shift (min)"
+msgid "Shifting recording start (min)"
 msgstr ""
 
 msgctxt "#70005"
-msgid "End record time-shift (min)"
+msgid "Shifting recording end (min)"
 msgstr ""
 
 msgctxt "#70006"
@@ -2474,6 +2474,18 @@ msgstr ""
 
 msgctxt "#70022"
 msgid "Dark focus"
+msgstr ""
+
+msgctxt "#70023"
+msgid "End time"
+msgstr ""
+
+msgctxt "#70024"
+msgid "Start date"
+msgstr ""
+
+msgctxt "#70025"
+msgid "End date"
 msgstr ""
 
 msgctxt "#70100"

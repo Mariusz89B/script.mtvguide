@@ -2389,12 +2389,12 @@ msgid "Record length"
 msgstr "Opptakslengde"
 
 msgctxt "#70004"
-msgid "Start record time-shift (min)"
-msgstr "Start rekordtidskift (min)"
+msgid "Shifting recording start (min)"
+msgstr "Skifte opptaksstart (min)"
 
 msgctxt "#70005"
-msgid "End record time-shift (min)"
-msgstr "Slutt rekordtidskift (min)"
+msgid "Shifting recording end (min)"
+msgstr "Skifte slutten av opptaket (min)"
 
 msgctxt "#70006"
 msgid "Task settings"
@@ -2463,6 +2463,18 @@ msgstr "Full oransje"
 msgctxt "#70022"
 msgid "Dark focus"
 msgstr "Mørk fokus"
+
+msgctxt "#70023"
+msgid "End time"
+msgstr "Sluttid"
+
+msgctxt "#70024"
+msgid "Start date"
+msgstr "Startdato"
+
+msgctxt "#70025"
+msgid "End date"
+msgstr "Sluttdato"
 
 msgctxt "#70100"
 msgid "Add-on Install"

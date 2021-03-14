@@ -2389,11 +2389,11 @@ msgid "Record length"
 msgstr "Długość nagrania"
 
 msgctxt "#70004"
-msgid "Start record time-shift (min)"
+msgid "Shifting recording start (min)"
 msgstr "Przesunięcie rozpoczęcia nagrania (min)"
 
 msgctxt "#70005"
-msgid "End record time-shift (min)"
+msgid "Shifting recording end (min)"
 msgstr "Przesunięcie zakończenia nagrania (min)"
 
 msgctxt "#70006"
@@ -2463,6 +2463,18 @@ msgstr "Pełny pomarańczowy"
 msgctxt "#70022"
 msgid "Dark focus"
 msgstr "Ciemny fokus"
+
+msgctxt "#70023"
+msgid "End time"
+msgstr "Godzina zakończenia"
+
+msgctxt "#70024"
+msgid "Start date"
+msgstr "Data rozpoczęcia"
+
+msgctxt "#70025"
+msgid "End date"
+msgstr "Data zakończenia"
 
 msgctxt "#70100"
 msgid "Add-on Install"

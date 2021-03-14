@@ -2389,12 +2389,12 @@ msgid "Record length"
 msgstr "Dužina zapisa"
 
 msgctxt "#70004"
-msgid "Start record time-shift (min)"
-msgstr "Pokreni vremensku promjenu rekorda (min)"
+msgid "Start record(min)"
+msgstr "Pomicanje početka snimanja (min)"
 
 msgctxt "#70005"
-msgid "End record time-shift (min)"
-msgstr "Završetak vremenskog pomaka rekorda (min)"
+msgid "Shifting recording end (min)"
+msgstr "Pomicanje kraja snimanja (min)"
 
 msgctxt "#70006"
 msgid "Task settings"
@@ -2463,6 +2463,18 @@ msgstr "Puna naranče"
 msgctxt "#70022"
 msgid "Dark focus"
 msgstr "Tamno fokus"
+
+msgctxt "#70023"
+msgid "End time"
+msgstr "Vrijeme završetka"
+
+msgctxt "#70024"
+msgid "Start date"
+msgstr "Datum početka"
+
+msgctxt "#70025"
+msgid "End date"
+msgstr "Datum završetka"
 
 msgctxt "#70100"
 msgid "Add-on Install"

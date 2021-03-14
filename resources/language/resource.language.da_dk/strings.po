@@ -2389,12 +2389,12 @@ msgid "Record length"
 msgstr "Optagelængde"
 
 msgctxt "#70004"
-msgid "Start record time-shift (min)"
-msgstr "Start optagelsetidskift (min)"
+msgid "Shifting recording start (min)"
+msgstr "Skift af optagestart (min)"
 
 msgctxt "#70005"
-msgid "End record time-shift (min)"
-msgstr "Afslut optagelsetidskift (min)"
+msgid "Shifting recording end (min)"
+msgstr "Skift slutningen af ​​optagelsen (min)"
 
 msgctxt "#70006"
 msgid "Task settings"
@@ -2463,6 +2463,18 @@ msgstr "Fuld orange"
 msgctxt "#70022"
 msgid "Dark focus"
 msgstr "Mørk fokus"
+
+msgctxt "#70023"
+msgid "End time"
+msgstr "Sluttid"
+
+msgctxt "#70024"
+msgid "Start date"
+msgstr "Startdato"
+
+msgctxt "#70025"
+msgid "End date"
+msgstr "Slutdato"
 
 msgctxt "#70100"
 msgid "Add-on Install"

@@ -247,9 +247,9 @@ class RecordService(BasePlayService):
                         else:
                             res = xbmcgui.Dialog().yesno(strings(70006) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', strings(31000).format(program.title).encode('utf-8') )
                         if res == True:
-                            recordMenu = RecordMenu(program)
-                            recordMenu.doModal()
-                            saveRecording, self.startOffsetDownload, self.endOffsetDownload = recordMenu.getOffsets()
+                            downloadMenu = DownloadMenu(program)
+                            downloadMenu.doModal()
+                            saveRecording, self.startOffsetDownload, self.endOffsetDownload = downloadMenu.getOffsets()
 
                             if saveRecording == True:
                                 self.startOffsetDownload *= 60
@@ -1715,6 +1715,154 @@ class RecordService(BasePlayService):
         xbmcgui.Dialog().ok(dialogName, dialogMessage)
 
 
+class DownloadMenu(xbmcgui.WindowXMLDialog):
+    def __new__(cls, program):
+        return super(DownloadMenu, cls).__new__(cls, 'script-tvguide-download.xml', Skin.getSkinBasePath(), Skin.getSkinName(), skin_resolution)
+
+    def __init__(self, program):
+        self.startDateId = 401
+        self.endDateId = 402
+
+        self.startTimeId = 403
+        self.endTimeId = 404
+
+        self.saveControlId = 301
+        self.cancelControlId = 302
+        self.resetControlId = 303
+
+        self.programTitleId = 201
+        self.channelId = 202
+
+        self.recordDurationId = 204
+
+        self.record = False
+        self.program = program
+
+        self.calculatedStartDate = self.program.startDate
+        self.calculatedEndDate = self.program.endDate
+        super(DownloadMenu, self).__init__()
+
+    def onInit(self): 
+        self.recordDuration = self.getControl(self.recordDurationId)
+
+        if sys.version_info[0] > 2:
+            channel = self.program.channel.title
+            title = self.program.title
+        else:
+            channel = self.program.channel.title.encode('utf-8')
+            title = self.program.title.encode('utf-8')
+
+        self.getControl(self.programTitleId).setLabel(channel)
+
+        self.channelId = self.getControl(self.channelId)
+        self.channelId.setLabel(strings(70000))
+        self.channelId.setText(title)
+
+        startDate = str(self.program.startDate).split(' ')[0]
+        endDate = str(self.program.endDate).split(' ')[0]
+
+        startTime = str(self.program.startDate).split(' ')[1]
+        endTime = str(self.program.endDate).split(' ')[1]
+
+        self.startDate = self.getControl(self.startDateId)
+        self.startDate.setType(xbmcgui.INPUT_TYPE_DATE, strings(70024))
+        self.startDate.setLabel(strings(70024))
+        self.startDate.setText(str(startDate))
+
+        self.endDate = self.getControl(self.endDateId)
+        self.endDate.setType(xbmcgui.INPUT_TYPE_DATE, strings(70025))
+        self.endDate.setLabel(strings(70025))
+        self.endDate.setText(str(endDate))
+
+        self.startTime = self.getControl(self.startTimeId)
+        self.startTime.setType(xbmcgui.INPUT_TYPE_SECONDS, strings(70002))
+        self.startTime.setLabel(strings(70002))
+        self.startTime.setText(str(startTime))
+
+        self.endTime = self.getControl(self.endTimeId)
+        self.endTime.setType(xbmcgui.INPUT_TYPE_SECONDS, strings(70023))
+        self.endTime.setLabel(strings(70023))
+        self.endTime.setText(str(endTime))
+
+        self.updateLabels()
+
+    def updateLabels(self):
+        self.calculatedStartDate = self.program.startDate + datetime.timedelta(minutes=0)
+        self.calculatedEndDate = self.program.endDate + datetime.timedelta(minutes=0)
+
+        try:
+            if self.calculatedEndDate > self.calculatedStartDate:
+                self.recordDuration.setLabel('{}'.format(self.calculatedEndDate - self.calculatedStartDate))
+            else:
+                self.recordDuration.setLabel('{}'.format(0))
+        except:
+            pass
+
+    def getOffsets(self):
+        if self.calculatedStartDate > self.calculatedEndDate:
+            self.record = False
+        return [self.record, 0, 0]
+
+    def getStartDate(self, date, time):
+        startDate = str(self.program.startDate).split(' ')[0]
+        startTime = str(self.program.startDate).split(' ')[1]
+
+        try:
+            strdate = '{} {}'.format(startDate, time)
+            dt = proxydt.strptime(str(strdate), '%Y-%m-%d %H:%M:%S')
+        except:
+            strdate = '{} {}'.format(date, startTime)
+            dt = proxydt.strptime(str(strdate), '%Y-%m-%d %H:%M:%S')
+
+        return dt
+
+    def getEndDate(self, date, time):
+        endDate = str(self.program.endDate).split(' ')[0]
+        endTime = str(self.program.endDate).split(' ')[1]
+
+        try:
+            strdate = '{} {}'.format(endDate, time)
+            dt = proxydt.strptime(str(strdate), '%Y-%m-%d %H:%M:%S')
+        except:
+            strdate = '{} {}'.format(date, endTime)
+            dt = proxydt.strptime(str(strdate), '%Y-%m-%d %H:%M:%S')
+
+        return dt
+
+    def onAction(self, action):
+        if action.getId() in [ACTION_PREVIOUS_MENU, KEY_NAV_BACK, ACTION_PARENT_DIR, 101]:
+            deb('DownloadMenu got action close!')
+            self.close()
+        else:
+            self.updateLabels()
+
+    def onClick(self, controlId):
+        if controlId == self.channelId.getId():
+            self.program.title = self.channelId.getText()
+            self.updateLabels()
+
+        elif controlId == self.startDateId or controlId == self.startTimeId:
+            startDate = self.startDate.getText()
+            startTime = self.startTime.getText()
+            self.program.startDate = self.getStartDate(startDate, startTime)
+            self.updateLabels()
+
+        elif controlId == self.endDateId or controlId == self.endTimeId:
+            endDate = self.endDate.getText()
+            endTime = self.endTime.getText()
+            self.program.endDate = self.getEndDate(endDate, endTime)
+            self.updateLabels()
+
+        elif controlId == self.cancelControlId:
+            self.close()
+
+        elif controlId == self.saveControlId:
+            self.record = True
+            self.close()
+
+        else:
+            self.updateLabels()
+
 class RecordMenu(xbmcgui.WindowXMLDialog):
     def __new__(cls, program):
         return super(RecordMenu, cls).__new__(cls, 'script-tvguide-record.xml', Skin.getSkinBasePath(), Skin.getSkinName(), skin_resolution)
@@ -1806,3 +1954,8 @@ class RecordMenu(xbmcgui.WindowXMLDialog):
         elif controlId == self.saveControlId:
             self.record = True
             self.close()
+        
+
+        
+        
+            
