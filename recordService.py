@@ -1808,26 +1808,29 @@ class DownloadMenu(xbmcgui.WindowXMLDialog):
         startTime = str(self.program.startDate).split(' ')[1]
 
         try:
-            strdate = '{} {}'.format(startDate, time)
-            dt = proxydt.strptime(str(strdate), '%Y-%m-%d %H:%M:%S')
+            try:
+                strdate = '{} {}'.format(startDate, time)
+                self.program.startDate = proxydt.strptime(str(strdate), '%Y-%m-%d %H:%M:%S')
+            except:
+                strdate = '{} {}'.format(date, startTime)
+                self.program.startDate = proxydt.strptime(str(strdate), '%Y-%m-%d %H:%M:%S')
         except:
-            strdate = '{} {}'.format(date, startTime)
-            dt = proxydt.strptime(str(strdate), '%Y-%m-%d %H:%M:%S')
-
-        return dt
+            self.program.startDate
 
     def getEndDate(self, date, time):
         endDate = str(self.program.endDate).split(' ')[0]
         endTime = str(self.program.endDate).split(' ')[1]
 
         try:
-            strdate = '{} {}'.format(endDate, time)
-            dt = proxydt.strptime(str(strdate), '%Y-%m-%d %H:%M:%S')
+            try:
+                strdate = '{} {}'.format(endDate, time)
+                self.program.endDate = proxydt.strptime(str(strdate), '%Y-%m-%d %H:%M:%S')
+            except:
+                strdate = '{} {}'.format(date, endTime)
+                self.program.endDate = proxydt.strptime(str(strdate), '%Y-%m-%d %H:%M:%S')
         except:
-            strdate = '{} {}'.format(date, endTime)
-            dt = proxydt.strptime(str(strdate), '%Y-%m-%d %H:%M:%S')
+            self.program.endDate
 
-        return dt
 
     def onAction(self, action):
         if action.getId() in [ACTION_PREVIOUS_MENU, KEY_NAV_BACK, ACTION_PARENT_DIR, 101]:
@@ -1841,16 +1844,24 @@ class DownloadMenu(xbmcgui.WindowXMLDialog):
             self.program.title = self.channelId.getText()
             self.updateLabels()
 
-        elif controlId == self.startDateId or controlId == self.startTimeId:
+        elif controlId == self.startDateId :
             startDate = self.startDate.getText()
-            startTime = self.startTime.getText()
-            self.program.startDate = self.getStartDate(startDate, startTime)
+            self.getStartDate(startDate, None)
             self.updateLabels()
 
-        elif controlId == self.endDateId or controlId == self.endTimeId:
+        elif controlId == self.startTimeId:
+            startTime = self.startTime.getText()
+            self.getStartDate(None, startTime)
+            self.updateLabels()
+
+        elif controlId == self.endDateId:
             endDate = self.endDate.getText()
+            self.getEndDate(endDate, None)
+            self.updateLabels()
+
+        elif controlId == self.endTimeId:
             endTime = self.endTime.getText()
-            self.program.endDate = self.getEndDate(endDate, endTime)
+            self.getEndDate(None, endTime)
             self.updateLabels()
 
         elif controlId == self.cancelControlId:
