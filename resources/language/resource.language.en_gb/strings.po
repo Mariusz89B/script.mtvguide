@@ -2384,6 +2384,10 @@ msgctxt "#69057"
 msgid "Cancel download"
 msgstr ""
 
+msgctxt "#69058"
+msgid "Cancel ongoing download?"
+msgstr ""
+
 msgctxt "#70000"
 msgid "Program title"
 msgstr ""

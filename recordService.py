@@ -1653,20 +1653,13 @@ class RecordService(BasePlayService):
 
 
     def isDownloadOngoing(self):
-        for thread in self.threadDownloadList:
-            if thread[0].is_alive():
-                return True
+        if self.downloading:
+            return True
         return False
 
 
     def isRecordScheduled(self):
         if len(self.timers) > 0:
-            return True
-        return False
-
-
-    def isDownloadScheduled(self):
-        if len(self.timersdw) > 0:
             return True
         return False
 

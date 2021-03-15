@@ -2059,6 +2059,11 @@ class mTVGuide(xbmcgui.WindowXML):
                 if ret == False:
                     return
 
+            elif self.recordService.isDownloadOngoing():
+                ret = xbmcgui.Dialog().yesno(strings(69056), '{}'.format(strings(69058)))
+                if ret == False:
+                    return
+
             self.isClosing = True
             strings2.M_TVGUIDE_CLOSING = True
             if self.refreshStreamsTimer:

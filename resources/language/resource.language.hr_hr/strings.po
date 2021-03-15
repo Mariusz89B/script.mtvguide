@@ -2372,6 +2372,10 @@ msgctxt "#69057"
 msgid "Cancel download"
 msgstr "Otkaži preuzimanje"
 
+msgctxt "#69058"
+msgid "Cancel ongoing download?"
+msgstr "Otkazati kontinuirano preuzimanje?"
+
 msgctxt "#70000"
 msgid "Program title"
 msgstr "Naslov programa"

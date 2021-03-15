@@ -1,6 +1,7 @@
-﻿[COLOR yellow][B]wersja 9.2.9[/B] - 2021-03-02[/COLOR]
+﻿[COLOR yellow][B]wersja 9.2.9[/B] - 2021-03-15[/COLOR]
 - poprawiono wydajność działania
 - poprawka zanikajacych ikon
+- dodane nowe menu pobierania
 
 [COLOR yellow][B]wersja 9.2.8[/B] - 2021-02-27[/COLOR]
 - poprawka serwisu Telia Play
