@@ -257,6 +257,8 @@ class RecordService(BasePlayService):
                                 if self.scheduleDownload(program, self.startOffsetDownload, self.endOffsetDownload):
                                     self.epg.database.addRecording(program, self.startOffsetDownload, self.endOffsetDownload)
                                     updateDB = True
+                            else:
+                                xbmcgui.Dialog().ok(strings(69056), string(59998))
 
                     else:
                         self.epg.database.removeRecording(program)
@@ -285,6 +287,9 @@ class RecordService(BasePlayService):
                         if self.scheduleRecording(program, startOffset, endOffset):
                             self.epg.database.addRecording(program, startOffset, endOffset)
                             updateDB = True
+                    else:
+                        xbmcgui.Dialog().ok(strings(31011), string(59998))
+
             else:
                 self.epg.database.removeRecording(program)
                 updateDB = True
@@ -1793,6 +1798,8 @@ class DownloadMenu(xbmcgui.WindowXMLDialog):
 
     def getOffsets(self):
         if self.calculatedStartDate > self.calculatedEndDate:
+            self.record = False
+        elif self.calculatedEndDate > datetime.datetime.now():
             self.record = False
         return [self.record, 0, 0]
 

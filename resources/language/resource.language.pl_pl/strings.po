@@ -1297,8 +1297,8 @@ msgid "Sort by selected character"
 msgstr "Sortuj według wybranej litery"
 
 msgctxt "#59998"
-msgid "Only one download session at once allowed."
-msgstr "Dozwolona jest tylko jedna sesja pobierania na raz."
+msgid "Time exceeds the selected value."
+msgstr "Czas przekracza wybraną wartość."
 
 msgctxt "#59999"
 msgid "Shift"

@@ -1301,7 +1301,7 @@ msgid "Sort by selected character"
 msgstr ""
 
 msgctxt "#59998"
-msgid "Only one download session at once allowed."
+msgid "Time exceeds the selected value."
 msgstr ""
 
 msgctxt "#59999"
