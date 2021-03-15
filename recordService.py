@@ -258,7 +258,7 @@ class RecordService(BasePlayService):
                                     self.epg.database.addRecording(program, self.startOffsetDownload, self.endOffsetDownload)
                                     updateDB = True
                             else:
-                                xbmcgui.Dialog().ok(strings(69056), string(59998))
+                                xbmcgui.Dialog().ok(strings(69056), strings(59998))
 
                     else:
                         self.epg.database.removeRecording(program)
