@@ -429,14 +429,18 @@ class PlaylistUpdater(baseServiceUpdater):
 
                                 ccList = ['BE', 'CZ', 'DE', 'DK', 'FR', 'HR', 'IT', 'NO', 'PL', 'SE', 'SRB', 'UK', 'US']
                                 langC = '|'.join(ccList)
+
+                                langDList = ['BEL', 'CZE', 'GER', 'DEN', 'FRA', 'HRT', 'ITA', 'NOR', 'POL', 'SWE', 'SRB', 'ENG', 'AME']
+                                langD = '|'.join(langDList)
+
                                 ccListInt = len(ccList)
                                 
                                 if any(ccExt not in title for ccExt in ccList):   
                                     try:
                                         if sys.version_info[0] > 2:
-                                            groupList = re.findall('group-title=".*[^\w]({a}|{b}|{c})[^\w]?.*"'.format(a=langA, b=langB, c=langC), str(splitedLine[0]))
+                                            groupList = re.findall('group-title=".*[^\w]({a}|{b}|{c}|{d})[^\w]?.*"'.format(a=langA, b=langB, c=langC, d=langD), str(splitedLine[0]))
                                         else:
-                                            groupList = re.findall('group-title=".*[^\w]({a}|{b}|{c})[^\w]?.*"'.format(a=langA, b=langB, c=langC), str(splitedLine[0].encode('utf-8')))
+                                            groupList = re.findall('group-title=".*[^\w]({a}|{b}|{c}|{d})[^\w]?.*"'.format(a=langA, b=langB, c=langC, d=langD), str(splitedLine[0].encode('utf-8')))
 
                                         if groupList:
                                             for item in range(ccListInt):
@@ -533,7 +537,10 @@ class PlaylistUpdater(baseServiceUpdater):
                 'Connection': 'Keep-Alive'
             }
 
-            timeout = int(ADDON.getSetting('max_wait_for_playback')) / 10
+            if sys.version_info[0] > 2:
+                timeout = int(ADDON.getSetting('max_wait_for_playback')) / 10
+            else:
+                timeout = int(ADDON.getSetting('max_wait_for_playback'))
             
             try:
                 if UA and not '_TS' in chann.cid:         

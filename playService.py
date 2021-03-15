@@ -923,7 +923,6 @@ class PlayService(xbmc.Player, BasePlayService):
 
                                 ListItem.setMimeType(mimeType)
                                 ListItem.setProperty('inputstream.adaptive.manifest_type', streamType)
-                                ListItem.setContentLookup(False)
 
                                 if streamType == 'hls' or streamType == 'ts':
                                     if ffmpegdirect:
