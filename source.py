@@ -1678,7 +1678,16 @@ class Database(object):
     def _updateRssDate(self, date):
         c = self.conn.cursor()
         c.execute("DELETE FROM rss_messages")
-        c.execute("INSERT INTO rss_messages(last_message) VALUES(?)", [date])
+        try:
+            c.execute("INSERT INTO rss_messages(last_message) VALUES(?)", [date])
+        except:
+            now = datetime.datetime.now()
+            if sys.version_info[0] > 2:
+                date = datetime.datetime.timestamp(now)
+            else:
+                from time import time
+                date = str(time()).split('.')[0]
+            c.execute("INSERT INTO rss_messages(last_message) VALUES(?)", [date])
         self.conn.commit()
         c.close()
 
@@ -1687,8 +1696,12 @@ class Database(object):
 
     def _getLastRssDate(self):
         c = self.conn.cursor()
-        c.execute("SELECT last_message FROM rss_messages")
-        row = c.fetchone()
+        try:
+            c.execute("SELECT last_message FROM rss_messages")
+            row = c.fetchone()
+        except:
+            c.execute("DELETE FROM rss_messages")
+            row = None
         if row:
             date = row[str('last_message')]
         else:
