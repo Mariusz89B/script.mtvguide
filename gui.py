@@ -572,17 +572,6 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile'))
             except:
                 self.profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
-            
-        if sys.version_info[0] > 2:
-            try:
-                self.addonPath  = xbmcvfs.translatePath(ADDON.getAddonInfo('path'))
-            except:
-                self.addonPath  = xbmcvfs.translatePath(ADDON.getAddonInfo('path')).decode('utf-8')
-        else:
-            try:
-                self.addonPath  = xbmc.translatePath(ADDON.getAddonInfo('path'))
-            except:
-                self.addonPath  = xbmc.translatePath(ADDON.getAddonInfo('path')).decode('utf-8')
 
         if sys.version_info[0] > 2:
             self.kodiPath = xbmcvfs.translatePath("special://home/")
