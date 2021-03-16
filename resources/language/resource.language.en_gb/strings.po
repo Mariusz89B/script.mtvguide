@@ -1301,7 +1301,7 @@ msgid "Sort by selected character"
 msgstr ""
 
 msgctxt "#59998"
-msgid "Time exceeds the selected value."
+msgid "Selected end date exceeds current time."
 msgstr ""
 
 msgctxt "#59999"

@@ -1297,8 +1297,8 @@ msgid "Sort by selected character"
 msgstr "Poredaj po odabranom slovu"
 
 msgctxt "#59998"
-msgid "Time exceeds the selected value."
-msgstr "Vrijeme premašuje odabranu vrijednost."
+msgid "Selected end date exceeds current time."
+msgstr "Odabrani datum završetka premašuje trenutno vrijeme."
 
 msgctxt "#59999"
 msgid "Shift"

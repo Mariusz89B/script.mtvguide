@@ -1297,8 +1297,8 @@ msgid "Sort by selected character"
 msgstr "Nach ausgewähltem Buchstaben sortieren"
 
 msgctxt "#59998"
-msgid "Time exceeds the selected value."
-msgstr "Die Zeit überschreitet den ausgewählten Wert."
+msgid "Selected end date exceeds current time."
+msgstr "Das ausgewählte Enddatum überschreitet die aktuelle Uhrzeit."
 
 msgctxt "#59999"
 msgid "Shift"
