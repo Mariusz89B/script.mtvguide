@@ -2174,7 +2174,7 @@ msgstr "Opptaksfeil!"
 
 msgctxt "#69008"
 msgid "Can't record due to not configured record application: "
-msgstr "Kan ikke ta opp på grunn av ikke konfigurert postprogram: "
+msgstr "Kan ikke ta opp på grunn av ikke konfigurert innspillingapplikasjon: "
 
 msgctxt "#69009"
 msgid "Record already scheduled - cancel?"
@@ -2189,8 +2189,8 @@ msgid "Cancel ongoing recording?"
 msgstr "Avbryt pågående opptak?"
 
 msgctxt "#69012"
-msgid "Import record app"
-msgstr "Importer plateapp"
+msgid "Import record application"
+msgstr "Importer innspillingapplikasjon"
 
 msgctxt "#69013"
 msgid "successfully imported"
@@ -2375,6 +2375,22 @@ msgstr "Avbryt nedlastning"
 msgctxt "#69058"
 msgid "Cancel ongoing download?"
 msgstr "Avbryt pågående nedlasting?"
+
+msgctxt "#69059"
+msgid "Download error!"
+msgstr "Last ned feil!"
+
+msgctxt "#69060"
+msgid "Can't download due to not configured record application: "
+msgstr "Kan ikke lastes ned på grunn av ikke konfigurert innspillingapplikasjon: "
+
+msgctxt "#69061"
+msgid "Not existing record destination directory - download canceled!"
+msgstr "Ikke eksisterende rekorddestinasjonskatalog - nedlastning kansellert!"
+
+msgctxt "#69062"
+msgid "Add-on error!"
+msgstr "Tilleggsfeil!"
 
 msgctxt "#70000"
 msgid "Program title"

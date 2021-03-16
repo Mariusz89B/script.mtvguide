@@ -2166,15 +2166,15 @@ msgstr "Færdig optagelse:"
 
 msgctxt "#69006"
 msgid "Not existing record destination directory - record canceled!"
-msgstr "Ikke eksisterende record destination katalog - optagelse annulleret!"
+msgstr "Ikke eksisterende optag destination katalog - optagelse annulleret!"
 
 msgctxt "#69007"
 msgid "Record error!"
-msgstr "Optag fejl!"
+msgstr "Optagfejl!"
 
 msgctxt "#69008"
 msgid "Can't record due to not configured record application: "
-msgstr "Kan ikke optage på grund af ikke konfigureret postprogram:"
+msgstr "Kan ikke optage på grund af ikke konfigureret optageapplikation:"
 
 msgctxt "#69009"
 msgid "Record already scheduled - cancel?"
@@ -2189,8 +2189,8 @@ msgid "Cancel ongoing recording?"
 msgstr "Afbryd løbende optagelse?"
 
 msgctxt "#69012"
-msgid "Import record app"
-msgstr "Importere record app"
+msgid "Import record application"
+msgstr "Importere optageapplikation"
 
 msgctxt "#69013"
 msgid "successfully imported"
@@ -2375,6 +2375,22 @@ msgstr "Annuller download"
 msgctxt "#69058"
 msgid "Cancel ongoing download?"
 msgstr "Annuller igangværende download?"
+
+msgctxt "#69059"
+msgid "Download error!"
+msgstr "Downloadfejl!"
+
+msgctxt "#69060"
+msgid "Can't download due to not configured record application: "
+msgstr "Kan ikke downloades på grund af ikke konfigureret optageapplikation: "
+
+msgctxt "#69061"
+msgid "Not existing record destination directory - download canceled!"
+msgstr "Ikke eksisterende optag destination katalog - download annulleret!"
+
+msgctxt "#69062"
+msgid "Add-on error!"
+msgstr "Tilføjelsesfejl!"
 
 msgctxt "#70000"
 msgid "Program title"

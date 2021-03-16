@@ -2170,7 +2170,7 @@ msgstr "Inget valt inspelnings mål - inspelning avbruten!"
 
 msgctxt "#69007"
 msgid "Record error!"
-msgstr "Inspelnings fel!"
+msgstr "Inspelningsfel!"
 
 msgctxt "#69008"
 msgid "Can't record due to not configured record application: "
@@ -2189,7 +2189,7 @@ msgid "Cancel ongoing recording?"
 msgstr "Avbryt pågående inspelning?"
 
 msgctxt "#69012"
-msgid "Import record app"
+msgid "Import record application"
 msgstr "Importera inspelnings program"
 
 msgctxt "#69013"
@@ -2375,6 +2375,22 @@ msgstr "Avbryt nedladdning"
 msgctxt "#69058"
 msgid "Cancel ongoing download?"
 msgstr "Avbryta pågående nedladdning?"
+
+msgctxt "#69059"
+msgid "Download error!"
+msgstr "Nedladdningsfel!"
+
+msgctxt "#69060"
+msgid "Can't download due to not configured record application: "
+msgstr "Det går inte att ladda ner på grund av att följande inspelnings program saknas: "
+
+msgctxt "#69061"
+msgid "Not existing record destination directory - download canceled!"
+msgstr "Inget valt inspelnings mål - nedladdning avbruten!"
+
+msgctxt "#69062"
+msgid "Add-on error!"
+msgstr "Tilläggsfel!"
 
 msgctxt "#70000"
 msgid "Program title"

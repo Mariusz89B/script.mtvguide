@@ -2174,7 +2174,7 @@ msgstr "Erreur d'enregistrement!"
 
 msgctxt "#69008"
 msgid "Can't record due to not configured record application: "
-msgstr "Enregistrement impossible en raison d'une application d'enregistrement non configurée:"
+msgstr "Enregistrement impossible en raison d'une application d'enregistrement non configurée: "
 
 msgctxt "#69009"
 msgid "Record already scheduled - cancel?"
@@ -2189,7 +2189,7 @@ msgid "Cancel ongoing recording?"
 msgstr "Annuler l'enregistrement en cours?"
 
 msgctxt "#69012"
-msgid "Import record app"
+msgid "Import record application"
 msgstr "Importer une application d'enregistrement"
 
 msgctxt "#69013"
@@ -2375,6 +2375,22 @@ msgstr "Annuler le download"
 msgctxt "#69058"
 msgid "Cancel ongoing download?"
 msgstr "Annuler le téléchargement en cours?"
+
+msgctxt "#69059"
+msgid "Download error!"
+msgstr "Erreur de téléchargement!"
+
+msgctxt "#69060"
+msgid "Can't download due to not configured record application: "
+msgstr "Téléchargement impossible en raison d'une application d'enregistrement non configurée: "
+
+msgctxt "#69061"
+msgid "Not existing record destination directory - download canceled!"
+msgstr "Enregistrement inexistant répertoire de destination - téléchargement annulé!"
+
+msgctxt "#69062"
+msgid "Add-on error!"
+msgstr "Erreur de module complémentaire!"
 
 msgctxt "#70000"
 msgid "Program title"

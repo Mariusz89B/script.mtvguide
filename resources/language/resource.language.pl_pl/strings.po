@@ -2189,7 +2189,7 @@ msgid "Cancel ongoing recording?"
 msgstr "Przerwać nagrywanie programow?"
 
 msgctxt "#69012"
-msgid "Import record app"
+msgid "Import record application"
 msgstr "Importowanie aplikacji do nagrywania"
 
 msgctxt "#69013"
@@ -2375,6 +2375,22 @@ msgstr "Przerwij pobieranie"
 msgctxt "#69058"
 msgid "Cancel ongoing download?"
 msgstr "Anulować trwające pobieranie?"
+
+msgctxt "#69059"
+msgid "Download error!"
+msgstr "Błąd pobierania!"
+
+msgctxt "#69060"
+msgid "Can't download due to not configured record application: "
+msgstr "Nie można pobrać ponieważ w ustawieniach nie jest wskazana aplikacja do nagrywania: "
+
+msgctxt "#69061"
+msgid "Not existing record destination directory - download canceled!"
+msgstr "Nie istnieje katalog do zapisu nagrań - pobieranie anulowane!"
+
+msgctxt "#69062"
+msgid "Add-on error!"
+msgstr "Błąd dodatku!"
 
 msgctxt "#70000"
 msgid "Program title"

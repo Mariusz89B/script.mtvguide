@@ -2201,7 +2201,7 @@ msgid "Cancel ongoing recording?"
 msgstr ""
 
 msgctxt "#69012"
-msgid "Import record app"
+msgid "Import record application"
 msgstr ""
 
 msgctxt "#69013"
@@ -2386,6 +2386,22 @@ msgstr ""
 
 msgctxt "#69058"
 msgid "Cancel ongoing download?"
+msgstr ""
+
+msgctxt "#69059"
+msgid "Download error!"
+msgstr ""
+
+msgctxt "#69060"
+msgid "Can't download due to not configured record application: "
+msgstr ""
+
+msgctxt "#69061"
+msgid "Not existing record destination directory - download canceled!"
+msgstr ""
+
+msgctxt "#69062"
+msgid "Add-on error!"
 msgstr ""
 
 msgctxt "#70000"

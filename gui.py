@@ -2464,7 +2464,7 @@ class mTVGuide(xbmcgui.WindowXML):
             try:
                 res = xbmc.executebuiltin('InstallAddon(script.extendedinfo)')
                 if res is None:
-                    xbmcgui.Dialog().ok(strings(30353), strings(31021).format('script.extendedinfo'))
+                    xbmcgui.Dialog().ok(strings(69062), strings(31021).format('script.extendedinfo')+'.')
             except:
                 None
             if res is True:

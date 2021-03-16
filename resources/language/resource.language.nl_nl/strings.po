@@ -2189,8 +2189,8 @@ msgid "Cancel ongoing recording?"
 msgstr "Doorlopende opname annuleren?"
 
 msgctxt "#69012"
-msgid "Import record app"
-msgstr "Importeer optekening-app"
+msgid "Import record application"
+msgstr "Importeer optekeningtoepassing"
 
 msgctxt "#69013"
 msgid "successfully imported"
@@ -2375,6 +2375,22 @@ msgstr "Download annuleren"
 msgctxt "#69058"
 msgid "Cancel ongoing download?"
 msgstr "Lopende download annuleren?"
+
+msgctxt "#69059"
+msgid "Download error!"
+msgstr "Download fout!"
+
+msgctxt "#69060"
+msgid "Can't download due to not configured record application: "
+msgstr "Kan niet downloaden vanwege niet geconfigureerde optekeningtoepassing: "
+
+msgctxt "#69061"
+msgid "Not existing record destination directory - download canceled!"
+msgstr "Bestaande optekeningbestemmingsdirectory niet - download geannuleerd!"
+
+msgctxt "#69062"
+msgid "Add-on error!"
+msgstr "Add-on fout!"
 
 msgctxt "#70000"
 msgid "Program title"

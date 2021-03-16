@@ -71,8 +71,11 @@ finishedDownloadNotificationName = strings(59986)
 recordNotificationName          = strings(69004)
 finishedRecordNotificationName  = strings(69005)
 nonExistingRecordDirName        = strings(69006)
+nonExistingDownloadDirName      = strings(69061)
 failedRecordDialogName          = strings(69007)
+failedDownloadDialogName        = strings(69059)
 missingRecordBinaryString       = strings(69008)
+missingDownloadBinaryString     = strings(69060)
 
 maxNrOfReattempts               = int(ADDON.getSetting('max_reattempts'))
 minRecordedFileSize             = 4097152 #Less then 4MB, remove downloaded data
@@ -311,10 +314,10 @@ class RecordService(BasePlayService):
 
         if self.rtmpdumpAvailable == False and self.ffmpegdumpAvailable == False:
             deb('DownloadService - no record application installed!')
-            self.showThreadedDialog(failedRecordDialogName, "\n" + missingRecordBinaryString + ' RTMPDUMP & FFMPEG.')
+            self.showThreadedDialog(failedDownloadDialogName, "\n" + missingDownloadBinaryString + ' RTMPDUMP & FFMPEG.')
             return False
 
-        if not self.checkIfRecordDirExist():
+        if not self.checkIfDownloadDirExist():
             return False
 
         secToRecording = self.calculateTimeDifference(program.startDate, timeOffset = startOffset + 5 )
@@ -1698,6 +1701,26 @@ class RecordService(BasePlayService):
                     return False
             except:
                 deb('checkIfRecordDirExist record destination does not exist and cannot be created! path: {}'.format(self.recordDestinationPath))
+                self.showThreadedDialog(failedRecordDialogName, "\n" + nonExistingRecordDirName + "\n" + self.recordDestinationPath)
+                return False
+        else:
+            return True
+
+    def checkIfDownloadDirExist(self):
+        if self.recordDestinationPath == '':
+            deb('checkIfDownloadDirExist download destination not configured!')
+            self.showThreadedDialog(failedDownloadDialogName, "\n" + nonExistingRecordDirName)
+            return False
+        elif os.path.isdir(self.recordDestinationPath) == False:
+            try:
+                os.makedirs(self.recordDestinationPath)
+                #make sure dir was created
+                if os.path.isdir(self.recordDestinationPath) == False:
+                    deb('checkIfDownloadDirExist download destination does not exist after attmept to create! path: {}'.format(self.recordDestinationPath))
+                    self.showThreadedDialog(failedRecordDialogName, "\n" + nonExistingRecordDirName + "\n" + self.recordDestinationPath)
+                    return False
+            except:
+                deb('checkIfDownloadDirExist download destination does not exist and cannot be created! path: {}'.format(self.recordDestinationPath))
                 self.showThreadedDialog(failedRecordDialogName, "\n" + nonExistingRecordDirName + "\n" + self.recordDestinationPath)
                 return False
         else:
