@@ -252,7 +252,7 @@ class RecordService(BasePlayService):
                         if res == True:
                             downloadMenu = DownloadMenu(program)
                             downloadMenu.doModal()
-                            saveRecording, self.startOffsetDownload, self.endOffsetDownload = downloadMenu.getOffsets()
+                            saveRecording, chkdate, self.startOffsetDownload, self.endOffsetDownload = downloadMenu.getOffsets()
 
                             if saveRecording == True:
                                 self.startOffsetDownload *= 60
@@ -260,7 +260,7 @@ class RecordService(BasePlayService):
                                 if self.scheduleDownload(program, self.startOffsetDownload, self.endOffsetDownload):
                                     self.epg.database.addRecording(program, self.startOffsetDownload, self.endOffsetDownload)
                                     updateDB = True
-                            else:
+                            elif chkdate == False:
                                 xbmcgui.Dialog().ok(failedDownloadDialogName, strings(59998))
 
                     else:
@@ -1752,9 +1752,10 @@ class DownloadMenu(xbmcgui.WindowXMLDialog):
         self.programTitleId = 201
         self.channelId = 202
 
-        self.recordDurationId = 204
+        self.downloadDurationId = 204
 
-        self.record = False
+        self.dwnl = False
+        self.chkdate = True
         self.program = program
 
         self.calculatedStartDate = self.program.startDate
@@ -1762,7 +1763,7 @@ class DownloadMenu(xbmcgui.WindowXMLDialog):
         super(DownloadMenu, self).__init__()
 
     def onInit(self): 
-        self.recordDuration = self.getControl(self.recordDurationId)
+        self.downloadDuration = self.getControl(self.downloadDurationId)
 
         if sys.version_info[0] > 2:
             channel = self.program.channel.title
@@ -1811,18 +1812,19 @@ class DownloadMenu(xbmcgui.WindowXMLDialog):
 
         try:
             if self.calculatedEndDate > self.calculatedStartDate:
-                self.recordDuration.setLabel('{}'.format(self.calculatedEndDate - self.calculatedStartDate))
+                self.downloadDuration.setLabel('{}'.format(self.calculatedEndDate - self.calculatedStartDate))
             else:
-                self.recordDuration.setLabel('{}'.format(0))
+                self.downloadDuration.setLabel('{}'.format(0))
         except:
             pass
 
     def getOffsets(self):
         if self.calculatedStartDate > self.calculatedEndDate:
-            self.record = False
+            self.dwnl = False
         elif self.calculatedEndDate > datetime.datetime.now():
-            self.record = False
-        return [self.record, 0, 0]
+            self.dwnl = False
+            self.chkdate = False
+        return [self.dwnl, self.chkdate, 0, 0]
 
     def getStartDate(self, date, time):
         startDate = str(self.program.startDate).split(' ')[0]
@@ -1889,7 +1891,8 @@ class DownloadMenu(xbmcgui.WindowXMLDialog):
             self.close()
 
         elif controlId == self.saveControlId:
-            self.record = True
+            self.dwnl = True
+            self.chkdate = True
             self.close()
 
         else:
