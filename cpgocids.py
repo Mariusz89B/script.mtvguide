@@ -237,7 +237,7 @@ class PolsatGoUpdater(baseServiceUpdater):
             dane = stoken+'|'+sexpir+'|navigation|getTvChannels'
             authdata = getHmac(dane)
             data = {"jsonrpc":"2.0","method":"getTvChannels","id":1,"params":{"filters":[],"ua":"cpgo_www/2015","authData":{"sessionToken":authdata}}}
-            response = requests.post(navigate_url, headers=headers, json=data, verify=False, timeout=15).json()
+            response = requests.post(navigate_url, headers=headers, json=data, timeout=15).json()
             aa = response['result']['results']
             for i in aa:
                 item = {}
@@ -283,7 +283,7 @@ class PolsatGoUpdater(baseServiceUpdater):
             
             cdata = {"jsonrpc":"2.0","method":"getSession","id":1,"params":{"ua":"cpgo_www/2015","authData":{"sessionToken":authdata}}}
             
-            response = requests.post(auth_url, headers=headers, json=cdata,verify=False,timeout=15).json()
+            response = requests.post(auth_url, headers=headers, json=cdata, timeout=15).json()
             sesja = response['result']['session']
             
             sesstoken = sesja['id']
@@ -311,7 +311,7 @@ class PolsatGoUpdater(baseServiceUpdater):
             authdata = getHmac(dane)
             cdata = {"jsonrpc":"2.0","id":1,"method":"prePlayData","params":{"ua":"cpgo_www_html5/2 (Windows 10; widevine=true)","cpid":cpid,"mediaId":id,"authData":{"sessionToken":authdata}}}
             
-            response = requests.post(navigate_url, headers=headers, json=cdata,verify=False,timeout=15).json()
+            response = requests.post(navigate_url, headers=headers, json=cdata ,timeout=15).json()
             playback = response['result']['mediaItem']['playback']
             mediaid = playback['mediaId']['id']
             mediaSources = playback['mediaSources'][0]

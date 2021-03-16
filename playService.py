@@ -471,10 +471,10 @@ class PlayService(xbmc.Player, BasePlayService):
                         ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
                         ListItem.setProperty('IsPlayable', 'true')
 
-                        import threading
-                        thread = threading.Thread(name='reverse', target=self.reverse, args=[])
-                        thread = threading.Timer(3.0, self.reverse, args=[])
-                        thread.start()
+                        #import threading
+                        #thread = threading.Thread(name='reverse', target=self.reverse, args=[])
+                        #thread = threading.Timer(3.0, self.reverse, args=[])
+                        #thread.start()
                         
                     xbmc.Player().play(item=strmUrl, listitem=ListItem, windowed=startWindowed)
                     res = True
