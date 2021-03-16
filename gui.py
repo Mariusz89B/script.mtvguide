@@ -2127,7 +2127,9 @@ class mTVGuide(xbmcgui.WindowXML):
             self.onSourceNotConfigured()
             self.close()
             return
+
         self.database.initialize(self.onSourceInitialized, self.isSourceInitializationCancelled)
+
         self.updateTimebar()
         self.showTime()
 
@@ -2271,6 +2273,118 @@ class mTVGuide(xbmcgui.WindowXML):
                     f.write(bytearray('\n'.join(NCGOStreamsList), 'utf-8'))
 
         return streamsList
+
+    def catchupEPG(self, program, cellWidth):
+        archive = ''
+
+        archivePlaylist = self.getPlaylist()
+        archiveList = self.getCmore() + self.getPolsatGo() + self.getIpla()# + self.getPlayerPL()
+
+        catchupList = list()
+
+        catchupList = self.getCatchupDays()
+
+        catchupDays = None
+
+        if program.channel.title.upper() in catchupList:
+            catchupDays = re.findall('.*=(.*?)$', catchupList)
+
+        if catchupDays:
+            self.catchupDays = catchupDays[0]
+        else:
+            self.catchupDays = ADDON.getSetting('archive_reverse_days')
+
+        if ADDON.getSetting('archive_reverse_auto') == '0' and self.catchupDays != '' or self.catchupDays !='0':
+            try:
+                reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(self.catchupDays)) * 24 - datetime.timedelta(minutes = 5)
+            except:
+                reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
+        else:
+            try:
+                reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(ADDON.getSetting('archive_manual_days'))) * 24 - datetime.timedelta(minutes = 5)
+            except:
+                reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
+
+        reverseArchiveService = datetime.datetime.now() - datetime.timedelta(hours = int(3)) - datetime.timedelta(minutes = 5)
+
+        addonSkin = ADDON.getSetting('Skin')
+
+        if ADDON.getSetting('archive_support') == 'true': 
+            if ADDON.getSetting('archive_finished_program') == 'true': 
+                if program.channel.title.upper() in archivePlaylist and program.endDate < datetime.datetime.now():
+                    #Download
+                    if cellWidth < 35:
+                        archive  = ''
+                    else:
+                        if skin_catchup_size == '1':
+                            archive = '[UPPERCASE][COLOR FF01cdfe][B]• [/B][/COLOR][/UPPERCASE]'
+                        else:
+                            archive = '[UPPERCASE][COLOR FF01cdfe][B]● [/B][/COLOR][/UPPERCASE]'
+                
+                if program.channel.title.upper() in archivePlaylist:
+                    #Catchup
+                    if program.endDate < datetime.datetime.now():
+                        if program.startDate > reverseTime:
+                            if cellWidth < 35:
+                                archive  = ''
+                            else:
+                                if skin_catchup_size == '1':
+                                    archive = '[UPPERCASE][COLOR FF0cbe24][B]• [/B][/COLOR][/UPPERCASE]'
+                                else:
+                                    archive = '[UPPERCASE][COLOR FF0cbe24][B]● [/B][/COLOR][/UPPERCASE]'
+
+                if program.channel.title.upper() in archiveList:
+                    #Catchup
+                    if program.endDate < datetime.datetime.now():
+                        if program.startDate > reverseArchiveService:
+                            if cellWidth < 35:
+                                archive  = ''
+                            else:
+                                if skin_catchup_size == '1':
+                                    archive = '[UPPERCASE][COLOR FF0cbe24][B]• [/B][/COLOR][/UPPERCASE]'
+                                else:
+                                    archive = '[UPPERCASE][COLOR FF0cbe24][B]● [/B][/COLOR][/UPPERCASE]'
+
+            else:
+                if program.channel.title.upper() in archivePlaylist and program.startDate < datetime.datetime.now():
+                    #Download
+                    if cellWidth < 35:
+                        archive  = ''
+                    else:
+                        if skin_catchup_size == '1':
+                            archive = '[UPPERCASE][COLOR FF01cdfe][B]• [/B][/COLOR][/UPPERCASE]'
+                        else:
+                            archive = '[UPPERCASE][COLOR FF01cdfe][B]● [/B][/COLOR][/UPPERCASE]'
+                
+                if program.channel.title.upper() in archivePlaylist:
+                    #Catchup
+                    if program.startDate < datetime.datetime.now():
+                        if program.startDate > reverseTime:
+                            if cellWidth < 35:
+                                archive  = ''
+                            else:
+                                if skin_catchup_size == '1':
+                                    archive = '[UPPERCASE][COLOR FF0cbe24][B]• [/B][/COLOR][/UPPERCASE]'
+                                else:
+                                    archive = '[UPPERCASE][COLOR FF0cbe24][B]● [/B][/COLOR][/UPPERCASE]'
+
+                if program.channel.title.upper() in archiveList:
+                    #Catchup
+                    if program.startDate < datetime.datetime.now():
+                        if program.startDate > reverseArchiveService:
+                            if cellWidth < 35:
+                                archive  = ''
+                            else:
+                                if skin_catchup_size == '1':
+                                    archive = '[UPPERCASE][COLOR FF0cbe24][B]• [/B][/COLOR][/UPPERCASE]'
+                                else:
+                                    archive = '[UPPERCASE][COLOR FF0cbe24][B]● [/B][/COLOR][/UPPERCASE]'
+        else:
+            archive = ''
+
+
+        return archive
+
 
     def showTime(self):
         alignLeft = 0
@@ -4784,112 +4898,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 else:
                     title = program.title
 
-                archive = ''
-
-                archivePlaylist = self.getPlaylist()
-                archiveList = self.getCmore() + self.getPolsatGo() + self.getIpla()# + self.getPlayerPL()
-
-                catchupList = list()
-
-                catchupList = self.getCatchupDays()
-
-                catchupDays = None
-
-                if program.channel.title.upper() in catchupList:
-                    catchupDays = re.findall('.*=(.*?)$', catchupList)
-
-                if catchupDays:
-                    self.catchupDays = catchupDays[0]
-                else:
-                    self.catchupDays = ADDON.getSetting('archive_reverse_days')
-
-                if ADDON.getSetting('archive_reverse_auto') == '0' and self.catchupDays != '' or self.catchupDays !='0':
-                    try:
-                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(self.catchupDays)) * 24 - datetime.timedelta(minutes = 5)
-                    except:
-                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
-                else:
-                    try:
-                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(ADDON.getSetting('archive_manual_days'))) * 24 - datetime.timedelta(minutes = 5)
-                    except:
-                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
-
-                reverseArchiveService = datetime.datetime.now() - datetime.timedelta(hours = int(3)) - datetime.timedelta(minutes = 5)
-
-                addonSkin = ADDON.getSetting('Skin')
-
-                if ADDON.getSetting('archive_support') == 'true': 
-                    if ADDON.getSetting('archive_finished_program') == 'true': 
-                        if program.channel.title.upper() in archivePlaylist and program.endDate < datetime.datetime.now():
-                            #Download
-                            if cellWidth < 35:
-                                archive  = ''
-                            else:
-                                if skin_catchup_size == '1':
-                                    archive = '[UPPERCASE][COLOR FF01cdfe][B]• [/B][/COLOR][/UPPERCASE]'
-                                else:
-                                    archive = '[UPPERCASE][COLOR FF01cdfe][B]● [/B][/COLOR][/UPPERCASE]'
-                        
-                        if program.channel.title.upper() in archivePlaylist:
-                            #Catchup
-                            if program.endDate < datetime.datetime.now():
-                                if program.startDate > reverseTime:
-                                    if cellWidth < 35:
-                                        archive  = ''
-                                    else:
-                                        if skin_catchup_size == '1':
-                                            archive = '[UPPERCASE][COLOR FF0cbe24][B]• [/B][/COLOR][/UPPERCASE]'
-                                        else:
-                                            archive = '[UPPERCASE][COLOR FF0cbe24][B]● [/B][/COLOR][/UPPERCASE]'
-
-                        if program.channel.title.upper() in archiveList:
-                            #Catchup
-                            if program.endDate < datetime.datetime.now():
-                                if program.startDate > reverseArchiveService:
-                                    if cellWidth < 35:
-                                        archive  = ''
-                                    else:
-                                        if skin_catchup_size == '1':
-                                            archive = '[UPPERCASE][COLOR FF0cbe24][B]• [/B][/COLOR][/UPPERCASE]'
-                                        else:
-                                            archive = '[UPPERCASE][COLOR FF0cbe24][B]● [/B][/COLOR][/UPPERCASE]'
-
-                    else:
-                        if program.channel.title.upper() in archivePlaylist and program.startDate < datetime.datetime.now():
-                            #Download
-                            if cellWidth < 35:
-                                archive  = ''
-                            else:
-                                if skin_catchup_size == '1':
-                                    archive = '[UPPERCASE][COLOR FF01cdfe][B]• [/B][/COLOR][/UPPERCASE]'
-                                else:
-                                    archive = '[UPPERCASE][COLOR FF01cdfe][B]● [/B][/COLOR][/UPPERCASE]'
-                        
-                        if program.channel.title.upper() in archivePlaylist:
-                            #Catchup
-                            if program.startDate < datetime.datetime.now():
-                                if program.startDate > reverseTime:
-                                    if cellWidth < 35:
-                                        archive  = ''
-                                    else:
-                                        if skin_catchup_size == '1':
-                                            archive = '[UPPERCASE][COLOR FF0cbe24][B]• [/B][/COLOR][/UPPERCASE]'
-                                        else:
-                                            archive = '[UPPERCASE][COLOR FF0cbe24][B]● [/B][/COLOR][/UPPERCASE]'
-
-                        if program.channel.title.upper() in archiveList:
-                            #Catchup
-                            if program.startDate < datetime.datetime.now():
-                                if program.startDate > reverseArchiveService:
-                                    if cellWidth < 35:
-                                        archive  = ''
-                                    else:
-                                        if skin_catchup_size == '1':
-                                            archive = '[UPPERCASE][COLOR FF0cbe24][B]• [/B][/COLOR][/UPPERCASE]'
-                                        else:
-                                            archive = '[UPPERCASE][COLOR FF0cbe24][B]● [/B][/COLOR][/UPPERCASE]'
-                else:
-                    archive = ''
+                archive = self.catchupEPG(program, cellWidth)
 
                 control = xbmcgui.ControlButton(
                     cellStart,
@@ -5179,11 +5188,12 @@ class mTVGuide(xbmcgui.WindowXML):
                 if ADDON.getSetting('categories_remember') == 'true' or ADDON.getSetting('category') != '':
                     self.database.setCategory(ADDON.getSetting('category'))
 
+                self.getStreamsCid()
                 self.onRedrawEPG(0, self.viewStartDate)
+                
                 if ADDON.getSetting('touch_panel') == 'true':
                     self._showControl(self.C_MAIN_MOUSEPANEL_CONTROLS)
 
-                self.getStreamsCid()
         else:
             self.close()
 
