@@ -118,7 +118,7 @@
 		<setting type="sep" visible="gt(-14,1)"/>
 		<setting label="59912" type="lsep" visible="gt(-15,1)"/>
 		<setting id="playlist_2_enabled" type="bool" label="59904" default="false" visible="gt(-16,0)"/>
-		<setting id="playlist_2_display_name" label="59914" type="text" default="Playlist_1" visible="eq(-1,true) + gt(-17,0)"/>
+		<setting id="playlist_2_display_name" label="59914" type="text" default="Playlist_2" visible="eq(-1,true) + gt(-17,0)"/>
 		<setting id="playlist_2_refr" type="bool" label="60008" default="true" visible="eq(2,0) + eq(-2,true) + gt(-18,0)"/>
 		<setting id="playlist_2_refr_days" label="60009" type="slider" default="7" range="0,30" option="int" visible="eq(1,0) + eq(-1,true) + eq(-3,true) + gt(-19,0)"/>
 		<setting id="playlist_2_source" label="59907" type="enum" default="0" lvalues="59919|59908" visible="eq(-4,true) + gt(-20,0)"/>
@@ -132,7 +132,7 @@
 		<setting type="sep" visible="gt(-27,2)"/>
 		<setting label="59913" type="lsep" visible="gt(-28,2)"/>
 		<setting id="playlist_3_enabled" type="bool" label="59904" default="false" visible="gt(-29,0)"/>
-		<setting id="playlist_3_display_name" label="59914" type="text" default="Playlist_1" visible="eq(-1,true) + gt(-30,0)"/>
+		<setting id="playlist_3_display_name" label="59914" type="text" default="Playlist_3" visible="eq(-1,true) + gt(-30,0)"/>
 		<setting id="playlist_3_refr" type="bool" label="60008" default="true" visible="eq(2,0) + eq(-2,true) + gt(-31,0)"/>
 		<setting id="playlist_3_refr_days" label="60009" type="slider" default="7" range="0,30" option="int" visible="eq(1,0) + eq(-1,true) + eq(-3,true) + gt(-32,0)"/>
 		<setting id="playlist_3_source" label="59907" type="enum" default="0" lvalues="59919|59908" visible="eq(-4,true) + gt(-33,0)"/>
@@ -146,7 +146,7 @@
 		<setting type="sep" visible="gt(-40,3)"/>
 		<setting label="59917" type="lsep" visible="gt(-41,3)"/>
 		<setting id="playlist_4_enabled" type="bool" label="59904" default="false" visible="gt(-42,0)"/>
-		<setting id="playlist_4_display_name" label="59914" type="text" default="Playlist_1" visible="eq(-1,true) + gt(-43,0)"/>
+		<setting id="playlist_4_display_name" label="59914" type="text" default="Playlist_4" visible="eq(-1,true) + gt(-43,0)"/>
 		<setting id="playlist_4_refr" type="bool" label="60008" default="true" visible="eq(2,0) + eq(-2,true) + gt(-44,0)"/>
 		<setting id="playlist_4_refr_days" label="60009" type="slider" default="7" range="0,30" option="int" visible="eq(1,0) + eq(-1,true) + eq(-3,true) + gt(-45,0)"/>
 		<setting id="playlist_4_source" label="59907" type="enum" default="0" lvalues="59919|59908" visible="eq(-4,true) + gt(-46,0)"/>
@@ -160,7 +160,7 @@
 		<setting type="sep" visible="gt(-53,4)"/>
 		<setting label="59918" type="lsep" visible="gt(-54,4)"/>
 		<setting id="playlist_5_enabled" type="bool" label="59904" default="false" visible="gt(-55,0)"/>
-		<setting id="playlist_5_display_name" label="59914" type="text" default="Playlist_1" visible="eq(-1,true) + gt(-56,0)"/>
+		<setting id="playlist_5_display_name" label="59914" type="text" default="Playlist_5" visible="eq(-1,true) + gt(-56,0)"/>
 		<setting id="playlist_5_refr" type="bool" label="60008" default="true" visible="eq(2,0) + eq(-2,true) + gt(-57,0)"/>
 		<setting id="playlist_5_refr_days" label="60009" type="slider" default="7" range="0,30" option="int" visible="eq(1,0) + eq(-1,true) + eq(-3,true) + gt(-58,0)"/>
 		<setting id="playlist_5_source" label="59907" type="enum" default="0" lvalues="59919|59908" visible="eq(-4,true) + gt(-59,0)"/>
@@ -307,7 +307,7 @@
 		<setting id="ask_to_delete_watched" label="69025" type="enum" default="1" lvalues="69028|69029|69030"/>
 	</category>
 	<category label="59976">
-		<setting id="archive_support" label="59978" type="bool" default="true" />
+		<setting id="archive_support" label="59978" type="bool" default="false" />
 		<setting id="archive_type" label="59989" type="enum" default="0" lvalues="70007|59990|59996|59999|30720" visible="eq(-1,true)"/>
 		<setting id="archive_string" label="59977" type="text" default="?utc={utc}&amp;lutc={lutc}" visible="eq(-2,true) + eq(-1,1)" />
 		<setting id="archive_reverse_auto" label="60002" type="enum" default="0" lvalues="60000|60001" visible="eq(-3,true)"/>
@@ -329,14 +329,14 @@
 	</category>
 	<category label="30930">
 		<setting label="30931" type="lsep"/>
-		<setting id="color_movies" label="30932" type="select" default="0" lvalues="70008|70009|70010|70011|70012|70013|70014|70015|70007"/>
-		<setting id="color_series" label="30933" type="select" default="1" lvalues="70008|70009|70010|70011|70012|70013|70014|70015|70007"/>
-		<setting id="color_information" label="30934" type="select" default="2" lvalues="70008|70009|70010|70011|70012|70013|70014|70015|70007"/>
-		<setting id="color_entertainment" label="30935" type="select" default="3" lvalues="70008|70009|70010|70011|70012|70013|70014|70015|70007"/>
-		<setting id="color_documents" label="30936" type="select" default="4" lvalues="70008|70009|70010|70011|70012|70013|70014|70015|70007"/>
-		<setting id="color_kids" label="30937" type="select" default="5" lvalues="70008|70009|70010|70011|70012|70013|70014|70015|70007"/>
-		<setting id="color_sports" label="30938" type="select" default="6" lvalues="70008|70009|70010|70011|70012|70013|70014|70015|70007"/>
-		<setting id="color_interactive" label="30939" type="select" default="7" lvalues="70008|70009|70010|70011|70012|70013|70014|70015|70007"/>
+		<setting id="color_movies" label="30932" type="select" default="8" lvalues="70008|70009|70010|70011|70012|70013|70014|70015|70007"/>
+		<setting id="color_series" label="30933" type="select" default="8" lvalues="70008|70009|70010|70011|70012|70013|70014|70015|70007"/>
+		<setting id="color_information" label="30934" type="select" default="8" lvalues="70008|70009|70010|70011|70012|70013|70014|70015|70007"/>
+		<setting id="color_entertainment" label="30935" type="select" default="8" lvalues="70008|70009|70010|70011|70012|70013|70014|70015|70007"/>
+		<setting id="color_documents" label="30936" type="select" default="8" lvalues="70008|70009|70010|70011|70012|70013|70014|70015|70007"/>
+		<setting id="color_kids" label="30937" type="select" default="8" lvalues="70008|70009|70010|70011|70012|70013|70014|70015|70007"/>
+		<setting id="color_sports" label="30938" type="select" default="8" lvalues="70008|70009|70010|70011|70012|70013|70014|70015|70007"/>
+		<setting id="color_interactive" label="30939" type="select" default="8" lvalues="70008|70009|70010|70011|70012|70013|70014|70015|70007"/>
 		<setting type="sep"/>
 		<setting label="30940" type="lsep"/>
 		<setting id="color_background" label="30941" type="select" default="0" lvalues="70007"/>

@@ -66,15 +66,17 @@ import cloudscraper
 scraper = cloudscraper.CloudScraper()
 serviceName   = 'playlist'
 
+playlists = ['playlist_1', 'playlist_2', 'playlist_3', 'playlist_4', 'playlist_5']
+
 class PlaylistUpdater(baseServiceUpdater):
     def __init__(self, instance_number):
-        self.serviceName        = serviceName + "_%s" % instance_number
+        self.serviceName        = serviceName + "_{}".format(instance_number)
         self.instance_number    = str(instance_number)
         self.localMapFile       = 'playlistmap.xml'
         baseServiceUpdater.__init__(self)
-        self.servicePriority    = int(ADDON.getSetting('%s_priority' % self.serviceName))
-        self.serviceDisplayName = ADDON.getSetting('%s_display_name' % self.serviceName)
-        self.source             = ADDON.getSetting('%s_source'       % self.serviceName)
+        self.servicePriority    = int(ADDON.getSetting('{}_priority'.format(self.serviceName)))
+        self.serviceDisplayName = ADDON.getSetting('{}_display_name'.format(self.serviceName))
+        self.source             = ADDON.getSetting('{}_source'.format(self.serviceName))
         self.addDuplicatesToList = True
         self.useOnlineMap       = False
         if sys.version_info[0] > 2:
@@ -89,24 +91,24 @@ class PlaylistUpdater(baseServiceUpdater):
                 self.profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
 
         if int(instance_number) <= int(ADDON.getSetting('nr_of_playlists')):
-            self.serviceEnabled  = ADDON.getSetting('%s_enabled'     % self.serviceName)
+            self.serviceEnabled  = ADDON.getSetting('{}_enabled'.format(self.serviceName))
         else:
             self.serviceEnabled = 'false'
 
         if self.source == '0':
-            self.url = ADDON.getSetting('%s_url' % self.serviceName)
+            self.url = ADDON.getSetting('{}_url'.format(self.serviceName))
         else:
             if sys.version_info[0] > 2:
-                self.url = xbmcvfs.translatePath(ADDON.getSetting('%s_file' % self.serviceName))
+                self.url = xbmcvfs.translatePath(ADDON.getSetting('{}_file'.format(self.serviceName)))
             else:
-                self.url = xbmc.translatePath(ADDON.getSetting('%s_file' % self.serviceName))
+                self.url = xbmc.translatePath(ADDON.getSetting('{}_file'.format(self.serviceName)))
 
-        if ADDON.getSetting('%s_high_prio_hd' % self.serviceName) == 'true':
+        if ADDON.getSetting('{}_high_prio_hd'.format(self.serviceName)) == 'true':
             self.hdStreamFirst = True
         else:
             self.hdStreamFirst = False
 
-        if ADDON.getSetting('%s_stop_when_starting' % self.serviceName) == 'true':
+        if ADDON.getSetting('{}_stop_when_starting'.format(self.serviceName)) == 'true':
             self.stopPlaybackOnStart = True
         else:
             self.stopPlaybackOnStart = False
@@ -128,7 +130,6 @@ class PlaylistUpdater(baseServiceUpdater):
         return content
 
     def cachePlaylist(self, upath):
-        import shutil
         n = datetime.datetime.now()
         h = datetime.timedelta(days=int(ADDON.getSetting('{playlist}_refr_days'.format(playlist=self.serviceName))))
 
@@ -206,7 +207,7 @@ class PlaylistUpdater(baseServiceUpdater):
                     content = self.requestUrl(path)
 
             except Exception as ex:
-                self.log('downloadPlaylist Error %s' % getExceptionString())
+                self.log('downloadPlaylist Error {}'.format(getExceptionString()))
 
             if (content is None or content == '') and (datetime.datetime.now() - start_time).seconds < 10:
                 self.log('downloadPlaylist Failed, sleeping')
@@ -217,6 +218,20 @@ class PlaylistUpdater(baseServiceUpdater):
 
     def getPlaylistContent(self, path, urltype):
         content = ''
+
+        fpath = os.path.join(self.profilePath, 'playlists')
+        filepath = os.path.join(self.profilePath, 'playlists', '{playlist}.m3u'.format(playlist=self.serviceName))
+
+        playlists.remove(self.serviceName)
+
+        for f in os.listdir(fpath):
+            for playlist in playlists:
+                try:
+                    os.remove(os.path.join(fpath, '{playlist}.m3u'.format(playlist=playlist)))
+                    os.remove(os.path.join(fpath, '{playlist}.url'.format(playlist=playlist)))
+                except:
+                    pass
+
         try:
             self.log('getPlaylistContent opening playlist: %s, urltype: %s' % (path, urltype))
             if urltype == '0':
@@ -241,7 +256,7 @@ class PlaylistUpdater(baseServiceUpdater):
 
             content = tmpcontent
         except:
-            self.log('getPlaylistContent opening Error %s, type: %s, url: %s' % (getExceptionString(), urltype, path) )
+            self.log('getPlaylistContent opening Error {}, type: {}, url: {}'.format(getExceptionString(), urltype, path) )
             if sys.version_info[0] > 2:
                 xbmcgui.Dialog().notification(strings(59905), strings(57049) + ' ' + self.serviceName + ' (' + self.getDisplayName() + ') ' + strings(57050), time=10000, sound=False)
             else:
