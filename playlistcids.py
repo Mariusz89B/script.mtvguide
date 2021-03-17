@@ -224,13 +224,16 @@ class PlaylistUpdater(baseServiceUpdater):
 
         playlists.remove(self.serviceName)
 
-        for f in os.listdir(fpath):
-            for playlist in playlists:
-                try:
-                    os.remove(os.path.join(fpath, '{playlist}.m3u'.format(playlist=playlist)))
-                    os.remove(os.path.join(fpath, '{playlist}.url'.format(playlist=playlist)))
-                except:
-                    pass
+        try:
+            for f in os.listdir(fpath):
+                for playlist in playlists:
+                    try:
+                        os.remove(os.path.join(fpath, '{playlist}.m3u'.format(playlist=playlist)))
+                        os.remove(os.path.join(fpath, '{playlist}.url'.format(playlist=playlist)))
+                    except:
+                        pass
+        except:
+            pass
 
         try:
             self.log('getPlaylistContent opening playlist: %s, urltype: %s' % (path, urltype))
