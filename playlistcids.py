@@ -131,7 +131,7 @@ class PlaylistUpdater(baseServiceUpdater):
 
     def cachePlaylist(self, upath):
         n = datetime.datetime.now()
-        h = datetime.timedelta(days=int(ADDON.getSetting('{playlist}_refr_days'.format(playlist=self.serviceName))))
+        d = datetime.timedelta(days=int(ADDON.getSetting('{playlist}_refr_days'.format(playlist=self.serviceName))))
 
         if sys.version_info[0] > 2:
             tnow = datetime.datetime.timestamp(n)
@@ -139,14 +139,14 @@ class PlaylistUpdater(baseServiceUpdater):
             from time import time
             tnow = str(time()).split('.')[0]
 
-        tdel = h.total_seconds()
+        tdel = d.total_seconds()
 
         path = os.path.join(self.profilePath, 'playlists')
         filepath = os.path.join(self.profilePath, 'playlists', '{playlist}.m3u'.format(playlist=self.serviceName))
         
         try:
             filename = os.path.basename(filepath)
-            timestamp = str(os.path.getctime(filepath)).split('.')[0]
+            timestamp = str(os.path.getmtime(filepath)).split('.')[0]
         except:
             timestamp = tnow
 
