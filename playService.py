@@ -1060,8 +1060,8 @@ class PlayService(xbmc.Player, BasePlayService):
                 self.stopPlayback()
 
 
-    def checkConnection(self, url):
-        if url is not None:
+    def checkConnection(self, strmUrl):
+        if strmUrl is not None:
             ctx = ssl.create_default_context()
             ctx.check_hostname = False
             ctx.verify_mode = ssl.CERT_NONE
@@ -1071,7 +1071,7 @@ class PlayService(xbmc.Player, BasePlayService):
             timeout = int(ADDON.getSetting('max_wait_for_playback'))
 
             try:
-                response = Request.urlopen(url, context=ctx, timeout=timeout)
+                response = Request.urlopen(strmUrl, context=ctx, timeout=timeout)
                 status = response.code
             except HTTPError as e:
                 deb('HTTP error: {}'.format(e.reason))
@@ -1083,9 +1083,9 @@ class PlayService(xbmc.Player, BasePlayService):
                 except:
                     status = 408
 
-            statusList = [406, 409]
-            if status in statusList:
-                status = 200
+            #statusList = [406, 409]
+            #if status in statusList:
+                #status = 200
 
             if status >= 400:
                 xbmcgui.Dialog().notification(strings(57018) + ' Error: ' + str(status), strings(31019), xbmcgui.NOTIFICATION_ERROR)

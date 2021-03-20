@@ -1948,13 +1948,13 @@ class RecordMenu(xbmcgui.WindowXMLDialog):
         self.resetSliders()
 
     def resetSliders(self):
-        self.startOffsetSlider.setPercent(50)
-        self.endOffsetSlider.setPercent(50)
+        self.startOffsetSlider.setInt(720, 0, 1, 1440)
+        self.endOffsetSlider.setInt(720, 0, 1, 1440)
         self.updateLabels()
 
     def updateLabels(self):
-        self.startOffsetValue = int(self.startOffsetSlider.getPercent() - 50)
-        self.endOffsetValue = int(self.endOffsetSlider.getPercent() - 50)
+        self.startOffsetValue = int(self.startOffsetSlider.getInt() - 720)
+        self.endOffsetValue = int(self.endOffsetSlider.getInt() - 720)
 
         self.startOffsetLabel.setLabel('{}'.format(self.startOffsetValue))
         self.endOffsetLabel.setLabel('{}'.format(self.endOffsetValue))
