@@ -199,7 +199,6 @@ class PlayService(xbmc.Player, BasePlayService):
         self.reconnectDelay         = int(ADDON.getSetting('reconnect_delay'))
         self.reconnectFailedStreams = ADDON.getSetting('reconnect_stream')
         self.maxStreamStartupTime   = int(ADDON.getSetting('max_wait_for_playback')) * 10
-        self.strmUrl                = None
 
     @contextmanager
     def busyDialog(self):
@@ -324,7 +323,7 @@ class PlayService(xbmc.Player, BasePlayService):
             customPlugin = True
         elif url[0:7] == 'service':
             cid, service = self.parseUrl(url)
-            success, self.strmUrl = self.LoadVideoLink(cid, service)
+            success, strmUrl = self.LoadVideoLink(cid, service)
             if success:
                 self.getStreamQualityFromCid(cid)
         else:
@@ -955,24 +954,24 @@ class PlayService(xbmc.Player, BasePlayService):
         self.playbackStopped = True
         self.unlockCurrentlyPlayedService()
         self.sleepSupervisor.Stop()
-        self.closeVideoOsd()
         self.checkConnection(self.strmUrl)
-
+        self.closeVideoOsd()
+        
     def onPlayBackStopped(self):
         self.playbackStopped = True
         self.unlockCurrentlyPlayedService()
         self.sleepSupervisor.Stop()
+        self.checkConnection(self.strmUrl)
         self.tryResummingPlayback()
         self.closeVideoOsd()
-        self.checkConnection(self.strmUrl)
-
+        
     def onPlayBackEnded(self):
         self.playbackStopped = True
         self.unlockCurrentlyPlayedService()
         self.sleepSupervisor.Stop()
+        self.checkConnection(self.strmUrl)
         self.tryResummingPlayback()
         self.closeVideoOsd()
-        self.checkConnection(self.strmUrl)
 
     def onPlayBackStarted(self):
         self.playbackStarted = True
