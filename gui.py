@@ -6586,6 +6586,7 @@ class Pla(xbmcgui.WindowXMLDialog):
                     self.epg.ExtendedInfo(self.program)
             except:
                 pass
+            return
 
         elif action.getButtonCode() == KEY_VOL_DOWN or (action.getId() == ACTION_LEFT and self.key_right_left_show_next == 'false'):
             xbmc.executebuiltin("Action(VolumeDown)")

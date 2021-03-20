@@ -286,9 +286,8 @@ class PlayService(xbmc.Player, BasePlayService):
 
             try:
                 #move stream to the end of list
-                if url is not None:
-                    self.urlList.remove(url)
-                    self.urlList.append(url)
+                self.urlList.remove(url)
+                self.urlList.append(url)
             except Exception as ex:
                 deb('_playUrlList exception: {}'.format(getExceptionString()))
 
