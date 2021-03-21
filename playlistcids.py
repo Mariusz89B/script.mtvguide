@@ -223,7 +223,7 @@ class PlaylistUpdater(baseServiceUpdater):
         filepath = os.path.join(self.profilePath, 'playlists', '{playlist}.m3u'.format(playlist=self.serviceName))
 
         try:
-        	playlists.remove(self.serviceName)
+            playlists.remove(self.serviceName)
 
             for f in os.listdir(fpath):
                 for playlist in playlists:
