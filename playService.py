@@ -961,24 +961,30 @@ class PlayService(xbmc.Player, BasePlayService):
         self.playbackStopped = True
         self.unlockCurrentlyPlayedService()
         self.sleepSupervisor.Stop()
-        self.checkConnection(self.strmUrl)
         self.closeVideoOsd()
+
+        if not self.userStoppedPlayback:
+            self.checkConnection(self.strmUrl)
         
     def onPlayBackStopped(self):
         self.playbackStopped = True
         self.unlockCurrentlyPlayedService()
         self.sleepSupervisor.Stop()
-        self.checkConnection(self.strmUrl)
         self.tryResummingPlayback()
         self.closeVideoOsd()
+
+        if not self.userStoppedPlayback:
+            self.checkConnection(self.strmUrl)
         
     def onPlayBackEnded(self):
         self.playbackStopped = True
         self.unlockCurrentlyPlayedService()
         self.sleepSupervisor.Stop()
-        self.checkConnection(self.strmUrl)
         self.tryResummingPlayback()
         self.closeVideoOsd()
+
+        if not self.userStoppedPlayback:
+            self.checkConnection(self.strmUrl)
 
     def onPlayBackStarted(self):
         self.playbackStarted = True
