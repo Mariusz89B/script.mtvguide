@@ -2120,7 +2120,7 @@ class mTVGuide(xbmcgui.WindowXML):
         self.database.initialize(self.onSourceInitialized, self.isSourceInitializationCancelled)
 
         self.updateTimebar()
-        self.showTime()
+        
 
     def getStreamsCid(self):
         streamsList = list()
@@ -2373,121 +2373,6 @@ class mTVGuide(xbmcgui.WindowXML):
 
 
         return archive
-
-
-    def showTime(self):
-        alignLeft = 0
-        alignRight = 1
-
-        skin_resolution = config.get("Skin", "resolution")
-        currentSkin = xbmc.getSkinDir()
-        chkSkinKodi = currentSkin
-
-        smallList = list()
-        mediumList = list()
-        largeList = list()
-
-        try:
-            # Check path
-            if xbmcvfs.exists(os.path.join(self.kodiPath, 'addons', chkSkinKodi, 'xml/')):
-                path0 = 'xml'
-            elif xbmcvfs.exists(os.path.join(self.kodiPath, 'addons', chkSkinKodi, '720p/')):
-                path0 = '720p'
-            elif xbmcvfs.exists(os.path.join(self.kodiPath, 'addons', chkSkinKodi, '1080i/')):
-                path0 = '1080i'
-            elif xbmcvfs.exists(os.path.join(self.kodiPath, 'addons', chkSkinKodi, '16x9/')):
-                path0 = '16x9'
-
-            if xbmcvfs.exists(os.path.join(self.kodiSkinPath, 'xml/')):
-                path1 = 'xml'
-            elif xbmcvfs.exists(os.path.join(self.kodiSkinPath, '720p/')):
-                path1 = '720p'
-            elif xbmcvfs.exists(os.path.join(self.kodiSkinPath, '1080i/')):
-                path1 = '1080i'
-            elif xbmcvfs.exists(os.path.join(self.kodiSkinPath, '16x9/')):
-                path1 = '16x9'
-
-            try:
-                file_check = xbmcvfs.File(os.path.join(self.kodiPath, 'addons', chkSkinKodi, path0, 'Font.xml'), 'r')
-            except:
-                file_check = xbmcvfs.File(os.path.join(self.kodiSkinPath, path1, 'Font.xml'), 'r')
-            f = file_check.read()
-            
-            sizeList = re.findall('<size>(.*?)</size>', f)
-            nameList = re.findall('<name>(.*?)</name>', f)
-
-            for idx in range(len(nameList)):
-                name = nameList[idx]
-                size = sizeList[idx]
-                size = re.sub('\.\d+$', '', size)
-                if int(size) > 25 and int(size) <= 35:
-                    smallList.append(name)
-                if int(size) > 35 and int(size) <= 45:
-                    mediumList.append(name)
-                if int(size) > 45:
-                    largeList.append(name)
-
-            if ADDON.getSetting('show_time') == "true":
-                if ADDON.getSetting('show_time_size') == "1":
-                    size = smallList[0]
-                elif ADDON.getSetting('show_time_size') == "2":
-                    size = mediumList[0]
-                elif ADDON.getSetting('show_time_size') == "3":
-                    size = largeList[0]
-                else:
-                    size = 'font13'
-        except:
-            size = 'font13'
-            
-            time = '$INFO[System.Time]'
-
-            if ADDON.getSetting('show_time_pos') == "0":
-                if skin_resolution == '720p':
-                    showTime = xbmcgui.ControlLabel(20, 6, 200, 50, time, textColor='0xFFFFFFFF',
-                                                         alignment=alignLeft, font=size)
-                elif skin_resolution == '1080i':
-                    showTime = xbmcgui.ControlLabel(30, 10, 300, 75, time, textColor='0xFFFFFFFF',
-                                                         alignment=alignLeft, font=size)
-                else:
-                    showTime = xbmcgui.ControlLabel(30, 10, 300, 75, time, textColor='0xFFFFFFFF',
-                                                         alignment=alignLeft, font=size)
-
-            if ADDON.getSetting('show_time_pos') == "1":
-                if skin_resolution == '720p':
-                    showTime = xbmcgui.ControlLabel(1060, 6, 200, 50, time, textColor='0xFFFFFFFF',
-                                                         alignment=alignRight, font=size)
-                elif skin_resolution == '1080i':
-                    showTime = xbmcgui.ControlLabel(1590, 10, 300, 75, time,
-                                                         textColor='0xFFFFFFFF', alignment=alignRight, font=size)
-                else:
-                    showTime = xbmcgui.ControlLabel(1590, 10, 300, 75, time,
-                                                         textColor='0xFFFFFFFF', alignment=alignRight, font=size)
-
-            if ADDON.getSetting('show_time_pos') == "2":
-                if skin_resolution == '720p':
-                    showTime = xbmcgui.ControlLabel(20, 663, 200, 50, time, textColor='0xFFFFFFFF',
-                                                         alignment=alignLeft, font=size)
-                elif skin_resolution == '1080i':
-                    showTime = xbmcgui.ControlLabel(30, 995, 300, 75, time, textColor='0xFFFFFFFF',
-                                                         alignment=alignLeft, font=size)
-                else:
-                    showTime = xbmcgui.ControlLabel(30, 995, 300, 75, time, textColor='0xFFFFFFFF',
-                                                         alignment=alignLeft, font=size)
-
-            if ADDON.getSetting('show_time_pos') == "3":
-                if skin_resolution == '720p':
-                    showTime = xbmcgui.ControlLabel(1060, 663, 200, 50, time,
-                                                         textColor='0xFFFFFFFF', alignment=alignRight, font=size)
-                elif skin_resolution == '1080i':
-                    showTime = xbmcgui.ControlLabel(1590, 995, 300, 75, time,
-                                                         textColor='0xFFFFFFFF', alignment=alignRight, font=size)
-                else:
-                    showTime = xbmcgui.ControlLabel(1590, 995, 300, 75, time,
-                                                         textColor='0xFFFFFFFF', alignment=alignRight, font=size)
-
-            self.addControl(showTime)
-            showTime.setVisibleCondition(
-                'Player.HasVideo + Control.IsVisible(5000) + !Window.IsVisible(VidOSD.xml)')
 
     def getChannelListLenght(self):
         channelList = self.database.getChannelList(onlyVisible=True)
@@ -6459,6 +6344,15 @@ class Pla(xbmcgui.WindowXMLDialog):
         self.archiveService = archiveService
         self.archivePlaylist = archivePlaylist
 
+        if sys.version_info[0] > 2:
+            self.kodiPath = xbmcvfs.translatePath("special://home/")
+            self.kodiPathMain = xbmcvfs.translatePath("special://xbmc/")
+            self.kodiSkinPath = xbmcvfs.translatePath("special://skin/")
+        else:
+            self.kodiPath = xbmc.translatePath("special://home/")
+            self.kodiPathMain = xbmc.translatePath("special://xbmc/")
+            self.kodiSkinPath = xbmc.translatePath("special://skin/")
+
         if ADDON.getSetting('show_osd_on_play') == 'true':
             self.showOsdOnPlay = True
             self.displayAutoOsd = True
@@ -6479,6 +6373,115 @@ class Pla(xbmcgui.WindowXMLDialog):
         threading.Timer(0, self.waitForPlayBackStopped).start()
 
     def onInit(self):
+        nowtime = '$INFO[System.Time]'
+
+        alignLeft = 0
+        alignRight = 1
+
+        skin_resolution = config.get("Skin", "resolution")
+        currentSkin = xbmc.getSkinDir()
+        chkSkinKodi = currentSkin
+
+        smallList = list()
+        mediumList = list()
+        largeList = list()
+
+        try:
+            # Check path
+            if xbmcvfs.exists(os.path.join(self.kodiPath, 'addons', chkSkinKodi, 'xml/')):
+                path0 = 'xml'
+            elif xbmcvfs.exists(os.path.join(self.kodiPath, 'addons', chkSkinKodi, '720p/')):
+                path0 = '720p'
+            elif xbmcvfs.exists(os.path.join(self.kodiPath, 'addons', chkSkinKodi, '1080i/')):
+                path0 = '1080i'
+            elif xbmcvfs.exists(os.path.join(self.kodiPath, 'addons', chkSkinKodi, '16x9/')):
+                path0 = '16x9'
+
+            if xbmcvfs.exists(os.path.join(self.kodiSkinPath, 'xml/')):
+                path1 = 'xml'
+            elif xbmcvfs.exists(os.path.join(self.kodiSkinPath, '720p/')):
+                path1 = '720p'
+            elif xbmcvfs.exists(os.path.join(self.kodiSkinPath, '1080i/')):
+                path1 = '1080i'
+            elif xbmcvfs.exists(os.path.join(self.kodiSkinPath, '16x9/')):
+                path1 = '16x9'
+
+            try:
+                file_check = xbmcvfs.File(os.path.join(self.kodiPath, 'addons', chkSkinKodi, path0, 'Font.xml'), 'r')
+            except:
+                file_check = xbmcvfs.File(os.path.join(self.kodiSkinPath, path1, 'Font.xml'), 'r')
+            f = file_check.read()
+            
+            sizeList = re.findall('<size>(.*?)</size>', f)
+            nameList = re.findall('<name>(.*?)</name>', f)
+
+            for idx in range(len(nameList)):
+                name = nameList[idx]
+                size = sizeList[idx]
+                size = re.sub('\.\d+$', '', size)
+                if int(size) > 25 and int(size) <= 35:
+                    smallList.append(name)
+                if int(size) > 35 and int(size) <= 45:
+                    mediumList.append(name)
+                if int(size) > 45:
+                    largeList.append(name)
+
+            if ADDON.getSetting('show_time') == "true":
+                if ADDON.getSetting('show_time_size') == "1":
+                    size = smallList[0]
+                elif ADDON.getSetting('show_time_size') == "2":
+                    size = mediumList[0]
+                elif ADDON.getSetting('show_time_size') == "3":
+                    size = largeList[0]
+                else:
+                    size = 'font13'
+        except:
+            size = 'font13'
+
+        if ADDON.getSetting('show_time_pos') == "0":
+            if skin_resolution == '720p':
+                showTime = xbmcgui.ControlLabel(20, 6, 200, 50, nowtime, textColor='0xFFFFFFFF',
+                                                     alignment=alignLeft, font=size)
+            elif skin_resolution == '1080i':
+                showTime = xbmcgui.ControlLabel(30, 10, 300, 75, nowtime, textColor='0xFFFFFFFF',
+                                                     alignment=alignLeft, font=size)
+            else:
+                showTime = xbmcgui.ControlLabel(30, 10, 300, 75, nowtime, textColor='0xFFFFFFFF',
+                                                     alignment=alignLeft, font=size)
+
+        if ADDON.getSetting('show_time_pos') == "1":
+            if skin_resolution == '720p':
+                showTime = xbmcgui.ControlLabel(1060, 6, 200, 50, nowtime, textColor='0xFFFFFFFF',
+                                                     alignment=alignRight, font=size)
+            elif skin_resolution == '1080i':
+                showTime = xbmcgui.ControlLabel(1590, 10, 300, 75, nowtime,
+                                                     textColor='0xFFFFFFFF', alignment=alignRight, font=size)
+            else:
+                showTime = xbmcgui.ControlLabel(1590, 10, 300, 75, nowtime,
+                                                     textColor='0xFFFFFFFF', alignment=alignRight, font=size)
+
+        if ADDON.getSetting('show_time_pos') == "2":
+            if skin_resolution == '720p':
+                showTime = xbmcgui.ControlLabel(20, 663, 200, 50, nowtime, textColor='0xFFFFFFFF',
+                                                     alignment=alignLeft, font=size)
+            elif skin_resolution == '1080i':
+                showTime = xbmcgui.ControlLabel(30, 995, 300, 75, nowtime, textColor='0xFFFFFFFF',
+                                                     alignment=alignLeft, font=size)
+            else:
+                showTime = xbmcgui.ControlLabel(30, 995, 300, 75, nowtime, textColor='0xFFFFFFFF',
+                                                     alignment=alignLeft, font=size)
+
+        if ADDON.getSetting('show_time_pos') == "3":
+            if skin_resolution == '720p':
+                showTime = xbmcgui.ControlLabel(1060, 663, 200, 50, nowtime,
+                                                     textColor='0xFFFFFFFF', alignment=alignRight, font=size)
+            elif skin_resolution == '1080i':
+                showTime = xbmcgui.ControlLabel(1590, 995, 300, 75, nowtime,
+                                                     textColor='0xFFFFFFFF', alignment=alignRight, font=size)
+            else:
+                showTime = xbmcgui.ControlLabel(1590, 995, 300, 75, nowtime,
+                                                     textColor='0xFFFFFFFF', alignment=alignRight, font=size)
+        
         if self.isClosing:
             self.closeOSD()
             return
@@ -6490,6 +6493,12 @@ class Pla(xbmcgui.WindowXMLDialog):
             self.epg.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(self.program.title))
             self.epg.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format(self.epg.formatTime(self.program.startDate), self.epg.formatTime(self.program.endDate)))
             self.epg.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format(self.database.getCurrentChannelIdx(self.program.channel) + 1))
+
+        time.sleep(1)
+        self.addControl(showTime)
+
+        showTime.setAnimations([('visible', 'effect=fade end=100 time=300 delay=300',)])
+        showTime.setVisibleCondition('Player.Playing + !Window.IsVisible(VidOSD.xml)')
 
     def play(self, urlList):
         self.epg.playService.playUrlList(urlList, self.archiveService, self.archivePlaylist, resetReconnectCounter=True)
