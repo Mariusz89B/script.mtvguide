@@ -599,7 +599,7 @@ class Database(object):
                     if not dbChannelsUpdated:
                         dbChannelsUpdated = True
                         if self.settingsChanged:
-                            #c.execute('DELETE FROM channels WHERE source=?', [self.source.KEY])
+                            c.execute('DELETE FROM channels WHERE source=?', [self.source.KEY])
                             c.execute('DELETE FROM programs WHERE source=?', [self.source.KEY])
                             c.execute("DELETE FROM updates WHERE source=?", [self.source.KEY])
                         self.settingsChanged = False # only want to update once due to changed settings
@@ -932,6 +932,7 @@ class Database(object):
                 self.channelList = channelList
         else:
             channelList = self.channelList
+
         return channelList
 
     def getAllChannelList(self, onlyVisible = True):
