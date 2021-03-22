@@ -556,9 +556,9 @@ class PlaylistUpdater(baseServiceUpdater):
             }
 
             if sys.version_info[0] > 2:
-                timeout = int(ADDON.getSetting('max_wait_for_playback')) / 10
+                timeout = 0.2
             else:
-                timeout = int(ADDON.getSetting('max_wait_for_playback'))
+                timeout = 2
             
             try:
                 if UA and not '_TS' in chann.cid:         
