@@ -52,9 +52,11 @@ import sys
 
 if sys.version_info[0] > 2:
     import urllib.request, urllib.parse, urllib.error
+    from urllib.parse import urlencode, quote_plus, quote, unquote, parse_qsl
     import http.cookiejar
 else:
     import urllib
+    from urllib import urlencode, quote_plus, quote, unquote
     import cookielib
 
 import re, os, copy, random, json
@@ -346,14 +348,14 @@ class IplaUpdater(baseServiceUpdater):
                 channelperms = i['grantExpression'].split('*')
                 channelperms = [w.replace('+plat:all', '') for w in channelperms]
                 for j in myper:
-                    #if j in channelperms or i['title'] == 'Polsat' or i['title'] == 'TV4' or i['title'] == 'DUCK TV':
-                    img = i['thumbnails'][-1]['src']
-                    cid = i['id']
-                    name = i['title'].upper() + ' PL'
-                    name = name.replace(' SD', '')
+                    if j in channelperms or i['title']=='Polsat' or i['title']=='TV4':
+                        img = i['thumbnails'][-1]['src']
+                        cid = i['id']
+                        name = i['title'].upper() + ' PL'
+                        name = name.replace(' SD', '')
 
-                    program = TvCid(cid, name, name, img=img)
-                    result.append(program)
+                        program = TvCid(cid, name, name, img=img)
+                        result.append(program)
 
             if len(result) <= 0:
                 self.log('Error while parsing service %s' % (self.serviceName))
@@ -446,17 +448,14 @@ class IplaUpdater(baseServiceUpdater):
                 sourceid = mediaSources['id']
                 cc = mediaSources.get('authorizationServices', None).get('pseudo', None)
                 if not cc:
+                    hd = {'Accept-Charset': 'UTF-8','User-Agent': OSINFO,}
                     licenseUrl = mediaSources['authorizationServices']['widevine']['getWidevineLicenseUrl']
                     dane = self.dane.format('drm','getWidevineLicense')
                     authdata = self.getHmac(dane)
                     devcid = (self.device_id).replace('-','')
-
-                    self.client_id = ADDON.getSetting('ipla_client_id')
-
-                    licenseUrl = "licenseUrl: {}, data: {}, osinfo: {}, cpid: {}, mediaid: {}, sourceid: {}, keyid: {}, devcid: {}, authdata: {}, clientid: {}".format(licenseUrl, data, OSINFO, cpid, mediaid, sourceid, keyid, devcid, authdata, self.client_id)
-
+                    licenseData = quote('{"jsonrpc":"2.0","id":1,"method":"getWidevineLicense","params":{"userAgentData":{"deviceType":"pc","application":"firefox","os":"windows","build":1,"portal":"ipla","osInfo":"'+OSINFO+'","player":"html","widevine":true},"cpid":%s,"mediaId":"'%cpid+mediaid+'","sourceId":"'+sourceid+'","keyId":"'+keyid+'","object":"b{SSM}","deviceId":{"type":"other","value":"'+devcid+'"},"ua":"ipla_pc_windows_firefox_html/1 (Mozilla","authData":{"sessionToken":"'+authdata+'"},"clientId":"'+self.client_id+'"}}')
+                    
                     data = mediaSources['url']
-
                 else:
                     dane = self.dane.format('drm','getPseudoLicense')
                     authdata = self.getHmac(dane)
@@ -464,15 +463,15 @@ class IplaUpdater(baseServiceUpdater):
 
                     postData = {"jsonrpc":"2.0","id":1,"method":"getPseudoLicense","params":{"ua":"ipla_pc_windows_firefox_html/1 (Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:75.0) Gecko/20100101 Firefox/75.0)","userAgentData":{"deviceType":"pc","application":"firefox","os":"windows","build":1,"portal":"ipla","osInfo":OSINFO,"player":"html","widevine":True},"cpid":cpid,"mediaId":mediaid,"sourceId":sourceid,"deviceId":{"type":"other","value":devcid},"authData":{"sessionToken":authdata},"clientId":self.client_id}}
 
-                    data = self.getRequests('https://b2c-www.redefine.pl/rpc/drm/', data=postData, headers=self.headers)
+                    getData = self.getRequests('https://b2c-www.redefine.pl/rpc/drm/', data=postData, headers=self.headers)
 
-                    data = data['result']['url']
+                    data = getData['result']['url']
 
             if data is not None and data != "":
                 chann.strm = data
                 
                 self.log('getChannelStream found matching channel: cid: {}, name: {}, rtmp:{}'.format(chann.cid, chann.name, chann.strm))
-                return chann, licenseUrl
+                return chann, licenseUrl, licenseData
             else:
                 self.log('getChannelStream error getting channel stream2, result: {}'.format(str(data)))
                 return None

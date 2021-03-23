@@ -488,7 +488,7 @@ class PlayService(xbmc.Player, BasePlayService):
                 try:
                     self.playbackStopped = False
 
-                    channelInfo, licenseUrl = channelInfo
+                    channelInfo, licenseUrl, licenseData = channelInfo
                     strmUrl = channelInfo.strm
 
                     try:
@@ -496,19 +496,6 @@ class PlayService(xbmc.Player, BasePlayService):
                     except ImportError:
                         from urllib import urlencode, quote_plus, quote, unquote
                         
-                    licServ = re.findall('licenseUrl: (.*?),', str(licenseUrl))
-                    data = re.findall('data: (.*?),', str(licenseUrl))
-                    osinfo = re.findall('osinfo: (.*?),', str(licenseUrl))
-                    cpid = re.findall('cpid: (.*?),', str(licenseUrl))
-                    mediaid = re.findall('mediaid: (.*?),', str(licenseUrl))
-                    sourceid = re.findall('sourceid: (.*?),', str(licenseUrl))
-                    keyid = re.findall('keyid: (.*?),', str(licenseUrl))
-                    devcid = re.findall('devcid: (.*?),', str(licenseUrl))
-                    authdata = re.findall('authdata: (.*?),', str(licenseUrl))
-                    clientid = re.findall('clientid: (.*?)', str(licenseUrl))
-
-                    licenseUrl = quote('{"jsonrpc":"2.0","id":1,"method":"getWidevineLicense","params":{"userAgentData":{"deviceType":"pc","application":"firefox","os":"windows","build":1,"portal":"ipla","osInfo":"'+osinfo[0]+'","player":"html","widevine":true},"cpid":%s,"mediaId":"'%cpid[0]+mediaid[0]+'","sourceId":"'+sourceid[0]+'","keyId":"'+keyid[0]+'","object":"b{SSM}","deviceId":{"type":"other","value":"'+devcid[0]+'"},"ua":"ipla_pc_windows_firefox_html/1 (Mozilla","authData":{"sessionToken":"'+authdata[0]+'"},"clientId":"'+clientid[0]+'"}}')
-
                     UA = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:84.0) Gecko/20100101 Firefox/84.0'
                     
                     PROTOCOL = 'mpd'
@@ -540,7 +527,7 @@ class PlayService(xbmc.Player, BasePlayService):
                         ListItem.setProperty('inputstream.adaptive.license_type', DRM)
                         #ListItem.setProperty('inputstream.adaptive.server_certificate', certificate_data)
                         ListItem.setProperty('inputstream.adaptive.manifest_update_parameter', 'full')
-                        ListItem.setProperty('inputstream.adaptive.license_key', licServ[0]+'|Content-Type=application%2Fjson&Referer=https://www.ipla.tv/&User-Agent='+quote(UA)+'|'+licenseUrl+'|JBlicense')
+                        ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl+'|Content-Type=application%2Fjson&Referer=https://www.ipla.tv/&User-Agent='+quote(UA)+'|'+licenseData+'|JBlicense')
                         ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
                         ListItem.setProperty("IsPlayable", "true")
 

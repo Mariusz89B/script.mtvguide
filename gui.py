@@ -5220,9 +5220,10 @@ class mTVGuide(xbmcgui.WindowXML):
     def _getProgramFromControl(self, control):
         # deb('_getProgramFromControl')
         try:
-            for elem in self.controlAndProgramList:
-                if elem.control.getId() == control.getId():
-                    return elem.program
+            if control is not None:
+                for elem in self.controlAndProgramList:
+                    if elem.control.getId() == control.getId():
+                        return elem.program
         except Exception as ex:
             deb('_getProgramFromControl Error: {}'.format(getExceptionString()))
             raise
