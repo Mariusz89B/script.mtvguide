@@ -930,6 +930,8 @@ class PlayService(xbmc.Player, BasePlayService):
                             status = self.checkConnection(self.strmUrl)
                             if status >= 400:
                                 self.strmUrl = None
+                                self.userStoppedPlayback = False
+                                self.tryResummingPlayback()
 
                         xbmc.Player().play(self.strmUrl, ListItem, windowed=startWindowed)
                         res = True
