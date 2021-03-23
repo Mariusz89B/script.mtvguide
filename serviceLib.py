@@ -448,12 +448,13 @@ class ShowList:
         return ret_lst
 
 class TvCid:
-    def __init__(self, cid, name, title, strm = "", catchup = "", img = ""):
+    def __init__(self, cid, name, title, strm = "", catchup = "", status="", img = ""):
         self.cid = cid
         self.name = name
         self.title = title
         self.strm = strm
         self.catchup = catchup
+        self.status = status
         self.src = ""
         self.img = img
         self.rtmpdumpLink = None

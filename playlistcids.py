@@ -63,7 +63,11 @@ from strings import *
 from serviceLib import *
 import cloudscraper 
 
-scraper = cloudscraper.CloudScraper()
+from contextlib import contextmanager
+
+sess = requests.Session()
+scraper = cloudscraper.create_scraper()
+
 serviceName   = 'playlist'
 
 playlists = ['playlist_1', 'playlist_2', 'playlist_3', 'playlist_4', 'playlist_5']
@@ -112,6 +116,14 @@ class PlaylistUpdater(baseServiceUpdater):
             self.stopPlaybackOnStart = True
         else:
             self.stopPlaybackOnStart = False
+
+    @contextmanager
+    def busyDialog(self):
+        xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
+        try:
+            yield
+        finally:
+            xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
 
     def requestUrl(self, path):
         content = None
@@ -539,6 +551,59 @@ class PlaylistUpdater(baseServiceUpdater):
             self.log('getChannelList Error %s' % getExceptionString())
         return result
 
+
+    def getUrl(self, strmUrl, cid):
+        with self.busyDialog():
+            status = False
+
+            UA = ADDON.getSetting('{}_user_agent'.format(self.serviceName))
+
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0',
+                'Accept': 'application/json, text/javascript, */*; q=0.01',
+                'Accept-Language': 'pl,en-US;q=0.7,en;q=0.3',
+                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+            }
+
+            if UA:         
+                headers.update({'User-Agent': UA})
+
+            conn_timeout = 3
+            read_timeout = int(ADDON.getSetting('reconnect_delay'))/ 100
+            timeouts = (conn_timeout, read_timeout)
+            
+            try:
+                if not '_TS' in cid:
+                    response = scraper.get(strmUrl, headers=headers, allow_redirects=False, timeout=timeouts)
+                    strmUrl = response.headers.get('Location', None) if 'Location' in response.headers else strmUrl
+
+                else:
+                    response = scraper.get(strmUrl, headers=headers, allow_redirects=False, timeout=timeouts)
+                    strmUrl = response.url
+
+            except HTTPError as e:
+                deb('getChannelStream HTTPError: {}'.format(str(e)))
+                status = True
+                strmUrl
+
+            except ConnectionError as e:
+                deb('getChannelStream ConnectionError: {}'.format(str(e)))
+                status = True
+                strmUrl
+
+            except Timeout as e:
+                deb('getChannelStream Timeout: {}'.format(str(e))) 
+                status = True
+                strmUrl
+
+            except RequestException as e:
+                deb('getChannelStream RequestException: {}'.format(str(e))) 
+                status = True
+                strmUrl
+
+            return strmUrl, status
+
+
     def getChannelStream(self, chann):
         try:
             if self.stopPlaybackOnStart and xbmc.Player().isPlaying():
@@ -546,46 +611,8 @@ class PlaylistUpdater(baseServiceUpdater):
                 xbmc.sleep(500)
             self.log('getChannelStream: found matching channel: cid {}, name {}, stream {}'.format(chann.cid, chann.name, chann.strm))
 
-            UA = ADDON.getSetting('{}_user_agent'.format(self.serviceName))
-
-            headers = {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:85.0) Gecko/20100101 Firefox/85.0',
-                'Keep-Alive': 'timeout=20',
-                'ContentType': 'application/json',
-                'Connection': 'Keep-Alive'
-            }
-
-            if sys.version_info[0] > 2:
-                timeout = 0.2
-            else:
-                timeout = 2
-            
-            try:
-                if UA and not '_TS' in chann.cid:         
-                    headers.update({'User-Agent': UA})
-
-                    response = scraper.get(chann.strm, headers=headers, allow_redirects=False, timeout=timeout)
-                    chann.strm = response.headers.get('Location', None) if 'Location' in response.headers else chann.strm
-
-                else:
-                    response = scraper.get(chann.strm, headers=headers, allow_redirects=False, timeout=timeout)
-                    chann.strm = response.url
-
-            except HTTPError as e:
-                #deb('getChannelStream HTTPError: {}'.format(str(e)))
-                chann.strm
-
-            except ConnectionError as e:
-                #deb('getChannelStream ConnectionError: {}'.format(str(e)))
-                chann.strm
-
-            except Timeout as e:
-                #deb('getChannelStream Timeout: {}'.format(str(e))) 
-                chann.strm
-
-            except RequestException as e:
-                #deb('getChannelStream RequestException: {}'.format(str(e))) 
-                chann.strm
+            chann.strm, chann.status = self.getUrl(chann.strm, chann.cid)
+            xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
 
             return chann
 

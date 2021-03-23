@@ -59,7 +59,6 @@ from strings import *
 import strings as strings2
 import serviceLib
 import requests
-from contextlib import contextmanager
 
 import playlistcids
 import videostarcids
@@ -200,14 +199,6 @@ class PlayService(xbmc.Player, BasePlayService):
         self.reconnectFailedStreams = ADDON.getSetting('reconnect_stream')
         self.maxStreamStartupTime   = int(ADDON.getSetting('max_wait_for_playback')) * 10
         self.strmUrl                = None
-
-    @contextmanager
-    def busyDialog(self):
-        xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
-        try:
-            yield
-        finally:
-            xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
         
 
     def playUrlList(self, urlList, archiveService, archivePlaylist, resetReconnectCounter=False):
@@ -286,8 +277,9 @@ class PlayService(xbmc.Player, BasePlayService):
 
             try:
                 #move stream to the end of list
-                self.urlList.remove(url)
-                self.urlList.append(url)
+                if url is not None:
+                    self.urlList.remove(url)
+                    self.urlList.append(url)
             except Exception as ex:
                 deb('_playUrlList exception: {}'.format(getExceptionString()))
 
@@ -885,7 +877,7 @@ class PlayService(xbmc.Player, BasePlayService):
                             streamType = ''
 
                             # MimeType
-                            if '.m3u8' in strmUrl:
+                            if 'm3u8' in strmUrl:
                                 mimeType = "application/x-mpegURL"
                                 #mimeType = "application/vnd.apple.mpegurl"
                                 #mimeType = "application/json"
@@ -933,6 +925,12 @@ class PlayService(xbmc.Player, BasePlayService):
                             ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
 
                         self.strmUrl = strmUrl
+
+                        if channelInfo.status:
+                            status = self.checkConnection(self.strmUrl)
+                            if status >= 400:
+                                self.strmUrl = None
+
                         xbmc.Player().play(self.strmUrl, ListItem, windowed=startWindowed)
                         res = True
 
@@ -1060,14 +1058,16 @@ class PlayService(xbmc.Player, BasePlayService):
 
             status = 200
 
-            timeout = int(ADDON.getSetting('max_wait_for_playback'))
+            timeout = 1.0
 
             try:
                 response = Request.urlopen(strmUrl, context=ctx, timeout=timeout)
                 status = response.code
+
             except HTTPError as e:
                 deb('HTTP error: {}'.format(e.reason))
                 status = e.code
+
             except URLError as e:
                 deb('URLError error: {}'.format(e.reason))
                 try:
@@ -1075,9 +1075,8 @@ class PlayService(xbmc.Player, BasePlayService):
                 except:
                     status = 408
 
-            #statusList = [406, 409]
-            #if status in statusList:
-                #status = 200
+            except:
+                status = 408
 
             if status >= 400:
                 xbmcgui.Dialog().notification(strings(57018) + ' Error: ' + str(status), strings(31019), xbmcgui.NOTIFICATION_ERROR)
