@@ -277,7 +277,7 @@ class PlayService(xbmc.Player, BasePlayService):
 
             try:
                 #move stream to the end of list
-                if url is not None:
+                if self.strmUrl is not None:
                     self.urlList.remove(url)
                     self.urlList.append(url)
             except Exception as ex:
@@ -927,9 +927,10 @@ class PlayService(xbmc.Player, BasePlayService):
                         self.strmUrl = strmUrl
 
                         if channelInfo.status:
-                            status = self.checkConnection(self.strmUrl)
+                            status = self.checkConnection(self.strmUrl) 
                             if status >= 400:
-                                self.strmUrl = None  
+                                res = False
+                                return
 
                         xbmc.Player().play(self.strmUrl, ListItem, windowed=startWindowed)
                         res = True

@@ -65,8 +65,8 @@ import cloudscraper
 
 from contextlib import contextmanager
 
-sess = requests.Session()
-scraper = cloudscraper.create_scraper()
+sess = cloudscraper.create_scraper()
+scraper = cloudscraper.CloudScraper()
 
 serviceName   = 'playlist'
 
@@ -567,23 +567,18 @@ class PlaylistUpdater(baseServiceUpdater):
 
             if UA:         
                 headers.update({'User-Agent': UA})
-
-            conn_timeout = 3
-            read_timeout = int(ADDON.getSetting('reconnect_delay'))/ 100
+            
+            conn_timeout = int(ADDON.getSetting('max_wait_for_playback'))
+            read_timeout = int(ADDON.getSetting('max_wait_for_playback'))
             timeouts = (conn_timeout, read_timeout)
             
             try:
-                response = scraper.get(strmUrl, headers=headers, verify=False, stream=True)
-                if (response.headers).get('Content-Type', None) == 'video/mpeg':
-                    strmUrl = response.url
-
-                elif not '_TS' in cid:
-                    response = scraper.get(strmUrl, headers=headers, allow_redirects=False, timeout=timeouts)
-                    strmUrl = response.headers.get('Location', None) if 'Location' in response.headers else strmUrl
-
+                response = scraper.get(strmUrl, headers=headers, allow_redirects=False, timeout=timeouts)
+                if 'Location' in response.headers and '_TS' not in cid:
+                    strmUrl = response.headers.get('Location', None) 
                 else:
-                    response = scraper.get(strmUrl, headers=headers, allow_redirects=False, timeout=timeouts)
-                    strmUrl = response.url
+                    status = True
+                    strmUrl
 
             except HTTPError as e:
                 deb('getChannelStream HTTPError: {}'.format(str(e)))
