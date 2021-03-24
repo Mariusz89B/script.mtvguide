@@ -930,6 +930,7 @@ class PlayService(xbmc.Player, BasePlayService):
                             status = self.checkConnection(self.strmUrl) 
                             if status >= 400:
                                 res = False
+                                self.userStoppedPlayback = False
                                 return
 
                         xbmc.Player().play(self.strmUrl, ListItem, windowed=startWindowed)
@@ -1079,7 +1080,7 @@ class PlayService(xbmc.Player, BasePlayService):
             except:
                 status = 408
 
-            if status >= 400:
+            if status >= 400 and not xbmc.Player().isPlaying():
                 xbmcgui.Dialog().notification(strings(57018) + ' Error: ' + str(status), strings(31019), xbmcgui.NOTIFICATION_ERROR)
 
             return status
