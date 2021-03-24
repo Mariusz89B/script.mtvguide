@@ -87,7 +87,6 @@ class PlaylistUpdater(baseServiceUpdater):
         self.source             = ADDON.getSetting('{}_source'.format(self.serviceName))
         self.addDuplicatesToList = True
         self.useOnlineMap       = False
-        self.thread             = None
 
         if sys.version_info[0] > 2:
             try:
@@ -580,9 +579,9 @@ class PlaylistUpdater(baseServiceUpdater):
             timeouts = (conn_timeout, read_timeout)
             
             try:
-                self.response = scraper.get(strmUrl, headers=headers, allow_redirects=False, timeout=timeouts)
-                if 'Location' in self.response.headers and '_TS' not in cid:
-                    strmUrl = self.response.headers.get('Location', None) 
+                response = scraper.get(strmUrl, headers=headers, allow_redirects=False, stream=True, timeout=timeouts)
+                if 'Location' in response.headers and '_TS' not in cid:
+                    strmUrl = response.headers.get('Location', None) 
                 else:
                     chkStatus = True
 
@@ -600,6 +599,9 @@ class PlaylistUpdater(baseServiceUpdater):
 
             except RequestException as e:
                 deb('getChannelStream RequestException: {}'.format(str(e))) 
+                chkStatus = True
+
+            except:
                 chkStatus = True
 
             return strmUrl, chkStatus
