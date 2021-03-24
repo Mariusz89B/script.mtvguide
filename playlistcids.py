@@ -573,7 +573,11 @@ class PlaylistUpdater(baseServiceUpdater):
             timeouts = (conn_timeout, read_timeout)
             
             try:
-                if not '_TS' in cid:
+                response = scraper.get(strmUrl, headers=headers, verify=False, stream=True)
+                if (response.headers).get('Content-Type', None) == 'video/mpeg':
+                    strmUrl = response.url
+
+                elif not '_TS' in cid:
                     response = scraper.get(strmUrl, headers=headers, allow_redirects=False, timeout=timeouts)
                     strmUrl = response.headers.get('Location', None) if 'Location' in response.headers else strmUrl
 
