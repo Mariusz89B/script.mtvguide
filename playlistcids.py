@@ -65,6 +65,10 @@ import cloudscraper
 
 from contextlib import contextmanager
 
+ACTION_PARENT_DIR = 9
+ACTION_PREVIOUS_MENU = 10
+KEY_NAV_BACK = 92
+
 sess = cloudscraper.create_scraper()
 scraper = cloudscraper.CloudScraper()
 
@@ -83,6 +87,8 @@ class PlaylistUpdater(baseServiceUpdater):
         self.source             = ADDON.getSetting('{}_source'.format(self.serviceName))
         self.addDuplicatesToList = True
         self.useOnlineMap       = False
+        self.thread             = None
+
         if sys.version_info[0] > 2:
             try:
                 self.profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
@@ -116,14 +122,6 @@ class PlaylistUpdater(baseServiceUpdater):
             self.stopPlaybackOnStart = True
         else:
             self.stopPlaybackOnStart = False
-
-    @contextmanager
-    def busyDialog(self):
-        xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
-        try:
-            yield
-        finally:
-            xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
 
     def requestUrl(self, path):
         content = None
@@ -552,10 +550,19 @@ class PlaylistUpdater(baseServiceUpdater):
         return result
 
 
-    def getUrl(self, strmUrl, cid):
-        with self.busyDialog():
-            status = False
+    @contextmanager
+    def busyDialog(self):
+        xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
+        try:
+            yield
+        finally:
+            xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
 
+
+    def getUrl(self, strmUrl, cid):
+        chkStatus = False
+
+        with self.busyDialog():
             UA = ADDON.getSetting('{}_user_agent'.format(self.serviceName))
 
             headers = {
@@ -573,34 +580,29 @@ class PlaylistUpdater(baseServiceUpdater):
             timeouts = (conn_timeout, read_timeout)
             
             try:
-                response = scraper.get(strmUrl, headers=headers, allow_redirects=False, timeout=timeouts)
-                if 'Location' in response.headers and '_TS' not in cid:
-                    strmUrl = response.headers.get('Location', None) 
+                self.response = scraper.get(strmUrl, headers=headers, allow_redirects=False, timeout=timeouts)
+                if 'Location' in self.response.headers and '_TS' not in cid:
+                    strmUrl = self.response.headers.get('Location', None) 
                 else:
-                    status = True
-                    strmUrl
+                    chkStatus = True
 
             except HTTPError as e:
                 deb('getChannelStream HTTPError: {}'.format(str(e)))
-                status = True
-                strmUrl
+                chkStatus = True
 
             except ConnectionError as e:
                 deb('getChannelStream ConnectionError: {}'.format(str(e)))
-                status = True
-                strmUrl
+                chkStatus = True
 
             except Timeout as e:
                 deb('getChannelStream Timeout: {}'.format(str(e))) 
-                status = True
-                strmUrl
+                chkStatus = True
 
             except RequestException as e:
                 deb('getChannelStream RequestException: {}'.format(str(e))) 
-                status = True
-                strmUrl
+                chkStatus = True
 
-            return strmUrl, status
+            return strmUrl, chkStatus
 
 
     def getChannelStream(self, chann):
