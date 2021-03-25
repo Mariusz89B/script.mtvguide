@@ -52,6 +52,7 @@ else:
     from urllib2 import HTTPError, URLError
 
 import ssl
+import socket
 
 import datetime, threading, sys, os, re
 import xbmc, xbmcaddon, xbmcgui, xbmcplugin, xbmcvfs
@@ -1060,10 +1061,15 @@ class PlayService(xbmc.Player, BasePlayService):
 
             status = 200
 
-            timeout = 1.0
+            timeout = 2.0
 
             try:
-                response = Request.urlopen(strmUrl, context=ctx, timeout=timeout)
+                req = Request.Request(strmUrl)
+                req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0')
+                req.add_header('Accept', 'application/json, text/javascript, */*; q=0.01')
+                req.add_header('Accept-Language', 'pl,en-US;q=0.7,en;q=0.3')
+                req.add_header('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
+                response = Request.urlopen(req, context=ctx, timeout=timeout)
                 status = response.code
 
             except HTTPError as e:
@@ -1072,12 +1078,10 @@ class PlayService(xbmc.Player, BasePlayService):
 
             except URLError as e:
                 deb('URLError error: {}'.format(e.reason))
-                try:
-                    status = e.code
-                except:
-                    status = 408
+                status = 400
 
-            except:
+            except socket.timeout as e:
+                deb('Timeout error: {}'.format('408'))
                 status = 408
 
             if status >= 400 and not xbmc.Player().isPlaying():
