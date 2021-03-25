@@ -61,6 +61,8 @@ import strings as strings2
 import serviceLib
 import requests
 
+from contextlib import contextmanager
+
 import playlistcids
 import videostarcids
 import iplacids
@@ -354,61 +356,240 @@ class PlayService(xbmc.Player, BasePlayService):
         return archiveStr
 
 
+    @contextmanager
+    def busyDialog(self):
+        if xbmc.getCondVisibility('!Window.IsVisible(DialogBusy.xml)'):
+            xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
+        try:
+            yield
+        finally:
+            xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
+
+
     def LoadVideoLink(self, channel, service):
-        #deb('LoadVideoLink {} service'.format(service))
-        res = False
-        channels = None
-        startWindowed = False
-        inputstream = self.CheckInputstreamInstalledAndEnabled()
-        ffmpegdirect = self.CheckFFmpegDirectInstalledAndEnabled()
+        with self.busyDialog():
+            #deb('LoadVideoLink {} service'.format(service))
+            res = False
+            startWindowed = False
 
-        if ADDON.getSetting('start_video_minimalized') == 'true':
-            startWindowed = True
+            inputstream = self.CheckInputstreamInstalledAndEnabled()
+            ffmpegdirect = self.CheckFFmpegDirectInstalledAndEnabled()
 
-        channelInfo = self.getChannel(channel, service, self.currentlyPlayedService)
+            if ADDON.getSetting('start_video_minimalized') == 'true':
+                startWindowed = True
 
-        if channelInfo is not None:
-            if self.currentlyPlayedService['service'] != service:
-                self.unlockCurrentlyPlayedService()
-            self.currentlyPlayedService['service'] = service
+            channelInfo = self.getChannel(channel, service, self.currentlyPlayedService)
 
-            if self.terminating or self.userStoppedPlayback:
-                deb('LoadVideoLink aborting playback: self.terminating {}, self.userStoppedPlayback: {}'.format(self.terminating, self.userStoppedPlayback))
-                self.unlockCurrentlyPlayedService()
-                return res
+            if channelInfo is not None:
+                if self.currentlyPlayedService['service'] != service:
+                    self.unlockCurrentlyPlayedService()
+                self.currentlyPlayedService['service'] = service
 
-            if self.currentlyPlayedService['service'] == 'C More':
-                try:
-                    self.playbackStopped = False
+                if self.terminating or self.userStoppedPlayback:
+                    deb('LoadVideoLink aborting playback: self.terminating {}, self.userStoppedPlayback: {}'.format(self.terminating, self.userStoppedPlayback))
+                    self.unlockCurrentlyPlayedService()
+                    return res
 
-                    strmUrl = channelInfo.strm
-
+                if self.currentlyPlayedService['service'] == 'C More':
                     try:
-                        from urllib.parse import urlencode, quote_plus, quote, unquote
-                    except ImportError:
-                        from urllib import urlencode, quote_plus, quote, unquote
+                        self.playbackStopped = False
 
-                    if strmUrl['type'] == 'hls':
-                        PROTOCOL = 'hls'
-                    else:
-                        PROTOCOL = 'mpd'
+                        strmUrl = channelInfo.strm
 
-                    DRM = 'widevine'
+                        try:
+                            from urllib.parse import urlencode, quote_plus, quote, unquote
+                        except ImportError:
+                            from urllib import urlencode, quote_plus, quote, unquote
 
-                    import inputstreamhelper
-                    is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
-                    if is_helper.check_inputstream():
-                        ListItem = xbmcgui.ListItem(path=strmUrl['manifestUrl'])
-                        ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
-                        ListItem.setContentLookup(False)
-                        if sys.version_info[0] > 2:
-                            ListItem.setProperty('inputstream', is_helper.inputstream_addon)
+                        if strmUrl['type'] == 'hls':
+                            PROTOCOL = 'hls'
                         else:
-                            ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
-                        ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
-                        if DRM:
-                            ListItem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
-                            ListItem.setProperty('inputstream.adaptive.license_key', strmUrl['license']['castlabsServer'] + '|Content-Type=&x-dt-auth-token=%s|R{SSM}|' % strmUrl['license']['castlabsToken'])
+                            PROTOCOL = 'mpd'
+
+                        DRM = 'widevine'
+
+                        import inputstreamhelper
+                        is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
+                        if is_helper.check_inputstream():
+                            ListItem = xbmcgui.ListItem(path=strmUrl['manifestUrl'])
+                            ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
+                            ListItem.setContentLookup(False)
+                            if sys.version_info[0] > 2:
+                                ListItem.setProperty('inputstream', is_helper.inputstream_addon)
+                            else:
+                                ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
+                            ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
+                            if DRM:
+                                ListItem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
+                                ListItem.setProperty('inputstream.adaptive.license_key', strmUrl['license']['castlabsServer'] + '|Content-Type=&x-dt-auth-token=%s|R{SSM}|' % strmUrl['license']['castlabsToken'])
+                                ListItem.setProperty('IsPlayable', 'true')
+
+                                import threading
+                                thread = threading.Thread(name='reverse', target=self.reverse, args=[])
+                                thread = threading.Timer(3.0, self.reverse, args=[])
+                                thread.start()
+
+                        self.strmUrl = strmUrl['manifestUrl']
+                        xbmc.Player().play(item=str(self.strmUrl), listitem=ListItem, windowed=startWindowed)
+                        res = True
+
+                    except Exception as ex:
+                        deb('Exception while trying to play video: {}'.format(getExceptionString()))
+                        self.unlockCurrentlyPlayedService()
+                        xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
+
+                elif self.currentlyPlayedService['service'] == 'Cyfrowy Polsat GO':
+                    try:
+                        self.playbackStopped = False
+
+                        channelInfo, licenseUrl = channelInfo
+                        strmUrl = channelInfo.strm
+
+                        try:
+                            from urllib.parse import urlencode, quote_plus, quote, unquote
+                        except ImportError:
+                            from urllib import urlencode, quote_plus, quote, unquote
+
+                        licServ = 'https://gm2.redefine.pl/rpc/drm/'
+
+                        UA = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.9 Safari/537.36'
+
+                        PROTOCOL = 'mpd'
+                        DRM = 'com.widevine.alpha'
+                        
+                        import inputstreamhelper
+                        is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
+                        if is_helper.check_inputstream():
+                            ListItem = xbmcgui.ListItem(path=strmUrl)
+                            ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
+                            ListItem.setContentLookup(False)
+                            if sys.version_info[0] > 2:
+                                ListItem.setProperty('inputstream', is_helper.inputstream_addon)
+                            else:
+                                ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
+                            ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
+                            ListItem.setMimeType('application/xml+dash')
+                            ListItem.setProperty('inputstream.adaptive.stream_headers', 'Referer: https://go.cyfrowypolsat.pl')
+                            ListItem.setProperty('inputstream.adaptive.license_type', DRM)
+                            ListItem.setProperty('inputstream.adaptive.manifest_update_parameter', 'full')
+                            ListItem.setProperty('inputstream.adaptive.license_key', licServ+'|Content-Type=application%2Fjson&Referer=https://go.cyfrowypolsat.pl/&User-Agent='+quote(UA)+'|'+licenseUrl+'|JBlicense')                      
+                            ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
+                            ListItem.setProperty('IsPlayable', 'true')
+
+                            #import threading
+                            #thread = threading.Thread(name='reverse', target=self.reverse, args=[])
+                            #thread = threading.Timer(3.0, self.reverse, args=[])
+                            #thread.start()
+                        
+                        self.strmUrl = strmUrl
+                        xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
+                        res = True
+
+                    except Exception as ex:
+                        deb('Exception while trying to play video: {}'.format(getExceptionString()))
+                        self.unlockCurrentlyPlayedService()
+                        xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
+
+                elif self.currentlyPlayedService['service'] == 'Ipla':
+                    try:
+                        self.playbackStopped = False
+
+                        channelInfo, licenseUrl, licenseData = channelInfo
+                        strmUrl = channelInfo.strm
+
+                        try:
+                            from urllib.parse import urlencode, quote_plus, quote, unquote
+                        except ImportError:
+                            from urllib import urlencode, quote_plus, quote, unquote
+                            
+                        UA = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:84.0) Gecko/20100101 Firefox/84.0'
+                        
+                        PROTOCOL = 'mpd'
+                        DRM = 'com.widevine.alpha'
+
+                        import inputstreamhelper
+                        import ssl
+                        try:
+                            _create_unverified_https_context = ssl._create_unverified_context
+                        except AttributeError:
+                            pass
+                        else:
+                            ssl._create_default_https_context = _create_unverified_https_context
+                        certificate_data = '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'
+                        
+
+                        is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
+                        if is_helper.check_inputstream():
+                            ListItem = xbmcgui.ListItem(path=strmUrl)
+                            ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
+                            ListItem.setContentLookup(False)
+                            if sys.version_info[0] > 2:
+                                ListItem.setProperty('inputstream', is_helper.inputstream_addon)
+                            else:
+                                ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
+                            ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
+                            ListItem.setMimeType('application/xml+dash')
+                            ListItem.setProperty('inputstream.adaptive.stream_headers', 'Referer: https://www.ipla.tv&User-Agent=' + quote(UA))
+                            ListItem.setProperty('inputstream.adaptive.license_type', DRM)
+                            #ListItem.setProperty('inputstream.adaptive.server_certificate', certificate_data)
+                            ListItem.setProperty('inputstream.adaptive.manifest_update_parameter', 'full')
+                            ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl+'|Content-Type=application%2Fjson&Referer=https://www.ipla.tv/&User-Agent='+quote(UA)+'|'+licenseData+'|JBlicense')
+                            ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
+                            ListItem.setProperty("IsPlayable", "true")
+
+                            import threading
+                            thread = threading.Thread(name='reverse', target=self.reverse, args=[])
+                            thread = threading.Timer(3.0, self.reverse, args=[])
+                            thread.start()
+
+                        self.strmUrl = strmUrl
+                        xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
+                        res = True
+
+                    except Exception as ex:
+                        deb('Exception while trying to play video: {}'.format(getExceptionString()))
+                        self.unlockCurrentlyPlayedService()
+                        xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
+
+                elif self.currentlyPlayedService['service'] == 'nc+ GO':
+                    try:
+                        self.playbackStopped = False
+
+                        channelInfo, licenseUrl = channelInfo
+                        strmUrl = channelInfo.strm + '|auth=SSL/TLS&verifypeer=false'
+
+                        if sys.version_info[0] > 2:
+                            from urllib.parse import parse_qsl, quote, unquote, urlencode, quote_plus
+
+                        else:
+                            from urllib import unquote, quote, urlencode, quote_plus
+                            from urlparse import parse_qsl
+
+                        licServ = 'https://wv.drm.insyscd.net/AcquireLicense.ashx'
+                        licenseUrl = 'DrmChallengeCustomData='+quote(licenseUrl)
+                        
+                        UA = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0'
+                        
+                        PROTOCOL = 'mpd'
+                        DRM = 'com.widevine.alpha'
+                        
+                        import inputstreamhelper
+                        is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
+                        if is_helper.check_inputstream():      
+                            ListItem = xbmcgui.ListItem(path=strmUrl)
+                            ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
+                            ListItem.setContentLookup(False)
+                            if sys.version_info[0] > 2:
+                                ListItem.setProperty('inputstream', is_helper.inputstream_addon)
+                            else:
+                                ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
+                            ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
+                            ListItem.setMimeType('application/xml+dash')
+                            ListItem.setProperty('inputstream.adaptive.stream_headers', 'User-Agent='+quote(UA)+'&auth=SSL/TLS&verifypeer=false')
+                            ListItem.setProperty('inputstream.adaptive.license_type', DRM)
+                            #ListItem.setProperty('inputstream.adaptive.manifest_update_parameter', 'full')
+                            ListItem.setProperty('inputstream.adaptive.license_key', licServ+'|'+licenseUrl+'&auth=SSL/TLS&verifypeer=false|R{SSM}|')
+                            #ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
                             ListItem.setProperty('IsPlayable', 'true')
 
                             import threading
@@ -416,232 +597,16 @@ class PlayService(xbmc.Player, BasePlayService):
                             thread = threading.Timer(3.0, self.reverse, args=[])
                             thread.start()
 
-                    self.strmUrl = strmUrl['manifestUrl']
-                    xbmc.Player().play(item=str(self.strmUrl), listitem=ListItem, windowed=startWindowed)
-                    res = True
+                        self.strmUrl = strmUrl
+                        xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
+                        res = True
 
-                except Exception as ex:
-                    deb('Exception while trying to play video: {}'.format(getExceptionString()))
-                    self.unlockCurrentlyPlayedService()
-                    xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
+                    except Exception as ex:
+                        deb('Exception while trying to play video: {}'.format(getExceptionString()))
+                        self.unlockCurrentlyPlayedService()
+                        xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
 
-            elif self.currentlyPlayedService['service'] == 'Cyfrowy Polsat GO':
-                try:
-                    self.playbackStopped = False
-
-                    channelInfo, licenseUrl = channelInfo
-                    strmUrl = channelInfo.strm
-
-                    try:
-                        from urllib.parse import urlencode, quote_plus, quote, unquote
-                    except ImportError:
-                        from urllib import urlencode, quote_plus, quote, unquote
-
-                    licServ = 'https://gm2.redefine.pl/rpc/drm/'
-
-                    UA = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.9 Safari/537.36'
-
-                    PROTOCOL = 'mpd'
-                    DRM = 'com.widevine.alpha'
-                    
-                    import inputstreamhelper
-                    is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
-                    if is_helper.check_inputstream():
-                        ListItem = xbmcgui.ListItem(path=strmUrl)
-                        ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
-                        ListItem.setContentLookup(False)
-                        if sys.version_info[0] > 2:
-                            ListItem.setProperty('inputstream', is_helper.inputstream_addon)
-                        else:
-                            ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
-                        ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
-                        ListItem.setMimeType('application/xml+dash')
-                        ListItem.setProperty('inputstream.adaptive.stream_headers', 'Referer: https://go.cyfrowypolsat.pl')
-                        ListItem.setProperty('inputstream.adaptive.license_type', DRM)
-                        ListItem.setProperty('inputstream.adaptive.manifest_update_parameter', 'full')
-                        ListItem.setProperty('inputstream.adaptive.license_key', licServ+'|Content-Type=application%2Fjson&Referer=https://go.cyfrowypolsat.pl/&User-Agent='+quote(UA)+'|'+licenseUrl+'|JBlicense')                      
-                        ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
-                        ListItem.setProperty('IsPlayable', 'true')
-
-                        #import threading
-                        #thread = threading.Thread(name='reverse', target=self.reverse, args=[])
-                        #thread = threading.Timer(3.0, self.reverse, args=[])
-                        #thread.start()
-                    
-                    self.strmUrl = strmUrl
-                    xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
-                    res = True
-
-                except Exception as ex:
-                    deb('Exception while trying to play video: {}'.format(getExceptionString()))
-                    self.unlockCurrentlyPlayedService()
-                    xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
-
-            elif self.currentlyPlayedService['service'] == 'Ipla':
-                try:
-                    self.playbackStopped = False
-
-                    channelInfo, licenseUrl, licenseData = channelInfo
-                    strmUrl = channelInfo.strm
-
-                    try:
-                        from urllib.parse import urlencode, quote_plus, quote, unquote
-                    except ImportError:
-                        from urllib import urlencode, quote_plus, quote, unquote
-                        
-                    UA = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:84.0) Gecko/20100101 Firefox/84.0'
-                    
-                    PROTOCOL = 'mpd'
-                    DRM = 'com.widevine.alpha'
-
-                    import inputstreamhelper
-                    import ssl
-                    try:
-                        _create_unverified_https_context = ssl._create_unverified_context
-                    except AttributeError:
-                        pass
-                    else:
-                        ssl._create_default_https_context = _create_unverified_https_context
-                    certificate_data = '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'
-                    
-
-                    is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
-                    if is_helper.check_inputstream():
-                        ListItem = xbmcgui.ListItem(path=strmUrl)
-                        ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
-                        ListItem.setContentLookup(False)
-                        if sys.version_info[0] > 2:
-                            ListItem.setProperty('inputstream', is_helper.inputstream_addon)
-                        else:
-                            ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
-                        ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
-                        ListItem.setMimeType('application/xml+dash')
-                        ListItem.setProperty('inputstream.adaptive.stream_headers', 'Referer: https://www.ipla.tv&User-Agent=' + quote(UA))
-                        ListItem.setProperty('inputstream.adaptive.license_type', DRM)
-                        #ListItem.setProperty('inputstream.adaptive.server_certificate', certificate_data)
-                        ListItem.setProperty('inputstream.adaptive.manifest_update_parameter', 'full')
-                        ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl+'|Content-Type=application%2Fjson&Referer=https://www.ipla.tv/&User-Agent='+quote(UA)+'|'+licenseData+'|JBlicense')
-                        ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
-                        ListItem.setProperty("IsPlayable", "true")
-
-                        import threading
-                        thread = threading.Thread(name='reverse', target=self.reverse, args=[])
-                        thread = threading.Timer(3.0, self.reverse, args=[])
-                        thread.start()
-
-                    self.strmUrl = strmUrl
-                    xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
-                    res = True
-
-                except Exception as ex:
-                    deb('Exception while trying to play video: {}'.format(getExceptionString()))
-                    self.unlockCurrentlyPlayedService()
-                    xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
-
-            elif self.currentlyPlayedService['service'] == 'nc+ GO':
-                try:
-                    self.playbackStopped = False
-
-                    channelInfo, licenseUrl = channelInfo
-                    strmUrl = channelInfo.strm + '|auth=SSL/TLS&verifypeer=false'
-
-                    if sys.version_info[0] > 2:
-                        from urllib.parse import parse_qsl, quote, unquote, urlencode, quote_plus
-
-                    else:
-                        from urllib import unquote, quote, urlencode, quote_plus
-                        from urlparse import parse_qsl
-
-                    licServ = 'https://wv.drm.insyscd.net/AcquireLicense.ashx'
-                    licenseUrl = 'DrmChallengeCustomData='+quote(licenseUrl)
-                    
-                    UA = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0'
-                    
-                    PROTOCOL = 'mpd'
-                    DRM = 'com.widevine.alpha'
-                    
-                    import inputstreamhelper
-                    is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
-                    if is_helper.check_inputstream():      
-                        ListItem = xbmcgui.ListItem(path=strmUrl)
-                        ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
-                        ListItem.setContentLookup(False)
-                        if sys.version_info[0] > 2:
-                            ListItem.setProperty('inputstream', is_helper.inputstream_addon)
-                        else:
-                            ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
-                        ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
-                        ListItem.setMimeType('application/xml+dash')
-                        ListItem.setProperty('inputstream.adaptive.stream_headers', 'User-Agent='+quote(UA)+'&auth=SSL/TLS&verifypeer=false')
-                        ListItem.setProperty('inputstream.adaptive.license_type', DRM)
-                        #ListItem.setProperty('inputstream.adaptive.manifest_update_parameter', 'full')
-                        ListItem.setProperty('inputstream.adaptive.license_key', licServ+'|'+licenseUrl+'&auth=SSL/TLS&verifypeer=false|R{SSM}|')
-                        #ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
-                        ListItem.setProperty('IsPlayable', 'true')
-
-                        import threading
-                        thread = threading.Thread(name='reverse', target=self.reverse, args=[])
-                        thread = threading.Timer(3.0, self.reverse, args=[])
-                        thread.start()
-
-                    self.strmUrl = strmUrl
-                    xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
-                    res = True
-
-                except Exception as ex:
-                    deb('Exception while trying to play video: {}'.format(getExceptionString()))
-                    self.unlockCurrentlyPlayedService()
-                    xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
-
-            elif self.currentlyPlayedService['service'] == 'PlayerPL':
-                try:
-                    self.playbackStopped = False
-
-                    channelInfo, licenseUrl = channelInfo
-                    strmUrl = channelInfo.strm
-
-                    try:
-                        from urllib.parse import urlencode, quote_plus, quote, unquote
-                    except ImportError:
-                        from urllib import urlencode, quote_plus, quote, unquote
-
-                    PROTOCOL = 'mpd'
-                    DRM = 'com.widevine.alpha'
-                    
-                    import inputstreamhelper
-                    is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
-                    if is_helper.check_inputstream():
-                        ListItem = xbmcgui.ListItem(path=strmUrl)
-                        ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
-                        ListItem.setContentLookup(False)
-                        if sys.version_info[0] > 2:
-                            ListItem.setProperty('inputstream', is_helper.inputstream_addon)
-                        else:
-                            ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
-                        ListItem.setMimeType('application/xml+dash')
-                        ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
-                        ListItem.setProperty('inputstream.adaptive.license_type', DRM)
-                        ListItem.setProperty('inputstream.adaptive.manifest_update_parameter', 'full')
-                        ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl+'|Content-Type=|R{SSM}|')
-                        ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
-                        ListItem.setProperty('IsPlayable', 'true')
-
-                        #import threading
-                        #thread = threading.Thread(name='reverse', target=self.reverse, args=[])
-                        #thread = threading.Timer(3.0, self.reverse, args=[])
-                        #thread.start()
-
-                    self.strmUrl = strmUrl
-                    xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
-                    res = True
-
-                except Exception as ex:
-                    deb('Exception while trying to play video: {}'.format(getExceptionString()))
-                    self.unlockCurrentlyPlayedService()
-                    xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
-
-            elif self.currentlyPlayedService['service'] == 'Telia Play':
-                if self.archiveService == '' or self.archivePlaylist == '':
+                elif self.currentlyPlayedService['service'] == 'PlayerPL':
                     try:
                         self.playbackStopped = False
 
@@ -655,10 +620,10 @@ class PlayService(xbmc.Player, BasePlayService):
 
                         PROTOCOL = 'mpd'
                         DRM = 'com.widevine.alpha'
-
+                        
                         import inputstreamhelper
                         is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
-                        if is_helper.check_inputstream():  
+                        if is_helper.check_inputstream():
                             ListItem = xbmcgui.ListItem(path=strmUrl)
                             ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
                             ListItem.setContentLookup(False)
@@ -666,12 +631,19 @@ class PlayService(xbmc.Player, BasePlayService):
                                 ListItem.setProperty('inputstream', is_helper.inputstream_addon)
                             else:
                                 ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
-                            ListItem.setMimeType('application/dash+xml')
-                            ListItem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
-                            ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl)
-                            ListItem.setProperty('inputstream.adaptive.manifest_type', 'mpd')
+                            ListItem.setMimeType('application/xml+dash')
+                            ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
+                            ListItem.setProperty('inputstream.adaptive.license_type', DRM)
+                            ListItem.setProperty('inputstream.adaptive.manifest_update_parameter', 'full')
+                            ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl+'|Content-Type=|R{SSM}|')
+                            ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
                             ListItem.setProperty('IsPlayable', 'true')
 
+                            #import threading
+                            #thread = threading.Thread(name='reverse', target=self.reverse, args=[])
+                            #thread = threading.Timer(3.0, self.reverse, args=[])
+                            #thread.start()
+
                         self.strmUrl = strmUrl
                         xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
                         res = True
@@ -681,269 +653,314 @@ class PlayService(xbmc.Player, BasePlayService):
                         self.unlockCurrentlyPlayedService()
                         xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
 
+                elif self.currentlyPlayedService['service'] == 'Telia Play':
+                    if self.archiveService == '' or self.archivePlaylist == '':
+                        try:
+                            self.playbackStopped = False
 
-            elif self.currentlyPlayedService['service'] == 'WP Pilot':
-                if self.archiveService == '' or self.archivePlaylist == '':
-                    try:
-                        self.playbackStopped = False
+                            channelInfo, licenseUrl = channelInfo
+                            strmUrl = channelInfo.strm
 
-                        strmUrl = channelInfo.strm
+                            try:
+                                from urllib.parse import urlencode, quote_plus, quote, unquote
+                            except ImportError:
+                                from urllib import urlencode, quote_plus, quote, unquote
 
-                        ListItem = xbmcgui.ListItem(channelInfo.title)
-                        ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
-                        
-                        self.strmUrl = strmUrl
-                        xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
-                        xbmcgui.Dialog().notification('WP Pilot', strings(30965))
+                            PROTOCOL = 'mpd'
+                            DRM = 'com.widevine.alpha'
 
-                        res = True
-
-                    except Exception as ex:
-                        deb('Exception while trying to play video: {}'.format(getExceptionString()))
-                        self.unlockCurrentlyPlayedService()
-                        xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
-                
-            else:
-                playbackServices = ['C More', 'Cyfrowy Polsat GO', 'Ipla', 'nc+ GO', 'PlayerPL', 'Telia Play', 'WP Pilot']
-                if self.currentlyPlayedService['service'] not in playbackServices:
-                    strmUrl = channelInfo.strm
-                    strmUrl_catchup = channelInfo.catchup
-
-                    duration = ''
-
-                    try:
-                        self.playbackStopped = False
-                        if ADDON.getSetting('archive_support') == 'true':
-                            if str(self.playlistArchive()) != '':
-                                archivePlaylist = str(self.playlistArchive())
-                                catchupList = archivePlaylist.split(', ')
-
-                                # Catchup strings
-                                duration = catchupList[0]
-                                offset = catchupList[1]
-                                utc = catchupList[2]
-                                lutc = catchupList[3]
-                                year = catchupList[4]
-                                month = catchupList[5]
-                                day = catchupList[6]
-                                hour = catchupList[7]
-                                minute = catchupList[8]
-                                second = catchupList[9]
-
-                                if strmUrl_catchup or ADDON.getSetting('archive_type') == '4':
-                                    if strmUrl_catchup:
-                                        try:
-                                            strmUrl = strmUrl_catchup.format(start=utc, timestamp=lutc)
-                                        except:
-                                            strmUrl = strmUrl_catchup.format(utc=utc, lutc=lutc)
-
-                                        if 'mono' in strmUrl:
-                                            strmUrl = re.sub('\$', '', str(strmUrl))
-                                            strmUrl = re.sub('mono', 'video', str(strmUrl))
-                                    else:
-                                        deb('archive_type(4) wrong type')
-                                        xbmcgui.Dialog().ok(strings(30998), strings(59979))
-                                        return
+                            import inputstreamhelper
+                            is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
+                            if is_helper.check_inputstream():  
+                                ListItem = xbmcgui.ListItem(path=strmUrl)
+                                ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
+                                ListItem.setContentLookup(False)
+                                if sys.version_info[0] > 2:
+                                    ListItem.setProperty('inputstream', is_helper.inputstream_addon)
                                 else:
+                                    ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
+                                ListItem.setMimeType('application/dash+xml')
+                                ListItem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
+                                ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl)
+                                ListItem.setProperty('inputstream.adaptive.manifest_type', 'mpd')
+                                ListItem.setProperty('IsPlayable', 'true')
 
-                                    # Default
-                                    if ADDON.getSetting('archive_type') == '0':
-                                        matches = re.compile('^(http[s]?://[^/]+)/([^/]+)/([^/]*)(mpegts|\\.m3u8)(\\?.+=.+)?$')
+                            self.strmUrl = strmUrl
+                            xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
+                            res = True
 
-                                        if matches.match(strmUrl):
-                                            fsHost = matches.search(strmUrl).group(1)
-                                            fsChannelId = matches.search(strmUrl).group(2)
-                                            fsListType = matches.search(strmUrl).group(3)
-                                            fsStreamType = matches.search(strmUrl).group(4)
-                                            fsUrlAppend = matches.search(strmUrl).group(5)
+                        except Exception as ex:
+                            deb('Exception while trying to play video: {}'.format(getExceptionString()))
+                            self.unlockCurrentlyPlayedService()
+                            xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
 
-                                            if fsStreamType == 'mpegts':
-                                                m_catchupSource = str(fsHost) + "/" + str(fsChannelId) + '/timeshift_abs-$' + str(utc) + '.ts' + str(fsUrlAppend)
-                                            else:
-                                                offset = str(int(offset) * 60)
 
-                                                if fsListType == 'index':
-                                                    m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/timeshift_rel-' + str(offset) + '.m3u8' + str(fsUrlAppend)
-                                                    
-                                                elif fsListType == 'video':
-                                                    m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/video-' + str(utc) + '-' + str(lutc) + '.m3u8' + str(fsUrlAppend)
-                                                
-                                                elif 'hls-custom' in fsListType:
-                                                    new_url = strmUrl + '?utc={utc}&lutc={lutc}'.format(utc=utc, lutc=lutc)
-                                                    response = requests.get(new_url, allow_redirects=False, verify=False, timeout=2)
-                                                    strmUrlNew = response.headers.get('Location', None) if 'Location' in response.headers else strmUrl
+                elif self.currentlyPlayedService['service'] == 'WP Pilot':
+                    if self.archiveService == '' or self.archivePlaylist == '':
+                        try:
+                            self.playbackStopped = False
 
-                                                    if strmUrlNew:
-                                                        strmUrlNew
-                                                    else:
-                                                        strmUrlNew = strmUrl
+                            strmUrl = channelInfo.strm
 
-                                                    fsHost = matches.search(strmUrlNew).group(1)
-                                                    fsChannelId = matches.search(strmUrlNew).group(2)
-                                                    fsListType = matches.search(strmUrlNew).group(3)
-                                                    fsStreamType = matches.search(strmUrlNew).group(4)
-                                                    fsUrlAppend = matches.search(strmUrlNew).group(5)
-                                                    
-                                                    fsUrlAppend = re.sub('&.*$', '', str(fsUrlAppend))
-                                                    fsListType = 'video'
-
-                                                    m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/' + str(fsListType) + '-' + str(utc) + '-' + str(offset) + str(fsStreamType) + str(fsUrlAppend)
-
-                                                else:
-                                                    m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/' + str(fsListType) + '-timeshift_rel-' + str(offset) + '.m3u8' + str(fsUrlAppend)
-
-                                            strmUrl = m_catchupSource
-
-                                        else:
-                                            deb('archive_type(0) wrong type')
-                                            xbmcgui.Dialog().ok(strings(30998), strings(59979))
-                                            return
-
-                                    # Append
-                                    if ADDON.getSetting('archive_type') == '1':
-                                        setting = ADDON.getSetting('archive_string')
-
-                                        putc = re.compile('(^\?utc=|^\&utc=)')
-                                        mutc = putc.match(setting)
-
-                                        putv = re.compile('(^.*)(\{Y\}.\{m\}.\{d\}.*\{H\}.\{M\}.\{S\})(?=.*|$)')
-                                        mutv = putv.match(setting)
-
-                                        if mutc:
-                                            catchup = ADDON.getSetting('archive_string').format(utc=utc, lutc=lutc)
-
-                                        elif mutv:
-                                            catchup = ADDON.getSetting('archive_string').format(Y=year, m=month, d=day, H=hour, M=minute, S=second)
-
-                                        putc = re.compile('(^\?utc=|^\&utc=)')
-                                        mutc = putc.match(catchup)
-
-                                        putv = re.compile('(^.*)(\d{4}.\d{2}.\d{2}.*\d{2}.\d{2}.\d{2})(?=.*|$)')
-                                        mutv = putv.match(catchup)
-
-                                        if mutc:
-                                            m_catchupSource = strmUrl + catchup
-                                            strmUrl = m_catchupSource + '-' + str(int(duration)*60)
-                                        elif mutv:
-                                            m_catchupSource = strmUrl + catchup
-                                            strmUrl = m_catchupSource + '?duration={duration}'.format(duration=str(int(duration)*60))
-                                        else:
-                                            deb('archive_type(1) wrong type')
-                                            xbmcgui.Dialog().ok(strings(30998), strings(59979))
-                                            return
-
-                                    # Xtream Codes
-                                    if ADDON.getSetting('archive_type') == '2':
-                                        matches = re.compile('^(http[s]?://[^/]+)/(?:live/)?([^/]+)/([^/]+)/([^/\\.]+)(\\.m3u[8]?|\\.ts)?$')
-
-                                        if matches.match(strmUrl):
-                                            xcHost = matches.search(strmUrl).group(1)
-                                            xcUsername = matches.search(strmUrl).group(2)
-                                            xcPassword = matches.search(strmUrl).group(3)
-                                            xcChannelId = matches.search(strmUrl).group(4)
-                                            try:
-                                                xcExtension = matches.search(strmUrl).group(5)
-                                            except:
-                                                xcExtension = ''
-
-                                            if xcExtension == '':
-                                                m_isCatchupTSStream = True
-                                                xcExtension = ".ts"
-
-                                            start = '{y}-{m}-{d}:{h}-{min}'.format(y=year, m=month, d=day, h=hour, min=minute)
-                                            timeshift = duration + '/' + start + '/' + duration
-
-                                            try:
-                                                m_catchupSource = xcHost + "/timeshift/" + xcUsername + "/" + xcPassword + "/"+timeshift+"/" + xcChannelId + xcExtension
-                                            except:
-                                                m_catchupSource = xcHost + "/timeshift/" + xcUsername + "/" + xcPassword + "/"+timeshift+"/" + xcChannelId
-
-                                            strmUrl = m_catchupSource
-
-                                        else:
-                                            deb('archive_type(2) wrong type')
-                                            xbmcgui.Dialog().ok(strings(30998), strings(59979))
-                                            return
-
-                                    # Shift
-                                    if ADDON.getSetting('archive_type') == '3':
-                                        if '?' in strmUrl:
-                                            m_catchupSource = strmUrl + '&utc={utc}&lutc={lutc}-{duration}'.format(utc=utc, lutc=lutc, duration=duration)
-                                            strmUrl = m_catchupSource
-                                        else:
-                                            m_catchupSource = strmUrl + '?utc={utc}&lutc={lutc}-{duration}'.format(utc=utc, lutc=lutc, duration=duration)
-                                            strmUrl = m_catchupSource
-
-                        if inputstream:
-                            streamType = ''
-
-                            # MimeType
-                            if 'm3u8' in strmUrl:
-                                mimeType = "application/x-mpegURL"
-                                #mimeType = "application/vnd.apple.mpegurl"
-                                #mimeType = "application/json"
-                                streamType = 'hls'
-
-                            elif '.mpd' in strmUrl:
-                                mimeType = "application/xml+dash"
-                                streamType = 'dash'
-
-                            elif '.ism' in strmUrl:
-                                mimeType = ''
-                                streamType = 'ism'
-
-                            elif '.ts' in strmUrl:
-                                mimeType = 'video/mp2t'
-                                streamType = 'ts'
-
-                            else:
-                                streamType = ''
-
-                            ListItem = xbmcgui.ListItem(path=strmUrl)
+                            ListItem = xbmcgui.ListItem(channelInfo.title)
                             ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
                             
-                            if streamType != '':
-                                if ffmpegdirect:
-                                    ListItem.setProperty('inputstream', 'inputstream.ffmpegdirect')
+                            self.strmUrl = strmUrl
+                            xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
+                            xbmcgui.Dialog().notification('WP Pilot', strings(30965))
 
-                                ListItem.setMimeType(mimeType)
-                                ListItem.setProperty('inputstream.adaptive.manifest_type', streamType)
+                            res = True
 
-                                if streamType == 'hls' or streamType == 'ts':
+                        except Exception as ex:
+                            deb('Exception while trying to play video: {}'.format(getExceptionString()))
+                            self.unlockCurrentlyPlayedService()
+                            xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
+                    
+                else:
+                    playbackServices = ['C More', 'Cyfrowy Polsat GO', 'Ipla', 'nc+ GO', 'PlayerPL', 'Telia Play', 'WP Pilot']
+                    if self.currentlyPlayedService['service'] not in playbackServices:
+                        strmUrl = channelInfo.strm
+                        strmUrl_catchup = channelInfo.catchup
+
+                        duration = ''
+
+                        try:
+                            self.playbackStopped = False
+                            if ADDON.getSetting('archive_support') == 'true':
+                                if str(self.playlistArchive()) != '':
+                                    archivePlaylist = str(self.playlistArchive())
+                                    catchupList = archivePlaylist.split(', ')
+
+                                    # Catchup strings
+                                    duration = catchupList[0]
+                                    offset = catchupList[1]
+                                    utc = catchupList[2]
+                                    lutc = catchupList[3]
+                                    year = catchupList[4]
+                                    month = catchupList[5]
+                                    day = catchupList[6]
+                                    hour = catchupList[7]
+                                    minute = catchupList[8]
+                                    second = catchupList[9]
+
+                                    if strmUrl_catchup or ADDON.getSetting('archive_type') == '4':
+                                        if strmUrl_catchup:
+                                            try:
+                                                strmUrl = strmUrl_catchup.format(start=utc, timestamp=lutc)
+                                            except:
+                                                strmUrl = strmUrl_catchup.format(utc=utc, lutc=lutc)
+
+                                            if 'mono' in strmUrl:
+                                                strmUrl = re.sub('\$', '', str(strmUrl))
+                                                strmUrl = re.sub('mono', 'video', str(strmUrl))
+                                        else:
+                                            deb('archive_type(4) wrong type')
+                                            xbmcgui.Dialog().ok(strings(30998), strings(59979))
+                                            return
+                                    else:
+
+                                        # Default
+                                        if ADDON.getSetting('archive_type') == '0':
+                                            matches = re.compile('^(http[s]?://[^/]+)/([^/]+)/([^/]*)(mpegts|\\.m3u8)(\\?.+=.+)?$')
+
+                                            if matches.match(strmUrl):
+                                                fsHost = matches.search(strmUrl).group(1)
+                                                fsChannelId = matches.search(strmUrl).group(2)
+                                                fsListType = matches.search(strmUrl).group(3)
+                                                fsStreamType = matches.search(strmUrl).group(4)
+                                                fsUrlAppend = matches.search(strmUrl).group(5)
+
+                                                if fsStreamType == 'mpegts':
+                                                    m_catchupSource = str(fsHost) + "/" + str(fsChannelId) + '/timeshift_abs-$' + str(utc) + '.ts' + str(fsUrlAppend)
+                                                else:
+                                                    offset = str(int(offset) * 60)
+
+                                                    if fsListType == 'index':
+                                                        m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/timeshift_rel-' + str(offset) + '.m3u8' + str(fsUrlAppend)
+                                                        
+                                                    elif fsListType == 'video':
+                                                        m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/video-' + str(utc) + '-' + str(lutc) + '.m3u8' + str(fsUrlAppend)
+                                                    
+                                                    elif 'hls-custom' in fsListType:
+                                                        new_url = strmUrl + '?utc={utc}&lutc={lutc}'.format(utc=utc, lutc=lutc)
+                                                        response = requests.get(new_url, allow_redirects=False, verify=False, timeout=2)
+                                                        strmUrlNew = response.headers.get('Location', None) if 'Location' in response.headers else strmUrl
+
+                                                        if strmUrlNew:
+                                                            strmUrlNew
+                                                        else:
+                                                            strmUrlNew = strmUrl
+
+                                                        fsHost = matches.search(strmUrlNew).group(1)
+                                                        fsChannelId = matches.search(strmUrlNew).group(2)
+                                                        fsListType = matches.search(strmUrlNew).group(3)
+                                                        fsStreamType = matches.search(strmUrlNew).group(4)
+                                                        fsUrlAppend = matches.search(strmUrlNew).group(5)
+                                                        
+                                                        fsUrlAppend = re.sub('&.*$', '', str(fsUrlAppend))
+                                                        fsListType = 'video'
+
+                                                        m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/' + str(fsListType) + '-' + str(utc) + '-' + str(offset) + str(fsStreamType) + str(fsUrlAppend)
+
+                                                    else:
+                                                        m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/' + str(fsListType) + '-timeshift_rel-' + str(offset) + '.m3u8' + str(fsUrlAppend)
+
+                                                strmUrl = m_catchupSource
+
+                                            else:
+                                                deb('archive_type(0) wrong type')
+                                                xbmcgui.Dialog().ok(strings(30998), strings(59979))
+                                                return
+
+                                        # Append
+                                        if ADDON.getSetting('archive_type') == '1':
+                                            setting = ADDON.getSetting('archive_string')
+
+                                            putc = re.compile('(^\?utc=|^\&utc=)')
+                                            mutc = putc.match(setting)
+
+                                            putv = re.compile('(^.*)(\{Y\}.\{m\}.\{d\}.*\{H\}.\{M\}.\{S\})(?=.*|$)')
+                                            mutv = putv.match(setting)
+
+                                            if mutc:
+                                                catchup = ADDON.getSetting('archive_string').format(utc=utc, lutc=lutc)
+
+                                            elif mutv:
+                                                catchup = ADDON.getSetting('archive_string').format(Y=year, m=month, d=day, H=hour, M=minute, S=second)
+
+                                            putc = re.compile('(^\?utc=|^\&utc=)')
+                                            mutc = putc.match(catchup)
+
+                                            putv = re.compile('(^.*)(\d{4}.\d{2}.\d{2}.*\d{2}.\d{2}.\d{2})(?=.*|$)')
+                                            mutv = putv.match(catchup)
+
+                                            if mutc:
+                                                m_catchupSource = strmUrl + catchup
+                                                strmUrl = m_catchupSource + '-' + str(int(duration)*60)
+                                            elif mutv:
+                                                m_catchupSource = strmUrl + catchup
+                                                strmUrl = m_catchupSource + '?duration={duration}'.format(duration=str(int(duration)*60))
+                                            else:
+                                                deb('archive_type(1) wrong type')
+                                                xbmcgui.Dialog().ok(strings(30998), strings(59979))
+                                                return
+
+                                        # Xtream Codes
+                                        if ADDON.getSetting('archive_type') == '2':
+                                            matches = re.compile('^(http[s]?://[^/]+)/(?:live/)?([^/]+)/([^/]+)/([^/\\.]+)(\\.m3u[8]?|\\.ts)?$')
+
+                                            if matches.match(strmUrl):
+                                                xcHost = matches.search(strmUrl).group(1)
+                                                xcUsername = matches.search(strmUrl).group(2)
+                                                xcPassword = matches.search(strmUrl).group(3)
+                                                xcChannelId = matches.search(strmUrl).group(4)
+                                                try:
+                                                    xcExtension = matches.search(strmUrl).group(5)
+                                                except:
+                                                    xcExtension = ''
+
+                                                if xcExtension == '':
+                                                    m_isCatchupTSStream = True
+                                                    xcExtension = ".ts"
+
+                                                start = '{y}-{m}-{d}:{h}-{min}'.format(y=year, m=month, d=day, h=hour, min=minute)
+                                                timeshift = duration + '/' + start + '/' + duration
+
+                                                try:
+                                                    m_catchupSource = xcHost + "/timeshift/" + xcUsername + "/" + xcPassword + "/"+timeshift+"/" + xcChannelId + xcExtension
+                                                except:
+                                                    m_catchupSource = xcHost + "/timeshift/" + xcUsername + "/" + xcPassword + "/"+timeshift+"/" + xcChannelId
+
+                                                strmUrl = m_catchupSource
+
+                                            else:
+                                                deb('archive_type(2) wrong type')
+                                                xbmcgui.Dialog().ok(strings(30998), strings(59979))
+                                                return
+
+                                        # Shift
+                                        if ADDON.getSetting('archive_type') == '3':
+                                            if '?' in strmUrl:
+                                                m_catchupSource = strmUrl + '&utc={utc}&lutc={lutc}-{duration}'.format(utc=utc, lutc=lutc, duration=duration)
+                                                strmUrl = m_catchupSource
+                                            else:
+                                                m_catchupSource = strmUrl + '?utc={utc}&lutc={lutc}-{duration}'.format(utc=utc, lutc=lutc, duration=duration)
+                                                strmUrl = m_catchupSource
+
+                            if inputstream:
+                                streamType = ''
+
+                                # MimeType
+                                if 'm3u8' in strmUrl:
+                                    mimeType = "application/x-mpegURL"
+                                    #mimeType = "application/vnd.apple.mpegurl"
+                                    #mimeType = "application/json"
+                                    streamType = 'hls'
+
+                                elif '.mpd' in strmUrl:
+                                    mimeType = "application/xml+dash"
+                                    streamType = 'dash'
+
+                                elif '.ism' in strmUrl:
+                                    mimeType = ''
+                                    streamType = 'ism'
+
+                                elif '.ts' in strmUrl:
+                                    mimeType = 'video/mp2t'
+                                    streamType = 'ts'
+
+                                else:
+                                    streamType = ''
+
+                                ListItem = xbmcgui.ListItem(path=strmUrl)
+                                ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
+                                
+                                if streamType != '':
                                     if ffmpegdirect:
-                                        ListItem.setProperty('inputstream.ffmpegdirect.stream_mode', 'timeshift')
-                                        ListItem.setProperty('inputstream.ffmpegdirect.is_realtime_stream', 'true')
-                                        ListItem.setProperty('inputstream.ffmpegdirect.manifest_type', 'hls')
+                                        ListItem.setProperty('inputstream', 'inputstream.ffmpegdirect')
 
-                                if streamType == 'dash':
-                                    ListItem.setProperty('inputstream.adaptive.manifest_update_parameter', 'full')
+                                    ListItem.setMimeType(mimeType)
+                                    ListItem.setProperty('inputstream.adaptive.manifest_type', streamType)
 
-                                if duration != '':
-                                    if ffmpegdirect:
-                                        ListItem.setProperty('inputstream.ffmpegarchive.default_programme_duration', duration)
-                        else:
-                            ListItem = xbmcgui.ListItem(path=strmUrl)
-                            ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
+                                    if streamType == 'hls' or streamType == 'ts':
+                                        if ffmpegdirect:
+                                            ListItem.setProperty('inputstream.ffmpegdirect.stream_mode', 'timeshift')
+                                            ListItem.setProperty('inputstream.ffmpegdirect.is_realtime_stream', 'true')
+                                            ListItem.setProperty('inputstream.ffmpegdirect.manifest_type', 'hls')
 
-                        self.strmUrl = strmUrl
+                                    if streamType == 'dash':
+                                        ListItem.setProperty('inputstream.adaptive.manifest_update_parameter', 'full')
 
-                        if channelInfo.status:
-                            status = self.checkConnection(self.strmUrl) 
-                            if status >= 400:
-                                res = False
-                                self.userStoppedPlayback = False
-                                return
+                                    if duration != '':
+                                        if ffmpegdirect:
+                                            ListItem.setProperty('inputstream.ffmpegarchive.default_programme_duration', duration)
+                            else:
+                                ListItem = xbmcgui.ListItem(path=strmUrl)
+                                ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
 
-                        xbmc.Player().play(self.strmUrl, ListItem, windowed=startWindowed)
-                        res = True
+                            self.strmUrl = strmUrl
 
-                    except Exception as ex:
-                        deb('Exception while trying to play video: {}'.format(getExceptionString()))
-                        self.unlockCurrentlyPlayedService()
-                        xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
-        else:
-            deb('LoadVideoLink ERROR channelInfo is None! service: {}'.format(service))
-        return res
+                            if channelInfo.status:
+                                status = self.checkConnection(self.strmUrl) 
+                                if status == 408:
+                                    status = 0
+
+                                if status >= 400:
+                                    res = False
+                                    self.userStoppedPlayback = False
+                                    return
+
+                            xbmc.Player().play(self.strmUrl, ListItem, windowed=startWindowed)
+                            xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
+                            res = True
+
+                        except Exception as ex:
+                            deb('Exception while trying to play video: {}'.format(getExceptionString()))
+                            self.unlockCurrentlyPlayedService()
+                            xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
+            else:
+                deb('LoadVideoLink ERROR channelInfo is None! service: {}'.format(service))
+            return res
 
     def onPlayBackError(self):
         self.playbackStopped = True
@@ -1059,9 +1076,8 @@ class PlayService(xbmc.Player, BasePlayService):
             ctx.check_hostname = False
             ctx.verify_mode = ssl.CERT_NONE
 
-            status = 200
-
-            timeout = 2.0
+            status = 0
+            timeout = 1.5
 
             try:
                 req = Request.Request(strmUrl)
@@ -1073,16 +1089,20 @@ class PlayService(xbmc.Player, BasePlayService):
                 status = response.code
 
             except HTTPError as e:
-                deb('HTTP error: {}'.format(e.reason))
+                deb('chkConn HTTPError: {}'.format(e.reason))
                 status = e.code
 
             except URLError as e:
-                deb('URLError error: {}'.format(e.reason))
-                status = 400
+                deb('chkConn URLError: {}'.format(e.reason))
+                status = 404
 
             except socket.timeout as e:
-                deb('Timeout error: {}'.format('408'))
+                deb('chkConn Timeout: {}, open stream in xbmc.Player'.format('408'))
                 status = 408
+
+            except:
+                deb('chkConn RequestException')
+                status = 400
 
             if status >= 400 and not xbmc.Player().isPlaying():
                 xbmcgui.Dialog().notification(strings(57018) + ' Error: ' + str(status), strings(31019), xbmcgui.NOTIFICATION_ERROR)

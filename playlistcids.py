@@ -65,10 +65,6 @@ import cloudscraper
 
 from contextlib import contextmanager
 
-ACTION_PARENT_DIR = 9
-ACTION_PREVIOUS_MENU = 10
-KEY_NAV_BACK = 92
-
 sess = cloudscraper.create_scraper()
 scraper = cloudscraper.CloudScraper()
 
@@ -555,7 +551,8 @@ class PlaylistUpdater(baseServiceUpdater):
         try:
             yield
         finally:
-            xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
+            if xbmc.getCondVisibility('Window.IsVisible(DialogBusy.xml)'):
+                xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
 
 
     def getUrl(self, strmUrl, cid):
@@ -583,22 +580,23 @@ class PlaylistUpdater(baseServiceUpdater):
                 if 'Location' in response.headers and '_TS' not in cid:
                     strmUrl = response.headers.get('Location', None) 
                 else:
+                    strmUrl
                     chkStatus = True
 
             except HTTPError as e:
-                deb('getChannelStream HTTPError: {}'.format(str(e)))
+                deb('HTTPError: {}'.format(str(e)))
                 chkStatus = True
 
             except ConnectionError as e:
-                deb('getChannelStream ConnectionError: {}'.format(str(e)))
+                deb('ConnectionError: {}'.format(str(e)))
                 chkStatus = True
 
             except Timeout as e:
-                deb('getChannelStream Timeout: {}'.format(str(e))) 
+                deb('Timeout: {}'.format(str(e))) 
                 chkStatus = True
 
             except RequestException as e:
-                deb('getChannelStream RequestException: {}'.format(str(e))) 
+                deb('RequestException: {}'.format(str(e))) 
                 chkStatus = True
 
             except:
@@ -615,7 +613,6 @@ class PlaylistUpdater(baseServiceUpdater):
             self.log('getChannelStream: found matching channel: cid {}, name {}, stream {}'.format(chann.cid, chann.name, chann.strm))
 
             chann.strm, chann.status = self.getUrl(chann.strm, chann.cid)
-            xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
 
             return chann
 
