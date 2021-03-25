@@ -1104,7 +1104,7 @@ class PlayService(xbmc.Player, BasePlayService):
                 deb('chkConn RequestException')
                 status = 400
 
-            if status >= 400 and not xbmc.Player().isPlaying():
+            if status >= 400 and xbmc.getCondVisibility('!Player.HasMedia'):
                 xbmcgui.Dialog().notification(strings(57018) + ' Error: ' + str(status), strings(31019), xbmcgui.NOTIFICATION_ERROR)
 
             return status
