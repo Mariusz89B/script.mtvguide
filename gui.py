@@ -4714,6 +4714,7 @@ class mTVGuide(xbmcgui.WindowXML):
             return
 
         categories = self.getCategories()
+        streams = self.getStreamsCid()
 
         for program in programs:
             idx = channels.index(program.channel)
@@ -5062,7 +5063,6 @@ class mTVGuide(xbmcgui.WindowXML):
                 if ADDON.getSetting('categories_remember') == 'true' or ADDON.getSetting('category') != '':
                     self.database.setCategory(ADDON.getSetting('category'))
 
-                self.getStreamsCid()
                 self.onRedrawEPG(0, self.viewStartDate)
                 
                 if ADDON.getSetting('touch_panel') == 'true':
@@ -5070,8 +5070,6 @@ class mTVGuide(xbmcgui.WindowXML):
 
         else:
             self.close()
-
-
 
         if ADDON.getSetting('autostart_channel') == 'true':
             if ADDON.getSetting('autostart_channel_last') == 'true':
