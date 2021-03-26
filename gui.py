@@ -5286,29 +5286,26 @@ class mTVGuide(xbmcgui.WindowXML):
     def setControlImage(self, controlId, image):
         #debug('setControlImage: {}'.format(image))
         control = self.getControl(controlId)
-        if control and image:
-            try:
-                control.setImage(image, True)
-            except:
-                pass
+        try:
+            control.setImage(image, True)
+        except:
+            pass
 
     def setControlLabel(self, controlId, label):
         #debug('setControlLabel: {}'.format(label))
         control = self.getControl(controlId)
-        if control and label:
-            try:
-                control.setLabel(label)
-            except:
-                pass
+        try:
+            control.setLabel(label)
+        except:
+            pass
 
     def setControlText(self, controlId, text):
         #debug('setControlText: {}'.format(text))
         control = self.getControl(controlId)
-        if control and text:
-            try:
-                control.setText(text)
-            except:
-                pass
+        try:
+            control.setText(text)
+        except:
+            pass
 
     def updateTimebar(self, scheduleTimer=True):
         # debug('updateTimebar')
