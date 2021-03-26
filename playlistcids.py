@@ -556,7 +556,7 @@ class PlaylistUpdater(baseServiceUpdater):
 
 
     def getUrl(self, strmUrl, cid):
-        chkStatus = False
+        mimeType = ''
 
         with self.busyDialog():
             UA = ADDON.getSetting('{}_user_agent'.format(self.serviceName))
@@ -576,33 +576,27 @@ class PlaylistUpdater(baseServiceUpdater):
             timeouts = (conn_timeout, read_timeout)
             
             try:
-                response = scraper.get(strmUrl, headers=headers, verify=False, allow_redirects=False, stream=True, timeout=timeouts)
+                response = scraper.get(strmUrl, headers=headers, allow_redirects=False, stream=True, timeout=timeouts)
                 if 'Location' in response.headers and '_TS' not in cid:
                     strmUrl = response.headers.get('Location', None) 
                 else:
-                    strmUrl
-                    chkStatus = True
+                    strmUrl = response.url
+                
+                mimeType = response.headers.get('Content-Type', None) 
 
             except HTTPError as e:
                 deb('HTTPError: {}'.format(str(e)))
-                chkStatus = True
 
             except ConnectionError as e:
                 deb('ConnectionError: {}'.format(str(e)))
-                chkStatus = True
 
             except Timeout as e:
                 deb('Timeout: {}'.format(str(e))) 
-                chkStatus = True
 
             except RequestException as e:
                 deb('RequestException: {}'.format(str(e))) 
-                chkStatus = True
 
-            except:
-                chkStatus = True
-
-            return strmUrl, chkStatus
+            return strmUrl, mimeType
 
 
     def getChannelStream(self, chann):
@@ -612,7 +606,7 @@ class PlaylistUpdater(baseServiceUpdater):
                 xbmc.sleep(500)
             self.log('getChannelStream: found matching channel: cid {}, name {}, stream {}'.format(chann.cid, chann.name, chann.strm))
 
-            chann.strm, chann.status = self.getUrl(chann.strm, chann.cid)
+            chann.strm, chann.mime = self.getUrl(chann.strm, chann.cid)
 
             return chann
 

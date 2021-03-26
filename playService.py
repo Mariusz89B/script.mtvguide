@@ -910,10 +910,16 @@ class PlayService(xbmc.Player, BasePlayService):
                                     streamType = 'ts'
 
                                 else:
-                                    streamType = ''
+                                    if channelInfo.mime != '':
+                                        mimeType = channelInfo.mime
+                                    else:
+                                        mimeType = 'video/mp4'
+
+                                    streamType = 'hls'
 
                                 ListItem = xbmcgui.ListItem(path=strmUrl)
                                 ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
+                                ListItem.setContentLookup(False)
                                 
                                 if streamType != '':
                                     if ffmpegdirect:
@@ -940,18 +946,7 @@ class PlayService(xbmc.Player, BasePlayService):
 
                             self.strmUrl = strmUrl
 
-                            if channelInfo.status:
-                                status = self.checkConnection(self.strmUrl) 
-                                if status == 408:
-                                    status = 0
-
-                                if status >= 400:
-                                    res = False
-                                    self.userStoppedPlayback = False
-                                    return
-
                             xbmc.Player().play(self.strmUrl, ListItem, windowed=startWindowed)
-                            xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
                             res = True
 
                         except Exception as ex:
@@ -1077,7 +1072,7 @@ class PlayService(xbmc.Player, BasePlayService):
             ctx.verify_mode = ssl.CERT_NONE
 
             status = 0
-            timeout = 1.5
+            timeout = 2.0
 
             try:
                 req = Request.Request(strmUrl)
