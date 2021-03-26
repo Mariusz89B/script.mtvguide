@@ -1408,7 +1408,12 @@ class Database(object):
         return customStreamUrlList
 
     def adapt_datetime(self, ts):
-        return time.mktime(ts.timetuple())
+        try:
+            adapt_datetime = time.mktime(ts.timetuple())
+        except:
+            adapt_datetime = time.mktime(ts.utctimetuple())
+
+        return adapt_datetime
 
     def convert_datetime(self, ts):
         try:
