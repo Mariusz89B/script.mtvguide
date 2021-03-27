@@ -28,11 +28,12 @@
 		<forum>http://mods-kodi.pl/forum/</forum>
 		<website>http://mods-kodi.pl/</website>
 		<email>support@m-tvguide.pl</email>
-	<news>v9.2.9 (2021-03-20)
+	<news>v9.2.9 (2021-03-27)
 - Performance improvements.
-- Fix fading icons issue.
+- Fixed fading icons.
 - Added new download menu.
 - Added option to cache playlist.
+- Fixed bugs.
 
 v9.2.8 (2021-02-27)
 - Fix for service Telia Play.

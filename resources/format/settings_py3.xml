@@ -992,7 +992,7 @@
 				</setting>
 				<setting help="95131" id="playlist_1_refr" label="60008" type="boolean">
 					<level>3</level>
-					<default>true</default>
+					<default>false</default>
 					<dependencies>
 						<dependency type="visible">
 							<condition operator="is" setting="playlist_1_enabled">true</condition>
@@ -1182,7 +1182,7 @@
 				</setting>
 				<setting help="95131" id="playlist_2_refr" label="60008" type="boolean">
 					<level>3</level>
-					<default>true</default>
+					<default>false</default>
 					<dependencies>
 						<dependency type="visible">
 							<condition operator="is" setting="playlist_2_enabled">true</condition>
@@ -1372,7 +1372,7 @@
 				</setting>
 				<setting help="95131" id="playlist_3_refr" label="60008" type="boolean">
 					<level>3</level>
-					<default>true</default>
+					<default>false</default>
 					<dependencies>
 						<dependency type="visible">
 							<condition operator="is" setting="playlist_3_enabled">true</condition>
@@ -1562,7 +1562,7 @@
 				</setting>
 				<setting help="95131" id="playlist_4_refr" label="60008" type="boolean">
 					<level>3</level>
-					<default>true</default>
+					<default>false</default>
 					<dependencies>
 						<dependency type="visible">
 							<condition operator="is" setting="playlist_4_enabled">true</condition>
@@ -1752,7 +1752,7 @@
 				</setting>
 				<setting help="95131" id="playlist_5_refr" label="60008" type="boolean">
 					<level>3</level>
-					<default>true</default>
+					<default>false</default>
 					<dependencies>
 						<dependency type="visible">
 							<condition operator="is" setting="playlist_5_enabled">true</condition>
