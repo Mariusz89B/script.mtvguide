@@ -887,62 +887,71 @@ class PlayService(xbmc.Player, BasePlayService):
                                                 m_catchupSource = strmUrl + '?utc={utc}&lutc={lutc}-{duration}'.format(utc=utc, lutc=lutc, duration=duration)
                                                 strmUrl = m_catchupSource
 
+                            ListItem = xbmcgui.ListItem(path=strmUrl)
+
                             if inputstream:
-                                streamType = ''
+                                PROTOCOL = ''
 
                                 # MimeType
                                 if 'm3u8' in strmUrl:
                                     mimeType = "application/x-mpegURL"
                                     #mimeType = "application/vnd.apple.mpegurl"
                                     #mimeType = "application/json"
-                                    streamType = 'hls'
+                                    PROTOCOL = 'hls'
 
                                 elif '.mpd' in strmUrl:
                                     mimeType = "application/xml+dash"
-                                    streamType = 'dash'
+                                    PROTOCOL = 'dash'
 
                                 elif '.ism' in strmUrl:
                                     mimeType = ''
-                                    streamType = 'ism'
+                                    PROTOCOL = 'ism'
 
                                 elif '.ts' in strmUrl:
                                     mimeType = 'video/mp2t'
-                                    streamType = 'ts'
+                                    PROTOCOL = 'ts'
 
                                 else:
-                                    if channelInfo.mime != '':
-                                        mimeType = channelInfo.mime
+                                    if channelInfo.mime != '': 
+                                        mimeType = channelInfo.mime  #Content-Type
                                     else:
-                                        mimeType = 'video/mp4'
+                                        mimeType = ''
 
-                                    streamType = 'hls'
+                                    PROTOCOL = 'hls'
 
-                                ListItem = xbmcgui.ListItem(path=strmUrl)
-                                ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
-                                ListItem.setContentLookup(False)
+                                import inputstreamhelper
+
+                                is_helper = inputstreamhelper.Helper(PROTOCOL)
+                                if is_helper.check_inputstream():
+                                    ListItem.setContentLookup(False)
+                                    if sys.version_info[0] > 2:
+                                        ListItem.setProperty('inputstream', is_helper.inputstream_addon)
+                                    else:
+                                        ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
                                 
-                                if streamType != '':
-                                    if ffmpegdirect:
-                                        ListItem.setProperty('inputstream', 'inputstream.ffmpegdirect')
-
-                                    ListItem.setMimeType(mimeType)
-                                    ListItem.setProperty('inputstream.adaptive.manifest_type', streamType)
-
-                                    if streamType == 'hls' or streamType == 'ts':
+                                    if PROTOCOL != '':
                                         if ffmpegdirect:
-                                            ListItem.setProperty('inputstream.ffmpegdirect.stream_mode', 'timeshift')
-                                            ListItem.setProperty('inputstream.ffmpegdirect.is_realtime_stream', 'true')
-                                            ListItem.setProperty('inputstream.ffmpegdirect.manifest_type', 'hls')
+                                            ListItem.setProperty('inputstream', 'inputstream.ffmpegdirect')
 
-                                    if streamType == 'dash':
-                                        ListItem.setProperty('inputstream.adaptive.manifest_update_parameter', 'full')
+                                        ListItem.setMimeType(mimeType)
+                                        ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
 
-                                    if duration != '':
-                                        if ffmpegdirect:
-                                            ListItem.setProperty('inputstream.ffmpegarchive.default_programme_duration', duration)
-                            else:
-                                ListItem = xbmcgui.ListItem(path=strmUrl)
-                                ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
+                                        if PROTOCOL == 'hls' or PROTOCOL == 'ts':
+                                            if ffmpegdirect:
+                                                ListItem.setProperty('inputstream.ffmpegdirect.stream_mode', 'timeshift')
+                                                ListItem.setProperty('inputstream.ffmpegdirect.is_realtime_stream', 'true')
+                                                ListItem.setProperty('inputstream.ffmpegdirect.manifest_type', 'hls')
+
+                                        if PROTOCOL == 'dash':
+                                            ListItem.setProperty('inputstream.adaptive.manifest_update_parameter', 'full')
+
+                                        if duration != '':
+                                            if ffmpegdirect:
+                                                ListItem.setProperty('inputstream.ffmpegarchive.default_programme_duration', duration)
+
+                                        ListItem.setProperty("IsPlayable", "true")
+
+                            ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
 
                             self.strmUrl = strmUrl
 
