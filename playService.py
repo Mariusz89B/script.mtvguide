@@ -889,7 +889,7 @@ class PlayService(xbmc.Player, BasePlayService):
 
                             ListItem = xbmcgui.ListItem(path=strmUrl)
 
-                            if inputstream:
+                            if inputstream and not xbmc.getCondVisibility('system.platform.android'):
                                 PROTOCOL = ''
 
                                 # MimeType
