@@ -906,7 +906,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                     ListItem.setProperty('inputstream.adaptive.license_type', DRM)
                                     ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl)
 
-                                elif '.m3u8' in strmUrl:
+                                elif 'm3u8' in strmUrl:
                                     mimeType = 'application/x-mpegURL'
                                     #mimeType = 'application/vnd.apple.mpegstream_url'
                                     PROTOCOL = 'hls'
@@ -920,12 +920,12 @@ class PlayService(xbmc.Player, BasePlayService):
                                     PROTOCOL = 'ism'
 
                                 elif '.ts' in strmUrl:
-                                    mimeType = ''
+                                    mimeType = 'video/mp2t'
                                     PROTOCOL = 'hls'
 
                                 else:
                                     if channelInfo.mime != '': 
-                                        mimeType = channelInfo.mime
+                                        mimeType = channelInfo.mime # Content-Type??
                                     else:
                                         mimeType = ''
 
@@ -956,6 +956,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                                 ListItem.setProperty('inputstream.ffmpegdirect.stream_mode', 'timeshift')
                                                 ListItem.setProperty('inputstream.ffmpegdirect.is_realtime_stream', 'true')
                                                 ListItem.setProperty('inputstream.ffmpegdirect.manifest_type', 'hls')
+
                                             else:
                                                 if sys.version_info[0] > 2:
                                                     ListItem.setProperty('inputstream', '')
