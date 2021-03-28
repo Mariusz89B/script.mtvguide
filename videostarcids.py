@@ -168,7 +168,7 @@ class VideoStarUpdater(baseServiceUpdater):
                 except:
                     device_id = ''
 
-                if 'Aplikacja Android foster_e' in device_id:
+                if 'TV Android foster_e' in device_id:
                     return True
                 else:
                     data = {'device': 'android_tv', 'login': self.login, 'password': self.password}
