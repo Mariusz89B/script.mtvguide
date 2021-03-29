@@ -530,6 +530,7 @@ class Database(object):
         epgSize = 0
         if row:
             epgSize = row[str('epg_size')]
+            ADDON.setSetting('epg_size', str(epgSize))
             ADDON.setSetting('epg_dbsize', str(epgSize))
         c.close()
 
