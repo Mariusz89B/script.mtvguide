@@ -530,7 +530,9 @@ class Database(object):
         epgSize = 0
         if row:
             epgSize = row[str('epg_size')]
+            ADDON.setSetting('epg_dbsize', str(epgSize))
         c.close()
+
         return self.source.isUpdated(channelsLastUpdated, programsLastUpdated, epgSize)
 
     def updateChannelAndProgramListCaches(self, callback, date = datetime.datetime.now(), progress_callback = None, clearExistingProgramList = True):
@@ -2196,7 +2198,7 @@ class MTVGUIDESource(Source):
             return 0
         if self.EPGSize is not None and forceCheck == False:
             return self.EPGSize
-        epgRecheckTimeout = 1200
+        epgRecheckTimeout = 900
         failedCounter = 0
         while failedCounter < 3:
             try:
@@ -2275,6 +2277,7 @@ class MTVGUIDESource(Source):
     def resetEpgSize(self):
         debug('resetEpgSize')
         self.EPGSize = self.getEpgSize(self.EPGSize, forceCheck=True)
+        ADDON.setSetting('epg_size', str(self.EPGSize))
 
     def close(self):
         if self.timer is not None:
