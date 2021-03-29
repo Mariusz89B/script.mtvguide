@@ -369,6 +369,9 @@ class epgTimer(object):
         self._timer.cancel()
         self.is_running = False
 
+    def is_alive(self):
+        self._timer.is_alive()
+
 
 class VideoPlayerStateChange(xbmc.Player):
 
@@ -2085,6 +2088,8 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.refreshStreamsTimer.cancel()
             if self.timer and self.timer.is_alive():
                 self.timer.cancel()
+            if self.updateEpgTimer and self.updateEpgTimer.is_alive():
+                self.updateEpgTimer.stop()
 
             if self.osd:
                 try:

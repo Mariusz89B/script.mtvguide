@@ -2280,7 +2280,7 @@ class MTVGUIDESource(Source):
         ADDON.setSetting('epg_size', str(self.EPGSize))
 
     def close(self):
-        if self.timer is not None:
+        if self.timer and self.timer.is_alive():
             self.timer.cancel()
 
 def parseXMLTVDate(dateString):
