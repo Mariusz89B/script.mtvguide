@@ -65,6 +65,7 @@ import playService
 import requests
 import json
 import base64
+import gc
 from vosd import VideoOSD
 from recordService import RecordService
 from settingsImportExport import SettingsImp
@@ -368,6 +369,8 @@ class epgTimer(object):
     def stop(self):
         self._timer.cancel()
         self.is_running = False
+        gc.collect()
+        time.sleep(self.interval)
 
     def is_alive(self):
         self._timer.is_alive()
@@ -2088,8 +2091,12 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.refreshStreamsTimer.cancel()
             if self.timer and self.timer.is_alive():
                 self.timer.cancel()
-            if self.updateEpgTimer and self.updateEpgTimer.is_alive():
-                self.updateEpgTimer.stop()
+
+            try:
+                if self.updateEpgTimer and self.updateEpgTimer.is_alive():
+                    self.updateEpgTimer.stop()
+            except:
+                pass
 
             if self.osd:
                 try:
@@ -2159,6 +2166,9 @@ class mTVGuide(xbmcgui.WindowXML):
         epgDbSize = ADDON.getSetting('epg_dbsize')
         if epgSize != epgDbSize:
             self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
+
+        self.updateEpgTimer.stop()
+        self.updateEpgTimer.start()
 
         
     def getStreamsCid(self):
@@ -4175,8 +4185,6 @@ class mTVGuide(xbmcgui.WindowXML):
             description = descriptionParser.description
 
         self.setControlText(C_MAIN_DESCRIPTION, description)
-
-        xbmc.sleep(10)
         
         p = re.compile('^http(s)?:\/\/.*')
 
