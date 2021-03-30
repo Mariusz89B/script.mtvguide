@@ -143,6 +143,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
         self.cookies            = ADDON.getSetting('teliaplay_cookies')
         self.usern              = ADDON.getSetting('teliaplay_usern')
         self.country            = int(ADDON.getSetting('teliaplay_locale'))
+        self.web                = ADDON.getSetting('teliaplay_devush')
 
 
     def createDATAS(self):
@@ -159,6 +160,8 @@ class TeliaPlayUpdater(baseServiceUpdater):
             return a
 
         dashjs = 'WEB-' + uid()
+
+        self.web = dashjs
 
         ADDON.setSetting('teliaplay_devush', dashjs)
 
@@ -205,7 +208,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                     }
 
             payload = {
-                "deviceId": self.dashjs,
+                "deviceId": self.web,
                 "username": self.login,
                 "password": self.password,
                 "deviceType": "WEB"
@@ -213,7 +216,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
 
 
             jsonresponse = sess.post(url, headers=headers, data=json.dumps(payload), verify=False).json()
-            #deb('TEST:{}'.format(jsonresponse.text))
+            deb('TEST:{}'.format(jsonresponse))
 
             url = 'https://ottapi.prod.telia.net/web/{cc}/tvclientgateway/rest/secure/v1/provision'.format(cc=cc[self.country])
 
@@ -509,6 +512,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
             licenseUrl = licurl+'|'+headok+'|R{SSM}|'
 
             data = mpdurl
+            deb('STR: {}'.format(mpdurl))
 
             if data is not None and data != "":
                 chann.strm = data
