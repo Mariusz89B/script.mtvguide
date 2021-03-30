@@ -158,7 +158,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
             a = gen_hex_code(8,0) + '-' + gen_hex_code(4,0) + '-' + gen_hex_code(4,4) + '-' + gen_hex_code(4,9) + '-' + gen_hex_code(12,0)
             return a
 
-        dashjs = 'DASHJS_' + uid()
+        dashjs = 'WEB-' + uid()
 
         ADDON.setSetting('teliaplay_devush', dashjs)
 
@@ -205,7 +205,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                     }
 
             payload = {
-                "deviceId": "WEB-"+self.dashjs,
+                "deviceId": self.dashjs,
                 "username": self.login,
                 "password": self.password,
                 "deviceType": "WEB"
@@ -213,6 +213,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
 
 
             jsonresponse = sess.post(url, headers=headers, data=json.dumps(payload), verify=False).json()
+            #deb('TEST:{}'.format(jsonresponse.text))
 
             url = 'https://ottapi.prod.telia.net/web/{cc}/tvclientgateway/rest/secure/v1/provision'.format(cc=cc[self.country])
 
@@ -267,6 +268,8 @@ class TeliaPlayUpdater(baseServiceUpdater):
             headers = { "Authorization": "Bearer " + beartoken }
 
             response = sess.get('https://ottapi.prod.telia.net/web/{cc}/tvclientgateway/rest/secure/v1/pubsub'.format(cc=cc[self.country]), headers=headers, cookies=sess.cookies, allow_redirects=False).json()
+
+            deb('TEST: {}'.format(response))
             
             self.usern = response['channels']['engagement']
             ADDON.setSetting('teliaplay_usern', self.usern)
@@ -302,17 +305,13 @@ class TeliaPlayUpdater(baseServiceUpdater):
                     }
 
             payload = {
-                "deviceId": "WEB-"+self.dashjs,
+                "deviceId": self.dashjs,
                 "username": self.login,
                 "password": self.password,
                 "deviceType": "WEB"
                 }
 
             jsonresponse = sess.post(url, headers=headers, data=json.dumps(payload), verify=False).json()
-
-            if jsonresponse['message'] == 'Login required':
-                deb('Login check failed')
-                return
 
             validTo = jsonresponse["validTo"]
             ADDON.setSetting('teliaplay_validTo', str(validTo))
@@ -479,7 +478,6 @@ class TeliaPlayUpdater(baseServiceUpdater):
             currentTime = response["currentTime"]
             expires = response["expires"]
             mpdurl = streamingUrl+'?ssl=true&time='+str(currentTime)+'&token='+str(token)+'&expires='+str(expires)+'&c='+str(self.usern).replace("e_{}_".format(ca[self.country]), "")+'&d='+str(self.dashjs)
-
             
             headers = {
                 'Host': 'wvls.webtv.telia.com:8063',
