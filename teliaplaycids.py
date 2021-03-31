@@ -66,7 +66,8 @@ import pytz
 import threading
 import time
 import textwrap
-
+import uuid
+import six
 
 serviceName = 'Telia Play'
 
@@ -145,26 +146,30 @@ class TeliaPlayUpdater(baseServiceUpdater):
         self.cookies            = ADDON.getSetting('teliaplay_cookies')
         self.usern              = ADDON.getSetting('teliaplay_usern')
         self.country            = int(ADDON.getSetting('teliaplay_locale'))
+        self.tv_client_boot_id  = ADDON.getSetting('teliaplay_tv_client_boot_id')
 
 
     def createDATAS(self):
-        import random
-        def gen_hex_code(myrange=6, start=0):
-            if not start:
-                a = ''.join([random.choice('0123456789abcdef') for x in range(myrange)])
-            else:
-                a = str(start)+''.join([random.choice('0123456789abcdef') for x in range(myrange-1)])
-            return a
+        #import random
+        
+        #def gen_hex_code(myrange=6, start=0):
+            #if not start:
+                #a = ''.join([random.choice('0123456789abcdef') for x in range(myrange)])
+            #else:
+                #a = str(start)+''.join([random.choice('0123456789abcdef') for x in range(myrange-1)])
+            #return a
 
-        def uid():
-            a = gen_hex_code(8,0) + '-' + gen_hex_code(4,0) + '-' + gen_hex_code(4,4) + '-' + gen_hex_code(4,9) + '-' + gen_hex_code(12,0)
-            return a
+        #def uid():
+            #a = gen_hex_code(8,0) + '-' + gen_hex_code(4,0) + '-' + gen_hex_code(4,4) + '-' + gen_hex_code(4,9) + '-' + gen_hex_code(12,0)
+            #return a
 
-        dashjs = 'WEB-' + uid()
+        self.dashjs = 'WEB-' + str(uuid.uuid4())
+        self.tv_client_boot_id = str(uuid.uuid4())
 
-        ADDON.setSetting('teliaplay_devush', dashjs)
+        ADDON.setSetting('teliaplay_devush', self.dashjs)
+        ADDON.setSetting('teliaplay_tv_client_boot_id', self.tv_client_boot_id)
 
-        return dashjs
+        return self.dashjs
 
         
     def loginService(self):
@@ -493,11 +498,12 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 'Sec-Fetch-Mode': 'cors',
                 'Sec-Fetch-Site': 'cross-site',
                 'User-Agent': UA,
+                'tv-client-boot-id': self.tv_client_boot_id,
             }
             
             params = (
                 ('playerProfile', 'DEFAULT'),
-                ('sessionId', self.sess_id),
+                ('sessionId', six.text_type(uuid.uuid4())),#self.sess_id),
             )
 
             response = sess.post('https://ottapi.prod.telia.net/web/{cc}/streaminggateway/rest/secure/v1/streamingticket/CHANNEL/{cid}/DASH'.format(cc=cc[self.country], cid=(str(cid))), headers=headers, params=params, cookies=sess.cookies, verify=False)#.json()
@@ -514,7 +520,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
             token = response["token"]
             currentTime = response["currentTime"]
             expires = response["expires"]
-            mpdurl = streamingUrl+'?ssl=true&time='+str(currentTime)+'&token='+str(token)+'&expires='+str(expires)+'&c='+str(self.usern).replace("e_{}_".format(ca[self.country]), "")+'&d='+str(self.dashjs)
+            mpdurl = streamingUrl+'?ssl=true&time='+str(currentTime)+'&token='+str(token)+'&expires='+str(expires)+'&c='+str(self.usern)+'&d='+str(self.dashjs)
             
             headers = {
                 'Accept': '*/*',
@@ -541,7 +547,6 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 'Cache-Control': 'no-cache',
                 'Connection': 'keep-alive',
                 'DNT': '1',
-                'Host': 'po22-hy-live.webtv.telia.com:8090',
                 'Origin': base[self.country],
                 'Pragma': 'no-cache',
                 'Referer': base[self.country]+'/',
@@ -551,9 +556,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 'User-Agent': UA,
             }
 
-            mpdurl2 = sess.get(mpdurl, headers=xheaders, verify=False)
-            mpdurl2 = mpdurl2.json()
-
+            mpdurl2 = sess.get(mpdurl, headers=xheaders, verify=False).json()
             mpdurl = mpdurl2["location"]
             
             if sys.version_info[0] > 2:

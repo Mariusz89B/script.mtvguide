@@ -10,6 +10,7 @@
 		<import addon="script.module.routing" />
 		<import addon="script.module.iso8601" />
 		<import addon="script.module.pytz" />
+		<import addon="script.module.six" />
 	</requires>
 	<extension point="xbmc.python.script" library="addon.py">
 		<provides>video</provides>
