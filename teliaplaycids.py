@@ -315,15 +315,15 @@ class TeliaPlayUpdater(baseServiceUpdater):
             url = 'https://ottapi.prod.telia.net/web/{cc}/logingateway/rest/v1/login'.format(cc=cc[self.country])
 
             headers = {
-                  'Pragma':'no-cache',
-                  'Cache-Control':'no-cache',
-                  'DNT':'1',
+                  'Pragma': 'no-cache',
+                  'Cache-Control': 'no-cache',
+                  'DNT': '1',
                   'User-Agent': UA,
-                  'Accept':'*/*',
-                  'Origin':base[self.country],
-                  'Accept-Encoding':'gzip, deflate, br',
-                  'Accept-Language':'sv',
-                  'Content-Type':'application/json',
+                  'Accept': '*/*',
+                  'Origin': base[self.country],
+                  'Accept-Encoding': 'gzip, deflate, br',
+                  'Accept-Language': 'sv',
+                  'Content-Type': 'application/json',
                     }
 
             payload = {
@@ -477,40 +477,23 @@ class TeliaPlayUpdater(baseServiceUpdater):
             self.dashjs = ADDON.getSetting('teliaplay_devush')
 
             headers = {
-                'Host': 'ottapi.prod.telia.net',
-                'User-Agent': UA,
                 'Accept': '*/*',
                 'Accept-Encoding': 'gzip, deflate, br',
                 'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
-                'cache-control': 'no-cache',
-                'if-modified-since': '0',
                 'Authorization': 'Bearer '+ self.beartoken,
+                'Cache-Control': 'no-cache',
+                'Connection': 'keep-alive',
                 'Content-Type': 'text/plain;charset=UTF-8',
+                'DNT': '1',
+                'Host': 'ottapi.prod.telia.net',
                 'Origin': base[self.country],
-                'Referer': base[self.country] + '/live',
+                'Pragma': 'no-cache',
+                'Referer': base[self.country]+'/',
+                'Sec-Fetch-Dest': 'empty',
+                'Sec-Fetch-Mode': 'cors',
+                'Sec-Fetch-Site': 'cross-site',
+                'User-Agent': UA,
             }
-
-            #headers_test = {
-                #'Accept': '*/*',
-                #'Accept-Encoding': 'gzip, deflate, br',
-                #'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
-                #'Authorization': 'Bearer '+ self.beartoken,
-                #'Cache-Control': 'no-cache',
-                #'Connection': 'keep-alive',
-                #'Content-Length': '0',
-                #'Content-Type': 'text/plain;charset=UTF-8',
-                #'DNT': '1',
-                #'Host': 'ottapi.prod.telia.net',
-                #'Origin': 'https://www.teliaplay.se',
-                #'Pragma': 'no-cache',
-                #'Referer': 'https://www.teliaplay.se/',
-                #'Sec-Fetch-Dest': 'empty',
-                #'Sec-Fetch-Mode': 'cors',
-                #'Sec-Fetch-Site': 'cross-site',
-                #'tv-client-boot-id': '350a9d96-bfb6-4eb1-bca1-247a55cdcc83',
-                #'User-Agent': UA,
-
-            #}
             
             params = (
                 ('playerProfile', 'DEFAULT'),
@@ -518,7 +501,6 @@ class TeliaPlayUpdater(baseServiceUpdater):
             )
 
             response = sess.post('https://ottapi.prod.telia.net/web/{cc}/streaminggateway/rest/secure/v1/streamingticket/CHANNEL/{cid}/DASH'.format(cc=cc[self.country], cid=(str(cid))), headers=headers, params=params, cookies=sess.cookies, verify=False)#.json()
-
             response = response.json()
 
             try:
@@ -535,23 +517,42 @@ class TeliaPlayUpdater(baseServiceUpdater):
             mpdurl = streamingUrl+'?ssl=true&time='+str(currentTime)+'&token='+str(token)+'&expires='+str(expires)+'&c='+str(self.usern).replace("e_{}_".format(ca[self.country]), "")+'&d='+str(self.dashjs)
             
             headers = {
+                'Accept': '*/*',
+                'Accept-Encoding': 'gzip, deflate, br',
+                'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
+                'Cache-Control': 'no-cache',
+                'Connection': 'keep-alive',
+                'DNT': '1',
                 'Host': 'wvls.webtv.telia.com:8063',
-                'User-Agent': UA,
-                'Accept': '*/*',
-                'Accept-Language': 'pl,en-US;q=0.7,en;q=0.3',
-                'X-AxDRM-Message': self.dashjs,
                 'Origin': base[self.country],
-                'Referer': base[self.country] + '/live',
+                'Pragma': 'no-cache',
+                'Referer': base[self.country]+'/',
+                'Sec-Fetch-Dest': 'empty',
+                'Sec-Fetch-Mode': 'cors',
+                'Sec-Fetch-Site': 'cross-site',
+                'User-Agent': UA,
+                'x-axdrm-message': self.dashjs,
             }
-            xheaders = {
 
-                'User-Agent': UA,
+            xheaders = {
                 'Accept': '*/*',
-                'Accept-Language': 'pl,en-US;q=0.7,en;q=0.3',
+                'Accept-Encoding': 'gzip, deflate, br',
+                'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
+                'Cache-Control': 'no-cache',
+                'Connection': 'keep-alive',
+                'DNT': '1',
+                'Host': 'po22-hy-live.webtv.telia.com:8090',
                 'Origin': base[self.country],
-                'Referer': base[self.country] + '/live',
+                'Pragma': 'no-cache',
+                'Referer': base[self.country]+'/',
+                'Sec-Fetch-Dest': 'empty',
+                'Sec-Fetch-Mode': 'cors',
+                'Sec-Fetch-Site': 'cross-site',
+                'User-Agent': UA,
             }
-            mpdurl2 = sess.get(mpdurl, headers=xheaders, verify=False).json()
+
+            mpdurl2 = sess.get(mpdurl, headers=xheaders, verify=False)
+            mpdurl2 = mpdurl2.json()
 
             mpdurl = mpdurl2["location"]
             
