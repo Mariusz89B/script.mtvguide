@@ -369,8 +369,6 @@ class epgTimer(object):
     def stop(self):
         self._timer.cancel()
         self.is_running = False
-        gc.collect()
-        time.sleep(self.interval)
 
     def is_alive(self):
         self._timer.is_alive()
@@ -2093,7 +2091,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.timer.cancel()
 
             try:
-                if self.updateEpgTimer and self.updateEpgTimer.is_alive():
+                if self.updateEpgTimer:
                     self.updateEpgTimer.stop()
             except:
                 pass
@@ -2168,6 +2166,8 @@ class mTVGuide(xbmcgui.WindowXML):
             self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
 
         self.updateEpgTimer.stop()
+        gc.collect()
+        time.sleep(self.interval)
         self.updateEpgTimer.start()
 
         
