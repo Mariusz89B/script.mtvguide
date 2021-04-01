@@ -70,7 +70,7 @@ import ncplusgocids
 import cpgocids
 import francetvcids
 import cmorecids
-import teliaplaycids
+import teliaplayclassiccids
 import playerplcids
 
 SERVICES = {
