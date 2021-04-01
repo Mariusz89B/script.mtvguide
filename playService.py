@@ -85,7 +85,7 @@ SERVICES = {
     cpgocids.serviceName            : cpgocids.PolsatGoUpdater(),
     francetvcids.serviceName        : francetvcids.FranceTVUpdater(),
     cmorecids.serviceName           : cmorecids.CmoreUpdater(),
-    teliaplaycids.serviceName       : teliaplaycids.TeliaPlayUpdater(),
+    teliaplayclassiccids.serviceName : teliaplayclassiccids.TeliaPlayUpdater(),
     playerplcids.serviceName        : playerplcids.PlayerPLUpdater()
 }
 
