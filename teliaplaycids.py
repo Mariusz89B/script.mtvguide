@@ -103,13 +103,13 @@ class Threading(object):
         :param interval: Check interval, in seconds
         """
         self.interval = interval
-        thread = threading.Thread(target=self.run, args=())
-        thread.daemon = True                            # Daemonize thread
-        thread.start()                                  # Start the execution
+        self.thread = threading.Thread(target=self.run, args=())
+        self.thread.daemon = True                            # Daemonize thread
+        self.thread.start()                                  # Start the execution
 
     def run(self):
         """ Method that runs forever """
-        while True:
+        while not monitor.abortRequested():
             ab = TeliaPlayUpdater().checkRefresh()
             if ab:
                 result = TeliaPlayUpdater().checkLogin()
@@ -122,6 +122,9 @@ class Threading(object):
                     ADDON.setSetting('teliaplay_cookies', str(cookies))
 
             time.sleep(self.interval)
+
+            if monitor.waitForAbort(1):
+                self.thread.join()
 
 
 class TeliaPlayUpdater(baseServiceUpdater):
@@ -147,6 +150,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
         self.usern              = ADDON.getSetting('teliaplay_usern')
         self.country            = int(ADDON.getSetting('teliaplay_locale'))
         self.tv_client_boot_id  = ADDON.getSetting('teliaplay_tv_client_boot_id')
+        self.subtoken           = ADDON.getSetting('teliaplay_subtoken')
 
 
     def createDATAS(self):
@@ -211,6 +215,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                   'Accept-Encoding':'gzip, deflate, br',
                   'Accept-Language':'sv',
                   'Content-Type':'application/json',
+                  'tv-client-boot-id': self.tv_client_boot_id,
                     }
 
             payload = {
@@ -245,36 +250,6 @@ class TeliaPlayUpdater(baseServiceUpdater):
             except:
                 pass
 
-
-            url = 'https://ottapi.prod.telia.net/web/{cc}/tvclientgateway/rest/secure/v1/provision'.format(cc=cc[self.country])
-
-            headers = {
-                    'Authorization': 'Bearer '+ jsonresponse['accessToken']
-            }
-
-            params = (
-                ('coreVersion',  '7.0.4'),
-                ('deviceId', self.dashjs),
-                ('model', 'desktop_windows'),
-                ('nativeVersion', 'N/A'),
-                ('networkType', 'unknown'),
-                ('platformName', 'windows'),
-                ('platformVersion', 'NT 10.0'),
-                ('productName', 'Microsoft Edge 89.0.774.63'),
-                ('uiName', 'telia-web'),
-                ('networkType', '6.24.0(578)'),
-                ('uiVersion', '2007ed0'),
-            )
-
-            response = sess.post(url, headers=headers, params=params, verify=False)
-            
-            cookies = {}
-
-            self.sess_id = sess.cookies['JSESSIONID']
-            ADDON.setSetting('teliaplay_sess_id', self.sess_id)
-
-            self.cookies = sess.cookies
-
             self.validTo = jsonresponse["validTo"]
             ADDON.setSetting('teliaplay_validTo', str(self.validTo))
 
@@ -284,22 +259,30 @@ class TeliaPlayUpdater(baseServiceUpdater):
             self.refrtoken = jsonresponse["refreshToken"]
             ADDON.setSetting('teliaplay_refrtoken', str(self.refrtoken))     
 
-            self.cookies = sess.cookies['JSESSIONID']
-            ADDON.setSetting('teliaplay_cookies', str(self.cookies))
-
-            run = Threading()
-            
             headers = { 
                 "User-Agent": UA,
                 "Accept": "*/*",
                 "Accept-Language": "sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6",
                 "Authorization": "Bearer " + self.beartoken,
+                'tv-client-boot-id': self.tv_client_boot_id,
             }
 
             response = sess.get('https://ottapi.prod.telia.net/web/{cc}/tvclientgateway/rest/secure/v1/pubsub'.format(cc=cc[self.country]), headers=headers, cookies=sess.cookies, allow_redirects=False).json()
+
+            cookies = {}
+
+            self.sess_id = six.text_type(uuid.uuid4())#sess.cookies['JSESSIONID']
+            ADDON.setSetting('teliaplay_sess_id', self.sess_id)
+
+            self.cookies = sess.cookies
             
             self.usern = response['channels']['engagement']
             ADDON.setSetting('teliaplay_usern', self.usern)
+
+            self.subtoken = response['config']['subscriberToken']
+            ADDON.setSetting('teliaplay_subtoken', str(self.subtoken))
+
+            run = Threading()
             
             return True
 
@@ -329,6 +312,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                   'Accept-Encoding': 'gzip, deflate, br',
                   'Accept-Language': 'sv',
                   'Content-Type': 'application/json',
+                  'tv-client-boot-id': self.tv_client_boot_id,
                     }
 
             payload = {
@@ -349,8 +333,28 @@ class TeliaPlayUpdater(baseServiceUpdater):
             self.refrtoken = jsonresponse["refreshToken"]
             ADDON.setSetting('teliaplay_refrtoken', str(self.refrtoken))
 
-            self.cookies = sess.cookies['JSESSIONID']
-            ADDON.setSetting('teliaplay_cookies', str(self.cookies))
+            headers = { 
+                "User-Agent": UA,
+                "Accept": "*/*",
+                "Accept-Language": "sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6",
+                "Authorization": "Bearer " + self.beartoken,
+                'tv-client-boot-id': self.tv_client_boot_id,
+            }
+
+            response = sess.get('https://ottapi.prod.telia.net/web/{cc}/tvclientgateway/rest/secure/v1/pubsub'.format(cc=cc[self.country]), headers=headers, cookies=sess.cookies, allow_redirects=False).json()
+
+            cookies = {}
+
+            self.sess_id = six.text_type(uuid.uuid4())#sess.cookies['JSESSIONID']
+            ADDON.setSetting('teliaplay_sess_id', self.sess_id)
+
+            self.cookies = sess.cookies
+            
+            self.usern = response['channels']['engagement']
+            ADDON.setSetting('teliaplay_usern', self.usern)
+
+            self.subtoken = response['config']['subscriberToken']
+            ADDON.setSetting('teliaplay_subtoken', str(self.subtoken))
 
             result = self.validTo, self.beartoken, self.refrtoken, self.cookies
 
@@ -388,8 +392,6 @@ class TeliaPlayUpdater(baseServiceUpdater):
                     date_time_format = '%Y-%m-%dT%H:%M:%S+' + self.validTo.split('+')[0]
                     validTo = datetime(*(time.strptime(self.validTo, date_time_format)[0:6]))
 
-
-            
             timestamp = int(time.mktime(validTo.timetuple()))
             tokenValidTo = datetime.fromtimestamp(int(timestamp))
             result = tokenValidTo - datetime.now()
@@ -437,6 +439,14 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 self.engagementLiveChannels = engagementjson['channelIds']
             except KeyError as k:
                 self.engagementLiveChannels = []
+                deb('errorMessage: {k}'.format(k=str(k)))
+
+            self.engagementPlayChannels = []
+
+            try:
+               for channel in engagementjson['store']:
+                   self.engagementPlayChannels.append(channel['id'])
+            except KeyError as k:
                 deb('errorMessage: {k}'.format(k=str(k)))
 
             headers = {
@@ -503,11 +513,11 @@ class TeliaPlayUpdater(baseServiceUpdater):
             
             params = (
                 ('playerProfile', 'DEFAULT'),
-                ('sessionId', six.text_type(uuid.uuid4())),#self.sess_id),
+                ('sessionId', self.sess_id),
             )
 
-            response = sess.post('https://ottapi.prod.telia.net/web/{cc}/streaminggateway/rest/secure/v1/streamingticket/CHANNEL/{cid}/DASH'.format(cc=cc[self.country], cid=(str(cid))), headers=headers, params=params, cookies=sess.cookies, verify=False)#.json()
-            response = response.json()
+            response = sess.post('https://ottapi.prod.telia.net/web/{cc}/streaminggateway/rest/secure/v1/streamingticket/CHANNEL/{cid}/DASH'.format(cc=cc[self.country], cid=(str(cid))), headers=headers, params=params, cookies=self.cookies, verify=False).json()
+            #deb('print: {}'.format(response.text))
 
             try:
                 if 'Content not authorized' in response['errorMessage']:
@@ -520,7 +530,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
             token = response["token"]
             currentTime = response["currentTime"]
             expires = response["expires"]
-            mpdurl = streamingUrl+'?ssl=true&time='+str(currentTime)+'&token='+str(token)+'&expires='+str(expires)+'&c='+str(self.usern)+'&d='+str(self.dashjs)
+            mpdurl = '{base}?ssl=true&time={new_time}&token={token}&expires={expires}&c={user_id}&d={dev_id}'.format(base=streamingUrl, new_time=currentTime, token=token, expires=expires, user_id=self.usern, dev_id=self.dashjs)
             
             headers = {
                 'Accept': '*/*',

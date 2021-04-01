@@ -100,13 +100,13 @@ class Threading(object):
         :param interval: Check interval, in seconds
         """
         self.interval = interval
-        thread = threading.Thread(target=self.run, args=())
-        thread.daemon = True                            # Daemonize thread
-        thread.start()                                  # Start the execution
+        self.thread = threading.Thread(target=self.run, args=())
+        self.thread.daemon = True                            # Daemonize thread
+        self.thread.start()                                  # Start the execution
 
     def run(self):
         """ Method that runs forever """
-        while True:
+        while not monitor.abortRequested():
             ab = TeliaPlayUpdater().checkRefresh()
             if ab:
                 result = TeliaPlayUpdater().checkLogin()
@@ -119,6 +119,9 @@ class Threading(object):
                     ADDON.setSetting('teliaplay_cookies', str(cookies))
 
             time.sleep(self.interval)
+
+            if monitor.waitForAbort(1):
+                self.thread.join()
 
 
 class TeliaPlayUpdater(baseServiceUpdater):
