@@ -299,6 +299,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
             ADDON.setSetting('teliaplay_sess_id', self.sess_id)
 
             self.cookies = sess.cookies
+            ADDON.setSetting('teliaplay_cookies', str(self.cookies))
 
             headers = { 
                 "User-Agent": UA,
@@ -316,6 +317,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
             #ADDON.setSetting('teliaplay_sess_id', self.sess_id)
 
             #self.cookies = sess.cookies
+            #ADDON.setSetting('teliaplay_cookies', self.cookies)
             
             self.usern = response['channels']['engagement']
             ADDON.setSetting('teliaplay_usern', self.usern)
@@ -418,6 +420,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
             ADDON.setSetting('teliaplay_sess_id', self.sess_id)
 
             self.cookies = sess.cookies
+            ADDON.setSetting('teliaplay_cookies', str(self.cookies))
 
             headers = { 
                 "User-Agent": UA,
@@ -435,6 +438,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
             #ADDON.setSetting('teliaplay_sess_id', self.sess_id)
 
             #self.cookies = sess.cookies
+            #ADDON.setSetting('teliaplay_cookies', self.cookies)
             
             self.usern = response['channels']['engagement']
             ADDON.setSetting('teliaplay_usern', self.usern)
