@@ -1788,6 +1788,7 @@
 						<effect type="fade" start="100" end="0" time="300" delay="300" tween="sine" easing="out" />
 						<effect type="slide" start="0" end="320" time="300" delay="300" tween="cubic" easing="out" />
 					</animation>
+					<visible>!Control.IsVisible(4200) | Control.IsVisible(4199)</visible>
 					
 					<control type="progress" id="4201">
 						<left>0</left>
