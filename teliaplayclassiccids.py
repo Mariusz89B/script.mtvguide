@@ -99,7 +99,6 @@ class Threading(object):
         :type interval: int
         :param interval: Check interval, in seconds
         """
-        self.interval = interval
         self.thread = threading.Thread(target=self.run, args=())
         self.thread.daemon = True                            # Daemonize thread
         self.thread.start()                                  # Start the execution

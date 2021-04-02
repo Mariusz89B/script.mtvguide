@@ -102,7 +102,6 @@ class Threading(object):
         :type interval: int
         :param interval: Check interval, in seconds
         """
-        self.interval = interval
         self.thread = threading.Thread(target=self.run, args=())
         self.thread.daemon = True                            # Daemonize thread
         self.thread.start()                                  # Start the execution
@@ -294,7 +293,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
             }
 
 
-            response = sess.post(url, headers=headers, data=payload, verify=False)
+            response = sess.post(url, headers=headers, data=json.dumps(payload), verify=False)
 
             self.sess_id = sess.cookies['JSESSIONID']
             ADDON.setSetting('teliaplay_sess_id', self.sess_id)
