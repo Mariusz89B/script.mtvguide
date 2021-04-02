@@ -97,7 +97,7 @@ class Threading(object):
     until the application exits.
     """
 
-    def __init__(self, interval=60):
+    def __init__(self):
         """ Constructor
         :type interval: int
         :param interval: Check interval, in seconds
@@ -109,7 +109,7 @@ class Threading(object):
 
     def run(self):
         """ Method that runs forever """
-        while not monitor.abortRequested():
+        while not xbmc.Monitor().abortRequested():
             ab = TeliaPlayUpdater().checkRefresh()
             if ab:
                 result = TeliaPlayUpdater().checkLogin()
@@ -121,11 +121,8 @@ class Threading(object):
                     ADDON.setSetting('teliaplay_refrtoken', str(refrtoken))
                     ADDON.setSetting('teliaplay_cookies', str(cookies))
 
-            time.sleep(self.interval)
-
-            if monitor.waitForAbort(1):
-                self.thread.join()
-
+            if xbmc.Monitor().waitForAbort(1):
+                break
 
 class TeliaPlayUpdater(baseServiceUpdater):
     def __init__(self):
@@ -259,6 +256,51 @@ class TeliaPlayUpdater(baseServiceUpdater):
             self.refrtoken = jsonresponse["refreshToken"]
             ADDON.setSetting('teliaplay_refrtoken', str(self.refrtoken))     
 
+            url = 'https://ottapi.prod.telia.net/web/se/tvclientgateway/rest/secure/v1/provision'
+
+            headers = {
+                'Accept': '*/*',
+                'Accept-Encoding': 'gzip, deflate, br',
+                'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
+                'Authorization': 'Bearer ' + self.beartoken,
+                'Cache-Control': 'no-cache',
+                'Connection': 'keep-alive',
+                #'Content-Length': '288',
+                'Content-Type': 'application/json',
+                'DNT': '1',
+                'Host': 'ottapi.prod.telia.net',
+                'If-Modified-Since': '0',
+                'Origin': 'https://www.teliaplay.se',
+                'Pragma': 'no-cache',
+                'Referer': 'https://www.teliaplay.se/',
+                'Sec-Fetch-Dest': 'empty',
+                'Sec-Fetch-Mode': 'cors',
+                'Sec-Fetch-Site': 'cross-site',
+                'tv-client-boot-id': self.tv_client_boot_id,
+                'User-Agent': UA,
+            }
+
+            payload = {
+                'coreVersion': "7.0.4",
+                'deviceId': self.dashjs,
+                'model': "windows_desktop",
+                'nativeVersion': "N/A",
+                'networkType': "unknown",
+                'platformName': "windows",
+                'platformVersion': "NT 10.0",
+                'productName': "Microsoft Edge 89.0.774.63",
+                'uiName': "telia-web",
+                'uiVersion': "7d5c207",
+            }
+
+
+            response = sess.post(url, headers=headers, data=payload, verify=False)
+
+            self.sess_id = sess.cookies['JSESSIONID']
+            ADDON.setSetting('teliaplay_sess_id', self.sess_id)
+
+            self.cookies = sess.cookies
+
             headers = { 
                 "User-Agent": UA,
                 "Accept": "*/*",
@@ -271,10 +313,10 @@ class TeliaPlayUpdater(baseServiceUpdater):
 
             cookies = {}
 
-            self.sess_id = six.text_type(uuid.uuid4())#sess.cookies['JSESSIONID']
-            ADDON.setSetting('teliaplay_sess_id', self.sess_id)
+            #self.sess_id = six.text_type(uuid.uuid4())#sess.cookies['JSESSIONID']
+            #ADDON.setSetting('teliaplay_sess_id', self.sess_id)
 
-            self.cookies = sess.cookies
+            #self.cookies = sess.cookies
             
             self.usern = response['channels']['engagement']
             ADDON.setSetting('teliaplay_usern', self.usern)
@@ -416,7 +458,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
         if not self.loginService():
             return result
 
-        self.checkLogin()
+        #self.checkLogin()
         
         self.log('\n\n')
         self.log('[UPD] Downloading list of available {} channels from {}'.format(self.serviceName, self.country))
@@ -444,7 +486,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
             self.engagementPlayChannels = []
 
             try:
-               for channel in engagementjson['store']:
+               for channel in engagementjson['stores']:
                    self.engagementPlayChannels.append(channel['id'])
             except KeyError as k:
                 deb('errorMessage: {k}'.format(k=str(k)))
@@ -479,7 +521,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
 
     
     def getChannelStream(self, chann):
-        self.checkLogin()
+        #self.checkLogin()
         data = None
         try:
             try:

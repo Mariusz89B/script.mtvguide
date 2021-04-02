@@ -94,7 +94,7 @@ class Threading(object):
     until the application exits.
     """
 
-    def __init__(self, interval=60):
+    def __init__(self):
         """ Constructor
         :type interval: int
         :param interval: Check interval, in seconds
@@ -106,7 +106,7 @@ class Threading(object):
 
     def run(self):
         """ Method that runs forever """
-        while not monitor.abortRequested():
+        while not xbmc.Monitor().abortRequested():
             ab = TeliaPlayUpdater().checkRefresh()
             if ab:
                 result = TeliaPlayUpdater().checkLogin()
@@ -118,10 +118,8 @@ class Threading(object):
                     ADDON.setSetting('teliaplay_refrtoken', str(refrtoken))
                     ADDON.setSetting('teliaplay_cookies', str(cookies))
 
-            time.sleep(self.interval)
-
-            if monitor.waitForAbort(1):
-                self.thread.join()
+            if xbmc.Monitor().waitForAbort(1):
+                break
 
 
 class TeliaPlayUpdater(baseServiceUpdater):
