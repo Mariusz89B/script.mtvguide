@@ -235,7 +235,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
             'deviceType': 'WEB'
             }
             
-            response = sess.post('{base}/rest/secure/users/authentication/j_security_check'.format(base=base[self.country]), headers=headers, params=params, data=data, cookies=self.cookies, allow_redirects=False, verify=False).json()
+            response = sess.post('{base}/rest/secure/users/authentication/j_security_check'.format(base=base[self.country]), headers=headers, params=params, data=data, cookies=self.cookies, allow_redirects=False, verify=False)
 
             try:
                 url = response.headers['Location']
@@ -373,7 +373,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
             return result
 
 
-    def utc_to_local(self, utc_dt):
+    def utcToLocal(self, utc_dt):
         # get integer timestamp to avoid precision lost
         timestamp = calendar.timegm(utc_dt.timetuple())
         local_dt = datetime.datetime.fromtimestamp(timestamp)
@@ -382,10 +382,12 @@ class TeliaPlayUpdater(baseServiceUpdater):
 
 
     def refreshTimeDelta(self):
+        result = None
+
         if 'Z' in self.validTo:
             validTo = iso8601.parse_date(self.validTo)
             if localize:
-                result = self.utc_to_local(validTo)
+                result = self.utcToLocal(validTo)
         else:
             try:
                 try:
@@ -402,7 +404,6 @@ class TeliaPlayUpdater(baseServiceUpdater):
                     date_time_format = '%Y-%m-%dT%H:%M:%S+' + self.validTo.split('+')[0]
                     validTo = datetime(*(time.strptime(self.validTo, date_time_format)[0:6]))
 
-            
             timestamp = int(time.mktime(validTo.timetuple()))
             tokenValidTo = datetime.fromtimestamp(int(timestamp))
             result = tokenValidTo - datetime.now()
