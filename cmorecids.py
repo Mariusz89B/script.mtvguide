@@ -521,7 +521,6 @@ class CmoreUpdater(baseServiceUpdater):
             login_token = ADDON.getSetting('cmore_login_token')
             if not login_token:
                 login_token = self.get_token()
-                deb('TEST: {}'.format(login_token))
 
             try:
                 data = self.get_stream(chann.cid, login_token=login_token)

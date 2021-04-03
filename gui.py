@@ -626,6 +626,8 @@ class mTVGuide(xbmcgui.WindowXML):
         self.tutorialExec()
 
         self.cat_index = 0
+        
+        self.interval = 0
 
     def tutorialGetEPG(self):
         res = xbmcgui.Dialog().select(strings(59940), [strings(59906), strings(59908)])
@@ -2157,7 +2159,8 @@ class mTVGuide(xbmcgui.WindowXML):
 
         self.updateTimebar()
 
-        self.updateEpgTimer = epgTimer(300, self.updateEpg)
+        self.interval = 300
+        self.updateEpgTimer = epgTimer(self.interval, self.updateEpg)
 
     def updateEpg(self):
         epgSize = ADDON.getSetting('epg_size')

@@ -235,8 +235,8 @@ class TeliaPlayUpdater(baseServiceUpdater):
             'deviceType': 'WEB'
             }
             
-            response = sess.post('{base}/rest/secure/users/authentication/j_security_check'.format(base=base[self.country]), headers=headers, params=params, data=data, cookies=self.cookies, allow_redirects=False, verify=False)
-            deb('TEST: {}'.format(response.text))
+            response = sess.post('{base}/rest/secure/users/authentication/j_security_check'.format(base=base[self.country]), headers=headers, params=params, data=data, cookies=self.cookies, allow_redirects=False, verify=False).json()
+
             try:
                 url = response.headers['Location']
             except:
