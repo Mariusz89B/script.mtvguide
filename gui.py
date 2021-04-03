@@ -145,7 +145,7 @@ try:
 except:
     skin_separate_program_actors = False
 try:
-    skin_resolution = config.getboolean("Skin", "resolution")
+    skin_resolution = config.get("Skin", "resolution")
 except:
     skin_resolution = '720p'
 try:
@@ -2118,6 +2118,7 @@ class mTVGuide(xbmcgui.WindowXML):
             else:
                 super(mTVGuide, self).close()
 
+
     def onInit(self):
         deb('onInit')
 
@@ -2134,6 +2135,7 @@ class mTVGuide(xbmcgui.WindowXML):
         self._hideControl(self.C_MAIN_LOADING_BACKGROUND)
         self.setControlLabel(self.C_MAIN_LOADING_TIME_LEFT, strings(BACKGROUND_UPDATE_IN_PROGRESS))
         self.setFocusId(self.C_MAIN_LOADING_CANCEL)
+        
 
         control = self.getControl(self.C_MAIN_EPG_VIEW_MARKER)
         if control:

@@ -283,9 +283,10 @@ class TeliaPlayUpdater(baseServiceUpdater):
             "platformVersion": "NT 6.1"
         }
 
-        response = sess.post(url, headers=headers, data=json.dumps(data), verify=False).json()
+        response = sess.post(url, headers=headers, data=json.dumps(data), verify=False)#.json()
 
         try:
+            response = response.json()
             if response['errorCode'] == 61004:
                 self.maxDeviceIdMessage()
                 ADDON.setSetting('teliaplay_sess_id', '')
