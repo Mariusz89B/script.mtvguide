@@ -4,7 +4,7 @@
 #   GNU General Public License
 
 #   m-TVGuide KODI Addon
-#   Copyright (C) 2020 mbebe
+#   Copyright (C) 2021 mbebe
 #   Copyright (C) 2021 Mariusz89B
 
 #   This program is free software: you can redistribute it and/or modify
@@ -72,6 +72,7 @@ import six
 serviceName = 'Telia Play'
 
 base = ['https://teliatv.dk', 'https://www.teliaplay.se']
+referer = ['https://teliatv.dk/', 'https://www.teliaplay.se/']
 host = ['www.teliatv.dk', 'www.teliaplay.se']
 cc = ['dk', 'se']
 ca = ['DK', 'SE']
@@ -90,6 +91,7 @@ else:
         profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
 
 sess = requests.Session()
+
 
 class Threading(object):
     """ Threading example class
@@ -123,6 +125,7 @@ class Threading(object):
             if xbmc.Monitor().waitForAbort(1):
                 break
 
+
 class TeliaPlayUpdater(baseServiceUpdater):
     def __init__(self):
         self.serviceName        = serviceName
@@ -137,47 +140,188 @@ class TeliaPlayUpdater(baseServiceUpdater):
         self.servicePriority    = int(ADDON.getSetting('priority_teliaplay'))
         self.login              = ADDON.getSetting('teliaplay_username').strip()
         self.password           = ADDON.getSetting('teliaplay_password').strip()
-        self.sess_id            = ADDON.getSetting('teliaplay_sess_id')
+        self.country            = int(ADDON.getSetting('teliaplay_locale'))
         self.dashjs             = ADDON.getSetting('teliaplay_devush')
+        self.tv_client_boot_id  = ADDON.getSetting('teliaplay_tv_client_boot_id')
+        self.timestamp          = ADDON.getSetting('teliaplay_timestamp')
+        self.validTo            = ADDON.getSetting('teliaplay_validTo')
         self.beartoken          = ADDON.getSetting('teliaplay_beartoken')
         self.refrtoken          = ADDON.getSetting('teliaplay_refrtoken')
-        self.validTo            = ADDON.getSetting('teliaplay_validTo')
         self.cookies            = ADDON.getSetting('teliaplay_cookies')
         self.usern              = ADDON.getSetting('teliaplay_usern')
-        self.country            = int(ADDON.getSetting('teliaplay_locale'))
-        self.tv_client_boot_id  = ADDON.getSetting('teliaplay_tv_client_boot_id')
         self.subtoken           = ADDON.getSetting('teliaplay_subtoken')
 
 
-    def createDATAS(self):
-        #import random
-        
-        #def gen_hex_code(myrange=6, start=0):
-            #if not start:
-                #a = ''.join([random.choice('0123456789abcdef') for x in range(myrange)])
-            #else:
-                #a = str(start)+''.join([random.choice('0123456789abcdef') for x in range(myrange-1)])
-            #return a
-
-        #def uid():
-            #a = gen_hex_code(8,0) + '-' + gen_hex_code(4,0) + '-' + gen_hex_code(4,4) + '-' + gen_hex_code(4,9) + '-' + gen_hex_code(12,0)
-            #return a
-
+    def createData(self):
         self.dashjs = 'WEB-' + str(uuid.uuid4())
+        ADDON.setSetting('teliaplay_devush', str(self.dashjs))
+
         self.tv_client_boot_id = str(uuid.uuid4())
+        ADDON.setSetting('teliaplay_tv_client_boot_id', str(self.tv_client_boot_id))
 
-        ADDON.setSetting('teliaplay_devush', self.dashjs)
-        ADDON.setSetting('teliaplay_tv_client_boot_id', self.tv_client_boot_id)
+        self.timestamp = int(time.time())*1000
+        ADDON.setSetting('teliaplay_timestamp', str(self.timestamp))
 
-        return self.dashjs
 
+    def loginData(self):
+        url = 'https://log.tvoip.telia.com:6003/logstash'
+            
+        data = {
+            "bootId": self.tv_client_boot_id,
+            "networkType": "unknown",
+            "service": "ott",
+            "deviceIdType": "vmxId",
+            "deviceId": self.dashjs,
+            "deviceType": "WEB",
+            "model": "windows_desktop",
+            "productName": "Chrome 89.0.4389.114",
+            "platformName": "windows",
+            "platformVersion": "NT 6.1",
+            "nativeVersion": "N/A",
+            "uiName": "telia-web",
+            "uiVersion": "7d5c207",
+            "environment": "unknown",
+            "country": "unknown",
+            "logType": "LOG",
+            "payloads": [{
+                "sequence": 1,
+                "timestamp": self.timestamp,
+                "level": "ERROR",
+                "loggerId": "telia-data-backend/System",
+                "message": "Failed to get service status due to timeout after 1000 ms"
+            }]
+        }
         
+        headers = {
+            'Host': 'log.tvoip.telia.com:6003',
+            'User-Agent': UA,
+            'Content-Type': 'text/plain;charset=UTF-8',
+            'Accept': '*/*',
+            'Sec-GPC': '1',
+            'Origin': base[self.country],
+            'Sec-Fetch-Site': 'cross-site',
+            'Sec-Fetch-Mode': 'cors',
+            'Sec-Fetch-Dest': 'empty',
+            'Referer': referer[self.country],
+            'Accept-Language': 'en-US,en;q=0.9',
+        }
+
+        response = sess.post(url, headers=headers, data=json.dumps(data), verify=False)
+
+        url = 'https://ottapi.prod.telia.net/web/{cc}/logingateway/rest/v1/login'.format(cc=cc[self.country])
+
+        headers = {
+            'Host': 'ottapi.prod.telia.net',
+            'tv-client-boot-id': self.tv_client_boot_id,
+            'User-Agent': UA,
+            'Content-Type': 'application/json',
+            'Accept': '*/*',
+            'Sec-GPC': '1',
+            'Origin':  base[self.country],
+            'Sec-Fetch-Site': 'cross-site',
+            'Sec-Fetch-Mode': 'cors',
+            'Sec-Fetch-Dest': 'empty',
+            'Referer': referer[self.country],
+            'Accept-Language': 'en-US,en;q=0.9',
+        }
+
+        data = {
+            "deviceId": self.dashjs,
+            "username": self.login,
+            "password": self.password,
+            "deviceType": "WEB",
+        }
+        
+        response = sess.post(url, headers=headers, data=json.dumps(data), verify=False).json()
+
+        try:
+            if 'Username/password was incorrect' in response['errorMessage']:
+                self.loginErrorMessage()
+                return False 
+        except:
+            pass
+
+        self.validTo = response.get('validTo', None)
+        ADDON.setSetting('teliaplay_validTo', str(self.validTo))
+
+        self.beartoken = response.get('accessToken', None)
+        ADDON.setSetting('teliaplay_beartoken', str(self.beartoken))
+
+        self.refrtoken = response.get('refreshToken', None)
+        ADDON.setSetting('teliaplay_refrtoken', str(self.refrtoken))
+
+        url = 'https://ottapi.prod.telia.net/web/{cc}/tvclientgateway/rest/secure/v1/provision'.format(cc=cc[self.country])
+
+        headers = {
+            'Host': 'ottapi.prod.telia.net',
+            'Cache-Control': 'no-cache',
+            'Authorization': 'Bearer ' + self.beartoken,
+            'If-Modified-Since': '0',
+            'User-Agent': UA,
+            'tv-client-boot-id': self.tv_client_boot_id,
+            'Content-Type': 'application/json',
+            'Accept': '*/*',
+            'Sec-GPC': '1',
+            'Origin': 'https://www.teliaplay.se',
+            'Sec-Fetch-Site': 'cross-site',
+            'Sec-Fetch-Mode': 'cors',
+            'Sec-Fetch-Dest': 'empty',
+            'Referer': 'https://www.teliaplay.se/',
+            'Accept-Language': 'en-US,en;q=0.9',
+        }
+
+        data = {
+            "deviceId": self.dashjs,
+            "uiVersion": "7d5c207",
+            "nativeVersion": "N/A",
+            "coreVersion": "7.0.4",
+            "model": "windows_desktop",
+            "networkType": "unknown",
+            "productName": "Chrome 89.0.4389.114",
+            "uiName": "telia-web",
+            "platformName": "windows",
+            "platformVersion": "NT 6.1"
+        }
+
+        response = sess.post(url, headers=headers, data=json.dumps(data), verify=False).json()
+
+        try:
+            if response['errorCode'] == 61004:
+                self.maxDeviceIdMessage()
+                ADDON.setSetting('teliaplay_sess_id', '')
+                ADDON.setSetting('teliaplay_devush', '')
+                return False
+        except:
+            pass
+
+        cookies = {}
+
+        self.cookies = sess.cookies
+        ADDON.setSetting('teliaplay_cookies', str(self.cookies))
+
+        url = 'https://ottapi.prod.telia.net/web/{cc}/tvclientgateway/rest/secure/v1/pubsub'.format(cc=cc[self.country])
+
+        headers = { 
+                "User-Agent": UA,
+                "Accept": "*/*",
+                "Accept-Language": "sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6",
+                "Authorization": "Bearer " + self.beartoken,
+                'tv-client-boot-id': self.tv_client_boot_id,
+            }
+
+        response = sess.get(url, headers=headers, cookies=sess.cookies, allow_redirects=False).json()
+
+        self.usern = response['channels']['engagement']
+        ADDON.setSetting('teliaplay_usern', str(self.usern))
+
+        self.subtoken = response['config']['subscriberToken']
+        ADDON.setSetting('teliaplay_subtoken', str(self.subtoken))
+
+        return True
+
+
     def loginService(self):
         try:
-            self.sess_id = ADDON.getSetting('teliaplay_sess_id')
-            self.dashjs = ADDON.getSetting('teliaplay_devush')
-
-            import uuid
             if self.dashjs == '':
                 try: 
                     from BeautifulSoup import BeautifulSoup
@@ -197,137 +341,13 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 else:
                     xbmcgui.Dialog().ok(strings(30904), str(msg.encode('utf-8')))
             
-                self.dashjs = self.createDATAS()
+                self.createData()
 
-            url = 'https://ottapi.prod.telia.net/web/{cc}/logingateway/rest/v1/login'.format(cc=cc[self.country])
-
-            headers = {
-                  'Pragma':'no-cache',
-                  'Cache-Control':'no-cache',
-                  'DNT':'1',
-                  'User-Agent': UA,
-                  'Accept':'*/*',
-                  'Origin': base[self.country],
-                  'Accept-Encoding':'gzip, deflate, br',
-                  'Accept-Language':'sv',
-                  'Content-Type':'application/json',
-                  'tv-client-boot-id': self.tv_client_boot_id,
-                    }
-
-            payload = {
-                "deviceId": self.dashjs,
-                "username": self.login,
-                "password": self.password,
-                "deviceType": "WEB"
-                }
-
-
-            jsonresponse = sess.post(url, headers=headers, data=json.dumps(payload), verify=False).json()
-
-            try:
-                if 'Username/password was incorrect' in jsonresponse['errorMessage']:
-                    self.loginErrorMessage()
-                    return False 
-            except:
-                pass
-        
-            try:
-                if 'Could not entitle customer because of the maximum number of devices have been reached' in jsonresponse['message']:
-                    self.maxDeviceIdMessage()
-                    ADDON.setSetting('teliaplay_sess_id', '')
-                    ADDON.setSetting('teliaplay_devush', '')
-                    return False
-            except:
-                pass
-
-            try:
-                if 'Could not get devices' in jsonresponse['message']:
-                    self.loginService()
-            except:
-                pass
-
-            self.validTo = jsonresponse["validTo"]
-            ADDON.setSetting('teliaplay_validTo', str(self.validTo))
-
-            self.beartoken = jsonresponse["accessToken"]
-            ADDON.setSetting('teliaplay_beartoken', str(self.beartoken))
-            
-            self.refrtoken = jsonresponse["refreshToken"]
-            ADDON.setSetting('teliaplay_refrtoken', str(self.refrtoken))     
-
-            url = 'https://ottapi.prod.telia.net/web/se/tvclientgateway/rest/secure/v1/provision'
-
-            headers = {
-                'Accept': '*/*',
-                'Accept-Encoding': 'gzip, deflate, br',
-                'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
-                'Authorization': 'Bearer ' + self.beartoken,
-                'Cache-Control': 'no-cache',
-                'Connection': 'keep-alive',
-                'Content-Type': 'application/json',
-                'DNT': '1',
-                'Host': 'ottapi.prod.telia.net',
-                'If-Modified-Since': '0',
-                'Origin': base[self.country],
-                'Pragma': 'no-cache',
-                'Referer': base[self.country]+'/',
-                'Sec-Fetch-Dest': 'empty',
-                'Sec-Fetch-Mode': 'cors',
-                'Sec-Fetch-Site': 'cross-site',
-                'tv-client-boot-id': self.tv_client_boot_id,
-                'User-Agent': UA,
-            }
-
-            payload = {
-                'coreVersion': "7.0.4",
-                'deviceId': self.dashjs,
-                'model': "windows_desktop",
-                'nativeVersion': "N/A",
-                'networkType': "unknown",
-                'platformName': "windows",
-                'platformVersion': "NT 10.0",
-                'productName': "Microsoft Edge 89.0.774.63",
-                'uiName': "telia-web",
-                'uiVersion': "7d5c207",
-            }
-
-
-            response = sess.post(url, headers=headers, data=json.dumps(payload), verify=False)
-            deb('print: {}'.format(response.status_code))
-
-            self.sess_id = sess.cookies['JSESSIONID']
-            ADDON.setSetting('teliaplay_sess_id', self.sess_id)
-
-            self.cookies = sess.cookies
-            ADDON.setSetting('teliaplay_cookies', str(self.cookies))
-
-            headers = { 
-                "User-Agent": UA,
-                "Accept": "*/*",
-                "Accept-Language": "sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6",
-                "Authorization": "Bearer " + self.beartoken,
-                'tv-client-boot-id': self.tv_client_boot_id,
-            }
-
-            response = sess.get('https://ottapi.prod.telia.net/web/{cc}/tvclientgateway/rest/secure/v1/pubsub'.format(cc=cc[self.country]), headers=headers, cookies=sess.cookies, allow_redirects=False).json()
-
-            #cookies = {}
-
-            #self.sess_id = six.text_type(uuid.uuid4())#sess.cookies['JSESSIONID']
-            #ADDON.setSetting('teliaplay_sess_id', self.sess_id)
-
-            #self.cookies = sess.cookies
-            #ADDON.setSetting('teliaplay_cookies', self.cookies)
-            
-            self.usern = response['channels']['engagement']
-            ADDON.setSetting('teliaplay_usern', self.usern)
-
-            self.subtoken = response['config']['subscriberToken']
-            ADDON.setSetting('teliaplay_subtoken', str(self.subtoken))
+            login = self.loginData()
 
             run = Threading()
-            
-            return True
+
+            return login
 
         except:
             self.log('getChannelList exception: {}'.format(getExceptionString()))
@@ -343,115 +363,14 @@ class TeliaPlayUpdater(baseServiceUpdater):
             self.validTo = datetime.datetime.now() - timedelta(days=1)
 
         if not self.beartoken or refreshTimeDelta < timedelta(minutes=1):
-            url = 'https://ottapi.prod.telia.net/web/{cc}/logingateway/rest/v1/login'.format(cc=cc[self.country])
-
-            headers = {
-                  'Pragma': 'no-cache',
-                  'Cache-Control': 'no-cache',
-                  'DNT': '1',
-                  'User-Agent': UA,
-                  'Accept': '*/*',
-                  'Origin': base[self.country],
-                  'Accept-Encoding': 'gzip, deflate, br',
-                  'Accept-Language': 'sv',
-                  'Content-Type': 'application/json',
-                  'tv-client-boot-id': self.tv_client_boot_id,
-                    }
-
-            payload = {
-                "deviceId": self.dashjs,
-                "username": self.login,
-                "password": self.password,
-                "deviceType": "WEB"
-                }
-
-            jsonresponse = sess.post(url, headers=headers, data=json.dumps(payload), verify=False).json()
-
-            self.validTo = jsonresponse["validTo"]
-            ADDON.setSetting('teliaplay_validTo', str(self.validTo))
-
-            self.beartoken = jsonresponse["accessToken"]
-            ADDON.setSetting('teliaplay_beartoken', str(self.beartoken))
-
-            self.refrtoken = jsonresponse["refreshToken"]
-            ADDON.setSetting('teliaplay_refrtoken', str(self.refrtoken))
-
-            url = 'https://ottapi.prod.telia.net/web/se/tvclientgateway/rest/secure/v1/provision'
-
-            headers = {
-                'Accept': '*/*',
-                'Accept-Encoding': 'gzip, deflate, br',
-                'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
-                'Authorization': 'Bearer ' + self.beartoken,
-                'Cache-Control': 'no-cache',
-                'Connection': 'keep-alive',
-                'Content-Type': 'application/json',
-                'DNT': '1',
-                'Host': 'ottapi.prod.telia.net',
-                'If-Modified-Since': '0',
-                'Origin': base[self.country],
-                'Pragma': 'no-cache',
-                'Referer': base[self.country]+'/',
-                'Sec-Fetch-Dest': 'empty',
-                'Sec-Fetch-Mode': 'cors',
-                'Sec-Fetch-Site': 'cross-site',
-                'tv-client-boot-id': self.tv_client_boot_id,
-                'User-Agent': UA,
-            }
-
-            payload = {
-                'coreVersion': "7.0.4",
-                'deviceId': self.dashjs,
-                'model': "windows_desktop",
-                'nativeVersion': "N/A",
-                'networkType': "unknown",
-                'platformName': "windows",
-                'platformVersion': "NT 10.0",
-                'productName': "Microsoft Edge 89.0.774.63",
-                'uiName': "telia-web",
-                'uiVersion': "7d5c207",
-            }
-
-
-            response = sess.post(url, headers=headers, data=json.dumps(payload), verify=False)
-            deb('print: {}'.format(response.status_code))
-
-            self.sess_id = sess.cookies['JSESSIONID']
-            ADDON.setSetting('teliaplay_sess_id', self.sess_id)
-
-            self.cookies = sess.cookies
-            ADDON.setSetting('teliaplay_cookies', str(self.cookies))
-
-            headers = { 
-                "User-Agent": UA,
-                "Accept": "*/*",
-                "Accept-Language": "sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6",
-                "Authorization": "Bearer " + self.beartoken,
-                'tv-client-boot-id': self.tv_client_boot_id,
-            }
-
-            response = sess.get('https://ottapi.prod.telia.net/web/{cc}/tvclientgateway/rest/secure/v1/pubsub'.format(cc=cc[self.country]), headers=headers, cookies=sess.cookies, allow_redirects=False).json()
-
-            #cookies = {}
-
-            #self.sess_id = six.text_type(uuid.uuid4())#sess.cookies['JSESSIONID']
-            #ADDON.setSetting('teliaplay_sess_id', self.sess_id)
-
-            #self.cookies = sess.cookies
-            #ADDON.setSetting('teliaplay_cookies', self.cookies)
-            
-            self.usern = response['channels']['engagement']
-            ADDON.setSetting('teliaplay_usern', self.usern)
-
-            self.subtoken = response['config']['subscriberToken']
-            ADDON.setSetting('teliaplay_subtoken', str(self.subtoken))
+            login = self.loginData()
 
             result = self.validTo, self.beartoken, self.refrtoken, self.cookies
 
         return result
 
 
-    def utc_to_local(self, utc_dt):
+    def utcToLocal(self, utc_dt):
         # get integer timestamp to avoid precision lost
         timestamp = calendar.timegm(utc_dt.timetuple())
         local_dt = datetime.datetime.fromtimestamp(timestamp)
@@ -465,7 +384,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
         if 'Z' in self.validTo:
             validTo = iso8601.parse_date(self.validTo)
             if localize:
-                result = self.utc_to_local(validTo)
+                result = self.utcToLocal(validTo)
         else:
             try:
                 try:
@@ -498,8 +417,8 @@ class TeliaPlayUpdater(baseServiceUpdater):
         refr = True if not self.beartoken or refreshTimeDelta < timedelta(minutes=1) else False
 
         return refr
-    
-            
+
+
     def getChannelList(self, silent):
         result = list()
 
@@ -539,6 +458,8 @@ class TeliaPlayUpdater(baseServiceUpdater):
             except KeyError as k:
                 deb('errorMessage: {k}'.format(k=str(k)))
 
+            url = 'https://ottapi.prod.telia.net/web/{cc}/contentsourcegateway/rest/v1/channels'.format(cc=cc[self.country])
+
             headers = {
                 'Host': host[self.country],
                 'User-Agent': UA,
@@ -548,7 +469,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
 
             }
 
-            channels = sess.get('https://ottapi.prod.telia.net/web/{cc}/contentsourcegateway/rest/v1/channels'.format(cc=cc[self.country]), headers=headers, verify=False).json() 
+            channels = sess.get(url, headers=headers, verify=False).json() 
             for channel in channels:
                 if channel['id'] in self.engagementLiveChannels:
                     cid = channel["id"]
@@ -567,10 +488,12 @@ class TeliaPlayUpdater(baseServiceUpdater):
         
         return result
 
-    
+
     def getChannelStream(self, chann):
-        self.checkLogin()
         data = None
+
+        self.checkLogin()
+        
         try:
             try:
                 from urllib.parse import urlencode, quote_plus, quote, unquote
@@ -578,8 +501,8 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 from urllib import urlencode, quote_plus, quote, unquote
 
             cid = chann.cid
-            self.beartoken = ADDON.getSetting('teliaplay_beartoken')
-            self.dashjs = ADDON.getSetting('teliaplay_devush')
+
+            url = 'https://ottapi.prod.telia.net/web/{cc}/streaminggateway/rest/secure/v1/streamingticket/CHANNEL/{cid}/DASH'.format(cc=cc[self.country], cid=(str(cid)))
 
             headers = {
                 'Accept': '*/*',
@@ -603,11 +526,10 @@ class TeliaPlayUpdater(baseServiceUpdater):
             
             params = (
                 ('playerProfile', 'DEFAULT'),
-                ('sessionId', self.sess_id),
+                ('sessionId', six.text_type(uuid.uuid4())),
             )
 
-            response = sess.post('https://ottapi.prod.telia.net/web/{cc}/streaminggateway/rest/secure/v1/streamingticket/CHANNEL/{cid}/DASH'.format(cc=cc[self.country], cid=(str(cid))), headers=headers, params=params, cookies=self.cookies, verify=False).json()
-            #deb('print: {}'.format(response.text))
+            response = sess.post(url, headers=headers, params=params, cookies=sess.cookies, verify=False).json()
 
             try:
                 if 'Content not authorized' in response['errorMessage']:
@@ -620,7 +542,8 @@ class TeliaPlayUpdater(baseServiceUpdater):
             token = response["token"]
             currentTime = response["currentTime"]
             expires = response["expires"]
-            mpdurl = '{base}?ssl=true&time={new_time}&token={token}&expires={expires}&c={user_id}&d={dev_id}'.format(base=streamingUrl, new_time=currentTime, token=token, expires=expires, user_id=self.usern, dev_id=self.dashjs)
+
+            mpdurl = '{base}?ssl=true&time={time}&token={token}&expires={expires}&c={user_id}&d={dev_id}'.format(base=streamingUrl, time=currentTime, token=token, expires=expires, user_id=self.usern, dev_id=self.dashjs)
             
             headers = {
                 'Accept': '*/*',
@@ -656,8 +579,8 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 'User-Agent': UA,
             }
 
-            mpdurl2 = sess.get(mpdurl, headers=xheaders, verify=False).json()
-            mpdurl = mpdurl2["location"]
+            mpdurl_re = sess.get(mpdurl, headers=xheaders, verify=False).json()
+            mpdurl = mpdurl_re["location"]
             
             if sys.version_info[0] > 2:
                 headok = urllib.parse.urlencode(headers)
