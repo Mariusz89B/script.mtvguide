@@ -390,23 +390,20 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 result = self.utcToLocal(validTo)
         else:
             try:
-                try:
-                    date_time_format = '%Y-%m-%dT%H:%M:%S.%f+' + self.validTo.split('+')[1]
-                    validTo = datetime(*(time.strptime(self.validTo, date_time_format)[0:6]))
-                except:
-                    date_time_format = '%Y-%m-%dT%H:%M:%S+' + self.validTo.split('+')[1]
-                    validTo = datetime(*(time.strptime(self.validTo, date_time_format)[0:6]))
-            except:
-                try:
-                    date_time_format = '%Y-%m-%dT%H:%M:%S.%f+' + self.validTo.split('+')[0]
-                    validTo = datetime(*(time.strptime(self.validTo, date_time_format)[0:6]))
-                except:
-                    date_time_format = '%Y-%m-%dT%H:%M:%S+' + self.validTo.split('+')[0]
-                    validTo = datetime(*(time.strptime(self.validTo, date_time_format)[0:6]))
+                date_time_format = '%Y-%m-%dT%H:%M:%S.%f+' + self.validTo.split('+')[1]
+                validTo = datetime(*(time.strptime(self.validTo, date_time_format)[0:6]))
 
-            timestamp = int(time.mktime(validTo.timetuple()))
-            tokenValidTo = datetime.fromtimestamp(int(timestamp))
-            result = tokenValidTo - datetime.now()
+                timestamp = int(time.mktime(validTo.timetuple()))
+                tokenValidTo = datetime.fromtimestamp(int(timestamp))
+                result = tokenValidTo - datetime.now()
+
+            except:
+                date_time_format = '%Y-%m-%dT%H:%M:%S.%f+' + self.validTo.split('+')[0]
+                validTo = datetime(*(time.strptime(self.validTo, date_time_format)[0:6]))
+
+                timestamp = int(time.mktime(validTo.timetuple()))
+                tokenValidTo = datetime.fromtimestamp(int(timestamp))
+                result = tokenValidTo - datetime.now()
 
         return result
         
@@ -417,7 +414,10 @@ class TeliaPlayUpdater(baseServiceUpdater):
         if not self.validTo:
             self.validTo = datetime.datetime.now() - timedelta(days=1)
 
-        refr = True if not self.beartoken or refreshTimeDelta < timedelta(minutes=1) else False
+        if refreshTimeDelta is not None:
+            refr = True if not self.beartoken or refreshTimeDelta < timedelta(minutes=1) else False
+        else:
+            refr = False
 
         return refr
     

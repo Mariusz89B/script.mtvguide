@@ -2171,7 +2171,6 @@ class mTVGuide(xbmcgui.WindowXML):
             self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
 
         self.updateEpgTimer.stop()
-        gc.collect()
         time.sleep(self.interval)
         self.updateEpgTimer.start()
 
@@ -2435,12 +2434,13 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def getChannelNumber(self):
         try:
+            channelList = self.database.getChannelList(onlyVisible=True)
             controlInFocus = self.getFocus()
             program = self._getProgramFromControl(controlInFocus)
-            index = self.database.getCurrentChannelIdx(program.channel) + 1
+            index = channelList.index(program.channel) + 1
             return index
         except:
-            None
+            pass
 
     def AutoPlayByNumber(self):
         self.viewStartDate = datetime.datetime.today() + datetime.timedelta(
