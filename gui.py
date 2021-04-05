@@ -4735,11 +4735,6 @@ class mTVGuide(xbmcgui.WindowXML):
         self._showControl(self.C_MAIN_EPG)
         self.updateTimebar(scheduleTimer=False)
 
-        # show Loading screen
-        self.setControlLabel(self.C_MAIN_LOADING_TIME_LEFT, strings(CALCULATING_REMAINING_TIME))
-        self._showControl(self.C_MAIN_LOADING)
-        self.setFocusId(self.C_MAIN_LOADING_CANCEL)
-
         # remove existing controls
         self._clearEpg()
         try:
@@ -5145,6 +5140,12 @@ class mTVGuide(xbmcgui.WindowXML):
                 control.setPercent(1)
             self.progressStartTime = datetime.datetime.now()
             self.progressPreviousPercentage = percentageComplete
+
+            # show Loading screen
+            self.setControlLabel(self.C_MAIN_LOADING_TIME_LEFT, strings(CALCULATING_REMAINING_TIME))
+            self._showControl(self.C_MAIN_LOADING)
+            self.setFocusId(self.C_MAIN_LOADING_CANCEL)
+
         elif percentageComplete >= 100:
             if control:
                 control.setPercent(100)
