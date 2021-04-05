@@ -2930,7 +2930,8 @@ class mTVGuide(xbmcgui.WindowXML):
 
             self.database.setCategory(self.category)
             ADDON.setSetting('category', self.category)
-            self.onRedrawEPG(self.channelIdx == 1, self.viewStartDate)
+            with self.busyDialog():
+                self.onRedrawEPG(self.channelIdx == 1, self.viewStartDate)
 
         if controlId in [self.C_MAIN_LOADING_CANCEL, self.C_MAIN_MOUSEPANEL_EXIT]:
             if ADDON.getSetting('exit') == '0':
@@ -4008,7 +4009,8 @@ class mTVGuide(xbmcgui.WindowXML):
         elif buttonClicked == PopupMenu.C_POPUP_CATEGORY:
             self.database.setCategory(new_category)
             ADDON.setSetting('category', new_category)
-            self.onRedrawEPG(self.channelIdx == 1, self.viewStartDate)
+            with self.busyDialog():
+                self.onRedrawEPG(self.channelIdx == 1, self.viewStartDate)
 
         elif buttonClicked == PopupMenu.C_POPUP_NUMBER:
             if ADDON.getSetting('channel_shortcut') == 'false':
