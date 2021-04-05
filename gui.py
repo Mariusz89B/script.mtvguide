@@ -4763,7 +4763,10 @@ class mTVGuide(xbmcgui.WindowXML):
             return
 
         categories = self.getCategories()
-        streams = self.getStreamsCid()
+
+        if self.onSourceUpdate == True:
+            streams = self.getStreamsCid()
+            self.onSourceUpdate = False
 
         for program in programs:
             idx = channels.index(program.channel)
@@ -5098,6 +5101,8 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.notification.scheduleNotifications()
             self.recordService.scheduleAllRecordings()
             self.rssFeed = src.RssFeed(url=RSS_FILE, last_message=self.database.getLastRssDate(), update_date_call=self.database.updateRssDate)
+            
+            self.onSourceUpdate = True
 
             if strings2.M_TVGUIDE_CLOSING == False:
 
