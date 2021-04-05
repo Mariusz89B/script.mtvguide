@@ -398,7 +398,7 @@ class PlayerPLUpdater(baseServiceUpdater):
         except:
             pass
 
-        src = vid['video']['sources']['dash']['url']
+        src = vid['video']['sources']['dash']['url'] + ('&dvr=7201000' if rodzaj == 'LIVE' else '')
         widev = vid['video']['protections']['widevine']['src']
         if vidsesid:
             widev += '&videoSessionId=%s' % vidsesid

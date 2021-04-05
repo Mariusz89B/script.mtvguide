@@ -891,7 +891,7 @@ class PlayService(xbmc.Player, BasePlayService):
 
                             ListItem = xbmcgui.ListItem(path=strmUrl)
 
-                            if inputstream:
+                            if inputstream and ffmpegdirect:
                                 PROTOCOL = 'mpd'
                                 DRM = 'com.widevine.alpha'
 
@@ -927,7 +927,7 @@ class PlayService(xbmc.Player, BasePlayService):
 
                                 else:
                                     if channelInfo.mime != '': 
-                                        mimeType = channelInfo.mime # Content-Type??
+                                        mimeType = channelInfo.mime # Should the mimetype contain Content-Type from url?
                                     else:
                                         mimeType = ''
 
@@ -958,12 +958,6 @@ class PlayService(xbmc.Player, BasePlayService):
                                                 ListItem.setProperty('inputstream.ffmpegdirect.stream_mode', 'timeshift')
                                                 ListItem.setProperty('inputstream.ffmpegdirect.is_realtime_stream', 'true')
                                                 ListItem.setProperty('inputstream.ffmpegdirect.manifest_type', 'hls')
-
-                                            else:
-                                                if sys.version_info[0] > 2:
-                                                    ListItem.setProperty('inputstream', '')
-                                                else:
-                                                    ListItem.setProperty('inputstreamaddon', '')
 
                                         if PROTOCOL == 'dash':                                            
                                             ListItem.setProperty('inputstream.adaptive.manifest_update_parameter', 'full')
