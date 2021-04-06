@@ -248,7 +248,7 @@ class RecordService(BasePlayService):
                         if sys.version_info[0] > 2:
                             res = xbmcgui.Dialog().yesno(strings(70006) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', strings(31000).format(program.title) )
                         else:
-                            res = xbmcgui.Dialog().yesno(strings(70006) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', strings(31000).format(program.title.encode('utf-8')) )
+                            res = xbmcgui.Dialog().yesno(strings(70006) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', strings(31000).format(program.title.encode('utf-8').decode('utf-8')) )
                         if res == True:
                             downloadMenu = DownloadMenu(program)
                             downloadMenu.doModal()
