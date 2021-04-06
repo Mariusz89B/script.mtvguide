@@ -1,4 +1,7 @@
-﻿[COLOR yellow][B]wersja 9.2.9[/B] - 2021-04-05[/COLOR]
+﻿[COLOR yellow][B]wersja 9.3.0[/B] - 2021-04-06[/COLOR]
+- poprawka błędu szyfrowania.
+
+[COLOR yellow][B]wersja 9.2.9[/B] - 2021-04-05[/COLOR]
 - poprawiono wydajność działania
 - poprawka zanikajacych ikon
 - dodane nowe menu pobierania
