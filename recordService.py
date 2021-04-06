@@ -248,7 +248,7 @@ class RecordService(BasePlayService):
                         if sys.version_info[0] > 2:
                             res = xbmcgui.Dialog().yesno(strings(70006) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', strings(31000).format(program.title) )
                         else:
-                            res = xbmcgui.Dialog().yesno(strings(70006) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', strings(31000).format(program.title.encode('utf-8')) )
+                            res = xbmcgui.Dialog().yesno(strings(70006) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', strings(31000).format(program.title.encode('utf-8').decode('utf-8')) )
                         if res == True:
                             downloadMenu = DownloadMenu(program)
                             downloadMenu.doModal()
@@ -308,7 +308,7 @@ class RecordService(BasePlayService):
         if sys.version_info[0] > 2:
             deb('DownloadService scheduling download for program {}, starting at {}, start offset {}'.format(program.title, program.startDate, startOffset))
         else:
-            deb('DownloadService scheduling download for program {}, starting at {}, start offset {}'.format(program.title.encode('utf-8'), program.startDate, startOffset))
+            deb('DownloadService scheduling download for program {}, starting at {}, start offset {}'.format(program.title.encode('utf-8').decode('utf-8'), program.startDate, startOffset))
 
         if self.rtmpdumpAvailable == False and self.ffmpegdumpAvailable == False:
             deb('DownloadService - no record application installed!')
@@ -454,7 +454,7 @@ class RecordService(BasePlayService):
         if sys.version_info[0] > 2:
             deb('DownloadService - end of download program: {}'.format(threadData['program'].title))
         else:
-            deb('DownloadService - end of download program: {}'.format(threadData['program'].title.encode('utf-8')))
+            deb('DownloadService - end of download program: {}'.format(threadData['program'].title.encode('utf-8').decode('utf-8')))
         
         self.epg.database.removeRecording(threadData['program'])
         self.showEndDownloadNotification(threadData)
@@ -907,13 +907,13 @@ class RecordService(BasePlayService):
             if sys.version_info[0] > 2:
                 deb('DownloadService downloadLoop successfully recored program: {}, started at: {}, ended at: {}, duration {}, now: {}'.format(threadData['program'].title, threadData['program'].startDate, threadData['program'].endDate, threadData['downloadDuration'], datetime.datetime.now()))
             else:
-                deb('DownloadService downloadLoop successfully recored program: {}, started at: {}, ended at: {}, duration {}, now: {}'.format(threadData['program'].title.encode('utf-8'), threadData['program'].startDate, threadData['program'].endDate, threadData['downloadDuration'], datetime.datetime.now()))
+                deb('DownloadService downloadLoop successfully recored program: {}, started at: {}, ended at: {}, duration {}, now: {}'.format(threadData['program'].title.encode('utf-8').decode('utf-8'), threadData['program'].startDate, threadData['program'].endDate, threadData['downloadDuration'], datetime.datetime.now()))
             threadData['success'] = True
         else:
             if sys.version_info[0] > 2:
                 deb('DownloadService downloadLoop ERROR: too short recording, got: {} sec, should be: {}, program: {}, start at: {}, end at: {}, nrOfReattempts: {}, max: {}'.format(recordedSecs, threadData['downloadDuration'], threadData['program'].title, threadData['program'].startDate, threadData['program'].endDate, threadData['nrOfReattempts'], maxNrOfReattempts))
             else:
-                deb('DownloadService downloadLoop ERROR: too short recording, got: {} sec, should be: {}, program: {}, start at: {}, end at: {}, nrOfReattempts: {}, max: {}'.format(recordedSecs, threadData['downloadDuration'], threadData['program'].title.encode('utf-8'), threadData['program'].startDate, threadData['program'].endDate, threadData['nrOfReattempts'], maxNrOfReattempts))
+                deb('DownloadService downloadLoop ERROR: too short recording, got: {} sec, should be: {}, program: {}, start at: {}, end at: {}, nrOfReattempts: {}, max: {}'.format(recordedSecs, threadData['downloadDuration'], threadData['program'].title.encode('utf-8').decode('utf-8'), threadData['program'].startDate, threadData['program'].endDate, threadData['nrOfReattempts'], maxNrOfReattempts))
             threadData['nrOfReattempts'] += 1
             if os.path.isfile(threadData['destinationFile']) and os.path.getsize(threadData['destinationFile']) < minRecordedFileSize: #Less than minimum, remove downloaded data
                 try:
@@ -1077,13 +1077,13 @@ class RecordService(BasePlayService):
             if sys.version_info[0] > 2:
                 deb('RecordService not scheduling record for program {}, starting at {}, ending at {}, since it already finished'.format(program.title, program.startDate, program.endDate))
             else:
-                deb('RecordService not scheduling record for program {}, starting at {}, ending at {}, since it already finished'.format(program.title.encode('utf-8'), program.startDate, program.endDate))
+                deb('RecordService not scheduling record for program {}, starting at {}, ending at {}, since it already finished'.format(program.title.encode('utf-8').decode('utf-8'), program.startDate, program.endDate))
             return False
         else:
             if sys.version_info[0] > 2:
                 deb('RecordService scheduling record for program {}, starting at {}, startOffset {}'.format(program.title, program.startDate, startOffset))
             else:
-                deb('RecordService scheduling record for program {}, starting at {}, startOffset {}'.format(program.title.encode('utf-8'), program.startDate, startOffset))
+                deb('RecordService scheduling record for program {}, starting at {}, startOffset {}'.format(program.title.encode('utf-8').decode('utf-8'), program.startDate, startOffset))
 
         if self.rtmpdumpAvailable == False and self.ffmpegdumpAvailable == False:
             deb('DownloadService - no record application installed!')
@@ -1158,7 +1158,7 @@ class RecordService(BasePlayService):
         if sys.version_info[0] > 2:
             deb('RecordService - end of recording program: {}'.format(threadData['program'].title))
         else:
-            deb('RecordService - end of recording program: {}'.format(threadData['program'].title.encode('utf-8')))
+            deb('RecordService - end of recording program: {}'.format(threadData['program'].title.encode('utf-8').decode('utf-8')))
 
         self.showEndRecordNotification(threadData)
 
@@ -1259,13 +1259,13 @@ class RecordService(BasePlayService):
             if sys.version_info[0] > 2:
                 deb('RecordService recordLoop successfully recored program: {}, started at: {}, ended at: {}, duration {}, now: {}'.format(threadData['program'].title, threadData['program'].startDate, threadData['program'].endDate, threadData['recordDuration'], datetime.datetime.now()))
             else:
-                deb('RecordService recordLoop successfully recored program: {}, started at: {}, ended at: {}, duration {}, now: {}'.format(threadData['program'].title.encode('utf-8'), threadData['program'].startDate, threadData['program'].endDate, threadData['recordDuration'], datetime.datetime.now()))
+                deb('RecordService recordLoop successfully recored program: {}, started at: {}, ended at: {}, duration {}, now: {}'.format(threadData['program'].title.encode('utf-8').decode('utf-8'), threadData['program'].startDate, threadData['program'].endDate, threadData['recordDuration'], datetime.datetime.now()))
             threadData['success'] = True
         else:
             if sys.version_info[0] > 2:
                 deb('RecordService recordLoop ERROR: too short recording, got: {} sec, should be: {}, program: {}, start at: {}, end at: {}, nrOfReattempts: {}, max: {}'.format(recordedSecs, threadData['recordDuration'], threadData['program'].title, threadData['program'].startDate, threadData['program'].endDate, threadData['nrOfReattempts'], maxNrOfReattempts))
             else:
-                deb('RecordService recordLoop ERROR: too short recording, got: {} sec, should be: {}, program: {}, start at: {}, end at: {}, nrOfReattempts: {}, max: {}'.format(recordedSecs, threadData['recordDuration'], threadData['program'].title.encode('utf-8'), threadData['program'].startDate, threadData['program'].endDate, threadData['nrOfReattempts'], maxNrOfReattempts))
+                deb('RecordService recordLoop ERROR: too short recording, got: {} sec, should be: {}, program: {}, start at: {}, end at: {}, nrOfReattempts: {}, max: {}'.format(recordedSecs, threadData['recordDuration'], threadData['program'].title.encode('utf-8').decode('utf-8'), threadData['program'].startDate, threadData['program'].endDate, threadData['nrOfReattempts'], maxNrOfReattempts))
             threadData['nrOfReattempts'] += 1
             if os.path.isfile(threadData['destinationFile']) and os.path.getsize(threadData['destinationFile']) < minRecordedFileSize: #Less than minimum, remove downloaded data
                 try:
@@ -1519,7 +1519,7 @@ class RecordService(BasePlayService):
         #if sys.version_info[0] > 2:
             #debug('RecordService isProgramRecorded program: %s' % program.title)
         #else:
-            #debug('RecordService isProgramRecorded program: %s' % program.title.encode('utf-8'))
+            #debug('RecordService isProgramRecorded program: %s' % program.title.encode('utf-8').decode('utf-8'))
         playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
         playlist.clear()
         filenameList = self.getListOfFilenamesForProgram(program)
@@ -1581,7 +1581,7 @@ class RecordService(BasePlayService):
                         if sys.version_info[0] > 2:
                             deb('RecordService canceled scheduled recording of: {}'.format(program.title))
                         else:
-                            deb('RecordService canceled scheduled recording of: {}'.format(program.title.encode('utf-8')))
+                            deb('RecordService canceled scheduled recording of: {}'.format(program.title.encode('utf-8').decode('utf-8')))
                         return
             except:
                 pass
@@ -1597,7 +1597,7 @@ class RecordService(BasePlayService):
                 if sys.version_info[0] > 2:
                     deb('RecordService canceled ongoing recording of: {}'.format(program.title))
                 else:
-                    deb('RecordService canceled ongoing recording of: {}'.format(program.title.encode('utf-8')))
+                    deb('RecordService canceled ongoing recording of: {}'.format(program.title.encode('utf-8').decode('utf-8')))
                 return
 
     def cancelProgramDownload(self, program): #wylaczyc akturalnie nagrywany program?
@@ -1613,7 +1613,7 @@ class RecordService(BasePlayService):
                         if sys.version_info[0] > 2:
                             deb('DownloadService canceled scheduled downloading of: {}'.format(program.title))
                         else:
-                            deb('DownloadService canceled scheduled downloading of: {}'.format(program.title.encode('utf-8')))
+                            deb('DownloadService canceled scheduled downloading of: {}'.format(program.title.encode('utf-8').decode('utf-8')))
                         return
             except:
                 pass
@@ -1629,7 +1629,7 @@ class RecordService(BasePlayService):
                 if sys.version_info[0] > 2:
                     deb('DownloadService canceled ongoing downloading of: {}'.format(program.title))
                 else:
-                    deb('DownloadService canceled ongoing downloading of: {}'.format(program.title.encode('utf-8')))
+                    deb('DownloadService canceled ongoing downloading of: {}'.format(program.title.encode('utf-8').decode('utf-8')))
                 return
 
 
@@ -1769,8 +1769,8 @@ class DownloadMenu(xbmcgui.WindowXMLDialog):
             channel = self.program.channel.title
             title = self.program.title
         else:
-            channel = self.program.channel.title.encode('utf-8')
-            title = self.program.title.encode('utf-8')
+            channel = self.program.channel.title.encode('utf-8').decode('utf-8')
+            title = self.program.title.encode('utf-8').decode('utf-8')
 
         self.getControl(self.programTitleId).setLabel(channel)
 
@@ -1942,8 +1942,8 @@ class RecordMenu(xbmcgui.WindowXMLDialog):
             self.getControl(self.programTitleId).setLabel('{}'.format(self.program.title))
             self.getControl(self.channelId).setLabel('{}'.format(self.program.channel.title))
         else:
-            self.getControl(self.programTitleId).setLabel('{}'.format(self.program.title.encode('utf-8')))
-            self.getControl(self.channelId).setLabel('{}'.format(self.program.channel.title.encode('utf-8')))
+            self.getControl(self.programTitleId).setLabel('{}'.format(self.program.title.encode('utf-8').decode('utf-8')))
+            self.getControl(self.channelId).setLabel('{}'.format(self.program.channel.title.encode('utf-8').decode('utf-8')))
 
         self.resetSliders()
 
