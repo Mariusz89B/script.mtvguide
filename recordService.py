@@ -1763,6 +1763,8 @@ class DownloadMenu(xbmcgui.WindowXMLDialog):
         super(DownloadMenu, self).__init__()
 
     def onInit(self): 
+        self.orgTitle = self.program.title
+
         self.downloadDuration = self.getControl(self.downloadDurationId)
 
         if sys.version_info[0] > 2:
@@ -1783,6 +1785,11 @@ class DownloadMenu(xbmcgui.WindowXMLDialog):
 
         startTime = str(self.program.startDate).split(' ')[1]
         endTime = str(self.program.endDate).split(' ')[1]
+
+        self.orgStartDate = startDate
+        self.orgEndDate = endDate
+        self.orgStartTime = startTime
+        self.orgEndTime = endTime
 
         self.startDate = self.getControl(self.startDateId)
         self.startDate.setType(xbmcgui.INPUT_TYPE_DATE, strings(70024))
@@ -1818,6 +1825,23 @@ class DownloadMenu(xbmcgui.WindowXMLDialog):
         except:
             pass
 
+    def resetSettings(self):
+        self.channelId.setText(self.orgTitle)
+        self.program.title = self.orgTitle
+        
+        self.startDate.setText(str(self.orgStartDate))
+        self.endDate.setText(str(self.orgEndDate))
+
+        self.startTime.setText(str(self.orgStartTime))
+        self.endTime.setText(str(self.orgEndTime))
+
+        self.program.startDate = self.getStartDate(self.orgStartDate, None)
+        self.program.endDate = self.getEndDate(self.orgEndDate, None)
+
+        self.program.startDate = self.getStartDate(None, self.orgStartTime)
+        self.program.endDate = self.getEndDate(None, self.orgEndTime)
+
+
     def getOffsets(self):
         if self.calculatedStartDate > self.calculatedEndDate:
             self.dwnl = False
@@ -1840,6 +1864,8 @@ class DownloadMenu(xbmcgui.WindowXMLDialog):
         except:
             self.program.startDate
 
+        return self.program.startDate
+
     def getEndDate(self, date, time):
         endDate = str(self.program.endDate).split(' ')[0]
         endTime = str(self.program.endDate).split(' ')[1]
@@ -1853,6 +1879,8 @@ class DownloadMenu(xbmcgui.WindowXMLDialog):
                 self.program.endDate = proxydt.strptime(str(strdate), '%Y-%m-%d %H:%M:%S')
         except:
             self.program.endDate
+
+        return self.program.endDate
 
 
     def onAction(self, action):
@@ -1889,6 +1917,10 @@ class DownloadMenu(xbmcgui.WindowXMLDialog):
 
         elif controlId == self.cancelControlId:
             self.close()
+
+        elif controlId == self.resetControlId:
+            self.resetSettings()
+            self.updateLabels()
 
         elif controlId == self.saveControlId:
             self.dwnl = True
