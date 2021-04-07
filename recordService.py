@@ -48,7 +48,7 @@ else:
     import ConfigParser
 
 import os, threading, datetime, subprocess, unicodedata, time, re, copy
-import xbmcgui, xbmc, xbmcvfs
+import xbmc, xbmcaddon, xbmcgui, xbmcplugin, xbmcvfs
 from strings import *
 import strings as strings2
 from playService import BasePlayService
@@ -154,6 +154,8 @@ class RecordService(BasePlayService):
         self.downloadDuration    = 0
         self.progress            = None
         self.downloadSize        = 0
+        self.elapsedTime         = 0
+        self.durationTime        = 0
         self.startOffsetDownload = 0
         self.endOffsetDownload   = 0
         self.license             = None
@@ -214,9 +216,8 @@ class RecordService(BasePlayService):
             num /= step_unit
 
 
-    def calcFileSize(self, threadData, bitrate, depth):
-        duration = threadData['downloadDuration']
-        result = float(bitrate / depth * duration * 1000)
+    def calcFileSize(self, duration, bitrate):
+        result = (bitrate / 8) * (duration * 1000)
         return result
 
 
@@ -362,6 +363,8 @@ class RecordService(BasePlayService):
         deb('startDownload')
         diag = self.createProgressDialog()
 
+        durationTime = (self.program.endDate - self.program.startDate).total_seconds()
+        
         iDownsize = 0
 
         while not (self.processIsCanceled or diag.isFinished()):
@@ -372,27 +375,35 @@ class RecordService(BasePlayService):
                 if xbmcvfs.exists(dest):
                     stat = os.stat(dest)
                     iDownsize = stat.st_size
+
             except:
                 program = ''
                 iDownsize = 1000
-
-
+    
             if float(self.downloadSize) > 1:
                 iTotalSize = float(self.downloadSize)
             else:
                 iTotalSize = 1000
             
-            self.stateCallBackFunction(program, iDownsize, iTotalSize)
+            self.stateCallBackFunction(program, iDownsize, iTotalSize, durationTime)
 
         self.processIsCanceled = True
         self.downloading = False
         self.progress.close()
 
-    def stateCallBackFunction(self, program, iDownsize, iTotalSize):
+    def stateCallBackFunction(self, program, iDownsize, iTotalSize, durationTime):
         if self.progress.isFinished():
             self.createProgressDialog()
 
-        iPercent = int(float(iDownsize * 100) / iTotalSize)
+        if self.elapsedTime != 0:
+            elapsedTime = datetime.proxydt.strptime(str(self.elapsedTime), '%H:%M:%S.%f')
+        else:
+            elapsedTime = datetime.proxydt.strptime(str('00:00:01.00'), '%H:%M:%S.%f')
+
+        elapsedTime = (elapsedTime - datetime.datetime(1900, 1, 1, 0, 0)).total_seconds() + 5
+        
+
+        iPercent = int(float(elapsedTime * 100) / durationTime)
         if iTotalSize <= 1000:
             TotalSize = '-'
         elif iTotalSize < 5000000:
@@ -405,7 +416,9 @@ class RecordService(BasePlayService):
         else:
             Downsize = self.formatFileSize(float(iDownsize))
 
-        self.progress.update(iPercent, program, Downsize + ' / ' + TotalSize)
+        downloadSpeed = round(iDownsize * 0.000008 / elapsedTime, 1)
+
+        self.progress.update(iPercent, program, Downsize + ' / ' + TotalSize+', '+str(downloadSpeed)+' mbit/s')
     
         if (self.progress.isFinished()) and not (self.processIsCanceled):
             self.processIsCanceled = True
@@ -849,35 +862,36 @@ class RecordService(BasePlayService):
                 #fps = frames[0]
                 #fps = int(fps)
 
-                i = 1
+                p = re.compile('.*time=(.*?)\s')
 
-                while i < 15:
-                    # Bitrate
-                    bitrate_re = re.findall(r'.*bitrate=(.*?)kbits.*', line)
-                    if bitrate_re:
-                        bitrate
-                    else:
-                        bitrate = 0
+                if p.match(line):
+                    self.elapsedTime = p.search(line).group(1)
+
+                duration = (self.program.endDate - self.program.startDate).total_seconds()
+
+                bitrate_re = re.findall(r'.*bitrate=(.*?)kbits.*', line)
+                if bitrate_re:
+                    bitrate
+                else:
+                    bitrate = 0
+                
+                try:
+                    bitrate = float(bitrate_re[0])
+                    avgList.append(bitrate)
                     
-                    try:
-                        bitrate = float(bitrate_re[0])
-                        avgList.append(bitrate)
-                        
-                    except:
-                        bit = 0
+                except:
+                    bit = 0
 
-                    if bitrate > 1:
-                        bit = sum(avgList) / len(avgList)
-                        self.downloadSize = self.calcFileSize(threadData, bit, 8)
-
-                    i += 1
+                if bitrate > 1:
+                    bit = sum(avgList) / len(avgList)
+                    self.downloadSize = self.calcFileSize(duration, bit)
 
             output = threadData['downloadHandle'].communicate()[0]
             returnCode = threadData['downloadHandle'].returncode
             threadData['stopDownloadTimer'].cancel()
             threadData['downloadHandle'] = None
 
-            self.downloading = False #dodane
+            self.downloading = False
 
             deb('DownloadService download finished, \noutput: {}, \nstatus: {}, Command: {}'.format(output, returnCode, str(recordCommand)))
 
