@@ -891,8 +891,8 @@ class PlayService(xbmc.Player, BasePlayService):
 
                             ListItem = xbmcgui.ListItem(path=strmUrl)
 
-                            if inputstream and ffmpegdirect:
-                                PROTOCOL = 'mpd'
+                            if inputstream:
+                                PROTOCOL = ''
                                 DRM = 'com.widevine.alpha'
 
                                 if '$$lic' in strmUrl:
@@ -908,9 +908,13 @@ class PlayService(xbmc.Player, BasePlayService):
                                     ListItem.setProperty('inputstream.adaptive.license_type', DRM)
                                     ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl)
 
-                                elif 'm3u8' in strmUrl:
+                                elif 'm3u8' in strmUrl and ffmpegdirect:
                                     mimeType = 'application/x-mpegURL'
                                     #mimeType = 'application/vnd.apple.mpegstream_url'
+                                    PROTOCOL = 'hls'
+
+                                elif '.ts' in strmUrl or ':8080' in strmUrl and ffmpegdirect:
+                                    mimeType = 'video/mp2t'
                                     PROTOCOL = 'hls'
 
                                 elif '.mpd' in strmUrl or 'format=mpd' in strmUrl:
@@ -921,53 +925,40 @@ class PlayService(xbmc.Player, BasePlayService):
                                     mimeType = 'application/vnd.ms-sstr+xml'
                                     PROTOCOL = 'ism'
 
-                                elif '.ts' in strmUrl:
-                                    mimeType = 'video/mp2t'
-                                    PROTOCOL = 'hls'
-
-                                else:
-                                    if channelInfo.mime != '': 
-                                        mimeType = channelInfo.mime # Should the mimetype contain Content-Type from url?
-                                    else:
-                                        mimeType = ''
-
-                                    PROTOCOL = 'hls'
-
                                 import inputstreamhelper
 
-                                is_helper = inputstreamhelper.Helper(PROTOCOL)
-                                if is_helper.check_inputstream():
-                                    if '|' in strmUrl:
-                                        strmUrl, strhdr = strmUrl.split('|')
-                                        ListItem.setProperty('inputstream.adaptive.stream_headers', strhdr)
+                                if PROTOCOL != '':
+                                    is_helper = inputstreamhelper.Helper(PROTOCOL)
+                                    if is_helper.check_inputstream():
+                                        ListItem.setContentLookup(False)
 
-                                    if sys.version_info[0] > 2:
-                                        ListItem.setProperty('inputstream', is_helper.inputstream_addon)
-                                    else:
-                                        ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
-                                
-                                    if PROTOCOL != '':
-                                        if ffmpegdirect:
-                                            ListItem.setProperty('inputstream', 'inputstream.ffmpegdirect')
+                                        if sys.version_info[0] > 2:
+                                            ListItem.setProperty('inputstream', is_helper.inputstream_addon)
+                                        else:
+                                            ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
 
                                         ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
-                                        ListItem.setMimeType(mimeType)
 
-                                        if PROTOCOL == 'hls':
-                                            if ffmpegdirect:
-                                                ListItem.setProperty('inputstream.ffmpegdirect.stream_mode', 'timeshift')
-                                                ListItem.setProperty('inputstream.ffmpegdirect.is_realtime_stream', 'true')
-                                                ListItem.setProperty('inputstream.ffmpegdirect.manifest_type', 'hls')
+                                        if mimeType != '':
+                                            ListItem.setMimeType(mimeType)
 
-                                        if PROTOCOL == 'dash':                                            
+                                        if '|' in strmUrl:
+                                            strmUrl, strhdr = strmUrl.split('|')
+                                            ListItem.setProperty('inputstream.adaptive.stream_headers', strhdr)
+
+                                        if PROTOCOL == 'dash':                            
                                             ListItem.setProperty('inputstream.adaptive.manifest_update_parameter', 'full')
 
-                                        if duration != '':
-                                            if ffmpegdirect:
+                                        if ffmpegdirect:
+                                            ListItem.setProperty('inputstream', 'inputstream.ffmpegdirect')
+                                            ListItem.setProperty('inputstream.ffmpegdirect.stream_mode', 'timeshift')
+                                            #ListItem.setProperty('inputstream.ffmpegdirect.open_mode', 'ffmpeg')
+                                            ListItem.setProperty('inputstream.ffmpegdirect.is_realtime_stream', 'true')
+                                            ListItem.setProperty('inputstream.ffmpegdirect.manifest_type', PROTOCOL)
+                                            if duration != '':
                                                 ListItem.setProperty('inputstream.ffmpegarchive.default_programme_duration', duration)
 
-                                    ListItem.setContentLookup(False)
-                                    ListItem.setProperty("IsPlayable", "true")
+                                        ListItem.setProperty("IsPlayable", "true")
 
                             ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
 

@@ -568,7 +568,7 @@ class PlaylistUpdater(baseServiceUpdater):
                 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
             }
 
-            if UA:         
+            if UA:
                 headers.update({'User-Agent': UA})
             
             conn_timeout = int(ADDON.getSetting('max_wait_for_playback'))
@@ -579,10 +579,9 @@ class PlaylistUpdater(baseServiceUpdater):
                 response = scraper.get(strmUrl, headers=headers, allow_redirects=False, stream=True, timeout=timeouts)
                 if 'Location' in response.headers and '_TS' not in cid:
                     strmUrl = response.headers.get('Location', None) 
+
                 else:
                     strmUrl = response.url
-                
-                mimeType = response.headers.get('Content-Type', None) 
 
             except HTTPError as e:
                 deb('HTTPError: {}'.format(str(e)))
@@ -596,7 +595,7 @@ class PlaylistUpdater(baseServiceUpdater):
             except RequestException as e:
                 deb('RequestException: {}'.format(str(e))) 
 
-            return strmUrl, mimeType
+            return strmUrl
 
 
     def getChannelStream(self, chann):
@@ -606,7 +605,7 @@ class PlaylistUpdater(baseServiceUpdater):
                 xbmc.sleep(500)
             self.log('getChannelStream: found matching channel: cid {}, name {}, stream {}'.format(chann.cid, chann.name, chann.strm))
 
-            chann.strm, chann.mime = self.getUrl(chann.strm, chann.cid)
+            chann.strm = self.getUrl(chann.strm, chann.cid)
 
             return chann
 
