@@ -568,6 +568,7 @@ class mTVGuide(xbmcgui.WindowXML):
         self.recordService = RecordService(self)
         self.getListLenght = list()
         self.catchupDays = None
+        self.onSourceUpdate = None
 
         # find nearest half hour
         self.viewStartDate = datetime.datetime.today() + datetime.timedelta(
@@ -2125,6 +2126,7 @@ class mTVGuide(xbmcgui.WindowXML):
         if self.initialized:
             # onInit(..) is invoked again by XBMC after a video addon exits after being invoked by XBMC.RunPlugin(..)
             deb("[{}] TVGuide.onInit(..) invoked, but we're already initialized!".format(ADDON_ID))
+            self.onSourceUpdate = True
             self.redrawagain = True
             self._showEPG()
             return
@@ -5101,8 +5103,6 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.notification.scheduleNotifications()
             self.recordService.scheduleAllRecordings()
             self.rssFeed = src.RssFeed(url=RSS_FILE, last_message=self.database.getLastRssDate(), update_date_call=self.database.updateRssDate)
-            
-            self.onSourceUpdate = True
 
             if strings2.M_TVGUIDE_CLOSING == False:
 
@@ -5117,6 +5117,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 if ADDON.getSetting('categories_remember') == 'true' or ADDON.getSetting('category') != '':
                     self.database.setCategory(ADDON.getSetting('category'))
 
+                self.onSourceUpdate = True
                 self.onRedrawEPG(0, self.viewStartDate)
                 
                 if ADDON.getSetting('touch_panel') == 'true':
