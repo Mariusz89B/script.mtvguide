@@ -1338,7 +1338,7 @@ msgstr "Kanały zostały usunięte. Wymagane jest ponowne uruchomienie, aby zmia
 
 msgctxt "#60008"
 msgid "Save playlist to local drive"
-msgstr "Zapisz playlistę na dysk lokalnym
+msgstr "Zapisz playlistę na dysk lokalny"
 
 msgctxt "#60009"
 msgid "Update playlist (days)"
