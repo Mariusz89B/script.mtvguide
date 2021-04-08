@@ -1,5 +1,8 @@
-﻿[COLOR yellow][B]wersja 9.3.0[/B] - 2021-04-06[/COLOR]
-- poprawka błędu szyfrowania.
+﻿[COLOR yellow][B]wersja 9.3.0[/B] - 2021-04-08[/COLOR]
+- poprawka błędu szyfrowania
+- naprawiono przycisk resetowania w menu pobierania
+- dodano wskaźnik prędkości pobierania
+- usunięte błędy
 
 [COLOR yellow][B]wersja 9.2.9[/B] - 2021-04-05[/COLOR]
 - poprawiono wydajność działania

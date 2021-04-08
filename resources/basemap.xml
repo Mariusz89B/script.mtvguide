@@ -50,6 +50,7 @@
 	<channel id="Canal+ Film PL"                           	title="(?=(Canal|C)\s*(\+|PLUS)?\s*Film(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Canal+ Now PL"                            	title="(?=(Canal|C)\s*(\+|PLUS)?\s*Now(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Canal+ PL"                                	title="(?=(Canal|C)\s*(\+|PLUS)?(\s*PREMIUM)?(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+ Premium PL"                      	title="(?=(Canal|C)\s*(\+|PLUS)?\s*Premium(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Canal+ Seriale PL"                        	title="(?=(Canal|C)\s*(\+|PLUS)?\s*Seriale(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Canal+ Sport 2 PL"                        	title="(?=(Canal|C)\s*(\+|PLUS)?\s*SPORT\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Canal+ Sport 3 PL"                        	title="(?=(Canal|C)\s*(\+|PLUS)?\s*SPORT\s*3(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -172,6 +173,7 @@
 	<channel id="Nickelodeon PL"                           	title="(?=Nickelodeon(\s*Polska)?(\s*TV)?(\s*PL)?$)" strm=""/>
 	<channel id="Nicktoons PL"                             	title="(?=Nicktoons(\s*Polska)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Nobox TV PL"                              	title="(?=Nobox(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Novela TV PL"                      		title="(?=Novela(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Nuta TV PL"                               	title="(?=Nuta(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="OPOKA TV PL"                              	title="(?=OPOKA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Ocko PL"                                  	title="(?=Ocko(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -251,6 +253,7 @@
 	<channel id="TV TORUN PL"                              	title="(?=(TV)?(\s*TORUN|\s*TORU.?)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TV ZGORZELEC PL"                          	title="(?=(TVT\s*)?Zgorzelec(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TV ZGORZELEC PL"                          	title="(?=(TV\s*)?ZGORZELEC(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVC PL"                      				title="(?=TVC(\s*Polska)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVN 24 BiS PL"                            	title="(?=TVN\s*24\s*(BiS|Biznes\s*i\s*.*wiat)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVN 24 PL"                                	title="(?=(TVN\s*24|24\s*TVN)(\+|PLUS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVN 7 PL"                                 	title="(?=TVN\s*(7|Siedem)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -281,8 +284,11 @@
 	<channel id="TVP ABC PL"                               	title="(?=(TVP\s*ABC|ABC\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP Dokument PL"                          	title="(?=(TVP\s*Dokument|Dokument\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP HD PL"                                	title="(?=TVP(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP Historia 2 PL"                       	title="(?=TVP\s*Historia\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP Historia PL"                          	title="(?=(TVP\s*Historia|Historia\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP Info PL"                              	title="(?=(TVP\s*Info|Info\s*TVP)(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP Kobieta PL"                       		title="(?=TVP\s*Kobieta(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP Kultura 2 PL"                       	title="(?=TVP\s*Kultura\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP Kultura PL"                           	title="(?=(TVP\s*Kultura|Kultura\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP Polonia PL"                           	title="(?=(TVP\s*Polonia|Polonia\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP Rozrywka PL"                          	title="(?=(TVP\s*Rozrywka|Rozrywka\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -371,6 +377,7 @@
 	<channel id="Canal+ Family.pl"                         	title="(?=(Canal|C)\s*(\+|PLUS)?\s*Family(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Canal+ Film.pl"                           	title="(?=(Canal|C)\s*(\+|PLUS)?\s*Film(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Canal+ Now.pl"                            	title="(?=(Canal|C)\s*(\+|PLUS)?\s*Now(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+ Premium.pl"                      	title="(?=(Canal|C)\s*(\+|PLUS)?\s*Premium(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Canal+ Seriale.pl"                        	title="(?=(Canal|C)\s*(\+|PLUS)?\s*Seriale(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Canal+ Sport 2.pl"                        	title="(?=(Canal|C)\s*(\+|PLUS)?\s*SPORT\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Canal+ Sport 3.pl"                        	title="(?=(Canal|C)\s*(\+|PLUS)?\s*SPORT\s*3(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -494,6 +501,7 @@
 	<channel id="Nickelodeon.pl"                           	title="(?=Nickelodeon(\s*Polska)?(\s*TV)?(\s*PL)?$)" strm=""/>
 	<channel id="Nicktoons.pl"                             	title="(?=Nicktoons(\s*Polska)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Nobox TV.pl"                              	title="(?=Nobox(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Novela TV.pl"                      		title="(?=Novela(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Nuta TV.pl"                               	title="(?=Nuta(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="OPOKA TV.pl"                              	title="(?=OPOKA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Ocko.pl"                                  	title="(?=Ocko(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -573,6 +581,7 @@
 	<channel id="TV TORUN.pl"                              	title="(?=(TV)?(\s*TORUN|\s*TORU.?)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TV ZGORZELEC.pl"                          	title="(?=(TVT\s*)?Zgorzelec(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TV ZGORZELEC.pl"                          	title="(?=(TV\s*)?ZGORZELEC(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVC.pl"                      				title="(?=TVC(\s*Polska)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVN 24 BiS.pl"                            	title="(?=TVN\s*24\s*(BiS|Biznes\s*i\s*.*wiat)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVN 24.pl"                                	title="(?=(TVN\s*24|24\s*TVN)(\+|PLUS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVN 7.pl"                                 	title="(?=TVN\s*(7|Siedem)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -603,8 +612,11 @@
 	<channel id="TVP ABC.pl"                               	title="(?=(TVP\s*ABC|ABC\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP Dokument.pl"                          	title="(?=(TVP\s*Dokument|Dokument\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP HD.pl"                                	title="(?=TVP(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP Historia 2.pl"                       	title="(?=TVP\s*Historia\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP Historia.pl"                          	title="(?=(TVP\s*Historia|Historia\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP Info.pl"                              	title="(?=(TVP\s*Info|Info\s*TVP)(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP Kobieta.pl"                       		title="(?=TVP\s*Kobieta(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP Kultura 2.pl"                       	title="(?=TVP\s*Kultura\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP Kultura.pl"                           	title="(?=(TVP\s*Kultura|Kultura\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP Polonia.pl"                           	title="(?=(TVP\s*Polonia|Polonia\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP Rozrywka.pl"                          	title="(?=(TVP\s*Rozrywka|Rozrywka\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -694,6 +706,7 @@
 	<channel id="Canal+ Family"                         	title="(?=(Canal|C)\s*(\+|PLUS)?\s*Family(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Canal+ Film"                           	title="(?=(Canal|C)\s*(\+|PLUS)?\s*Film(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Canal+ Now"                            	title="(?=(Canal|C)\s*(\+|PLUS)?\s*Now(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Canal+ Premium"                      		title="(?=(Canal|C)\s*(\+|PLUS)?\s*Premium(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Canal+ Seriale"                        	title="(?=(Canal|C)\s*(\+|PLUS)?\s*Seriale(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Canal+ Sport 2"                        	title="(?=(Canal|C)\s*(\+|PLUS)?\s*SPORT\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Canal+ Sport"                          	title="(?=(CANAL|C)\s*(\+|PLUS)?\s*SPORT(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -815,6 +828,7 @@
 	<channel id="Nickelodeon"                           	title="(?=Nickelodeon(\s*Polska)?(\s*TV)?(\s*PL)?$)" strm=""/>
 	<channel id="Nicktoons"                             	title="(?=Nicktoons(\s*Polska)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Nobox TV"                              	title="(?=Nobox(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Novela TV"                      			title="(?=Novela(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Nuta TV"                               	title="(?=Nuta(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="OPOKA TV"                              	title="(?=OPOKA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Ocko"                                  	title="(?=Ocko(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -895,6 +909,7 @@
 	<channel id="TV TORUN"                              	title="(?=(TV)?(\s*TORUN|\s*TORU.?)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TV ZGORZELEC"                          	title="(?=(TVT\s*)?Zgorzelec(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TV ZGORZELEC"                          	title="(?=(TV\s*)?ZGORZELEC(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVC"                      					title="(?=TVC(\s*Polska)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVN 24 BiS"                            	title="(?=TVN\s*24\s*(BiS|Biznes\s*i\s*.*wiat)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVN 24"                                	title="(?=(TVN\s*24|24\s*TVN)(\+|PLUS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVN 7"                                 	title="(?=TVN\s*(7|Siedem)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -925,8 +940,11 @@
 	<channel id="TVP ABC"                               	title="(?=(TVP\s*ABC|ABC\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP Dokument"                          	title="(?=(TVP\s*Dokument|Dokument\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP HD"                                	title="(?=TVP(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP Historia 2"                       		title="(?=TVP\s*Historia\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP Historia"                          	title="(?=(TVP\s*Historia|Historia\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP Info"                              	title="(?=(TVP\s*Info|Info\s*TVP)(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP Kobieta"                       		title="(?=TVP\s*Kobieta(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP Kultura 2"                       		title="(?=TVP\s*Kultura\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP Kultura"                           	title="(?=(TVP\s*Kultura|Kultura\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP Polonia"                           	title="(?=(TVP\s*Polonia|Polonia\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP Rozrywka"                          	title="(?=(TVP\s*Rozrywka|Rozrywka\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
