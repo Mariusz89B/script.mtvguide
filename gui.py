@@ -7046,7 +7046,7 @@ class ProgramListDialog(xbmcgui.WindowXMLDialog):
 
         listControl = self.getControl(ProgramListDialog.C_PROGRAM_LIST)
         listControl.addItems(items)
-        if not self.startChannelIndex == None:
+        if self.startChannelIndex is not None:
             listControl.selectItem(int(self.startChannelIndex))
         else:
             listControl.selectItem(int(0))
