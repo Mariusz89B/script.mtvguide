@@ -348,7 +348,9 @@ class Skin:
                     if success and skin.name == Skin.getSkinName():
                         usedSkinUpdated = True
         if usedSkinUpdated:
-            xbmcgui.Dialog().ok(strings(30709), strings(30979))
+            if not xbmc.getCondVisibility('Window.IsVisible(yesnodialog)'):
+                xbmcgui.Dialog().ok(strings(30709), strings(30979))
+                exit()
         deb('Skin finished update')
 
     @staticmethod
