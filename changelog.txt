@@ -1,4 +1,5 @@
-﻿[COLOR yellow][B]wersja 9.3.0[/B] - 2021-04-08[/COLOR]
+﻿[COLOR yellow][B]wersja 9.3.0[/B] - 2021-04-09[/COLOR]
+- dodana funkcja timeshift do serwisu Telia Play
 - poprawka błędu szyfrowania
 - naprawiono przycisk resetowania w menu pobierania
 - dodano wskaźnik prędkości pobierania

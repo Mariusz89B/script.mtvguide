@@ -489,12 +489,11 @@ class TeliaPlayUpdater(baseServiceUpdater):
         
         return result
 
-
     def getChannelStream(self, chann):
         data = None
 
         self.checkLogin()
-        
+
         try:
             try:
                 from urllib.parse import urlencode, quote_plus, quote, unquote
@@ -503,7 +502,9 @@ class TeliaPlayUpdater(baseServiceUpdater):
 
             cid = chann.cid
 
-            url = 'https://ottapi.prod.telia.net/web/{cc}/streaminggateway/rest/secure/v1/streamingticket/CHANNEL/{cid}/DASH'.format(cc=cc[self.country], cid=(str(cid)))
+            streamType = 'CHANNEL'
+
+            url = 'https://ottapi.prod.telia.net/web/{cc}/streaminggateway/rest/secure/v1/streamingticket/{type}/{cid}/DASH'.format(cc=cc[self.country], cid=(str(cid)), type=streamType)
 
             headers = {
                 'Accept': '*/*',

@@ -2053,6 +2053,15 @@ class mTVGuide(xbmcgui.WindowXML):
             #os.remove(f)
         #except:
             #None
+
+        try:
+            if sys.version_info[0] > 2:
+                f = os.path.join(self.profilePath, 'teliaplay_ts.json')
+            else:
+                f = os.path.join(self.profilePath, 'teliaplay_ts.json').decode('utf-8')
+            os.remove(f)
+        except:
+            None
             
         try:
             if sys.version_info[0] > 2:
@@ -2184,6 +2193,7 @@ class mTVGuide(xbmcgui.WindowXML):
         IplaStreamsList = list()
         NCGOStreamsList = list()
         #PlayerPLStreamsList = list()
+        TeliaPlayStreamsList = list()
 
         streams = self.database.getAllStreamUrlList() 
         #deb('getStreams: {}'.format(streams))
@@ -2298,6 +2308,24 @@ class mTVGuide(xbmcgui.WindowXML):
                 #else:
                     #f.write(bytearray('\n'.join(PlayerPLStreamsList), 'utf-8'))
 
+        # Telia Play
+        for item in streams:
+            try:
+                item = re.findall('^(.+?), SERVICE=TELIA PLAY&CID=\d+$', str(item))
+            except:
+                item = re.findall('^(.+?), SERVICE=TELIA PLAY&CID=\d+$', str(item.encode('ascii', 'ignore').decode('ascii')))
+
+            if len(item) > 0:
+                TeliaPlayStreamsList.append(item[0].upper())
+
+        if TeliaPlayStreamsList:
+            file_name = os.path.join(self.profilePath, 'teliaplay_ts.json')
+            with open(file_name, 'w+') as f:
+                if sys.version_info[0] > 2:
+                    f.write('\n'.join(TeliaPlayStreamsList))
+                else:
+                    f.write(bytearray('\n'.join(TeliaPlayStreamsList), 'utf-8'))
+
         # nc+ GO
         for item in streams:
             try:
@@ -2321,7 +2349,7 @@ class mTVGuide(xbmcgui.WindowXML):
     def catchupEPG(self, program, cellWidth):
         archive = ''
 
-        archivePlaylist = self.getPlaylist()
+        archivePlaylist = self.getPlaylist() + self.getTeliaPlay()
         archiveList = self.getCmore() + self.getPolsatGo() + self.getIpla()# + self.getPlayerPL()
 
         catchupList = list()
@@ -4414,6 +4442,18 @@ class mTVGuide(xbmcgui.WindowXML):
 
         #return ArchivePlayerPLList
 
+    def getTeliaPlay(self):
+        ArchiveTeliaPlayList = ''
+        try:
+            file_name = os.path.join(self.profilePath, 'teliaplay_ts.json')
+            f = xbmcvfs.File(file_name, 'r')
+            ArchiveTeliaPlayList = f.read()
+            f.close()
+        except:
+            ArchiveTeliaPlayList += ''
+
+        return ArchiveTeliaPlayList
+
     def elapsed_interval(self, start, end):
         elapsed = end - start
         min, secs = divmod(elapsed.days * 86400 + elapsed.seconds, 60)
@@ -4463,7 +4503,7 @@ class mTVGuide(xbmcgui.WindowXML):
         try:
             if finishedProgram < datetime.datetime.now() and ADDON.getSetting('archive_support') == 'true':
                 archiveList = self.getCmore() + self.getPolsatGo() + self.getIpla()# + self.getPlayerPL()
-                archivePlaylist = self.getPlaylist()
+                archivePlaylist = self.getPlaylist() + self.getTeliaPlay()
 
                 if (program.channel.title.upper() in archiveList and program.startDate > reverseArchiveService) or (program.channel.title.upper() in archivePlaylist and program.startDate > reverseTime):
                     res = xbmcgui.Dialog().yesno(strings(30998), strings(30999).format(program.title))
@@ -4597,7 +4637,7 @@ class mTVGuide(xbmcgui.WindowXML):
         try:
             if finishedProgram < datetime.datetime.now() and ADDON.getSetting('archive_support') == 'true':
                 archiveList = self.getCmore() + self.getPolsatGo() + self.getIpla()# + self.getPlayerPL()
-                archivePlaylist = self.getPlaylist()
+                archivePlaylist = self.getPlaylist() + self.getTeliaPlay()
 
                 if (program.channel.title.upper() in archiveList and program.startDate > reverseArchiveService) or (program.channel.title.upper() in archivePlaylist and program.startDate > reverseTime):
                     res = xbmcgui.Dialog().yesno(strings(30998), strings(30999).format(program.title))
