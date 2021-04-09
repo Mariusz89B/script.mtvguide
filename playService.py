@@ -695,9 +695,13 @@ class PlayService(xbmc.Player, BasePlayService):
                                 base = ['https://teliatv.dk', 'https://www.teliaplay.se']
                                 classic = ['https://teliatv.dk', 'https://classic.teliaplay.se']
 
+                                host = ['www.teliatv.dk', 'www.teliaplay.se']
+                                hclassic = ['www.teliatv.dk', 'classic.teliaplay.se']
+
                                 cc = ['dk', 'se']
 
                                 country            = int(ADDON.getSetting('teliaplay_locale'))
+                                
                                 dashjs             = ADDON.getSetting('teliaplay_devush')
                                 beartoken          = ADDON.getSetting('teliaplay_beartoken')
                                 tv_client_boot_id  = ADDON.getSetting('teliaplay_tv_client_boot_id')
@@ -708,16 +712,15 @@ class PlayService(xbmc.Player, BasePlayService):
                                 utc = utc + '000'
                                 lutc = lutc + '000'
 
-                                url = 'https://classic.teliaplay.se/rest/v2/epg/{cid}/map?deviceType=WEB&fromTime={start}&toTime={end}&followingPrograms=0'.format(base=base[country], cid=channelInfo.cid, start=utc, end=lutc)
+                                url = '{base}/rest/v2/epg/{cid}/map?deviceType=WEB&fromTime={start}&toTime={end}&followingPrograms=0'.format(base=classic[country], cid=channelInfo.cid, start=utc, end=lutc)
 
                                 headers = {
                                     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
                                     'Accept-Encoding': 'gzip, deflate, br',
                                     'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
                                     'Cache-Control': 'no-cache',
-                                    'Connection': 'keep-alive',
                                     'DNT': '1',
-                                    'Host': 'classic.teliaplay.se',
+                                    'Host': hclassic[country],
                                     'Pragma': 'no-cache',
                                     'Sec-Fetch-Dest': 'document',
                                     'Sec-Fetch-Mode': 'navigate',
