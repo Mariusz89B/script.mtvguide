@@ -76,6 +76,7 @@ import cpgocids
 import francetvcids
 import cmorecids
 import teliaplaycids
+#import teliaplayclassiccids
 import playerplcids
 
 sess = requests.Session()
@@ -93,6 +94,7 @@ SERVICES = {
     francetvcids.serviceName        : francetvcids.FranceTVUpdater(),
     cmorecids.serviceName           : cmorecids.CmoreUpdater(),
     teliaplaycids.serviceName       : teliaplaycids.TeliaPlayUpdater(),
+    #teliaplayclassiccids.serviceName : teliaplayclassiccids.TeliaPlayUpdater(),
     playerplcids.serviceName        : playerplcids.PlayerPLUpdater()
 }
 
@@ -401,8 +403,7 @@ class PlayService(xbmc.Player, BasePlayService):
                     try:
                         self.playbackStopped = False
 
-                        channelInfo, data = channelInfo
-
+                        licenseUrl = channelInfo.lic
                         strmUrl = channelInfo.strm
 
                         try:
@@ -410,7 +411,7 @@ class PlayService(xbmc.Player, BasePlayService):
                         except ImportError:
                             from urllib import urlencode, quote_plus, quote, unquote
 
-                        if data['type'] == 'hls':
+                        if lic['type'] == 'hls':
                             PROTOCOL = 'hls'
                         else:
                             PROTOCOL = 'mpd'
@@ -430,7 +431,7 @@ class PlayService(xbmc.Player, BasePlayService):
                             ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
                             if DRM:
                                 ListItem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
-                                ListItem.setProperty('inputstream.adaptive.license_key', data['license']['castlabsServer'] + '|Content-Type=&x-dt-auth-token=%s|R{SSM}|' % data['license']['castlabsToken'])
+                                ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl['license']['castlabsServer'] + '|Content-Type=&x-dt-auth-token=%s|R{SSM}|' % licenseUrl['license']['castlabsToken'])
                                 ListItem.setProperty('IsPlayable', 'true')
 
                                 import threading
@@ -451,7 +452,7 @@ class PlayService(xbmc.Player, BasePlayService):
                     try:
                         self.playbackStopped = False
 
-                        channelInfo, licenseUrl = channelInfo
+                        licenseUrl = channelInfo.lic
                         strmUrl = channelInfo.strm
 
                         try:
@@ -503,7 +504,7 @@ class PlayService(xbmc.Player, BasePlayService):
                     try:
                         self.playbackStopped = False
 
-                        channelInfo, licenseUrl, licenseData = channelInfo
+                        licenseUrl, licenseData = channelInfo.lic
                         strmUrl = channelInfo.strm
 
                         try:
@@ -564,8 +565,8 @@ class PlayService(xbmc.Player, BasePlayService):
                     try:
                         self.playbackStopped = False
 
-                        channelInfo, licenseUrl = channelInfo
-                        strmUrl = channelInfo.strm + '|auth=SSL/TLS&verifypeer=false'
+                        licenseUrl = channelInfo.lic
+                        strmUrl = channelInfo.strm
 
                         if sys.version_info[0] > 2:
                             from urllib.parse import parse_qsl, quote, unquote, urlencode, quote_plus
@@ -619,7 +620,7 @@ class PlayService(xbmc.Player, BasePlayService):
                     try:
                         self.playbackStopped = False
 
-                        channelInfo, licenseUrl = channelInfo
+                        licenseUrl = channelInfo.lic
                         strmUrl = channelInfo.strm
 
                         try:
@@ -666,7 +667,7 @@ class PlayService(xbmc.Player, BasePlayService):
                     try:
                         self.playbackStopped = False
 
-                        channelInfo, licenseUrl = channelInfo
+                        licenseUrl = channelInfo.lic
                         strmUrl = channelInfo.strm
 
                         try:
@@ -861,6 +862,7 @@ class PlayService(xbmc.Player, BasePlayService):
                             self.playbackStopped = False
 
                             strmUrl = channelInfo.strm
+                            #adsUrl = channelInfo.lic
 
                             PROTOCOL = ''
 

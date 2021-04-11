@@ -158,7 +158,6 @@ class RecordService(BasePlayService):
         self.durationTime        = 0
         self.startOffsetDownload = 0
         self.endOffsetDownload   = 0
-        self.license             = None
         self.downloading         = False 
 
 
@@ -1220,11 +1219,6 @@ class RecordService(BasePlayService):
         cid, service = self.parseUrl(url)
         channelInfo = self.getChannel(cid, service)
 
-        if type(channelInfo) is tuple:
-            channelInfo, LicenseUrl = channelInfo
-
-            self.license = LicenseUrl
-
         if channelInfo is None:
             threadData['nrOfReattempts'] += 1
             deb('RecordService recordUrl - locked service {} - trying next, nrOfReattempts: {}, max: {}'.format(service, threadData['nrOfReattempts'], maxNrOfReattempts))
@@ -1371,6 +1365,8 @@ class RecordService(BasePlayService):
     def generateFFMPEGCommand(self, channelInfo, programDuration, destinationFile, recordOptions):
         recordCommand = list()
         recordCommand.append(self.ffmpegdumpExe)
+
+        streamSource = channelInfo.strm
 
         if channelInfo.ffmpegdumpLink is not None:
             recordCommand.extend(channelInfo.ffmpegdumpLink)

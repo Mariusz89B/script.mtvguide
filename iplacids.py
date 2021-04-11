@@ -469,9 +469,10 @@ class IplaUpdater(baseServiceUpdater):
 
             if data is not None and data != "":
                 chann.strm = data
+                chann.lic = licenseUrl, licenseData
                 
                 self.log('getChannelStream found matching channel: cid: {}, name: {}, rtmp:{}'.format(chann.cid, chann.name, chann.strm))
-                return chann, licenseUrl, licenseData
+                return chann
             else:
                 self.log('getChannelStream error getting channel stream2, result: {}'.format(str(data)))
                 return None

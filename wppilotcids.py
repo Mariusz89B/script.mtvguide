@@ -312,13 +312,14 @@ class WpPilotUpdater(baseServiceUpdater):
                     #except:
                         #adList.remove(ad)
 
-                #adsUrls = adList
+                #adsUrl = adList
 
             if data is not None and data != "":
                 chann.strm = data
+                chann.lic = adsUrl
 
                 self.log('getChannelStream found matching channel: cid: {}, name: {}, rtmp:{}'.format(chann.cid, chann.name, chann.strm))
-                return chann#, adsUrls
+                return chann
             else:
                 self.log('getChannelStream error getting channel stream2, result: {}'.format(str(data)))
                 return None

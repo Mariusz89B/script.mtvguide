@@ -329,8 +329,9 @@ class PolsatGoUpdater(baseServiceUpdater):
         
             if data is not None and data != "":
                 chann.strm = data
+                chann.lic = licenseUrl
                 self.log('getChannelStream found matching channel: cid: {}, name: {}, rtmp:{}'.format(chann.cid, chann.name, chann.strm))
-                return chann, licenseUrl
+                return chann
             else:
                 self.log('getChannelStream error getting channel stream2, result: {}'.format(str(data)))
                 return None
