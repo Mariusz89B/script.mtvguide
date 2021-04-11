@@ -69,14 +69,13 @@ import requests
 from contextlib import contextmanager
 
 import playlistcids
-import videostarcids
+import wppilotcids
 import iplacids
 import ncplusgocids
 import cpgocids
 import francetvcids
 import cmorecids
 import teliaplaycids
-#import teliaplayclassiccids
 import playerplcids
 
 sess = requests.Session()
@@ -87,14 +86,13 @@ SERVICES = {
     playlistcids.serviceName + '_3' : playlistcids.PlaylistUpdater(instance_number=3),
     playlistcids.serviceName + '_4' : playlistcids.PlaylistUpdater(instance_number=4),
     playlistcids.serviceName + '_5' : playlistcids.PlaylistUpdater(instance_number=5),
-    videostarcids.serviceName       : videostarcids.VideoStarUpdater(),
+    wppilotcids.serviceName         : wppilotcids.WpPilotUpdater(),
     iplacids.serviceName            : iplacids.IplaUpdater(),
     ncplusgocids.serviceName        : ncplusgocids.NcPlusGoUpdater(),
     cpgocids.serviceName            : cpgocids.PolsatGoUpdater(),
     francetvcids.serviceName        : francetvcids.FranceTVUpdater(),
     cmorecids.serviceName           : cmorecids.CmoreUpdater(),
     teliaplaycids.serviceName       : teliaplaycids.TeliaPlayUpdater(),
-    #teliaplayclassiccids.serviceName : teliaplayclassiccids.TeliaPlayUpdater(),
     playerplcids.serviceName        : playerplcids.PlayerPLUpdater()
 }
 
@@ -403,6 +401,8 @@ class PlayService(xbmc.Player, BasePlayService):
                     try:
                         self.playbackStopped = False
 
+                        channelInfo, data = channelInfo
+
                         strmUrl = channelInfo.strm
 
                         try:
@@ -410,7 +410,7 @@ class PlayService(xbmc.Player, BasePlayService):
                         except ImportError:
                             from urllib import urlencode, quote_plus, quote, unquote
 
-                        if strmUrl['type'] == 'hls':
+                        if data['type'] == 'hls':
                             PROTOCOL = 'hls'
                         else:
                             PROTOCOL = 'mpd'
@@ -420,7 +420,7 @@ class PlayService(xbmc.Player, BasePlayService):
                         import inputstreamhelper
                         is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
                         if is_helper.check_inputstream():
-                            ListItem = xbmcgui.ListItem(path=strmUrl['manifestUrl'])
+                            ListItem = xbmcgui.ListItem(path=strmUrl)
                             ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
                             ListItem.setContentLookup(False)
                             if sys.version_info[0] > 2:
@@ -430,7 +430,7 @@ class PlayService(xbmc.Player, BasePlayService):
                             ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
                             if DRM:
                                 ListItem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
-                                ListItem.setProperty('inputstream.adaptive.license_key', strmUrl['license']['castlabsServer'] + '|Content-Type=&x-dt-auth-token=%s|R{SSM}|' % strmUrl['license']['castlabsToken'])
+                                ListItem.setProperty('inputstream.adaptive.license_key', data['license']['castlabsServer'] + '|Content-Type=&x-dt-auth-token=%s|R{SSM}|' % data['license']['castlabsToken'])
                                 ListItem.setProperty('IsPlayable', 'true')
 
                                 import threading
@@ -438,7 +438,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                 thread = threading.Timer(3.0, self.reverse, args=[])
                                 thread.start()
 
-                        self.strmUrl = strmUrl['manifestUrl']
+                        self.strmUrl = strmUrl
                         xbmc.Player().play(item=str(self.strmUrl), listitem=ListItem, windowed=startWindowed)
                         res = True
 
@@ -862,8 +862,30 @@ class PlayService(xbmc.Player, BasePlayService):
 
                             strmUrl = channelInfo.strm
 
-                            ListItem = xbmcgui.ListItem(channelInfo.title)
-                            ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
+                            PROTOCOL = ''
+
+                            if '.m3u8' in strmUrl:
+                                mimeType = 'application/x-mpegURL'
+                                #mimeType = 'application/vnd.apple.mpegstream_url'
+                                PROTOCOL = 'hls'
+
+                            elif '.mpd' in strmUrl or 'format=mpd' in strmUrl:
+                                mimeType = 'application/xml+dash'
+                                PROTOCOL = 'mpd'
+
+                            import inputstreamhelper
+                            is_helper = inputstreamhelper.Helper(PROTOCOL)
+                            if is_helper.check_inputstream():  
+                                ListItem = xbmcgui.ListItem(path=strmUrl)
+                                ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
+                                ListItem.setContentLookup(False)
+                                if sys.version_info[0] > 2:
+                                    ListItem.setProperty('inputstream', is_helper.inputstream_addon)
+                                else:
+                                    ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
+                                ListItem.setMimeType(mimeType)
+                                ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
+                                ListItem.setProperty('IsPlayable', 'true')
                             
                             self.strmUrl = strmUrl
                             xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)

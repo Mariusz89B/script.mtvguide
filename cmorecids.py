@@ -534,12 +534,12 @@ class CmoreUpdater(baseServiceUpdater):
                         self.noPremiumMessage()
         
             if data is not None and data != "":
-                chann.strm = data
+                chann.strm = data['manifestUrl']
                 try:
                     self.log('getChannelStream found matching channel: cid: {}, name: {}, rtmp:{}'.format(chann.cid, chann.name, chann.strm))
                 except:
                     self.log('getChannelStream found matching channel: cid: {}, name: {}, rtmp:{}'.format(str(chann.cid), str(chann.name), str(chann.strm)))
-                return chann
+                return chann, data
             else:
                 self.log('getChannelStream error getting channel stream2, result: {}'.format(str(data)))
                 return None

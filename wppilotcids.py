@@ -58,7 +58,9 @@ import base64
 import json
 
 serviceName         = 'WP Pilot'
-videostarUrl        = 'https://pilot.wp.pl/api/'
+wpUrl               = 'https://pilot.wp.pl/api/'
+wpVideoUrl          = 'https://pilot.wp.pl/api/v1/channel/'
+wpCloseUrl          = 'https://pilot.wp.pl/api/v1/channels/close'
 
 headers = {
     'user-agent': 'ExoMedia 4.3.0 (43000) / Android 8.0.0 / foster_e',
@@ -67,7 +69,7 @@ headers = {
     'content-type': 'application/json; charset=UTF-8'
 }
 
-login_url = 'https://pilot.wp.pl/api/v1/user_auth/login'
+wpLoginUrl = 'https://pilot.wp.pl/api/v1/user_auth/login'
 
 if sys.version_info[0] > 2:
     try:
@@ -84,7 +86,7 @@ cacheFile = os.path.join(profilePath, 'cache.db')
 
 sess = requests.Session()
 
-class VideoStarUpdater(baseServiceUpdater):
+class WpPilotUpdater(baseServiceUpdater):
     def __init__(self):
         self.serviceName        = serviceName
         self.localMapFile       = 'basemap.xml'
@@ -93,7 +95,9 @@ class VideoStarUpdater(baseServiceUpdater):
         self.login              = ADDON.getSetting('videostar_username').strip()
         self.password           = ADDON.getSetting('videostar_password').strip()
         self.servicePriority    = int(ADDON.getSetting('priority_videostar'))
-        self.url                = videostarUrl
+        self.url                = wpUrl
+        self.videoUrl           = wpVideoUrl
+        self.closeUrl           = wpCloseUrl
         self.addDuplicatesToList = True
         self.acc                = None
 
@@ -107,8 +111,8 @@ class VideoStarUpdater(baseServiceUpdater):
         conn = sqlite3.connect(cacheFile, detect_types=sqlite3.PARSE_DECLTYPES,
                                cached_statements=20000)
         c = conn.cursor()
-        c.execute('CREATE TABLE IF NOT EXISTS Cache({} TEXT)'.format(table_name))
-        c.execute("INSERT INTO Cache('{}') VALUES ('{}')".format(table_name, value))
+        c.execute('CREATE TABLE IF NOT EXISTS Cache(%s TEXT)' % table_name)
+        c.execute("INSERT INTO Cache('%s') VALUES ('%s')" % (table_name, value))
         conn.commit()
         c.close()
 
@@ -125,7 +129,7 @@ class VideoStarUpdater(baseServiceUpdater):
 
     def cookiesToString(self, cookies):
         try:
-            return "; ".join([str(x) + "=" + str(y) for x, y in list(cookies.get_dict().items())])
+            return "; ".join([str(x) + "=" + str(y) for x, y in cookies.get_dict().items()])
         except Exception as e:
             print (e)
             return ''
@@ -174,7 +178,7 @@ class VideoStarUpdater(baseServiceUpdater):
                     data = {'device': 'android_tv', 'login': self.login, 'password': self.password}
 
                     response = requests.post(
-                        login_url,
+                        wpLoginUrl,
                         json=data,
                         verify=False,
                         headers=headers
@@ -245,33 +249,45 @@ class VideoStarUpdater(baseServiceUpdater):
             self.log('getChannelList exception: {}'.format(getExceptionString()))
         return result
 
-    def getChannelStream(self, chann):
+    def getChannelStream(self, chann, retry=False):
         data = None
         
         free = self.acc
 
         try:
             cookies = self.readFromDB()
-            url = self.url + 'v1/channel/{}'.format(chann.cid)
+            url = self.videoUrl + chann.cid
             data = {'format_id': '2', 'device_type': 'android'}
 
             headers.update({'Cookie': cookies})
             response = requests.get(url, params=data, verify=False, headers=headers).json()
+
+            meta = response.get('_meta', None)
+            if meta is not None:
+                token = meta.get('error', {}).get('info', {}).get('stream_token', None)
+                if token is not None:
+                    json = {'channelId': chann.cid, 't': token}
+                    response = requests.post(
+                        self.closeUrl,
+                        json=json,
+                        verify=False,
+                        headers=headers).json()
+
+                    if response.get('data', {}).get('status', '') == 'ok' and not retry:
+                        data = self.getChannelStream(chann.cid, True)
+                    else:
+                        return
+
             if 'user_channel_other_stream_playing' in str(response):
                 self.maxDeviceIdMessage()
 
             if 'user_not_verified_eu' in str(response):
                 self.geoBlockErrorMessage()
 
-            if 'hls' in response['data']['stream_channel']['streams'][0]['type']:
-                data = response['data']['stream_channel']['streams'][0]['url'][0] + '|user-agent=' + headers['user-agent']
-
-            elif data is None: # or data['status'] != 'ok'
-                self.log('Error getting channel stream, result: {}'.format(str(data)))
-                return None
-
+            if 'hls@live:abr' in response['data']['stream_channel']['streams'][0]['type']:
+                data = response['data']['stream_channel']['streams'][0]['url'][0] + '|user-agent=' + headers['user-agent'] + '&cookie=' + cookies
             else:
-                data = response['data']['stream_channel']['streams'][1]['url'][0] + '|user-agent=' + headers['user-agent']        
+                data = response['data']['stream_channel']['streams'][1]['url'][0] + '|user-agent=' + headers['user-agent'] + '&cookie=' + cookies
 
             # Advertisement
             #adList = list()

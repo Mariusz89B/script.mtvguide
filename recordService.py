@@ -979,23 +979,45 @@ class RecordService(BasePlayService):
         duration = datetime.timedelta(seconds=int(programDuration))
 
         streamSource = channelInfo.strm
-        coockieSeparator = streamSource.find('|')
-        if coockieSeparator > 0:
-            removedCoockie = streamSource[coockieSeparator+1:]
-            streamSource = streamSource[:coockieSeparator]
-            deb('DownloadService - found cookie separator in download source! Remove this from URL: %s' % removedCoockie)
+        
+        cookieSeparator = streamSource.find('|')
+        if cookieSeparator > 0:
+            removedCookie = streamSource[cookieSeparator+1:]
+            streamSource = streamSource[:cookieSeparator]
+            deb('DownloadService - found cookie separator in download source! Remove this from URL: %s' % removedCookie)
 
-            headers = removedCoockie.split('&')
+            headers = removedCookie.split('&')
             newHeader = ""
+            newCookie = ""  
+
+            UA = serviceLib.HOST
+
             for header in headers:
-                deb('Got: {}'.format(header))
-                if 'User-Agent' in header:
-                    newHeader = newHeader + "User-Agent: {}\r\n".format(serviceLib.HOST)
+                #deb('Got: {}'.format(header))
+                if 'user-agent' in header:
+                    p = re.compile('user-agent=(.*?)$')
+
+                    if p.match(header):
+                        UA = p.search(header).group(1)
+
+                    newHeader = newHeader + "User-Agent: {}\r\n".format(UA)
+
+                elif 'cookie' in header:
+                    p = re.compile('cookie=(.*?)$')
+
+                    if p.match(header):
+                        cookie = p.search(header).group(1)
+
+                    newCookie = newCookie + "Cookie: {}\r\n".format(cookie)
+
                 else:
                     newHeader = newHeader + "{}\r\n".format(header)
 
             recordCommand.append("-headers")
             recordCommand.append(newHeader)
+
+            recordCommand.append("-cookies")
+            recordCommand.append(newCookie)
 
         recordCommand.append("-protocol_whitelist")
         recordCommand.append("file,http,https,tcp,tls,crypto")
@@ -1352,29 +1374,46 @@ class RecordService(BasePlayService):
 
         if channelInfo.ffmpegdumpLink is not None:
             recordCommand.extend(channelInfo.ffmpegdumpLink)
+
         else:
-            if 'cmore.se' in str(channelInfo.strm):
-                streamSource = channelInfo.strm['manifestUrl']
-            else:
-                streamSource = channelInfo.strm
+            cookieSeparator = streamSource.find('|')
+            if cookieSeparator > 0:
+                removedCookie = streamSource[cookieSeparator+1:]
+                streamSource = streamSource[:cookieSeparator]
+                deb('RecordService - found cookie separator in record source! Remove this from URL: %s' % removedCookie)
 
-            coockieSeparator = streamSource.find('|')
-            if coockieSeparator > 0:
-                removedCoockie = streamSource[coockieSeparator+1:]
-                streamSource = streamSource[:coockieSeparator]
-                deb('RecordService - found coockie separator in record source! Remove this from URL: %s' % removedCoockie)
-
-                headers = removedCoockie.split('&')
+                headers = removedCookie.split('&')
                 newHeader = ""
+                newCookie = ""  
+
+                UA = serviceLib.HOST
+
                 for header in headers:
-                    deb('Got: {}'.format(header))
-                    if 'User-Agent' in header:
-                        newHeader = newHeader + "User-Agent: {}\r\n".format(serviceLib.HOST)
+                    #deb('Got: {}'.format(header))
+                    if 'user-agent' in header:
+                        p = re.compile('user-agent=(.*?)$')
+
+                        if p.match(header):
+                            UA = p.search(header).group(1)
+
+                        newHeader = newHeader + "User-Agent: {}\r\n".format(UA)
+
+                    elif 'cookie' in header:
+                        p = re.compile('cookie=(.*?)$')
+
+                        if p.match(header):
+                            cookie = p.search(header).group(1)
+
+                        newCookie = newCookie + "Cookie: {}\r\n".format(cookie)
+
                     else:
                         newHeader = newHeader + "{}\r\n".format(header)
 
                 recordCommand.append("-headers")
                 recordCommand.append(newHeader)
+
+                recordCommand.append("-cookies")
+                recordCommand.append(newCookie)
 
             recordCommand.append("-probesize")
             recordCommand.append("50M")
@@ -1406,7 +1445,7 @@ class RecordService(BasePlayService):
         recordCommand.append("-t")
         recordCommand.append("{}".format(programDuration))
         recordCommand.append("-loglevel")
-        recordCommand.append("info")
+        recordCommand.append("debug")
         recordCommand.append("-n")
         recordCommand.append("{}".format(destinationFile))
 
