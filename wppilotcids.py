@@ -316,7 +316,7 @@ class WpPilotUpdater(baseServiceUpdater):
 
             if data is not None and data != "":
                 chann.strm = data
-                chann.lic = adsUrl
+                #chann.lic = adsUrl
 
                 self.log('getChannelStream found matching channel: cid: {}, name: {}, rtmp:{}'.format(chann.cid, chann.name, chann.strm))
                 return chann
