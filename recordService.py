@@ -503,18 +503,16 @@ class RecordService(BasePlayService):
         e = ProgramEndDate
 
         # Duration
-        durationCalc = ((ProgramEndDate - ProgramStartDate).total_seconds() / 60.0)
-        duration = re.sub('.\d+$', '', str(durationCalc))
+        durationCalc = int(((ProgramEndDate - ProgramStartDate).total_seconds() / 60.0))
+        duration = str(durationCalc)
 
         # Offset
-        offsetCalc = ((datetime.datetime.now() - ProgramStartDate).total_seconds() / 60.0)
-        offset = re.sub('.\d+$', '', str(offsetCalc))
+        offsetCalc = int(((datetime.datetime.now() - ProgramStartDate).total_seconds() / 60.0))
+        offset = str(offsetCalc)
 
         # UTC/LUTC
-        utc = mktime(t.timetuple())
-        utc = re.sub('.0$', '', str(utc))
-        lutc = mktime(n.timetuple())
-        lutc = re.sub('.0$', '', str(lutc))
+        utc = str(int(datetime.datetime.timestamp(t)))
+        lutc = str(int(datetime.datetime.timestamp(e)))
 
         # Datestring
         year = t.strftime("%Y")
@@ -527,7 +525,8 @@ class RecordService(BasePlayService):
         archivePlaylist = '{duration}, {offset}, {utc}, {lutc}, {y}, {m}, {d}, {h}, {min}, {s}'.format(
             duration=duration, offset=offset, utc=utc, lutc=lutc, y=year, m=month, d=day, h=hour, min=minute, s=second)
 
-        mktime_duration = mktime(e.timetuple()) - mktime(t.timetuple())
+        mktime_duration = int(datetime.datetime.timestamp(e) - datetime.datetime.timestamp(t))
+        mktime_duration = str(mktime_duration)
 
         return archivePlaylist, mktime_duration
 

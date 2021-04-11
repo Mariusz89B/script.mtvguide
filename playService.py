@@ -710,10 +710,8 @@ class PlayService(xbmc.Player, BasePlayService):
 
                                 UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36 Edg/89.0.774.63'
 
-                                utc = utc + '000'
-                                lutc = lutc + '000'
-
-                                utc = int(utc) + 1000
+                                utc = str(int(utc) * 1000)
+                                lutc = str(int(lutc) * 1000)
 
                                 url = '{base}/rest/v2/epg/{cid}/map?deviceType=WEB&fromTime={start}&toTime={end}&followingPrograms=0'.format(base=classic[country], cid=channelInfo.cid, start=utc, end=lutc)
 

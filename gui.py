@@ -4510,47 +4510,84 @@ class mTVGuide(xbmcgui.WindowXML):
 
                     if res:
                         # archiveService
-                        if program.channel.title.upper() in archiveList and program.endDate < datetime.datetime.now():
-                            self.archiveService = datetime.datetime.now() - ProgramStartDate
+                        if ADDON.getSetting('archive_finished_program') == 'true': 
+                            if program.channel.title.upper() in archiveList and program.endDate < datetime.datetime.now():
+                                self.archiveService = datetime.datetime.now() - ProgramStartDate
+                            else:
+                                self.archiveService = ''
                         else:
-                            self.archiveService = ''
+                            if program.channel.title.upper() in archiveList and program.startDate < datetime.datetime.now():
+                                self.archiveService = datetime.datetime.now() - ProgramStartDate
+                            else:
+                                self.archiveService = ''
 
-                        if program.channel.title.upper() in archivePlaylist and program.endDate < datetime.datetime.now():
-                            from time import mktime
+                        if ADDON.getSetting('archive_finished_program') == 'true': 
+                            if program.channel.title.upper() in archivePlaylist and program.endDate < datetime.datetime.now():
+                                from time import mktime
 
-                            n = datetime.datetime.now()
-                            t = ProgramStartDate
-                            e = ProgramEndDate
+                                n = datetime.datetime.now()
+                                t = ProgramStartDate
+                                e = ProgramEndDate
 
-                            # Duration
-                            durationCalc = ((ProgramEndDate - ProgramStartDate).total_seconds() / 60.0)
-                            duration = re.sub('.\d+$', '', str(durationCalc))
+                                # Duration
+                                durationCalc = int(((ProgramEndDate - ProgramStartDate).total_seconds() / 60.0))
+                                duration = str(durationCalc)
 
-                            # Offset
-                            offsetCalc = ((datetime.datetime.now() - ProgramStartDate).total_seconds() / 60.0)
-                            offset = re.sub('.\d+$', '', str(offsetCalc))
+                                # Offset
+                                offsetCalc = int(((datetime.datetime.now() - ProgramStartDate).total_seconds() / 60.0))
+                                offset = str(offsetCalc)
 
-                            # UTC/LUTC
-                            utc = mktime(t.timetuple())
-                            utc = re.sub('.0$', '', str(utc))
-                            lutc = mktime(n.timetuple())
-                            lutc = re.sub('.0$', '', str(lutc))
-                            #et = mktime(e.timetuple()) - mktime(t.timetuple())
-                            #et = re.sub('.0$', '', str(et))
+                                # UTC/LUTC
+                                utc = str(int(datetime.datetime.timestamp(t)))
+                                lutc = str(int(datetime.datetime.timestamp(e)))
 
-                            # Datestring
-                            year = t.strftime("%Y")
-                            month = t.strftime("%m")
-                            day = t.strftime("%d")
-                            hour = t.strftime("%H")
-                            minute = t.strftime("%M")
-                            second = t.strftime("%S")
+                                # Datestring
+                                year = t.strftime("%Y")
+                                month = t.strftime("%m")
+                                day = t.strftime("%d")
+                                hour = t.strftime("%H")
+                                minute = t.strftime("%M")
+                                second = t.strftime("%S")
 
-                            self.archivePlaylist = '{duration}, {offset}, {utc}, {lutc}, {y}, {m}, {d}, {h}, {min}, {s}'.format(
-                                duration=duration, offset=offset, utc=utc, lutc=lutc, y=year, m=month, d=day, h=hour, min=minute, s=second)
+                                self.archivePlaylist = '{duration}, {offset}, {utc}, {lutc}, {y}, {m}, {d}, {h}, {min}, {s}'.format(
+                                    duration=duration, offset=offset, utc=utc, lutc=lutc, y=year, m=month, d=day, h=hour, min=minute, s=second)
 
+                            else:
+                                self.archivePlaylist = ''
                         else:
-                            self.archivePlaylist = ''
+                            if program.channel.title.upper() in archivePlaylist and program.startDate < datetime.datetime.now():
+                                from time import mktime
+
+                                n = datetime.datetime.now()
+                                t = ProgramStartDate
+                                e = ProgramEndDate
+
+                                # Duration
+                                durationCalc = int(((ProgramEndDate - ProgramStartDate).total_seconds() / 60.0))
+                                duration = str(durationCalc)
+
+                                # Offset
+                                offsetCalc = int(((datetime.datetime.now() - ProgramStartDate).total_seconds() / 60.0))
+                                offset = str(offsetCalc)
+
+                                # UTC/LUTC
+                                utc = str(int(datetime.datetime.timestamp(t)))
+                                lutc = str(int(datetime.datetime.timestamp(e)))
+                                
+
+                                # Datestring
+                                year = t.strftime("%Y")
+                                month = t.strftime("%m")
+                                day = t.strftime("%d")
+                                hour = t.strftime("%H")
+                                minute = t.strftime("%M")
+                                second = t.strftime("%S")
+
+                                self.archivePlaylist = '{duration}, {offset}, {utc}, {lutc}, {y}, {m}, {d}, {h}, {min}, {s}'.format(
+                                    duration=duration, offset=offset, utc=utc, lutc=lutc, y=year, m=month, d=day, h=hour, min=minute, s=second)
+
+                            else:
+                                self.archivePlaylist = ''
 
                     else:
                         if ADDON.getSetting('archive_finished_program') == 'false':
@@ -4644,47 +4681,84 @@ class mTVGuide(xbmcgui.WindowXML):
 
                     if res:
                         # archiveService
-                        if program.channel.title.upper() in archiveList and program.endDate < datetime.datetime.now():
-                            self.archiveService = datetime.datetime.now() - ProgramStartDate
+                        if ADDON.getSetting('archive_finished_program') == 'true': 
+                            if program.channel.title.upper() in archiveList and program.endDate < datetime.datetime.now():
+                                self.archiveService = datetime.datetime.now() - ProgramStartDate
+                            else:
+                                self.archiveService = ''
                         else:
-                            self.archiveService = ''
+                            if program.channel.title.upper() in archiveList and program.startDate < datetime.datetime.now():
+                                self.archiveService = datetime.datetime.now() - ProgramStartDate
+                            else:
+                                self.archiveService = ''
 
-                        if program.channel.title.upper() in archivePlaylist and program.endDate < datetime.datetime.now():
-                            from time import mktime
+                        if ADDON.getSetting('archive_finished_program') == 'true': 
+                            if program.channel.title.upper() in archivePlaylist and program.endDate < datetime.datetime.now():
+                                from time import mktime
 
-                            n = datetime.datetime.now()
-                            t = ProgramStartDate
-                            e = ProgramEndDate
+                                n = datetime.datetime.now()
+                                t = ProgramStartDate
+                                e = ProgramEndDate
 
-                            # Duration
-                            durationCalc = ((ProgramEndDate - ProgramStartDate).total_seconds() / 60.0)
-                            duration = re.sub('.\d+$', '', str(durationCalc))
+                                # Duration
+                                durationCalc = int(((ProgramEndDate - ProgramStartDate).total_seconds() / 60.0))
+                                duration = str(durationCalc)
 
-                            # Offset
-                            offsetCalc = ((datetime.datetime.now() - ProgramStartDate).total_seconds() / 60.0)
-                            offset = re.sub('.\d+$', '', str(offsetCalc))
+                                # Offset
+                                offsetCalc = int(((datetime.datetime.now() - ProgramStartDate).total_seconds() / 60.0))
+                                offset = str(offsetCalc)
 
-                            # UTC/LUTC
-                            utc = mktime(t.timetuple())
-                            utc = re.sub('.0$', '', str(utc))
-                            lutc = mktime(n.timetuple())
-                            lutc = re.sub('.0$', '', str(lutc))
-                            #et = mktime(e.timetuple()) - mktime(t.timetuple())
-                            #et = re.sub('.0$', '', str(et))
+                                # UTC/LUTC
+                                utc = str(int(datetime.datetime.timestamp(t)))
+                                lutc = str(int(datetime.datetime.timestamp(e)))
 
-                            # Datestring
-                            year = t.strftime("%Y")
-                            month = t.strftime("%m")
-                            day = t.strftime("%d")
-                            hour = t.strftime("%H")
-                            minute = t.strftime("%M")
-                            second = t.strftime("%S")
+                                # Datestring
+                                year = t.strftime("%Y")
+                                month = t.strftime("%m")
+                                day = t.strftime("%d")
+                                hour = t.strftime("%H")
+                                minute = t.strftime("%M")
+                                second = t.strftime("%S")
 
-                            self.archivePlaylist = '{duration}, {offset}, {utc}, {lutc}, {y}, {m}, {d}, {h}, {min}, {s}'.format(
-                                duration=duration, offset=offset, utc=utc, lutc=lutc, y=year, m=month, d=day, h=hour, min=minute, s=second)
+                                self.archivePlaylist = '{duration}, {offset}, {utc}, {lutc}, {y}, {m}, {d}, {h}, {min}, {s}'.format(
+                                    duration=duration, offset=offset, utc=utc, lutc=lutc, y=year, m=month, d=day, h=hour, min=minute, s=second)
 
+                            else:
+                                self.archivePlaylist = ''
                         else:
-                            self.archivePlaylist = ''
+                            if program.channel.title.upper() in archivePlaylist and program.startDate < datetime.datetime.now():
+                                from time import mktime
+
+                                n = datetime.datetime.now()
+                                t = ProgramStartDate
+                                e = ProgramEndDate
+
+                                # Duration
+                                durationCalc = int(((ProgramEndDate - ProgramStartDate).total_seconds() / 60.0))
+                                duration = str(durationCalc)
+
+                                # Offset
+                                offsetCalc = int(((datetime.datetime.now() - ProgramStartDate).total_seconds() / 60.0))
+                                offset = str(offsetCalc)
+
+                                # UTC/LUTC
+                                utc = str(int(datetime.datetime.timestamp(t)))
+                                lutc = str(int(datetime.datetime.timestamp(e)))
+                                
+
+                                # Datestring
+                                year = t.strftime("%Y")
+                                month = t.strftime("%m")
+                                day = t.strftime("%d")
+                                hour = t.strftime("%H")
+                                minute = t.strftime("%M")
+                                second = t.strftime("%S")
+
+                                self.archivePlaylist = '{duration}, {offset}, {utc}, {lutc}, {y}, {m}, {d}, {h}, {min}, {s}'.format(
+                                    duration=duration, offset=offset, utc=utc, lutc=lutc, y=year, m=month, d=day, h=hour, min=minute, s=second)
+
+                            else:
+                                self.archivePlaylist = ''
 
                     else:
                         if ADDON.getSetting('archive_finished_program') == 'false':
