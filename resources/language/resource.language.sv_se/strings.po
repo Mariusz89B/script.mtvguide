@@ -504,6 +504,10 @@ msgctxt "#30372"
 msgid "Login credentials have been reset"
 msgstr "Inloggningsuppgifter har återställts"
 
+msgctxt "#30373"
+msgid "DRM protected material, recording is not allowed."
+msgstr "DRM skyddat material, inspelning är inte tillåten."
+
 msgctxt "#30500"
 msgid "Edit channel order and visibility"
 msgstr "Redigera kanalordning och synlighet"

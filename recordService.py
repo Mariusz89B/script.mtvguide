@@ -231,6 +231,7 @@ class RecordService(BasePlayService):
         self.program = program
         self.isDownload = False
         updateDB = False
+
         try:
             if self.calculateTimeDifference(program.endDate) <= 0:
                 archiveList = self.getTimeshift()
@@ -588,6 +589,7 @@ class RecordService(BasePlayService):
                             strmUrl = re.sub('mono', 'video', str(strmUrl))
                     else:
                         deb('archive_type(4) wrong type')
+                        self.epg.database.removeRecording(self.program)
                         self.cancelProgramDownload(self.program)
                         updateDB = True
                         xbmcgui.Dialog().ok(strings(30998), strings(59979))
@@ -645,6 +647,7 @@ class RecordService(BasePlayService):
 
                         else:
                             deb('archive_type(0) wrong type')
+                            self.epg.database.removeRecording(self.program)
                             self.cancelProgramDownload(self.program)
                             updateDB = True
                             xbmcgui.Dialog().ok(strings(30998), strings(59979))
@@ -681,8 +684,12 @@ class RecordService(BasePlayService):
                             strmUrl = m_catchupSource + '?duration={duration}'.format(duration=str(int(duration)*60))
                         else:
                             deb('archive_type(1) wrong type')
+                            self.epg.database.removeRecording(self.program)
+                            self.cancelProgramDownload(self.program)
+                            updateDB = True
                             xbmcgui.Dialog().ok(strings(30998), strings(59979))
-                            return
+                            self.processIsCanceled = True
+                            return False
 
                     # Xtream Codes
                     if ADDON.getSetting('archive_type') == '2':
@@ -714,6 +721,7 @@ class RecordService(BasePlayService):
 
                         else:
                             deb('archive_type(2) wrong type')
+                            self.epg.database.removeRecording(self.program)
                             self.cancelProgramDownload(self.program)
                             updateDB = True
                             xbmcgui.Dialog().ok(strings(30998), strings(59979))
@@ -1218,6 +1226,14 @@ class RecordService(BasePlayService):
 
         cid, service = self.parseUrl(url)
         channelInfo = self.getChannel(cid, service)
+
+        if '.mpd' in channelInfo.strm or 'format=mpd' in channelInfo.strm:
+            self.epg.database.removeRecording(self.program)
+            self.cancelProgramRecord(self.program)
+            updateDB = True
+            xbmcgui.Dialog().ok(strings(70006) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30373))
+            self.processIsCanceled = True
+            return False
 
         if channelInfo is None:
             threadData['nrOfReattempts'] += 1
