@@ -1233,7 +1233,7 @@ msgid "Wrong timeshift format."
 msgstr ""
 
 msgctxt "#59980"
-msgid "No available catchup playback."
+msgid "No available catchup playback. Would you like to play this channel?"
 msgstr ""
 
 msgctxt "#59981"

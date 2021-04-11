@@ -713,6 +713,8 @@ class PlayService(xbmc.Player, BasePlayService):
                                 utc = utc + '000'
                                 lutc = lutc + '000'
 
+                                utc = int(utc) + 1000
+
                                 url = '{base}/rest/v2/epg/{cid}/map?deviceType=WEB&fromTime={start}&toTime={end}&followingPrograms=0'.format(base=classic[country], cid=channelInfo.cid, start=utc, end=lutc)
 
                                 headers = {
@@ -741,8 +743,12 @@ class PlayService(xbmc.Player, BasePlayService):
                                 if cid != '':
                                     streamType = 'SVOD'
                                 else:
-                                    xbmcgui.Dialog().ok(strings(30998), strings(59980))
-                                    return
+                                    res = xbmcgui.Dialog().yesno(strings(30998), strings(59980))
+                                    if res:
+                                        cid = channelInfo.cid
+                                        streamType = 'CHANNEL'
+                                    else:
+                                        return
 
                                 url = 'https://ottapi.prod.telia.net/web/{cc}/streaminggateway/rest/secure/v1/streamingticket/{type}/{cid}/DASH'.format(cc=cc[country], cid=(str(cid)), type=streamType)
 

@@ -1229,8 +1229,8 @@ msgid "Wrong timeshift format."
 msgstr "Format Timeshift incorrect."
 
 msgctxt "#59980"
-msgid "No available catchup playback."
-msgstr "Pas de lecture timeshift disponible."
+msgid "No available catchup playback. Would you like to play this channel?"
+msgstr "Pas de lecture timeshift disponible. Souhaitez vous écouter cette chaîne?"
 
 msgctxt "#59981"
 msgid "- Buffer before program start (min)"
