@@ -350,7 +350,11 @@ class PlayService(xbmc.Player, BasePlayService):
         archiveStr = self.archiveService
         return archiveStr
 
-    def beginning(self, cc, streamType, cid, dashjs, headers):
+    def playlistArchive(self):
+        archiveStr = self.archivePlaylist
+        return archiveStr
+
+    def seek(self, cc, streamType, cid, dashjs, headers):
         # Wait for player to start playing. This is not exactly bulletproof...
         xbmc.sleep(2000)
         while not xbmc.Player().isPlaying():
@@ -362,13 +366,12 @@ class PlayService(xbmc.Player, BasePlayService):
         # we need to send a delete request to close the session after playback stops
         while xbmc.Player().isPlaying():
             xbmc.sleep(300)
-            #xbmc.log('looping while playing', xbmc.LOGDEBUG)
+            #deb('looping while playing')
 
         url = 'https://ottapi.prod.telia.net/web/{cc}/streaminggateway/rest/secure/v1/streamingticket/'\
                          '{type}/{cid}?sessionId={dev_id}'.format(cc=cc, type=streamType, cid=cid, dev_id=dashjs)
 
         response = sess.delete(url, headers=headers)
-
 
     def reverse(self, getSecs=''):
         if getSecs == '':
@@ -383,10 +386,6 @@ class PlayService(xbmc.Player, BasePlayService):
         
         if xbmc.Player().isPlaying():
             xbmc.Player().seekTime(int(seek_secs))
-
-    def playlistArchive(self):
-        archiveStr = self.archivePlaylist
-        return archiveStr
 
 
     @contextmanager
@@ -440,7 +439,7 @@ class PlayService(xbmc.Player, BasePlayService):
                         else:
                             PROTOCOL = 'mpd'
 
-                        DRM = 'widevine'
+                        DRM = 'com.widevine.alpha'
 
                         import inputstreamhelper
                         is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
@@ -454,7 +453,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                 ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
                             ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
                             if DRM:
-                                ListItem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
+                                ListItem.setProperty('inputstream.adaptive.license_type', DRM)
                                 ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl['license']['castlabsServer'] + '|Content-Type=&x-dt-auth-token=%s|R{SSM}|' % licenseUrl['license']['castlabsToken'])
                                 ListItem.setProperty('IsPlayable', 'true')
 
@@ -875,7 +874,7 @@ class PlayService(xbmc.Player, BasePlayService):
                             else:
                                 ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
                             ListItem.setMimeType('application/dash+xml')
-                            ListItem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
+                            ListItem.setProperty('inputstream.adaptive.license_type', DRM)
                             ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl)
                             ListItem.setProperty('inputstream.adaptive.manifest_type', 'mpd')
                             ListItem.setProperty('IsPlayable', 'true')
@@ -897,8 +896,8 @@ class PlayService(xbmc.Player, BasePlayService):
                                         'Accept-Language': 'en-US;q=0.9,en;q=0.8'
                                     }
 
-                                    thread = threading.Thread(name='beginning', target=self.beginning, args=[cc[country], streamType, channelInfo.cid, dashjs, xheaders])
-                                    thread = threading.Timer(3.0, self.beginning, args=[cc[country], streamType, channelInfo.cid, dashjs, xheaders])
+                                    thread = threading.Thread(name='seek', target=self.seek, args=[cc[country], streamType, channelInfo.cid, dashjs, xheaders])
+                                    thread = threading.Timer(3.0, self.seek, args=[cc[country], streamType, channelInfo.cid, dashjs, xheaders])
                                     thread.start()
 
                         self.strmUrl = strmUrl
