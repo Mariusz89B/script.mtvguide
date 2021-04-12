@@ -854,9 +854,11 @@ class PlayService(xbmc.Player, BasePlayService):
                         xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
 
                         n = datetime.datetime.now()
-                        seek_secs = int(utc) - datetime.datetime.timestamp(n)
 
-                        if catchup and int(lutc) > datetime.datetime.timestamp(n):
+                        now_stamp = int(datetime.datetime.timestamp(n)) * 1000
+                        seek_secs = int(utc) - now_stamp
+
+                        if catchup and int(lutc) > now_stamp:
                             thread = threading.Thread(name='reverse', target=self.reverse, args=[seek_secs])
                             thread = threading.Timer(3.0, self.reverse, args=[seek_secs])
                             thread.start()
