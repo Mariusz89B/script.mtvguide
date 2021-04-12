@@ -252,6 +252,9 @@ class PlayService(xbmc.Player, BasePlayService):
 
             playStarted, customPlugin = self.playUrl(url)
 
+            if playStarted is None:
+                return
+
             if not playStarted:
                 deb('_playUrlList playback not started - checking next stream')
             else:
@@ -448,7 +451,7 @@ class PlayService(xbmc.Player, BasePlayService):
                         self.unlockCurrentlyPlayedService()
                         xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
 
-                elif self.currentlyPlayedService['service'] == 'Cyfrowy Polsat GO':
+                if self.currentlyPlayedService['service'] == 'Cyfrowy Polsat GO':
                     try:
                         self.playbackStopped = False
 
@@ -499,7 +502,7 @@ class PlayService(xbmc.Player, BasePlayService):
                         self.unlockCurrentlyPlayedService()
                         xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
 
-                elif self.currentlyPlayedService['service'] == 'Ipla':
+                if self.currentlyPlayedService['service'] == 'Ipla':
                     try:
                         self.playbackStopped = False
 
@@ -559,7 +562,7 @@ class PlayService(xbmc.Player, BasePlayService):
                         self.unlockCurrentlyPlayedService()
                         xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
 
-                elif self.currentlyPlayedService['service'] == 'nc+ GO':
+                if self.currentlyPlayedService['service'] == 'nc+ GO':
                     try:
                         self.playbackStopped = False
 
@@ -613,7 +616,7 @@ class PlayService(xbmc.Player, BasePlayService):
                         self.unlockCurrentlyPlayedService()
                         xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
 
-                elif self.currentlyPlayedService['service'] == 'PlayerPL':
+                if self.currentlyPlayedService['service'] == 'PlayerPL':
                     try:
                         self.playbackStopped = False
 
@@ -659,7 +662,7 @@ class PlayService(xbmc.Player, BasePlayService):
                         self.unlockCurrentlyPlayedService()
                         xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
 
-                elif self.currentlyPlayedService['service'] == 'Telia Play':
+                if self.currentlyPlayedService['service'] == 'Telia Play':
                     try:
                         self.playbackStopped = False
 
@@ -713,6 +716,11 @@ class PlayService(xbmc.Player, BasePlayService):
                                 utc = str(int(utc) * 1000)
                                 lutc = str(int(lutc) * 1000)
 
+                                n = datetime.datetime.now()
+
+                                now_stamp = int(datetime.datetime.timestamp(n)) * 1000
+                                seek_secs = int(utc) - now_stamp
+
                                 url = '{base}/rest/v2/epg/{cid}/map?deviceType=WEB&fromTime={start}&toTime={end}&followingPrograms=0'.format(base=classic[country], cid=channelInfo.cid, start=utc, end=lutc)
 
                                 headers = {
@@ -746,7 +754,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                         cid = channelInfo.cid
                                         streamType = 'CHANNEL'
                                     else:
-                                        return
+                                        return None
 
                                 url = 'https://ottapi.prod.telia.net/web/{cc}/streaminggateway/rest/secure/v1/streamingticket/{type}/{cid}/DASH'.format(cc=cc[country], cid=(str(cid)), type=streamType)
 
@@ -853,15 +861,11 @@ class PlayService(xbmc.Player, BasePlayService):
                         self.strmUrl = strmUrl
                         xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
 
-                        n = datetime.datetime.now()
-
-                        now_stamp = int(datetime.datetime.timestamp(n)) * 1000
-                        seek_secs = int(utc) - now_stamp
-
-                        if catchup and int(lutc) > now_stamp:
-                            thread = threading.Thread(name='reverse', target=self.reverse, args=[seek_secs])
-                            thread = threading.Timer(3.0, self.reverse, args=[seek_secs])
-                            thread.start()
+                        if catchup:
+                            if int(lutc) > now_stamp:
+                                thread = threading.Thread(name='reverse', target=self.reverse, args=[seek_secs])
+                                thread = threading.Timer(3.0, self.reverse, args=[seek_secs])
+                                thread.start()
 
                         res = True
 
@@ -871,7 +875,7 @@ class PlayService(xbmc.Player, BasePlayService):
                         xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
 
 
-                elif self.currentlyPlayedService['service'] == 'WP Pilot':
+                if self.currentlyPlayedService['service'] == 'WP Pilot':
                     if self.archiveService == '' or self.archivePlaylist == '':
                         try:
                             self.playbackStopped = False
@@ -914,8 +918,8 @@ class PlayService(xbmc.Player, BasePlayService):
                             deb('Exception while trying to play video: {}'.format(getExceptionString()))
                             self.unlockCurrentlyPlayedService()
                             xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
-                    
-                else:
+
+                if 'playlist_' in self.currentlyPlayedService['service']:
                     playbackServices = ['C More', 'Cyfrowy Polsat GO', 'Ipla', 'nc+ GO', 'PlayerPL', 'Telia Play', 'WP Pilot']
                     if self.currentlyPlayedService['service'] not in playbackServices:
                         strmUrl = channelInfo.strm
