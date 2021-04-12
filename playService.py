@@ -350,6 +350,26 @@ class PlayService(xbmc.Player, BasePlayService):
         archiveStr = self.archiveService
         return archiveStr
 
+    def beginning(self, cc, streamType, cid, dashjs, headers):
+        # Wait for player to start playing. This is not exactly bulletproof...
+        xbmc.sleep(2000)
+        while not xbmc.Player().isPlaying():
+            xbmc.sleep(100)
+        # if we want to play a live program from the beginning we must set it here.
+        # Setting the StartOffset property on play_item does not work
+        xbmc.sleep(200)
+        xbmc.Player().seekTime(0.0)
+        # we need to send a delete request to close the session after playback stops
+        while xbmc.Player().isPlaying():
+            xbmc.sleep(300)
+            #xbmc.log('looping while playing', xbmc.LOGDEBUG)
+
+        url = 'https://ottapi.prod.telia.net/web/{cc}/streaminggateway/rest/secure/v1/streamingticket/'\
+                         '{type}/{cid}?sessionId={dev_id}'.format(cc=cc, type=streamType, cid=cid, dev_id=dashjs)
+
+        response = sess.delete(url, headers=headers)
+
+
     def reverse(self, getSecs=''):
         if getSecs == '':
             getSecs = self.archiveService
@@ -663,219 +683,233 @@ class PlayService(xbmc.Player, BasePlayService):
                         xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
 
                 if self.currentlyPlayedService['service'] == 'Telia Play':
-                    #try:
-                    self.playbackStopped = False
-
-                    licenseUrl = channelInfo.lic
-                    strmUrl = channelInfo.strm
-
                     try:
-                        from urllib.parse import urlencode, quote_plus, quote, unquote
-                    except ImportError:
-                        from urllib import urlencode, quote_plus, quote, unquote
+                        self.playbackStopped = False
 
-                    catchup = False
+                        licenseUrl = channelInfo.lic
+                        strmUrl = channelInfo.strm
 
-                    if ADDON.getSetting('archive_support') == 'true':
-                        #if self.archiveService != '':
-                        if str(self.playlistArchive()) != '':
-                            archivePlaylist = str(self.playlistArchive())
-                            catchupList = archivePlaylist.split(', ')
+                        try:
+                            from urllib.parse import urlencode, quote_plus, quote, unquote
+                        except ImportError:
+                            from urllib import urlencode, quote_plus, quote, unquote
 
-                            catchup = True
+                        catchup = False
 
-                            # Catchup strings
-                            duration = catchupList[0]
-                            offset = catchupList[1]
-                            utc = catchupList[2]
-                            lutc = catchupList[3]
-                            year = catchupList[4]
-                            month = catchupList[5]
-                            day = catchupList[6]
-                            hour = catchupList[7]
-                            minute = catchupList[8]
-                            second = catchupList[9]
+                        if ADDON.getSetting('archive_support') == 'true':
+                            if str(self.playlistArchive()) != '':
+                                archivePlaylist = str(self.playlistArchive())
+                                catchupList = archivePlaylist.split(', ')
 
-                            base = ['https://teliatv.dk', 'https://www.teliaplay.se']
-                            classic = ['https://teliatv.dk', 'https://classic.teliaplay.se']
+                                catchup = True
 
-                            host = ['www.teliatv.dk', 'www.teliaplay.se']
-                            hclassic = ['www.teliatv.dk', 'classic.teliaplay.se']
+                                # Catchup strings
+                                duration = catchupList[0]
+                                offset = catchupList[1]
+                                utc = catchupList[2]
+                                lutc = catchupList[3]
+                                year = catchupList[4]
+                                month = catchupList[5]
+                                day = catchupList[6]
+                                hour = catchupList[7]
+                                minute = catchupList[8]
+                                second = catchupList[9]
 
-                            cc = ['dk', 'se']
+                                base = ['https://teliatv.dk', 'https://www.teliaplay.se']
+                                classic = ['https://teliatv.dk', 'https://classic.teliaplay.se']
 
-                            country            = int(ADDON.getSetting('teliaplay_locale'))
-                            
-                            dashjs             = ADDON.getSetting('teliaplay_devush')
-                            beartoken          = ADDON.getSetting('teliaplay_beartoken')
-                            tv_client_boot_id  = ADDON.getSetting('teliaplay_tv_client_boot_id')
-                            usern              = ADDON.getSetting('teliaplay_usern')
+                                host = ['www.teliatv.dk', 'www.teliaplay.se']
+                                hclassic = ['www.teliatv.dk', 'classic.teliaplay.se']
 
-                            UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36 Edg/89.0.774.63'
+                                cc = ['dk', 'se']
 
-                            xutc = int(utc)
+                                country            = int(ADDON.getSetting('teliaplay_locale'))
+                                
+                                dashjs             = ADDON.getSetting('teliaplay_devush')
+                                beartoken          = ADDON.getSetting('teliaplay_beartoken')
+                                tv_client_boot_id  = ADDON.getSetting('teliaplay_tv_client_boot_id')
+                                usern              = ADDON.getSetting('teliaplay_usern')
 
-                            utc = str(int(utc) * 1000 + 1000)
-                            lutc = str(int(lutc) * 1000)
+                                UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36 Edg/89.0.774.63'
 
-                            n = datetime.datetime.now()
-                            t = datetime.datetime.fromtimestamp(xutc)
+                                xutc = int(utc)
 
-                            seek_secs = int((n - t).total_seconds())
-                            now_stamp = int(datetime.datetime.timestamp(n)) * 1000
+                                utc = str(int(utc) * 1000 + 1000)
+                                lutc = str(int(lutc) * 1000)
 
-                            url = '{base}/rest/v2/epg/{cid}/map?deviceType=WEB&fromTime={start}&toTime={end}&followingPrograms=0'.format(base=classic[country], cid=channelInfo.cid, start=utc, end=lutc)
+                                n = datetime.datetime.now()
+                                t = datetime.datetime.fromtimestamp(xutc)
 
-                            headers = {
-                                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-                                'Accept-Encoding': 'gzip, deflate, br',
-                                'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
-                                'Cache-Control': 'no-cache',
-                                'DNT': '1',
-                                'Host': hclassic[country],
-                                'Pragma': 'no-cache',
-                                'Sec-Fetch-Dest': 'document',
-                                'Sec-Fetch-Mode': 'navigate',
-                                'Sec-Fetch-Site': 'none',
-                                'Sec-Fetch-User': '?1',
-                                'Upgrade-Insecure-Requests': '1',
-                                'User-Agent': UA,
-                            }
+                                #seek_secs = int((n - t).total_seconds())
+                                now = int(datetime.datetime.timestamp(n)) * 1000
 
-                            response = requests.get(url, headers=headers, verify=False).json()
+                                url = '{base}/rest/v2/epg/{cid}/map?deviceType=WEB&fromTime={start}&toTime={end}&followingPrograms=0'.format(base=classic[country], cid=channelInfo.cid, start=utc, end=lutc)
 
-                            try:
-                                cid = response['map'][channelInfo.cid][0]['assetId']
-                            except:
-                                cid = ''
+                                headers = {
+                                    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+                                    'Accept-Encoding': 'gzip, deflate, br',
+                                    'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
+                                    'Cache-Control': 'no-cache',
+                                    'DNT': '1',
+                                    'Host': hclassic[country],
+                                    'Pragma': 'no-cache',
+                                    'Sec-Fetch-Dest': 'document',
+                                    'Sec-Fetch-Mode': 'navigate',
+                                    'Sec-Fetch-Site': 'none',
+                                    'Sec-Fetch-User': '?1',
+                                    'Upgrade-Insecure-Requests': '1',
+                                    'User-Agent': UA,
+                                }
 
-                            if cid != '':
-                                streamType = 'SVOD'
-                            else:
-                                res = xbmcgui.Dialog().yesno(strings(30998), strings(59980))
-                                if res:
-                                    cid = channelInfo.cid
-                                    streamType = 'CHANNEL'
+                                response = requests.get(url, headers=headers, verify=False).json()
+
+                                try:
+                                    cid = response['map'][channelInfo.cid][0]['assetId']
+                                except:
+                                    cid = ''
+
+                                if cid != '':
+                                    streamType = 'SVOD'
                                 else:
-                                    return None
+                                    res = xbmcgui.Dialog().yesno(strings(30998), strings(59980))
+                                    if res:
+                                        cid = channelInfo.cid
+                                        streamType = 'CHANNEL'
+                                    else:
+                                        return None
 
-                            url = 'https://ottapi.prod.telia.net/web/{cc}/streaminggateway/rest/secure/v1/streamingticket/{type}/{cid}/DASH'.format(cc=cc[country], cid=(str(cid)), type=streamType)
+                                url = 'https://ottapi.prod.telia.net/web/{cc}/streaminggateway/rest/secure/v1/streamingticket/{type}/{cid}/DASH'.format(cc=cc[country], cid=(str(cid)), type=streamType)
 
-                            headers = {
-                                'Accept': '*/*',
-                                'Accept-Encoding': 'gzip, deflate, br',
-                                'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
-                                'Authorization': 'Bearer '+ beartoken,
-                                'Cache-Control': 'no-cache',
-                                'Connection': 'keep-alive',
-                                'Content-Type': 'text/plain;charset=UTF-8',
-                                'DNT': '1',
-                                'Host': 'ottapi.prod.telia.net',
-                                'Origin': base[country],
-                                'Pragma': 'no-cache',
-                                'Referer': base[country]+'/',
-                                'Sec-Fetch-Dest': 'empty',
-                                'Sec-Fetch-Mode': 'cors',
-                                'Sec-Fetch-Site': 'cross-site',
-                                'User-Agent': UA,
-                                'tv-client-boot-id': tv_client_boot_id,
-                            }
-                            
-                            params = (
-                                ('playerProfile', 'DEFAULT'),
-                                ('sessionId', six.text_type(uuid.uuid4())),
-                            )
+                                headers = {
+                                    'Accept': '*/*',
+                                    'Accept-Encoding': 'gzip, deflate, br',
+                                    'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
+                                    'Authorization': 'Bearer '+ beartoken,
+                                    'Cache-Control': 'no-cache',
+                                    'Connection': 'keep-alive',
+                                    'Content-Type': 'text/plain;charset=UTF-8',
+                                    'DNT': '1',
+                                    'Host': 'ottapi.prod.telia.net',
+                                    'Origin': base[country],
+                                    'Pragma': 'no-cache',
+                                    'Referer': base[country]+'/',
+                                    'Sec-Fetch-Dest': 'empty',
+                                    'Sec-Fetch-Mode': 'cors',
+                                    'Sec-Fetch-Site': 'cross-site',
+                                    'User-Agent': UA,
+                                    'tv-client-boot-id': tv_client_boot_id,
+                                }
+                                
+                                params = (
+                                    ('playerProfile', 'DEFAULT'),
+                                    ('sessionId', six.text_type(uuid.uuid4())),
+                                )
 
-                            response = sess.post(url, headers=headers, params=params, cookies=sess.cookies, verify=False).json()
+                                response = sess.post(url, headers=headers, params=params, cookies=sess.cookies, verify=False).json()
 
-                            streamingUrl = response["streamingUrl"]
-                            token = response["token"]
-                            currentTime = response["currentTime"]
-                            expires = response["expires"]
+                                streamingUrl = response["streamingUrl"]
+                                token = response["token"]
+                                currentTime = response["currentTime"]
+                                expires = response["expires"]
 
-                            mpdurl = '{classic}?ssl=true&time={time}&token={token}&expires={expires}&c={user_id}&d={dev_id}'.format(classic=streamingUrl, time=currentTime, token=token, expires=expires, user_id=usern, dev_id=dashjs)
-                            
-                            headers = {
-                                'Accept': '*/*',
-                                'Accept-Encoding': 'gzip, deflate, br',
-                                'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
-                                'Cache-Control': 'no-cache',
-                                'Connection': 'keep-alive',
-                                'DNT': '1',
-                                'Host': 'wvls.webtv.telia.com:8063',
-                                'Origin': base[country],
-                                'Pragma': 'no-cache',
-                                'Referer': base[country]+'/',
-                                'Sec-Fetch-Dest': 'empty',
-                                'Sec-Fetch-Mode': 'cors',
-                                'Sec-Fetch-Site': 'cross-site',
-                                'User-Agent': UA,
-                                'x-axdrm-message': dashjs,
-                            }
+                                mpdurl = '{classic}?ssl=true&time={time}&token={token}&expires={expires}&c={user_id}&d={dev_id}'.format(classic=streamingUrl, time=currentTime, token=token, expires=expires, user_id=usern, dev_id=dashjs)
+                                
+                                headers = {
+                                    'Accept': '*/*',
+                                    'Accept-Encoding': 'gzip, deflate, br',
+                                    'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
+                                    'Cache-Control': 'no-cache',
+                                    'Connection': 'keep-alive',
+                                    'DNT': '1',
+                                    'Host': 'wvls.webtv.telia.com:8063',
+                                    'Origin': base[country],
+                                    'Pragma': 'no-cache',
+                                    'Referer': base[country]+'/',
+                                    'Sec-Fetch-Dest': 'empty',
+                                    'Sec-Fetch-Mode': 'cors',
+                                    'Sec-Fetch-Site': 'cross-site',
+                                    'User-Agent': UA,
+                                    'x-axdrm-message': dashjs,
+                                }
 
-                            xheaders = {
-                                'Accept': '*/*',
-                                'Accept-Encoding': 'gzip, deflate, br',
-                                'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
-                                'Cache-Control': 'no-cache',
-                                'Connection': 'keep-alive',
-                                'DNT': '1',
-                                'Origin': base[country],
-                                'Pragma': 'no-cache',
-                                'Referer': base[country]+'/',
-                                'Sec-Fetch-Dest': 'empty',
-                                'Sec-Fetch-Mode': 'cors',
-                                'Sec-Fetch-Site': 'cross-site',
-                                'User-Agent': UA,
-                            }
+                                xheaders = {
+                                    'Accept': '*/*',
+                                    'Accept-Encoding': 'gzip, deflate, br',
+                                    'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
+                                    'Cache-Control': 'no-cache',
+                                    'Connection': 'keep-alive',
+                                    'DNT': '1',
+                                    'Origin': base[country],
+                                    'Pragma': 'no-cache',
+                                    'Referer': base[country]+'/',
+                                    'Sec-Fetch-Dest': 'empty',
+                                    'Sec-Fetch-Mode': 'cors',
+                                    'Sec-Fetch-Site': 'cross-site',
+                                    'User-Agent': UA,
+                                }
 
-                            mpdurl_re = sess.get(mpdurl, headers=xheaders, verify=False).json()
-                            mpdurl = mpdurl_re["location"]
+                                mpdurl_re = sess.get(mpdurl, headers=xheaders, verify=False).json()
+                                mpdurl = mpdurl_re["location"]
 
-                            strmUrl = mpdurl
-                            
+                                strmUrl = mpdurl
+                                
+                                if sys.version_info[0] > 2:
+                                    headok = Parse.urlencode(headers)
+                                else:
+                                    headok = Request.urlencode(headers)
+
+                                licurl = 'https://wvls.webtv.telia.com:8063/'
+                                licenseUrl = licurl+'|'+headok+'|R{SSM}|'
+
+                        PROTOCOL = 'mpd'
+                        DRM = 'com.widevine.alpha'
+
+                        import inputstreamhelper
+                        is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
+                        if is_helper.check_inputstream():  
+                            ListItem = xbmcgui.ListItem(path=strmUrl)
+                            ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
+                            ListItem.setContentLookup(False)
                             if sys.version_info[0] > 2:
-                                headok = Parse.urlencode(headers)
+                                ListItem.setProperty('inputstream', is_helper.inputstream_addon)
                             else:
-                                headok = Request.urlencode(headers)
+                                ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
+                            ListItem.setMimeType('application/dash+xml')
+                            ListItem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
+                            ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl)
+                            ListItem.setProperty('inputstream.adaptive.manifest_type', 'mpd')
+                            ListItem.setProperty('IsPlayable', 'true')
 
-                            licurl = 'https://wvls.webtv.telia.com:8063/'
-                            licenseUrl = licurl+'|'+headok+'|R{SSM}|'
+                            if catchup:
+                                if int(lutc) > now:
+                                    xheaders = {
+                                        'Connection': 'keep-alive',
+                                        'Pragma': 'no-cache',
+                                        'Cache-Control': 'no-cache',
+                                        'tv-client-boot-id': tv_client_boot_id,
+                                        'User-Agent': UA,
+                                        'Accept': '*/*',
+                                        'Origin': base[country],
+                                        'Sec-Fetch-Site': 'cross-site',
+                                        'Sec-Fetch-Mode': 'cors',
+                                        'Sec-Fetch-Dest': 'empty',
+                                        'Referer': base[country],
+                                        'Accept-Language': 'en-US;q=0.9,en;q=0.8'
+                                    }
 
-                    PROTOCOL = 'mpd'
-                    DRM = 'com.widevine.alpha'
+                                    thread = threading.Thread(name='beginning', target=self.beginning, args=[cc[country], streamType, channelInfo.cid, dashjs, xheaders])
+                                    thread = threading.Timer(3.0, self.beginning, args=[cc[country], streamType, channelInfo.cid, dashjs, xheaders])
+                                    thread.start()
 
-                    import inputstreamhelper
-                    is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
-                    if is_helper.check_inputstream():  
-                        ListItem = xbmcgui.ListItem(path=strmUrl)
-                        ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
-                        ListItem.setContentLookup(False)
-                        if sys.version_info[0] > 2:
-                            ListItem.setProperty('inputstream', is_helper.inputstream_addon)
-                        else:
-                            ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
-                        ListItem.setMimeType('application/dash+xml')
-                        ListItem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
-                        ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl)
-                        ListItem.setProperty('inputstream.adaptive.manifest_type', 'mpd')
-                        ListItem.setProperty('IsPlayable', 'true')
+                        self.strmUrl = strmUrl
+                        xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
 
-                    self.strmUrl = strmUrl
-                    xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
+                        res = True
 
-                    if catchup:
-                        if int(lutc) > now_stamp:
-                            thread = threading.Thread(name='reverse', target=self.reverse, args=[seek_secs])
-                            thread = threading.Timer(3.0, self.reverse, args=[seek_secs])
-                            thread.start()
-
-                    res = True
-
-                    #except Exception as ex:
-                        #deb('Exception while trying to play video: {}'.format(getExceptionString()))
-                        #self.unlockCurrentlyPlayedService()
-                        #xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
+                    except Exception as ex:
+                        deb('Exception while trying to play video: {}'.format(getExceptionString()))
+                        self.unlockCurrentlyPlayedService()
+                        xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
 
 
                 if self.currentlyPlayedService['service'] == 'WP Pilot':
