@@ -362,7 +362,7 @@ class PlayService(xbmc.Player, BasePlayService):
             xbmc.Monitor().waitForAbort(0.25)
         
         if xbmc.Player().isPlaying():
-            xbmc.Player().seekTime(seek_secs)
+            xbmc.Player().seekTime(int(seek_secs))
 
     def playlistArchive(self):
         archiveStr = self.archivePlaylist
@@ -713,7 +713,7 @@ class PlayService(xbmc.Player, BasePlayService):
 
                                 UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36 Edg/89.0.774.63'
 
-                                utc = str(int(utc) * 1000)
+                                utc = str(int(utc) * 1000 + 1000)
                                 lutc = str(int(lutc) * 1000)
 
                                 n = datetime.datetime.now()
@@ -742,7 +742,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                 response = requests.get(url, headers=headers, verify=False).json()
 
                                 try:
-                                    cid = response['map'][channelInfo.cid][1]['assetId']
+                                    cid = response['map'][channelInfo.cid][0]['assetId']
                                 except:
                                     cid = ''
 
