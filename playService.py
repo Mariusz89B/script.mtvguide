@@ -65,6 +65,8 @@ from strings import *
 import strings as strings2
 import serviceLib
 import requests
+import time
+import threading
 
 from contextlib import contextmanager
 
@@ -76,7 +78,6 @@ import cpgocids
 import francetvcids
 import cmorecids
 import teliaplaycids
-#import teliaplayclassiccids
 import playerplcids
 
 sess = requests.Session()
@@ -94,7 +95,6 @@ SERVICES = {
     francetvcids.serviceName        : francetvcids.FranceTVUpdater(),
     cmorecids.serviceName           : cmorecids.CmoreUpdater(),
     teliaplaycids.serviceName       : teliaplaycids.TeliaPlayUpdater(),
-    #teliaplayclassiccids.serviceName : teliaplayclassiccids.TeliaPlayUpdater(),
     playerplcids.serviceName        : playerplcids.PlayerPLUpdater()
 }
 
@@ -347,18 +347,19 @@ class PlayService(xbmc.Player, BasePlayService):
         archiveStr = self.archiveService
         return archiveStr
 
-    def reverse(self):
-        getsec = self.archiveService
+    def reverse(self, getSecs=''):
+        if getSecs == '':
+            getSecs = self.archiveService
         try:
-            sec = getsec.total_seconds()
+            secs = getSec.total_seconds()
         except:
-            sec = 0
-        seek_secs = -int(sec)
+            secs = 0
+        seek_secs = int(secs)
         while not xbmc.Player().isPlaying():
             xbmc.Monitor().waitForAbort(0.25)
         
         if xbmc.Player().isPlaying():
-            xbmc.executebuiltin('Seek(' + str(seek_secs) + ')') 
+            xbmc.Player().seekTime(seek_secs)
 
     def playlistArchive(self):
         archiveStr = self.archivePlaylist
@@ -434,7 +435,6 @@ class PlayService(xbmc.Player, BasePlayService):
                                 ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl['license']['castlabsServer'] + '|Content-Type=&x-dt-auth-token=%s|R{SSM}|' % licenseUrl['license']['castlabsToken'])
                                 ListItem.setProperty('IsPlayable', 'true')
 
-                                import threading
                                 thread = threading.Thread(name='reverse', target=self.reverse, args=[])
                                 thread = threading.Timer(3.0, self.reverse, args=[])
                                 thread.start()
@@ -486,7 +486,6 @@ class PlayService(xbmc.Player, BasePlayService):
                             ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
                             ListItem.setProperty('IsPlayable', 'true')
 
-                            #import threading
                             #thread = threading.Thread(name='reverse', target=self.reverse, args=[])
                             #thread = threading.Timer(3.0, self.reverse, args=[])
                             #thread.start()
@@ -547,7 +546,6 @@ class PlayService(xbmc.Player, BasePlayService):
                             ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
                             ListItem.setProperty("IsPlayable", "true")
 
-                            import threading
                             thread = threading.Thread(name='reverse', target=self.reverse, args=[])
                             thread = threading.Timer(3.0, self.reverse, args=[])
                             thread.start()
@@ -602,7 +600,6 @@ class PlayService(xbmc.Player, BasePlayService):
                             #ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
                             ListItem.setProperty('IsPlayable', 'true')
 
-                            import threading
                             thread = threading.Thread(name='reverse', target=self.reverse, args=[])
                             thread = threading.Timer(3.0, self.reverse, args=[])
                             thread.start()
@@ -649,7 +646,6 @@ class PlayService(xbmc.Player, BasePlayService):
                             ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
                             ListItem.setProperty('IsPlayable', 'true')
 
-                            #import threading
                             #thread = threading.Thread(name='reverse', target=self.reverse, args=[])
                             #thread = threading.Timer(3.0, self.reverse, args=[])
                             #thread.start()
@@ -675,11 +671,15 @@ class PlayService(xbmc.Player, BasePlayService):
                         except ImportError:
                             from urllib import urlencode, quote_plus, quote, unquote
 
+                        catchup = False
+
                         if ADDON.getSetting('archive_support') == 'true':
                             #if self.archiveService != '':
                             if str(self.playlistArchive()) != '':
                                 archivePlaylist = str(self.playlistArchive())
                                 catchupList = archivePlaylist.split(', ')
+
+                                catchup = True
 
                                 # Catchup strings
                                 duration = catchupList[0]
@@ -852,6 +852,15 @@ class PlayService(xbmc.Player, BasePlayService):
 
                         self.strmUrl = strmUrl
                         xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
+
+                        n = datetime.datetime.now()
+                        seek_secs = int(utc) - datetime.datetime.timestamp(n)
+
+                        if catchup and int(lutc) > datetime.datetime.timestamp(n):
+                            thread = threading.Thread(name='reverse', target=self.reverse, args=[seek_secs])
+                            thread = threading.Timer(3.0, self.reverse, args=[seek_secs])
+                            thread.start()
+
                         res = True
 
                     except Exception as ex:
