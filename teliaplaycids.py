@@ -210,7 +210,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
             try:
                 response = sess.post(url, headers=headers, data=json.dumps(data), verify=False, timeout=3)
             except:
-                self.geoBlockErrorMessage()
+                self.connErrorMessage()
                 return False
 
             url = 'https://ottapi.prod.telia.net/web/{cc}/logingateway/rest/v1/login'.format(cc=cc[self.country])
@@ -326,6 +326,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
             return True
         except:
             self.log('getChannelList exception: {}'.format(getExceptionString()))
+            self.connErrorMessage()  
         return False
 
     def loginService(self):
@@ -359,6 +360,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
 
         except:
             self.log('getChannelList exception: {}'.format(getExceptionString()))
+            self.connErrorMessage()
         return False
 
 

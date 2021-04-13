@@ -29,7 +29,8 @@
 		<forum>http://mods-kodi.pl/forum/</forum>
 		<website>http://mods-kodi.pl/</website>
 		<email>support@m-tvguide.pl</email>
-	<news>v9.3.0 (2021-04-12)
+	<news>v9.3.0 (2021-04-13)
+- Fixed recording service WP Pilot.
 - Added timeshift function for service Telia Play.
 - Fixed decoding issue.
 - Fixed reset button in download menu.

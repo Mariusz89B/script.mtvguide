@@ -157,54 +157,60 @@ class IplaUpdater(baseServiceUpdater):
         return content
 
     def loginService(self):
-        if self.device_id == '' or self.client_id == '' or self.id_ == '':
-            self.createDatas()
+        try:
+            if self.device_id == '' or self.client_id == '' or self.id_ == '':
+                self.createDatas()
 
-        if self.login and self.password:
-            self.device_id = ADDON.getSetting('ipla_device_id')
-            self.client_id = ADDON.getSetting('ipla_client_id')
-            self.client = ADDON.getSetting('ipla_client')
-            
-            if self.client == 'Ipla':
-                post = {"id":1,"jsonrpc":"2.0","method":"login","params":{"userAgentData":{"portal":"ipla","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":UAIPLA,"authData":{"login":self.login,"password":self.password,"deviceId":{"type":"other","value":self.device_id}},"clientId":self.client_id}}
-            else:
-                post = {"id":1,"jsonrpc":"2.0","method":"login","params":{"userAgentData":{"portal":"ipla","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":UAIPLA,"authData":{"loginICOK":self.login,"passwordICOK":self.password,"deviceIdICOK":{"type":"other","value":self.device_id}},"clientId":self.client_id}}
-            
-            data = self.getRequests(self.auth, data = post, headers=self.headers)
-
-            if data.get('error', None):
-                msg = data['error']['data']['userMessage']
-                ADDON.setSetting('ipla_sesstoken', '')
-                ADDON.setSetting('ipla_sessexpir', '')
-                ADDON.setSetting('ipla_sesskey', '')
-                ADDON.setSetting('ipla_myperm', '')
-                ADDON.setSetting('ipla_device_id', '')
-                ADDON.setSetting('ipla_client_id', '')
-
-                self.loginErrorMessage() 
-                return False
-
-            else:
-                myper = []
-                for i in data["result"]["accessGroups"]:
-                    if 'sc:' in i:
-                        myper.append(str(i))
-                    if 'oth:' in i:
-                        myper.append(str(i))
-
-                ADDON.setSetting('ipla_myperm', str(myper))
-
-                sesja = data['result']['session']
-        
-                self.sesstoken = sesja['id']
-                self.sessexpir = str(sesja['keyExpirationTime'])
-                self.sesskey = sesja['key']
+            if self.login and self.password:
+                self.device_id = ADDON.getSetting('ipla_device_id')
+                self.client_id = ADDON.getSetting('ipla_client_id')
+                self.client = ADDON.getSetting('ipla_client')
                 
-                ADDON.setSetting('ipla_sesstoken', self.sesstoken)
-                ADDON.setSetting('ipla_sessexpir', str(self.sessexpir))
-                ADDON.setSetting('ipla_sesskey', self.sesskey)
+                if self.client == 'Ipla':
+                    post = {"id":1,"jsonrpc":"2.0","method":"login","params":{"userAgentData":{"portal":"ipla","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":UAIPLA,"authData":{"login":self.login,"password":self.password,"deviceId":{"type":"other","value":self.device_id}},"clientId":self.client_id}}
+                else:
+                    post = {"id":1,"jsonrpc":"2.0","method":"login","params":{"userAgentData":{"portal":"ipla","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":UAIPLA,"authData":{"loginICOK":self.login,"passwordICOK":self.password,"deviceIdICOK":{"type":"other","value":self.device_id}},"clientId":self.client_id}}
                 
-            return True
+                data = self.getRequests(self.auth, data = post, headers=self.headers)
+
+                if data.get('error', None):
+                    msg = data['error']['data']['userMessage']
+                    ADDON.setSetting('ipla_sesstoken', '')
+                    ADDON.setSetting('ipla_sessexpir', '')
+                    ADDON.setSetting('ipla_sesskey', '')
+                    ADDON.setSetting('ipla_myperm', '')
+                    ADDON.setSetting('ipla_device_id', '')
+                    ADDON.setSetting('ipla_client_id', '')
+
+                    self.loginErrorMessage() 
+                    return False
+
+                else:
+                    myper = []
+                    for i in data["result"]["accessGroups"]:
+                        if 'sc:' in i:
+                            myper.append(str(i))
+                        if 'oth:' in i:
+                            myper.append(str(i))
+
+                    ADDON.setSetting('ipla_myperm', str(myper))
+
+                    sesja = data['result']['session']
+            
+                    self.sesstoken = sesja['id']
+                    self.sessexpir = str(sesja['keyExpirationTime'])
+                    self.sesskey = sesja['key']
+                    
+                    ADDON.setSetting('ipla_sesstoken', self.sesstoken)
+                    ADDON.setSetting('ipla_sessexpir', str(self.sessexpir))
+                    ADDON.setSetting('ipla_sesskey', self.sesskey)
+                    
+                return True
+                
+        except:
+            self.log('getChannelList exception: {}'.format(getExceptionString()))
+            self.connErrorMessage()  
+        return False
 
     def createDatas(self):
         import random

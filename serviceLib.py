@@ -695,6 +695,10 @@ class baseServiceUpdater:
         del self.traceList[:]
         self.traceList = list()
 
+    def connErrorMessage(self):
+        self.log('connection error for service: {}'.format(self.serviceName))
+        xbmcgui.Dialog().notification(self.serviceName, strings(SERVICE_ERROR), time=15000, sound=True)
+
     def loginErrorMessage(self):
         self.log('login error for service: {}'.format(self.serviceName))
         xbmcgui.Dialog().notification(self.serviceName, strings(SERVICE_LOGIN_INCORRECT), time=15000, sound=True)

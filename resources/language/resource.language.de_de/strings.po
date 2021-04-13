@@ -2013,8 +2013,8 @@ msgid "Content is not included in your service"
 msgstr "Inhalt ist nicht in Ihrem Dienst enthalten"
 
 msgctxt "#57042"
-msgid "Error connection with website!"
-msgstr "Fehler bei der verbindung mit der webseite!"
+msgid "Error connecting to service"
+msgstr "Fehler beim Herstellen einer Verbindung zum Dienst"
 
 msgctxt "#57043"
 msgid "Selected channel does not exist!"

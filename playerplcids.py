@@ -261,7 +261,7 @@ class PlayerPLUpdater(baseServiceUpdater):
 
         except:
             self.log('Exception while trying to log in: {}'.format(getExceptionString()))
-            self.loginErrorMessage()
+            self.connErrorMessage()
         return False
 
     def checkLogin(self):

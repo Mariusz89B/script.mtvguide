@@ -266,26 +266,32 @@ class CmoreUpdater(baseServiceUpdater):
         return data['data']['operators']
 
     def loginService(self):
-        username = ADDON.getSetting('cmore_username').strip()
-        password = ADDON.getSetting('cmore_password').strip()
+        try:
+            username = ADDON.getSetting('cmore_username').strip()
+            password = ADDON.getSetting('cmore_password').strip()
 
-        if ADDON.getSetting('cmore_tv_provider_login') == 'true':
-            operator = self.get_operator(ADDON.getSetting('cmore_operator'))
-            if not operator:
-                return False
-        else:
-            operator = None
-            self.set_setting('cmore_operator_title', '')
-            self.set_setting('cmore_operator', '')
-
-        if not username or not password:
-            if operator:
-                return self.set_tv_provider_credentials()
+            if ADDON.getSetting('cmore_tv_provider_login') == 'true':
+                operator = self.get_operator(ADDON.getSetting('cmore_operator'))
+                if not operator:
+                    self.loginErrorMessage() 
+                    return False
             else:
-                self.loginErrorMessage() 
-                return False
-        else:
-            return True
+                operator = None
+                self.set_setting('cmore_operator_title', '')
+                self.set_setting('cmore_operator', '')
+
+            if not username or not password:
+                if operator:
+                    return self.set_tv_provider_credentials()
+                else:
+                    self.loginErrorMessage() 
+                    return False
+            else:
+                return True
+        except:
+            self.log('getChannelList exception: {}'.format(getExceptionString()))
+            self.connErrorMessage()
+        return False
 
     def loginC(self, username=None, password=None, operator=None):
         """Complete login process for C More."""

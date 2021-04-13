@@ -2017,7 +2017,7 @@ msgid "Content is not included in your service"
 msgstr ""
 
 msgctxt "#57042"
-msgid "Error connection with website!"
+msgid "Error connecting to service"
 msgstr ""
 
 msgctxt "#57043"
