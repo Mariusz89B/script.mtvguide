@@ -2155,7 +2155,10 @@ class MTVGUIDESource(Source):
 
     def _getDataFromExternal(self, date, progress_callback, url):
         try:
-            xml = self._downloadUrl(url).decode(encoding='utf-8', errors='strict')
+            try:
+                xml = self._downloadUrl(url).decode(encoding='utf-8', errors='strict')
+            except:
+                xml = self._downloadUrl(url)
 
             if strings2.M_TVGUIDE_CLOSING:
                 raise SourceUpdateCanceledException()
