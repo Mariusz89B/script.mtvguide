@@ -505,8 +505,8 @@ msgid "Login credentials have been reset"
 msgstr "Akreditivi za prijavu su vraćeni"
 
 msgctxt "#30373"
-msgid "DRM protected material, recording is not allowed."
-msgstr "DRM zaštićeni materijal, snimanje nije dopušteno."
+msgid "DRM protected material is encrypted, not possible to record."
+msgstr "DRM zaštićeni materijal je šifriran, nije ga moguće snimiti."
 
 msgctxt "#30500"
 msgid "Edit channel order and visibility"

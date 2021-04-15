@@ -1226,7 +1226,7 @@ class RecordService(BasePlayService):
         cid, service = self.parseUrl(url)
         channelInfo = self.getChannel(cid, service)
 
-        if '.mpd' in channelInfo.strm or 'format=mpd' in channelInfo.strm:
+        if 'streaming.telia.com' in channelInfo.strm:
             self.epg.database.removeRecording(self.program)
             self.cancelProgramRecord(self.program)
             updateDB = True
