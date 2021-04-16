@@ -395,22 +395,19 @@ class TeliaPlayUpdater(baseServiceUpdater):
             validTo = iso8601.parse_date(self.validTo)
             if localize:
                 result = self.utcToLocal(validTo)
-        else:
+        elif self.validTo != '':
             try:
                 date_time_format = '%Y-%m-%dT%H:%M:%S.%f+' + self.validTo.split('+')[1]
-                validTo = datetime(*(time.strptime(self.validTo, date_time_format)[0:6]))
-
-                timestamp = int(time.mktime(validTo.timetuple()))
-                tokenValidTo = datetime.fromtimestamp(int(timestamp))
-                result = tokenValidTo - datetime.now()
-
             except:
                 date_time_format = '%Y-%m-%dT%H:%M:%S.%f+' + self.validTo.split('+')[0]
-                validTo = datetime(*(time.strptime(self.validTo, date_time_format)[0:6]))
 
-                timestamp = int(time.mktime(validTo.timetuple()))
-                tokenValidTo = datetime.fromtimestamp(int(timestamp))
-                result = tokenValidTo - datetime.now()
+            validTo = datetime(*(time.strptime(self.validTo, date_time_format)[0:6]))
+            timestamp = int(time.mktime(validTo.timetuple()))
+            tokenValidTo = datetime.fromtimestamp(int(timestamp))
+        else:
+            tokenValidTo = datetime.now()
+
+            result = tokenValidTo - datetime.now()
 
         return result
         
