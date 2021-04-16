@@ -537,7 +537,7 @@ class RecordService(BasePlayService):
         threadData['downloadOptions']['settingsChanged'] = False
         threadData['downloadDuration'] = self.downloadDuration
 
-        if threadData['downloadDuration'] <= 0:
+        if int(threadData['downloadDuration']) <= 0:
             deb('DownloadService - downloadUrl duration is 0, aborting download')
             return
 
