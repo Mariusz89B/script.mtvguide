@@ -407,7 +407,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
         else:
             tokenValidTo = datetime.now()
 
-            result = tokenValidTo - datetime.now()
+        result = tokenValidTo - datetime.now()
 
         return result
         
