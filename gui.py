@@ -1963,6 +1963,7 @@ class mTVGuide(xbmcgui.WindowXML):
         deb("########### onPlayerStateChanged {} {}".format(pstate, ADDON.getSetting('info_osd')))
         if self.isClosing:
             return
+
         if (pstate == "Stopped" or pstate == "Ended" or pstate == "PlayBackError"):
             if self.playService.isWorking() or xbmc.Player().isPlaying():
                 while self.playService.isWorking() == True and not self.isClosing:
@@ -1974,8 +1975,8 @@ class mTVGuide(xbmcgui.WindowXML):
                     return
 
             self._showEPG()
-            if pstate == "Ended" and self.playingRecordedProgram and self.recordService.isProgramScheduled(
-                    self.program) == False:
+
+            if pstate == "Ended" and self.playingRecordedProgram and self.recordService.isProgramRecordScheduled(self.program) == False:
                 time.sleep(0.1)
                 if xbmc.Player().isPlaying() == False:
                     deleteFiles = False
@@ -2078,22 +2079,23 @@ class mTVGuide(xbmcgui.WindowXML):
         except:
             None
 
-    def close(self):
+    def close(self, background=''):
         deb('close')
         if not self.isClosing:
-            if self.recordService.isRecordOngoing():
-                ret = xbmcgui.Dialog().yesno(strings(69000), '{}'.format(strings(69011)))
-                if ret == False:
-                    return
-            elif self.recordService.isRecordScheduled():
-                ret = xbmcgui.Dialog().yesno(strings(69000), '{}'.format(strings(69015)))
-                if ret == False:
-                    return
+            if not background:
+                if self.recordService.isRecordOngoing():
+                    ret = xbmcgui.Dialog().yesno(strings(69000), '{}'.format(strings(69011)))
+                    if ret == False:
+                        return
+                elif self.recordService.isRecordScheduled():
+                    ret = xbmcgui.Dialog().yesno(strings(69000), '{}'.format(strings(69015)))
+                    if ret == False:
+                        return
 
-            elif self.recordService.isDownloadOngoing():
-                ret = xbmcgui.Dialog().yesno(strings(69056), '{}'.format(strings(69058)))
-                if ret == False:
-                    return
+                elif self.recordService.isDownloadOngoing():
+                    ret = xbmcgui.Dialog().yesno(strings(69056), '{}'.format(strings(69058)))
+                    if ret == False:
+                        return
 
             self.isClosing = True
             strings2.M_TVGUIDE_CLOSING = True
@@ -2113,8 +2115,14 @@ class mTVGuide(xbmcgui.WindowXML):
                     self.osd.closeOSD()
                 except:
                     pass
-            self.playService.close()
-            self.recordService.close()
+            if not background:
+                self.playService.close()
+                self.recordService.close()
+            else:
+                while xbmc.Monitor().abortRequested():
+                    self.playService.close()
+                    self.recordService.close()
+
             if self.notification:
                 self.notification.close()
             if self.updateTimebarTimer:
@@ -2142,10 +2150,13 @@ class mTVGuide(xbmcgui.WindowXML):
 
         self.initialized = True
         self._hideControl(self.C_MAIN_MOUSEPANEL_CONTROLS)
-        self._showControl(self.C_MAIN_EPG, self.C_MAIN_LOADING)
+        self._showControl(self.C_MAIN_LOADING)
         self._hideControl(self.C_MAIN_LOADING_BACKGROUND)
         self.setControlLabel(self.C_MAIN_LOADING_TIME_LEFT, strings(BACKGROUND_UPDATE_IN_PROGRESS))
         self.setFocusId(self.C_MAIN_LOADING_CANCEL)
+
+        time.sleep(2)
+        self._showControl(self.C_MAIN_EPG)
         
 
         control = self.getControl(self.C_MAIN_EPG_VIEW_MARKER)
@@ -2495,7 +2506,7 @@ class mTVGuide(xbmcgui.WindowXML):
         channelList = self.database.getChannelList(onlyVisible=True)
         f = xbmcvfs.File(os.path.join(self.profilePath, 'autoplay.json'), "r")
         lines = f.read()
-        self.channelIdx = int(lines)
+        self.channelIdx = int(lines.split(',')[0])
         try:
             program = Program(channel=channelList[self.channelIdx], title='', startDate='', endDate='', description='', productionDate='', director='', actor='', episode='',
                               imageLarge='', imageSmall='', categoryA='', categoryB='')
@@ -2759,21 +2770,28 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def onActionEPGMode(self, action):
         debug('onActionEPGMode keyId {}, buttonCode {}'.format(action.getId(), action.getButtonCode()))
+        if ADDON.getSetting('background_services') == 'true':
+            background = True
+        else:
+            background = False
+
         if action.getId() in [ACTION_PARENT_DIR, KEY_NAV_BACK, ACTION_PREVIOUS_MENU]:
-            if xbmc.Player().isPlaying() or self.playService.isWorking():
-                self.playService.stopPlayback()
-            elif action.getButtonCode() != 0 or action.getId() == ACTION_SELECT_ITEM:
+            if not background:
+                if xbmc.Player().isPlaying() or self.playService.isWorking():
+                    self.playService.stopPlayback()
+                    
+            if action.getButtonCode() != 0 or action.getId() == ACTION_SELECT_ITEM:
                 if ADDON.getSetting('exit') == '0':
                     # Ask to close
                     ret = xbmcgui.Dialog().yesno(strings(30963), '{}?'.format(strings(30981)))
                     if ret == False:
                         return
                     elif ret == True:
-                        self.close()
+                        self.close(background=background)
                 else:
                     # Close by two returns
                     if (datetime.datetime.now() - self.lastCloseKeystroke).seconds < 3:
-                        self.close()
+                        self.close(background=background)
                     else:
                         self.lastCloseKeystroke = datetime.datetime.now()
                         xbmcgui.Dialog().notification(strings(30963), strings(30964), time=3000, sound=False)
@@ -2808,8 +2826,12 @@ class mTVGuide(xbmcgui.WindowXML):
             return
 
         elif action.getId() == KEY_CONTEXT_MENU or action.getButtonCode() == KEY_CONTEXT or action.getId() == ACTION_MOUSE_RIGHT_CLICK:
-            if xbmc.Player().isPlaying():
 
+            if self.currentChannel is None:
+                chann, prog, idx = self.getLastPlayingChannel()
+                self.currentChannel = chann
+
+            if xbmc.Player().isPlaying():
                 if ADDON.getSetting('start_video_minimalized') == 'false' or self.playingRecordedProgram or self.currentChannel is None:
                     xbmc.executebuiltin("Action(FullScreen)")
                 self._hideEpg()
@@ -2964,17 +2986,22 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.onRedrawEPG(self.channelIdx == 1, self.viewStartDate)
 
         if controlId in [self.C_MAIN_LOADING_CANCEL, self.C_MAIN_MOUSEPANEL_EXIT]:
+            if ADDON.getSetting('background_services') == 'true':
+                background = True
+            else:
+                background = False
+
             if ADDON.getSetting('exit') == '0':
                 # Ask to close
                 ret = xbmcgui.Dialog().yesno(strings(30963), '{}?'.format(strings(30981)))
                 if ret == False:
                     return
                 elif ret == True:
-                    self.close()
+                    self.close(background=background)
             else:
                 # Close by two returns
                 if (datetime.datetime.now() - self.lastCloseKeystroke).seconds < 3:
-                    self.close()
+                    self.close(background=background)
                 else:
                     self.lastCloseKeystroke = datetime.datetime.now()
                     xbmcgui.Dialog().notification(strings(30963), strings(30964), time=3000, sound=False)
@@ -3828,6 +3855,16 @@ class mTVGuide(xbmcgui.WindowXML):
             channels = 1
             self.letterSort(channels)
 
+        #elif res == 2:
+            #kb = xbmc.Keyboard('','')
+            #kb.setHeading('Create channel')
+            #kb.setHiddenInput(False)
+            #kb.doModal()
+            #c = kb.getText() if kb.isConfirmed() else None
+            #if c == '': c = None
+
+            #epgChann = c
+
         elif res == 2:
             p = re.compile('\s<channel id="(.*?)"', re.DOTALL)
 
@@ -3922,7 +3959,7 @@ class mTVGuide(xbmcgui.WindowXML):
             epgChann = epgList[res]
             self.channelsFromStream(epgChann, epgList, channels)
 
-    def channelsFromStream(self, epgChann, epgList, channels):
+    def channelsFromStream(self, epgChann="", epgList="", channels=""):
         file = xbmcvfs.File(os.path.join(self.profilePath, 'stream_url.list'), 'r')
         getStreams = file.read().splitlines()
         strmList = getStreams
@@ -3933,7 +3970,10 @@ class mTVGuide(xbmcgui.WindowXML):
         res = xbmcgui.Dialog().select(strings(59992), strmList)
 
         if res < 0:
-            self.channelsFromEPG(epgList, channels)
+            if epgList is not None:
+                self.channelsFromEPG(epgList, channels)
+            else:
+                self.channelsSelect()
 
         else:
             regChann = strmList[res]
@@ -3962,7 +4002,7 @@ class mTVGuide(xbmcgui.WindowXML):
             f.write(new_str)
             xbmcgui.Dialog().ok(strings(57051), strings(59993).format(regChann.upper()))
             self.onRedrawEPG(self.channelIdx, self.viewStartDate)
-  
+
 
     def _showContextMenu(self, program):
         deb('_showContextMenu')
@@ -4002,7 +4042,22 @@ class mTVGuide(xbmcgui.WindowXML):
             xbmcaddon.Addon(id=ADDON_ID).openSettings()
 
         elif buttonClicked == PopupMenu.C_POPUP_RECORD:
-            self.recordProgram(program)
+            if program.recordingScheduled:
+                self.recordProgram(program)
+            else:
+                res = xbmcgui.Dialog().select(strings(70006) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', [strings(30622), strings(30623)])
+                if res < 0:
+                    return
+
+                if res == 0:
+                    hours = xbmcgui.Dialog().numeric(0, strings(30624))
+                    if hours == '':
+                        return
+                    else:
+                        self.recordProgram(program, watch=True, length=hours)
+
+                if res == 1:
+                    self.recordProgram(program)
 
         elif buttonClicked == PopupMenu.C_POPUP_INFO:
             deb('Info')
@@ -4123,6 +4178,25 @@ class mTVGuide(xbmcgui.WindowXML):
 
         self.setControlLabel(C_MAIN_CALC_TIME_EPG, '{}'.format(calcTime))
 
+    def getLastPlayingChannel(self):
+        file_name = os.path.join(self.profilePath, 'autoplay.json')
+        with open(file_name, 'r') as f:
+            value = f.read()
+            idx = int(value.split(',')[0])
+            date = value.split(',')[1]
+
+        startDate = proxydt.strptime(str(date), '%Y-%m-%d %H:%M:%S')
+
+        channelList = self.database.getChannelList(onlyVisible=True)
+        try:
+            chann = channelList[idx]
+        except:
+            chann = channelList[0]
+
+        prog = self.database.getProgramStartingAt(chann, startDate)
+
+        return chann, prog, idx
+
     def delayedOnFocus(self, controlId):
         debug('onFocus controlId: {}'.format(controlId))
         try:
@@ -4139,11 +4213,15 @@ class mTVGuide(xbmcgui.WindowXML):
         self.setControlLabel(C_MAIN_TITLE, '{}'.format(program.title))
         self.setControlLabel(C_MAIN_TIME, '{} - {}'.format(self.formatTime(program.startDate), self.formatTime(program.endDate)))
 
-        if ADDON.getSetting('info_osd') == "false" or self.program is None:
-            self.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format("N/A"))
-            self.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(strings(55016)))
-            self.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format("N/A", "N/A"))
-            self.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format("-"))
+        try:
+            if ADDON.getSetting('info_osd') == "false" or self.program is None:
+                chann, prog, idx = self.getLastPlayingChannel()
+
+                self.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format(chann.id))
+                self.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(prog.title))
+                self.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format((str(int(idx) + 1))))
+        except:
+            pass
 
         if program.description:
             description = program.description
@@ -4238,8 +4316,11 @@ class mTVGuide(xbmcgui.WindowXML):
         else:
             self.setControlImage(C_MAIN_LIVE, '')
 
-        self.realtimeDate(program)
-        self.calctimeLeft(program)
+        try:
+            self.realtimeDate(program)
+            self.calctimeLeft(program)
+        except:
+            pass
 
     def _left(self, currentFocus):
         # debug('_left')
@@ -4353,18 +4434,59 @@ class mTVGuide(xbmcgui.WindowXML):
                 return True
         return False
 
+    @contextmanager
+    def busyPlayDialog(self):
+        if xbmc.getCondVisibility('!Window.IsVisible(fullscreenvideo)'):
+            xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
+        try:
+            yield
+        finally:
+            xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
+
+    def playAndWatchRecordedProgram(self, program):
+        with self.busyPlayDialog():
+            time.sleep(5)
+            self.playingRecordedProgram = False
+            recordedProgram = self.recordService.isProgramRecorded(program)
+            if recordedProgram is not None:
+                diff = program.endDate - datetime.datetime.now()
+                diffSeconds = (diff.days * 86400) + diff.seconds
+                
+                #if ADDON.getSetting('start_video_minimalized') == 'true':
+                    #startWindowed = True
+                #else:
+                    #startWindowed = False
+                try:
+                    firstFileInPlaylist = recordedProgram[0].getfilename()
+                    playlistIndex = int(self.recordedFilesPlaylistPositions[firstFileInPlaylist])
+                except:
+                    playlistIndex = -1
+
+                deb('playRecordedProgram starting play of recorded program {} from index {}'.format(program.title, playlistIndex))
+
+                xbmc.Player().play(item=recordedProgram, windowed=False, startpos=playlistIndex)
+                self.playingRecordedProgram = True
+                return True
+
     def updateCurrentChannel(self, channel):
         deb('updateCurrentChannel')
         self.lastChannel = self.currentChannel
         self.currentChannel = channel
 
+        date = datetime.datetime.now()
+
         file_name = os.path.join(self.profilePath, 'autoplay.json')
         f = xbmcvfs.File(file_name, "wb")
         s = "{}".format(str(self.database.getCurrentChannelIdx(channel)))
+        try:
+            date = self.program.startDate
+        except:
+            program = self.database.getCurrentProgram(channel)
+            date = program.startDate
         if sys.version_info[0] > 2:
-            f.write('{}'.format(s))
+            f.write('{},{}'.format(s, date))
         else:
-            f.write(bytearray(s, 'utf-8'))
+            f.write(str('{},{}'.format(s, date)))
         f.close()
 
     def getLastChannel(self):
@@ -4794,10 +4916,16 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.playService.playUrlList(urlList, self.archiveService, self.archivePlaylist, resetReconnectCounter=True)
         return len(urlList) > 0
 
-    def recordProgram(self, program):
+    def recordProgram(self, program, watch='', length=''):
         deb('recordProgram')
-        if self.recordService.recordProgramGui(program):
-            self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+        if watch and length != '':
+            if self.recordService.recordProgramGui(program, watch, length):
+                self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+                self.playAndWatchRecordedProgram(program)
+                
+        else:
+            if self.recordService.recordProgramGui(program):
+                self.onRedrawEPG(self.channelIdx, self.viewStartDate)
 
     def waitForPlayBackStopped(self):
         debug('waitForPlayBackStopped')
@@ -4819,7 +4947,10 @@ class mTVGuide(xbmcgui.WindowXML):
         deb('_showEpg')
 
         # aktualna godzina!
-        self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(ADDON.getSetting('timebar_adjust')))
+        try:
+            self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(ADDON.getSetting('timebar_adjust')))
+        except:
+            self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(0))
         self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
         if self.currentChannel is not None:
             currentChannelIndex = self.database.getCurrentChannelIdx(self.currentChannel)

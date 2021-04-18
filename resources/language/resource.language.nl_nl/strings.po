@@ -644,6 +644,18 @@ msgctxt "#30621"
 msgid "Live, schedule recording or download program.[CR]Add a task, use time-shift to urge or delay start of recording / download."
 msgstr "Live, plan opname of download programma.[CR]Voeg een taak toe, gebruik tijdverschuiving om de start van opname / download aan te sporen of uit te stellen."
 
+msgctxt "#30622"
+msgid "Record and play"
+msgstr "Opnemen en afspelen"
+
+msgctxt "#30623"
+msgid "Plan recording"
+msgstr "Opname plannen"
+
+msgctxt "#30624"
+msgid "Recording hours"
+msgstr "Opname uren"
+
 msgctxt "#30700"
 msgid "Multiple addons provide this channels.[CR]Choose one to watch the stream."
 msgstr "Meerdere add-ons bieden deze kanalen.[CR]Kies er een om de stream te bekijken."
@@ -1383,6 +1395,10 @@ msgstr "Op kanaalnummer"
 msgctxt "#30921"
 msgid "Last seen channel"
 msgstr "Laatst gezien kanaal"
+
+msgctxt "#30922"
+msgid "Enable background services"
+msgstr "Schakel achtergrondservices in"
 
 msgctxt "#30930"
 msgid "Colours"

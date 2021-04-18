@@ -79,6 +79,7 @@ base_url = 'https://cmore-mobile-bff.b17g.services'
 class CmoreUpdater(baseServiceUpdater):
     def __init__(self):
         self.serviceName        = serviceName
+        self.localMapFile       = 'basemap.xml'
         if ADDON.getSetting('cmore_locale') == 'cmore.se':
             self.localMapFile = 'basemap_swedish.xml'
             locale = 'sv_SE'

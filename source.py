@@ -268,7 +268,10 @@ class Database(object):
         self.conn = None
         self.eventQueue = list()
         try:
-            self.event = multiprocessing.Event()
+            if sys.version_info[0] > 2:
+                self.event = multiprocessing.Event()
+            else:
+                self.event = threading.Event()
         except:
             self.event = threading.Event()
 

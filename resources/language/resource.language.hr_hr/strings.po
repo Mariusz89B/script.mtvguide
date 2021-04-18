@@ -644,6 +644,18 @@ msgctxt "#30621"
 msgid "Live, schedule recording or download program.[CR]Add a task, use time-shift to urge or delay start of recording / download."
 msgstr "Uživo, zakažite snimanje ili preuzmite program.[CR]Dodajte zadatak, upotrijebite pomak vremena da biste potakli ili odgodili početak snimanja / preuzimanja."
 
+msgctxt "#30622"
+msgid "Record and play"
+msgstr "Snimanje i reprodukcija"
+
+msgctxt "#30623"
+msgid "Plan recording"
+msgstr "Planiraj snimanje"
+
+msgctxt "#30624"
+msgid "Recording hours"
+msgstr "Snimanje sati"
+
 msgctxt "#30700"
 msgid "Multiple addons provide this channels.[CR]Choose one to watch the stream."
 msgstr "Više kanala pruža ove kanale.[CR]Izaberite jedan za gledanje streama."
@@ -1383,6 +1395,10 @@ msgstr "Po broju kanala"
 msgctxt "#30921"
 msgid "Last seen channel"
 msgstr "Zadnji put viđen kanal"
+
+msgctxt "#30922"
+msgid "Enable background services"
+msgstr "Omogućite pozadinske usluge"
 
 msgctxt "#30930"
 msgid "Colours"

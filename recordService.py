@@ -158,7 +158,7 @@ class RecordService(BasePlayService):
         self.durationTime        = 0
         self.startOffsetDownload = 0
         self.endOffsetDownload   = 0
-        self.downloading         = False 
+        self.downloading         = False
 
 
         if ADDON.getSetting('ffmpeg_dis_cop_un') == 'true':
@@ -227,74 +227,82 @@ class RecordService(BasePlayService):
         return self.progress
 
 
-    def recordProgramGui(self, program):
+    def recordProgramGui(self, program, watch='', length=''):
         self.program = program
         self.isDownload = False
         updateDB = False
 
         try:
-            if self.calculateTimeDifference(program.endDate) <= 0:
-                archiveList = self.getTimeshift()
+            if not watch:
+                if self.calculateTimeDifference(program.endDate) <= 0:
+                    archiveList = self.getTimeshift()
 
-                if program.channel.id.upper() in archiveList and ADDON.getSetting('archive_support') == 'true' and program.startDate < datetime.datetime.now():
-                    self.isDownload = True
-                    if self.isProgramDownloadScheduled(program):
-                        ret = xbmcgui.Dialog().yesno(strings(69000), strings(69009))
-                        if ret == True:
-                            self.epg.database.removeRecording(program)
-                            self.cancelProgramDownload(program)
-                            updateDB = True
+                    if program.channel.id.upper() in archiveList and ADDON.getSetting('archive_support') == 'true' and program.startDate < datetime.datetime.now():
+                        self.isDownload = True
+                        if self.isProgramDownloadScheduled(program):
+                            ret = xbmcgui.Dialog().yesno(strings(69000), strings(69009))
+                            if ret == True:
+                                self.epg.database.removeRecording(program)
+                                self.cancelProgramDownload(program)
+                                updateDB = True
 
-                    elif program.recordingScheduled != 1:
-                        if sys.version_info[0] > 2:
-                            res = xbmcgui.Dialog().yesno(strings(70006) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', strings(31000).format(program.title) )
+                        elif program.recordingScheduled != 1:
+                            if sys.version_info[0] > 2:
+                                res = xbmcgui.Dialog().yesno(strings(70006) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', strings(31000).format(program.title) )
+                            else:
+                                res = xbmcgui.Dialog().yesno(strings(70006) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', strings(31000).format(program.title.encode('utf-8').decode('utf-8')) )
+                            if res == True:
+                                downloadMenu = DownloadMenu(program)
+                                downloadMenu.doModal()
+                                saveRecording, chkdate, self.startOffsetDownload, self.endOffsetDownload = downloadMenu.getOffsets()
+
+                                if saveRecording == True:
+                                    self.startOffsetDownload *= 60
+                                    self.endOffsetDownload *= 60
+                                    if self.scheduleDownload(program, self.startOffsetDownload, self.endOffsetDownload):
+                                        self.epg.database.addRecording(program, self.startOffsetDownload, self.endOffsetDownload)
+                                        updateDB = True
+                                elif chkdate == False:
+                                    xbmcgui.Dialog().ok(failedDownloadDialogName, strings(59998))
+
                         else:
-                            res = xbmcgui.Dialog().yesno(strings(70006) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', strings(31000).format(program.title.encode('utf-8').decode('utf-8')) )
-                        if res == True:
-                            downloadMenu = DownloadMenu(program)
-                            downloadMenu.doModal()
-                            saveRecording, chkdate, self.startOffsetDownload, self.endOffsetDownload = downloadMenu.getOffsets()
-
-                            if saveRecording == True:
-                                self.startOffsetDownload *= 60
-                                self.endOffsetDownload *= 60
-                                if self.scheduleDownload(program, self.startOffsetDownload, self.endOffsetDownload):
-                                    self.epg.database.addRecording(program, self.startOffsetDownload, self.endOffsetDownload)
-                                    updateDB = True
-                            elif chkdate == False:
-                                xbmcgui.Dialog().ok(failedDownloadDialogName, strings(59998))
+                            self.epg.database.removeRecording(program)
+                            updateDB = True
 
                     else:
+                        xbmcgui.Dialog().ok(strings(70006) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', strings(59987) )
+                        return
+
+                if program.endDate > datetime.datetime.now() and self.isProgramRecordScheduled(program):
+                    ret = xbmcgui.Dialog().yesno(strings(69000), strings(69009))
+                    if ret == True:
                         self.epg.database.removeRecording(program)
+                        self.cancelProgramRecord(program)
                         updateDB = True
 
-                else:
-                    xbmcgui.Dialog().ok(strings(70006) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', strings(59987) )
-                    return
+                elif program.recordingScheduled != 1:
+                    if self.isDownload == False:
+                        recordMenu = RecordMenu(program)
+                        recordMenu.doModal()
+                        saveRecording, startOffset, endOffset = recordMenu.getOffsets()
 
-            if program.endDate > datetime.datetime.now() and self.isProgramRecordScheduled(program):
-                ret = xbmcgui.Dialog().yesno(strings(69000), strings(69009))
-                if ret == True:
+                        if saveRecording == True:
+                            startOffset *= 60
+                            endOffset *= 60
+                            if self.scheduleRecording(program, startOffset, endOffset):
+                                self.epg.database.addRecording(program, startOffset, endOffset)
+                                updateDB = True
+
+                else:
                     self.epg.database.removeRecording(program)
-                    self.cancelProgramRecord(program)
                     updateDB = True
 
-            elif program.recordingScheduled != 1:
-                if self.isDownload == False:
-                    recordMenu = RecordMenu(program)
-                    recordMenu.doModal()
-                    saveRecording, startOffset, endOffset = recordMenu.getOffsets()
-
-                    if saveRecording == True:
-                        startOffset *= 60
-                        endOffset *= 60
-                        if self.scheduleRecording(program, startOffset, endOffset):
-                            self.epg.database.addRecording(program, startOffset, endOffset)
-                            updateDB = True
-
             else:
-                self.epg.database.removeRecording(program)
-                updateDB = True
+                startOffset = 0
+                endOffset = int(length) * 60
+                if self.scheduleRecording(program, startOffset, endOffset):
+                    self.epg.database.addRecording(program, startOffset, endOffset)
+                    updateDB = True
 
         except:
             deb('recordProgramGui exception: %s' % getExceptionString())
@@ -1226,37 +1234,38 @@ class RecordService(BasePlayService):
         cid, service = self.parseUrl(url)
         channelInfo = self.getChannel(cid, service)
 
-        if 'streaming.telia.com' in channelInfo.strm:
+        if not 'streaming.telia.com' in channelInfo.strm:
+            if channelInfo is None:
+                threadData['nrOfReattempts'] += 1
+                deb('RecordService recordUrl - locked service {} - trying next, nrOfReattempts: {}, max: {}'.format(service, threadData['nrOfReattempts'], maxNrOfReattempts))
+                return #go to next stream - this one seems to be locked
+
+            self.findNextUnusedOutputFilename(threadData)
+            
+            if self.rtmpdumpAvailable and self.useOnlyFFmpeg == 'false' and (channelInfo.rtmpdumpLink is not None or (threadData['recordOptions']['forceRTMPDump'] == True and 'rtmp:' in channelInfo.strm) ):
+                recordCommand = self.generateRTMPDumpCommand(channelInfo, threadData['recordDuration'], threadData['destinationFile'], threadData['recordOptions'])
+            elif self.ffmpegdumpAvailable:
+                recordCommand = self.generateFFMPEGCommand(channelInfo, threadData['recordDuration'], threadData['destinationFile'], threadData['recordOptions'])
+            else:
+                recordCommand = None
+                deb('RecordService recordUrl ERROR, cant choose record application, self.rtmpdumpAvailable: {}, self.ffmpegdumpAvailable: {}, self.useOnlyFFmpeg: {}, channelInfo.rtmpdumpLink: {}, forceRTMPDump: {}, rtmpInUrl: {}'.format(self.rtmpdumpAvailable, self.ffmpegdumpAvailable, self.useOnlyFFmpeg, channelInfo.rtmpdumpLink, threadData['recordOptions']['forceRTMPDump'], 'rtmp:' in channelInfo.strm) )
+
+            if recordCommand:
+                self.showStartRecordNotification(threadData)
+                output = self.record(recordCommand, threadData)
+                self.postRecordActions(output, threadData)
+            else:
+                threadData['nrOfReattempts'] += 1
+
+            self.unlockService(service)
+
+        else:
             self.epg.database.removeRecording(self.program)
             self.cancelProgramRecord(self.program)
             updateDB = True
             xbmcgui.Dialog().ok(strings(70006) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30373))
             self.processIsCanceled = True
-            return False
-
-        if channelInfo is None:
-            threadData['nrOfReattempts'] += 1
-            deb('RecordService recordUrl - locked service {} - trying next, nrOfReattempts: {}, max: {}'.format(service, threadData['nrOfReattempts'], maxNrOfReattempts))
-            return #go to next stream - this one seems to be locked
-
-        self.findNextUnusedOutputFilename(threadData)
-        
-        if self.rtmpdumpAvailable and self.useOnlyFFmpeg == 'false' and (channelInfo.rtmpdumpLink is not None or (threadData['recordOptions']['forceRTMPDump'] == True and 'rtmp:' in channelInfo.strm) ):
-            recordCommand = self.generateRTMPDumpCommand(channelInfo, threadData['recordDuration'], threadData['destinationFile'], threadData['recordOptions'])
-        elif self.ffmpegdumpAvailable:
-            recordCommand = self.generateFFMPEGCommand(channelInfo, threadData['recordDuration'], threadData['destinationFile'], threadData['recordOptions'])
-        else:
-            recordCommand = None
-            deb('RecordService recordUrl ERROR, cant choose record application, self.rtmpdumpAvailable: {}, self.ffmpegdumpAvailable: {}, self.useOnlyFFmpeg: {}, channelInfo.rtmpdumpLink: {}, forceRTMPDump: {}, rtmpInUrl: {}'.format(self.rtmpdumpAvailable, self.ffmpegdumpAvailable, self.useOnlyFFmpeg, channelInfo.rtmpdumpLink, threadData['recordOptions']['forceRTMPDump'], 'rtmp:' in channelInfo.strm) )
-
-        if recordCommand:
-            self.showStartRecordNotification(threadData)
-            output = self.record(recordCommand, threadData)
-            self.postRecordActions(output, threadData)
-        else:
-            threadData['nrOfReattempts'] += 1
-
-        self.unlockService(service)
+            self.unlockService(service)
 
 
     def record(self, recordCommand, threadData):
@@ -1483,7 +1492,6 @@ class RecordService(BasePlayService):
 
     def close(self):
         deb('RecordService close')
-
         # Record
         self.terminating = True
         for element in self.timers[:]:

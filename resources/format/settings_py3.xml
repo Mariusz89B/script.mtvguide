@@ -2448,6 +2448,11 @@
 					<default>false</default>
 					<control type="toggle"/>
 				</setting>
+				<setting help="95133" id="background_services" label="30922" type="boolean">
+					<level>2</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
 			</group>
 			<group id="2">
 				<setting help="95044" id="autostart_channel" label="30919" type="boolean">

@@ -1,4 +1,9 @@
-﻿[COLOR yellow][B]wersja 9.3.0[/B] - 2021-04-13[/COLOR]
+﻿[COLOR yellow][B]wersja 9.3.1[/B] - 2021-04-18[/COLOR]
+- dodana opcja nagrywaj i oglądaj
+- dodano ustawienie aby kontynuować odtwarzanie, nagrywanie i
+pobieranie usług w tle po zakonczeniu wtyczki
+
+[COLOR yellow][B]wersja 9.3.0[/B] - 2021-04-13[/COLOR]
 - poprawka nagrywania z serwisu WP Pilot
 - dodana funkcja timeshift do serwisu Telia Play
 - poprawka błędu szyfrowania

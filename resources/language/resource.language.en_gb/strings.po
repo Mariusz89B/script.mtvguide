@@ -644,6 +644,18 @@ msgctxt "#30621"
 msgid "Live, schedule recording or download program.[CR]Add a task, use time-shift to urge or delay start of recording / download."
 msgstr ""
 
+msgctxt "#30622"
+msgid "Record and play"
+msgstr ""
+
+msgctxt "#30623"
+msgid "Plan recording"
+msgstr ""
+
+msgctxt "#30624"
+msgid "Recording hours"
+msgstr ""
+
 msgctxt "#30700"
 msgid "Multiple addons provide this channels.[CR]Choose one to watch the stream."
 msgstr ""
@@ -1386,6 +1398,10 @@ msgstr ""
 
 msgctxt "#30921"
 msgid "Last seen channel"
+msgstr ""
+
+msgctxt "#30922"
+msgid "Enable background services"
 msgstr ""
 
 msgctxt "#30930"
@@ -3146,6 +3162,10 @@ msgstr ""
 
 msgctxt "#95132"
 msgid "Adjust interval time for playlist update."
+msgstr ""
+
+msgctxt "#95133"
+msgid "If enabled add-on will continue to run play and record services upon exit."
 msgstr ""
 
 msgctxt "#99995" 

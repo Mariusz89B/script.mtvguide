@@ -129,9 +129,9 @@ class Threading(object):
 class TeliaPlayUpdater(baseServiceUpdater):
     def __init__(self):
         self.serviceName        = serviceName
+        self.localMapFile       = 'basemap.xml'
         if ADDON.getSetting('teliaplay_locale') == '0':
             self.localMapFile = 'basemap_danish.xml'
-
         elif ADDON.getSetting('teliaplay_locale') == '1':
             self.localMapFile = 'basemap_swedish.xml'
 

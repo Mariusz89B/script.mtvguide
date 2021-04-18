@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.mtvguide" name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]" version="9.3.0" provider-name="Team Mods-Kodi">
+<addon id="script.mtvguide" name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]" version="9.3.1" provider-name="Team Mods-Kodi">
 	<requires>
 		<import addon="xbmc.addon" version="17.0.0"/>
 		<import addon="script.module.inputstreamhelper" />
@@ -29,7 +29,12 @@
 		<forum>http://mods-kodi.pl/forum/</forum>
 		<website>http://mods-kodi.pl/</website>
 		<email>support@m-tvguide.pl</email>
-	<news>v9.3.0 (2021-04-13)
+	<news>v9.3.1 (2021-04-18)
+- Added record and play function.
+- Added setting to keep running playback, recording and 
+download services in background on add-on exit.
+
+v9.3.0 (2021-04-13)
 - Fixed recording service WP Pilot.
 - Added timeshift function for service Telia Play.
 - Fixed decoding issue.

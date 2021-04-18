@@ -644,6 +644,18 @@ msgctxt "#30621"
 msgid "Live, schedule recording or download program.[CR]Add a task, use time-shift to urge or delay start of recording / download."
 msgstr "Inspelning av direktsända, schemalagda eller nedladdade program.[CR]Lägg till en inspelning, använd time-shift för att påskynda eller fördröja starten på inspelningen / nedladdningen."
 
+msgctxt "#30622"
+msgid "Record and play"
+msgstr "Spela in och spela upp"
+
+msgctxt "#30623"
+msgid "Plan recording"
+msgstr "Planera inspelning"
+
+msgctxt "#30624"
+msgid "Recording hours"
+msgstr "Inspelningstimmar"
+
 msgctxt "#30700"
 msgid "Multiple addons provide this channels.[CR]Choose one to watch the stream."
 msgstr "Flera tillägg tillhandahåller dessa kanaler.[CR]Välj ett för att titta på strömmen."
@@ -1383,6 +1395,10 @@ msgstr "Efter kanalnummer"
 msgctxt "#30921"
 msgid "Last seen channel"
 msgstr "Senast sedd kanal"
+
+msgctxt "#30922"
+msgid "Enable background services"
+msgstr "Aktivera bakgrundstjänster"
 
 msgctxt "#30930"
 msgid "Colours"

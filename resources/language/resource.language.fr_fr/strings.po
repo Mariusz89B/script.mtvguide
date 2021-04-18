@@ -644,6 +644,18 @@ msgctxt "#30621"
 msgid "Live, schedule recording or download program.[CR]Add a task, use time-shift to urge or delay start of recording / download."
 msgstr "En direct, programmez l'enregistrement ou téléchargez le programme.[CR]Ajoutez une tâche, utilisez le décalage horaire pour demander ou retarder le démarrage de l'enregistrement / du téléchargement."
 
+msgctxt "#30622"
+msgid "Record and play"
+msgstr "Enregistrer et lire"
+
+msgctxt "#30623"
+msgid "Plan recording"
+msgstr "Planifier l'enregistrement"
+
+msgctxt "#30624"
+msgid "Recording hours"
+msgstr "Heures d'enregistrement heures"
+
 msgctxt "#30700"
 msgid "Multiple addons provide this channels.[CR]Choose one to watch the stream."
 msgstr "Plusieurs addons fournissent ces canaux.[CR]Choisissez-en un pour regarder le flux."
@@ -1383,6 +1395,10 @@ msgstr "Par numéro de chaîne"
 msgctxt "#30921"
 msgid "Last seen channel"
 msgstr "Dernière chaîne vue"
+
+msgctxt "#30922"
+msgid "Enable background services"
+msgstr "Activer les services d'arrière plan"
 
 msgctxt "#30930"
 msgid "Colours"
