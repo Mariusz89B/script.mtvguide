@@ -4048,6 +4048,10 @@ class mTVGuide(xbmcgui.WindowXML):
         elif buttonClicked == PopupMenu.C_POPUP_RECORD:
             if program.recordingScheduled:
                 self.recordProgram(program)
+
+            if program.endDate <= datetime.datetime.now():
+                self.recordProgram(program)
+                
             else:
                 res = xbmcgui.Dialog().select(strings(70006) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', [strings(30622), strings(30623)])
                 if res < 0:
