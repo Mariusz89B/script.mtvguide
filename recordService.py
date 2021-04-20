@@ -519,8 +519,12 @@ class RecordService(BasePlayService):
         offset = str(offsetCalc)
 
         # UTC/LUTC
-        utc = str(int(datetime.datetime.timestamp(t)))
-        lutc = str(int(datetime.datetime.timestamp(e)))
+        if sys.version_info[0] > 2:
+            utc = str(int(datetime.datetime.timestamp(t)))
+            lutc = str(int(datetime.datetime.timestamp(e)))
+        else:
+            utc = str(int(time.mktime(t.timetuple())))
+            lutc = str(int(time.mktime(e.timetuple())))
 
         # Datestring
         year = t.strftime("%Y")
@@ -533,7 +537,10 @@ class RecordService(BasePlayService):
         archivePlaylist = '{duration}, {offset}, {utc}, {lutc}, {y}, {m}, {d}, {h}, {min}, {s}'.format(
             duration=duration, offset=offset, utc=utc, lutc=lutc, y=year, m=month, d=day, h=hour, min=minute, s=second)
 
-        mktime_duration = int(datetime.datetime.timestamp(e) - datetime.datetime.timestamp(t))
+        if sys.version_info[0] > 2:
+            mktime_duration = int(datetime.datetime.timestamp(e) - datetime.datetime.timestamp(t))
+        else:
+            mktime_duration = int(time.mktime(e.timetuple())) - int(time.mktime(t.timetuple()))
         mktime_duration = str(mktime_duration)
 
         return archivePlaylist, mktime_duration
@@ -1176,6 +1183,14 @@ class RecordService(BasePlayService):
                     thread = threading.Thread(name='recordLoop', target = self.recordLoop, args=[threadData])
                     self.threadList.append([thread, threadData])
                     thread.start()
+                
+                self.saveThreads()
+
+
+    def saveThreads(self):
+        file_name = os.path.join(self.profilePath, 'threads.list')
+        with open(file_name, 'w+') as f:
+            f.write(str(self.threadList[0]))
 
 
     def recordLoop(self, threadData):
@@ -1465,7 +1480,7 @@ class RecordService(BasePlayService):
         recordCommand.append("-t")
         recordCommand.append("{}".format(programDuration))
         recordCommand.append("-loglevel")
-        recordCommand.append("debug")
+        recordCommand.append("info")
         recordCommand.append("-n")
         recordCommand.append("{}".format(destinationFile))
 
@@ -1641,6 +1656,15 @@ class RecordService(BasePlayService):
 
 
     def cancelProgramRecord(self, program): #wylaczyc akturalnie nagrywany program?
+        #c = False
+        #if not self.threadList:
+            #file_name = os.path.join(self.profilePath, 'threads.list')
+            #with open(file_name, 'r', encoding="utf-8") as f:
+                #xthread = f.read()
+                #self.threadList.append(xthread)
+                #c = True
+
+
         for element in self.getScheduledRecordingsForThisTime(program.startDate):
             programList = element.programList
             try:
@@ -1654,6 +1678,8 @@ class RecordService(BasePlayService):
                             deb('RecordService canceled scheduled recording of: {}'.format(program.title))
                         else:
                             deb('RecordService canceled scheduled recording of: {}'.format(program.title.encode('utf-8')))
+
+                        #if not c:
                         return
             except:
                 pass

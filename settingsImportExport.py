@@ -62,6 +62,7 @@ except:
 
 dbFileName          = 'source.db'
 settingsFileName    = 'settings.xml'
+categoriesFileName  = 'categories.ini'
 WINDOWS_OS_NAME     = 'Windows'
 ANDROID_OS_NAME     = 'Android'
 OPENELEC_OS_NAME    = 'OpenELEC'
@@ -133,7 +134,7 @@ class SettingsImp:
             deb('SettingsImp exportSettings to file %s' % os.path.join(dirname, filename))
             try:
                 with zipfile.ZipFile(os.path.join(dirname, filename), mode='w', compression=compressionType) as zf:
-                    for fileN in [ dbFileName, settingsFileName ]:
+                    for fileN in [ dbFileName, settingsFileName, categoriesFileName ]:
                         if os.path.isfile(os.path.join(self.profilePath, fileN)):
                             zf.write(os.path.join(self.profilePath, fileN), fileN)
                             success = True
@@ -180,7 +181,7 @@ class SettingsImp:
 
             if filename[-4:] == '.zip':
                 zf = zipfile.ZipFile(filename)
-                for fileN in [ dbFileName, settingsFileName ]:
+                for fileN in [ dbFileName, settingsFileName, categoriesFileName ]:
                     try:
                         zf.extract(fileN, self.profilePath)
                         success = True
@@ -188,7 +189,7 @@ class SettingsImp:
                         deb('SettingsImp importSettings: Error got exception %s while reading archive %s' % (getExceptionString(), filename))
             else:
                 deb('Importing settings as single files!')
-                for fileN in [ dbFileName, settingsFileName ]:
+                for fileN in [ dbFileName, settingsFileName, categoriesFileName ]:
                     try:
                         source_file = os.path.join(os.path.dirname(filename), fileN)
                         deb('Trying to copy file: %s to %s' % (source_file, self.profilePath))

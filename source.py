@@ -62,6 +62,9 @@ try:
 except ImportError:
     pass
 
+if sys.version_info[0] < 3:
+    import cStringIO
+
 import threading
 import os, re, time, datetime, io, zipfile
 import xbmc, xbmcgui, xbmcvfs
@@ -268,10 +271,7 @@ class Database(object):
         self.conn = None
         self.eventQueue = list()
         try:
-            if sys.version_info[0] > 2:
-                self.event = multiprocessing.Event()
-            else:
-                self.event = threading.Event()
+            self.event = multiprocessing.Event()
         except:
             self.event = threading.Event()
 
@@ -2091,6 +2091,17 @@ class MTVGUIDESource(Source):
         self.logoFolder = None
         self.timer      = None
 
+        if sys.version_info[0] > 2:
+            try:
+                self.profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
+            except:
+                self.profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
+        else:
+            try:
+                self.profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile'))
+            except:
+                self.profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
+
     def getDataFromExternal(self, date, progress_callback = None):
         #try:
         data = self._getDataFromExternal(date, progress_callback, self.MTVGUIDEUrl)
@@ -2156,6 +2167,15 @@ class MTVGUIDESource(Source):
             xbmcgui.Dialog().ok(strings(LOAD_ERROR_TITLE), strings(LOAD_ERROR_LINE1) + '\n' + ex.epg + strings(LOAD_NOT_CRITICAL_ERROR))
         return data
 
+    def fileBuffer(self, text):
+        buffer = cStringIO.StringIO()
+        try:
+            for x in text:
+                buffer.write(b'{}'.format(x.encode('utf-8')))
+            return buffer.getvalue()
+        finally:
+            buffer.close()
+
     def _getDataFromExternal(self, date, progress_callback, url):
         try:
             try:
@@ -2178,8 +2198,21 @@ class MTVGUIDESource(Source):
                 else:
                     return customParseXMLTV(xml, progress_callback)
             else:
-                iob = io.BytesIO(xml.encode('utf-8'))
-                context = ElementTree.iterparse(iob)
+                if sys.version_info[0] > 2:
+                    iob = io.BytesIO(xml.encode('utf-8'))
+                else:
+                    try:
+                        iob = cStringIO.StringIO(xml.encode('utf-8'))
+                    except:
+                        text = self.fileBuffer(xml)
+                        file_name = os.path.join(self.profilePath, 'epg.temp')
+                        with open(file_name, 'wb') as f:
+                            f.write(text)
+
+                        temp = open(file_name, 'rb')
+                        iob = temp
+                
+                context = ElementTree.iterparse(iob, events=("start", "end"))
                 return parseXMLTV(context, iob, len(xml), self.logoFolder, progress_callback)
 
         except SourceUpdateCanceledException as cancelException:
@@ -2521,8 +2554,10 @@ def customParseXMLTV(xml, progress_callback):
 def parseXMLTV(context, f, size, logoFolder, progress_callback):
     deb("[EPG] Parsing EPG")
     start = datetime.datetime.now()
-    event, root = next(context)
+    context = iter(context)
+    event, root = context.next()
     elements_parsed = 0
+    category_count = {}
 
     for event, elem in context:
         if event == "end":
@@ -2536,6 +2571,21 @@ def parseXMLTV(context, f, size, logoFolder, progress_callback):
                 episode = elem.findtext("episode-num")
                 iconElement = elem.findtext("sub-title")
                 cat = elem.findall("category")
+                category_list = []
+                try:
+                    c = cat[0].text
+                except:
+                    pass
+
+                txt = c
+                if txt:
+                    if txt in category_count:
+                        category_count[txt] = category_count[txt] + 1
+                    else:
+                        category_count[txt] = 1
+                    category_list.append(txt)
+                categories = ','.join(category_list)
+
                 live3 = ''
                 live = elem.findtext("video")
                 if live is not None:
@@ -2593,8 +2643,55 @@ def parseXMLTV(context, f, size, logoFolder, progress_callback):
                 yield result
         root.clear()
     f.close()
+
+    del context
+
     tnow = datetime.datetime.now()
     deb("[EPG] Parsing EPG is done [{} sek.]".format(str((tnow-start).seconds)))
+
+    if sys.version_info[0] > 2:
+        file_name = os.path.join(xbmcvfs.translatePath(ADDON.getAddonInfo('profile')), 'category_count.list')
+    else:
+        file_name = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('profile')), 'category_count.list')
+
+    if sys.version_info[0] > 2:
+        f = open(file_name, 'a+', encoding='utf-8')
+    else:
+        f = open(file_name, 'a+')
+    for c in sorted(category_count):
+        s = "{}={}\n".format(c, category_count[c])
+        s = re.sub(r'\$.*', '', s)
+        s = re.sub(r'(\(|\))', '', s)
+        s = re.sub(r'\\/', ' / ', s)
+        s = re.sub(r'.*(,|\.)(\s)?', '', s)
+        s = re.sub(r'^(\d+)?=\d+', '', s)
+        s = re.sub(r'^\W+(\d+)?(=|\s)', '', s)
+        s = re.sub(r'^(\d|\w)=\d+$', '', s)
+        s = re.sub(r'^(?:[\t ]*(?:\r?\n|\r))+', '', s)
+        s = re.sub(r'(^|\s)(\S)', lambda m: m.group(1) + m.group(2).upper(), s)
+        if sys.version_info[0] > 2:
+            f.write('{}'.format(s))
+        else:
+            f.write(bytearray(s, 'utf-8'))
+
+    f.close()
+
+    if sys.version_info[0] > 2:
+        try:
+            profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
+        except:
+            profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
+    else:
+        try:
+            profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile'))
+        except:
+            profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
+
+    try:
+        file_name = os.path.join(profilePath, 'epg.temp')
+        os.remove(file_name)
+    except:
+        pass
 
 class FileWrapper(object):
     def __init__(self, filename):

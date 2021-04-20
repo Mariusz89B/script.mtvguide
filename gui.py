@@ -568,7 +568,6 @@ class mTVGuide(xbmcgui.WindowXML):
         self.recordService = RecordService(self)
         self.getListLenght = list()
         self.catchupDays = None
-        self.onSourceUpdate = None
 
         # find nearest half hour
         self.viewStartDate = datetime.datetime.today() + datetime.timedelta(
@@ -3574,7 +3573,10 @@ class mTVGuide(xbmcgui.WindowXML):
     def categorySearch(self):
         d = xbmcgui.Dialog()
         f = xbmcvfs.File(os.path.join(self.profilePath, 'category_count.list'))
-        category_count = [x.split("=", 1) for x in f.read().splitlines()]
+        if sys.version_info[0] > 2:
+            category_count = [x.split("=", 1) for x in f.read().splitlines()]
+        else:
+            category_count = [x.split(b"=", 1) for x in f.readBytes().splitlines()]
         f.close()
         categories = []
         for (c, v) in category_count:
@@ -3582,7 +3584,10 @@ class mTVGuide(xbmcgui.WindowXML):
                 s = "{} ({})".format(c, v)
             else:
                 s = c
-            categories.append(s)
+            if sys.version_info[0] > 2:
+                categories.append(s)
+            else:
+                categories.append(s.decode("utf-8"))
         which = d.select(strings(30324), categories)
         if which == -1:
             return
@@ -4436,6 +4441,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
     @contextmanager
     def busyPlayDialog(self):
+        time.sleep(1)
         if xbmc.getCondVisibility('!Window.IsVisible(fullscreenvideo)'):
             xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
         try:
@@ -4660,8 +4666,12 @@ class mTVGuide(xbmcgui.WindowXML):
                                 offset = str(offsetCalc)
 
                                 # UTC/LUTC
-                                utc = str(int(datetime.datetime.timestamp(t)))
-                                lutc = str(int(datetime.datetime.timestamp(e)))
+                                if sys.version_info[0] > 2:
+                                    utc = str(int(datetime.datetime.timestamp(t)))
+                                    lutc = str(int(datetime.datetime.timestamp(e)))
+                                else:
+                                    utc = str(int(time.mktime(t.timetuple())))
+                                    lutc = str(int(time.mktime(e.timetuple())))
 
                                 # Datestring
                                 year = t.strftime("%Y")
@@ -4693,9 +4703,12 @@ class mTVGuide(xbmcgui.WindowXML):
                                 offset = str(offsetCalc)
 
                                 # UTC/LUTC
-                                utc = str(int(datetime.datetime.timestamp(t)))
-                                lutc = str(int(datetime.datetime.timestamp(e)))
-                                
+                                if sys.version_info[0] > 2:
+                                    utc = str(int(datetime.datetime.timestamp(t)))
+                                    lutc = str(int(datetime.datetime.timestamp(e)))
+                                else:
+                                    utc = str(int(time.mktime(t.timetuple())))
+                                    lutc = str(int(time.mktime(e.timetuple())))
 
                                 # Datestring
                                 year = t.strftime("%Y")
@@ -4831,8 +4844,12 @@ class mTVGuide(xbmcgui.WindowXML):
                                 offset = str(offsetCalc)
 
                                 # UTC/LUTC
-                                utc = str(int(datetime.datetime.timestamp(t)))
-                                lutc = str(int(datetime.datetime.timestamp(e)))
+                                if sys.version_info[0] > 2:
+                                    utc = str(int(datetime.datetime.timestamp(t)))
+                                    lutc = str(int(datetime.datetime.timestamp(e)))
+                                else:
+                                    utc = str(int(time.mktime(t.timetuple())))
+                                    lutc = str(int(time.mktime(e.timetuple())))
 
                                 # Datestring
                                 year = t.strftime("%Y")
@@ -4864,8 +4881,12 @@ class mTVGuide(xbmcgui.WindowXML):
                                 offset = str(offsetCalc)
 
                                 # UTC/LUTC
-                                utc = str(int(datetime.datetime.timestamp(t)))
-                                lutc = str(int(datetime.datetime.timestamp(e)))
+                                if sys.version_info[0] > 2:
+                                    utc = str(int(datetime.datetime.timestamp(t)))
+                                    lutc = str(int(datetime.datetime.timestamp(e)))
+                                else:
+                                    utc = str(int(time.mktime(t.timetuple())))
+                                    lutc = str(int(time.mktime(e.timetuple())))
                                 
 
                                 # Datestring
@@ -4966,7 +4987,7 @@ class mTVGuide(xbmcgui.WindowXML):
         for idx in range(0, CHANNELS_PER_PAGE):
             self.disableControl(start_index + idx)
 
-    def onRedrawEPG(self, channelStart, startTime, focusFunction=None):
+    def onRedrawEPG(self, channelStart, startTime, focusFunction=None, sourceUpdate=''):
         deb('onRedrawEPG')
         if self.redrawingEPG or (self.database is not None and self.database.updateInProgress) or self.isClosing or strings2.M_TVGUIDE_CLOSING:
             deb('onRedrawEPG - already redrawing')
@@ -5011,9 +5032,8 @@ class mTVGuide(xbmcgui.WindowXML):
 
         categories = self.getCategories()
 
-        if self.onSourceUpdate == True:
+        if sourceUpdate == True:
             streams = self.getStreamsCid()
-            self.onSourceUpdate = False
 
         for program in programs:
             idx = channels.index(program.channel)
@@ -5362,8 +5382,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 if ADDON.getSetting('categories_remember') == 'true' or ADDON.getSetting('category') != '':
                     self.database.setCategory(ADDON.getSetting('category'))
 
-                self.onSourceUpdate = True
-                self.onRedrawEPG(0, self.viewStartDate)
+                self.onRedrawEPG(0, self.viewStartDate, sourceUpdate=True)
                 
                 if ADDON.getSetting('touch_panel') == 'true':
                     self._showControl(self.C_MAIN_MOUSEPANEL_CONTROLS)
@@ -7292,9 +7311,10 @@ class ProgramListDialog(xbmcgui.WindowXMLDialog):
         listControl = self.getControl(ProgramListDialog.C_PROGRAM_LIST)
         listControl.addItems(items)
         if self.startChannelIndex is not None:
-            listControl.selectItem(int(self.startChannelIndex))
-        else:
-            listControl.selectItem(int(0))
+            try:
+                listControl.selectItem(int(self.startChannelIndex))
+            except:
+                listControl.selectItem(int(0))
 
         if items != '':
             xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
