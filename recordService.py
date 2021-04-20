@@ -160,7 +160,6 @@ class RecordService(BasePlayService):
         self.endOffsetDownload   = 0
         self.downloading         = False
 
-
         if ADDON.getSetting('ffmpeg_dis_cop_un') == 'true':
             self.ffmpegDisableCopyUnknown = True
         else:
@@ -1182,16 +1181,7 @@ class RecordService(BasePlayService):
                     threadData = {'urlList' : urlList, 'program' : program, 'recordHandle' : None, 'stopRecordTimer' : None, 'terminateThread' : False}
                     thread = threading.Thread(name='recordLoop', target = self.recordLoop, args=[threadData])
                     self.threadList.append([thread, threadData])
-                    thread.start()
-                
-                self.saveThreads()
-
-
-    def saveThreads(self):
-        file_name = os.path.join(self.profilePath, 'threads.list')
-        with open(file_name, 'w+') as f:
-            f.write(str(self.threadList[0]))
-
+                    thread.start()      
 
     def recordLoop(self, threadData):
         threadData['success']               = False
@@ -1280,8 +1270,7 @@ class RecordService(BasePlayService):
             updateDB = True
             xbmcgui.Dialog().ok(strings(70006) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30373))
             self.processIsCanceled = True
-            self.unlockService(service)
-
+            self.unlockService(service)               
 
     def record(self, recordCommand, threadData):
         deb('RecordService record command: {}'.format(str(recordCommand)))
@@ -1656,15 +1645,6 @@ class RecordService(BasePlayService):
 
 
     def cancelProgramRecord(self, program): #wylaczyc akturalnie nagrywany program?
-        #c = False
-        #if not self.threadList:
-            #file_name = os.path.join(self.profilePath, 'threads.list')
-            #with open(file_name, 'r', encoding="utf-8") as f:
-                #xthread = f.read()
-                #self.threadList.append(xthread)
-                #c = True
-
-
         for element in self.getScheduledRecordingsForThisTime(program.startDate):
             programList = element.programList
             try:
@@ -1678,8 +1658,6 @@ class RecordService(BasePlayService):
                             deb('RecordService canceled scheduled recording of: {}'.format(program.title))
                         else:
                             deb('RecordService canceled scheduled recording of: {}'.format(program.title.encode('utf-8')))
-
-                        #if not c:
                         return
             except:
                 pass

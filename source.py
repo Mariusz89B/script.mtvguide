@@ -2555,7 +2555,10 @@ def parseXMLTV(context, f, size, logoFolder, progress_callback):
     deb("[EPG] Parsing EPG")
     start = datetime.datetime.now()
     context = iter(context)
-    event, root = context.next()
+    if sys.version_info[0] > 2:
+        event, root = next(context)
+    else:
+        event, root = context.next()
     elements_parsed = 0
     category_count = {}
 

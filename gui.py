@@ -2095,7 +2095,7 @@ class mTVGuide(xbmcgui.WindowXML):
                     ret = xbmcgui.Dialog().yesno(strings(69056), '{}'.format(strings(69058)))
                     if ret == False:
                         return
-
+            
             self.isClosing = True
             strings2.M_TVGUIDE_CLOSING = True
             if self.refreshStreamsTimer:
@@ -2134,7 +2134,6 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.database.close(super(mTVGuide, self).close)
             else:
                 super(mTVGuide, self).close()
-
 
     def onInit(self):
         deb('onInit')
