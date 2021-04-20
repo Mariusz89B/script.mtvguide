@@ -937,7 +937,7 @@ class RecordService(BasePlayService):
         self.analyzeDownloadOutput(recordOutput, threadData['downloadOptions'])
         recordedSecs = (threadData['program'].endDate - threadData['downloadStartTime']).seconds
 
-        if(threadData['downloadDuration'] - recordedSecs < 60):
+        if(int(threadData['downloadDuration']) - int(recordedSecs) < 60):
             if sys.version_info[0] > 2:
                 deb('DownloadService downloadLoop successfully recored program: {}, started at: {}, ended at: {}, duration {}, now: {}'.format(threadData['program'].title, threadData['program'].startDate, threadData['program'].endDate, threadData['downloadDuration'], datetime.datetime.now()))
             else:
