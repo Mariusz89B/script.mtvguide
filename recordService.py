@@ -1313,7 +1313,7 @@ class RecordService(BasePlayService):
     def postRecordActions(self, recordOutput, threadData):
         self.analyzeRecordOutput(recordOutput, threadData['recordOptions'])
         recordedSecs = (datetime.datetime.now() - threadData['recordStartTime']).seconds
-        if(threadData['recordDuration'] - recordedSecs < 60):
+        if(int(threadData['recordDuration']) - int(recordedSecs) < 60):
             if sys.version_info[0] > 2:
                 deb('RecordService recordLoop successfully recored program: {}, started at: {}, ended at: {}, duration {}, now: {}'.format(threadData['program'].title, threadData['program'].startDate, threadData['program'].endDate, threadData['recordDuration'], datetime.datetime.now()))
             else:
