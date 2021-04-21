@@ -368,8 +368,6 @@ class Database(object):
                 self.unlockDbTimer.start()
                 time.sleep(uniform(0, 0.2))
                 self.conn = sqlite3.connect(self.databasePath, detect_types=sqlite3.PARSE_DECLTYPES, cached_statements=2000)
-                if sys.version_info[0] > 2: 
-                    self.conn.text_factory = str
                 self.conn.execute('PRAGMA foreign_keys = ON')
                 #self.conn.execute('PRAGMA synchronous = OFF')
                 #self.conn.execute('PRAGMA journal_mode = OFF')
@@ -2181,7 +2179,7 @@ class MTVGUIDESource(Source):
                 raise SourceFaultyEPGException(url)
 
             if ADDON.getSetting('useCustomParser') == 'true':
-                return customParseXMLTV(xml, progress_callback)
+                return customParseXMLTV(xml.decode('utf-8'), progress_callback)
             else:
                 iob = io.BytesIO(xml)
 
@@ -2362,9 +2360,6 @@ def customParseXMLTV(xml, progress_callback):
     programLive      = re.compile('<video>\s*<aspect>(.*?)</aspect>\s*</video>', re.DOTALL | re.MULTILINE)
 
     #replace &amp; with & and Carriage Return (CR) in xml
-    if sys.version_info[0] > 2:
-        xml = xml.decode('utf-8')
-
     xml = xml.replace('&amp;', '&').replace('&lt;', '<').replace('&gt;', '>').replace('\r', '')
 
     channels = channelRe.findall(xml)
