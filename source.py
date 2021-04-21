@@ -2167,51 +2167,24 @@ class MTVGUIDESource(Source):
             xbmcgui.Dialog().ok(strings(LOAD_ERROR_TITLE), strings(LOAD_ERROR_LINE1) + '\n' + ex.epg + strings(LOAD_NOT_CRITICAL_ERROR))
         return data
 
-    def fileBuffer(self, text):
-        buffer = cStringIO.StringIO()
-        try:
-            for x in text:
-                buffer.write(b'{}'.format(x.encode('utf-8')))
-            return buffer.getvalue()
-        finally:
-            buffer.close()
-
     def _getDataFromExternal(self, date, progress_callback, url):
         try:
-            try:
-                xml = self._downloadUrl(url).decode(encoding='utf-8', errors='strict')
-            except:
-                xml = self._downloadUrl(url)
+            xml = self._downloadUrl(url)
 
             if strings2.M_TVGUIDE_CLOSING:
                 raise SourceUpdateCanceledException()
 
-            if not '<channel' in xml:
+            if not b'<channel' in xml:
                 deb('Detected not valid EPG XML, url: {}'.format(url))
                 deb('Faulty EPG content: {}'.format(str(xml[:15000])))
                 #not a valid EPG XML
                 raise SourceFaultyEPGException(url)
 
             if ADDON.getSetting('useCustomParser') == 'true':
-                if sys.version_info[0] > 2:
-                    return customParseXMLTV(xml.encode('utf-8'), progress_callback)
-                else:
-                    return customParseXMLTV(xml, progress_callback)
+                return customParseXMLTV(xml, progress_callback)
             else:
-                if sys.version_info[0] > 2:
-                    iob = io.BytesIO(xml.encode('utf-8'))
-                else:
-                    try:
-                        iob = cStringIO.StringIO(xml.encode('utf-8'))
-                    except:
-                        text = self.fileBuffer(xml)
-                        file_name = os.path.join(self.profilePath, 'epg.temp')
-                        with open(file_name, 'wb') as f:
-                            f.write(text)
+                iob = io.BytesIO(xml)
 
-                        temp = open(file_name, 'rb')
-                        iob = temp
-                
                 context = ElementTree.iterparse(iob, events=("start", "end"))
                 return parseXMLTV(context, iob, len(xml), self.logoFolder, progress_callback)
 
