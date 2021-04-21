@@ -2198,7 +2198,7 @@ msgstr "Kan ikke ta opp på grunn av ikke konfigurert innspillingapplikasjon: "
 
 msgctxt "#69009"
 msgid "Record already scheduled - cancel?"
-msgstr "Registrer allerede planlagt - avbryt?"
+msgstr "Opptak allerede planlagt - avbryt?"
 
 msgctxt "#69010"
 msgid "Schedule program record: "
@@ -2411,6 +2411,10 @@ msgstr "Ikke eksisterende rekorddestinasjonskatalog - nedlastning kansellert!"
 msgctxt "#69062"
 msgid "Add-on error!"
 msgstr "Tilleggsfeil!"
+
+msgctxt "#69063"
+msgid "Download already scheduled - cancel?"
+msgstr "Last ned allerede planlagt - avbryt?"
 
 msgctxt "#70000"
 msgid "Program title"

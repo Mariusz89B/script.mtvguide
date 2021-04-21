@@ -1044,9 +1044,9 @@ class Database(object):
         c = self.conn.cursor()
         channelList = self._getChannelList(True)
         if sys.version_info[0] > 2:
-            search = '{}'.format(search)
+            search = '%%{}%%'.format(search)
         else:
-            search = '{}'.format(search.decode('utf-8'))
+            search = '%%{}%%'.format(search.decode('utf-8'))
 
         for channel in channelList:
 
@@ -1076,9 +1076,9 @@ class Database(object):
         c = self.conn.cursor()
         channelList = self._getChannelList(True)
         if sys.version_info[0] > 2:
-            search = '{}'.format(search)
+            search = '%%{}%%'.format(search)
         else:
-            search = '{}'.format(search.decode('utf-8'))
+            search = '%%{}%%'.format(search.decode('utf-8'))
 
         for channel in channelList:
 
@@ -1103,9 +1103,9 @@ class Database(object):
         c = self.conn.cursor()
         channelList = self._getChannelList(True)
         if sys.version_info[0] > 2:
-            search = '{}'.format(search)
+            search = '%%{}%%'.format(search)
         else:
-            search = '{}'.format(search.decode('utf-8'))
+            search = '%%{}%%'.format(search.decode('utf-8'))
 
         for channel in channelList:
 

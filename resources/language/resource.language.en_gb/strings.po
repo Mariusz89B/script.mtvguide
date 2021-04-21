@@ -2424,6 +2424,10 @@ msgctxt "#69062"
 msgid "Add-on error!"
 msgstr ""
 
+msgctxt "#69063"
+msgid "Download already scheduled - cancel?"
+msgstr ""
+
 msgctxt "#70000"
 msgid "Program title"
 msgstr ""

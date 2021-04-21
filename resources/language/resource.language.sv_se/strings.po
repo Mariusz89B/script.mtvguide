@@ -2198,7 +2198,7 @@ msgstr "Det går inte att spela in på grund av att följande inspelnings progra
 
 msgctxt "#69009"
 msgid "Record already scheduled - cancel?"
-msgstr "Inspelning redan planerad - Avbryt?"
+msgstr "Inspelning redan planerad - avbryt?"
 
 msgctxt "#69010"
 msgid "Schedule program record: "
@@ -2411,6 +2411,10 @@ msgstr "Inget valt inspelnings mål - nedladdning avbruten!"
 msgctxt "#69062"
 msgid "Add-on error!"
 msgstr "Tilläggsfel!"
+
+msgctxt "#69063"
+msgid "Download already scheduled - cancel?"
+msgstr "Nedladdning redan planerad - avbryt?"
 
 msgctxt "#70000"
 msgid "Program title"
