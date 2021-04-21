@@ -281,7 +281,7 @@ def replace_formatting(label):
     label = re.sub(r"\s\$ADDON\[script.mtvguide.*?\]\.", '', label)
     label = re.sub(r"\$ADDON\[script.mtvguide.*?\]", '[B]N/A', label)
     return label
-
+    
 
 def timedelta_total_seconds(timedelta):
     return (
@@ -4075,7 +4075,8 @@ class mTVGuide(xbmcgui.WindowXML):
             self.infoDialog = None
 
         elif buttonClicked == PopupMenu.C_POPUP_RECORDINGS:
-            xbmc.executebuiltin('ActivateWindow(Videos,{},return)'.format(ADDON.getSetting('record_folder')))
+            folder = ADDON.getSetting('record_folder')
+            xbmc.executebuiltin('ActivateWindow(Videos,{},return)'.format(folder))
 
         elif buttonClicked == PopupMenu.C_POPUP_LISTS:
             d = xbmcgui.Dialog()
