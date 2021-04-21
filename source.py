@@ -2333,21 +2333,12 @@ def customParseXMLTV(xml, progress_callback):
     deb("[EPG] Parsing EPG by custom parser")
     startTime = datetime.datetime.now()
 
-    #def replacement(match):
-        #return match.group(1).upper()
-
     def customParseXMLTVDate(dateString):
         if dateString is not None:
             t = time.strptime(dateString, '%Y%m%d%H%M%S')
             return datetime.datetime(t.tm_year, t.tm_mon, t.tm_mday, t.tm_hour, t.tm_min, t.tm_sec)
         else:
             return None
-
-    #try:
-        #encoding = re.search('<\?xml.*encoding="(.*?)"\?>', xml).group(1)
-        #deb('XML encoding is {}'.format(encoding))
-    #except:
-        #encoding = 'utf-8'
 
     #regex for channel
     channelRe        = re.compile('(<channel.*?</channel>)',                re.DOTALL)
@@ -2384,7 +2375,6 @@ def customParseXMLTV(xml, progress_callback):
 
     for channel in channels:
         id = channelIdRe.search(channel).group(1).upper()
-        #id = re.sub(r'(\.[A-Z]{2,3}$)\1', replacement, id)
 
         try:
             title = channelTitleRe.search(channel).group(1)
@@ -2651,23 +2641,6 @@ def parseXMLTV(context, f, size, logoFolder, progress_callback):
             f.write(bytearray(s, 'utf-8'))
 
     f.close()
-
-    if sys.version_info[0] > 2:
-        try:
-            profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
-        except:
-            profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
-    else:
-        try:
-            profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile'))
-        except:
-            profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
-
-    try:
-        file_name = os.path.join(profilePath, 'epg.temp')
-        os.remove(file_name)
-    except:
-        pass
 
 class FileWrapper(object):
     def __init__(self, filename):

@@ -196,7 +196,7 @@ class RecordService(BasePlayService):
 
     def getTimeshift(self):
         try:
-            file_name = os.path.join(self.profilePath, 'playlist_ts.json')
+            file_name = os.path.join(self.profilePath, 'playlist_ts.list')
             f = xbmcvfs.File(file_name, 'r')
             ArchivePlayList = f.read()
             f.close()

@@ -64,8 +64,6 @@ import streaming
 import playService
 import requests
 import json
-import base64
-import gc
 from vosd import VideoOSD
 from recordService import RecordService
 from settingsImportExport import SettingsImp
@@ -1450,17 +1448,17 @@ class mTVGuide(xbmcgui.WindowXML):
                 checkKodiFonts = filter(r.match, item)
 
         try:
-            if xbmcvfs.exists(os.path.join(self.profilePath, 'fonts.json')) == 0:
-                file = xbmcvfs.File(os.path.join(self.profilePath, 'fonts.json'), 'w+')
+            if xbmcvfs.exists(os.path.join(self.profilePath, 'fonts.list')) == 0:
+                file = xbmcvfs.File(os.path.join(self.profilePath, 'fonts.list'), 'w+')
                 file.write(str(''))
                 file.close()
             else:
-                file_add = xbmcvfs.File(os.path.join(self.profilePath, 'fonts.json'), 'r')
+                file_add = xbmcvfs.File(os.path.join(self.profilePath, 'fonts.list'), 'r')
                 checkCurrentSkin = file_add.read()
                 c2 = str(checkCurrentSkin)
 
         except:
-            deb('obsolete fonts.json is missing')
+            deb('obsolete fonts.list is missing')
 
         chkSkinProfile = addonSkin
 
@@ -1761,7 +1759,7 @@ class mTVGuide(xbmcgui.WindowXML):
                         except:
                             deb('IOError: [Errno 13] Permission denied')
 
-                        with open(os.path.join(self.profilePath, 'fonts.json'), 'w') as file_add:
+                        with open(os.path.join(self.profilePath, 'fonts.list'), 'w') as file_add:
                             file_add.write(currentSkin + '\n')
                             file_add.close()
 
@@ -2011,54 +2009,54 @@ class mTVGuide(xbmcgui.WindowXML):
 
         try:
             if sys.version_info[0] > 2:
-                f = os.path.join(self.profilePath, 'playlist_ts.json')
+                f = os.path.join(self.profilePath, 'playlist_ts.list')
             else:
-                f = os.path.join(self.profilePath, 'playlist_ts.json').decode('utf-8')
+                f = os.path.join(self.profilePath, 'playlist_ts.list').decode('utf-8')
             os.remove(f)
         except:
             None
 
         try:
             if sys.version_info[0] > 2:
-                f = os.path.join(self.profilePath, 'cmore_ts.json')
+                f = os.path.join(self.profilePath, 'cmore_ts.list')
             else:
-                f = os.path.join(self.profilePath, 'cmore_ts.json').decode('utf-8')
+                f = os.path.join(self.profilePath, 'cmore_ts.list').decode('utf-8')
             os.remove(f)
         except:
             None
             
         try:
             if sys.version_info[0] > 2:
-                f = os.path.join(self.profilePath, 'cpgo_ts.json')
+                f = os.path.join(self.profilePath, 'cpgo_ts.list')
             else:
-                f = os.path.join(self.profilePath, 'cpgo_ts.json').decode('utf-8')
+                f = os.path.join(self.profilePath, 'cpgo_ts.list').decode('utf-8')
             os.remove(f)
         except:
             None
 
         try:
             if sys.version_info[0] > 2:
-                f = os.path.join(self.profilePath, 'ipla_ts.json')
+                f = os.path.join(self.profilePath, 'ipla_ts.list')
             else:
-                f = os.path.join(self.profilePath, 'ipla_ts.json').decode('utf-8')
+                f = os.path.join(self.profilePath, 'ipla_ts.list').decode('utf-8')
             os.remove(f)
         except:
             None
 
         #try:
             #if sys.version_info[0] > 2:
-                #f = os.path.join(self.profilePath, 'playerpl_ts.json')
+                #f = os.path.join(self.profilePath, 'playerpl_ts.list')
             #else:
-                #f = os.path.join(self.profilePath, 'playerpl_ts.json').decode('utf-8')
+                #f = os.path.join(self.profilePath, 'playerpl_ts.list').decode('utf-8')
             #os.remove(f)
         #except:
             #None
 
         try:
             if sys.version_info[0] > 2:
-                f = os.path.join(self.profilePath, 'teliaplay_ts.json')
+                f = os.path.join(self.profilePath, 'teliaplay_ts.list')
             else:
-                f = os.path.join(self.profilePath, 'teliaplay_ts.json').decode('utf-8')
+                f = os.path.join(self.profilePath, 'teliaplay_ts.list').decode('utf-8')
             os.remove(f)
         except:
             None
@@ -2238,7 +2236,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 streamsList.append(item[0].upper())
 
         if streamsList:
-            file_name = os.path.join(self.profilePath, 'playlist_ts.json')
+            file_name = os.path.join(self.profilePath, 'playlist_ts.list')
             with open(file_name, 'w+') as f:
                 if sys.version_info[0] > 2:
                     f.write('\n'.join(streamsList))
@@ -2256,7 +2254,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 CMoreStreamsList.append(item[0].upper())
 
         if CMoreStreamsList:
-            file_name = os.path.join(self.profilePath, 'cmore_ts.json')
+            file_name = os.path.join(self.profilePath, 'cmore_ts.list')
             with open(file_name, 'w+') as f:
                 if sys.version_info[0] > 2:
                     f.write('\n'.join(CMoreStreamsList))
@@ -2274,7 +2272,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 CPGOStreamsList.append(item[0].upper())
 
         if CPGOStreamsList:
-            file_name = os.path.join(self.profilePath, 'cpgo_ts.json')
+            file_name = os.path.join(self.profilePath, 'cpgo_ts.list')
             with open(file_name, 'w+') as f:
                 if sys.version_info[0] > 2:
                     f.write('\n'.join(CPGOStreamsList))
@@ -2292,7 +2290,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 IplaStreamsList.append(item[0].upper())
 
         if IplaStreamsList:
-            file_name = os.path.join(self.profilePath, 'ipla_ts.json')
+            file_name = os.path.join(self.profilePath, 'ipla_ts.list')
             with open(file_name, 'w+') as f:
                 if sys.version_info[0] > 2:
                     f.write('\n'.join(IplaStreamsList))
@@ -2310,7 +2308,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 #PlayerPLStreamsList.append(item[0].upper())
 
         #if PlayerPLStreamsList:
-            #file_name = os.path.join(self.profilePath, 'playerpl_ts.json')
+            #file_name = os.path.join(self.profilePath, 'playerpl_ts.list')
             #with open(file_name, 'w+') as f:
                 #if sys.version_info[0] > 2:
                     #f.write('\n'.join(PlayerPLStreamsList))
@@ -2328,7 +2326,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 TeliaPlayStreamsList.append(item[0].upper())
 
         if TeliaPlayStreamsList:
-            file_name = os.path.join(self.profilePath, 'teliaplay_ts.json')
+            file_name = os.path.join(self.profilePath, 'teliaplay_ts.list')
             with open(file_name, 'w+') as f:
                 if sys.version_info[0] > 2:
                     f.write('\n'.join(TeliaPlayStreamsList))
@@ -2346,7 +2344,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 NCGOStreamsList.append(item[0].upper())
 
         if NCGOStreamsList:
-            file_name = os.path.join(self.profilePath, 'ncgo_ts.json')
+            file_name = os.path.join(self.profilePath, 'ncgo_ts.list')
             with open(file_name, 'w+') as f:
                 if sys.version_info[0] > 2:
                     f.write('\n'.join(NCGOStreamsList))
@@ -2502,7 +2500,7 @@ class mTVGuide(xbmcgui.WindowXML):
             minutes=int(ADDON.getSetting('timebar_adjust')))
         self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
         channelList = self.database.getChannelList(onlyVisible=True)
-        f = xbmcvfs.File(os.path.join(self.profilePath, 'autoplay.json'), "r")
+        f = xbmcvfs.File(os.path.join(self.profilePath, 'autoplay.list'), "r")
         lines = f.read()
         self.channelIdx = int(lines.split(',')[0])
         try:
@@ -4187,7 +4185,7 @@ class mTVGuide(xbmcgui.WindowXML):
         self.setControlLabel(C_MAIN_CALC_TIME_EPG, '{}'.format(calcTime))
 
     def getLastPlayingChannel(self):
-        file_name = os.path.join(self.profilePath, 'autoplay.json')
+        file_name = os.path.join(self.profilePath, 'autoplay.list')
         with open(file_name, 'r') as f:
             value = f.read()
             idx = int(value.split(',')[0])
@@ -4484,7 +4482,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
         date = datetime.datetime.now()
 
-        file_name = os.path.join(self.profilePath, 'autoplay.json')
+        file_name = os.path.join(self.profilePath, 'autoplay.list')
         f = xbmcvfs.File(file_name, "wb")
         s = "{}".format(str(self.database.getCurrentChannelIdx(channel)))
         try:
@@ -4516,7 +4514,7 @@ class mTVGuide(xbmcgui.WindowXML):
     def getPlaylist(self):
         ArchivePlaylistList = ''
         try:
-            file_name = os.path.join(self.profilePath, 'playlist_ts.json')
+            file_name = os.path.join(self.profilePath, 'playlist_ts.list')
             f = xbmcvfs.File(file_name, 'r')
             ArchivePlaylistList = f.read()
             f.close()
@@ -4528,7 +4526,7 @@ class mTVGuide(xbmcgui.WindowXML):
     def getCmore(self):
         ArchiveCmoreList = ''
         try:
-            file_name = os.path.join(self.profilePath, 'cmore_ts.json')
+            file_name = os.path.join(self.profilePath, 'cmore_ts.list')
             f = xbmcvfs.File(file_name, 'r')
             ArchiveCmoreList = f.read()
             f.close()
@@ -4540,7 +4538,7 @@ class mTVGuide(xbmcgui.WindowXML):
     def getPolsatGo(self):
         ArchiveCpGoList = ''
         try:
-            file_name = os.path.join(self.profilePath, 'cpgo_ts.json')
+            file_name = os.path.join(self.profilePath, 'cpgo_ts.list')
             f = xbmcvfs.File(file_name, 'r')
             ArchiveCpGoList = f.read()
             f.close()
@@ -4552,7 +4550,7 @@ class mTVGuide(xbmcgui.WindowXML):
     def getIpla(self):
         ArchiveIplaList = ''
         try:
-            file_name = os.path.join(self.profilePath, 'ipla_ts.json')
+            file_name = os.path.join(self.profilePath, 'ipla_ts.list')
             f = xbmcvfs.File(file_name, 'r')
             ArchiveIplaList = f.read()
             f.close()
@@ -4564,7 +4562,7 @@ class mTVGuide(xbmcgui.WindowXML):
     #def getPlayerPL(self):
         #ArchivePlayerPLList = ''
         #try:
-            #file_name = os.path.join(self.profilePath, 'playerpl_ts.json')
+            #file_name = os.path.join(self.profilePath, 'playerpl_ts.list')
             #f = xbmcvfs.File(file_name, 'r')
             #ArchivePlayerPLList = f.read()
             #f.close()
@@ -4576,7 +4574,7 @@ class mTVGuide(xbmcgui.WindowXML):
     def getTeliaPlay(self):
         ArchiveTeliaPlayList = ''
         try:
-            file_name = os.path.join(self.profilePath, 'teliaplay_ts.json')
+            file_name = os.path.join(self.profilePath, 'teliaplay_ts.list')
             f = xbmcvfs.File(file_name, 'r')
             ArchiveTeliaPlayList = f.read()
             f.close()

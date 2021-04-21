@@ -167,11 +167,11 @@ class Skin:
                     profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
             
             try:
-                file = xbmcvfs.File(os.path.join(profilePath, 'fonts.json'), 'w+')
+                file = xbmcvfs.File(os.path.join(profilePath, 'fonts.list'), 'w+')
                 file.write('')
                 file.close()
             except:
-                deb('Error: fonts.json is missing')
+                deb('Error: fonts.list is missing')
 
     @staticmethod
     def fixSkinIfNeeded():
@@ -454,10 +454,10 @@ class SkinPicker(xbmcgui.WindowXMLDialog):
                         except:
                             profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
                     try:
-                        file = os.path.join(profilePath, 'fonts.json')
+                        file = os.path.join(profilePath, 'fonts.list')
                         os.remove(file)
                     except:
-                        deb('Error: fonts.json is missing')
+                        deb('Error: fonts.list is missing')
 
                 else:
                     deb('Failed to wnload skin %s' % self.currentlySelectedSkin.name)
