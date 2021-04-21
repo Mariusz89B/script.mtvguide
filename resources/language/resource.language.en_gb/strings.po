@@ -2428,6 +2428,10 @@ msgctxt "#69063"
 msgid "Download already scheduled - cancel?"
 msgstr ""
 
+msgctxt "#69064"
+msgid "Downloading"
+msgstr ""
+
 msgctxt "#70000"
 msgid "Program title"
 msgstr ""

@@ -239,7 +239,7 @@ class RecordService(BasePlayService):
                     if program.channel.id.upper() in archiveList and ADDON.getSetting('archive_support') == 'true' and program.startDate < datetime.datetime.now():
                         self.isDownload = True
                         if self.isProgramDownloadScheduled(program):
-                            ret = xbmcgui.Dialog().yesno(strings(69056), strings(69063))
+                            ret = xbmcgui.Dialog().yesno(strings(69064), strings(69063))
                             if ret == True:
                                 self.epg.database.removeRecording(program)
                                 self.cancelProgramDownload(program)

@@ -2416,6 +2416,10 @@ msgctxt "#69063"
 msgid "Download already scheduled - cancel?"
 msgstr "Pobieranie już zaplanowane - anulować?"
 
+msgctxt "#69064"
+msgid "Downloading"
+msgstr "Pobieranie"
+
 msgctxt "#70000"
 msgid "Program title"
 msgstr "Tytuł programu"

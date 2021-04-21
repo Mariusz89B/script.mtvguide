@@ -2416,6 +2416,10 @@ msgctxt "#69063"
 msgid "Download already scheduled - cancel?"
 msgstr "Preuzimanje je već zakazano - otkazati?"
 
+msgctxt "#69064"
+msgid "Downloading"
+msgstr "Preuzimanje datoteka"
+
 msgctxt "#70000"
 msgid "Program title"
 msgstr "Naslov programa"
