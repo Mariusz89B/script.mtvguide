@@ -4186,10 +4186,16 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def getLastPlayingChannel(self):
         file_name = os.path.join(self.profilePath, 'autoplay.list')
-        with open(file_name, 'r') as f:
-            value = f.read()
-            idx = int(value.split(',')[0])
-            date = value.split(',')[1]
+        try:    
+            with open(file_name, 'r') as f:
+                value = f.read()
+                idx = int(value.split(',')[0])
+                date = value.split(',')[1]
+        except:
+            idx = int(0)
+            controlInFocus = self.getFocus()
+            program = self._getProgramFromControl(controlInFocus)
+            date = program.startDate
 
         startDate = proxydt.strptime(str(date), '%Y-%m-%d %H:%M:%S')
 
