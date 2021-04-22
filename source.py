@@ -1051,11 +1051,11 @@ class Database(object):
         for channel in channelList:
 
             if ADDON.getSetting('program_search_plot') == 'true':
-                try: c.execute('SELECT * FROM programs WHERE channel=? AND source=? AND start_date>=? AND end_date<=? AND (title LIKE ? OR description LIKE ?) OR channel=? AND source=? AND start_date <= ? AND end_date >= ? AND (title LIKE ? OR description LIKE ?)',
+                try: c.execute('SELECT * FROM programs WHERE channel=? AND source=? AND start_date>=? AND end_date<=? AND (title LIKE ? OR description LIKE ?) OR channel=? AND source=? AND start_date<=? AND end_date>=? AND (title LIKE ? OR description LIKE ?)',
                           [channel.id, self.source.KEY, startTime, endTime, search, search, channel.id, self.source.KEY, now, now, search, search])
                 except: return
             else:
-                try: c.execute('SELECT * FROM programs WHERE channel=? AND source=? AND start_date>=? AND end_date<=? AND title LIKE ? OR channel=? AND source=? AND start_date <= ? AND end_date >= ? AND title LIKE ?',
+                try: c.execute('SELECT * FROM programs WHERE channel=? AND source=? AND start_date>=? AND end_date<=? AND title LIKE ? OR channel=? AND source=? AND start_date<=? AND end_date>=? AND title LIKE ?',
                           [channel.id, self.source.KEY, startTime, endTime, search, channel.id, self.source.KEY, now, now, search])
                 except: return
             for row in c:
@@ -1082,8 +1082,8 @@ class Database(object):
 
         for channel in channelList:
 
-            try: c.execute('SELECT * FROM programs WHERE channel=? AND source=? AND description LIKE ? AND start_date>=? AND end_date<=? ',
-                      [channel.id, self.source.KEY, search, startTime, endTime])
+            try: c.execute('SELECT * FROM programs WHERE channel=? AND source=? AND description LIKE ? AND start_date>=? AND end_date<=? OR channel=? AND source=? AND description LIKE ? AND start_date<=? AND end_date>=?',
+                      [channel.id, self.source.KEY, search, startTime, endTime, channel.id, self.source.KEY, search, now, now])
             except: return
             for row in c:
                 program = Program(channel, row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')])
@@ -1109,8 +1109,8 @@ class Database(object):
 
         for channel in channelList:
 
-            try: c.execute('SELECT * FROM programs WHERE channel=? AND source=? AND (categoryA LIKE ? OR categoryB LIKE ?) AND start_date>=? AND end_date<=? ',
-                      [channel.id, self.source.KEY, search, search, startTime, endTime])
+            try: c.execute('SELECT * FROM programs WHERE channel=? AND source=? AND (categoryA LIKE ? OR categoryB LIKE ?) AND start_date>=? AND end_date<=? OR channel=? AND source=? AND (categoryA LIKE ? OR categoryB LIKE ?) AND start_date<=? AND end_date>=?',
+                      [channel.id, self.source.KEY, search, search, startTime, endTime, channel.id, self.source.KEY, search, search, now, now])
             except: return
             for row in c:
                 program = Program(channel, row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')])
