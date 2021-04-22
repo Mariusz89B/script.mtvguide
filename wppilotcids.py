@@ -134,7 +134,7 @@ class WpPilotUpdater(baseServiceUpdater):
             print (e)
             return ''
 
-    def loginService(self):
+    def loginService(self, checked=''):
         try:
             if len(self.password) > 0 and len(self.login) > 0:
                 try:
@@ -147,8 +147,11 @@ class WpPilotUpdater(baseServiceUpdater):
 
                 try:
                     if not self.login == account['data']['login']:
-                        self.loginErrorMessage()
-                        return False
+                        os.remove(cacheFile)
+                        self.loginService(checked=True)
+                        if checked:
+                            self.loginErrorMessage()
+                            return False
                 except:
                     None
                 
