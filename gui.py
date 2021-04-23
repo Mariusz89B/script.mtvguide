@@ -46,6 +46,7 @@
 #   SOFTWARE.
 
 from __future__ import unicode_literals
+from future.utils import bytes_to_native_str as native
 
 import sys
 
@@ -64,6 +65,7 @@ import streaming
 import playService
 import requests
 import json
+import urllib
 from vosd import VideoOSD
 from recordService import RecordService
 from settingsImportExport import SettingsImp
@@ -281,7 +283,7 @@ def replace_formatting(label):
     label = re.sub(r"\s\$ADDON\[script.mtvguide.*?\]\.", '', label)
     label = re.sub(r"\$ADDON\[script.mtvguide.*?\]", '[B]N/A', label)
     return label
-    
+
 
 def timedelta_total_seconds(timedelta):
     return (
@@ -4075,8 +4077,8 @@ class mTVGuide(xbmcgui.WindowXML):
             self.infoDialog = None
 
         elif buttonClicked == PopupMenu.C_POPUP_RECORDINGS:
-            folder = ADDON.getSetting('record_folder')
-            xbmc.executebuiltin('ActivateWindow(Videos,{},return)'.format(folder))
+            record_folder = native(ADDON.getSetting('record_folder'))
+            xbmc.executebuiltin(b'ActivateWindow(Videos,{record_folder},return)'.format(record_folder=record_folder))
 
         elif buttonClicked == PopupMenu.C_POPUP_LISTS:
             d = xbmcgui.Dialog()
