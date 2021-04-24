@@ -46,9 +46,11 @@
 #   SOFTWARE.
 
 from __future__ import unicode_literals
-from future.utils import bytes_to_native_str as native
 
 import sys
+
+if sys.version_info[0] < 3:
+    from future.utils import bytes_to_native_str as native
 
 if sys.version_info[0] > 2:
     import configparser
@@ -4077,8 +4079,12 @@ class mTVGuide(xbmcgui.WindowXML):
             self.infoDialog = None
 
         elif buttonClicked == PopupMenu.C_POPUP_RECORDINGS:
-            record_folder = native(ADDON.getSetting('record_folder'))
-            xbmc.executebuiltin(b'ActivateWindow(Videos,{record_folder},return)'.format(record_folder=record_folder))
+            if sys.version_info[0] > 2:
+                record_folder = ADDON.getSetting('record_folder')
+                xbmc.executebuiltin('ActivateWindow(Videos,{record_folder},return)'.format(record_folder=record_folder))
+            else:
+                record_folder = native(ADDON.getSetting('record_folder'))
+                xbmc.executebuiltin(b'ActivateWindow(Videos,{record_folder},return)'.format(record_folder=record_folder))
 
         elif buttonClicked == PopupMenu.C_POPUP_LISTS:
             d = xbmcgui.Dialog()

@@ -373,13 +373,12 @@ class PlayService(xbmc.Player, BasePlayService):
 
         response = sess.delete(url, headers=headers)
 
-    def reverse(self, getSecs=''):
-        if getSecs == '':
-            getSecs = self.archiveService
+    def reverse(self):
+        getsec = self.archiveService
         try:
-            secs = getSec.total_seconds()
+            sec = getsec.total_seconds()
         except:
-            secs = 0
+            sec = 0
         seek_secs = int(secs)
         while not xbmc.Player().isPlaying():
             xbmc.Monitor().waitForAbort(0.25)
