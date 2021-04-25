@@ -96,6 +96,38 @@ try:
 except:
     skin_resolution = '720p'
 
+def decodeBackslashPath(s):
+    if sys.version_info[0] < 3:
+        s = s.replace('\\', '/').decode('utf-8').encode('utf-8')
+    else:
+        s = s
+    
+    return s
+
+def decodePath(s):
+    if sys.version_info[0] < 3:
+        s = s.decode('utf-8')
+    else:
+        s = s
+    
+    return s
+
+def encodePath(s):
+    if sys.version_info[0] < 3:
+        s = s.encode('utf-8')
+    else: 
+        s = s
+    
+    return s
+
+def asciiPath(s):
+    if sys.version_info[0] < 3:
+        s = s.decode('utf-8').encode('latin-1')
+    else:
+        s = s
+    
+    return s
+
 class proxydt(datetime.datetime):
     @staticmethod
     def strptime(date_string, format):
@@ -375,22 +407,17 @@ class RecordService(BasePlayService):
         iDownsize = 0
 
         while not (self.processIsCanceled or diag.isFinished()):
-            try:
-                program = self.getOutputFilename(threadData['program'], threadData['partNumber'])
-                dest = os.path.join(self.recordDestinationPath, self.getOutputFilename(threadData['program'], threadData['partNumber']))
+            program = self.getOutputFilename(threadData['program'], threadData['partNumber'])
+            dest = os.path.join(decodePath(self.recordDestinationPath), self.getOutputFilename(threadData['program'], threadData['partNumber']))
 
-                if xbmcvfs.exists(dest):
-                    stat = os.stat(dest)
-                    iDownsize = stat.st_size
-
-            except:
-                program = ''
-                iDownsize = 1000
+            if xbmcvfs.exists(dest):
+                stat = os.stat(dest)
+                iDownsize = stat.st_size
     
-            if float(self.downloadSize) > 1:
+            if float(self.downloadSize) > 1.0:
                 iTotalSize = float(self.downloadSize)
             else:
-                iTotalSize = 1000
+                iTotalSize = 1000.0
             
             self.stateCallBackFunction(program, iDownsize, iTotalSize, durationTime)
 
@@ -416,7 +443,7 @@ class RecordService(BasePlayService):
         elif iTotalSize < 5000000:
             TotalSize = '0 MB'
         else:
-            TotalSize = self.formatFileSize(iTotalSize)
+            TotalSize = self.formatFileSize(float(iTotalSize))
 
         if iDownsize < 5000000:
             Downsize = '0 MB'
@@ -425,7 +452,7 @@ class RecordService(BasePlayService):
 
         downloadSpeed = round(iDownsize * 0.000008 / elapsedTime, 1)
 
-        self.progress.update(iPercent, program, Downsize + ' / ' + TotalSize+', '+str(downloadSpeed)+' mbit/s')
+        self.progress.update(iPercent, str(program), str(Downsize) + ' / ' + str(TotalSize)+', '+str(downloadSpeed)+' mbit/s')
     
         if (self.progress.isFinished()) and not (self.processIsCanceled):
             self.processIsCanceled = True
@@ -447,7 +474,7 @@ class RecordService(BasePlayService):
     def downloadLoop(self, threadData):
         threadData['success']               = False
         threadData['notificationDisplayed'] = False
-        threadData['destinationFile']       = os.path.join(self.recordDestinationPath, self.getOutputFilename(threadData['program']))
+        threadData['destinationFile']       = os.path.join(decodeBackslashPath(self.recordDestinationPath), encodePath(self.getOutputFilename(threadData['program'])))
         threadData['partNumber']            = 1
         threadData['nrOfReattempts']        = 0     
         threadData['downloadOptions']       = { 'forceRTMPDump' : False, 'settingsChanged' : False, 'force_h264_mp4toannexb' : self.force_h264_mp4toannexb }
@@ -1078,7 +1105,7 @@ class RecordService(BasePlayService):
         recordCommand.append("-loglevel")
         recordCommand.append("info")
         recordCommand.append("-n")
-        recordCommand.append("{}".format(destinationFile))
+        recordCommand.append(asciiPath(destinationFile))
 
         return recordCommand
 
@@ -1186,7 +1213,7 @@ class RecordService(BasePlayService):
     def recordLoop(self, threadData):
         threadData['success']               = False
         threadData['notificationDisplayed'] = False
-        threadData['destinationFile']       = os.path.join(self.recordDestinationPath, self.getOutputFilename(threadData['program']))
+        threadData['destinationFile']       = os.path.join(decodeBackslashPath(self.recordDestinationPath), encodePath(self.getOutputFilename(threadData['program'])))
         threadData['partNumber']            = 1
         threadData['nrOfReattempts']        = 0
         threadData['recordOptions']         = { 'forceRTMPDump' : False, 'settingsChanged' : False, 'force_h264_mp4toannexb' : self.force_h264_mp4toannexb }
@@ -1471,7 +1498,7 @@ class RecordService(BasePlayService):
         recordCommand.append("-loglevel")
         recordCommand.append("info")
         recordCommand.append("-n")
-        recordCommand.append("{}".format(destinationFile))
+        recordCommand.append(asciiPath(destinationFile))
 
         return recordCommand
 
@@ -1575,19 +1602,19 @@ class RecordService(BasePlayService):
         while os.path.isfile(threadData['destinationFile']): #Generate output filename which is not used
             threadData['partNumber'] += 1
             outputFileName = self.getOutputFilename(threadData['program'], threadData['partNumber'])
-            threadData['destinationFile'] = os.path.join(self.recordDestinationPath, outputFileName)
+            threadData['destinationFile'] = os.path.join(decodePath(self.recordDestinationPath), outputFileName)
 
     def getListOfFilenamesForProgram(self, program):
         #debug('getListOfFilenamesForProgram')
         filenameList = list()
         filename = self.getOutputFilename(program)
-        filePath = os.path.join(self.recordDestinationPath, filename)
+        filePath = os.path.join(decodePath(self.recordDestinationPath), filename)
         partNumber = 1
         while os.path.isfile(filePath):
             filenameList.append(filePath)
             partNumber = partNumber + 1
             filename = self.getOutputFilename(program, partNumber)
-            filePath = os.path.join(self.recordDestinationPath, filename)
+            filePath = os.path.join(decodePath(self.recordDestinationPath), filename)
         return filenameList
 
 
@@ -1761,41 +1788,41 @@ class RecordService(BasePlayService):
                 deb('removeRecordedProgram exception: %s' % getExceptionString())
 
     def checkIfRecordDirExist(self):
-        if self.recordDestinationPath == '':
+        if decodePath(self.recordDestinationPath) == '':
             deb('checkIfRecordDirExist record destination not configured!')
             self.showThreadedDialog(failedRecordDialogName, "\n" + nonExistingRecordDirName)
             return False
-        elif os.path.isdir(self.recordDestinationPath) == False:
+        elif os.path.isdir(decodePath(self.recordDestinationPath)) == False:
             try:
-                os.makedirs(self.recordDestinationPath)
+                os.makedirs(decodePath(self.recordDestinationPath))
                 #make sure dir was created
-                if os.path.isdir(self.recordDestinationPath) == False:
-                    deb('checkIfRecordDirExist record destination does not exist after attmept to create! path: {}'.format(self.recordDestinationPath))
-                    self.showThreadedDialog(failedRecordDialogName, "\n" + nonExistingRecordDirName + "\n" + self.recordDestinationPath)
+                if os.path.isdir(decodePath(self.recordDestinationPath)) == False:
+                    deb('checkIfRecordDirExist record destination does not exist after attmept to create! path: {}'.format(decodePath(self.recordDestinationPath)))
+                    self.showThreadedDialog(failedRecordDialogName, "\n" + nonExistingRecordDirName + "\n" + decodePath(self.recordDestinationPath))
                     return False
             except:
-                deb('checkIfRecordDirExist record destination does not exist and cannot be created! path: {}'.format(self.recordDestinationPath))
-                self.showThreadedDialog(failedRecordDialogName, "\n" + nonExistingRecordDirName + "\n" + self.recordDestinationPath)
+                deb('checkIfRecordDirExist record destination does not exist and cannot be created! path: {}'.format(decodePath(self.recordDestinationPath)))
+                self.showThreadedDialog(failedRecordDialogName, "\n" + nonExistingRecordDirName + "\n" + decodePath(self.recordDestinationPath))
                 return False
         else:
             return True
 
     def checkIfDownloadDirExist(self):
-        if self.recordDestinationPath == '':
+        if decodePath(self.recordDestinationPath) == '':
             deb('checkIfDownloadDirExist download destination not configured!')
             self.showThreadedDialog(failedDownloadDialogName, "\n" + nonExistingRecordDirName)
             return False
-        elif os.path.isdir(self.recordDestinationPath) == False:
+        elif os.path.isdir(decodePath(self.recordDestinationPath)) == False:
             try:
-                os.makedirs(self.recordDestinationPath)
+                os.makedirs(decodePath(self.recordDestinationPath))
                 #make sure dir was created
-                if os.path.isdir(self.recordDestinationPath) == False:
-                    deb('checkIfDownloadDirExist download destination does not exist after attmept to create! path: {}'.format(self.recordDestinationPath))
-                    self.showThreadedDialog(failedRecordDialogName, "\n" + nonExistingRecordDirName + "\n" + self.recordDestinationPath)
+                if os.path.isdir(decodePath(self.recordDestinationPath)) == False:
+                    deb('checkIfDownloadDirExist download destination does not exist after attmept to create! path: {}'.format(decodePath(self.recordDestinationPath)))
+                    self.showThreadedDialog(failedRecordDialogName, "\n" + nonExistingRecordDirName + "\n" + decodePath(self.recordDestinationPath))
                     return False
             except:
-                deb('checkIfDownloadDirExist download destination does not exist and cannot be created! path: {}'.format(self.recordDestinationPath))
-                self.showThreadedDialog(failedRecordDialogName, "\n" + nonExistingRecordDirName + "\n" + self.recordDestinationPath)
+                deb('checkIfDownloadDirExist download destination does not exist and cannot be created! path: {}'.format(decodePath(self.recordDestinationPath)))
+                self.showThreadedDialog(failedRecordDialogName, "\n" + nonExistingRecordDirName + "\n" + decodePath(self.recordDestinationPath))
                 return False
         else:
             return True
