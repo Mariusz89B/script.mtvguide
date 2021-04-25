@@ -318,8 +318,8 @@
 		<setting id="archive_finished_program" label="59984" type="bool" default="true" visible="eq(-7,true)"/>
 	</category>
 	<category label="30309">
+		<setting id="listing_pre_days" label="30340" type="slider" default="1" range="1,14" option="int" visible="true"/>
         <setting id="listing_days" label="30339" type="slider" default="3" range="1,7" option="int" visible="true"/>
-        <setting id="listing_hours" label="30340" type="slider" default="1" range="0,6" option="int" visible="true"/>
         <setting id="listing_sort_time" label="30341" type="bool" default="true" />
 		<setting id="program_search_plot" label="30342" type="bool" default="false" />
 	</category>

@@ -3309,23 +3309,23 @@
 		</category>
 		<category help="95105" id="lists" label="30309">
 			<group id="1">
+				<setting help="95107" id="listing_pre_days" label="30340" type="integer">
+					<level>2</level>
+					<default>1</default>
+					<constraints>
+						<minimum>1</minimum>
+						<maximum>14</maximum>
+					</constraints>
+					<control format="integer" type="slider">
+						<popup>false</popup>
+					</control>
+				</setting>
 				<setting help="95106" id="listing_days" label="30339" type="integer">
 					<level>2</level>
 					<default>3</default>
 					<constraints>
 						<minimum>1</minimum>
 						<maximum>7</maximum>
-					</constraints>
-					<control format="integer" type="slider">
-						<popup>false</popup>
-					</control>
-				</setting>
-				<setting help="95107" id="listing_hours" label="30340" type="integer">
-					<level>2</level>
-					<default>1</default>
-					<constraints>
-						<minimum>0</minimum>
-						<maximum>6</maximum>
 					</constraints>
 					<control format="integer" type="slider">
 						<popup>false</popup>

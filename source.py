@@ -1038,8 +1038,9 @@ class Database(object):
     def _programSearch(self, search):
         programList = []
         now = datetime.datetime.now()
+        pre_days = int(ADDON.getSetting('listing_pre_days'))
         days = int(ADDON.getSetting('listing_days'))
-        startTime = now - datetime.timedelta(hours=int(ADDON.getSetting('listing_hours')))
+        startTime = now - datetime.timedelta(days=pre_days)
         endTime = now + datetime.timedelta(days=days)
         c = self.conn.cursor()
         channelList = self._getChannelList(True)
@@ -1070,8 +1071,9 @@ class Database(object):
     def _descriptionSearch(self, search):
         programList = []
         now = datetime.datetime.now()
+        pre_days = int(ADDON.getSetting('listing_pre_days'))
         days = int(ADDON.getSetting('listing_days'))
-        startTime = now - datetime.timedelta(hours=int(ADDON.getSetting('listing_hours')))
+        startTime = now - datetime.timedelta(days=pre_days)
         endTime = now + datetime.timedelta(days=days)
         c = self.conn.cursor()
         channelList = self._getChannelList(True)
@@ -1097,8 +1099,9 @@ class Database(object):
     def _programCategorySearch(self, search):
         programList = []
         now = datetime.datetime.now()
+        pre_days = int(ADDON.getSetting('listing_pre_days'))
         days = int(ADDON.getSetting('listing_days'))
-        startTime = now - datetime.timedelta(hours=int(ADDON.getSetting('listing_hours')))
+        startTime = now - datetime.timedelta(days=pre_days)
         endTime = now + datetime.timedelta(days=days)
         c = self.conn.cursor()
         channelList = self._getChannelList(True)

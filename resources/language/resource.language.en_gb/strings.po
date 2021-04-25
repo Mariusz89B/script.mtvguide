@@ -373,7 +373,7 @@ msgid "List future days"
 msgstr ""
 
 msgctxt "#30340"
-msgid "List previous hours"
+msgid "List previous days"
 msgstr ""
 
 msgctxt "#30341"
@@ -3069,7 +3069,7 @@ msgid "Select how many future days to show in listing views."
 msgstr ""
 
 msgctxt "#95107"
-msgid "Select how many previous hours to show in listing views."
+msgid "Select how many previous days to show in listing views."
 msgstr ""
 
 msgctxt "#95108"

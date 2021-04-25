@@ -373,8 +373,8 @@ msgid "List future days"
 msgstr "Liste des prochains jours"
 
 msgctxt "#30340"
-msgid "List previous hours"
-msgstr "Liste des heures précédentes"
+msgid "List previous days"
+msgstr "Liste des jours précédents"
 
 msgctxt "#30341"
 msgid "Sort list by time"

@@ -1,4 +1,4 @@
-﻿[COLOR yellow][B]wersja 9.3.1[/B] - 2021-04-23[/COLOR]
+﻿[COLOR yellow][B]wersja 9.3.1[/B] - 2021-04-25[/COLOR]
 - poprawka błędu parsowania
 - dodana opcja nagrywaj i oglądaj
 - dodano ustawienie aby kontynuować odtwarzanie, nagrywanie i
