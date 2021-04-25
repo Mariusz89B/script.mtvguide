@@ -377,15 +377,14 @@ class PlayService(xbmc.Player, BasePlayService):
         getsec = self.archiveService
         try:
             sec = getsec.total_seconds()
+            seek_secs = int(sec)
+            while not xbmc.Player().isPlaying():
+                xbmc.Monitor().waitForAbort(0.25)
+            
+            if xbmc.Player().isPlaying():
+                xbmc.Player().seekTime(int(seek_secs))
         except:
-            sec = 0
-        seek_secs = int(secs)
-        while not xbmc.Player().isPlaying():
-            xbmc.Monitor().waitForAbort(0.25)
-        
-        if xbmc.Player().isPlaying():
-            xbmc.Player().seekTime(int(seek_secs))
-
+            pass
 
     @contextmanager
     def busyDialog(self):
