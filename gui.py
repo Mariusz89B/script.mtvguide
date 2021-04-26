@@ -7290,7 +7290,7 @@ class ProgramListDialog(xbmcgui.WindowXMLDialog):
 
             day = self.formatDateTodayTomorrow(start)
             start_str = start.strftime("%H:%M")
-            start_str = "{} {}".format(start_str, day)
+            start_str = "{} {} - {}".format(start_str, start.strftime("%d-%m").replace('-', '/').replace('0', ''), day)
             item.setProperty('StartTime', start_str)
 
             duration_str = "{} min".format(duration.seconds // 60)
