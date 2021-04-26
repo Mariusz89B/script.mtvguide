@@ -3164,6 +3164,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
                 self.viewStartDate = programList[index].startDate
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
+                self.focusPoint.y = self.epgView.top
                 self.onRedrawEPG(channelIdx, self.viewStartDate)
                 #self._showContextMenu(programList[index])
         else:
@@ -3230,6 +3231,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
                 self.viewStartDate = programList[index].startDate
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
+                self.focusPoint.y = self.epgView.top
                 self.onRedrawEPG(channelIdx, self.viewStartDate)
                 #self._showContextMenu(programList[index])
         else:
@@ -3296,6 +3298,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
                 self.viewStartDate = programList[index].startDate
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
+                self.focusPoint.y = self.epgView.top
                 self.onRedrawEPG(channelIdx, self.viewStartDate)
                 #self._showContextMenu(programList[index])
         else:
@@ -3439,6 +3442,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
                 self.viewStartDate = programList[index].startDate
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
+                self.focusPoint.y = self.epgView.top
                 self.onRedrawEPG(channelIdx, self.viewStartDate)
                 #self._showContextMenu(programList[index])
         else:
@@ -3518,6 +3522,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
                 self.viewStartDate = programList[index].startDate
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
+                self.focusPoint.y = self.epgView.top
                 self.onRedrawEPG(channelIdx, self.viewStartDate)
                 #self._showContextMenu(programList[index])
         else:
@@ -3596,6 +3601,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
                 self.viewStartDate = programList[index].startDate
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
+                self.focusPoint.y = self.epgView.top
                 self.onRedrawEPG(channelIdx, self.viewStartDate)
                 #self._showContextMenu(programList[index])
         else:
@@ -3659,6 +3665,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
                 self.viewStartDate = programList[index].startDate
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
+                self.focusPoint.y = self.epgView.top
                 self.onRedrawEPG(channelIdx, self.viewStartDate)
                 #self._showContextMenu(programList[index])
         else:
@@ -3705,6 +3712,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
                 self.viewStartDate = programList[index].startDate
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
+                self.focusPoint.y = self.epgView.top
                 self.onRedrawEPG(channelIdx, self.viewStartDate)
                 #self._showContextMenu(programList[index])
         else:
@@ -3756,6 +3764,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
                 self.viewStartDate = programList[index].startDate
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
+                self.focusPoint.y = self.epgView.top
                 self.onRedrawEPG(channelIdx, self.viewStartDate)
                 #self._showContextMenu(programList[index])
         elif action == ACTION_SHOW_INFO:
@@ -3820,6 +3829,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
                 self.viewStartDate = programList[index].startDate
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
+                self.focusPoint.y = self.epgView.top
                 self.onRedrawEPG(channelIdx, self.viewStartDate)
                 #self._showContextMenu(programList[index])
         elif action == ACTION_SHOW_INFO:
@@ -3884,6 +3894,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
                 self.viewStartDate = programList[index].startDate
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
+                self.focusPoint.y = self.epgView.top
                 self.onRedrawEPG(channelIdx, self.viewStartDate)
                 #self._showContextMenu(programList[index])
         elif action == ACTION_SHOW_INFO:
