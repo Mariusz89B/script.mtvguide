@@ -3158,7 +3158,7 @@ class mTVGuide(xbmcgui.WindowXML):
             except:
                 pass
             return
-        elif action == KEY_CONTEXT_MENU and xbmc.Player().isPlaying() == False:
+        elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 self.index = 1
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
@@ -3166,7 +3166,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
                 self.focusPoint.y = self.epgView.top
                 self.onRedrawEPG(channelIdx, self.viewStartDate)
-                #self._showContextMenu(programList[index])
+
         else:
             if index > -1:
                 program = programList[index]
@@ -3225,7 +3225,7 @@ class mTVGuide(xbmcgui.WindowXML):
             except:
                 pass
             return
-        elif action == KEY_CONTEXT_MENU and xbmc.Player().isPlaying() == False:
+        elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 self.index = 1
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
@@ -3233,7 +3233,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
                 self.focusPoint.y = self.epgView.top
                 self.onRedrawEPG(channelIdx, self.viewStartDate)
-                #self._showContextMenu(programList[index])
+
         else:
             if index > -1:
                 program = programList[index]
@@ -3292,7 +3292,7 @@ class mTVGuide(xbmcgui.WindowXML):
             except:
                 pass
             return
-        elif action == KEY_CONTEXT_MENU and xbmc.Player().isPlaying() == False:
+        elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 self.index = 1
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
@@ -3300,7 +3300,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
                 self.focusPoint.y = self.epgView.top
                 self.onRedrawEPG(channelIdx, self.viewStartDate)
-                #self._showContextMenu(programList[index])
+
         else:
             if index > -1:
                 program = programList[index]
@@ -3436,7 +3436,7 @@ class mTVGuide(xbmcgui.WindowXML):
             except:
                 pass
             return
-        elif action == KEY_CONTEXT_MENU and xbmc.Player().isPlaying() == False:
+        elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 self.index = 1
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
@@ -3444,7 +3444,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
                 self.focusPoint.y = self.epgView.top
                 self.onRedrawEPG(channelIdx, self.viewStartDate)
-                #self._showContextMenu(programList[index])
+
         else:
             if index > -1:
                 program = programList[index]
@@ -3516,7 +3516,7 @@ class mTVGuide(xbmcgui.WindowXML):
             except:
                 pass
             return
-        elif action == KEY_CONTEXT_MENU and xbmc.Player().isPlaying() == False:
+        elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 self.index = 1
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
@@ -3524,7 +3524,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
                 self.focusPoint.y = self.epgView.top
                 self.onRedrawEPG(channelIdx, self.viewStartDate)
-                #self._showContextMenu(programList[index])
+
         else:
             if index > -1:
                 program = programList[index]
@@ -3595,7 +3595,7 @@ class mTVGuide(xbmcgui.WindowXML):
             except:
                 pass
             return
-        elif action == KEY_CONTEXT_MENU and xbmc.Player().isPlaying() == False:
+        elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 self.index = 1
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
@@ -3603,7 +3603,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
                 self.focusPoint.y = self.epgView.top
                 self.onRedrawEPG(channelIdx, self.viewStartDate)
-                #self._showContextMenu(programList[index])
+
         else:
             if index > -1:
                 program = programList[index]
@@ -3659,7 +3659,7 @@ class mTVGuide(xbmcgui.WindowXML):
             except:
                 pass
             return
-        elif action == KEY_CONTEXT_MENU and xbmc.Player().isPlaying() == False:
+        elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 self.index = 1
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
@@ -3667,7 +3667,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
                 self.focusPoint.y = self.epgView.top
                 self.onRedrawEPG(channelIdx, self.viewStartDate)
-                #self._showContextMenu(programList[index])
+
         else:
             if index > -1:
                 program = programList[index]
@@ -3706,7 +3706,7 @@ class mTVGuide(xbmcgui.WindowXML):
             except:
                 pass
             return
-        elif action == KEY_CONTEXT_MENU and xbmc.Player().isPlaying() == False:
+        elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 self.index = 1
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
@@ -3714,7 +3714,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
                 self.focusPoint.y = self.epgView.top
                 self.onRedrawEPG(channelIdx, self.viewStartDate)
-                #self._showContextMenu(programList[index])
+
         else:
             if index > -1:
                 program = programList[index]
@@ -3758,7 +3758,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.showFullRecordings(channel)
             elif list == 5:
                 self.programSearchSelect(channel)
-        elif action == KEY_CONTEXT_MENU and xbmc.Player().isPlaying() == False:
+        elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 self.index = 1
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
@@ -3766,7 +3766,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
                 self.focusPoint.y = self.epgView.top
                 self.onRedrawEPG(channelIdx, self.viewStartDate)
-                #self._showContextMenu(programList[index])
+
         elif action == ACTION_SHOW_INFO:
             try:
                 d = xbmcgui.Dialog()
@@ -3823,7 +3823,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.showFullRecordings(channel)
             elif list == 5:
                 self.programSearchSelect(channel)
-        elif action == KEY_CONTEXT_MENU and xbmc.Player().isPlaying() == False:
+        elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 self.index = 1
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
@@ -3831,7 +3831,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
                 self.focusPoint.y = self.epgView.top
                 self.onRedrawEPG(channelIdx, self.viewStartDate)
-                #self._showContextMenu(programList[index])
+
         elif action == ACTION_SHOW_INFO:
             try:
                 d = xbmcgui.Dialog()
@@ -3888,7 +3888,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.showFullRecordings(channel)
             elif list == 5:
                 self.programSearchSelect(channel)
-        elif action == KEY_CONTEXT_MENU and xbmc.Player().isPlaying() == False:
+        elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 self.index = 1
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
@@ -3896,7 +3896,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
                 self.focusPoint.y = self.epgView.top
                 self.onRedrawEPG(channelIdx, self.viewStartDate)
-                #self._showContextMenu(programList[index])
+
         elif action == ACTION_SHOW_INFO:
             try:
                 d = xbmcgui.Dialog()
