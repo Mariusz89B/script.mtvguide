@@ -570,6 +570,7 @@ class mTVGuide(xbmcgui.WindowXML):
         self.recordService = RecordService(self)
         self.getListLenght = list()
         self.catchupDays = None
+        self.context = False
 
         # find nearest half hour
         self.viewStartDate = datetime.datetime.today() + datetime.timedelta(
@@ -2919,28 +2920,28 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action.getButtonCode() == KEY_LIST:
             program = self._getProgramFromControl(controlInFocus)
             d = xbmcgui.Dialog()
-            list = d.select(strings(30309), [strings(30310), strings(30311), strings(30312), strings(30336), strings(30337), strings(30315)])
+            list = d.select(strings(30309), [strings(30315), strings(30310), strings(30311), strings(30312), strings(30336), strings(30337)])
 
             if list < 0:
                 self.onRedrawEPG(self.channelIdx, self.viewStartDate)
             if list == 0:
-                index = self.database.getCurrentChannelIdx(program.channel)
-                programList = self.database.getChannelListing(program.channel)
-                self.showListing(program.channel)
+                self.programSearchSelect(program.channel)
             elif list == 1:
                 index = self.database.getCurrentChannelIdx(program.channel)
                 programList = self.database.getChannelListing(program.channel)
-                self.showNow(program.channel)
+                self.showListing(program.channel)
             elif list == 2:
                 index = self.database.getCurrentChannelIdx(program.channel)
                 programList = self.database.getChannelListing(program.channel)
-                self.showNext(program.channel)
+                self.showNow(program.channel)
             elif list == 3:
-                self.showFullReminders(program.channel)
+                index = self.database.getCurrentChannelIdx(program.channel)
+                programList = self.database.getChannelListing(program.channel)
+                self.showNext(program.channel)
             elif list == 4:
-                self.showFullRecordings(program.channel)
+                self.showFullReminders(program.channel)
             elif list == 5:
-                self.programSearchSelect(program.channel)
+                self.showFullRecordings(program.channel)
             return
 
         elif action.getId() == ACTION_MOUSE_MIDDLE_CLICK:
@@ -3121,6 +3122,7 @@ class mTVGuide(xbmcgui.WindowXML):
         d.doModal()
         index = d.index
         action = d.action
+        self.context = False
         if action == ACTION_RIGHT:
             self.showNow(programList[index].channel)
         elif action == ACTION_LEFT:
@@ -3128,22 +3130,23 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_NAV_BACK:
             self.index = -1
             d = xbmcgui.Dialog()
-            list = d.select(strings(30309), [strings(30310), strings(30311), strings(30312), strings(30336), strings(30337), strings(30315)])
+            list = d.select(strings(30309), [strings(30315), strings(30310), strings(30311), strings(30312), strings(30336), strings(30337)])
 
             if list < 0:
                 self.onRedrawEPG(self.channelIdx, self.viewStartDate)
             if list == 0:
-                self.showListing(programList[index].channel)
-            elif list == 1:
-                self.showNow(programList[index].channel)
-            elif list == 2:
-                self.showNext(programList[index].channel)
-            elif list == 3:
-                self.showFullReminders(channel)
-            elif list == 4:
-                self.showFullRecordings(channel)
-            elif list == 5:
                 self.programSearchSelect(channel)
+            elif list == 1:
+                self.showListing(programList[index].channel)
+            elif list == 2:
+                self.showNow(programList[index].channel)
+            elif list == 3:
+                self.showNext(programList[index].channel)
+            elif list == 4:
+                self.showFullReminders(channel)
+            elif list == 5:
+                self.showFullRecordings(channel)
+            
         elif action == ACTION_SHOW_INFO:
             try:
                 d = xbmcgui.Dialog()
@@ -3160,7 +3163,7 @@ class mTVGuide(xbmcgui.WindowXML):
             return
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
-                self.index = 1
+                self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
                 self.viewStartDate = programList[index].startDate
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
@@ -3188,6 +3191,7 @@ class mTVGuide(xbmcgui.WindowXML):
         d.doModal()
         index = d.index
         action = d.action
+        self.context = False
         if action == ACTION_RIGHT:
             self.showNext(programList[index].channel)
         elif action == ACTION_LEFT:
@@ -3195,22 +3199,23 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_NAV_BACK:
             self.index = -1
             d = xbmcgui.Dialog()
-            list = d.select(strings(30309), [strings(30310), strings(30311), strings(30312), strings(30336), strings(30337), strings(30315)])
+            list = d.select(strings(30309), [strings(30315), strings(30310), strings(30311), strings(30312), strings(30336), strings(30337)])
 
             if list < 0:
                 self.onRedrawEPG(self.channelIdx, self.viewStartDate)
             if list == 0:
-                self.showListing(programList[index].channel)
-            elif list == 1:
-                self.showNow(programList[index].channel)
-            elif list == 2:
-                self.showNext(programList[index].channel)
-            elif list == 3:
-                self.showFullReminders(channel)
-            elif list == 4:
-                self.showFullRecordings(channel)
-            elif list == 5:
                 self.programSearchSelect(channel)
+            elif list == 1:
+                self.showListing(programList[index].channel)
+            elif list == 2:
+                self.showNow(programList[index].channel)
+            elif list == 3:
+                self.showNext(programList[index].channel)
+            elif list == 4:
+                self.showFullReminders(channel)
+            elif list == 5:
+                self.showFullRecordings(channel)
+            
         elif action == ACTION_SHOW_INFO:
             try:
                 d = xbmcgui.Dialog()
@@ -3227,7 +3232,7 @@ class mTVGuide(xbmcgui.WindowXML):
             return
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
-                self.index = 1
+                self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
                 self.viewStartDate = programList[index].startDate
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
@@ -3255,6 +3260,7 @@ class mTVGuide(xbmcgui.WindowXML):
         d.doModal()
         index = d.index
         action = d.action
+        self.context = False
         if action == ACTION_LEFT:
             self.showNow(programList[index].channel)
         elif action == ACTION_RIGHT:
@@ -3262,22 +3268,23 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_NAV_BACK:
             self.index = -1
             d = xbmcgui.Dialog()
-            list = d.select(strings(30309), [strings(30310), strings(30311), strings(30312), strings(30336), strings(30337), strings(30315)])
+            list = d.select(strings(30309), [strings(30315), strings(30310), strings(30311), strings(30312), strings(30336), strings(30337)])
 
             if list < 0:
                 self.onRedrawEPG(self.channelIdx, self.viewStartDate)
             if list == 0:
-                self.showListing(programList[index].channel)
-            elif list == 1:
-                self.showNow(programList[index].channel)
-            elif list == 2:
-                self.showNext(programList[index].channel)
-            elif list == 3:
-                self.showFullReminders(channel)
-            elif list == 4:
-                self.showFullRecordings(channel)
-            elif list == 5:
                 self.programSearchSelect(channel)
+            elif list == 1:
+                self.showListing(programList[index].channel)
+            elif list == 2:
+                self.showNow(programList[index].channel)
+            elif list == 3:
+                self.showNext(programList[index].channel)
+            elif list == 4:
+                self.showFullReminders(channel)
+            elif list == 5:
+                self.showFullRecordings(channel)
+            
         elif action == ACTION_SHOW_INFO:
             try:
                 d = xbmcgui.Dialog()
@@ -3294,7 +3301,7 @@ class mTVGuide(xbmcgui.WindowXML):
             return
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
-                self.index = 1
+                self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
                 self.viewStartDate = programList[index].startDate
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
@@ -3315,54 +3322,55 @@ class mTVGuide(xbmcgui.WindowXML):
 
         if what == -1:
             d = xbmcgui.Dialog()
-            list = d.select(strings(30309), [strings(30310), strings(30311), strings(30312), strings(30336), strings(30337), strings(30315)])
+            list = d.select(strings(30309), [strings(30315), strings(30310), strings(30311), strings(30312), strings(30336), strings(30337)])
 
             if list < 0:
                 self.onRedrawEPG(self.channelIdx, self.viewStartDate)
             if list == 0:
-                index = self.database.getCurrentChannelIdx(channel)
-                programList = self.database.getChannelListing(channel)
-                self.showListing(programList[index].channel)
+                self.programSearchSelect(channel)
             elif list == 1:
                 index = self.database.getCurrentChannelIdx(channel)
                 programList = self.database.getChannelListing(channel)
-                self.showNow(programList[index].channel)
+                self.showListing(programList[index].channel)
             elif list == 2:
                 index = self.database.getCurrentChannelIdx(channel)
                 programList = self.database.getChannelListing(channel)
-                self.showNext(programList[index].channel)
+                self.showNow(programList[index].channel)
             elif list == 3:
-                self.showFullReminders(channel)
+                index = self.database.getCurrentChannelIdx(channel)
+                programList = self.database.getChannelListing(channel)
+                self.showNext(programList[index].channel)
             elif list == 4:
-                self.showFullRecordings(channel)
+                self.showFullReminders(channel)
             elif list == 5:
-                self.programSearchSelect(channel)
+                self.showFullRecordings(channel)
+            
 
         if what == 0:
             self.programSearch()
-            if self.index < 0:
-                self.index = -1
+            self.index = -1
+            if not self.context:
                 self.programSearchSelect(channel)
 
         elif what == 1:
             self.descriptionSearch()
-            if self.index < 0:
-                self.index = -1
+            self.index = -1
+            if not self.context:
                 self.programSearchSelect(channel)
         elif what == 2:
             self.categorySearchInput()
-            if self.index < 0:
-                self.index = -1
+            self.index = -1
+            if not self.context:
                 self.programSearchSelect(channel)
         elif what == 3:
             self.categorySearch()
-            if self.index < 0:
-                self.index = -1
+            self.index = -1
+            if not self.context:
                 self.programSearchSelect(channel)
         elif what == 4:
             self.channelSearch()
-            if self.index < 0:
-                self.index = -1
+            self.index = -1
+            if not self.context:
                 self.programSearchSelect(channel)
 
     def programSearch(self):
@@ -3381,6 +3389,7 @@ class mTVGuide(xbmcgui.WindowXML):
         f = xbmcvfs.File(file_name, "rb")
         searches = sorted(f.read().splitlines())
         f.close()
+        self.context = False
         actions = [strings(30320), strings(30321)] + searches
         action = d.select(strings(30327).format(title), actions)
         if action == -1:
@@ -3438,7 +3447,7 @@ class mTVGuide(xbmcgui.WindowXML):
             return
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
-                self.index = 1
+                self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
                 self.viewStartDate = programList[index].startDate
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
@@ -3460,6 +3469,7 @@ class mTVGuide(xbmcgui.WindowXML):
         f = xbmcvfs.File(file_name, "rb")
         searches = sorted(f.read().splitlines())
         f.close()
+        self.context = False
         actions = [strings(30320), strings(30321)] + searches
         action = d.select(strings(30328), actions)
         if action == -1:
@@ -3518,7 +3528,7 @@ class mTVGuide(xbmcgui.WindowXML):
             return
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
-                self.index = 1
+                self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
                 self.viewStartDate = programList[index].startDate
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
@@ -3540,6 +3550,7 @@ class mTVGuide(xbmcgui.WindowXML):
         f = xbmcvfs.File(file_name, "rb")
         searches = sorted(f.read().splitlines())
         f.close()
+        self.context = False
         actions = [strings(30320), strings(30321)] + searches
         action = d.select(strings(30345), actions)
         if action == -1:
@@ -3597,7 +3608,7 @@ class mTVGuide(xbmcgui.WindowXML):
             return
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
-                self.index = 1
+                self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
                 self.viewStartDate = programList[index].startDate
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
@@ -3620,6 +3631,7 @@ class mTVGuide(xbmcgui.WindowXML):
         else:
             category_count = [x.split(b"=", 1) for x in f.readBytes().splitlines()]
         f.close()
+        self.context = False
         categories = []
         for (c, v) in category_count:
             if not self.database.category or self.database.category == "All Channels":
@@ -3661,7 +3673,7 @@ class mTVGuide(xbmcgui.WindowXML):
             return
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
-                self.index = 1
+                self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
                 self.viewStartDate = programList[index].startDate
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
@@ -3687,6 +3699,7 @@ class mTVGuide(xbmcgui.WindowXML):
         d.doModal()
         index = d.index
         action = d.action
+        self.context = False
         if action == ACTION_RIGHT:
             self.showNext(programList[index].channel)
         elif action == ACTION_LEFT:
@@ -3708,7 +3721,7 @@ class mTVGuide(xbmcgui.WindowXML):
             return
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
-                self.index = 1
+                self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
                 self.viewStartDate = programList[index].startDate
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
@@ -3730,6 +3743,7 @@ class mTVGuide(xbmcgui.WindowXML):
         d.doModal()
         index = d.index
         action = d.action
+        self.context = False
         if action == ACTION_RIGHT:
             self.showNext(programList[index].channel)
         elif action == ACTION_LEFT:
@@ -3737,30 +3751,31 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_NAV_BACK:
             self.index = -1
             d = xbmcgui.Dialog()
-            list = d.select(strings(30309), [strings(30310), strings(30311), strings(30312), strings(30336), strings(30337), strings(30315)])
+            list = d.select(strings(30309), [strings(30315), strings(30310), strings(30311), strings(30312), strings(30336), strings(30337)])
             if list < 0:
                 self.onRedrawEPG(self.channelIdx, self.viewStartDate)
             if list == 0:
-                index = self.database.getCurrentChannelIdx(channel)
-                programList = self.database.getChannelListing(channel)
-                self.showListing(programList[index].channel)
+                self.programSearchSelect(channel)
             elif list == 1:
                 index = self.database.getCurrentChannelIdx(channel)
                 programList = self.database.getChannelListing(channel)
-                self.showNow(programList[index].channel)
+                self.showListing(programList[index].channel)
             elif list == 2:
                 index = self.database.getCurrentChannelIdx(channel)
                 programList = self.database.getChannelListing(channel)
-                self.showNext(programList[index].channel)
+                self.showNow(programList[index].channel)
             elif list == 3:
-                self.showFullReminders(channel)
+                index = self.database.getCurrentChannelIdx(channel)
+                programList = self.database.getChannelListing(channel)
+                self.showNext(programList[index].channel)
             elif list == 4:
-                self.showFullRecordings(channel)
+                self.showFullReminders(channel)
             elif list == 5:
-                self.programSearchSelect(channel)
+                self.showFullRecordings(channel)
+            
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
-                self.index = 1
+                self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
                 self.viewStartDate = programList[index].startDate
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
@@ -3795,6 +3810,7 @@ class mTVGuide(xbmcgui.WindowXML):
         d.doModal()
         index = d.index
         action = d.action
+        self.context = False
         if action == ACTION_RIGHT:
             self.showNext(programList[index].channel)
         elif action == ACTION_LEFT:
@@ -3802,30 +3818,31 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_NAV_BACK:
             self.index = -1
             d = xbmcgui.Dialog()
-            list = d.select(strings(30309), [strings(30310), strings(30311), strings(30312), strings(30336), strings(30337), strings(30315)])
+            list = d.select(strings(30309), [strings(30315), strings(30310), strings(30311), strings(30312), strings(30336), strings(30337)])
             if list < 0:
                 self.onRedrawEPG(self.channelIdx, self.viewStartDate)
             if list == 0:
-                index = self.database.getCurrentChannelIdx(channel)
-                programList = self.database.getChannelListing(channel)
-                self.showListing(programList[index].channel)
+                self.programSearchSelect(channel)
             elif list == 1:
                 index = self.database.getCurrentChannelIdx(channel)
                 programList = self.database.getChannelListing(channel)
-                self.showNow(programList[index].channel)
+                self.showListing(programList[index].channel)
             elif list == 2:
                 index = self.database.getCurrentChannelIdx(channel)
                 programList = self.database.getChannelListing(channel)
-                self.showNext(programList[index].channel)
+                self.showNow(programList[index].channel)
             elif list == 3:
-                self.showFullReminders(channel)
+                index = self.database.getCurrentChannelIdx(channel)
+                programList = self.database.getChannelListing(channel)
+                self.showNext(programList[index].channel)
             elif list == 4:
-                self.showFullRecordings(channel)
+                self.showFullReminders(channel)
             elif list == 5:
-                self.programSearchSelect(channel)
+                self.showFullRecordings(channel)
+            
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
-                self.index = 1
+                self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
                 self.viewStartDate = programList[index].startDate
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
@@ -3860,6 +3877,7 @@ class mTVGuide(xbmcgui.WindowXML):
         d.doModal()
         index = d.index
         action = d.action
+        self.context = False
         if action == ACTION_RIGHT:
             self.showNext(programList[index].channel)
         elif action == ACTION_LEFT:
@@ -3867,30 +3885,31 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_NAV_BACK:
             self.index = -1
             d = xbmcgui.Dialog()
-            list = d.select(strings(30309), [strings(30310), strings(30311), strings(30312), strings(30336), strings(30337), strings(30315)])
+            list = d.select(strings(30309), [strings(30315), strings(30310), strings(30311), strings(30312), strings(30336), strings(30337)])
             if list < 0:
                 self.onRedrawEPG(self.channelIdx, self.viewStartDate)
             if list == 0:
-                index = self.database.getCurrentChannelIdx(channel)
-                programList = self.database.getChannelListing(channel)
-                self.showListing(programList[index].channel)
+                self.programSearchSelect(channel)
             elif list == 1:
                 index = self.database.getCurrentChannelIdx(channel)
                 programList = self.database.getChannelListing(channel)
-                self.showNow(programList[index].channel)
+                self.showListing(programList[index].channel)
             elif list == 2:
                 index = self.database.getCurrentChannelIdx(channel)
                 programList = self.database.getChannelListing(channel)
-                self.showNext(programList[index].channel)
+                self.showNow(programList[index].channel)
             elif list == 3:
-                self.showFullReminders(channel)
+                index = self.database.getCurrentChannelIdx(channel)
+                programList = self.database.getChannelListing(channel)
+                self.showNext(programList[index].channel)
             elif list == 4:
-                self.showFullRecordings(channel)
+                self.showFullReminders(channel)
             elif list == 5:
-                self.programSearchSelect(channel)
+                self.showFullRecordings(channel)
+            
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
-                self.index = 1
+                self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
                 self.viewStartDate = programList[index].startDate
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
@@ -4159,22 +4178,22 @@ class mTVGuide(xbmcgui.WindowXML):
 
         elif buttonClicked == PopupMenu.C_POPUP_LISTS:
             d = xbmcgui.Dialog()
-            list = d.select(strings(30309), [strings(30310), strings(30311), strings(30312), strings(30336), strings(30337), strings(30315)])
+            list = d.select(strings(30309), [strings(30315), strings(30310), strings(30311), strings(30312), strings(30336), strings(30337)])
 
             if list < 0:
                 self.onRedrawEPG(self.channelIdx, self.viewStartDate)
-            if list == 0:
-                self.showListing(program.channel)
-            elif list == 1:
-                self.showNow(program.channel)
-            elif list == 2:
-                self.showNext(program.channel)
-            elif list == 3:
-                self.showFullReminders(program.channel)
-            elif list == 4:
-                self.showFullRecordings(program.channel)
-            elif list == 5:
+            elif list == 0:
                 self.programSearchSelect(program.channel)
+            elif list == 1:
+                self.showListing(program.channel)
+            elif list == 2:
+                self.showNow(program.channel)
+            elif list == 3:
+                self.showNext(program.channel)
+            elif list == 4:
+                self.showFullReminders(program.channel)
+            elif list == 5:
+                self.showFullRecordings(program.channel)
             return
 
         elif buttonClicked == PopupMenu.C_POPUP_CATEGORY:
