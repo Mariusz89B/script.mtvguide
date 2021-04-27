@@ -3397,11 +3397,13 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == 0:
             pass
         elif action == 1:
-            which = d.select(strings(30321), searches)
-            if which == -1:
+            which = d.multiselect(strings(30321), searches)
+            if which is None:
                 return
             else:
-                del searches[which]
+                for item in reversed(which):
+                    del searches[item]
+                    
                 f = xbmcvfs.File(file_name, "wb")
                 if sys.version_info[0] < 3:
                     searches = [x.decode('utf-8') for x in searches]
@@ -3410,7 +3412,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 return
         else:
             title = searches[action - 2]
-        search = d.input(strings(30322), title)
+        search = title#d.input(strings(30322), title) #kb input
         if not search:
             return
         searches = (set([search] + searches))
@@ -3477,11 +3479,13 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == 0:
             pass
         elif action == 1:
-            which = d.select(strings(30321), searches)
-            if which == -1:
+            which = d.multiselect(strings(30321), searches)
+            if which is None:
                 return
             else:
-                del searches[which]
+                for item in reversed(which):
+                    del searches[item]
+
                 f = xbmcvfs.File(file_name, "wb")
                 if sys.version_info[0] < 3:
                     searches = [x.decode('utf-8') for x in searches]
@@ -3490,7 +3494,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 return
         else:
             title = searches[action - 2]
-        search = d.input(strings(30323), title)
+        search = title#d.input(strings(30323), title) #kb input
         if not search:
             return
         searches = (set([search] + searches))
@@ -3558,11 +3562,13 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == 0:
             pass
         elif action == 1:
-            which = d.select(strings(30321), searches)
-            if which == -1:
+            which = d.multiselect(strings(30321), searches)
+            if which is None:
                 return
             else:
-                del searches[which]
+                for item in reversed(which):
+                    del searches[item]
+
                 f = xbmcvfs.File(file_name, "wb")
                 if sys.version_info[0] < 3:
                     searches = [x.decode('utf-8') for x in searches]
@@ -3571,7 +3577,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 return
         else:
             title = searches[action - 2]
-        search = d.input(strings(30344), title)
+        search = title#d.input(strings(30344), title) #kb input
         if not search:
             return
         searches = (set([search] + searches))
