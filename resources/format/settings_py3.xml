@@ -2448,13 +2448,15 @@
 					<default>false</default>
 					<control type="toggle"/>
 				</setting>
+			</group>
+			<group id="2" label="70026">>	
 				<setting help="95133" id="background_services" label="30922" type="boolean">
 					<level>2</level>
 					<default>false</default>
 					<control type="toggle"/>
 				</setting>
 			</group>
-			<group id="2">
+			<group id="3">
 				<setting help="95044" id="autostart_channel" label="30919" type="boolean">
 					<level>2</level>
 					<default>false</default>
@@ -2486,7 +2488,7 @@
 					</control>
 				</setting>
 			</group>
-			<group id="3">
+			<group id="4">
 				<setting help="95047" id="timebar_adjust" label="30366" type="integer">
 					<level>3</level>
 					<default>0</default>
@@ -2733,8 +2735,8 @@
 					</control>
 				</setting>
 			</group>
-			<group id="4"/>
-			<group id="5" label="30347">
+			<group id="5"/>
+			<group id="6" label="30347">
 				<setting help="95055" id="channel_shortcut" label="30348" type="boolean">
 					<level>3</level>
 					<default>true</default>
@@ -2757,7 +2759,6 @@
 					<control format="string" type="spinner"/>
 				</setting>
 			</group>
-			<group id="6"/>
 			<group id="7" label="30963">
 				<setting help="95057" id="exit" label="30963" type="integer">
 					<level>2</level>

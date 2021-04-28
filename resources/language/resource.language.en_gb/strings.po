@@ -313,7 +313,7 @@ msgid "Program category search"
 msgstr ""
 
 msgctxt "#30325"
-msgid "All channels"
+msgid "Sort all channels"
 msgstr ""
 
 msgctxt "#30326"
@@ -1305,7 +1305,7 @@ msgid "Select which channels to display"
 msgstr ""
 
 msgctxt "#59995"
-msgid "Missing channels"
+msgid "Sort missing channels"
 msgstr ""
 
 msgctxt "#59996"
@@ -1362,6 +1362,10 @@ msgstr ""
 
 msgctxt "#60009"
 msgid "Update playlist (days)"
+msgstr ""
+
+msgctxt "#60010"
+msgid "Add logo to selected channel"
 msgstr ""
 
 msgctxt "#30913"
@@ -2536,6 +2540,10 @@ msgctxt "#70025"
 msgid "End date"
 msgstr ""
 
+msgctxt "#70026"
+msgid "[COLOR]**WARNING!**[CR]Experimental setting, might cause unexpected behavior![/COLOR]"
+msgstr ""
+
 msgctxt "#70100"
 msgid "Add-on Install"
 msgstr ""
@@ -2610,6 +2618,34 @@ msgstr ""
 
 msgctxt "#70118"
 msgid "Non-writeable {} in use. Need to make a copy in userdata folder so we can install fonts. Would you like to continue?"
+msgstr ""
+
+msgctxt "#70119"
+msgid "Add channel unavailable in epg"
+msgstr ""
+
+msgctxt "#70120"
+msgid "Would you like to add a logo?"
+msgstr ""
+
+msgctxt "#70121"
+msgid "Select logo"
+msgstr ""
+
+msgctxt "#70122"
+msgid "Select file type"
+msgstr ""
+
+msgctxt "#70123"
+msgid "Select file"
+msgstr ""
+
+msgctxt "#70124"
+msgid "Enter URL link"
+msgstr ""
+
+msgctxt "#70125"
+msgid "Remove added channels"
 msgstr ""
 
 msgctxt "#80005"
@@ -3181,7 +3217,7 @@ msgid "[COLOR gold][B]m-TVGuide[/B][/COLOR]\n\nThis is a Kodi add-on with suppor
 msgstr ""
 
 msgctxt "#99996"
-msgid "[COLOR gold][B]EPG[/B][/COLOR]\n\n[UPPERCASE][COLOR FF0cbe24][B]•[/B][/COLOR][/UPPERCASE] Indicates that the program has timeshift and is available for download.\n[UPPERCASE][COLOR FF01cdfe][B]•[/B][/COLOR][/UPPERCASE] Indicates that the program is available for download.\n__________________________________________________________________\n\n[COLOR blue][B]Context menu[/B][/COLOR]\n\n- [B]Go to channel[/B]\nChoose a channel number.\n\n- [B]Programme information[/B]\n[I](Shortcut key [ I ] or [ INFO ])[/I]\nInformation from EPG about the selected program.\n\n- [B]Extended information[/B]\n[I](Shortcut key [ I ] or [ INFO ])[/I]\nExtended information from the ExtendedInfo Script plugin for the selected program.\n\n- [B]Remind[/B]\nEnables reminder notifications when the program is about to start. Reminders can be set for a single program or any occurence of that program name.\n\n- [B]Record[/B]\n[I](Shortcut key [ CUSTOM ])[/I]\nEnables recording or downloading of the selected program.\n\n- [B]Recordings[/B]\nOpens the saved recording location.\n\n- [B]Channels[/B]\nEdit the order and visibility of channels.\n\n- [B]Lists[/B]\n[I](Shortcut key [ CUSTOM ])[/I]\nListings views can be brought up by channel list, now, next, reminders, recordings and search engine.\n\n- [B]Options[/B]\nAddon settings.\n\n- [B]Favourites[/B]\nPlay favorite channels from other addons.\n\n- [B]Add favorites[/B]\nCreate a list of favorite programs that will be displayed in EPG.\n\n- [B]Add channel[/B]\nAdd stream to a channel available in EPG.\n\n- [B]Remove/Choose stream[/B]\nAbility to choose streams from favorites or import from different addons.\n\n- [B]Exit[/B]\nExit the m-TVGuide addon.\n__________________________________________________________________\n\n[COLOR blue][B]Playing content[/B][/COLOR]\n\n- [B]Switch stream[/B]\n[I](Shortcut key [ C ] or [ CONTEXT ])[/I]\nSwitch stream by selected priority.\n\n- [B]Programme information[/B]\n(Shortcut key [ I ] or [ INFO ])\nInformation from EPG about the selected program.\n__________________________________________________________________\n\n[COLOR blue][B]Getting started[/B][/COLOR]\n\n- [B]Information[/B]\n(Options - Getting started) Here you will find more information about the m-TVGuide settings."
+msgid "[COLOR gold][B]EPG[/B][/COLOR]\n\n[UPPERCASE][COLOR FF0cbe24][B]•[/B][/COLOR][/UPPERCASE] Indicates that the program has timeshift and is available for download.\n[UPPERCASE][COLOR FF01cdfe][B]•[/B][/COLOR][/UPPERCASE] Indicates that the program is available for download.\n__________________________________________________________________\n\n[COLOR blue][B]Context menu[/B][/COLOR]\n\n- [B]Go to channel[/B]\nChoose a channel number.\n\n- [B]Programme information[/B]\n[I](Shortcut key [ I ] or [ INFO ])[/I]\nInformation from EPG about the selected program.\n\n- [B]Extended information[/B]\n[I](Shortcut key [ I ] or [ INFO ])[/I]\nExtended information from the ExtendedInfo Script plugin for the selected program.\n\n- [B]Remind[/B]\nEnables reminder notifications when the program is about to start. Reminders can be set for a single program or any occurence of that program name.\n\n- [B]Record[/B]\n[I](Shortcut key [ CUSTOM ])[/I]\nEnables recording or downloading of the selected program.\n\n- [B]Recordings[/B]\nOpens the saved recording location.\n\n- [B]Channels[/B]\nEdit the order and visibility of channels.\n\n- [B]Lists[/B]\n[I](Shortcut key [ CUSTOM ])[/I]\nListings views can be brought up by channel list, now, next, reminders, recordings and search engine.\n\n- [B]Options[/B]\nAddon settings.\n\n- [B]Favourites[/B]\nPlay favorite channels from other addons.\n\n- [B]Add favorites[/B]\nCreate a list of favorite programs that will be displayed in EPG.\n\n- [B]Add channel[/B]\nAdd channel to list in EPG.\n\n- [B]Remove added channel[/B]\nRemove added channel in EPG list.\n\n- [B]Remove/Choose stream[/B]\nAbility to choose streams from favorites or import from different addons.\n\n- [B]Exit[/B]\nExit the m-TVGuide addon.\n__________________________________________________________________\n\n[COLOR blue][B]Playing content[/B][/COLOR]\n\n- [B]Switch stream[/B]\n[I](Shortcut key [ C ] or [ CONTEXT ])[/I]\nSwitch stream by selected priority.\n\n- [B]Programme information[/B]\n(Shortcut key [ I ] or [ INFO ])\nInformation from EPG about the selected program.\n__________________________________________________________________\n\n[COLOR blue][B]Getting started[/B][/COLOR]\n\n- [B]Information[/B]\n(Options - Getting started) Here you will find more information about the m-TVGuide settings."
 msgstr ""
 
 msgctxt "#99997"

@@ -313,8 +313,8 @@ msgid "Program category search"
 msgstr "Recherche par catégorie de programme"
 
 msgctxt "#30325"
-msgid "All channels"
-msgstr "Toutes canaux"
+msgid "Sort all channels"
+msgstr "Trier toutes les chaînes"
 
 msgctxt "#30326"
 msgid "Channel search"
@@ -1301,8 +1301,8 @@ msgid "Select which channels to display"
 msgstr "Sélectionnez les canaux à afficher"
 
 msgctxt "#59995"
-msgid "Missing channels"
-msgstr "Chaînes manquantes"
+msgid "Sort missing channels"
+msgstr "Trier les chaînes manquantes"
 
 msgctxt "#59996"
 msgid "Xtream Codes"
@@ -1359,6 +1359,10 @@ msgstr "Enregistrer la playlist sur le disque local"
 msgctxt "#60009"
 msgid "Update playlist (days)"
 msgstr "Mettre à jour la playlist (jours)"
+
+msgctxt "#60010"
+msgid "Add logo to selected channel"
+msgstr "Ajouter le logo à la chaîne sélectionnée"
 
 msgctxt "#30913"
 msgid "Settings"
@@ -2524,6 +2528,10 @@ msgctxt "#70025"
 msgid "End date"
 msgstr "Date de fin"
 
+msgctxt "#70026"
+msgid "[COLOR]**WARNING!**[CR]Experimental setting, might cause unexpected behavior![/COLOR]"
+msgstr "[COLOR]**ATTENTION!**[CR]Paramètre expérimental, cela peut provoquer un comportement inattendu![/COLOR]"
+
 msgctxt "#70100"
 msgid "Add-on Install"
 msgstr "Extension installer"
@@ -2599,6 +2607,34 @@ msgstr "Liste"
 msgctxt "#70118"
 msgid "Non-writeable {} in use. Need to make a copy in userdata folder so we can install fonts. Would you like to continue?"
 msgstr "Non inscriptible {} en cours d'utilisation. Besoin de créer une copie dans le dossier de données utilisateur afin que nous puissions installer des polices. Voulez-vous continuer?"
+
+msgctxt "#70119"
+msgid "Add channel unavailable in epg"
+msgstr "Ajouter une chaîne non disponible dans epg"
+
+msgctxt "#70120"
+msgid "Would you like to add a logo?"
+msgstr "Souhaitez-vous ajouter un logo?"
+
+msgctxt "#70121"
+msgid "Select logo"
+msgstr "Sélectionner le logo"
+
+msgctxt "#70122"
+msgid "Select file type"
+msgstr "Sélectionnez le type de fichier"
+
+msgctxt "#70123"
+msgid "Select file"
+msgstr "Sélectionner un fichier"
+
+msgctxt "#70124"
+msgid "Enter URL link"
+msgstr "Entrer le lien URL"
+
+msgctxt "#70125"
+msgid "Remove added channels"
+msgstr "Supprimer les chaînes ajoutées"
 
 msgctxt "#80005"
 msgid "[COLOR]WP Pilot[/COLOR]"

@@ -882,6 +882,18 @@ class Database(object):
             idx = len(channels) - 1
         return channels[idx]
 
+    def addChannel(self, callback, channel):
+        self.eventQueue.append([self._addChannel, callback, channel])
+        self.event.set()
+
+    def _addChannel(self, channel):
+        if channel is not None:
+            c = self.conn.cursor()
+            c.execute('INSERT OR IGNORE INTO channels(id, title, logo, stream_url, visible, weight, source) VALUES(?, ?, ?, ?, ?, (CASE ? WHEN -1 THEN (SELECT COALESCE(MAX(weight)+1, 0) FROM channels WHERE source=?) ELSE ? END), ?)', [channel.id, channel.title, channel.logo, channel.streamUrl, channel.visible, channel.weight, self.source.KEY, channel.weight, self.source.KEY])
+            if not c.rowcount:
+                c.execute('UPDATE channels SET title=?, logo=?, stream_url=?, visible=?, weight=(CASE ? WHEN -1 THEN weight ELSE ? END) WHERE id=? AND source=?', [channel.title, channel.logo, channel.streamUrl, channel.visible, channel.weight, channel.weight, channel.id, self.source.KEY])
+            self.conn.commit()
+            
     def saveChannelList(self, callback, channelList):
         self.eventQueue.append([self._saveChannelList, callback, channelList])
         self.event.set()

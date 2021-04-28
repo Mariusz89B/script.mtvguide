@@ -478,7 +478,7 @@
 				<height>120</height>
 				<onleft>6056</onleft>
 				<onright>4010</onright>
-				<onup>4015</onup>
+				<onup>4016</onup>
 				<ondown>6051</ondown>
 				<width>1000</width>
 				
@@ -601,7 +601,7 @@
 			<width>470</width>
 			<height>70</height>
 			<onup>7004</onup>
-			<ondown>60560</ondown>
+			<ondown>4016</ondown>
 			<onright>4010</onright>
 			<align>left</align>
 			<aligny>center</aligny>
@@ -611,6 +611,27 @@
 			<textoffsetx>20</textoffsetx>
 			<label>$ADDON[script.mtvguide 70117]</label>
 			<label2>[B]$ADDON[script.mtvguide 70116][/B]</label2>
+			<texturefocus colordiffuse="button_focus" border="5">osd/grey.png</texturefocus>
+			<texturenofocus></texturenofocus>
+		</control>
+		
+		
+				<!-- Remove channel -->
+		<control type="button" id="4016"> 
+			<posx>0</posx>
+			<posy>605</posy>
+			<width>470</width>
+			<height>70</height>
+			<onup>4015</onup>
+			<ondown>60560</ondown>
+			<onright>4010</onright>
+			<align>left</align>
+			<aligny>center</aligny>
+			<font>font13</font>
+			<textcolor>FFFFFFFF</textcolor>
+			<focusedcolor>FFFFFFFF</focusedcolor>
+			<textoffsetx>20</textoffsetx>
+			<label2>[B]$ADDON[script.mtvguide 70125][/B]</label2>
 			<texturefocus colordiffuse="button_focus" border="5">osd/grey.png</texturefocus>
 			<texturenofocus></texturenofocus>
 		</control>

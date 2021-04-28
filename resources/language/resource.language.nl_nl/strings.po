@@ -313,8 +313,8 @@ msgid "Program category search"
 msgstr "Zoeken in programmacategorieën"
 
 msgctxt "#30325"
-msgid "All channels"
-msgstr "Alle kanalen"
+msgid "Sort all channels"
+msgstr "Sorteer alle kanalen"
 
 msgctxt "#30326"
 msgid "Channel search"
@@ -1301,8 +1301,8 @@ msgid "Select which channels to display"
 msgstr "Selecteer welke kanalen moeten worden weergegeven"
 
 msgctxt "#59995"
-msgid "Missing channels"
-msgstr "Ontbrekende kanalen"
+msgid "Sort missing channels"
+msgstr "Sorteer ontbrekende kanalen"
 
 msgctxt "#59996"
 msgid "Xtream Codes"
@@ -1359,6 +1359,10 @@ msgstr "Afspeellijst opslaan op lokale schijf"
 msgctxt "#60009"
 msgid "Update playlist (days)"
 msgstr "Update afspeellijst (dagen)"
+
+msgctxt "#60010"
+msgid "Add logo to selected channel"
+msgstr "Logo toevoegen aan geselecteerd kanaal"
 
 msgctxt "#30913"
 msgid "Settings"
@@ -2524,6 +2528,10 @@ msgctxt "#70025"
 msgid "End date"
 msgstr "Einddatum"
 
+msgctxt "#70026"
+msgid "[COLOR]**WARNING!**[CR]Experimental setting, might cause unexpected behavior![/COLOR]"
+msgstr "[COLOR]**WAARSCHUWING!**[CR]Experimentele instelling, kan onverwacht gedrag veroorzaken![/COLOR]"
+
 msgctxt "#70100"
 msgid "Add-on Install"
 msgstr "Add-on Installeren"
@@ -2599,6 +2607,34 @@ msgstr "Lijst"
 msgctxt "#70118"
 msgid "Non-writeable {} in use. Need to make a copy in userdata folder so we can install fonts. Would you like to continue?"
 msgstr "Niet beschrijfbaar {} in gebruik. U moet een kopie maken in de map met userdata, zodat we lettertypen kunnen installeren. Wil je doorgaan?"
+
+msgctxt "#70119"
+msgid "Add channel unavailable in epg"
+msgstr "Kanaal toevoegen niet beschikbaar in epg"
+
+msgctxt "#70120"
+msgid "Would you like to add a logo?"
+msgstr "Wilt u een logo toevoegen?"
+
+msgctxt "#70121"
+msgid "Select logo"
+msgstr "Selecteer logo"
+
+msgctxt "#70122"
+msgid "Select file type"
+msgstr "Selecteer bestandstype"
+
+msgctxt "#70123"
+msgid "Select file"
+msgstr "Selecteer bestand"
+
+msgctxt "#70124"
+msgid "Enter URL link"
+msgstr "URL link invoeren"
+
+msgctxt "#70125"
+msgid "Remove added channels"
+msgstr "Verwijder toegevoegde kanalen"
 
 msgctxt "#80005"
 msgid "[COLOR]WP Pilot[/COLOR]"

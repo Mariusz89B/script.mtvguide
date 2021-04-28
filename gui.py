@@ -2122,8 +2122,9 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.recordService.close()
             else:
                 while xbmc.Monitor().abortRequested():
-                    self.playService.close()
-                    self.recordService.close()
+                    if xbmc.Monitor().waitForAbort(1):
+                        self.playService.close()
+                        self.recordService.close()
 
             if self.notification:
                 self.notification.close()
@@ -2224,11 +2225,8 @@ class mTVGuide(xbmcgui.WindowXML):
                 catchupList.append(channel.upper() + '=' + days)
 
         file_name = os.path.join(self.profilePath, 'catchup.list')
-        with open(file_name, 'w+') as f:
-            if sys.version_info[0] > 2:
-                f.write('\n'.join(sorted(catchupList)))
-            else:
-                f.write(bytearray('\n'.join(sorted(catchupList)), 'utf-8'))
+        with open(file_name, 'wb+') as f:
+            f.write(bytearray('\n'.join(sorted(catchupList)), 'utf-8'))
         
         # Playlist
         for item in streams:
@@ -2242,11 +2240,8 @@ class mTVGuide(xbmcgui.WindowXML):
 
         if streamsList:
             file_name = os.path.join(self.profilePath, 'playlist_ts.list')
-            with open(file_name, 'w+') as f:
-                if sys.version_info[0] > 2:
-                    f.write('\n'.join(streamsList))
-                else:
-                    f.write(bytearray('\n'.join(streamsList), 'utf-8'))
+            with open(file_name, 'wb+') as f:
+                f.write(bytearray('\n'.join(streamsList), 'utf-8'))
 
         # C More
         for item in streams:
@@ -2260,11 +2255,8 @@ class mTVGuide(xbmcgui.WindowXML):
 
         if CMoreStreamsList:
             file_name = os.path.join(self.profilePath, 'cmore_ts.list')
-            with open(file_name, 'w+') as f:
-                if sys.version_info[0] > 2:
-                    f.write('\n'.join(CMoreStreamsList))
-                else:
-                    f.write(bytearray('\n'.join(CMoreStreamsList), 'utf-8'))
+            with open(file_name, 'wb+') as f:
+                f.write(bytearray('\n'.join(CMoreStreamsList), 'utf-8'))
 
         # Cyfrowy Polsat GO
         for item in streams:
@@ -2278,11 +2270,8 @@ class mTVGuide(xbmcgui.WindowXML):
 
         if CPGOStreamsList:
             file_name = os.path.join(self.profilePath, 'cpgo_ts.list')
-            with open(file_name, 'w+') as f:
-                if sys.version_info[0] > 2:
-                    f.write('\n'.join(CPGOStreamsList))
-                else:
-                    f.write(bytearray('\n'.join(CPGOStreamsList), 'utf-8'))
+            with open(file_name, 'wb+') as f:
+                f.write(bytearray('\n'.join(CPGOStreamsList), 'utf-8'))
 
         # Ipla
         for item in streams:
@@ -2296,11 +2285,8 @@ class mTVGuide(xbmcgui.WindowXML):
 
         if IplaStreamsList:
             file_name = os.path.join(self.profilePath, 'ipla_ts.list')
-            with open(file_name, 'w+') as f:
-                if sys.version_info[0] > 2:
-                    f.write('\n'.join(IplaStreamsList))
-                else:
-                    f.write(bytearray('\n'.join(IplaStreamsList), 'utf-8'))
+            with open(file_name, 'wb+') as f:
+                f.write(bytearray('\n'.join(IplaStreamsList), 'utf-8'))
 
         # PlayerPL
         #for item in streams:
@@ -2332,11 +2318,9 @@ class mTVGuide(xbmcgui.WindowXML):
 
         if TeliaPlayStreamsList:
             file_name = os.path.join(self.profilePath, 'teliaplay_ts.list')
-            with open(file_name, 'w+') as f:
-                if sys.version_info[0] > 2:
-                    f.write('\n'.join(TeliaPlayStreamsList))
-                else:
-                    f.write(bytearray('\n'.join(TeliaPlayStreamsList), 'utf-8'))
+            with open(file_name, 'wb+') as f:
+                f.write(bytearray('\n'.join(TeliaPlayStreamsList), 'utf-8'))
+
 
         # nc+ GO
         for item in streams:
@@ -2350,11 +2334,8 @@ class mTVGuide(xbmcgui.WindowXML):
 
         if NCGOStreamsList:
             file_name = os.path.join(self.profilePath, 'ncgo_ts.list')
-            with open(file_name, 'w+') as f:
-                if sys.version_info[0] > 2:
-                    f.write('\n'.join(NCGOStreamsList))
-                else:
-                    f.write(bytearray('\n'.join(NCGOStreamsList), 'utf-8'))
+            with open(file_name, 'wb+') as f:
+                f.write(bytearray('\n'.join(NCGOStreamsList), 'utf-8'))
 
         return streamsList
 
@@ -2366,7 +2347,10 @@ class mTVGuide(xbmcgui.WindowXML):
 
         catchupList = list()
 
-        catchupList = self.getCatchupDays()
+        if sys.version_info[0] > 2:
+            catchupList = self.getCatchupDays()
+        else:
+            catchupList = self.getCatchupDays().decode('utf-8')
 
         catchupDays = None
 
@@ -2395,7 +2379,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
         if ADDON.getSetting('archive_support') == 'true': 
             if ADDON.getSetting('archive_finished_program') == 'true': 
-                if program.channel.title.upper() in archivePlaylist and program.endDate < datetime.datetime.now():
+                if program.channel.title.upper() in archivePlaylist and program.endDate < datetime.datetime.now() and program.title != program.channel.title:
                     #Download
                     if cellWidth < 35:
                         archive  = ''
@@ -2405,7 +2389,7 @@ class mTVGuide(xbmcgui.WindowXML):
                         else:
                             archive = '[UPPERCASE][COLOR FF01cdfe][B]● [/B][/COLOR][/UPPERCASE]'
                 
-                if program.channel.title.upper() in archivePlaylist:
+                if program.channel.title.upper() in archivePlaylist and program.title != program.channel.title:
                     #Catchup
                     if program.endDate < datetime.datetime.now():
                         if program.startDate > reverseTime:
@@ -2417,7 +2401,7 @@ class mTVGuide(xbmcgui.WindowXML):
                                 else:
                                     archive = '[UPPERCASE][COLOR FF0cbe24][B]● [/B][/COLOR][/UPPERCASE]'
 
-                if program.channel.title.upper() in archiveList:
+                if program.channel.title.upper() in archiveList and program.title != program.channel.title:
                     #Catchup
                     if program.endDate < datetime.datetime.now():
                         if program.startDate > reverseArchiveService:
@@ -2430,7 +2414,7 @@ class mTVGuide(xbmcgui.WindowXML):
                                     archive = '[UPPERCASE][COLOR FF0cbe24][B]● [/B][/COLOR][/UPPERCASE]'
 
             else:
-                if program.channel.title.upper() in archivePlaylist and program.startDate < datetime.datetime.now():
+                if program.channel.title.upper() in archivePlaylist and program.startDate < datetime.datetime.now() and program.title != program.channel.title:
                     #Download
                     if cellWidth < 35:
                         archive  = ''
@@ -2440,7 +2424,7 @@ class mTVGuide(xbmcgui.WindowXML):
                         else:
                             archive = '[UPPERCASE][COLOR FF01cdfe][B]● [/B][/COLOR][/UPPERCASE]'
                 
-                if program.channel.title.upper() in archivePlaylist:
+                if program.channel.title.upper() in archivePlaylist and program.title != program.channel.title:
                     #Catchup
                     if program.startDate < datetime.datetime.now():
                         if program.startDate > reverseTime:
@@ -2452,7 +2436,7 @@ class mTVGuide(xbmcgui.WindowXML):
                                 else:
                                     archive = '[UPPERCASE][COLOR FF0cbe24][B]● [/B][/COLOR][/UPPERCASE]'
 
-                if program.channel.title.upper() in archiveList:
+                if program.channel.title.upper() in archiveList and program.title != program.channel.title:
                     #Catchup
                     if program.startDate < datetime.datetime.now():
                         if program.startDate > reverseArchiveService:
@@ -3943,8 +3927,31 @@ class mTVGuide(xbmcgui.WindowXML):
                 end = program.endDate
                 self.playChannel2(program)
 
+    def channelsRemove(self):
+        p = re.compile('\s<channel id="(.*?)"', re.DOTALL)
+
+        with open(os.path.join(self.profilePath, 'basemap_extra.xml'), 'rb') as f:
+            base = f.read()
+
+            channList = p.findall(base.decode('utf-8'))
+
+            res = xbmcgui.Dialog().multiselect(strings(70125), channList)
+            if res:
+                for item in res:
+                    p = re.compile('<channel id="{}".*/>\n'.format(channList[item]))
+                    base = p.sub('', base.decode('utf-8'))
+                
+                with open(os.path.join(self.profilePath, 'basemap_extra.xml'), 'wb') as f:
+                    f.write(base.encode('utf-8'))
+
+                xbmcgui.Dialog().ok(strings(57051), strings(60007))
+                self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+
+            else:
+                return
+
     def channelsSelect(self):
-        res = xbmcgui.Dialog().select(strings(59994), [strings(30325), strings(59995), strings(60005)])
+        res = xbmcgui.Dialog().select(strings(70116), [strings(30325), strings(59995), strings(70119)])
 
         if res < 0:
             return
@@ -3957,42 +3964,70 @@ class mTVGuide(xbmcgui.WindowXML):
             channels = 1
             self.letterSort(channels)
 
-        #elif res == 2:
-            #kb = xbmc.Keyboard('','')
-            #kb.setHeading('Create channel')
-            #kb.setHiddenInput(False)
-            #kb.doModal()
-            #c = kb.getText() if kb.isConfirmed() else None
-            #if c == '': c = None
-
-            #epgChann = c
-
         elif res == 2:
-            p = re.compile('\s<channel id="(.*?)"', re.DOTALL)
+            kb = xbmc.Keyboard('','')
+            kb.setHeading(strings(70119))
+            kb.setHiddenInput(False)
+            kb.doModal()
+            c = kb.getText() if kb.isConfirmed() else None
+            if sys.version_info[0] > 2:
+                c = c
+            else:
+                c = c.decode('utf-8')
+            if c == '': c = None
 
-            with open(os.path.join(self.profilePath, 'basemap_extra.xml'), 'r') as f:
-                base = f.read()
+            if c is None:
+                self.channelsSelect()
 
-                channList = p.findall(base)
+            else:
+                epgChann = c
+                logo = ''
 
-                res = xbmcgui.Dialog().multiselect(strings(60006), channList)
-                if res:
-                    for item in res:
-                        p = re.compile('<channel id="{}".*/>\n'.format(channList[item]))
-                        base = p.sub('', base)
-                    
-                    with open(os.path.join(self.profilePath, 'basemap_extra.xml'), 'w') as f:
-                        f.write(base)
+                ret = xbmcgui.Dialog().yesno(strings(60010), strings(70120))
 
-                    xbmcgui.Dialog().ok(strings(57051), strings(60007))
-                    self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+                if ret:
+                    res = xbmcgui.Dialog().select(strings(70122),
+                        [strings(59919), strings(59908)])
+
+                    if res < 0:
+                        self.channelsSelect()
+
+                    if res == 0:
+                        kb = xbmc.Keyboard('','')
+                        kb.setHeading(strings(70124))
+                        kb.setHiddenInput(False)
+                        kb.doModal()
+                        c = kb.getText() if kb.isConfirmed() else None
+                        if sys.version_info[0] > 2:
+                            c = c
+                        else:
+                            c = c.decode('utf-8')
+                        if c == '': c = None
+
+                        logo = c
+
+                        if c is None:
+                            self.channelsSelect()
+
+                    elif res == 1:
+                        fn = xbmcgui.Dialog().browse(1, strings(70123), '')
+                        if fn != '':
+                            logo = fn
+                        else:
+                            self.channelsSelect()
 
                 else:
-                    self.channelsSelect()
-        
+                    logo = ''
+
+                if epgChann != '':
+                    newChannel = Channel(epgChann, epgChann, logo)
+                    self.database.addChannel(None, newChannel)
+
+                    self.channelsFromStream(epgChann)
         
     def letterSort(self, channels):
         epgList = list()
+
 
         v = ([channel.title.upper() for channel in self.database.getChannelList()])
         n = ([channel.title.upper() for channel in self.database.getAllChannelList()])
@@ -4068,11 +4103,11 @@ class mTVGuide(xbmcgui.WindowXML):
 
         strmList = sorted(set(strmList))
         strmList = [x.strip() for x in strmList if x.strip()]
-        
+
         res = xbmcgui.Dialog().select(strings(59992), strmList)
 
         if res < 0:
-            if epgList is not None:
+            if epgList != '':
                 self.channelsFromEPG(epgList, channels)
             else:
                 self.channelsSelect()
@@ -4083,7 +4118,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def channelRegex(self, epgChann, regChann):
         # regex format
-        regChann = re.sub('[ ](?=[ ])|[^-_,A-Za-z0-9 ]+', '', regChann)
+        regChann = re.sub('[ ](?=[ ])|[^-_,A-Za-z0-9 ]+', '.?', regChann)
 
         regex = '(?='+regChann.upper()+'$)'.replace(' ', r'\s*')
 
@@ -4097,12 +4132,13 @@ class mTVGuide(xbmcgui.WindowXML):
         #Add to map
         item = '<channel id="{}"\t\t\t\t\t\t\t\t\ttitle="{}" strm=""/>'.format(epgChann, regex)
 
-        with open(os.path.join(self.profilePath, 'basemap_extra.xml'), 'r+') as f:
+        with open(os.path.join(self.profilePath, 'basemap_extra.xml'), mode='rb+') as f:
             s = f.read()
+            s = s.decode('utf-8')
             new_str = re.sub(r'^(.*{}.*)$'.format(re.escape('strm=""/>')), lambda g: g.group(0) + '\n\t'+item, s, count=1, flags=re.MULTILINE)
             f.seek(0)
-            f.write(new_str)
-            xbmcgui.Dialog().ok(strings(57051), strings(59993).format(regChann.upper()))
+            f.write(new_str.encode('utf-8'))
+            xbmcgui.Dialog().ok(strings(57051), strings(59993).format(epgChann.upper()))
             self.onRedrawEPG(self.channelIdx, self.viewStartDate)
 
 
@@ -4237,6 +4273,11 @@ class mTVGuide(xbmcgui.WindowXML):
             self.channelsSelect()
             return
 
+        elif buttonClicked == PopupMenu.C_POPUP_REMOVE_CHANNEL:
+            deb('RemoveChannel')
+            self.channelsRemove()
+            return
+
     def setFocusId(self, controlId):
         debug('setFocusId')
         control = self.getControl(controlId)
@@ -4302,7 +4343,10 @@ class mTVGuide(xbmcgui.WindowXML):
             program = self._getProgramFromControl(controlInFocus)
             date = program.startDate
 
-        startDate = proxydt.strptime(str(date), '%Y-%m-%d %H:%M:%S')
+        try:
+            startDate = proxydt.strptime(str(date), '%Y-%m-%d %H:%M:%S')
+        except:
+            startDate = proxydt.strptime(str(date), '%Y-%m-%d %H:%M:%S.%f')
 
         channelList = self.database.getChannelList(onlyVisible=True)
         try:
@@ -4614,7 +4658,7 @@ class mTVGuide(xbmcgui.WindowXML):
         CatchupList = ''
         try:
             file_name = os.path.join(self.profilePath, 'catchup.list')
-            f = xbmcvfs.File(file_name, 'r')
+            f = xbmcvfs.File(file_name, 'rb')
             CatchupList = f.read()
             f.close()
         except:
@@ -4626,7 +4670,7 @@ class mTVGuide(xbmcgui.WindowXML):
         ArchivePlaylistList = ''
         try:
             file_name = os.path.join(self.profilePath, 'playlist_ts.list')
-            f = xbmcvfs.File(file_name, 'r')
+            f = xbmcvfs.File(file_name, 'rb')
             ArchivePlaylistList = f.read()
             f.close()
         except:
@@ -4638,7 +4682,7 @@ class mTVGuide(xbmcgui.WindowXML):
         ArchiveCmoreList = ''
         try:
             file_name = os.path.join(self.profilePath, 'cmore_ts.list')
-            f = xbmcvfs.File(file_name, 'r')
+            f = xbmcvfs.File(file_name, 'rb')
             ArchiveCmoreList = f.read()
             f.close()
         except:
@@ -4650,7 +4694,7 @@ class mTVGuide(xbmcgui.WindowXML):
         ArchiveCpGoList = ''
         try:
             file_name = os.path.join(self.profilePath, 'cpgo_ts.list')
-            f = xbmcvfs.File(file_name, 'r')
+            f = xbmcvfs.File(file_name, 'rb')
             ArchiveCpGoList = f.read()
             f.close()
         except:
@@ -4662,7 +4706,7 @@ class mTVGuide(xbmcgui.WindowXML):
         ArchiveIplaList = ''
         try:
             file_name = os.path.join(self.profilePath, 'ipla_ts.list')
-            f = xbmcvfs.File(file_name, 'r')
+            f = xbmcvfs.File(file_name, 'rb')
             ArchiveIplaList = f.read()
             f.close()
         except:
@@ -4686,7 +4730,7 @@ class mTVGuide(xbmcgui.WindowXML):
         ArchiveTeliaPlayList = ''
         try:
             file_name = os.path.join(self.profilePath, 'teliaplay_ts.list')
-            f = xbmcvfs.File(file_name, 'r')
+            f = xbmcvfs.File(file_name, 'rb')
             ArchiveTeliaPlayList = f.read()
             f.close()
         except:
@@ -4741,7 +4785,7 @@ class mTVGuide(xbmcgui.WindowXML):
         reverseArchiveService = datetime.datetime.now() - datetime.timedelta(hours = int(3)) - datetime.timedelta(minutes = 5)
 
         try:
-            if finishedProgram < datetime.datetime.now() and ADDON.getSetting('archive_support') == 'true':
+            if finishedProgram < datetime.datetime.now() and ADDON.getSetting('archive_support') == 'true' and program.title != program.channel.title:
                 archiveList = self.getCmore() + self.getPolsatGo() + self.getIpla()# + self.getPlayerPL()
                 archivePlaylist = self.getPlaylist() + self.getTeliaPlay()
 
@@ -4919,7 +4963,7 @@ class mTVGuide(xbmcgui.WindowXML):
         reverseArchiveService = datetime.datetime.now() - datetime.timedelta(hours = int(3)) - datetime.timedelta(minutes = 5)
 
         try:
-            if finishedProgram < datetime.datetime.now() and ADDON.getSetting('archive_support') == 'true':
+            if finishedProgram < datetime.datetime.now() and ADDON.getSetting('archive_support') == 'true' and program.title != program.channel.title:
                 archiveList = self.getCmore() + self.getPolsatGo() + self.getIpla()# + self.getPlayerPL()
                 archivePlaylist = self.getPlaylist() + self.getTeliaPlay()
 
@@ -5453,7 +5497,7 @@ class mTVGuide(xbmcgui.WindowXML):
             debug('_clearEpg end')
 
         except:
-            debug('_clearEpg can´t clear')
+            debug('_clearEpg not cleared')
             pass
 
     def onEPGLoadError(self):
@@ -5933,6 +5977,7 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
     C_POPUP_FAQ = 4013
     C_POPUP_FAVOURITES = 4014
     C_POPUP_ADD_CHANNEL = 4015
+    C_POPUP_REMOVE_CHANNEL = 4016
 
     LABEL_CHOOSE_STRM = CHOOSE_STRM_FILE
 

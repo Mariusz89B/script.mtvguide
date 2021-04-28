@@ -477,7 +477,7 @@ class MapString:
         if sys.version_info[0] > 2:
             xmlstr = xmlstr.decode('utf-8')
         else:
-            xmlstr = xmlstr if isinstance(xmlstr, unicode) else xmlstr.decode('utf8')
+            xmlstr = xmlstr if isinstance(xmlstr, unicode) else xmlstr.decode('utf-8')
 
         if logCall:
             logCall('[UPD] %-35s %-50s %s' % ('ID' , 'TITLE_REGEX', 'STRM'))

@@ -219,6 +219,7 @@
 	</category>
 	<category label="30913">
 		<setting id="autostart_mtvguide" label="30915" type="bool" default="false"/>
+		<setting label="70026" type="lsep"/>
 		<setting id="background_services" label="30922" type="bool" default="false"/>
 		<setting type="sep"/>
 		<setting id="autostart_channel" label="30919" type="bool" default="false"/>

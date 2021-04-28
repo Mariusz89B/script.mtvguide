@@ -313,8 +313,8 @@ msgid "Program category search"
 msgstr "Pretraživanje kategorije programa"
 
 msgctxt "#30325"
-msgid "All channels"
-msgstr "Svi kanali"
+msgid "Sort all channels"
+msgstr "Poredaj sve kanale"
 
 msgctxt "#30326"
 msgid "Channel search"
@@ -1301,8 +1301,8 @@ msgid "Select which channels to display"
 msgstr "Odaberite koji će se kanali prikazati"
 
 msgctxt "#59995"
-msgid "Missing channels"
-msgstr "Nedostaju kanali"
+msgid "Sort missing channels"
+msgstr "Poredaj kanale koji nedostaju"
 
 msgctxt "#59996"
 msgid "Xtream Codes"
@@ -1359,6 +1359,10 @@ msgstr "Spremi popis za reprodukciju na lokalni disk"
 msgctxt "#60009"
 msgid "Update playlist (days)"
 msgstr "Ažuriraj popis pjesama (dana)"
+
+msgctxt "#60010"
+msgid "Add logo to selected channel"
+msgstr "Dodaj logotip na odabrani kanal"
 
 msgctxt "#30913"
 msgid "Settings"
@@ -2524,6 +2528,10 @@ msgctxt "#70025"
 msgid "End date"
 msgstr "Datum završetka"
 
+msgctxt "#70026"
+msgid "[COLOR]**WARNING!**[CR]Experimental setting, might cause unexpected behavior![/COLOR]"
+msgstr "[COLOR]**UPOZORENJE!**[CR]Eksperimentalna postavka, može uzrokovati neočekivano ponašanje![/COLOR]"
+
 msgctxt "#70100"
 msgid "Add-on Install"
 msgstr "Instalacija Dodatka"
@@ -2599,6 +2607,34 @@ msgstr "Popis"
 msgctxt "#70118"
 msgid "Non-writeable {} in use. Need to make a copy in userdata folder so we can install fonts. Would you like to continue?"
 msgstr "U upotrebi se ne može pisati {}. Trebate stvoriti kopiju u mapi s userdata podacima kako bismo mogli instalirati fontove. Želite li nastaviti?"
+
+msgctxt "#70119"
+msgid "Add channel unavailable in epg"
+msgstr "Dodaj kanal nedostupan u epg"
+
+msgctxt "#70120"
+msgid "Would you like to add a logo?"
+msgstr "Želite li dodati logotip?"
+
+msgctxt "#70121"
+msgid "Select logo"
+msgstr "Odaberite logotip"
+
+msgctxt "#70122"
+msgid "Select file type"
+msgstr "Odaberite vrstu datoteke"
+
+msgctxt "#70123"
+msgid "Select file"
+msgstr "Odaberite datoteku"
+
+msgctxt "#70124"
+msgid "Enter URL link"
+msgstr "Unesite URL vezu"
+
+msgctxt "#70125"
+msgid "Remove added channels"
+msgstr "Ukloni dodane kanale"
 
 msgctxt "#80005"
 msgid "[COLOR]WP Pilot[/COLOR]"

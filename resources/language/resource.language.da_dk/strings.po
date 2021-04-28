@@ -313,8 +313,8 @@ msgid "Program category search"
 msgstr "Søgning af programkategori"
 
 msgctxt "#30325"
-msgid "All channels"
-msgstr "Alle kanaler"
+msgid "Sort all channels"
+msgstr "Sorter alle kanaler"
 
 msgctxt "#30326"
 msgid "Channel search"
@@ -1301,8 +1301,8 @@ msgid "Select which channels to display"
 msgstr "Vælg hvilke kanaler der skal vises"
 
 msgctxt "#59995"
-msgid "Missing channels"
-msgstr "Manglende kanaler"
+msgid "Sort missing channels"
+msgstr "Sorter manglende kanaler"
 
 msgctxt "#59996"
 msgid "Xtream Codes"
@@ -1359,6 +1359,10 @@ msgstr "Gem afspilningsliste på lokal disk"
 msgctxt "#60009"
 msgid "Update playlist (days)"
 msgstr "Opdater afspilningsliste (dage)"
+
+msgctxt "#60010"
+msgid "Add logo to selected channel"
+msgstr "Føj logo til valgt kanal"
 
 msgctxt "#30913"
 msgid "Settings"
@@ -2524,6 +2528,10 @@ msgctxt "#70025"
 msgid "End date"
 msgstr "Slutdato"
 
+msgctxt "#70026"
+msgid "[COLOR]**WARNING!**[CR]Experimental setting, might cause unexpected behavior![/COLOR]"
+msgstr "[COLOR]**ADVARSEL!**[CR]Eksperimentel indstilling, kan forårsage uventet opførsel![/COLOR]"
+
 msgctxt "#70100"
 msgid "Add-on Install"
 msgstr "Add-on Installer"
@@ -2599,6 +2607,34 @@ msgstr "Liste"
 msgctxt "#70118"
 msgid "Non-writeable {} in use. Need to make a copy in userdata folder so we can install fonts. Would you like to continue?"
 msgstr "Ikke skrivbar {} i brug. Brug for at oprette en kopi i userdata mappen, så vi kan installere skrifttyper. Vil du fortsætte?"
+
+msgctxt "#70119"
+msgid "Add channel unavailable in epg"
+msgstr "Tilføj kanal ikke tilgængelig i epg"
+
+msgctxt "#70120"
+msgid "Would you like to add a logo?"
+msgstr "Vil du tilføje et logo?"
+
+msgctxt "#70121"
+msgid "Select logo"
+msgstr "Vælg logo"
+
+msgctxt "#70122"
+msgid "Select file type"
+msgstr "Vælg filtype"
+
+msgctxt "#70123"
+msgid "Select file"
+msgstr "Vælg fil"
+
+msgctxt "#70124"
+msgid "Enter URL link"
+msgstr "Indtast URL link"
+
+msgctxt "#70125"
+msgid "Remove added channels"
+msgstr "Fjern tilføjede kanaler"
 
 msgctxt "#80005"
 msgid "[COLOR]WP Pilot[/COLOR]"
