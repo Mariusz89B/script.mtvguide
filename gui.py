@@ -3931,15 +3931,18 @@ class mTVGuide(xbmcgui.WindowXML):
         p = re.compile('\s<channel id="(.*?)"', re.DOTALL)
 
         with open(os.path.join(self.profilePath, 'basemap_extra.xml'), 'rb') as f:
-            base = f.read()
+            if sys.version_info[0] > 2:
+                base = str(f.read(), 'utf-8')
+            else:
+                base = f.read().decode('utf-8')
 
-            channList = p.findall(base.decode('utf-8'))
+            channList = p.findall(base)
 
             res = xbmcgui.Dialog().multiselect(strings(70125), channList)
             if res:
                 for item in res:
                     p = re.compile('<channel id="{}".*/>\n'.format(channList[item]))
-                    base = p.sub('', base.decode('utf-8'))
+                    base = p.sub('', base)
                 
                 with open(os.path.join(self.profilePath, 'basemap_extra.xml'), 'wb') as f:
                     f.write(base.encode('utf-8'))
