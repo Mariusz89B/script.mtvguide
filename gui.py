@@ -3396,7 +3396,11 @@ class mTVGuide(xbmcgui.WindowXML):
                 return
         else:
             title = searches[action - 2]
-        search = title#d.input(strings(30322), title) #kb input
+
+        if sys.version_info[0] > 2:
+            search = title#d.input(strings(30322), title) #kb input
+        else:
+            search = title.encode('utf-8')#d.input(strings(30322), title) #kb input
         if not search:
             return
         searches = (set([search] + searches))
@@ -3478,7 +3482,11 @@ class mTVGuide(xbmcgui.WindowXML):
                 return
         else:
             title = searches[action - 2]
-        search = title#d.input(strings(30323), title) #kb input
+
+        if sys.version_info[0] > 2:
+            search = title#d.input(strings(30323), title) #kb input
+        else:
+            search = title.encode('utf-8')#d.input(strings(30323), title) #kb input
         if not search:
             return
         searches = (set([search] + searches))
@@ -3561,7 +3569,11 @@ class mTVGuide(xbmcgui.WindowXML):
                 return
         else:
             title = searches[action - 2]
-        search = title#d.input(strings(30344), title) #kb input
+
+        if sys.version_info[0] > 2:
+            search = title#d.input(strings(30344), title) #kb input
+        else:
+            search = title.encode('utf-8')#d.input(strings(30344), title) #kb input
         if not search:
             return
         searches = (set([search] + searches))
@@ -3948,6 +3960,9 @@ class mTVGuide(xbmcgui.WindowXML):
                     f.write(base.encode('utf-8'))
 
                 xbmcgui.Dialog().ok(strings(57051), strings(60007))
+                time.sleep(2)
+                self.database.reloadServices()
+                time.sleep(1)
                 self.onRedrawEPG(self.channelIdx, self.viewStartDate)
 
             else:
@@ -4132,7 +4147,7 @@ class mTVGuide(xbmcgui.WindowXML):
         regex = re.sub('&', '(and|&amp;)', str(regex))
         regex = re.sub(' ', '', str(regex))
 
-        #Add to map
+        # add to basemap
         item = '<channel id="{}"\t\t\t\t\t\t\t\t\ttitle="{}" strm=""/>'.format(epgChann, regex)
 
         with open(os.path.join(self.profilePath, 'basemap_extra.xml'), mode='rb+') as f:
@@ -4142,6 +4157,9 @@ class mTVGuide(xbmcgui.WindowXML):
             f.seek(0)
             f.write(new_str.encode('utf-8'))
             xbmcgui.Dialog().ok(strings(57051), strings(59993).format(epgChann.upper()))
+            time.sleep(2)
+            self.database.reloadServices()
+            time.sleep(1)
             self.onRedrawEPG(self.channelIdx, self.viewStartDate)
 
 
