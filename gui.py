@@ -3397,10 +3397,14 @@ class mTVGuide(xbmcgui.WindowXML):
         else:
             title = searches[action - 2]
 
-        if sys.version_info[0] > 2:
-            search = title#d.input(strings(30322), title) #kb input
+        if action == 0:
+            search = d.input(strings(30322), title)
         else:
-            search = title.encode('utf-8')#d.input(strings(30322), title) #kb input
+            if sys.version_info[0] > 2:
+                search = title
+            else:
+                search = title.encode('utf-8')
+        
         if not search:
             return
         searches = (set([search] + searches))
@@ -3483,10 +3487,14 @@ class mTVGuide(xbmcgui.WindowXML):
         else:
             title = searches[action - 2]
 
-        if sys.version_info[0] > 2:
-            search = title#d.input(strings(30323), title) #kb input
+        if action == 0:
+            search = d.input(strings(30323), title)
         else:
-            search = title.encode('utf-8')#d.input(strings(30323), title) #kb input
+            if sys.version_info[0] > 2:
+                search = title
+            else:
+                search = title.encode('utf-8')
+
         if not search:
             return
         searches = (set([search] + searches))
@@ -3570,10 +3578,14 @@ class mTVGuide(xbmcgui.WindowXML):
         else:
             title = searches[action - 2]
 
-        if sys.version_info[0] > 2:
-            search = title#d.input(strings(30344), title) #kb input
+        if action == 0:
+            search = d.input(strings(30344), title)
         else:
-            search = title.encode('utf-8')#d.input(strings(30344), title) #kb input
+            if sys.version_info[0] > 2:
+                search = title
+            else:
+                search = title.encode('utf-8')
+
         if not search:
             return
         searches = (set([search] + searches))
@@ -5452,78 +5464,74 @@ class mTVGuide(xbmcgui.WindowXML):
         debug('onRedrawEPG done')
 
     def _clearEpg(self):
-        deb('_clearEpg')  
-        try:   
-            controls = [elem.control for elem in self.controlAndProgramList]
-            try:
-                self.removeControls(controls)
-            except:
-                debug('_clearEpg failed to delete all controls, deleting one by one')
-                for elem in self.controlAndProgramList:
-                    try:
-                        self.removeControl(elem.control)
-
-                    except RuntimeError as ex:
-                        debug('_clearEpg RuntimeError: {}'.format(getExceptionString()))
-                        pass  # happens if we try to remove a control that doesn't exist
-
-                    except Exception as ex:
-                        deb('_clearEpg unhandled exception: {}'.format(getExceptionString()))
-
-            try:
-                if self.timebar:
-                    self.removeControl(self.timebar)
-                    self.timebar = None
-
-                if self.timebarBack:
-                    self.removeControl(self.timebarBack)
-                    self.timebarBack = None
-            except:
-                pass
-
-            try:
-                self.category = self.database.category
-                if sys.version_info[0] < 3:
-                    self.category = self.category.decode('utf-8', 'replace')
-                self.categories = self.database.getAllCategories()
-            except:
-                pass
-
-            try:
-                listControl = self.getControl(self.C_MAIN_CATEGORY)
-                listControl.reset()
-
-                items = list()
-
-                ccList = ['be', 'cz', 'de', 'dk', 'fr', 'hr', 'it', 'no', 'pl', 'se', 'srb', 'uk', 'us', 'radio']
-                
-                categories = PREDEFINED_CATEGORIES + sorted(list(self.categories), key=lambda x: x.lower())
-                for item in ccList:
-                    if ADDON.getSetting('country_code_{cc}'.format(cc=item)) == "false":
-                        categories.remove('Group: {cc}'.format(cc=item.upper()))
-
-                categories = [label.replace('Group', strings(30995)) for label in categories]
-
-                for label in categories:
-                    item = xbmcgui.ListItem(label)
-                    items.append(item)
-
-                listControl.addItems(items)
-                if self.category and self.category in categories:
-                    index = categories.index(self.category)
-                    if index >= 0:
-                        listControl.selectItem(index)
-            except:
-                deb('Categories not supported by current skin')
-                self.category = None
-
-
-            del self.controlAndProgramList[:]
-            debug('_clearEpg end')
-
+        deb('_clearEpg')    
+        controls = [elem.control for elem in self.controlAndProgramList]
+        try:
+            self.removeControls(controls)
         except:
-            debug('_clearEpg not cleared')
+            debug('_clearEpg failed to delete all controls, deleting one by one')
+            for elem in self.controlAndProgramList:
+                try:
+                    deb('Debug removeControl: {}'.format(str(elem.control.getId())))
+                    self.removeControl(elem.control)
+
+                except RuntimeError as ex:
+                    debug('_clearEpg RuntimeError: {}'.format(getExceptionString()))
+                    pass  # happens if we try to remove a control that doesn't exist
+
+                except Exception as ex:
+                    deb('_clearEpg unhandled exception: {}'.format(getExceptionString()))
+
+        try:
+            if self.timebar:
+                self.removeControl(self.timebar)
+                self.timebar = None
+
+            if self.timebarBack:
+                self.removeControl(self.timebarBack)
+                self.timebarBack = None
+        except:
             pass
+
+        try:
+            self.category = self.database.category
+            if sys.version_info[0] < 3:
+                self.category = self.category.decode('utf-8', 'replace')
+            self.categories = self.database.getAllCategories()
+        except:
+            pass
+
+        try:
+            listControl = self.getControl(self.C_MAIN_CATEGORY)
+            listControl.reset()
+
+            items = list()
+
+            ccList = ['be', 'cz', 'de', 'dk', 'fr', 'hr', 'it', 'no', 'pl', 'se', 'srb', 'uk', 'us', 'radio']
+            
+            categories = PREDEFINED_CATEGORIES + sorted(list(self.categories), key=lambda x: x.lower())
+            for item in ccList:
+                if ADDON.getSetting('country_code_{cc}'.format(cc=item)) == "false":
+                    categories.remove('Group: {cc}'.format(cc=item.upper()))
+
+            categories = [label.replace('Group', strings(30995)) for label in categories]
+
+            for label in categories:
+                item = xbmcgui.ListItem(label)
+                items.append(item)
+
+            listControl.addItems(items)
+            if self.category and self.category in categories:
+                index = categories.index(self.category)
+                if index >= 0:
+                    listControl.selectItem(index)
+        except:
+            deb('Categories not supported by current skin')
+            self.category = None
+
+
+        del self.controlAndProgramList[:]
+        debug('_clearEpg end')
 
     def onEPGLoadError(self):
         deb('onEPGLoadError, M_TVGUIDE_CLOSING: {}'.format(strings2.M_TVGUIDE_CLOSING))
