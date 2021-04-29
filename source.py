@@ -899,16 +899,18 @@ class Database(object):
             idx = len(channels) - 1
         return channels[idx]
 
-    def removeChannel(self, callback, channel):
-        self.eventQueue.append([self._removeChannel, callback, channel])
+    def removeChannel(self, callback, channelList):
+        self.eventQueue.append([self._removeChannel, callback, channelList])
         self.event.set()
 
-    def _removeChannel(self, channel):
+    def _removeChannel(self, channelList):
         try:
-            if channel is not None:
-                c = self.conn.cursor()
-                c.execute('DELETE FROM channels WHERE id LIKE ? AND title LIKE ?', [channel.id, channel.title])
-                self.conn.commit()
+            if channelList is not None:
+                for chann in reversed(channelList):
+                    channel = Channel(chann, chann)
+                    c = self.conn.cursor()
+                    c.execute('DELETE FROM channels WHERE id LIKE ? AND title LIKE ?', [channel.id, channel.title])
+                    self.conn.commit()
         except:
             pass
 

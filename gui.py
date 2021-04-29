@@ -3939,7 +3939,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 end = program.endDate
                 self.playChannel2(program)
 
-    def reloadList(self):
+    def reloadList(self, add=""):
         with self.busyDialog():
             time.sleep(1)
             self.database.reloadServices()
@@ -3954,7 +3954,7 @@ class mTVGuide(xbmcgui.WindowXML):
             else:
                 base = f.read().decode('utf-8')
 
-            channList = p.findall(base)
+            channList = sorted(p.findall(base))
 
             res = xbmcgui.Dialog().multiselect(strings(70125), channList)
             if res:
@@ -3965,10 +3965,13 @@ class mTVGuide(xbmcgui.WindowXML):
                 with open(os.path.join(self.profilePath, 'basemap_extra.xml'), 'wb') as f:
                     f.write(base.encode('utf-8'))
 
+                removeList = list()
+
                 for item in res:
-                    removeChannel = Channel(channList[item], channList[item])
-                    self.database.removeChannel(None, removeChannel)
-                    self.reloadList()
+                    removeList.append(channList[item])
+                
+                self.database.removeChannel(None, removeList)
+                self.reloadList()
 
             else:
                 return
@@ -4162,7 +4165,7 @@ class mTVGuide(xbmcgui.WindowXML):
             f.seek(0)
             f.write(new_str.encode('utf-8'))
             xbmcgui.Dialog().ok(strings(57051), strings(59993).format(epgChann.upper()))
-            self.reloadList()
+            self.reloadList(add=True)
 
     def _showContextMenu(self, program):
         deb('_showContextMenu')
