@@ -127,10 +127,13 @@ class PlaylistUpdater(baseServiceUpdater):
             headers['ContentType'] = 'application/x-www-form-urlencoded'
             headers['Accept-Encoding'] = 'gzip'
 
-            content = scraper.get(path, headers=headers, allow_redirects=False, verify=False, timeout=20).content.decode('utf-8')
+            content = scraper.get(path, headers=headers, allow_redirects=False, verify=False, timeout=60).content.decode('utf-8')
 
         except:
-            content = self.sl.getJsonFromExtendedAPI(path).decode('utf-8')
+            try:
+                content = self.sl.getJsonFromExtendedAPI(path).decode('utf-8')
+            except:
+                pass
 
         return content
 
