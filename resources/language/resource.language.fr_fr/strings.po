@@ -313,8 +313,8 @@ msgid "Program category search"
 msgstr "Recherche par catégorie de programme"
 
 msgctxt "#30325"
-msgid "Sort all channels"
-msgstr "Trier toutes les chaînes"
+msgid "All channels"
+msgstr "Toutes les chaînes"
 
 msgctxt "#30326"
 msgid "Channel search"
@@ -507,6 +507,10 @@ msgstr "Les informations de connexion ont été réinitialisées"
 msgctxt "#30373"
 msgid "DRM protected material is encrypted, not possible to record."
 msgstr "Le matériel protégé par DRM est crypté, impossible à enregistrer."
+
+msgctxt "#30374"
+msgid "Sort all channels"
+msgstr "Trier toutes les chaînes"
 
 msgctxt "#30500"
 msgid "Edit channel order and visibility"
@@ -1293,8 +1297,8 @@ msgid "Add stream to selected channel"
 msgstr "Ajouter un flux à la chaîne sélectionnée"
 
 msgctxt "#59993"
-msgid "Added channel [B]{}[/B]. Restart required for changes to take place."
-msgstr "Ajout de la chaîne [B]{}[/B]. Redémarrage requis pour que les modifications aient lieu."
+msgid "Added channel [B]{}[/B]."
+msgstr "Ajout de la chaîne [B]{}[/B]."
 
 msgctxt "#59994"
 msgid "Select which channels to display"
@@ -1349,8 +1353,8 @@ msgid "Select channels to delete"
 msgstr "Sélectionnez les chaînes à supprimer"
 
 msgctxt "#60007"
-msgid "Channels has been deleted. Restart required for changes to take place."
-msgstr "Les chaînes ont été supprimées. Redémarrage requis pour que les modifications aient lieu."
+msgid "Channels have been removed."
+msgstr "Les chaînes ont été supprimées."
 
 msgctxt "#60008"
 msgid "Save playlist to local drive"

@@ -3939,6 +3939,12 @@ class mTVGuide(xbmcgui.WindowXML):
                 end = program.endDate
                 self.playChannel2(program)
 
+    def reloadList(self):
+        with self.busyDialog():
+            time.sleep(1)
+            self.database.reloadServices()
+            self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+
     def channelsRemove(self):
         p = re.compile('\s<channel id="(.*?)"', re.DOTALL)
 
@@ -3960,16 +3966,13 @@ class mTVGuide(xbmcgui.WindowXML):
                     f.write(base.encode('utf-8'))
 
                 xbmcgui.Dialog().ok(strings(57051), strings(60007))
-                time.sleep(2)
-                self.database.reloadServices()
-                time.sleep(1)
-                self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+                self.reloadList()
 
             else:
                 return
 
     def channelsSelect(self):
-        res = xbmcgui.Dialog().select(strings(70116), [strings(30325), strings(59995), strings(70119)])
+        res = xbmcgui.Dialog().select(strings(70116), [strings(30374), strings(59995), strings(70119)])
 
         if res < 0:
             return
@@ -4157,11 +4160,7 @@ class mTVGuide(xbmcgui.WindowXML):
             f.seek(0)
             f.write(new_str.encode('utf-8'))
             xbmcgui.Dialog().ok(strings(57051), strings(59993).format(epgChann.upper()))
-            time.sleep(2)
-            self.database.reloadServices()
-            time.sleep(1)
-            self.onRedrawEPG(self.channelIdx, self.viewStartDate)
-
+            self.reloadList()
 
     def _showContextMenu(self, program):
         deb('_showContextMenu')

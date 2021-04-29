@@ -313,7 +313,7 @@ msgid "Program category search"
 msgstr ""
 
 msgctxt "#30325"
-msgid "Sort all channels"
+msgid "All channels"
 msgstr ""
 
 msgctxt "#30326"
@@ -506,6 +506,10 @@ msgstr ""
 
 msgctxt "#30373"
 msgid "DRM protected material is encrypted, not possible to record."
+msgstr ""
+
+msgctxt "#30374"
+msgid "Sort all channels"
 msgstr ""
 
 msgctxt "#30500"
@@ -1297,7 +1301,7 @@ msgid "Add stream to selected channel"
 msgstr ""
 
 msgctxt "#59993"
-msgid "Added channel [B]{}[/B]. Restart required for changes to take place."
+msgid "Added channel [B]{}[/B]."
 msgstr ""
 
 msgctxt "#59994"
@@ -1353,7 +1357,7 @@ msgid "Select channels to delete"
 msgstr ""
 
 msgctxt "#60007"
-msgid "Channels has been deleted. Restart required for changes to take place."
+msgid "Channels have been removed."
 msgstr ""
 
 msgctxt "#60008"

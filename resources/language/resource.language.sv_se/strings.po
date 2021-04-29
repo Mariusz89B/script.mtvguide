@@ -313,8 +313,8 @@ msgid "Program category search"
 msgstr "Sökning av programkategori"
 
 msgctxt "#30325"
-msgid "Sort all channels"
-msgstr "Sortera alla kanaler"
+msgid "All channels"
+msgstr "Alla kanaler"
 
 msgctxt "#30326"
 msgid "Channel search"
@@ -507,6 +507,10 @@ msgstr "Inloggningsuppgifter har återställts"
 msgctxt "#30373"
 msgid "DRM protected material is encrypted, not possible to record."
 msgstr "DRM skyddade materialet är krypterat, går inte att spela in."
+
+msgctxt "#30374"
+msgid "Sort all channels"
+msgstr "Sortera alla kanaler"
 
 msgctxt "#30500"
 msgid "Edit channel order and visibility"
@@ -1293,8 +1297,8 @@ msgid "Add stream to selected channel"
 msgstr "Lägg till ström till vald kanal"
 
 msgctxt "#59993"
-msgid "Added channel [B]{}[/B]. Restart required for changes to take place."
-msgstr "Tillagd kanal [B]{}[/B]. Omstart krävs för att ändringar ska äga rum."
+msgid "Added channel [B]{}[/B]."
+msgstr "Tillagd kanal [B]{}[/B]."
 
 msgctxt "#59994"
 msgid "Select which channels to display"
@@ -1349,8 +1353,8 @@ msgid "Select channels to delete"
 msgstr "Välj kanaler att radera"
 
 msgctxt "#60007"
-msgid "Channels has been deleted. Restart required for changes to take place."
-msgstr "Kanaler har tagits bort. Omstart krävs för att ändringar ska äga rum."
+msgid "Channels have been removed."
+msgstr "Kanaler har tagits bort."
 
 msgctxt "#60008"
 msgid "Save playlist to local drive"
