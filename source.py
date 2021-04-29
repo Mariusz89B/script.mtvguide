@@ -599,11 +599,28 @@ class Database(object):
                 for item in self.source.getDataFromExternal(date, progress_callback):
                     imported += 1
 
+                    channelList = list()
+
+                    p = re.compile('\s<channel id="(.*?)"', re.DOTALL)
+
+                    with open(os.path.join(profilePath, 'basemap_extra.xml'), 'rb') as f:
+                        if sys.version_info[0] > 2:
+                            base = str(f.read(), 'utf-8')
+                        else:
+                            base = f.read().decode('utf-8')
+
+                        channList = p.findall(base)
+                        intList = range(len(channList))
+
+                        for chann in intList:
+                            ch = Channel(channList[chann], channList[chann])
+                            channelList.append(ch)
+
                     # Clear program list only when there is at lease one valid row available
                     if not dbChannelsUpdated:
                         dbChannelsUpdated = True
                         if self.settingsChanged:
-                            c.execute('DELETE FROM channels WHERE source=?', [self.source.KEY])
+                            c.execute('DELETE FROM channels WHERE source=? AND NOT LIKE id IN ?', [self.source.KEY, channelList])
                             c.execute('DELETE FROM programs WHERE source=?', [self.source.KEY])
                             c.execute("DELETE FROM updates WHERE source=?", [self.source.KEY])
                         self.settingsChanged = False # only want to update once due to changed settings
@@ -881,6 +898,19 @@ class Database(object):
         if idx < 0:
             idx = len(channels) - 1
         return channels[idx]
+
+    def removeChannel(self, callback, channel):
+        self.eventQueue.append([self._removeChannel, callback, channel])
+        self.event.set()
+
+    def _removeChannel(self, channel):
+        try:
+            if channel is not None:
+                c = self.conn.cursor()
+                c.execute('DELETE FROM channels WHERE id LIKE ? AND title LIKE ?', [channel.id, channel.title])
+                self.conn.commit()
+        except:
+            pass
 
     def addChannel(self, callback, channel):
         self.eventQueue.append([self._addChannel, callback, channel])

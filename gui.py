@@ -3965,7 +3965,10 @@ class mTVGuide(xbmcgui.WindowXML):
                 with open(os.path.join(self.profilePath, 'basemap_extra.xml'), 'wb') as f:
                     f.write(base.encode('utf-8'))
 
-                self.reloadList()
+                for item in res:
+                    removeChannel = Channel(channList[item], channList[item])
+                    self.database.removeChannel(None, removeChannel)
+                    self.reloadList()
 
             else:
                 return
