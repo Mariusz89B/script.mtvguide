@@ -3965,7 +3965,6 @@ class mTVGuide(xbmcgui.WindowXML):
                 with open(os.path.join(self.profilePath, 'basemap_extra.xml'), 'wb') as f:
                     f.write(base.encode('utf-8'))
 
-                xbmcgui.Dialog().ok(strings(57051), strings(60007))
                 self.reloadList()
 
             else:
