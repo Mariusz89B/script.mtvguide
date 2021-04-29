@@ -3154,6 +3154,12 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.focusPoint.y = self.epgView.top
                 self.onRedrawEPG(channelIdx, self.viewStartDate)
 
+        elif action == KEY_RECORD:
+            if index > -1:
+                self.recordProgram(programList[index])
+                time.sleep(1)
+                self.showListing(programList[index].channel)
+
         else:
             if index > -1:
                 program = programList[index]
@@ -3214,6 +3220,7 @@ class mTVGuide(xbmcgui.WindowXML):
             except:
                 pass
             return
+
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 self.context = True
@@ -3222,6 +3229,12 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
                 self.focusPoint.y = self.epgView.top
                 self.onRedrawEPG(channelIdx, self.viewStartDate)
+
+        elif action == KEY_RECORD:
+            if index > -1:
+                self.recordProgram(programList[index])
+                time.sleep(1)
+                self.showListing(programList[index].channel)
 
         else:
             if index > -1:
@@ -3283,6 +3296,7 @@ class mTVGuide(xbmcgui.WindowXML):
             except:
                 pass
             return
+
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 self.context = True
@@ -3291,6 +3305,12 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
                 self.focusPoint.y = self.epgView.top
                 self.onRedrawEPG(channelIdx, self.viewStartDate)
+
+        elif action == KEY_RECORD:
+            if index > -1:
+                self.recordProgram(programList[index])
+                time.sleep(1)
+                self.showListing(programList[index].channel)
 
         else:
             if index > -1:
@@ -3439,6 +3459,7 @@ class mTVGuide(xbmcgui.WindowXML):
             except:
                 pass
             return
+
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 self.context = True
@@ -3447,6 +3468,12 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
                 self.focusPoint.y = self.epgView.top
                 self.onRedrawEPG(channelIdx, self.viewStartDate)
+
+        elif action == KEY_RECORD:
+            if index > -1:
+                self.recordProgram(programList[index])
+                time.sleep(1)
+                self.showListing(programList[index].channel)
 
         else:
             if index > -1:
@@ -3530,6 +3557,7 @@ class mTVGuide(xbmcgui.WindowXML):
             except:
                 pass
             return
+
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 self.context = True
@@ -3538,6 +3566,12 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
                 self.focusPoint.y = self.epgView.top
                 self.onRedrawEPG(channelIdx, self.viewStartDate)
+
+        elif action == KEY_RECORD:
+            if index > -1:
+                self.recordProgram(programList[index])
+                time.sleep(1)
+                self.showListing(programList[index].channel)
 
         else:
             if index > -1:
@@ -3620,6 +3654,7 @@ class mTVGuide(xbmcgui.WindowXML):
             except:
                 pass
             return
+
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 self.context = True
@@ -3628,6 +3663,12 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
                 self.focusPoint.y = self.epgView.top
                 self.onRedrawEPG(channelIdx, self.viewStartDate)
+
+        elif action == KEY_RECORD:
+            if index > -1:
+                self.recordProgram(programList[index])
+                time.sleep(1)
+                self.showListing(programList[index].channel)
 
         else:
             if index > -1:
@@ -3685,6 +3726,7 @@ class mTVGuide(xbmcgui.WindowXML):
             except:
                 pass
             return
+
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 self.context = True
@@ -3693,6 +3735,12 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
                 self.focusPoint.y = self.epgView.top
                 self.onRedrawEPG(channelIdx, self.viewStartDate)
+
+        elif action == KEY_RECORD:
+            if index > -1:
+                self.recordProgram(programList[index])
+                time.sleep(1)
+                self.showListing(programList[index].channel)
 
         else:
             if index > -1:
@@ -3733,6 +3781,7 @@ class mTVGuide(xbmcgui.WindowXML):
             except:
                 pass
             return
+
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 self.context = True
@@ -3741,6 +3790,12 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
                 self.focusPoint.y = self.epgView.top
                 self.onRedrawEPG(channelIdx, self.viewStartDate)
+
+        elif action == KEY_RECORD:
+            if index > -1:
+                self.recordProgram(programList[index])
+                time.sleep(1)
+                self.showListing(programList[index].channel)
 
         else:
             if index > -1:
@@ -3809,6 +3864,13 @@ class mTVGuide(xbmcgui.WindowXML):
             except:
                 pass
             return
+
+        elif action == KEY_RECORD:
+            if index > -1:
+                self.recordProgram(programList[index])
+                time.sleep(1)
+                self.showListing(programList[index].channel)
+
         else:
             if index > -1:
                 program = programList[index]
@@ -3876,6 +3938,13 @@ class mTVGuide(xbmcgui.WindowXML):
             except:
                 pass
             return
+
+        elif action == KEY_RECORD:
+            if index > -1:
+                self.recordProgram(programList[index])
+                time.sleep(1)
+                self.showListing(programList[index].channel)
+
         else:
             if index > -1:
                 program = programList[index]
@@ -3943,6 +4012,13 @@ class mTVGuide(xbmcgui.WindowXML):
             except:
                 pass
             return
+
+        elif action == KEY_RECORD:
+            if index > -1:
+                self.recordProgram(programList[index])
+                time.sleep(1)
+                self.showListing(programList[index].channel)
+
         else:
             if index > -1:
                 program = programList[index]
@@ -6187,6 +6263,7 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
             self.database.saveCategoryMap(categories)
             self.categories = [category for category in categories if category]
             self.buttonClicked = self.C_POPUP_CATEGORY
+            self.close()
 
     def onClick(self, controlId):
         if controlId == self.C_POPUP_CHOOSE_STREAM and self.database.getCustomStreamUrl(self.program.channel):
@@ -7551,6 +7628,9 @@ class ProgramListDialog(xbmcgui.WindowXMLDialog):
             self.close()
         elif action.getId() == ACTION_SHOW_INFO:
             self.action = ACTION_SHOW_INFO
+            self.close()
+        elif action.getButtonCode() == KEY_RECORD:
+            self.action = KEY_RECORD
             self.close()
 
     def onClick(self, controlId):
