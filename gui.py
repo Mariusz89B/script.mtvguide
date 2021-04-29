@@ -3167,6 +3167,8 @@ class mTVGuide(xbmcgui.WindowXML):
                 start = program.startDate
                 end = program.endDate
                 self.playChannel2(program)
+                time.sleep(1)
+                self.showListing(programList[index].channel)
 
     def showNow(self, channel):
         programList = self.database.getNowList(channel)
@@ -3234,7 +3236,7 @@ class mTVGuide(xbmcgui.WindowXML):
             if index > -1:
                 self.recordProgram(programList[index])
                 time.sleep(1)
-                self.showListing(programList[index].channel)
+                self.showNow(programList[index].channel)
 
         else:
             if index > -1:
@@ -3243,6 +3245,8 @@ class mTVGuide(xbmcgui.WindowXML):
                 start = program.startDate
                 end = program.endDate
                 self.playChannel2(program)
+                time.sleep(1)
+                self.showNow(programList[index].channel)
 
     def showNext(self, channel):
         programList = self.database.getNextList(channel)
@@ -3310,7 +3314,7 @@ class mTVGuide(xbmcgui.WindowXML):
             if index > -1:
                 self.recordProgram(programList[index])
                 time.sleep(1)
-                self.showListing(programList[index].channel)
+                self.showNext(programList[index].channel)
 
         else:
             if index > -1:
@@ -3319,6 +3323,8 @@ class mTVGuide(xbmcgui.WindowXML):
                 start = program.startDate
                 end = program.endDate
                 self.playChannel2(program)
+                time.sleep(1)
+                self.showNext(programList[index].channel)
 
     def programSearchSelect(self, channel):
         d = xbmcgui.Dialog()
@@ -3473,7 +3479,7 @@ class mTVGuide(xbmcgui.WindowXML):
             if index > -1:
                 self.recordProgram(programList[index])
                 time.sleep(1)
-                self.showListing(programList[index].channel)
+                self.programSearch(programList[index].channel)
 
         else:
             if index > -1:
@@ -3482,6 +3488,8 @@ class mTVGuide(xbmcgui.WindowXML):
                 start = program.startDate
                 end = program.endDate
                 self.playChannel2(program)
+                time.sleep(1)
+                self.programSearch(programList[index].channel)
 
     def descriptionSearch(self):
         d = xbmcgui.Dialog()
@@ -3571,7 +3579,7 @@ class mTVGuide(xbmcgui.WindowXML):
             if index > -1:
                 self.recordProgram(programList[index])
                 time.sleep(1)
-                self.showListing(programList[index].channel)
+                self.descriptionSearch(programList[index].channel)
 
         else:
             if index > -1:
@@ -3580,6 +3588,8 @@ class mTVGuide(xbmcgui.WindowXML):
                 start = program.startDate
                 end = program.endDate
                 self.playChannel2(program)
+                time.sleep(1)
+                self.descriptionSearch(programList[index].channel)
 
     def categorySearchInput(self):
         d = xbmcgui.Dialog()
@@ -3668,7 +3678,7 @@ class mTVGuide(xbmcgui.WindowXML):
             if index > -1:
                 self.recordProgram(programList[index])
                 time.sleep(1)
-                self.showListing(programList[index].channel)
+                self.categorySearchInput(programList[index].channel)
 
         else:
             if index > -1:
@@ -3677,6 +3687,8 @@ class mTVGuide(xbmcgui.WindowXML):
                 start = program.startDate
                 end = program.endDate
                 self.playChannel2(program)
+                time.sleep(1)
+                self.categorySearchInput(programList[index].channel)
 
     def categorySearch(self):
         d = xbmcgui.Dialog()
@@ -3740,7 +3752,7 @@ class mTVGuide(xbmcgui.WindowXML):
             if index > -1:
                 self.recordProgram(programList[index])
                 time.sleep(1)
-                self.showListing(programList[index].channel)
+                self.categorySearch(programList[index].channel)
 
         else:
             if index > -1:
@@ -3749,6 +3761,8 @@ class mTVGuide(xbmcgui.WindowXML):
                 start = program.startDate
                 end = program.endDate
                 self.playChannel2(program)
+                time.sleep(1)
+                self.categorySearch(programList[index].channel)
 
     def channelSearch(self):
         d = xbmcgui.Dialog()
@@ -3795,7 +3809,7 @@ class mTVGuide(xbmcgui.WindowXML):
             if index > -1:
                 self.recordProgram(programList[index])
                 time.sleep(1)
-                self.showListing(programList[index].channel)
+                self.channelSearch(programList[index].channel)
 
         else:
             if index > -1:
@@ -3804,6 +3818,8 @@ class mTVGuide(xbmcgui.WindowXML):
                 start = program.startDate
                 end = program.endDate
                 self.playChannel2(program)
+                time.sleep(1)
+                self.channelSearch(programList[index].channel)
 
     def showReminders(self, channel):
         programList = self.database.getNotifications()
@@ -3869,7 +3885,7 @@ class mTVGuide(xbmcgui.WindowXML):
             if index > -1:
                 self.recordProgram(programList[index])
                 time.sleep(1)
-                self.showListing(programList[index].channel)
+                self.showReminders(programList[index].channel)
 
         else:
             if index > -1:
@@ -3878,6 +3894,8 @@ class mTVGuide(xbmcgui.WindowXML):
                 start = program.startDate
                 end = program.endDate
                 self.playChannel2(program)
+                time.sleep(1)
+                self.showReminders(programList[index].channel)
 
     def showFullReminders(self, channel):
         programList = self.database.getFullNotifications(int(ADDON.getSetting('listing_days')))
@@ -3943,7 +3961,7 @@ class mTVGuide(xbmcgui.WindowXML):
             if index > -1:
                 self.recordProgram(programList[index])
                 time.sleep(1)
-                self.showListing(programList[index].channel)
+                self.showFullReminders(programList[index].channel)
 
         else:
             if index > -1:
@@ -3952,6 +3970,8 @@ class mTVGuide(xbmcgui.WindowXML):
                 start = program.startDate
                 end = program.endDate
                 self.playChannel2(program)
+                time.sleep(1)
+                self.showFullReminders(programList[index].channel)
 
     def showFullRecordings(self, channel):
         programList = self.database.getFullRecordings(int(ADDON.getSetting('listing_days')))
@@ -4017,7 +4037,7 @@ class mTVGuide(xbmcgui.WindowXML):
             if index > -1:
                 self.recordProgram(programList[index])
                 time.sleep(1)
-                self.showListing(programList[index].channel)
+                self.showFullRecordings(programList[index].channel)
 
         else:
             if index > -1:
@@ -4026,6 +4046,9 @@ class mTVGuide(xbmcgui.WindowXML):
                 start = program.startDate
                 end = program.endDate
                 self.playChannel2(program)
+                time.sleep(1)
+                self.showFullRecordings(programList[index].channel)
+
 
     def reloadList(self, add=""):
         with self.busyDialog():
