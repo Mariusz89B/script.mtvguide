@@ -3156,9 +3156,16 @@ class mTVGuide(xbmcgui.WindowXML):
 
         elif action == KEY_RECORD:
             if index > -1:
+                xbmc.Player().stop()
                 self.recordProgram(programList[index])
-                time.sleep(1)
-                self.showListing(programList[index].channel)
+                if xbmc.getCondVisibility('!Window.IsVisible(okdialog)'):
+                    with self.busyDialog():
+                        time.sleep(1)
+                        self.showListing(programList[index].channel)
+
+
+        elif action == ACTION_STOP:
+            return
 
         else:
             if index > -1:
@@ -3167,8 +3174,9 @@ class mTVGuide(xbmcgui.WindowXML):
                 start = program.startDate
                 end = program.endDate
                 self.playChannel2(program)
-                time.sleep(1)
-                self.showListing(programList[index].channel)
+                with self.busyDialog():
+                    time.sleep(1)
+                    self.showListing(programList[index].channel)
 
     def showNow(self, channel):
         programList = self.database.getNowList(channel)
@@ -3235,8 +3243,13 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_RECORD:
             if index > -1:
                 self.recordProgram(programList[index])
-                time.sleep(1)
-                self.showNow(programList[index].channel)
+                if xbmc.getCondVisibility('!Window.IsVisible(okdialog)'):
+                    with self.busyDialog():
+                        time.sleep(1)
+                        self.showNow(programList[index].channel)
+
+        elif action == ACTION_STOP:
+            return
 
         else:
             if index > -1:
@@ -3245,8 +3258,9 @@ class mTVGuide(xbmcgui.WindowXML):
                 start = program.startDate
                 end = program.endDate
                 self.playChannel2(program)
-                time.sleep(1)
-                self.showNow(programList[index].channel)
+                with self.busyDialog():
+                    time.sleep(1)
+                    self.showNow(programList[index].channel)
 
     def showNext(self, channel):
         programList = self.database.getNextList(channel)
@@ -3313,8 +3327,13 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_RECORD:
             if index > -1:
                 self.recordProgram(programList[index])
-                time.sleep(1)
-                self.showNext(programList[index].channel)
+                if xbmc.getCondVisibility('!Window.IsVisible(okdialog)'):
+                    with self.busyDialog():
+                        time.sleep(1)
+                        self.showNext(programList[index].channel)
+
+        elif action == ACTION_STOP:
+            return
 
         else:
             if index > -1:
@@ -3323,8 +3342,9 @@ class mTVGuide(xbmcgui.WindowXML):
                 start = program.startDate
                 end = program.endDate
                 self.playChannel2(program)
-                time.sleep(1)
-                self.showNext(programList[index].channel)
+                with self.busyDialog():
+                    time.sleep(1)
+                    self.showNext(programList[index].channel)
 
     def programSearchSelect(self, channel):
         d = xbmcgui.Dialog()
@@ -3478,8 +3498,13 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_RECORD:
             if index > -1:
                 self.recordProgram(programList[index])
-                time.sleep(1)
-                self.programSearch(programList[index].channel)
+                if xbmc.getCondVisibility('!Window.IsVisible(okdialog)'):
+                    with self.busyDialog():
+                        time.sleep(1)
+                        self.programSearch(programList[index].channel)
+
+        elif action == ACTION_STOP:
+            return
 
         else:
             if index > -1:
@@ -3488,8 +3513,9 @@ class mTVGuide(xbmcgui.WindowXML):
                 start = program.startDate
                 end = program.endDate
                 self.playChannel2(program)
-                time.sleep(1)
-                self.programSearch(programList[index].channel)
+                with self.busyDialog():
+                    time.sleep(1)
+                    self.programSearch(programList[index].channel)
 
     def descriptionSearch(self):
         d = xbmcgui.Dialog()
@@ -3578,8 +3604,13 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_RECORD:
             if index > -1:
                 self.recordProgram(programList[index])
-                time.sleep(1)
-                self.descriptionSearch(programList[index].channel)
+                if xbmc.getCondVisibility('!Window.IsVisible(okdialog)'):
+                    with self.busyDialog():
+                        time.sleep(1)
+                        self.descriptionSearch(programList[index].channel)
+
+        elif action == ACTION_STOP:
+            return
 
         else:
             if index > -1:
@@ -3588,8 +3619,9 @@ class mTVGuide(xbmcgui.WindowXML):
                 start = program.startDate
                 end = program.endDate
                 self.playChannel2(program)
-                time.sleep(1)
-                self.descriptionSearch(programList[index].channel)
+                with self.busyDialog():
+                    time.sleep(1)
+                    self.descriptionSearch(programList[index].channel)
 
     def categorySearchInput(self):
         d = xbmcgui.Dialog()
@@ -3677,8 +3709,13 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_RECORD:
             if index > -1:
                 self.recordProgram(programList[index])
-                time.sleep(1)
-                self.categorySearchInput(programList[index].channel)
+                if xbmc.getCondVisibility('!Window.IsVisible(okdialog)'):
+                    with self.busyDialog():
+                        time.sleep(1)
+                        self.categorySearchInput(programList[index].channel)
+
+        elif action == ACTION_STOP:
+            return
 
         else:
             if index > -1:
@@ -3687,8 +3724,9 @@ class mTVGuide(xbmcgui.WindowXML):
                 start = program.startDate
                 end = program.endDate
                 self.playChannel2(program)
-                time.sleep(1)
-                self.categorySearchInput(programList[index].channel)
+                with self.busyDialog():
+                    time.sleep(1)
+                    self.categorySearchInput(programList[index].channel)
 
     def categorySearch(self):
         d = xbmcgui.Dialog()
@@ -3751,8 +3789,13 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_RECORD:
             if index > -1:
                 self.recordProgram(programList[index])
-                time.sleep(1)
-                self.categorySearch(programList[index].channel)
+                if xbmc.getCondVisibility('!Window.IsVisible(okdialog)'):
+                    with self.busyDialog():
+                        time.sleep(1)
+                        self.categorySearch(programList[index].channel)
+
+        elif action == ACTION_STOP:
+            return
 
         else:
             if index > -1:
@@ -3761,8 +3804,9 @@ class mTVGuide(xbmcgui.WindowXML):
                 start = program.startDate
                 end = program.endDate
                 self.playChannel2(program)
-                time.sleep(1)
-                self.categorySearch(programList[index].channel)
+                with self.busyDialog():
+                    time.sleep(1)
+                    self.categorySearch(programList[index].channel)
 
     def channelSearch(self):
         d = xbmcgui.Dialog()
@@ -3808,8 +3852,13 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_RECORD:
             if index > -1:
                 self.recordProgram(programList[index])
-                time.sleep(1)
-                self.channelSearch(programList[index].channel)
+                if xbmc.getCondVisibility('!Window.IsVisible(okdialog)'):
+                    with self.busyDialog():
+                        time.sleep(1)
+                        self.channelSearch(programList[index].channel)
+
+        elif action == ACTION_STOP:
+            return
 
         else:
             if index > -1:
@@ -3818,8 +3867,9 @@ class mTVGuide(xbmcgui.WindowXML):
                 start = program.startDate
                 end = program.endDate
                 self.playChannel2(program)
-                time.sleep(1)
-                self.channelSearch(programList[index].channel)
+                with self.busyDialog():
+                    time.sleep(1)
+                    self.channelSearch(programList[index].channel)
 
     def showReminders(self, channel):
         programList = self.database.getNotifications()
@@ -3884,8 +3934,13 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_RECORD:
             if index > -1:
                 self.recordProgram(programList[index])
-                time.sleep(1)
-                self.showReminders(programList[index].channel)
+                if xbmc.getCondVisibility('!Window.IsVisible(okdialog)'):
+                    with self.busyDialog():
+                        time.sleep(1)
+                        self.showReminders(programList[index].channel)
+
+        elif action == ACTION_STOP:
+            return
 
         else:
             if index > -1:
@@ -3894,8 +3949,9 @@ class mTVGuide(xbmcgui.WindowXML):
                 start = program.startDate
                 end = program.endDate
                 self.playChannel2(program)
-                time.sleep(1)
-                self.showReminders(programList[index].channel)
+                with self.busyDialog():
+                    time.sleep(1)
+                    self.showReminders(programList[index].channel)
 
     def showFullReminders(self, channel):
         programList = self.database.getFullNotifications(int(ADDON.getSetting('listing_days')))
@@ -3960,8 +4016,13 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_RECORD:
             if index > -1:
                 self.recordProgram(programList[index])
-                time.sleep(1)
-                self.showFullReminders(programList[index].channel)
+                if xbmc.getCondVisibility('!Window.IsVisible(okdialog)'):
+                    with self.busyDialog():
+                        time.sleep(1)
+                        self.showFullReminders(programList[index].channel)
+
+        elif action == ACTION_STOP:
+            return
 
         else:
             if index > -1:
@@ -3970,8 +4031,9 @@ class mTVGuide(xbmcgui.WindowXML):
                 start = program.startDate
                 end = program.endDate
                 self.playChannel2(program)
-                time.sleep(1)
-                self.showFullReminders(programList[index].channel)
+                with self.busyDialog():
+                    time.sleep(1)
+                    self.showFullReminders(programList[index].channel)
 
     def showFullRecordings(self, channel):
         programList = self.database.getFullRecordings(int(ADDON.getSetting('listing_days')))
@@ -4036,8 +4098,13 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_RECORD:
             if index > -1:
                 self.recordProgram(programList[index])
-                time.sleep(1)
-                self.showFullRecordings(programList[index].channel)
+                if xbmc.getCondVisibility('!Window.IsVisible(okdialog)'):
+                    with self.busyDialog():
+                        time.sleep(1)
+                        self.showFullRecordings(programList[index].channel)
+
+        elif action == ACTION_STOP:
+            return
 
         else:
             if index > -1:
@@ -4046,8 +4113,9 @@ class mTVGuide(xbmcgui.WindowXML):
                 start = program.startDate
                 end = program.endDate
                 self.playChannel2(program)
-                time.sleep(1)
-                self.showFullRecordings(programList[index].channel)
+                with self.busyDialog():
+                    time.sleep(1)
+                    self.showFullRecordings(programList[index].channel)
 
 
     def reloadList(self, add=""):
