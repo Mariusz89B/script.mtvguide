@@ -5727,7 +5727,14 @@ class mTVGuide(xbmcgui.WindowXML):
             self.notification = Notification(self.database, ADDON.getAddonInfo('path'), self)
             if ADDON.getSetting('notifications_enabled') == 'true':
                 self.notification.scheduleNotifications()
-            self.recordService.scheduleAllRecordings()
+
+            if ADDON.getSetting('background_services') == 'true':
+                background = True
+            else:
+                background = False
+
+            if not background:
+                self.recordService.scheduleAllRecordings()
             self.rssFeed = src.RssFeed(url=RSS_FILE, last_message=self.database.getLastRssDate(), update_date_call=self.database.updateRssDate)
 
             if strings2.M_TVGUIDE_CLOSING == False:

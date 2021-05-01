@@ -68,6 +68,7 @@ if sys.version_info[0] < 3:
 import threading
 import os, re, time, datetime, io, zipfile
 import xbmc, xbmcgui, xbmcvfs
+import shutil
 import playService
 import serviceLib
 import sqlite3
@@ -612,15 +613,22 @@ class Database(object):
                         channList = p.findall(base)
                         intList = range(len(channList))
 
-                        for chann in intList:
-                            ch = Channel(channList[chann], channList[chann])
+                        for chann in channList:
+                            ch = chann #Channel(channList[chann], channList[chann])
                             channelList.append(ch)
+
+                        if channelList:
+                            chList = '\',\''.join(channelList)
 
                     # Clear program list only when there is at lease one valid row available
                     if not dbChannelsUpdated:
                         dbChannelsUpdated = True
                         if self.settingsChanged:
-                            c.execute('DELETE FROM channels WHERE source=? AND NOT LIKE id IN ?', [self.source.KEY, channelList])
+                            try:
+                                c.execute('DELETE FROM channels WHERE source=? AND NOT LIKE title IN (\'' + chList + '\') ', [self.source.KEY])
+                            except:
+                                c.execute('DELETE FROM channels WHERE source=?', [self.source.KEY])
+                                shutil.copyfile(os.path.join(ADDON.getAddonInfo('path'), 'resources', 'basemap_extra.xml'), os.path.join(profilePath, 'basemap_extra.xml'))
                             c.execute('DELETE FROM programs WHERE source=?', [self.source.KEY])
                             c.execute("DELETE FROM updates WHERE source=?", [self.source.KEY])
                         self.settingsChanged = False # only want to update once due to changed settings

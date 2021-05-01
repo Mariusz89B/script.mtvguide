@@ -1672,6 +1672,38 @@ class RecordService(BasePlayService):
 
 
     def cancelProgramRecord(self, program): #wylaczyc akturalnie nagrywany program?
+        """
+        if not self.threadList:
+            urlList = self.epg.database.getStreamUrlList(program.channel)
+
+            for url in urlList:
+                cid, service = self.parseUrl(url)
+                channelInfo = self.getChannel(cid, service)
+
+                destinationFile = os.path.join(decodeBackslashPath(self.recordDestinationPath), encodePath(self.getOutputFilename(program)))
+                recordDuration = self.calculateTimeDifference(program.endDate, timeOffset = -5 )
+                recordOptions = { 'forceRTMPDump' : False, 'settingsChanged' : False, 'force_h264_mp4toannexb' : self.force_h264_mp4toannexb }
+
+                recordCommand = self.generateFFMPEGCommand(channelInfo, recordDuration, destinationFile, recordOptions)
+
+                si = None
+                if os.name == 'nt':
+                    si = subprocess.STARTUPINFO()
+                    si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+                recordEnviron = os.environ.copy()
+                oldLdPath = recordEnviron.get("LD_LIBRARY_PATH", '')
+                recordEnviron["LD_LIBRARY_PATH"] = os.path.join(os.path.dirname(recordCommand[0]), 'lib') + ':/lib:/usr/lib:/usr/local/lib'
+
+                recordHandle = subprocess.Popen(recordCommand, start_new_session=False, shell=False, stdin=None, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, startupinfo=si, env=recordEnviron)
+                recordHandle.kill()
+
+                self.epg.database.removeRecording(program)
+                self.cancelProgramRecord(program)
+                updateDB = True
+                self.processIsCanceled = True
+                return
+        """
+
         for element in self.getScheduledRecordingsForThisTime(program.startDate):
             programList = element.programList
             try:
