@@ -174,6 +174,9 @@ class PlaylistUpdater(baseServiceUpdater):
 
         if (int(tnow) >= int(timestamp) + int(tdel)) or not os.path.exists(filepath) or os.stat(filepath).st_size <= 0 or url != url_setting:
             content = self.requestUrl(upath)
+            if not '#EXTINF' in content:
+                content = None
+                
             for f in os.listdir(path):
                 if not f.endswith(".m3u") or not f.endswith(".url"):
                     continue

@@ -298,6 +298,7 @@ class RecordService(BasePlayService):
 
                         else:
                             self.epg.database.removeRecording(program)
+                            self.abortProgramDownload(program)
                             updateDB = True
 
                     else:
@@ -326,6 +327,7 @@ class RecordService(BasePlayService):
 
                 else:
                     self.epg.database.removeRecording(program)
+                    self.abortProgramRecord(program)
                     updateDB = True
 
             else:
@@ -341,7 +343,6 @@ class RecordService(BasePlayService):
 
 
     def scheduleDownload(self, program, startOffset, endOffset, delayRecording = 0):
-
         program = copy.deepcopy(program)
         program.endDate += datetime.timedelta(seconds=endOffset)
 
@@ -1266,38 +1267,43 @@ class RecordService(BasePlayService):
         cid, service = self.parseUrl(url)
         channelInfo = self.getChannel(cid, service)
 
-        if not 'streaming.telia.com' in channelInfo.strm:
-            if channelInfo is None:
-                threadData['nrOfReattempts'] += 1
-                deb('RecordService recordUrl - locked service {} - trying next, nrOfReattempts: {}, max: {}'.format(service, threadData['nrOfReattempts'], maxNrOfReattempts))
-                return #go to next stream - this one seems to be locked
+        try:
+            if 'streaming.telia.com' in channelInfo.strm:
+                self.epg.database.removeRecording(self.program)
+                self.cancelProgramRecord(self.program)
+                updateDB = True
+                xbmcgui.Dialog().ok(strings(70006) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30373))
+                self.processIsCanceled = True
+                self.unlockService(service) 
+                return
+                
+        except:
+            pass
 
-            self.findNextUnusedOutputFilename(threadData)
-            
-            if self.rtmpdumpAvailable and self.useOnlyFFmpeg == 'false' and (channelInfo.rtmpdumpLink is not None or (threadData['recordOptions']['forceRTMPDump'] == True and 'rtmp:' in channelInfo.strm) ):
-                recordCommand = self.generateRTMPDumpCommand(channelInfo, threadData['recordDuration'], threadData['destinationFile'], threadData['recordOptions'])
-            elif self.ffmpegdumpAvailable:
-                recordCommand = self.generateFFMPEGCommand(channelInfo, threadData['recordDuration'], threadData['destinationFile'], threadData['recordOptions'])
-            else:
-                recordCommand = None
-                deb('RecordService recordUrl ERROR, cant choose record application, self.rtmpdumpAvailable: {}, self.ffmpegdumpAvailable: {}, self.useOnlyFFmpeg: {}, channelInfo.rtmpdumpLink: {}, forceRTMPDump: {}, rtmpInUrl: {}'.format(self.rtmpdumpAvailable, self.ffmpegdumpAvailable, self.useOnlyFFmpeg, channelInfo.rtmpdumpLink, threadData['recordOptions']['forceRTMPDump'], 'rtmp:' in channelInfo.strm) )
+        if channelInfo is None:
+            threadData['nrOfReattempts'] += 1
+            deb('RecordService recordUrl - locked service {} - trying next, nrOfReattempts: {}, max: {}'.format(service, threadData['nrOfReattempts'], maxNrOfReattempts))
+            return #go to next stream - this one seems to be locked
 
-            if recordCommand:
-                self.showStartRecordNotification(threadData)
-                output = self.record(recordCommand, threadData)
-                self.postRecordActions(output, threadData)
-            else:
-                threadData['nrOfReattempts'] += 1
-
-            self.unlockService(service)
-
+        self.findNextUnusedOutputFilename(threadData)
+        
+        if self.rtmpdumpAvailable and self.useOnlyFFmpeg == 'false' and (channelInfo.rtmpdumpLink is not None or (threadData['recordOptions']['forceRTMPDump'] == True and 'rtmp:' in channelInfo.strm) ):
+            recordCommand = self.generateRTMPDumpCommand(channelInfo, threadData['recordDuration'], threadData['destinationFile'], threadData['recordOptions'])
+        elif self.ffmpegdumpAvailable:
+            recordCommand = self.generateFFMPEGCommand(channelInfo, threadData['recordDuration'], threadData['destinationFile'], threadData['recordOptions'])
         else:
-            self.epg.database.removeRecording(self.program)
-            self.cancelProgramRecord(self.program)
-            updateDB = True
-            xbmcgui.Dialog().ok(strings(70006) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30373))
-            self.processIsCanceled = True
-            self.unlockService(service)               
+            recordCommand = None
+            deb('RecordService recordUrl ERROR, cant choose record application, self.rtmpdumpAvailable: {}, self.ffmpegdumpAvailable: {}, self.useOnlyFFmpeg: {}, channelInfo.rtmpdumpLink: {}, forceRTMPDump: {}, rtmpInUrl: {}'.format(self.rtmpdumpAvailable, self.ffmpegdumpAvailable, self.useOnlyFFmpeg, channelInfo.rtmpdumpLink, threadData['recordOptions']['forceRTMPDump'], 'rtmp:' in channelInfo.strm) )
+
+        if recordCommand:
+            self.showStartRecordNotification(threadData)
+            output = self.record(recordCommand, threadData)
+            self.postRecordActions(output, threadData)
+        else:
+            threadData['nrOfReattempts'] += 1
+
+        self.unlockService(service)
+                          
 
     def record(self, recordCommand, threadData):
         deb('RecordService record command: {}'.format(str(recordCommand)))
@@ -1671,39 +1677,39 @@ class RecordService(BasePlayService):
         return False
 
 
-    def cancelProgramRecord(self, program): #wylaczyc akturalnie nagrywany program?
-        """
-        if not self.threadList:
-            urlList = self.epg.database.getStreamUrlList(program.channel)
+    def abortProgramRecord(self, program):
+        urlList = self.epg.database.getStreamUrlList(program.channel)
 
-            for url in urlList:
-                cid, service = self.parseUrl(url)
-                channelInfo = self.getChannel(cid, service)
+        for url in urlList:
+            cid, service = self.parseUrl(url)
+            channelInfo = self.getChannel(cid, service)
 
-                destinationFile = os.path.join(decodeBackslashPath(self.recordDestinationPath), encodePath(self.getOutputFilename(program)))
-                recordDuration = self.calculateTimeDifference(program.endDate, timeOffset = -5 )
-                recordOptions = { 'forceRTMPDump' : False, 'settingsChanged' : False, 'force_h264_mp4toannexb' : self.force_h264_mp4toannexb }
+            self.unlockService(service)
 
+            destinationFile = os.path.join(decodeBackslashPath(self.recordDestinationPath), encodePath(self.getOutputFilename(program)))
+            recordDuration = self.calculateTimeDifference(program.endDate, timeOffset = -5 )
+            recordOptions = { 'forceRTMPDump' : False, 'settingsChanged' : False, 'force_h264_mp4toannexb' : self.force_h264_mp4toannexb }
+
+            if self.ffmpegdumpAvailable:
                 recordCommand = self.generateFFMPEGCommand(channelInfo, recordDuration, destinationFile, recordOptions)
+            else:
+                recordCommand = self.generateRTMPDumpCommand(channelInfo, recordDuration, destinationFile, recordOptions)
 
-                si = None
-                if os.name == 'nt':
-                    si = subprocess.STARTUPINFO()
-                    si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-                recordEnviron = os.environ.copy()
-                oldLdPath = recordEnviron.get("LD_LIBRARY_PATH", '')
-                recordEnviron["LD_LIBRARY_PATH"] = os.path.join(os.path.dirname(recordCommand[0]), 'lib') + ':/lib:/usr/lib:/usr/local/lib'
+            output = ''
+            si = None
+            if os.name == 'nt':
+                si = subprocess.STARTUPINFO()
+                si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+            recordEnviron = os.environ.copy()
+            oldLdPath = recordEnviron.get("LD_LIBRARY_PATH", '')
+            recordEnviron["LD_LIBRARY_PATH"] = os.path.join(os.path.dirname(recordCommand[0]), 'lib') + ':/lib:/usr/lib:/usr/local/lib'
+            recordHandle = subprocess.Popen(recordCommand, shell=False, stdin=None, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, startupinfo=si, env=recordEnviron)
+            output = recordHandle.communicate()[0]
+            recordHandle.kill()
+            return
 
-                recordHandle = subprocess.Popen(recordCommand, start_new_session=False, shell=False, stdin=None, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, startupinfo=si, env=recordEnviron)
-                recordHandle.kill()
 
-                self.epg.database.removeRecording(program)
-                self.cancelProgramRecord(program)
-                updateDB = True
-                self.processIsCanceled = True
-                return
-        """
-
+    def cancelProgramRecord(self, program): #wylaczyc akturalnie nagrywany program?
         for element in self.getScheduledRecordingsForThisTime(program.startDate):
             programList = element.programList
             try:
@@ -1734,6 +1740,34 @@ class RecordService(BasePlayService):
                 else:
                     deb('RecordService canceled ongoing recording of: {}'.format(program.title.encode('utf-8')))
                 return
+
+
+    def abortProgramDownload(self, program):
+        urlList = self.epg.database.getStreamUrlList(program.channel)
+        for url in urlList:
+            cid, service = self.parseUrl(url)
+            channelInfo = self.getChannelDownload(cid, service)
+
+            self.unlockService(service)
+
+            destinationFile = os.path.join(decodeBackslashPath(self.recordDestinationPath), encodePath(self.getOutputFilename(program)))
+            recordDuration = self.calculateTimeDifference(program.endDate, timeOffset = -5 )
+            recordOptions = { 'forceRTMPDump' : False, 'settingsChanged' : False, 'force_h264_mp4toannexb' : self.force_h264_mp4toannexb }
+
+            recordCommand = self.generateFFMPEGDownloadCommand(channelInfo, recordDuration, destinationFile, recordOptions)
+
+            output = ''
+            si = None
+            if os.name == 'nt':
+                si = subprocess.STARTUPINFO()
+                si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+            recordEnviron = os.environ.copy()
+            oldLdPath = recordEnviron.get("LD_LIBRARY_PATH", '')
+            recordEnviron["LD_LIBRARY_PATH"] = os.path.join(os.path.dirname(recordCommand[0]), 'lib') + ':/lib:/usr/lib:/usr/local/lib'
+            recordHandle = subprocess.Popen(recordCommand, shell=False, stdin=None, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, startupinfo=si, env=recordEnviron)
+            output = recordHandle.communicate()[0]
+            recordHandle.kill()
+            return
 
     def cancelProgramDownload(self, program): #wylaczyc akturalnie nagrywany program?
         for element in self.getScheduledDownloadingsForThisTime(program.startDate):
