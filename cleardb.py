@@ -72,6 +72,7 @@ class clearDB:
                 with open(os.path.join(self.profilePath, 'skin_fonts.ini'), 'w+') as fp:
                     fp.write('')
                     fp.close()
+
             if self.command == 'deleteAll' or self.command == 'deleteDb59908':
                 settingsFile = os.path.join(self.profilePath , 'settings.xml')
                 os.remove(settingsFile)
@@ -79,6 +80,7 @@ class clearDB:
                     shutil.rmtree(self.profilePath)
                 except:
                     pass
+
             xbmcgui.Dialog().ok(strings(DB_DELETED), strings(30969))
         else:
             self.database.initialize(self.onInitialized)
