@@ -2440,6 +2440,10 @@ msgctxt "#69064"
 msgid "Downloading"
 msgstr ""
 
+msgctxt "#69065"
+msgid "Ongoing recording, record service locked."
+msgstr ""
+
 msgctxt "#70000"
 msgid "Program title"
 msgstr ""

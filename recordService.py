@@ -505,7 +505,13 @@ class RecordService(BasePlayService):
             deb('DownloadService - end of download program: {}'.format(threadData['program'].title.encode('utf-8')))
         
         self.epg.database.removeRecording(threadData['program'])
+        threadData['notificationDisplayed'] = True
         self.showEndDownloadNotification(threadData)
+
+        try:
+            self.progress.close()
+        except:
+            pass
         
         if self.cleanupDownloadTimer is not None:
             self.cleanupDownloadTimer.cancel()
@@ -1120,12 +1126,19 @@ class RecordService(BasePlayService):
 
             threadData['notificationDisplayed'] = True #show only once
 
-    def showEndDownloadNotification(self, threadData):
-        if threadData['notificationDisplayed'] == True:
+    def showEndDownloadNotification(self, threadData="", program="", notificationDisplayed=False):
+        if not notificationDisplayed:
+            if threadData['notificationDisplayed'] == True:
+                if sys.version_info[0] > 2:
+                    xbmc.executebuiltin('Notification({},{},10000,{})'.format(finishedDownloadNotificationName, self.normalizeString(threadData['program'].title), self.dwicon))
+                else:
+                    xbmc.executebuiltin('Notification({},{},10000,{})'.format(finishedDownloadNotificationName.encode('utf-8', 'replace'), self.normalizeString(threadData['program'].title), self.dwicon))
+
+        else:
             if sys.version_info[0] > 2:
-                xbmc.executebuiltin('Notification({},{},10000,{})'.format(finishedDownloadNotificationName, self.normalizeString(threadData['program'].title), self.dwicon))
+                xbmc.executebuiltin('Notification({},{},10000,{})'.format(finishedDownloadNotificationName, self.normalizeString(program.title), self.dwicon))
             else:
-                xbmc.executebuiltin('Notification({},{},10000,{})'.format(finishedDownloadNotificationName.encode('utf-8', 'replace'), self.normalizeString(threadData['program'].title), self.dwicon))
+                xbmc.executebuiltin('Notification({},{},10000,{})'.format(finishedDownloadNotificationName.encode('utf-8', 'replace'), self.normalizeString(program.title), self.dwicon))
 
 
     def scheduleAllRecordings(self):
@@ -1243,6 +1256,7 @@ class RecordService(BasePlayService):
         else:
             deb('RecordService - end of recording program: {}'.format(threadData['program'].title.encode('utf-8')))
 
+        threadData['notificationDisplayed'] = True
         self.showEndRecordNotification(threadData)
 
         if self.cleanupTimer is not None:
@@ -1267,42 +1281,51 @@ class RecordService(BasePlayService):
         cid, service = self.parseUrl(url)
         channelInfo = self.getChannel(cid, service)
 
-        try:
-            if 'streaming.telia.com' in channelInfo.strm:
-                self.epg.database.removeRecording(self.program)
-                self.cancelProgramRecord(self.program)
-                updateDB = True
-                xbmcgui.Dialog().ok(strings(70006) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30373))
-                self.processIsCanceled = True
-                self.unlockService(service) 
-                return
-                
-        except:
-            pass
+        if channelInfo is not None:
+            try:
+                if 'streaming.telia.com' in channelInfo.strm:
+                    self.epg.database.removeRecording(self.program)
+                    self.cancelProgramRecord(self.program)
+                    updateDB = True
+                    xbmcgui.Dialog().ok(strings(70006) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30373))
+                    self.processIsCanceled = True
+                    self.unlockService(service) 
+                    return
 
-        if channelInfo is None:
-            threadData['nrOfReattempts'] += 1
-            deb('RecordService recordUrl - locked service {} - trying next, nrOfReattempts: {}, max: {}'.format(service, threadData['nrOfReattempts'], maxNrOfReattempts))
-            return #go to next stream - this one seems to be locked
+            except:
+                pass
 
-        self.findNextUnusedOutputFilename(threadData)
-        
-        if self.rtmpdumpAvailable and self.useOnlyFFmpeg == 'false' and (channelInfo.rtmpdumpLink is not None or (threadData['recordOptions']['forceRTMPDump'] == True and 'rtmp:' in channelInfo.strm) ):
-            recordCommand = self.generateRTMPDumpCommand(channelInfo, threadData['recordDuration'], threadData['destinationFile'], threadData['recordOptions'])
-        elif self.ffmpegdumpAvailable:
-            recordCommand = self.generateFFMPEGCommand(channelInfo, threadData['recordDuration'], threadData['destinationFile'], threadData['recordOptions'])
+            if channelInfo is None:
+                threadData['nrOfReattempts'] += 1
+                deb('RecordService recordUrl - locked service {} - trying next, nrOfReattempts: {}, max: {}'.format(service, threadData['nrOfReattempts'], maxNrOfReattempts))
+                return #go to next stream - this one seems to be locked
+
+            self.findNextUnusedOutputFilename(threadData)
+            
+            if self.rtmpdumpAvailable and self.useOnlyFFmpeg == 'false' and (channelInfo.rtmpdumpLink is not None or (threadData['recordOptions']['forceRTMPDump'] == True and 'rtmp:' in channelInfo.strm) ):
+                recordCommand = self.generateRTMPDumpCommand(channelInfo, threadData['recordDuration'], threadData['destinationFile'], threadData['recordOptions'])
+            elif self.ffmpegdumpAvailable:
+                recordCommand = self.generateFFMPEGCommand(channelInfo, threadData['recordDuration'], threadData['destinationFile'], threadData['recordOptions'])
+            else:
+                recordCommand = None
+                deb('RecordService recordUrl ERROR, cant choose record application, self.rtmpdumpAvailable: {}, self.ffmpegdumpAvailable: {}, self.useOnlyFFmpeg: {}, channelInfo.rtmpdumpLink: {}, forceRTMPDump: {}, rtmpInUrl: {}'.format(self.rtmpdumpAvailable, self.ffmpegdumpAvailable, self.useOnlyFFmpeg, channelInfo.rtmpdumpLink, threadData['recordOptions']['forceRTMPDump'], 'rtmp:' in channelInfo.strm) )
+
+            if recordCommand:
+                self.showStartRecordNotification(threadData)
+                output = self.record(recordCommand, threadData)
+                self.postRecordActions(output, threadData)
+            else:
+                threadData['nrOfReattempts'] += 1
+
+            self.unlockService(service)
+
         else:
-            recordCommand = None
-            deb('RecordService recordUrl ERROR, cant choose record application, self.rtmpdumpAvailable: {}, self.ffmpegdumpAvailable: {}, self.useOnlyFFmpeg: {}, channelInfo.rtmpdumpLink: {}, forceRTMPDump: {}, rtmpInUrl: {}'.format(self.rtmpdumpAvailable, self.ffmpegdumpAvailable, self.useOnlyFFmpeg, channelInfo.rtmpdumpLink, threadData['recordOptions']['forceRTMPDump'], 'rtmp:' in channelInfo.strm) )
-
-        if recordCommand:
-            self.showStartRecordNotification(threadData)
-            output = self.record(recordCommand, threadData)
-            self.postRecordActions(output, threadData)
-        else:
-            threadData['nrOfReattempts'] += 1
-
-        self.unlockService(service)
+            self.epg.database.removeRecording(self.program)
+            self.cancelProgramRecord(self.program)
+            updateDB = True
+            xbmcgui.Dialog().ok(strings(70006) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', strings(69065))
+            self.processIsCanceled = True
+            self.unlockService(service) 
                           
 
     def record(self, recordCommand, threadData):
@@ -1767,6 +1790,8 @@ class RecordService(BasePlayService):
             recordHandle = subprocess.Popen(recordCommand, shell=False, stdin=None, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, startupinfo=si, env=recordEnviron)
             output = recordHandle.communicate()[0]
             recordHandle.kill()
+
+            self.showEndDownloadNotification(program=program, notificationDisplayed=True)
             return
 
     def cancelProgramDownload(self, program): #wylaczyc akturalnie nagrywany program?
