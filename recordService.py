@@ -246,8 +246,8 @@ class RecordService(BasePlayService):
             num /= step_unit
 
 
-    def calcFileSize(self, duration, bitrate):
-        result = (bitrate / 8) * (duration * 1000)
+    def calcFileSize(self, duration, bitrate, depth):
+        result = bitrate / depth * duration * 1000
         return result
 
 
@@ -408,17 +408,21 @@ class RecordService(BasePlayService):
         iDownsize = 0
 
         while not (self.processIsCanceled or diag.isFinished()):
-            program = self.getOutputFilename(threadData['program'], threadData['partNumber'])
-            dest = os.path.join(decodePath(self.recordDestinationPath), self.getOutputFilename(threadData['program'], threadData['partNumber']))
+            try:
+                program = self.getOutputFilename(threadData['program'], threadData['partNumber'])
+                dest = os.path.join(decodePath(self.recordDestinationPath), self.getOutputFilename(threadData['program'], threadData['partNumber']))
 
-            if xbmcvfs.exists(dest):
-                stat = os.stat(dest)
-                iDownsize = stat.st_size
-    
-            if float(self.downloadSize) > 1.0:
+                if xbmcvfs.exists(dest):
+                    stat = os.stat(dest)
+                    iDownsize = stat.st_size
+            except:
+                program = ''
+                iDownsize = 1000
+
+            if float(self.downloadSize) > 1:
                 iTotalSize = float(self.downloadSize)
             else:
-                iTotalSize = 1000.0
+                iTotalSize = 1000
             
             self.stateCallBackFunction(program, iDownsize, iTotalSize, durationTime)
 
@@ -444,16 +448,16 @@ class RecordService(BasePlayService):
         elif iTotalSize < 5000000:
             TotalSize = '0 MB'
         else:
-            TotalSize = self.formatFileSize(float(iTotalSize))
+            TotalSize = self.formatFileSize(iTotalSize)
 
         if iDownsize < 5000000:
             Downsize = '0 MB'
         else:
-            Downsize = self.formatFileSize(float(iDownsize))
+            Downsize = self.formatFileSize(int(iDownsize))
 
-        downloadSpeed = round(iDownsize * 0.000008 / elapsedTime, 1)
+        downloadSpeed = round(int(iDownsize) * 0.000008 / int(elapsedTime), 1)
 
-        self.progress.update(iPercent, str(program), str(Downsize) + ' / ' + str(TotalSize)+', '+str(downloadSpeed)+' mbit/s')
+        self.progress.update(iPercent, str(program), str(Downsize) + ' / ' + str(TotalSize) + ', ' + str(downloadSpeed) + ' mbit/s')
     
         if (self.progress.isFinished()) and not (self.processIsCanceled):
             self.processIsCanceled = True
@@ -574,7 +578,7 @@ class RecordService(BasePlayService):
             mktime_duration = int(datetime.datetime.timestamp(e) - datetime.datetime.timestamp(t))
         else:
             mktime_duration = int(time.mktime(e.timetuple())) - int(time.mktime(t.timetuple()))
-        mktime_duration = str(mktime_duration)
+        #mktime_duration = str(mktime_duration)
 
         return archivePlaylist, mktime_duration
 
@@ -585,7 +589,7 @@ class RecordService(BasePlayService):
         threadData['downloadOptions']['settingsChanged'] = False
         threadData['downloadDuration'] = self.downloadDuration
 
-        if int(threadData['downloadDuration']) <= 0:
+        if threadData['downloadDuration'] <= 0:
             deb('DownloadService - downloadUrl duration is 0, aborting download')
             return
 
@@ -834,88 +838,6 @@ class RecordService(BasePlayService):
             duration = threadData['downloadDuration']
 
             for line in threadData['downloadHandle'].stdout:
-                #mediaprobe_re = re.compile(r"Duration:\s+(?P<dur>(?:(?:\d:?)+[.]?\d*)|N/A)(?:.+start:\s+(?P<start>\d+[.]\d+))?.+bitrate:\s+(?P<bitrate>(?:\d+\s*..[/]s)|N/A)")
-                #streamprobe_re = re.compile(r"\s*Stream.+:\s+Video:(.*,\s(?P<depth>.*)).+\s+(?P<res>\d+x\d+)(?:.*,\s*(?P<fps>\d+[.]?\d*)\sfps)?(?:.+\(default\))?")
-                #audioprobe_re = re.compile(r"\s*Stream.+:\s+Audio:.*")
-                #fftime_re = re.compile(r"(?P<h>\d+):(?P<m>\d+):(?P<s>\d+)\.(?P<fract>\d+)")
-
-                #media = mediaprobe_re.search(line).group(0)
-                #deb('media: {}'.format(media))
-
-                #duration  = mediaprobe_re.search(line).group(1)
-                #deb('duration: {}'.format(duration))
-                
-                #start  = mediaprobe_re.search(line).group(2)
-                #deb('start: {}'.format(start))
-                
-                #bitrate  = mediaprobe_re.search(line).group(3)
-                #deb('bitrate: {}'.format(bitrate))
-
-                #bitrateNum = re.findall(r'(\d+)\skb/s', bitrate)
-                #bitrateCalc = int(bitrateNum[0])
-
-                #video = streamprobe_re.search(line).group(0)
-                #deb('video: {}'.format(video))
-
-                #res  = streamprobe_re.search(line).group(3)
-                #deb('res: {}'.format(res))
-
-                #split = res.split('x')
-                #width = int(split[0])
-                #height = int(split[1])
-
-                #deb('width: {}'.format(self.width))
-                #deb('height: {}'.format(self.height))
-
-                #fps  = streamprobe_re.search(line).group(4)
-                #fps = int(fps)
-                #deb('fps: {}'.format(self.fps))
-
-                #depth = streamprobe_re.search(line).group(2)
-                #deb('depth: {}'.format(depth))
-
-                #bit8 = ['yuv420p', 'yuvj420p', 'yuv422p', 'yuvj422p', 'yuv444p', 'yuvj444p', 'nv12', 'nv16']
-                #bit10 = ['yuv420p10le', 'yuv422p10le', 'yuv444p10le', 'nv20le']
-
-                #if depth in bit8:
-                    #depthSize = 8
-
-                #elif depth in bit10:
-                    #depthSize = 10
-
-                #else:
-                    #depthSize = 8
-
-                #audio  = audioprobe_re.search(line).group(0)
-                #deb('audio: {}'.format(audio))
-
-                #h  = fftime_re.search(line).group(1)
-                #deb('h: {}'.format(h))
-                #m  = fftime_re.search(line).group(2)
-                #deb('m: {}'.format(m))
-                #s  = fftime_re.search(line).group(3)
-                #deb('s: {}'.format(s))
-                #f  = fftime_re.search(line).group(4)
-                #deb('f: {}'.format(f))
-
-
-                ### Regex ###
-
-                # Resolution
-
-                #resolution = re.findall('Video:.*\s(\d+x\d+)', video)
-                #res = resolution[0]
-
-                #split = res.split('x')
-                #width = int(split[0])
-                #height = int(split[1])
-
-                # Fps
-
-                #frames = re.findall('Video:.*,\s(\d+)', video)
-                #fps = frames[0]
-                #fps = int(fps)
-
                 p = re.compile('.*time=(.*?)\s')
 
                 if p.match(line):
@@ -924,21 +846,19 @@ class RecordService(BasePlayService):
                 duration = (self.program.endDate - self.program.startDate).total_seconds()
 
                 bitrate_re = re.findall(r'.*bitrate=(.*?)kbits.*', line)
-                if bitrate_re:
-                    bitrate
-                else:
+                if not bitrate_re:
                     bitrate = 0
                 
                 try:
                     bitrate = float(bitrate_re[0])
-                    avgList.append(bitrate)
+                    avgList.append(int(bitrate))
                     
                 except:
                     bit = 0
 
                 if bitrate > 1:
                     bit = sum(avgList) / len(avgList)
-                    self.downloadSize = self.calcFileSize(duration, bit)
+                    self.downloadSize = self.calcFileSize(int(duration), int(bit), 8)
 
             output = threadData['downloadHandle'].communicate()[0]
             returnCode = threadData['downloadHandle'].returncode
@@ -1035,7 +955,7 @@ class RecordService(BasePlayService):
         streamSource = channelInfo.strm
         
         cookieSeparator = streamSource.find('|')
-        if cookieSeparator > 0:
+        if cookieSeparator > 0 and not '.mpd' in streamSource:
             removedCookie = streamSource[cookieSeparator+1:]
             streamSource = streamSource[:cookieSeparator]
             deb('DownloadService - found cookie separator in download source! Remove this from URL: %s' % removedCookie)
@@ -1369,7 +1289,7 @@ class RecordService(BasePlayService):
     def postRecordActions(self, recordOutput, threadData):
         self.analyzeRecordOutput(recordOutput, threadData['recordOptions'])
         recordedSecs = (datetime.datetime.now() - threadData['recordStartTime']).seconds
-        if(int(threadData['recordDuration']) - int(recordedSecs) < 60):
+        if(threadData['recordDuration'] - recordedSecs < 60):
             if sys.version_info[0] > 2:
                 deb('RecordService recordLoop successfully recored program: {}, started at: {}, ended at: {}, duration {}, now: {}'.format(threadData['program'].title, threadData['program'].startDate, threadData['program'].endDate, threadData['recordDuration'], datetime.datetime.now()))
             else:
@@ -1457,7 +1377,7 @@ class RecordService(BasePlayService):
 
         else:
             cookieSeparator = streamSource.find('|')
-            if cookieSeparator > 0:
+            if cookieSeparator > 0 and not '.mpd' in streamSource:
                 removedCookie = streamSource[cookieSeparator+1:]
                 streamSource = streamSource[:cookieSeparator]
                 deb('RecordService - found cookie separator in record source! Remove this from URL: %s' % removedCookie)
@@ -1707,29 +1627,33 @@ class RecordService(BasePlayService):
             cid, service = self.parseUrl(url)
             channelInfo = self.getChannel(cid, service)
 
-            self.unlockService(service)
+            if channelInfo is not None:
+                try:
+                    self.unlockService(service)
+                except:
+                    return
 
-            destinationFile = os.path.join(decodeBackslashPath(self.recordDestinationPath), encodePath(self.getOutputFilename(program)))
-            recordDuration = self.calculateTimeDifference(program.endDate, timeOffset = -5 )
-            recordOptions = { 'forceRTMPDump' : False, 'settingsChanged' : False, 'force_h264_mp4toannexb' : self.force_h264_mp4toannexb }
+                destinationFile = os.path.join(decodeBackslashPath(self.recordDestinationPath), encodePath(self.getOutputFilename(program)))
+                recordDuration = self.calculateTimeDifference(program.endDate, timeOffset = -5 )
+                recordOptions = { 'forceRTMPDump' : False, 'settingsChanged' : False, 'force_h264_mp4toannexb' : self.force_h264_mp4toannexb }
 
-            if self.ffmpegdumpAvailable:
-                recordCommand = self.generateFFMPEGCommand(channelInfo, recordDuration, destinationFile, recordOptions)
-            else:
-                recordCommand = self.generateRTMPDumpCommand(channelInfo, recordDuration, destinationFile, recordOptions)
+                if self.ffmpegdumpAvailable:
+                    recordCommand = self.generateFFMPEGCommand(channelInfo, recordDuration, destinationFile, recordOptions)
+                else:
+                    recordCommand = self.generateRTMPDumpCommand(channelInfo, recordDuration, destinationFile, recordOptions)
 
-            output = ''
-            si = None
-            if os.name == 'nt':
-                si = subprocess.STARTUPINFO()
-                si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-            recordEnviron = os.environ.copy()
-            oldLdPath = recordEnviron.get("LD_LIBRARY_PATH", '')
-            recordEnviron["LD_LIBRARY_PATH"] = os.path.join(os.path.dirname(recordCommand[0]), 'lib') + ':/lib:/usr/lib:/usr/local/lib'
-            recordHandle = subprocess.Popen(recordCommand, shell=False, stdin=None, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, startupinfo=si, env=recordEnviron)
-            output = recordHandle.communicate()[0]
-            recordHandle.kill()
-            return
+                output = ''
+                si = None
+                if os.name == 'nt':
+                    si = subprocess.STARTUPINFO()
+                    si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+                recordEnviron = os.environ.copy()
+                oldLdPath = recordEnviron.get("LD_LIBRARY_PATH", '')
+                recordEnviron["LD_LIBRARY_PATH"] = os.path.join(os.path.dirname(recordCommand[0]), 'lib') + ':/lib:/usr/lib:/usr/local/lib'
+                recordHandle = subprocess.Popen(recordCommand, shell=False, stdin=None, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, startupinfo=si, env=recordEnviron)
+                output = recordHandle.communicate()[0]
+                recordHandle.kill()
+                return
 
 
     def cancelProgramRecord(self, program): #wylaczyc akturalnie nagrywany program?
@@ -1771,28 +1695,32 @@ class RecordService(BasePlayService):
             cid, service = self.parseUrl(url)
             channelInfo = self.getChannelDownload(cid, service)
 
-            self.unlockService(service)
+            if channelInfo is not None:
+                try:
+                    self.unlockService(service)
+                except:
+                    return
 
-            destinationFile = os.path.join(decodeBackslashPath(self.recordDestinationPath), encodePath(self.getOutputFilename(program)))
-            recordDuration = self.calculateTimeDifference(program.endDate, timeOffset = -5 )
-            recordOptions = { 'forceRTMPDump' : False, 'settingsChanged' : False, 'force_h264_mp4toannexb' : self.force_h264_mp4toannexb }
+                destinationFile = os.path.join(decodeBackslashPath(self.recordDestinationPath), encodePath(self.getOutputFilename(program)))
+                recordDuration = self.calculateTimeDifference(program.endDate, timeOffset = -5 )
+                recordOptions = { 'forceRTMPDump' : False, 'settingsChanged' : False, 'force_h264_mp4toannexb' : self.force_h264_mp4toannexb }
 
-            recordCommand = self.generateFFMPEGDownloadCommand(channelInfo, recordDuration, destinationFile, recordOptions)
+                recordCommand = self.generateFFMPEGDownloadCommand(channelInfo, recordDuration, destinationFile, recordOptions)
 
-            output = ''
-            si = None
-            if os.name == 'nt':
-                si = subprocess.STARTUPINFO()
-                si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-            recordEnviron = os.environ.copy()
-            oldLdPath = recordEnviron.get("LD_LIBRARY_PATH", '')
-            recordEnviron["LD_LIBRARY_PATH"] = os.path.join(os.path.dirname(recordCommand[0]), 'lib') + ':/lib:/usr/lib:/usr/local/lib'
-            recordHandle = subprocess.Popen(recordCommand, shell=False, stdin=None, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, startupinfo=si, env=recordEnviron)
-            output = recordHandle.communicate()[0]
-            recordHandle.kill()
+                output = ''
+                si = None
+                if os.name == 'nt':
+                    si = subprocess.STARTUPINFO()
+                    si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+                recordEnviron = os.environ.copy()
+                oldLdPath = recordEnviron.get("LD_LIBRARY_PATH", '')
+                recordEnviron["LD_LIBRARY_PATH"] = os.path.join(os.path.dirname(recordCommand[0]), 'lib') + ':/lib:/usr/lib:/usr/local/lib'
+                recordHandle = subprocess.Popen(recordCommand, shell=False, stdin=None, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, startupinfo=si, env=recordEnviron)
+                output = recordHandle.communicate()[0]
+                recordHandle.kill()
 
-            self.showEndDownloadNotification(program=program, notificationDisplayed=True)
-            return
+                self.showEndDownloadNotification(program=program, notificationDisplayed=True)
+                return
 
     def cancelProgramDownload(self, program): #wylaczyc akturalnie nagrywany program?
         for element in self.getScheduledDownloadingsForThisTime(program.startDate):

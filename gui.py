@@ -4584,9 +4584,14 @@ class mTVGuide(xbmcgui.WindowXML):
 
                 self.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format(chann.id))
                 self.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(prog.title))
+                self.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format(self.formatTime(prog.startDate), self.formatTime(prog.endDate)))
                 self.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format((str(int(idx) + 1))))
         except:
-            pass
+            if ADDON.getSetting('info_osd') == "false" or self.program is None:
+                self.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format("N/A"))
+                self.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(strings(55016)))
+                self.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format("N/A", "N/A"))
+                self.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format("-"))
 
         if program.description:
             description = program.description
@@ -4836,19 +4841,16 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def updateCurrentChannel(self, channel):
         deb('updateCurrentChannel')
-        self.lastChannel = self.currentChannel
         self.currentChannel = channel
-
-        date = datetime.datetime.now()
+        self.lastChannel = self.currentChannel
 
         file_name = os.path.join(self.profilePath, 'autoplay.list')
         f = xbmcvfs.File(file_name, "wb")
+
         s = "{}".format(str(self.database.getCurrentChannelIdx(channel)))
-        try:
-            date = self.program.startDate
-        except:
-            program = self.database.getCurrentProgram(channel)
-            date = program.startDate
+        
+        date = self.program.startDate
+
         if sys.version_info[0] > 2:
             f.write('{},{}'.format(s, date))
         else:
@@ -5928,17 +5930,6 @@ class mTVGuide(xbmcgui.WindowXML):
                     for elem in self.controlAndProgramList:
                         if elem.program.channel.id == program.channel.id and elem.program.startDate == program.startDate:
                             return elem.control
-        except:
-            pass
-        return None
-
-    def _getProgramFocus(self, channel, point=None):
-        try:
-            program = self.database.getCurrentProgram(channel)
-            if program is not None:
-                for elem in self.controlAndProgramList:
-                    if elem.program.channel.id == program.channel.id and elem.program.startDate == program.startDate:
-                        return elem.control
         except:
             pass
         return None
