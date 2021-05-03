@@ -403,7 +403,7 @@ class PlaylistUpdater(baseServiceUpdater):
                         title = ''
                         splitedLine = stripLine.split(',')
 
-                        p = re.compile('^.*catchup-source=.*$', re.IGNORECASE)
+                        p = re.compile('^.*catchup-source=http[s]?.*$', re.IGNORECASE)
 
                         if p.match(stripLine) and ADDON.getSetting('archive_support') == 'true':
                             catchup = re.compile('^.*catchup-source="(.*?)".*')

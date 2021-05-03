@@ -815,6 +815,8 @@ class RecordService(BasePlayService):
         deb('DownloadService download command: {}'.format(str(recordCommand)))
         avgList = list()
 
+        self.downloading = True
+
         threadData['downloadStartTime'] = datetime.datetime.now()
         output = ''
         si = None
@@ -830,9 +832,7 @@ class RecordService(BasePlayService):
 
         try:
             threadData['stopDownloadTimer'] = threading.Timer(threadData['downloadDuration'], self.stopDownload, [threadData])
-            threadData['stopDownloadTimer'].start()
-
-            self.downloading = True 
+            threadData['stopDownloadTimer'].start() 
 
             threadData['downloadHandle'] = subprocess.Popen(recordCommand, shell=False, stdin=None, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True, startupinfo=si, env=recordEnviron)
             duration = threadData['downloadDuration']
@@ -840,25 +840,30 @@ class RecordService(BasePlayService):
             for line in threadData['downloadHandle'].stdout:
                 p = re.compile('.*time=(.*?)\s')
 
-                if p.match(line):
-                    self.elapsedTime = p.search(line).group(1)
+                i = 1
 
-                duration = (self.program.endDate - self.program.startDate).total_seconds()
+                while i < 15: 
+                    if p.match(line):
+                        self.elapsedTime = p.search(line).group(1)
 
-                bitrate_re = re.findall(r'.*bitrate=(.*?)kbits.*', line)
-                if not bitrate_re:
-                    bitrate = 0
-                
-                try:
-                    bitrate = float(bitrate_re[0])
-                    avgList.append(int(bitrate))
+                    duration = (self.program.endDate - self.program.startDate).total_seconds()
+
+                    bitrate_re = re.findall(r'.*bitrate=(.*?)kbits.*', line)
+                    if not bitrate_re:
+                        bitrate = 0
                     
-                except:
-                    bit = 0
+                    try:
+                        bitrate = float(bitrate_re[0])
+                        avgList.append(int(bitrate))
+                        
+                    except:
+                        bit = 0
 
-                if bitrate > 1:
-                    bit = sum(avgList) / len(avgList)
-                    self.downloadSize = self.calcFileSize(int(duration), int(bit), 8)
+                    if bitrate > 1:
+                        bit = sum(avgList) / len(avgList)
+                        self.downloadSize = self.calcFileSize(int(duration), int(bit), 8)
+
+                    i += 1
 
             output = threadData['downloadHandle'].communicate()[0]
             returnCode = threadData['downloadHandle'].returncode
