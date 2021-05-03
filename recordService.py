@@ -298,7 +298,7 @@ class RecordService(BasePlayService):
 
                         else:
                             self.epg.database.removeRecording(program)
-                            self.abortProgramDownload(program)
+                            #self.abortProgramDownload(program)
                             updateDB = True
 
                     else:
@@ -1693,7 +1693,7 @@ class RecordService(BasePlayService):
                     deb('RecordService canceled ongoing recording of: {}'.format(program.title.encode('utf-8')))
                 return
 
-
+    """            
     def abortProgramDownload(self, program):
         urlList = self.epg.database.getStreamUrlList(program.channel)
         for url in urlList:
@@ -1726,6 +1726,7 @@ class RecordService(BasePlayService):
 
                 self.showEndDownloadNotification(program=program, notificationDisplayed=True)
                 return
+    """
 
     def cancelProgramDownload(self, program): #wylaczyc akturalnie nagrywany program?
         for element in self.getScheduledDownloadingsForThisTime(program.startDate):

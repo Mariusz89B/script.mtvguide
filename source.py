@@ -1272,7 +1272,10 @@ class Database(object):
         sqlite3.register_converter(str('timestamp'), self.convert_datetime)
 
         program = None
-        now = datetime.datetime.now() + datetime.timedelta(minutes=int(ADDON.getSetting('timebar_adjust')))
+        try:
+            now = datetime.datetime.now() + datetime.timedelta(minutes=int(ADDON.getSetting('timebar_adjust')))
+        except:
+            now = datetime.datetime.now()
         c = self.conn.cursor()
         c.execute('SELECT * FROM programs WHERE channel=? AND source=? AND start_date <= ? AND end_date >= ?', [channel.id, self.source.KEY, now, now])
         row = c.fetchone()

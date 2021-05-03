@@ -2192,7 +2192,7 @@ class mTVGuide(xbmcgui.WindowXML):
         epgSize = ADDON.getSetting('epg_size')
         epgDbSize = ADDON.getSetting('epg_dbsize')
         if epgSize != epgDbSize:
-            self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
+            self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus, sourceUpdate=True)
 
         self.updateEpgTimer.stop()
         time.sleep(self.interval)
@@ -5341,7 +5341,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
         # przerysuj tylko wtedy gdy nie bylo epg! jak jest to nie przerysowuj - nie ustawi sie wtedy na aktualnej godzienie!
         if (self.mode == MODE_TV or self.redrawagain):
-            self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus)  # przerysuj
+            self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus, sourceUpdate=True)  # przerysuj
         if ADDON.getSetting('touch_panel') == 'true':
             self._showControl(self.C_MAIN_MOUSEPANEL_CONTROLS)
                     
