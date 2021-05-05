@@ -2262,7 +2262,7 @@ class MTVGUIDESource(Source):
                 raise SourceFaultyEPGException(url)
 
             if ADDON.getSetting('useCustomParser') == 'true':
-                return customParseXMLTV(unicode(xml, 'utf-8'), progress_callback)
+                return customParseXMLTV(xml.decode('utf-8'), progress_callback)
             else:
                 iob = io.BytesIO(xml)
 
