@@ -392,7 +392,7 @@ class RecordService(BasePlayService):
                     thread = threading.Thread(name='downloadLoop', target = self.downloadLoop, args=[threadData])
                     self.threadDownloadList.append([thread, threadData])
 
-                for thread, threadData in self.threadDownloadList:
+                for thread, threadData in self.threadDownloadList: 
                     thread.start()
                     if not self.downloading:
                         self.processIsCanceled = False
@@ -815,8 +815,6 @@ class RecordService(BasePlayService):
         deb('DownloadService download command: {}'.format(str(recordCommand)))
         avgList = list()
 
-        self.downloading = True
-
         threadData['downloadStartTime'] = datetime.datetime.now()
         output = ''
         si = None
@@ -836,6 +834,8 @@ class RecordService(BasePlayService):
 
             threadData['downloadHandle'] = subprocess.Popen(recordCommand, shell=False, stdin=None, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True, startupinfo=si, env=recordEnviron)
             duration = threadData['downloadDuration']
+
+            self.downloading = True
 
             for line in threadData['downloadHandle'].stdout:
                 p = re.compile('.*time=(.*?)\s')

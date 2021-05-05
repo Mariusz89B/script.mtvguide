@@ -62,10 +62,8 @@ try:
 except ImportError:
     pass
 
-if sys.version_info[0] < 3:
-    import cStringIO
-
 import threading
+import requests
 import os, re, time, datetime, io, zipfile
 import xbmc, xbmcgui, xbmcvfs
 import shutil
@@ -615,19 +613,20 @@ class Database(object):
 
                         for chann in intList:
                             ch = Channel(channList[chann], channList[chann])
-                            channelList.append(ch.id)
+                            channelList.append(ch)
 
                     # Clear program list only when there is at lease one valid row available
                     if not dbChannelsUpdated:
                         dbChannelsUpdated = True
                         if self.settingsChanged:
-                            try:
-                                c.execute('DELETE FROM channels WHERE source=? AND NOT LIKE id IN ?', [self.source.KEY, channelList])
-                            except:
-                                pass
-                                #c.execute('DELETE FROM channels WHERE source=?', [self.source.KEY])
+                            c.execute('DELETE FROM channels WHERE source=?', [self.source.KEY])
                             c.execute('DELETE FROM programs WHERE source=?', [self.source.KEY])
-                            c.execute("DELETE FROM updates WHERE source=?", [self.source.KEY])
+                            c.execute('DELETE FROM updates WHERE source=?', [self.source.KEY])
+                            for channel in channelList:
+                                c.execute('INSERT OR IGNORE INTO channels(id, title, logo, stream_url, visible, weight, source) VALUES(?, ?, ?, ?, ?, (CASE ? WHEN -1 THEN (SELECT COALESCE(MAX(weight)+1, 0) FROM channels WHERE source=?) ELSE ? END), ?)', [channel.id, channel.title, channel.logo, channel.streamUrl, channel.visible, channel.weight, self.source.KEY, channel.weight, self.source.KEY])
+                                if not c.rowcount:
+                                    c.execute('UPDATE channels SET title=?, logo=?, stream_url=?, visible=?, weight=(CASE ? WHEN -1 THEN weight ELSE ? END) WHERE id=? AND source=?', [channel.title, channel.logo, channel.streamUrl, channel.visible, channel.weight, channel.weight, channel.id, self.source.KEY])
+                               
                         self.settingsChanged = False # only want to update once due to changed settings
 
                         if clearExistingProgramList:
@@ -2039,8 +2038,10 @@ class Source(object):
             deb("[EPG] Downloading epg: {}".format(url))
             start = datetime.datetime.now()
             failCounter = 0
+
             while True:
                 try:
+                    """
                     if sys.version_info[0] > 2:
                         reqUrl   = urllib.request.Request(url)
                     else:
@@ -2058,6 +2059,20 @@ class Source(object):
 
                     content = u.read()
                     break
+                    """
+
+                    headers = {
+                        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:19.0) Gecko/20121213 Firefox/19.0',
+                        'Keep-Alive': 'timeout=20',
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Connection': 'Keep-Alive',
+                    }
+
+                    u = requests.get(url, headers=headers, timeout=15)
+                    filename = u.url
+                    content = u.content
+                    break
+
                 except Exception as ex:
                     failCounter+=1
                     deb('_downloadUrl Error downloading url: {}, Exceptiion: {}, failcounter: {}'.format(url, str(ex), failCounter))
@@ -2067,7 +2082,7 @@ class Source(object):
                         raise
                     time.sleep(1)
             try:
-                remoteFilename = u.info()['Content-Disposition'].split('filename=')[-1].replace('"','').replace(';','').strip()
+                remoteFilename = u.headers['Content-Disposition'].split('filename=')[-1].replace('"','').replace(';','').strip()
             except:
                 pass
 
@@ -2247,7 +2262,7 @@ class MTVGUIDESource(Source):
                 raise SourceFaultyEPGException(url)
 
             if ADDON.getSetting('useCustomParser') == 'true':
-                return customParseXMLTV(xml.decode('utf-8'), progress_callback)
+                return customParseXMLTV(unicode(xml, 'utf-8'), progress_callback)
             else:
                 iob = io.BytesIO(xml)
 
