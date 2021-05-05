@@ -5449,9 +5449,9 @@ class mTVGuide(xbmcgui.WindowXML):
                     else:
                         ADDON.setSetting('color_recordings', '0')
 
-                if cellWidth > 5 and cellWidth < 30:
+                if cellWidth > 30 and cellWidth < 45:
                     title = '...'  # Text will overflow outside the button if it is too narrow
-                elif cellWidth < 5:
+                elif cellWidth < 30:
                     title = ' '
                 else:
                     title = program.title
