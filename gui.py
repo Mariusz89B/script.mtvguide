@@ -5392,10 +5392,10 @@ class mTVGuide(xbmcgui.WindowXML):
             self.onEPGLoadError()
             return
 
-        categories = self.getCategories()
-
         if sourceUpdate == True:
             streams = self.getStreamsCid()
+
+        categories = self.getCategories()
 
         for program in programs:
             idx = channels.index(program.channel)
@@ -5449,8 +5449,10 @@ class mTVGuide(xbmcgui.WindowXML):
                     else:
                         ADDON.setSetting('color_recordings', '0')
 
-                if cellWidth < 35:
-                    title = ''  # Text will overflow outside the button if it is too narrow
+                if cellWidth > 5 and cellWidth < 30:
+                    title = '...'  # Text will overflow outside the button if it is too narrow
+                elif cellWidth < 5:
+                    title = ' '
                 else:
                     title = program.title
 
