@@ -362,7 +362,7 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
                 self.pageUpControl.controlRight(self.pausePlaybackControl)
                 self.setFocusIfNeeded(C_PLAY)
 
-        elif not self.controlledByMouse and not (currentlyPlayedProgram.channel.id == self.program.channel.id and currentlyPlayedProgram.startDate == self.program.startDate):
+        elif not self.controlledByMouse and not (currentlyPlayedProgram.channel.id == self.program.channel.id):
             #Program executed on different channel than currently is on, False if mouse controlled
             self.playControl.setEnabled(True)
             self.playControl.setVisible(True)
@@ -370,6 +370,13 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
             self.pageUpControl.controlRight(self.playControl)
             self.setFocusIfNeeded(C_PLAY)
 
+        elif currentlyPlayedProgram.startDate == self.program.startDate:
+            self.stopPlaybackControl.setEnabled(True)
+            self.stopPlaybackControl.setVisible(True)
+            self.pausePlaybackControl.controlLeft(self.stopPlaybackControl)
+            self.pageUpControl.controlRight(self.stopPlaybackControl)
+            self.setFocusIfNeeded(C_STOP)
+            
         elif self.controlledByMouse or self.showConfigButtons:
             self.stopPlaybackControl.setEnabled(True)
             self.stopPlaybackControl.setVisible(True)
