@@ -1241,8 +1241,8 @@ msgid "Enable catchup"
 msgstr "Schakel tijdsverschuiving in"
 
 msgctxt "#59979"
-msgid "Wrong timeshift format."
-msgstr "Verkeerd timeshift formaat."
+msgid "Wrong catchup format."
+msgstr "Verkeerd catchup formaat."
 
 msgctxt "#59980"
 msgid "No available catchup playback. Would you like to play this channel?"
@@ -1262,7 +1262,7 @@ msgstr "Andere instellingen"
 
 msgctxt "#59984"
 msgid "Catchup only finished programmes"
-msgstr "Timeshift is alleen beschikbaar voor voltooide programma's"
+msgstr "Catchup is alleen beschikbaar voor voltooide programma's"
 
 msgctxt "#59985"
 msgid "Downloading:"
@@ -1282,7 +1282,7 @@ msgstr "Tijdverschuivingsvenster dagen"
 
 msgctxt "#59989"
 msgid "Catchup type"
-msgstr "Timeshift type"
+msgstr "Catchup type"
 
 msgctxt "#59990"
 msgid "Append"

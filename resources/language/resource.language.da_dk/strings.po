@@ -1241,8 +1241,8 @@ msgid "Enable catchup"
 msgstr "Aktivér tidsforskydning"
 
 msgctxt "#59979"
-msgid "Wrong timeshift format."
-msgstr "Forkert timeshift format."
+msgid "Wrong catchup format."
+msgstr "Forkert catchup format."
 
 msgctxt "#59980"
 msgid "No available catchup playback. Would you like to play this channel?"
@@ -1262,7 +1262,7 @@ msgstr "Andre indstillinger"
 
 msgctxt "#59984"
 msgid "Catchup only finished programmes"
-msgstr "Timeshift er kun tilgængelig på afsluttede programmer"
+msgstr "Catchup er kun tilgængelig på afsluttede programmer"
 
 msgctxt "#59985"
 msgid "Downloading:"
@@ -1282,7 +1282,7 @@ msgstr "Tidsskift vindue dage"
 
 msgctxt "#59989"
 msgid "Catchup type"
-msgstr "Timeshift type"
+msgstr "Catchup type"
 
 msgctxt "#59990"
 msgid "Append"

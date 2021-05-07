@@ -1230,7 +1230,7 @@ msgstr "Amerykańskich"
 
 msgctxt "#59976"
 msgid "Catchup"
-msgstr "Timeshift"
+msgstr "Archiwum"
 
 msgctxt "#59977"
 msgid "Query format string"
@@ -1238,15 +1238,15 @@ msgstr "Format ciągu"
 
 msgctxt "#59978"
 msgid "Enable catchup"
-msgstr "Włącz timeshift"
+msgstr "Włącz archiwum"
 
 msgctxt "#59979"
-msgid "Wrong timeshift format."
-msgstr "Niepoprawny format timeshiftu."
+msgid "Wrong archiwum format."
+msgstr "Niepoprawny format archiwum."
 
 msgctxt "#59980"
 msgid "No available catchup playback. Would you like to play this channel?"
-msgstr "Brak dostępnego odtwarzania timeshift. Czy chcesz odtworzyć wybrany kanał?"
+msgstr "Brak dostępnego odtwarzania archiwum. Czy chcesz odtworzyć wybrany kanał?"
 
 msgctxt "#59981"
 msgid "- Buffer before program start (min)"
@@ -1262,7 +1262,7 @@ msgstr "Inne ustawienia"
 
 msgctxt "#59984"
 msgid "Catchup only finished programmes"
-msgstr "Timeshift dostępny tylko dla zakończonych programów"
+msgstr "Archiwum dostępny tylko dla zakończonych programów"
 
 msgctxt "#59985"
 msgid "Downloading:"
@@ -1278,11 +1278,11 @@ msgstr "Brak dostępnych plików do pobrania dla tego programu."
 
 msgctxt "#59988"
 msgid "Catchup window days"
-msgstr "Liczba dni timeshift"
+msgstr "Liczba dni archiwum"
 
 msgctxt "#59989"
 msgid "Catchup type"
-msgstr "Rodzaj timeshiftu"
+msgstr "Rodzaj archiwum"
 
 msgctxt "#59990"
 msgid "Append"
@@ -1334,7 +1334,7 @@ msgstr ""
 
 msgctxt "#60002"
 msgid "Catchup window"
-msgstr "Okno nadrobienia zaległości timeshift"
+msgstr "Okno nadrobienia zaległości archiwum"
 
 msgctxt "#60003"
 msgid "Add single URL value"
@@ -1662,7 +1662,7 @@ msgstr "Wybierz urządzenie do wymiany"
 
 msgctxt "#30998"
 msgid "Catchup - m-TVGuide [COLOR gold]EPG[/COLOR]"
-msgstr "Timeshift - m-TVGuide [COLOR gold]EPG[/COLOR]"
+msgstr "Archiwum - m-TVGuide [COLOR gold]EPG[/COLOR]"
 
 msgctxt "#30999"
 msgid "Would you like to start program [B]{}[/B] from the beginning?"

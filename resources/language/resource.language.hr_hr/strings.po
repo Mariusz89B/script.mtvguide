@@ -1230,7 +1230,7 @@ msgstr "Američki"
 
 msgctxt "#59976"
 msgid "Catchup"
-msgstr "Timeshift"
+msgstr "Catchup"
 
 msgctxt "#59977"
 msgid "Query format string"
@@ -1238,15 +1238,15 @@ msgstr "String formata"
 
 msgctxt "#59978"
 msgid "Enable catchup"
-msgstr "Omogući timeshift"
+msgstr "Omogući catchup"
 
 msgctxt "#59979"
-msgid "Wrong timeshift format."
-msgstr "Pogrešan format timeshift."
+msgid "Wrong catchup format."
+msgstr "Pogrešan format catchup."
 
 msgctxt "#59980"
 msgid "No available catchup playback. Would you like to play this channel?"
-msgstr "Nema dostupne reprodukcije timeshift. Želite li igrati ovaj kanal?"
+msgstr "Nema dostupne reprodukcije catchup. Želite li igrati ovaj kanal?"
 
 msgctxt "#59981"
 msgid "- Buffer before program start (min)"
@@ -1262,7 +1262,7 @@ msgstr "Ostale postavke"
 
 msgctxt "#59984"
 msgid "Catchup only finished programmes"
-msgstr "Timeshift dostupan samo na gotovim programima"
+msgstr "Catchup dostupan samo na gotovim programima"
 
 msgctxt "#59985"
 msgid "Downloading:"
@@ -1278,11 +1278,11 @@ msgstr "Nije dostupno preuzimanje za ovaj program."
 
 msgctxt "#59988"
 msgid "Catchup window days"
-msgstr "Timeshift prozor dana"
+msgstr "Catchup prozor dana"
 
 msgctxt "#59989"
 msgid "Catchup type"
-msgstr "Timeshift tip"
+msgstr "Catchup tip"
 
 msgctxt "#59990"
 msgid "Append"
@@ -1334,7 +1334,7 @@ msgstr "Manual"
 
 msgctxt "#60002"
 msgid "Catchup window"
-msgstr "Timeshift prozor"
+msgstr "Catchup prozor"
 
 msgctxt "#60003"
 msgid "Add single URL value"
@@ -1662,7 +1662,7 @@ msgstr "Odaberite uređaj koji želite zamijeniti"
 
 msgctxt "#30998"
 msgid "Catchup - m-TVGuide [COLOR gold]EPG[/COLOR]"
-msgstr "Timeshift - m-TVGuide [COLOR gold]EPG[/COLOR]"
+msgstr "Catchup - m-TVGuide [COLOR gold]EPG[/COLOR]"
 
 msgctxt "#30999"
 msgid "Would you like to start program [B]{}[/B] from the beginning?"

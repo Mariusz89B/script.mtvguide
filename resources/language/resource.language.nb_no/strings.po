@@ -1230,7 +1230,7 @@ msgstr "Amerikanske"
 
 msgctxt "#59976"
 msgid "Catchup"
-msgstr "Timeshift"
+msgstr "Catchup"
 
 msgctxt "#59977"
 msgid "Query format string"
@@ -1238,15 +1238,15 @@ msgstr "Streng format"
 
 msgctxt "#59978"
 msgid "Enable catchup"
-msgstr "Aktiver timeshift"
+msgstr "Aktiver catchup"
 
 msgctxt "#59979"
-msgid "Wrong timeshift format."
-msgstr "Feil timeshift format."
+msgid "Wrong catchup format."
+msgstr "Feil catchup format."
 
 msgctxt "#59980"
 msgid "No available catchup playback. Would you like to play this channel?"
-msgstr "Ingen tilgjengelige timeshift avspillinger. Vil du spille denne kanalen?"
+msgstr "Ingen tilgjengelige catchup avspillinger. Vil du spille denne kanalen?"
 
 msgctxt "#59981"
 msgid "- Buffer before program start (min)"
@@ -1262,7 +1262,7 @@ msgstr "Andre innstillinger"
 
 msgctxt "#59984"
 msgid "Catchup only finished programmes"
-msgstr "Timeshift er bare tilgjengelig på fullførte programmer"
+msgstr "Catchup er bare tilgjengelig på fullførte programmer"
 
 msgctxt "#59985"
 msgid "Downloading:"
@@ -1282,7 +1282,7 @@ msgstr "Tidsskiftvindu dager"
 
 msgctxt "#59989"
 msgid "Catchup type"
-msgstr "Timeshift type"
+msgstr "Catchup type"
 
 msgctxt "#59990"
 msgid "Append"
@@ -1662,7 +1662,7 @@ msgstr "Velg en enhet du vil bytte ut"
 
 msgctxt "#30998"
 msgid "Catchup - m-TVGuide [COLOR gold]EPG[/COLOR]"
-msgstr "Timeshift - m-TVGuide [COLOR gold]EPG[/COLOR]"
+msgstr "Catchup - m-TVGuide [COLOR gold]EPG[/COLOR]"
 
 msgctxt "#30999"
 msgid "Would you like to start program [B]{}[/B] from the beginning?"
