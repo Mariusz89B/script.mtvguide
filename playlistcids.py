@@ -551,67 +551,12 @@ class PlaylistUpdater(baseServiceUpdater):
         return result
 
 
-    @contextmanager
-    def busyDialog(self):
-        xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
-        try:
-            yield
-        finally:
-            if xbmc.getCondVisibility('Window.IsVisible(DialogBusy.xml)'):
-                xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
-
-
-    def getUrl(self, strmUrl, cid):
-        mimeType = ''
-
-        with self.busyDialog():
-            UA = ADDON.getSetting('{}_user_agent'.format(self.serviceName))
-
-            headers = {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0',
-                'Accept': 'application/json, text/javascript, */*; q=0.01',
-                'Accept-Language': 'pl,en-US;q=0.7,en;q=0.3',
-                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-            }
-
-            if UA:
-                headers.update({'User-Agent': UA})
-            
-            conn_timeout = int(ADDON.getSetting('max_wait_for_playback'))
-            read_timeout = int(ADDON.getSetting('max_wait_for_playback'))
-            timeouts = (conn_timeout, read_timeout)
-            
-            try:
-                response = scraper.get(strmUrl, headers=headers, allow_redirects=False, stream=True, timeout=timeouts)
-                if 'Location' in response.headers and '_TS' not in cid:
-                    strmUrl = response.headers.get('Location', None) 
-
-                else:
-                    strmUrl = response.url
-
-            except HTTPError as e:
-                deb('HTTPError: {}'.format(str(e)))
-
-            except ConnectionError as e:
-                deb('ConnectionError: {}'.format(str(e)))
-
-            except Timeout as e:
-                deb('Timeout: {}'.format(str(e))) 
-
-            except RequestException as e:
-                deb('RequestException: {}'.format(str(e))) 
-
-            return strmUrl
-
-
     def getChannelStream(self, chann):
         try:
             if self.stopPlaybackOnStart and xbmc.Player().isPlaying():
                 xbmc.Player().stop()
                 xbmc.sleep(500)
             self.log('getChannelStream: found matching channel: cid {}, name {}, stream {}'.format(chann.cid, chann.name, chann.strm))
-
-            chann.strm = self.getUrl(chann.strm, chann.cid)
 
             return chann
 
