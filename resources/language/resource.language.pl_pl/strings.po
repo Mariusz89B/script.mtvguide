@@ -1241,7 +1241,7 @@ msgid "Enable catchup"
 msgstr "Włącz archiwum"
 
 msgctxt "#59979"
-msgid "Wrong archiwum format."
+msgid "Wrong catchup format."
 msgstr "Niepoprawny format archiwum."
 
 msgctxt "#59980"
