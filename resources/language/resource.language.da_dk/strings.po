@@ -940,6 +940,10 @@ msgctxt "#30911"
 msgid "Timezone UTC (+00:00 GMT)"
 msgstr "Tidszone UTC (+00:00 GMT)"
 
+msgctxt "#30912"
+msgid "Press one more time to return to main screen"
+msgstr "Tryk endnu en gang for at vende tilbage til hovedskærmen"
+
 msgctxt "#59904"
 msgid "Enable"
 msgstr "Aktivereet"

@@ -842,7 +842,7 @@ class RecordService(BasePlayService):
 
                 i = 1
 
-                while i < 15: 
+                while i < 20: 
                     if p.match(line):
                         self.elapsedTime = p.search(line).group(1)
 
@@ -862,6 +862,9 @@ class RecordService(BasePlayService):
                     if bitrate > 1:
                         bit = sum(avgList) / len(avgList)
                         self.downloadSize = self.calcFileSize(int(duration), int(bit), 8)
+
+                    if i > 20:
+                        break
 
                     i += 1
 

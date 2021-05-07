@@ -2769,6 +2769,11 @@
 							<option label="30983">1</option>
 						</options>
 					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="background_services">false</condition>
+						</dependency>
+					</dependencies>
 					<control format="string" type="spinner"/>
 				</setting>
 			</group>

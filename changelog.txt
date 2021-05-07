@@ -1,4 +1,4 @@
-﻿[COLOR yellow][B]wersja 9.3.1[/B] - 2021-05-07[/COLOR]
+﻿[COLOR yellow][B]wersja 9.3.1[/B] - 2021-05-08[/COLOR]
 - dodana opcja wprowadzenia kanałów bez epg 
 - poprawka błędu parsowania
 - dodana opcja nagrywaj i oglądaj

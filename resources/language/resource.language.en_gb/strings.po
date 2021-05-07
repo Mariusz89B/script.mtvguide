@@ -940,10 +940,6 @@ msgctxt "#30910"
 msgid "Enable navigation panel for mouse or touch"
 msgstr ""
 
-msgctxt "#30911"
-msgid "Timezone UTC (+00:00 GMT)"
-msgstr ""
-
 msgctxt "#59904"
 msgid "Enable"
 msgstr ""
@@ -1370,6 +1366,14 @@ msgstr ""
 
 msgctxt "#60010"
 msgid "Add logo to selected channel"
+msgstr ""
+
+msgctxt "#30911"
+msgid "Timezone UTC (+00:00 GMT)"
+msgstr ""
+
+msgctxt "#30912"
+msgid "Press one more time to return to main screen"
 msgstr ""
 
 msgctxt "#30913"

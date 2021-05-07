@@ -2081,7 +2081,7 @@ class mTVGuide(xbmcgui.WindowXML):
         except:
             None
 
-    def close(self, background=''):
+    def close(self, background=False):
         deb('close')
         if not self.isClosing:
             if not background:
@@ -2757,8 +2757,11 @@ class mTVGuide(xbmcgui.WindowXML):
         debug('onActionEPGMode keyId {}, buttonCode {}'.format(action.getId(), action.getButtonCode()))
         if ADDON.getSetting('background_services') == 'true':
             background = True
+            C_MAIN_RETURN_STR = strings(30912)
         else:
             background = False
+            C_MAIN_EXIT_STR = strings(30981)
+            C_MAIN_RETURN_STR = strings(30964)
 
         if action.getId() in [ACTION_PARENT_DIR, KEY_NAV_BACK, ACTION_PREVIOUS_MENU]:
             if not background:
@@ -2766,9 +2769,9 @@ class mTVGuide(xbmcgui.WindowXML):
                     self.playService.stopPlayback()
                     
             if action.getButtonCode() != 0 or action.getId() == ACTION_SELECT_ITEM:
-                if ADDON.getSetting('exit') == '0':
+                if ADDON.getSetting('exit') == '0' and not background:
                     # Ask to close
-                    ret = xbmcgui.Dialog().yesno(strings(30963), '{}?'.format(strings(30981)))
+                    ret = xbmcgui.Dialog().yesno(strings(30963), '{}?'.format(C_MAIN_EXIT_STR))
                     if ret == False:
                         return
                     elif ret == True:
@@ -2779,7 +2782,7 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.close(background=background)
                     else:
                         self.lastCloseKeystroke = datetime.datetime.now()
-                        xbmcgui.Dialog().notification(strings(30963), strings(30964), time=3000, sound=False)
+                        xbmcgui.Dialog().notification(strings(30963), C_MAIN_RETURN_STR, time=3000, sound=False)
 
         elif action.getId() == ACTION_MOUSE_MOVE:
             if ADDON.getSetting('touch_panel') == 'true':
@@ -2973,12 +2976,15 @@ class mTVGuide(xbmcgui.WindowXML):
         if controlId in [self.C_MAIN_LOADING_CANCEL, self.C_MAIN_MOUSEPANEL_EXIT]:
             if ADDON.getSetting('background_services') == 'true':
                 background = True
+                C_MAIN_RETURN_STR = strings(30912)
             else:
                 background = False
+                C_MAIN_EXIT_STR = strings(30981)
+                C_MAIN_RETURN_STR = strings(30964)
 
-            if ADDON.getSetting('exit') == '0':
+            if ADDON.getSetting('exit') == '0' and not background:
                 # Ask to close
-                ret = xbmcgui.Dialog().yesno(strings(30963), '{}?'.format(strings(30981)))
+                ret = xbmcgui.Dialog().yesno(strings(30963), '{}?'.format(C_MAIN_EXIT_STR))
                 if ret == False:
                     return
                 elif ret == True:
@@ -2989,7 +2995,7 @@ class mTVGuide(xbmcgui.WindowXML):
                     self.close(background=background)
                 else:
                     self.lastCloseKeystroke = datetime.datetime.now()
-                    xbmcgui.Dialog().notification(strings(30963), strings(30964), time=3000, sound=False)
+                    xbmcgui.Dialog().notification(strings(30963), C_MAIN_RETURN_STR, time=3000, sound=False)
 
         if self.isClosing:
             return
