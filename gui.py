@@ -5398,10 +5398,10 @@ class mTVGuide(xbmcgui.WindowXML):
             self.onEPGLoadError()
             return
 
+        categories = self.getCategories()
+
         if sourceUpdate == True:
             streams = self.getStreamsCid()
-
-        categories = self.getCategories()
 
         for program in programs:
             idx = channels.index(program.channel)
