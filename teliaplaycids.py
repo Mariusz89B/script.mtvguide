@@ -60,8 +60,7 @@ from serviceLib import *
 import requests
 import json
 import iso8601
-import datetime
-from datetime import datetime, timedelta
+from datetime import timedelta
 import time
 import pytz
 import threading
@@ -112,7 +111,7 @@ class Threading(object):
         """ Method that runs forever """
         while not xbmc.Monitor().abortRequested():
             ab = TeliaPlayUpdater().checkRefresh()
-            if ab:
+            if not ab:
                 result = TeliaPlayUpdater().checkLogin()
                 if result is not None:
                     validTo, beartoken, refrtoken, cookies = result
@@ -246,13 +245,13 @@ class TeliaPlayUpdater(baseServiceUpdater):
             except:
                 pass
 
-            self.validTo = response.get('validTo', None)
+            self.validTo = response.get('validTo', '')
             ADDON.setSetting('teliaplay_validTo', str(self.validTo))
 
-            self.beartoken = response.get('accessToken', None)
+            self.beartoken = response.get('accessToken', '')
             ADDON.setSetting('teliaplay_beartoken', str(self.beartoken))
 
-            self.refrtoken = response.get('refreshToken', None)
+            self.refrtoken = response.get('refreshToken', '')
             ADDON.setSetting('teliaplay_refrtoken', str(self.refrtoken))
 
             url = 'https://ottapi.prod.telia.net/web/{cc}/tvclientgateway/rest/secure/v1/provision'.format(cc=cc[self.country])
@@ -294,6 +293,11 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 response = response.json()
                 if response['errorCode'] == 61004:
                     self.maxDeviceIdMessage()
+                    ADDON.setSetting('teliaplay_sess_id', '')
+                    ADDON.setSetting('teliaplay_devush', '')
+                    return False
+                elif response['errorCode'] == 9030:
+                    self.connErrorMessage() 
                     ADDON.setSetting('teliaplay_sess_id', '')
                     ADDON.setSetting('teliaplay_devush', '')
                     return False
@@ -354,7 +358,8 @@ class TeliaPlayUpdater(baseServiceUpdater):
 
             login = self.loginData()
 
-            run = Threading()
+            if login:
+                run = Threading()
 
             return login
 
@@ -396,18 +401,21 @@ class TeliaPlayUpdater(baseServiceUpdater):
             if localize:
                 result = self.utcToLocal(validTo)
         elif self.validTo != '':
-            try:
-                date_time_format = '%Y-%m-%dT%H:%M:%S.%f+' + self.validTo.split('+')[1]
-            except:
-                date_time_format = '%Y-%m-%dT%H:%M:%S.%f+' + self.validTo.split('+')[0]
+            if not self.validTo:
+                try:
+                    date_time_format = '%Y-%m-%dT%H:%M:%S.%f+' + self.validTo.split('+')[1]
+                except:
+                    date_time_format = '%Y-%m-%dT%H:%M:%S.%f+' + self.validTo.split('+')[0]
 
-            validTo = datetime(*(time.strptime(self.validTo, date_time_format)[0:6]))
-            timestamp = int(time.mktime(validTo.timetuple()))
-            tokenValidTo = datetime.fromtimestamp(int(timestamp))
+                validTo = datetime.datetime(*(time.strptime(self.validTo, date_time_format)[0:6]))
+                timestamp = int(time.mktime(validTo.timetuple()))
+                tokenValidTo = datetime.datetime.fromtimestamp(int(timestamp))
+            else:
+                tokenValidTo = datetime.datetime.now()
         else:
-            tokenValidTo = datetime.now()
+            tokenValidTo = datetime.datetime.now()
 
-        result = tokenValidTo - datetime.now()
+        result = tokenValidTo - datetime.datetime.now()
 
         return result
         
