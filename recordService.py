@@ -359,10 +359,6 @@ class RecordService(BasePlayService):
         if not self.checkIfDownloadDirExist():
             return False
 
-        secToRecording = self.calculateTimeDifference(program.startDate, timeOffset = startOffset + 5 )
-        if secToRecording < 0:
-            secToRecording = delayRecording #start now
-
         for element in self.getScheduledDownloadingsForThisTime(program.startDate):
             if element.startOffset == startOffset:
                 programList = element.programList #Fetch already scheduled list of programs
@@ -374,7 +370,7 @@ class RecordService(BasePlayService):
 
         programList = list()
         programList.append(program)
-        timer = threading.Timer(secToRecording, self.downloadChannel, [program.startDate, startOffset])
+        timer = threading.Timer(0, self.downloadChannel, [program.startDate, startOffset])
         self.timersdw.append(DownloadTimer(program.startDate, startOffset, timer, programList))
         timer.start()
         return True
