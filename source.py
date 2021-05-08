@@ -2296,63 +2296,53 @@ class MTVGUIDESource(Source):
         failedCounter = 0
         while failedCounter < 3:
             try:
-                if sys.version_info[0] > 2:
-                    reqUrl   = urllib.request.Request(self.MTVGUIDEUrl)
-                else:
-                    reqUrl   = urllib2.Request(self.MTVGUIDEUrl)
-                reqUrl.add_header('User-Agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:19.0) Gecko/20121213 Firefox/19.0')
-                reqUrl.add_header('Keep-Alive', 'timeout=20')
-                reqUrl.add_header('ContentType', 'application/x-www-form-urlencoded')
-                reqUrl.add_header('Connection', 'Keep-Alive')
-                if sys.version_info[0] > 2:    
-                    u = urllib.request.urlopen(reqUrl, timeout=2)
-                else:
-                    u = urllib2.urlopen(reqUrl, timeout=2)
-
-                headers = u.info()
-
                 new_size = None
 
+                headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:19.0) Gecko/20121213 Firefox/19.0',
+                            'Keep-Alive': 'timeout=20',
+                            'ContentType': 'application/x-www-form-urlencoded',
+                            'Connection': 'Keep-Alive',
+                            }
+
+                response = requests.get(self.MTVGUIDEUrl, headers=headers, verify=False, timeout=2)
+
                 try:
-                    new_size = int(headers.get("Content-Length").strip())
-                    u.close()
+                    new_size = int(response.headers['Content-Length'].strip())
                 except:
-                    new_size = headers.get("Content-Length")
-                    u.close()
+                    new_size = None
 
-                    if new_size is None:
+                if new_size is None:
+                    if sys.version_info[0] > 2:
+                        try:
+                            profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
+                        except:
+                            profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
+                    else:
+                        try:
+                            profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile'))
+                        except:
+                            profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
+
+                    response = requests.get(self.MTVGUIDEUrl, headers=headers, verify=False, timeout=2)
+
+                    file_name = os.path.join(profilePath, 'epg.temp')
+
+                    with open(file_name, 'wb') as f:
                         if sys.version_info[0] > 2:
-                            try:
-                                profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
-                            except:
-                                profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
+                            f.write(response.content)
                         else:
-                            try:
-                                profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile'))
-                            except:
-                                profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
+                            f.write(str(response.content))
 
-                        if sys.version_info[0] > 2:
-                            r = urllib.request.urlopen(self.MTVGUIDEUrl)  
-                            file_name = os.path.join(profilePath, 'epg_temp')
-                            f = open(file_name, 'wb')
-                            f.write(r.content)
-                        else:
-                            r = urllib2.urlopen(self.MTVGUIDEUrl) 
-                            file_name = os.path.join(profilePath, 'epg_temp')
-                            f = open(file_name, 'wb')
-                            f.write(str(r.content))
+                    st = os.stat(str(file_name))
+                    new_size = int(st.st_size)
+                    os.remove(file_name)
 
-                        st = os.stat(str(file_name))
-                        new_size = st.st_size
-                        f.close()
-                        os.remove(file_name)
-
-                        if new_size < 0:
-                            new_size = None
+                    if new_size < 0:
+                        new_size = None
 
                 #if new_size < 10000:
                     #raise Exception('getEpgSize too smal EPG size received: {}'.format(new_size))
+
                 self.EPGSize = new_size
                 break
             except Exception as ex:
