@@ -512,7 +512,7 @@ class PlaylistUpdater(baseServiceUpdater):
                                 
                                 days = pdays.search(splitedLine[0]).group(2)
                             else:
-                                days = '0'
+                                days = '1'
 
                             fc = re.compile('.*(timeshift|catchup).*')
 

@@ -751,22 +751,19 @@ class RecordService(BasePlayService):
                             xcUsername = matches.search(strmUrl).group(2)
                             xcPassword = matches.search(strmUrl).group(3)
                             xcChannelId = matches.search(strmUrl).group(4)
-                            try:
-                                xcExtension = matches.search(strmUrl).group(5)
-                            except:
-                                xcExtension = ''
+                            xcExtension = matches.search(strmUrl).group(5)
 
-                            if xcExtension == '':
+                            if xcExtension is None:
                                 m_isCatchupTSStream = True
                                 xcExtension = ".ts"
 
                             start = '{y}-{m}-{d}:{h}-{min}'.format(y=year, m=month, d=day, h=hour, min=minute)
-                            timeshift = duration + '/' + start + '/' + duration
+                            timeshift = duration + '/' + start
 
                             try:
                                 m_catchupSource = xcHost + "/timeshift/" + xcUsername + "/" + xcPassword + "/"+timeshift+"/" + xcChannelId + xcExtension
                             except:
-                                m_catchupSource = xcHost + "/timeshift/" + xcUsername + "/" + xcPassword + "/"+timeshift+"/" + xcChannelId
+                                m_catchupSource = xcHost + "/timeshift/" + xcUsername + "/" + xcPassword + "/"+timeshift+"/" + xcChannelId + '.m3u8'
 
                             strmUrl = m_catchupSource
 
