@@ -1195,7 +1195,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                     #mimeType = 'application/vnd.apple.mpegstream_url'
                                     PROTOCOL = 'hls'
 
-                                elif '.ts' in strmUrl or ':8080' in strmUrl and ffmpegdirect:
+                                elif ('.ts' or ':8080' in strmUrl) and ffmpegdirect:
                                     mimeType = 'video/mp2t'
                                     PROTOCOL = 'hls'
 
