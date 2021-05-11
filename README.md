@@ -7,7 +7,6 @@ List of available television providers
 
 * **C More** - C More Entertainment
 * **Cyfrowy Polsat GO** - Cyfrowy Polsat S.A.
-* **FranceTV** - France Télévisions
 * **Ipla** - Cyfrowy Polsat S.A.
 * **nc+ GO** - ITI Neovision S.A.
 * **PlayerPL** - TVN S.A.
@@ -30,7 +29,6 @@ Detailed regulations of the television providers can be found on their websites.
 
 * **C More** - https://www.cmore.se/artiklar/anvandarvillkor/
 * **Cyfrowy Polsat GO** - https://www.cyfrowypolsat.pl/do-pobrania/regulanki-i-cenniki.cp/
-* **FranceTV** - https://www.francetelevisions.fr/cgu/
 * **Ipla** - https://www.ipla.tv/regulamins/
 * **nc+ GO** - https://ncplusgo.pl/Cms/Page?codename=regulamin/
 * **PlayerPL** - https://player.pl/regulamin.pdf
@@ -41,7 +39,6 @@ Account registration takes place on the television provider website.
 
 * **C More** - https://www.cmore.se/skapakonto/
 * **Cyfrowy Polsat GO** - https://icok.cyfrowypolsat.pl/rejestracja.cp/
-* **FranceTV** - https://www.francetelevisions.fr/
 * **Ipla** - https://www.ipla.tv/register/
 * **nc+ GO** - https://ncplusgo.pl/konto/rejestracja/
 * **PlayerPL** - https://player.pl/
@@ -51,9 +48,6 @@ Account registration takes place on the television provider website.
 Subscription fees are made on the television providers website and are not linked to the add-on.
 
 More information on licensed television providers is found here:
-
-France - Autorité de Régulation des Communications Électroniques et des Postes
-https://www.arcep.fr/
 
 Poland - Krajowa Rada Radiofonii i Telewizji
 http://www.krrit.gov.pl/
