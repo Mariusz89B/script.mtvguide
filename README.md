@@ -93,6 +93,6 @@ This statement is also available in polish language on http://m-tvguide.pl/regul
 
 <br>
 
-![](https://scontent.fbma2-1.fna.fbcdn.net/v/t1.0-9/117195753_3266310433462483_1963608395033058711_o.jpg?_nc_cat=101&ccb=1-3&_nc_sid=730e14&_nc_ohc=oLhyFsRpBlgAX-CixJh&_nc_ht=scontent.fbma2-1.fna&oh=b8e52fa00ca8f133b259f5ea405b2ed3&oe=606FE469)
+![](https://i.imgur.com/ipTGRvj.jpg)
 
 Copyright mods-kodi.pl © 2013 - 2021
