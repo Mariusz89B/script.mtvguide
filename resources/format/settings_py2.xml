@@ -26,10 +26,10 @@
 		<setting id="cpgo_password" type="text" option="hidden" label="55003" default="" visible="eq(-2,true)"/>
 		<setting id="priority_cpgo" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-3,true)"/>
 		
-		<setting type="sep"/>
+		<!--<setting type="sep"/>
 		<setting label="59922" type="lsep"/>
 		<setting id="francetv_enabled" type="bool" label="59904" default="false"/>
-		<setting id="priority_francetv" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-1,true)"/>
+		<setting id="priority_francetv" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-1,true)"/>-->
 		
 		<setting type="sep"/>
 		<setting label="80006" type="lsep"/>

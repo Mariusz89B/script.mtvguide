@@ -222,7 +222,7 @@
 					<control format="string" type="spinner"/>
 				</setting>
 			</group>
-			<group id="7" label="59922">
+			<!--<group id="7" label="59922">
 				<setting help="95007" id="francetv_enabled" label="59904" type="boolean">
 					<level>0</level>
 					<default>false</default>
@@ -254,7 +254,7 @@
 					</dependencies>
 					<control format="string" type="spinner"/>
 				</setting>
-			</group>
+			</group>-->
 			<group id="8"/>
 			<group id="14"/>
 			<group id="15" label="80006">

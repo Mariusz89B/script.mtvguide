@@ -81,7 +81,7 @@ import wppilotcids
 import iplacids
 import ncplusgocids
 import cpgocids
-import francetvcids
+#import francetvcids
 import cmorecids
 import teliaplaycids
 import playerplcids
@@ -99,7 +99,7 @@ SERVICES = {
     iplacids.serviceName            : iplacids.IplaUpdater(),
     ncplusgocids.serviceName        : ncplusgocids.NcPlusGoUpdater(),
     cpgocids.serviceName            : cpgocids.PolsatGoUpdater(),
-    francetvcids.serviceName        : francetvcids.FranceTVUpdater(),
+    #francetvcids.serviceName        : francetvcids.FranceTVUpdater(),
     cmorecids.serviceName           : cmorecids.CmoreUpdater(),
     teliaplaycids.serviceName       : teliaplaycids.TeliaPlayUpdater(),
     playerplcids.serviceName        : playerplcids.PlayerPLUpdater()
