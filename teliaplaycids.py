@@ -93,22 +93,12 @@ sess = requests.Session()
 
 
 class Threading(object):
-    """ Threading example class
-    The run() method will be started and it will run in the background
-    until the application exits.
-    """
-
     def __init__(self):
-        """ Constructor
-        :type interval: int
-        :param interval: Check interval, in seconds
-        """
         self.thread = threading.Thread(target=self.run, args=())
-        self.thread.daemon = True                            # Daemonize thread
-        self.thread.start()                                  # Start the execution
+        self.thread.daemon = True
+        self.thread.start()
 
     def run(self):
-        """ Method that runs forever """
         while not xbmc.Monitor().abortRequested():
             ab = TeliaPlayUpdater().checkRefresh()
             if not ab:
@@ -135,11 +125,14 @@ class TeliaPlayUpdater(baseServiceUpdater):
             self.localMapFile = 'basemap_swedish.xml'
 
         baseServiceUpdater.__init__(self)
-        self.serviceEnabled     = ADDON.getSetting('teliaplay_enabled')
-        self.servicePriority    = int(ADDON.getSetting('priority_teliaplay'))
+        self.serviceEnabled     = ADDON.getSetting('teliaplay_enabled') 
         self.login              = ADDON.getSetting('teliaplay_username').strip()
         self.password           = ADDON.getSetting('teliaplay_password').strip()
-        self.country            = int(ADDON.getSetting('teliaplay_locale'))
+        try:
+            self.servicePriority    = int(ADDON.getSetting('priority_teliaplay'))
+            self.country            = int(ADDON.getSetting('teliaplay_locale'))
+        except:
+            pass
         self.dashjs             = ADDON.getSetting('teliaplay_devush')
         self.tv_client_boot_id  = ADDON.getSetting('teliaplay_tv_client_boot_id')
         self.timestamp          = ADDON.getSetting('teliaplay_timestamp')
