@@ -150,6 +150,10 @@ try:
      KEY_PM = int(ADDON.getSetting('pm_key'))
 except:
      KEY_PM = 0
+try:
+    KEY_LIST = int(ADDON.getSetting('list_key'))
+except:
+    KEY_LIST = -1
 
 class proxydt(datetime.datetime):
     @staticmethod
@@ -478,6 +482,33 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
             self.keyboardTime = time.mktime(datetime.datetime.now().timetuple())
             self.videoOsdWindowControl.setVisible(True)
             self.blockOsd = False
+
+        elif action.getButtonCode() == KEY_LIST:
+            program = self.program
+            d = xbmcgui.Dialog()
+            list = d.select(strings(30309), [strings(30315), strings(30310), strings(30311), strings(30312), strings(30336), strings(30337)])
+
+            if list < 0:
+                return
+            if list == 0:
+                self.gu.epg.programSearchSelect(program.channel)
+            elif list == 1:
+                index = self.gu.database.getCurrentChannelIdx(program.channel)
+                programList = self.gu.database.getChannelListing(program.channel)
+                self.gu.epg.showListing(program.channel)
+            elif list == 2:
+                index = self.gu.database.getCurrentChannelIdx(program.channel)
+                programList = self.gu.database.getChannelListing(program.channel)
+                self.gu.epg.showNow(program.channel)
+            elif list == 3:
+                index = self.gu.database.getCurrentChannelIdx(program.channel)
+                programList = self.gu.database.getChannelListing(program.channel)
+                self.gu.epg.showNext(program.channel)
+            elif list == 4:
+                self.gu.epg.showFullReminders(program.channel)
+            elif list == 5:
+                self.gu.epg.showFullRecordings(program.channel)
+            return
 
         elif action.getButtonCode() == KEY_SWITCH_TO_LAST:
             self.isClosing = True

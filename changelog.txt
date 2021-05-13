@@ -1,4 +1,7 @@
-﻿[COLOR yellow][B]wersja 9.3.1[/B] - 2021-05-12[/COLOR]
+﻿[COLOR yellow][B]wersja 9.3.2[/B] - 2021-05-13[/COLOR]
+- poprawka memoryerror przy szybkim parsowaniu epg
+
+[COLOR yellow][B]wersja 9.3.1[/B] - 2021-05-12[/COLOR]
 - dodana opcja wprowadzenia kanałów bez epg 
 - poprawka błędu parsowania
 - dodana opcja nagrywaj i oglądaj

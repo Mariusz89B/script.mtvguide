@@ -255,10 +255,10 @@ class PlaylistUpdater(baseServiceUpdater):
                     raise Exception
             else:
                 try:
-                    try:
+                    if sys.version_info[0] > 2:
+                    	tmpcontent = open(path, 'r', encoding='utf-8').read()
+                    else:
                         tmpcontent = open(path, 'r').read()
-                    except:
-                        tmpcontent = open(path, 'r', encoding='utf-8').read()
                 except:
                     self.log('getPlaylistContent opening normally Error %s, type: %s, url: %s' % (getExceptionString(), urltype, path) )
                     self.log('getPlaylistContent trying to open file using xbmcvfs')

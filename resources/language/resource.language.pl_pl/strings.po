@@ -2096,6 +2096,18 @@ msgctxt "#57055"
 msgid "Maximum number of devices have been reached"
 msgstr "Osiągnięto maksymalną liczbę urządzeń"
 
+msgctxt "#57056"
+msgid "teliatv.dk"
+msgstr "teliatv.dk"
+
+msgctxt "#57057"
+msgid "teliaplay.se"
+msgstr "teliaplay.se"
+
+msgctxt "#57058"
+msgid "Redirect needed!"
+msgstr "Potrzebne przekierowanie!"
+
 msgctxt "#68000"
 msgid "Plot"
 msgstr "Opis"

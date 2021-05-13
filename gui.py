@@ -3123,7 +3123,10 @@ class mTVGuide(xbmcgui.WindowXML):
             list = d.select(strings(30309), [strings(30315), strings(30310), strings(30311), strings(30312), strings(30336), strings(30337)])
 
             if list < 0:
-                self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+                if xbmc.getCondVisibility('Control.IsVisible(5001)'): 
+                    self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+                else:
+                    return
             if list == 0:
                 self.programSearchSelect(channel)
             elif list == 1:
@@ -3153,6 +3156,8 @@ class mTVGuide(xbmcgui.WindowXML):
             return
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
+                if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
+                    self.osd.closeOSD()
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
                 self.viewStartDate = programList[index].startDate
@@ -3208,7 +3213,10 @@ class mTVGuide(xbmcgui.WindowXML):
             list = d.select(strings(30309), [strings(30315), strings(30310), strings(30311), strings(30312), strings(30336), strings(30337)])
 
             if list < 0:
-                self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+                if xbmc.getCondVisibility('Control.IsVisible(5001)'): 
+                    self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+                else:
+                    return
             if list == 0:
                 self.programSearchSelect(channel)
             elif list == 1:
@@ -3239,6 +3247,8 @@ class mTVGuide(xbmcgui.WindowXML):
 
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
+                if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
+                    self.osd.closeOSD()
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
                 self.viewStartDate = programList[index].startDate
@@ -3253,6 +3263,9 @@ class mTVGuide(xbmcgui.WindowXML):
                     with self.busyDialog():
                         time.sleep(1)
                         self.showNow(programList[index].channel)
+                else:
+                    if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
+                        self.osd.closeOSD() 
 
         elif action == ACTION_STOP:
             return
@@ -3292,7 +3305,10 @@ class mTVGuide(xbmcgui.WindowXML):
             list = d.select(strings(30309), [strings(30315), strings(30310), strings(30311), strings(30312), strings(30336), strings(30337)])
 
             if list < 0:
-                self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+                if xbmc.getCondVisibility('Control.IsVisible(5001)'): 
+                    self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+                else:
+                    return
             if list == 0:
                 self.programSearchSelect(channel)
             elif list == 1:
@@ -3323,6 +3339,8 @@ class mTVGuide(xbmcgui.WindowXML):
 
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
+                if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
+                    self.osd.closeOSD()
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
                 self.viewStartDate = programList[index].startDate
@@ -3337,6 +3355,9 @@ class mTVGuide(xbmcgui.WindowXML):
                     with self.busyDialog():
                         time.sleep(1)
                         self.showNext(programList[index].channel)
+                else:
+                    if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
+                        self.osd.closeOSD()
 
         elif action == ACTION_STOP:
             return
@@ -3361,7 +3382,10 @@ class mTVGuide(xbmcgui.WindowXML):
             list = d.select(strings(30309), [strings(30315), strings(30310), strings(30311), strings(30312), strings(30336), strings(30337)])
 
             if list < 0:
-                self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+                if xbmc.getCondVisibility('Control.IsVisible(5001)'): 
+                    self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+                else:
+                    return
             if list == 0:
                 self.programSearchSelect(channel)
             elif list == 1:
@@ -3494,6 +3518,8 @@ class mTVGuide(xbmcgui.WindowXML):
 
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
+                if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
+                    self.osd.closeOSD()
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
                 self.viewStartDate = programList[index].startDate
@@ -3508,6 +3534,9 @@ class mTVGuide(xbmcgui.WindowXML):
                     with self.busyDialog():
                         time.sleep(1)
                         self.programSearch(programList[index].channel)
+                else:
+                    if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
+                        self.osd.closeOSD() 
 
         elif action == ACTION_STOP:
             return
@@ -3600,6 +3629,8 @@ class mTVGuide(xbmcgui.WindowXML):
 
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
+                if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
+                    self.osd.closeOSD()
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
                 self.viewStartDate = programList[index].startDate
@@ -3614,6 +3645,9 @@ class mTVGuide(xbmcgui.WindowXML):
                     with self.busyDialog():
                         time.sleep(1)
                         self.descriptionSearch(programList[index].channel)
+                else:
+                    if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
+                        self.osd.closeOSD() 
 
         elif action == ACTION_STOP:
             return
@@ -3705,6 +3739,8 @@ class mTVGuide(xbmcgui.WindowXML):
 
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
+                if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
+                    self.osd.closeOSD()
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
                 self.viewStartDate = programList[index].startDate
@@ -3719,6 +3755,9 @@ class mTVGuide(xbmcgui.WindowXML):
                     with self.busyDialog():
                         time.sleep(1)
                         self.categorySearchInput(programList[index].channel)
+                else:
+                    if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
+                        self.osd.closeOSD() 
 
         elif action == ACTION_STOP:
             return
@@ -3785,6 +3824,8 @@ class mTVGuide(xbmcgui.WindowXML):
 
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
+                if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
+                    self.osd.closeOSD()
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
                 self.viewStartDate = programList[index].startDate
@@ -3799,6 +3840,9 @@ class mTVGuide(xbmcgui.WindowXML):
                     with self.busyDialog():
                         time.sleep(1)
                         self.categorySearch(programList[index].channel)
+                else:
+                    if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
+                        self.osd.closeOSD() 
 
         elif action == ACTION_STOP:
             return
@@ -3848,6 +3892,8 @@ class mTVGuide(xbmcgui.WindowXML):
 
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
+                if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
+                    self.osd.closeOSD()
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
                 self.viewStartDate = programList[index].startDate
@@ -3862,6 +3908,9 @@ class mTVGuide(xbmcgui.WindowXML):
                     with self.busyDialog():
                         time.sleep(1)
                         self.channelSearch(programList[index].channel)
+                else:
+                    if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
+                        self.osd.closeOSD() 
 
         elif action == ACTION_STOP:
             return
@@ -3894,7 +3943,10 @@ class mTVGuide(xbmcgui.WindowXML):
             d = xbmcgui.Dialog()
             list = d.select(strings(30309), [strings(30315), strings(30310), strings(30311), strings(30312), strings(30336), strings(30337)])
             if list < 0:
-                self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+                if xbmc.getCondVisibility('Control.IsVisible(5001)'): 
+                    self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+                else:
+                    return
             if list == 0:
                 self.programSearchSelect(channel)
             elif list == 1:
@@ -3916,6 +3968,8 @@ class mTVGuide(xbmcgui.WindowXML):
             
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
+                if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
+                    self.osd.closeOSD()
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
                 self.viewStartDate = programList[index].startDate
@@ -3944,6 +3998,9 @@ class mTVGuide(xbmcgui.WindowXML):
                     with self.busyDialog():
                         time.sleep(1)
                         self.showReminders(programList[index].channel)
+                else:
+                    if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
+                        self.osd.closeOSD() 
 
         elif action == ACTION_STOP:
             return
@@ -3976,7 +4033,10 @@ class mTVGuide(xbmcgui.WindowXML):
             d = xbmcgui.Dialog()
             list = d.select(strings(30309), [strings(30315), strings(30310), strings(30311), strings(30312), strings(30336), strings(30337)])
             if list < 0:
-                self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+                if xbmc.getCondVisibility('Control.IsVisible(5001)'): 
+                    self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+                else:
+                    return
             if list == 0:
                 self.programSearchSelect(channel)
             elif list == 1:
@@ -3998,6 +4058,8 @@ class mTVGuide(xbmcgui.WindowXML):
             
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
+                if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
+                    self.osd.closeOSD()
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
                 self.viewStartDate = programList[index].startDate
@@ -4026,6 +4088,9 @@ class mTVGuide(xbmcgui.WindowXML):
                     with self.busyDialog():
                         time.sleep(1)
                         self.showFullReminders(programList[index].channel)
+                else:
+                    if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
+                        self.osd.closeOSD() 
 
         elif action == ACTION_STOP:
             return
@@ -4058,7 +4123,10 @@ class mTVGuide(xbmcgui.WindowXML):
             d = xbmcgui.Dialog()
             list = d.select(strings(30309), [strings(30315), strings(30310), strings(30311), strings(30312), strings(30336), strings(30337)])
             if list < 0:
-                self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+                if xbmc.getCondVisibility('Control.IsVisible(5001)'): 
+                    self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+                else:
+                    return
             if list == 0:
                 self.programSearchSelect(channel)
             elif list == 1:
@@ -4080,6 +4148,8 @@ class mTVGuide(xbmcgui.WindowXML):
             
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
+                if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
+                    self.osd.closeOSD()
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
                 self.viewStartDate = programList[index].startDate
@@ -4108,6 +4178,9 @@ class mTVGuide(xbmcgui.WindowXML):
                     with self.busyDialog():
                         time.sleep(1)
                         self.showFullRecordings(programList[index].channel)
+                else:
+                    if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
+                        self.osd.closeOSD() 
 
         elif action == ACTION_STOP:
             return
@@ -4961,163 +5034,168 @@ class mTVGuide(xbmcgui.WindowXML):
         self.program = program
 
         # Playback for services
-        try:
-            ProgramEndDate = datetime.proxydt.strptime(str(self.program.endDate), '%Y-%m-%d %H:%M:%S')
-            ProgramStartDate = datetime.proxydt.strptime(str(self.program.startDate), '%Y-%m-%d %H:%M:%S')
-        except:
-            ProgramEndDate = datetime.proxydt.strptime(str(datetime.datetime.now()), '%Y-%m-%d %H:%M:%S.%f')
-            ProgramStartDate = datetime.proxydt.strptime(str(datetime.datetime.now()), '%Y-%m-%d %H:%M:%S.%f')
-
-        try:
-            ProgramNowDate = datetime.proxydt.strptime(str(datetime.datetime.now()), '%Y-%m-%d %H:%M:%S.%f')
-        except:
-            ProgramNowDate = datetime.proxydt.strptime(str(datetime.datetime.now()), '%Y-%m-%d %H:%M:%S')
-
-        if ADDON.getSetting('archive_finished_program') == 'true':
-            finishedProgram = ProgramEndDate
-        else:
-            finishedProgram = ProgramStartDate
-
-        if self.catchupDays is not None:
-            self.catchupDays = self.catchupDays
-        else:
-            self.catchupDays = ADDON.getSetting('archive_reverse_days')
-
-        if ADDON.getSetting('archive_reverse_auto') == '0' and self.catchupDays != '' or self.catchupDays != '0':
+        if ADDON.getSetting('archive_support') == 'true':
             try:
-                reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(self.catchupDays)) * 24 - datetime.timedelta(minutes = 5)
+                ProgramEndDate = datetime.proxydt.strptime(str(self.program.endDate), '%Y-%m-%d %H:%M:%S')
+                ProgramStartDate = datetime.proxydt.strptime(str(self.program.startDate), '%Y-%m-%d %H:%M:%S')
             except:
-                reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
-        else:
+                ProgramEndDate = datetime.proxydt.strptime(str(datetime.datetime.now()), '%Y-%m-%d %H:%M:%S.%f')
+                ProgramStartDate = datetime.proxydt.strptime(str(datetime.datetime.now()), '%Y-%m-%d %H:%M:%S.%f')
+
             try:
-                reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(ADDON.getSetting('archive_manual_days'))) * 24 - datetime.timedelta(minutes = 5)
+                ProgramNowDate = datetime.proxydt.strptime(str(datetime.datetime.now()), '%Y-%m-%d %H:%M:%S.%f')
             except:
-                reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
-        
-        reverseArchiveService = datetime.datetime.now() - datetime.timedelta(hours = int(3)) - datetime.timedelta(minutes = 5)
+                ProgramNowDate = datetime.proxydt.strptime(str(datetime.datetime.now()), '%Y-%m-%d %H:%M:%S')
 
-        try:
-            if finishedProgram < datetime.datetime.now() and ADDON.getSetting('archive_support') == 'true' and program.title != program.channel.title:
-                archiveList = self.getCmore() + self.getPolsatGo() + self.getIpla()# + self.getPlayerPL()
-                archivePlaylist = self.getPlaylist() + self.getTeliaPlay()
+            if ADDON.getSetting('archive_finished_program') == 'true':
+                finishedProgram = ProgramEndDate
+            else:
+                finishedProgram = ProgramStartDate
 
-                if (program.channel.title.upper() in archiveList and program.startDate > reverseArchiveService) or (program.channel.title.upper() in archivePlaylist and program.startDate > reverseTime):
-                    res = xbmcgui.Dialog().yesno(strings(30998), strings(30999).format(program.title))
+            if self.catchupDays is not None:
+                self.catchupDays = self.catchupDays
+            else:
+                self.catchupDays = ADDON.getSetting('archive_reverse_days')
 
-                    if res:
-                        # archiveService
-                        if ADDON.getSetting('archive_finished_program') == 'true': 
-                            if program.channel.title.upper() in archiveList and program.endDate < datetime.datetime.now():
-                                self.archiveService = datetime.datetime.now() - ProgramStartDate
-                            else:
-                                self.archiveService = ''
-                        else:
-                            if program.channel.title.upper() in archiveList and program.startDate < datetime.datetime.now():
-                                self.archiveService = datetime.datetime.now() - ProgramStartDate
-                            else:
-                                self.archiveService = ''
+            if ADDON.getSetting('archive_reverse_auto') == '0' and self.catchupDays != '' or self.catchupDays != '0':
+                try:
+                    reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(self.catchupDays)) * 24 - datetime.timedelta(minutes = 5)
+                except:
+                    reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
+            else:
+                try:
+                    reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(ADDON.getSetting('archive_manual_days'))) * 24 - datetime.timedelta(minutes = 5)
+                except:
+                    reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
+            
+            reverseArchiveService = datetime.datetime.now() - datetime.timedelta(hours = int(3)) - datetime.timedelta(minutes = 5)
 
-                        if ADDON.getSetting('archive_finished_program') == 'true': 
-                            if program.channel.title.upper() in archivePlaylist and program.endDate < datetime.datetime.now():
-                                from time import mktime
+            try:
+                if finishedProgram < datetime.datetime.now() and ADDON.getSetting('archive_support') == 'true' and program.title != program.channel.title:
+                    archiveList = self.getCmore() + self.getPolsatGo() + self.getIpla()# + self.getPlayerPL()
+                    archivePlaylist = self.getPlaylist() + self.getTeliaPlay()
 
-                                n = datetime.datetime.now()
-                                t = ProgramStartDate
-                                e = ProgramEndDate
+                    if (program.channel.title.upper() in archiveList and program.startDate > reverseArchiveService) or (program.channel.title.upper() in archivePlaylist and program.startDate > reverseTime):
+                        res = xbmcgui.Dialog().yesno(strings(30998), strings(30999).format(program.title))
 
-                                # Duration
-                                durationCalc = int(((ProgramEndDate - ProgramStartDate).total_seconds() / 60.0))
-                                duration = str(durationCalc)
-
-                                # Offset
-                                offsetCalc = int(((datetime.datetime.now() - ProgramStartDate).total_seconds() / 60.0))
-                                offset = str(offsetCalc)
-
-                                # UTC/LUTC
-                                if sys.version_info[0] > 2:
-                                    utc = str(int(datetime.datetime.timestamp(t)))
-                                    lutc = str(int(datetime.datetime.timestamp(e)))
+                        if res:
+                            # archiveService
+                            if ADDON.getSetting('archive_finished_program') == 'true': 
+                                if program.channel.title.upper() in archiveList and program.endDate < datetime.datetime.now():
+                                    self.archiveService = datetime.datetime.now() - ProgramStartDate
                                 else:
-                                    utc = str(int(time.mktime(t.timetuple())))
-                                    lutc = str(int(time.mktime(e.timetuple())))
-
-                                # Datestring
-                                year = t.strftime("%Y")
-                                month = t.strftime("%m")
-                                day = t.strftime("%d")
-                                hour = t.strftime("%H")
-                                minute = t.strftime("%M")
-                                second = t.strftime("%S")
-
-                                self.archivePlaylist = '{duration}, {offset}, {utc}, {lutc}, {y}, {m}, {d}, {h}, {min}, {s}'.format(
-                                    duration=duration, offset=offset, utc=utc, lutc=lutc, y=year, m=month, d=day, h=hour, min=minute, s=second)
-
+                                    self.archiveService = ''
                             else:
-                                self.archivePlaylist = ''
-                        else:
-                            if program.channel.title.upper() in archivePlaylist and program.startDate < datetime.datetime.now():
-                                from time import mktime
-
-                                n = datetime.datetime.now()
-                                t = ProgramStartDate
-                                e = ProgramEndDate
-
-                                # Duration
-                                durationCalc = int(((ProgramEndDate - ProgramStartDate).total_seconds() / 60.0))
-                                duration = str(durationCalc)
-
-                                # Offset
-                                offsetCalc = int(((datetime.datetime.now() - ProgramStartDate).total_seconds() / 60.0))
-                                offset = str(offsetCalc)
-
-                                # UTC/LUTC
-                                if sys.version_info[0] > 2:
-                                    utc = str(int(datetime.datetime.timestamp(t)))
-                                    lutc = str(int(datetime.datetime.timestamp(e)))
+                                if program.channel.title.upper() in archiveList and program.startDate < datetime.datetime.now():
+                                    self.archiveService = datetime.datetime.now() - ProgramStartDate
                                 else:
-                                    utc = str(int(time.mktime(t.timetuple())))
-                                    lutc = str(int(time.mktime(e.timetuple())))
+                                    self.archiveService = ''
 
-                                # Datestring
-                                year = t.strftime("%Y")
-                                month = t.strftime("%m")
-                                day = t.strftime("%d")
-                                hour = t.strftime("%H")
-                                minute = t.strftime("%M")
-                                second = t.strftime("%S")
+                            if ADDON.getSetting('archive_finished_program') == 'true': 
+                                if program.channel.title.upper() in archivePlaylist and program.endDate < datetime.datetime.now():
+                                    from time import mktime
 
-                                self.archivePlaylist = '{duration}, {offset}, {utc}, {lutc}, {y}, {m}, {d}, {h}, {min}, {s}'.format(
-                                    duration=duration, offset=offset, utc=utc, lutc=lutc, y=year, m=month, d=day, h=hour, min=minute, s=second)
+                                    n = datetime.datetime.now()
+                                    t = ProgramStartDate
+                                    e = ProgramEndDate
 
+                                    # Duration
+                                    durationCalc = int(((ProgramEndDate - ProgramStartDate).total_seconds() / 60.0))
+                                    duration = str(durationCalc)
+
+                                    # Offset
+                                    offsetCalc = int(((datetime.datetime.now() - ProgramStartDate).total_seconds() / 60.0))
+                                    offset = str(offsetCalc)
+
+                                    # UTC/LUTC
+                                    if sys.version_info[0] > 2:
+                                        utc = str(int(datetime.datetime.timestamp(t)))
+                                        lutc = str(int(datetime.datetime.timestamp(e)))
+                                    else:
+                                        utc = str(int(time.mktime(t.timetuple())))
+                                        lutc = str(int(time.mktime(e.timetuple())))
+
+                                    # Datestring
+                                    year = t.strftime("%Y")
+                                    month = t.strftime("%m")
+                                    day = t.strftime("%d")
+                                    hour = t.strftime("%H")
+                                    minute = t.strftime("%M")
+                                    second = t.strftime("%S")
+
+                                    self.archivePlaylist = '{duration}, {offset}, {utc}, {lutc}, {y}, {m}, {d}, {h}, {min}, {s}'.format(
+                                        duration=duration, offset=offset, utc=utc, lutc=lutc, y=year, m=month, d=day, h=hour, min=minute, s=second)
+
+                                else:
+                                    self.archivePlaylist = ''
                             else:
-                                self.archivePlaylist = ''
+                                if program.channel.title.upper() in archivePlaylist and program.startDate < datetime.datetime.now():
+                                    from time import mktime
 
-                    else:
-                        if ADDON.getSetting('archive_finished_program') == 'false':
-                            if ProgramEndDate > datetime.datetime.now():
-                                self.archiveService = ''
-                                self.archivePlaylist = ''
+                                    n = datetime.datetime.now()
+                                    t = ProgramStartDate
+                                    e = ProgramEndDate
+
+                                    # Duration
+                                    durationCalc = int(((ProgramEndDate - ProgramStartDate).total_seconds() / 60.0))
+                                    duration = str(durationCalc)
+
+                                    # Offset
+                                    offsetCalc = int(((datetime.datetime.now() - ProgramStartDate).total_seconds() / 60.0))
+                                    offset = str(offsetCalc)
+
+                                    # UTC/LUTC
+                                    if sys.version_info[0] > 2:
+                                        utc = str(int(datetime.datetime.timestamp(t)))
+                                        lutc = str(int(datetime.datetime.timestamp(e)))
+                                    else:
+                                        utc = str(int(time.mktime(t.timetuple())))
+                                        lutc = str(int(time.mktime(e.timetuple())))
+
+                                    # Datestring
+                                    year = t.strftime("%Y")
+                                    month = t.strftime("%m")
+                                    day = t.strftime("%d")
+                                    hour = t.strftime("%H")
+                                    minute = t.strftime("%M")
+                                    second = t.strftime("%S")
+
+                                    self.archivePlaylist = '{duration}, {offset}, {utc}, {lutc}, {y}, {m}, {d}, {h}, {min}, {s}'.format(
+                                        duration=duration, offset=offset, utc=utc, lutc=lutc, y=year, m=month, d=day, h=hour, min=minute, s=second)
+
+                                else:
+                                    self.archivePlaylist = ''
+
+                        else:
+                            if ADDON.getSetting('archive_finished_program') == 'false':
+                                if ProgramEndDate > datetime.datetime.now():
+                                    self.archiveService = ''
+                                    self.archivePlaylist = ''
+                                else:
+                                    return 'None'
                             else:
                                 return 'None'
+
+                    else:
+                        if self.program.channel.title.upper() in archivePlaylist and program.endDate < datetime.datetime.now():
+                            self.recordProgram(self.program)
+                            return 'None'
+                        elif program.endDate > datetime.datetime.now():
+                            self.archiveService = ''
+                            self.archivePlaylist = ''
                         else:
+                            xbmcgui.Dialog().ok(strings(30998), strings(59980))
                             return 'None'
 
                 else:
-                    if self.program.channel.title.upper() in archivePlaylist and program.endDate < datetime.datetime.now():
-                        self.recordProgram(self.program)
-                        return 'None'
-                    elif program.endDate > datetime.datetime.now():
-                        self.archiveService = ''
-                        self.archivePlaylist = ''
-                    else:
-                        xbmcgui.Dialog().ok(strings(30998), strings(59980))
-                        return 'None'
+                    self.archiveService = ''
+                    self.archivePlaylist = ''
 
-            else:
+            except:
                 self.archiveService = ''
                 self.archivePlaylist = ''
 
-        except:
+        else:
             self.archiveService = ''
             self.archivePlaylist = ''
 
@@ -5139,153 +5217,158 @@ class mTVGuide(xbmcgui.WindowXML):
         deb('playChannel')
 
         # Playback for services
-        try:
-            ProgramEndDate = datetime.proxydt.strptime(str(program.endDate), '%Y-%m-%d %H:%M:%S')
-            ProgramStartDate = datetime.proxydt.strptime(str(program.startDate), '%Y-%m-%d %H:%M:%S')
-        except:
-            ProgramEndDate = datetime.proxydt.strptime(str(datetime.datetime.now()), '%Y-%m-%d %H:%M:%S.%f')
-            ProgramStartDate = datetime.proxydt.strptime(str(datetime.datetime.now()), '%Y-%m-%d %H:%M:%S.%f')
-
-        try:
-            ProgramNowDate = datetime.proxydt.strptime(str(datetime.datetime.now()), '%Y-%m-%d %H:%M:%S.%f')
-        except:
-            ProgramNowDate = datetime.proxydt.strptime(str(datetime.datetime.now()), '%Y-%m-%d %H:%M:%S')
-
-        if ADDON.getSetting('archive_finished_program') == 'true':
-            finishedProgram = ProgramEndDate
-        else:
-            finishedProgram = ProgramStartDate
-
-        if self.catchupDays is not None:
-            self.catchupDays = self.catchupDays
-        else:
-            self.catchupDays = ADDON.getSetting('archive_reverse_days')
-
-        if ADDON.getSetting('archive_reverse_auto') == '0' and self.catchupDays != '' or self.catchupDays != '0':
+        if ADDON.getSetting('archive_support') == 'true':
             try:
-                reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(self.catchupDays)) * 24 - datetime.timedelta(minutes = 5)
+                ProgramEndDate = datetime.proxydt.strptime(str(program.endDate), '%Y-%m-%d %H:%M:%S')
+                ProgramStartDate = datetime.proxydt.strptime(str(program.startDate), '%Y-%m-%d %H:%M:%S')
             except:
-                reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
-        else:
+                ProgramEndDate = datetime.proxydt.strptime(str(datetime.datetime.now()), '%Y-%m-%d %H:%M:%S.%f')
+                ProgramStartDate = datetime.proxydt.strptime(str(datetime.datetime.now()), '%Y-%m-%d %H:%M:%S.%f')
+
             try:
-                reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(ADDON.getSetting('archive_manual_days'))) * 24 - datetime.timedelta(minutes = 5)
+                ProgramNowDate = datetime.proxydt.strptime(str(datetime.datetime.now()), '%Y-%m-%d %H:%M:%S.%f')
             except:
-                reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
-        
-        reverseArchiveService = datetime.datetime.now() - datetime.timedelta(hours = int(3)) - datetime.timedelta(minutes = 5)
+                ProgramNowDate = datetime.proxydt.strptime(str(datetime.datetime.now()), '%Y-%m-%d %H:%M:%S')
 
-        try:
-            if finishedProgram < datetime.datetime.now() and ADDON.getSetting('archive_support') == 'true' and program.title != program.channel.title:
-                archiveList = self.getCmore() + self.getPolsatGo() + self.getIpla()# + self.getPlayerPL()
-                archivePlaylist = self.getPlaylist() + self.getTeliaPlay()
+            if ADDON.getSetting('archive_finished_program') == 'true':
+                finishedProgram = ProgramEndDate
+            else:
+                finishedProgram = ProgramStartDate
 
-                if (program.channel.title.upper() in archiveList and program.startDate > reverseArchiveService) or (program.channel.title.upper() in archivePlaylist and program.startDate > reverseTime):
-                    res = xbmcgui.Dialog().yesno(strings(30998), strings(30999).format(program.title))
+            if self.catchupDays is not None:
+                self.catchupDays = self.catchupDays
+            else:
+                self.catchupDays = ADDON.getSetting('archive_reverse_days')
 
-                    if res:
-                        # archiveService
-                        if ADDON.getSetting('archive_finished_program') == 'true': 
-                            if program.channel.title.upper() in archiveList and program.endDate < datetime.datetime.now():
-                                self.archiveService = datetime.datetime.now() - ProgramStartDate
-                            else:
-                                self.archiveService = ''
-                        else:
-                            if program.channel.title.upper() in archiveList and program.startDate < datetime.datetime.now():
-                                self.archiveService = datetime.datetime.now() - ProgramStartDate
-                            else:
-                                self.archiveService = ''
+            if ADDON.getSetting('archive_reverse_auto') == '0' and self.catchupDays != '' or self.catchupDays != '0':
+                try:
+                    reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(self.catchupDays)) * 24 - datetime.timedelta(minutes = 5)
+                except:
+                    reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
+            else:
+                try:
+                    reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(ADDON.getSetting('archive_manual_days'))) * 24 - datetime.timedelta(minutes = 5)
+                except:
+                    reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
+            
+            reverseArchiveService = datetime.datetime.now() - datetime.timedelta(hours = int(3)) - datetime.timedelta(minutes = 5)
 
-                        if ADDON.getSetting('archive_finished_program') == 'true': 
-                            if program.channel.title.upper() in archivePlaylist and program.endDate < datetime.datetime.now():
-                                from time import mktime
+            try:
+                if finishedProgram < datetime.datetime.now() and ADDON.getSetting('archive_support') == 'true' and program.title != program.channel.title:
+                    archiveList = self.getCmore() + self.getPolsatGo() + self.getIpla()# + self.getPlayerPL()
+                    archivePlaylist = self.getPlaylist() + self.getTeliaPlay()
 
-                                n = datetime.datetime.now()
-                                t = ProgramStartDate
-                                e = ProgramEndDate
+                    if (program.channel.title.upper() in archiveList and program.startDate > reverseArchiveService) or (program.channel.title.upper() in archivePlaylist and program.startDate > reverseTime):
+                        res = xbmcgui.Dialog().yesno(strings(30998), strings(30999).format(program.title))
 
-                                # Duration
-                                durationCalc = int(((ProgramEndDate - ProgramStartDate).total_seconds() / 60.0))
-                                duration = str(durationCalc)
-
-                                # Offset
-                                offsetCalc = int(((datetime.datetime.now() - ProgramStartDate).total_seconds() / 60.0))
-                                offset = str(offsetCalc)
-
-                                # UTC/LUTC
-                                if sys.version_info[0] > 2:
-                                    utc = str(int(datetime.datetime.timestamp(t)))
-                                    lutc = str(int(datetime.datetime.timestamp(e)))
+                        if res:
+                            # archiveService
+                            if ADDON.getSetting('archive_finished_program') == 'true': 
+                                if program.channel.title.upper() in archiveList and program.endDate < datetime.datetime.now():
+                                    self.archiveService = datetime.datetime.now() - ProgramStartDate
                                 else:
-                                    utc = str(int(time.mktime(t.timetuple())))
-                                    lutc = str(int(time.mktime(e.timetuple())))
-
-                                # Datestring
-                                year = t.strftime("%Y")
-                                month = t.strftime("%m")
-                                day = t.strftime("%d")
-                                hour = t.strftime("%H")
-                                minute = t.strftime("%M")
-                                second = t.strftime("%S")
-
-                                self.archivePlaylist = '{duration}, {offset}, {utc}, {lutc}, {y}, {m}, {d}, {h}, {min}, {s}'.format(
-                                    duration=duration, offset=offset, utc=utc, lutc=lutc, y=year, m=month, d=day, h=hour, min=minute, s=second)
-
+                                    self.archiveService = ''
                             else:
-                                self.archivePlaylist = ''
-                        else:
-                            if program.channel.title.upper() in archivePlaylist and program.startDate < datetime.datetime.now():
-                                from time import mktime
-
-                                n = datetime.datetime.now()
-                                t = ProgramStartDate
-                                e = ProgramEndDate
-
-                                # Duration
-                                durationCalc = int(((ProgramEndDate - ProgramStartDate).total_seconds() / 60.0))
-                                duration = str(durationCalc)
-
-                                # Offset
-                                offsetCalc = int(((datetime.datetime.now() - ProgramStartDate).total_seconds() / 60.0))
-                                offset = str(offsetCalc)
-
-                                # UTC/LUTC
-                                if sys.version_info[0] > 2:
-                                    utc = str(int(datetime.datetime.timestamp(t)))
-                                    lutc = str(int(datetime.datetime.timestamp(e)))
+                                if program.channel.title.upper() in archiveList and program.startDate < datetime.datetime.now():
+                                    self.archiveService = datetime.datetime.now() - ProgramStartDate
                                 else:
-                                    utc = str(int(time.mktime(t.timetuple())))
-                                    lutc = str(int(time.mktime(e.timetuple())))
-                                
+                                    self.archiveService = ''
 
-                                # Datestring
-                                year = t.strftime("%Y")
-                                month = t.strftime("%m")
-                                day = t.strftime("%d")
-                                hour = t.strftime("%H")
-                                minute = t.strftime("%M")
-                                second = t.strftime("%S")
+                            if ADDON.getSetting('archive_finished_program') == 'true': 
+                                if program.channel.title.upper() in archivePlaylist and program.endDate < datetime.datetime.now():
+                                    from time import mktime
 
-                                self.archivePlaylist = '{duration}, {offset}, {utc}, {lutc}, {y}, {m}, {d}, {h}, {min}, {s}'.format(
-                                    duration=duration, offset=offset, utc=utc, lutc=lutc, y=year, m=month, d=day, h=hour, min=minute, s=second)
+                                    n = datetime.datetime.now()
+                                    t = ProgramStartDate
+                                    e = ProgramEndDate
 
+                                    # Duration
+                                    durationCalc = int(((ProgramEndDate - ProgramStartDate).total_seconds() / 60.0))
+                                    duration = str(durationCalc)
+
+                                    # Offset
+                                    offsetCalc = int(((datetime.datetime.now() - ProgramStartDate).total_seconds() / 60.0))
+                                    offset = str(offsetCalc)
+
+                                    # UTC/LUTC
+                                    if sys.version_info[0] > 2:
+                                        utc = str(int(datetime.datetime.timestamp(t)))
+                                        lutc = str(int(datetime.datetime.timestamp(e)))
+                                    else:
+                                        utc = str(int(time.mktime(t.timetuple())))
+                                        lutc = str(int(time.mktime(e.timetuple())))
+
+                                    # Datestring
+                                    year = t.strftime("%Y")
+                                    month = t.strftime("%m")
+                                    day = t.strftime("%d")
+                                    hour = t.strftime("%H")
+                                    minute = t.strftime("%M")
+                                    second = t.strftime("%S")
+
+                                    self.archivePlaylist = '{duration}, {offset}, {utc}, {lutc}, {y}, {m}, {d}, {h}, {min}, {s}'.format(
+                                        duration=duration, offset=offset, utc=utc, lutc=lutc, y=year, m=month, d=day, h=hour, min=minute, s=second)
+
+                                else:
+                                    self.archivePlaylist = ''
                             else:
-                                self.archivePlaylist = ''
+                                if program.channel.title.upper() in archivePlaylist and program.startDate < datetime.datetime.now():
+                                    from time import mktime
 
-                    else:
-                        if ADDON.getSetting('archive_finished_program') == 'false':
-                            if ProgramEndDate > datetime.datetime.now():
-                                self.archiveService = ''
-                                self.archivePlaylist = ''
+                                    n = datetime.datetime.now()
+                                    t = ProgramStartDate
+                                    e = ProgramEndDate
+
+                                    # Duration
+                                    durationCalc = int(((ProgramEndDate - ProgramStartDate).total_seconds() / 60.0))
+                                    duration = str(durationCalc)
+
+                                    # Offset
+                                    offsetCalc = int(((datetime.datetime.now() - ProgramStartDate).total_seconds() / 60.0))
+                                    offset = str(offsetCalc)
+
+                                    # UTC/LUTC
+                                    if sys.version_info[0] > 2:
+                                        utc = str(int(datetime.datetime.timestamp(t)))
+                                        lutc = str(int(datetime.datetime.timestamp(e)))
+                                    else:
+                                        utc = str(int(time.mktime(t.timetuple())))
+                                        lutc = str(int(time.mktime(e.timetuple())))
+                                    
+
+                                    # Datestring
+                                    year = t.strftime("%Y")
+                                    month = t.strftime("%m")
+                                    day = t.strftime("%d")
+                                    hour = t.strftime("%H")
+                                    minute = t.strftime("%M")
+                                    second = t.strftime("%S")
+
+                                    self.archivePlaylist = '{duration}, {offset}, {utc}, {lutc}, {y}, {m}, {d}, {h}, {min}, {s}'.format(
+                                        duration=duration, offset=offset, utc=utc, lutc=lutc, y=year, m=month, d=day, h=hour, min=minute, s=second)
+
+                                else:
+                                    self.archivePlaylist = ''
+
+                        else:
+                            if ADDON.getSetting('archive_finished_program') == 'false':
+                                if ProgramEndDate > datetime.datetime.now():
+                                    self.archiveService = ''
+                                    self.archivePlaylist = ''
+                                else:
+                                    return 'None'
                             else:
                                 return 'None'
-                        else:
-                            return 'None'
 
-                else:
-                    self.archiveService = ''
-                    self.archivePlaylist = ''
+                    else:
+                        self.archiveService = ''
+                        self.archivePlaylist = ''
 
-        except:
+            except:
+                self.archiveService = ''
+                self.archivePlaylist = ''
+
+        else:
             self.archiveService = ''
             self.archivePlaylist = ''
 
@@ -7231,6 +7314,33 @@ class Pla(xbmcgui.WindowXMLDialog):
         if action.getId() == ACTION_PREVIOUS_MENU or action.getId() == ACTION_STOP or (action.getButtonCode() == KEY_STOP and KEY_STOP != 0) or (action.getId() == KEY_STOP and KEY_STOP != 0):
             self.epg.playService.stopPlayback()
             self.closeOSD()
+
+        elif action.getButtonCode() == KEY_LIST:
+            program = self.program
+            d = xbmcgui.Dialog()
+            list = d.select(strings(30309), [strings(30315), strings(30310), strings(30311), strings(30312), strings(30336), strings(30337)])
+
+            if list < 0:
+                return
+            if list == 0:
+                self.epg.programSearchSelect(program.channel)
+            elif list == 1:
+                index = self.database.getCurrentChannelIdx(program.channel)
+                programList = self.database.getChannelListing(program.channel)
+                self.epg.showListing(program.channel)
+            elif list == 2:
+                index = self.database.getCurrentChannelIdx(program.channel)
+                programList = self.database.getChannelListing(program.channel)
+                self.epg.showNow(program.channel)
+            elif list == 3:
+                index = self.database.getCurrentChannelIdx(program.channel)
+                programList = self.database.getChannelListing(program.channel)
+                self.epg.showNext(program.channel)
+            elif list == 4:
+                self.epg.showFullReminders(program.channel)
+            elif list == 5:
+                self.epg.showFullRecordings(program.channel)
+            return
 
         elif action.getId() == KEY_NAV_BACK:
             self.closeOSD()

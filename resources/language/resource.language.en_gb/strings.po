@@ -2108,6 +2108,10 @@ msgctxt "#57057"
 msgid "teliaplay.se"
 msgstr ""
 
+msgctxt "#57058"
+msgid "Redirect needed!"
+msgstr ""
+
 msgctxt "#68000"
 msgid "Plot"
 msgstr ""

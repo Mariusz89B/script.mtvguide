@@ -418,29 +418,29 @@ class PlayService(xbmc.Player, BasePlayService):
             if UA:
                 headers.update({'User-Agent': UA})
             
-            conn_timeout = int(ADDON.getSetting('max_wait_for_playback'))
-            read_timeout = int(ADDON.getSetting('max_wait_for_playback'))
-            timeouts = (conn_timeout, read_timeout)
-            
-            try:
-                response = scraper.get(strmUrl, headers=headers, allow_redirects=False, stream=True, timeout=timeouts)
-                if 'Location' in response.headers and '_TS' not in cid:
-                    strmUrl = response.headers.get('Location', None) 
+                conn_timeout = int(ADDON.getSetting('max_wait_for_playback'))
+                read_timeout = int(ADDON.getSetting('max_wait_for_playback'))
+                timeouts = (conn_timeout, read_timeout)
+                
+                try:
+                    response = scraper.get(strmUrl, headers=headers, allow_redirects=False, stream=True, timeout=timeouts)
+                    if 'Location' in response.headers and '_TS' not in cid:
+                        strmUrl = response.headers.get('Location', None) 
 
-                else:
-                    strmUrl = response.url
+                    else:
+                        strmUrl = response.url
 
-            except HTTPError as e:
-                deb('HTTPError: {}'.format(str(e)))
+                except HTTPError as e:
+                    deb('HTTPError: {}'.format(str(e)))
 
-            except ConnectionError as e:
-                deb('ConnectionError: {}'.format(str(e)))
+                except ConnectionError as e:
+                    deb('ConnectionError: {}'.format(str(e)))
 
-            except Timeout as e:
-                deb('Timeout: {}'.format(str(e))) 
+                except Timeout as e:
+                    deb('Timeout: {}'.format(str(e))) 
 
-            except RequestException as e:
-                deb('RequestException: {}'.format(str(e))) 
+                except RequestException as e:
+                    deb('RequestException: {}'.format(str(e))) 
 
             return strmUrl
 
@@ -1383,6 +1383,26 @@ class PlayService(xbmc.Player, BasePlayService):
                 response = Request.urlopen(req, context=ctx, timeout=timeout)
                 status = response.code
 
+                if status == 200:
+                    UA = ADDON.getSetting('{}_user_agent'.format(self.currentlyPlayedService['service']))
+
+                    headers = {
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0',
+                        'Accept': 'application/json, text/javascript, */*; q=0.01',
+                        'Accept-Language': 'pl,en-US;q=0.7,en;q=0.3',
+                        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                    }
+
+                    if UA:
+                        headers.update({'User-Agent': UA})
+
+                    conn_timeout = int(ADDON.getSetting('max_wait_for_playback'))
+                    read_timeout = int(ADDON.getSetting('max_wait_for_playback'))
+                    timeouts = (conn_timeout, read_timeout)
+                    
+                    response = scraper.get(strmUrl, headers=headers, allow_redirects=False, stream=True, timeout=timeouts)
+                    status = response.status_code
+
             except HTTPError as e:
                 deb('chkConn HTTPError: {}'.format(e.reason))
                 status = e.code
@@ -1399,8 +1419,13 @@ class PlayService(xbmc.Player, BasePlayService):
                 deb('chkConn RequestException')
                 status = 400
 
+            time.sleep(1)
+
             if status >= 400 and xbmc.getCondVisibility('!Player.HasMedia'):
                 xbmcgui.Dialog().notification(strings(57018) + ' Error: ' + str(status), strings(31019), xbmcgui.NOTIFICATION_ERROR)
+
+            elif status >= 300 and status < 400:
+                xbmcgui.Dialog().notification(strings(57058) + ' Status: ' + str(status), strings(31019), xbmcgui.NOTIFICATION_WARNING)
 
             return status
 

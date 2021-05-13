@@ -2262,7 +2262,7 @@ class MTVGUIDESource(Source):
                 raise SourceFaultyEPGException(url)
 
             if ADDON.getSetting('useCustomParser') == 'true':
-                return customParseXMLTV(xml.decode('utf-8'), progress_callback)
+                return customParseXMLTV(xml, progress_callback)
             else:
                 iob = io.BytesIO(xml)
 
@@ -2411,6 +2411,14 @@ def customParseXMLTV(xml, progress_callback):
         else:
             return None
 
+    def decodeString(s):
+        if sys.version_info[0] < 3:
+            s = s if isinstance(s, unicode) else s.decode('utf-8')
+        else:
+            s = s
+        
+        return s
+
     #regex for channel
     channelRe        = re.compile('(<channel.*?</channel>)',                re.DOTALL)
     channelIdRe      = re.compile('<channel\s*id="(.*?)">',                 re.DOTALL)
@@ -2433,7 +2441,12 @@ def customParseXMLTV(xml, progress_callback):
     programLive      = re.compile('<video>\s*<aspect>(.*?)</aspect>\s*</video>', re.DOTALL | re.MULTILINE)
 
     #replace &amp; with & and Carriage Return (CR) in xml
-    xml = xml.replace('&amp;', '&').replace('&lt;', '<').replace('&gt;', '>').replace('\r', '')
+    xml = xml.replace(b'&amp;', b'&').replace(b'&lt;', b'<').replace(b'&gt;', b'>').replace(b'\r', b'')
+
+    if sys.version_info[0] > 2:
+        xml = xml.decode('utf-8')
+    else:
+        pass
 
     channels = channelRe.findall(xml)
     if len(channels) == 0:
@@ -2442,15 +2455,15 @@ def customParseXMLTV(xml, progress_callback):
         raise SourceFaultyEPGException('')
 
     for channel in channels:
-        id = channelIdRe.search(channel).group(1).upper()
+        id = decodeString(channelIdRe.search(channel).group(1).upper())
 
         try:
-            title = channelTitleRe.search(channel).group(1)
+            title = decodeString(channelTitleRe.search(channel).group(1))
         except:
-            title = id
+            title = decodeString(id)
 
         try:
-            logo = channelIconRe.search(channel).group(1)
+            logo = decodeString(channelIconRe.search(channel).group(1))
         except:
             logo = None
 
@@ -2469,14 +2482,14 @@ def customParseXMLTV(xml, progress_callback):
     totalElement = len(programs)
 
     for program in programs:
-        channel = programChannelRe.search(program).group(1).upper()
+        channel = decodeString(programChannelRe.search(program).group(1).upper())
         try:
-            title = programTitleRe.search(program).group(1)
+            title = decodeString(programTitleRe.search(program).group(1))
         except AttributeError:
             title = ''
         start = TimeZone(customParseXMLTVDate( programStartRe.search(program).group(1)))
         stop  = TimeZone(customParseXMLTVDate( programStopRe.search(program).group(1)))
-        category = programCategory.findall(program)
+        category = programCategory.findall(decodeString(program))
         category_list = []
         for c in category:
             txt = c
@@ -2489,37 +2502,37 @@ def customParseXMLTV(xml, progress_callback):
         categories = ','.join(category_list)
 
         try:
-            desc  = programDesc.search(program).group(1)
+            desc  = decodeString(programDesc.search(program).group(1))
         except:
             desc = ''
 
         try:
-            icon  = programIcon.search(program).group(1)
+            icon  = decodeString(programIcon.search(program).group(1))
         except:
             icon = None
 
         try:
-            date  = programProdDate.search(program).group(1)
+            date  = decodeString(programProdDate.search(program).group(1))
         except:
             date = ''
 
         try:
-            director  = programDirector.search(program).group(1)
+            director  = decodeString(programDirector.search(program).group(1))
         except:
             director = ''
 
         try:
-            actor  = programActor.search(program).group(1)
+            actor  = decodeString(programActor.search(program).group(1))
         except:
             actor = ''
 
         try:
-            episode  = programEpisode.search(program).group(1)
+            episode  = decodeString(programEpisode.search(program).group(1))
         except:
             episode = ''
 
         try:
-            category = programCategory.findall(program)
+            category = programCategory.findall(decodeString(program))
             catlength = len(category)
             if catlength > 0:
                 categoryA = category[0]
@@ -2535,7 +2548,7 @@ def customParseXMLTV(xml, progress_callback):
             categoryB = ''
 
         try:
-            live = programLive.search(program).group(1)
+            live = decodeString(programLive.search(program).group(1))
         except:
             live = ''
 
