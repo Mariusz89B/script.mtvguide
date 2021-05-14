@@ -692,7 +692,7 @@ class RecordService(BasePlayService):
                                     m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/' + str(fsListType) + '-' + str(utc) + '-' + str(offset) + str(fsStreamType) + str(fsUrlAppend)
 
                                 else:
-                                    m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/' + str(fsListType) + '-timeshift_rel-' + str(offset) + '.m3u8' + str(fsUrlAppend)
+                                    m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/' + str(fsListType.replace('mono', 'video')) + '-timeshift_rel-' + str(offset) + '.m3u8' + str(fsUrlAppend)
 
                             strmUrl = m_catchupSource
 

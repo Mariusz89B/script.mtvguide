@@ -2735,6 +2735,33 @@ class mTVGuide(xbmcgui.WindowXML):
                         xbmcgui.Dialog().notification(strings(30353), strings(30354))
                         return
 
+        if action.getId() in [KEY_CONTEXT_MENU] and self.getFocusId() == 7900:
+            self.sortCategory()
+
+    def sortCategory(self):
+        categories = list()
+
+        values = dict(self.database.getCategoryMap())
+
+        current_categories = list(self.database.getAllCategories())         
+
+        for category in range(len(current_categories)):   
+            res = xbmcgui.Dialog().select('Select order for category: {}'.format(category+1), current_categories)
+            if res == -1:
+                return
+            elif res > -1:
+                cat = current_categories[res]
+                categories.append(cat)
+
+            current_categories.pop(res)
+
+        sortedvalues = dict(sorted(values.items(), key=lambda x: categories.index(x[1])))
+
+        dictlist = [(k, v) for k, v in sortedvalues.items()]
+
+        self.database.saveCategoryMap(dictlist, True)
+        self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+
     def onActionTVMode(self, action):
         debug('onActionTVMode actId {}, buttonCode {}'.format(action.getId(), action.getButtonCode()))
         if action.getId() == ACTION_PAGE_UP:
@@ -4614,17 +4641,21 @@ class mTVGuide(xbmcgui.WindowXML):
         self.setControlLabel(C_MAIN_CALC_TIME_EPG, '{}'.format(calcTime))
 
     def getLastPlayingChannel(self):
-        file_name = os.path.join(self.profilePath, 'autoplay.list')
         try:    
+            file_name = os.path.join(self.profilePath, 'autoplay.list')
             with open(file_name, 'r') as f:
                 value = f.read()
                 idx = int(value.split(',')[0])
                 date = value.split(',')[1]
         except:
             idx = int(0)
-            controlInFocus = self.getFocus()
-            program = self._getProgramFromControl(controlInFocus)
-            date = program.startDate
+
+            try:
+                controlInFocus = self.getFocus()
+                program = self._getProgramFromControl(controlInFocus)
+                date = program.startDate
+            except:
+                date = datetime.datetime.now()
 
         try:
             startDate = proxydt.strptime(str(date), '%Y-%m-%d %H:%M:%S')
@@ -5769,7 +5800,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
             ccList = ['be', 'cz', 'de', 'dk', 'fr', 'hr', 'it', 'no', 'pl', 'se', 'srb', 'uk', 'us', 'radio']
             
-            categories = PREDEFINED_CATEGORIES + sorted(list(self.categories), key=lambda x: x.lower())
+            categories = PREDEFINED_CATEGORIES + list(self.categories)
             for item in ccList:
                 if ADDON.getSetting('country_code_{cc}'.format(cc=item)) == "false":
                     categories.remove('Group: {cc}'.format(cc=item.upper()))
@@ -6306,7 +6337,7 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
 
             ccList = ['be', 'cz', 'de', 'dk', 'fr', 'hr', 'it', 'no', 'pl', 'se', 'srb', 'uk', 'us', 'radio']
 
-            categories = PREDEFINED_CATEGORIES + sorted(list(self.categories), key=lambda x: x.lower())
+            categories = PREDEFINED_CATEGORIES + list(self.categories)
             for item in ccList:
                 if ADDON.getSetting('country_code_{cc}'.format(cc=item)) == "false":
                     categories.remove('Group: {cc}'.format(cc=item.upper()))
@@ -6478,7 +6509,7 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
                     categories.add(cat.decode('utf-8'))
                 self.categories = list(set(categories))
                 items = list()
-                categories = PREDEFINED_CATEGORIES + sorted(list(self.categories), key=lambda x: x.lower())
+                categories = PREDEFINED_CATEGORIES + list(self.categories)
                 for label in categories:
                     item = xbmcgui.ListItem(label)
                     items.append(item)

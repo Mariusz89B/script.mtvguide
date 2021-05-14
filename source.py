@@ -1056,16 +1056,29 @@ class Database(object):
 
         return categoryMap
 
-    def saveCategoryMap(self, categories):
+    def saveCategoryMap(self, categories, custom=False):
         self.channelList = None
-        try:
-            f = xbmcvfs.File('special://profile/addon_data/script.mtvguide/categories.ini','wb')
-            for cat in categories:
-                for channel in categories[cat]:
-                    f.write(bytearray("{}={}\n".format(channel, cat), 'utf-8'))
-            f.close()
-        except:
-            deb('saveCategoryMap Error: {}'.format(getExceptionString()))
+        if custom:
+            try:
+                newList = list()
+                for channel, cat in categories:
+                    line = "{}={}".format(channel, cat)
+                    newList.append(line)
+
+                f = xbmcvfs.File('special://profile/addon_data/script.mtvguide/categories.ini','wb')
+                f.write(bytearray('\n'.join(newList), 'utf-8'))
+                f.close()
+            except:
+                deb('custom saveCategoryMap Error: {}'.format(getExceptionString()))
+        else:
+            try:
+                f = xbmcvfs.File('special://profile/addon_data/script.mtvguide/categories.ini','wb')
+                for cat in categories:
+                    for channel in categories[cat]:
+                        f.write(bytearray("{}={}\n".format(channel, cat), 'utf-8'))
+                f.close()
+            except:
+                deb('saveCategoryMap Error: {}'.format(getExceptionString()))
 
     def getChannelsInCategory(self, category):
         channelList = set()
@@ -1075,9 +1088,10 @@ class Database(object):
         return channelList
 
     def getAllCategories(self):
-        categoryList = set()
+        categoryList = list()
         for _, cat in self.getCategoryMap():
-            categoryList.add(cat)
+            categoryList.append(cat)
+        categoryList = list(dict.fromkeys(categoryList))
         return categoryList
 
     def programSearch(self, search):
