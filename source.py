@@ -2055,9 +2055,6 @@ class Database(object):
         else:
             deb('_deleteDbFile failed to delete database file')
 
-    def runSource(self):
-        Source()
-
 class Source(object):
     def getDataFromExternal(self, date, progress_callback = None):
         """
