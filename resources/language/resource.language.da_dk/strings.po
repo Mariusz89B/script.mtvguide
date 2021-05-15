@@ -512,6 +512,10 @@ msgctxt "#30374"
 msgid "Sort all channels"
 msgstr "Sorter alle kanaler"
 
+msgctxt "#30375"
+msgid "Set order for category: {}"
+msgstr "Angiv rækkefølge for kategori: {}"
+
 msgctxt "#30500"
 msgid "Edit channel order and visibility"
 msgstr "Rediger kanal rækkefølge og synlighed"

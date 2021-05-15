@@ -903,21 +903,6 @@ class Database(object):
             idx = len(channels) - 1
         return channels[idx]
 
-    def removeChannel(self, callback, channelList):
-        self.eventQueue.append([self._removeChannel, callback, channelList])
-        self.event.set()
-
-    def _removeChannel(self, channelList):
-        try:
-            if channelList is not None:
-                for chann in reversed(channelList):
-                    channel = Channel(chann, chann)
-                    c = self.conn.cursor()
-                    c.execute('DELETE FROM channels WHERE id LIKE ? AND title LIKE ?', [channel.id, channel.title])
-                    self.conn.commit()
-        except:
-            pass
-
     def lastChannel(self, idx, date):
         self._invokeAndBlockForResult(self._lastChannel, idx, date)
 
@@ -955,9 +940,8 @@ class Database(object):
 
         return idx, date
 
-    def addChannel(self, callback, channel):
-        self.eventQueue.append([self._addChannel, callback, channel])
-        self.event.set()
+    def addChannel(self, channel):
+        self._invokeAndBlockForResult(self._addChannel, channel)
 
     def _addChannel(self, channel):
         if channel is not None:
@@ -966,6 +950,22 @@ class Database(object):
             if not c.rowcount:
                 c.execute('UPDATE channels SET title=?, logo=?, stream_url=?, visible=?, weight=(CASE ? WHEN -1 THEN weight ELSE ? END) WHERE id=? AND source=?', [channel.title, channel.logo, channel.streamUrl, channel.visible, channel.weight, channel.weight, channel.id, self.source.KEY])
             self.conn.commit()
+            c.close()
+
+    def removeChannel(self, channelList):
+        self._invokeAndBlockForResult(self._removeChannel, channelList)
+
+    def _removeChannel(self, channelList):
+        try:
+            if channelList is not None:
+                for chann in reversed(channelList):
+                    channel = Channel(chann, chann)
+                    c = self.conn.cursor()
+                    c.execute('DELETE FROM channels WHERE id LIKE ? AND title LIKE ?', [channel.id, channel.title])
+                    self.conn.commit()
+                    c.close()
+        except:
+            pass
             
     def saveChannelList(self, callback, channelList):
         self.eventQueue.append([self._saveChannelList, callback, channelList])
@@ -2054,6 +2054,9 @@ class Database(object):
             deb('_deleteDbFile successfully deleted database file')
         else:
             deb('_deleteDbFile failed to delete database file')
+
+    def runSource(self):
+        Source()
 
 class Source(object):
     def getDataFromExternal(self, date, progress_callback = None):

@@ -2745,22 +2745,23 @@ class mTVGuide(xbmcgui.WindowXML):
 
         current_categories = list(self.database.getAllCategories())         
 
-        for category in range(len(current_categories)):   
-            res = xbmcgui.Dialog().select('Select order for category: {}'.format(category+1), current_categories)
-            if res == -1:
-                return
-            elif res > -1:
-                cat = current_categories[res]
-                categories.append(cat)
+        if current_categories:
+            for category in range(len(current_categories)):   
+                res = xbmcgui.Dialog().select(strings(30375).format(category+1), current_categories)
+                if res == -1:
+                    return
+                elif res > -1:
+                    cat = current_categories[res]
+                    categories.append(cat)
 
-            current_categories.pop(res)
+                current_categories.pop(res)
 
-        sortedvalues = dict(sorted(values.items(), key=lambda x: categories.index(x[1])))
+            sortedvalues = dict(sorted(values.items(), key=lambda x: categories.index(x[1])))
 
-        dictlist = [(k, v) for k, v in sortedvalues.items()]
+            dictlist = [(k, v) for k, v in sortedvalues.items()]
 
-        self.database.saveCategoryMap(dictlist, True)
-        self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+            self.database.saveCategoryMap(dictlist, True)
+            self.onRedrawEPG(self.channelIdx, self.viewStartDate)
 
     def onActionTVMode(self, action):
         debug('onActionTVMode actId {}, buttonCode {}'.format(action.getId(), action.getButtonCode()))
@@ -4255,7 +4256,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 for item in res:
                     removeList.append(channList[item])
                 
-                self.database.removeChannel(None, removeList)
+                self.database.removeChannel(removeList)
                 self.reloadList()
 
             else:
@@ -4332,7 +4333,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
                 if epgChann != '':
                     newChannel = Channel(epgChann, epgChann, logo)
-                    self.database.addChannel(None, newChannel)
+                    self.database.addChannel(newChannel)
 
                     self.channelsFromStream(epgChann)
         
@@ -7324,7 +7325,7 @@ class Pla(xbmcgui.WindowXMLDialog):
             self.epg.playService.stopPlayback()
             self.closeOSD()
 
-        elif action.getButtonCode() == KEY_LIST:
+        elif action.getButtonCode() == KEY_LIST and KEY_LIST != 0 or action.getId() == KEY_LIST and KEY_LIST != 0:
             program = self.program
             d = xbmcgui.Dialog()
             list = d.select(strings(30309), [strings(30315), strings(30310), strings(30311), strings(30312), strings(30336), strings(30337)])
