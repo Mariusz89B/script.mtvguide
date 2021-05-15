@@ -918,6 +918,43 @@ class Database(object):
         except:
             pass
 
+    def lastChannel(self, idx, date):
+        self._invokeAndBlockForResult(self._lastChannel, idx, date)
+
+    def _lastChannel(self, idx, date):
+        c = self.conn.cursor()
+        c.execute("DELETE FROM latestplayed")
+        try:
+            c.execute("INSERT INTO latestplayed(idx, start_date) VALUES(?, ?)", [idx, date])
+        except:
+            now = datetime.datetime.now()
+            if sys.version_info[0] > 2:
+                date = datetime.datetime.timestamp(now)
+            else:
+                from time import time
+                date = str(time()).split('.')[0]
+            c.execute("INSERT INTO latestplayed(idx, start_date) VALUES(?, ?)", [idx, date])
+        self.conn.commit()
+        c.close()
+
+    def getLastChannel(self):
+        return self._invokeAndBlockForResult(self._getLastChannel)
+
+    def _getLastChannel(self):
+        c = self.conn.cursor()
+        idx = ''
+        date = ''
+        try:
+            c.execute("SELECT idx, start_date FROM latestplayed")
+            row = c.fetchone()
+            idx = row[str('idx')]
+            date = row[str('start_date')]
+            c.close()
+        except:
+            pass
+
+        return idx, date
+
     def addChannel(self, callback, channel):
         self.eventQueue.append([self._addChannel, callback, channel])
         self.event.set()
@@ -1744,6 +1781,7 @@ class Database(object):
 
             # make sure we have a record in sources for this Source
             c.execute("INSERT OR IGNORE INTO sources(id, channels_updated) VALUES(?, ?)", [self.source.KEY, 0])
+            c.execute('CREATE TABLE IF NOT EXISTS latestplayed(idx INTEGER, start_date TEXT)')
             self.conn.commit()
             c.close()
 

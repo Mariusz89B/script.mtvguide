@@ -2489,9 +2489,8 @@ class mTVGuide(xbmcgui.WindowXML):
             minutes=int(ADDON.getSetting('timebar_adjust')))
         self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
         channelList = self.database.getChannelList(onlyVisible=True)
-        f = xbmcvfs.File(os.path.join(self.profilePath, 'autoplay.list'), "r")
-        lines = f.read()
-        self.channelIdx = int(lines.split(',')[0])
+        idx, date = self.database.getLastChannel()
+        self.channelIdx = int(idx)
         try:
             program = Program(channel=channelList[self.channelIdx], title='', startDate='', endDate='', description='', productionDate='', director='', actor='', episode='',
                               imageLarge='', imageSmall='', categoryA='', categoryB='')
@@ -2499,7 +2498,8 @@ class mTVGuide(xbmcgui.WindowXML):
             program = Program(channel=channelList[0], title='', startDate='', endDate='', description='', productionDate='', director='', actor='', episode='',
                               imageLarge='', imageSmall='', categoryA='', categoryB='')
         xbmc.sleep(350)
-        self.playChannel(program.channel)
+        if not xbmc.Player().isPlaying():
+            self.playChannel(program.channel)
 
     def Info(self, program, playChannel2, recordProgram, notification, ExtendedInfo, onRedrawEPG, channelIdx,
              viewStartDate):
@@ -4641,26 +4641,7 @@ class mTVGuide(xbmcgui.WindowXML):
         self.setControlLabel(C_MAIN_CALC_TIME_EPG, '{}'.format(calcTime))
 
     def getLastPlayingChannel(self):
-        try:    
-            file_name = os.path.join(self.profilePath, 'autoplay.list')
-            with open(file_name, 'r') as f:
-                value = f.read()
-                idx = int(value.split(',')[0])
-                date = value.split(',')[1]
-        except:
-            idx = int(0)
-
-            try:
-                controlInFocus = self.getFocus()
-                program = self._getProgramFromControl(controlInFocus)
-                date = program.startDate
-            except:
-                date = datetime.datetime.now()
-
-        try:
-            startDate = proxydt.strptime(str(date), '%Y-%m-%d %H:%M:%S')
-        except:
-            startDate = proxydt.strptime(str(date), '%Y-%m-%d %H:%M:%S.%f')
+        idx, date = self.database.getLastChannel()
 
         channelList = self.database.getChannelList(onlyVisible=True)
         try:
@@ -4668,7 +4649,7 @@ class mTVGuide(xbmcgui.WindowXML):
         except:
             chann = channelList[0]
 
-        prog = self.database.getProgramStartingAt(chann, startDate)
+        prog = self.database.getProgramStartingAt(chann, date)
 
         return chann, prog, idx
 
@@ -4696,6 +4677,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(prog.title))
                 self.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format(self.formatTime(prog.startDate), self.formatTime(prog.endDate)))
                 self.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format((str(int(idx) + 1))))
+
         except:
             if ADDON.getSetting('info_osd') == "false" or self.program is None:
                 self.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format("N/A"))
@@ -4949,23 +4931,19 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.playingRecordedProgram = True
                 return True
 
-    def updateCurrentChannel(self, channel):
+    def updateCurrentChannel(self, program, channel):
         deb('updateCurrentChannel')
         self.currentChannel = channel
         self.lastChannel = self.currentChannel
 
-        file_name = os.path.join(self.profilePath, 'autoplay.list')
-        f = xbmcvfs.File(file_name, "wb")
-
-        s = "{}".format(str(self.database.getCurrentChannelIdx(channel)))
+        idx = self.currentChannel.weight
         
-        date = self.program.startDate
+        try:
+            date = program.startDate
+        except:
+            date = datetime.datetime.now()
 
-        if sys.version_info[0] > 2:
-            f.write('{},{}'.format(s, date))
-        else:
-            f.write(str('{},{}'.format(s, date)))
-        f.close()
+        self.database.lastChannel(idx, date)
 
     def getLastChannel(self):
         return self.lastChannel
@@ -5230,7 +5208,7 @@ class mTVGuide(xbmcgui.WindowXML):
             self.archiveService = ''
             self.archivePlaylist = ''
 
-        self.updateCurrentChannel(program.channel)
+        self.updateCurrentChannel(program, program.channel)
         if self.playRecordedProgram(program):
             return True
 
@@ -5403,7 +5381,7 @@ class mTVGuide(xbmcgui.WindowXML):
             self.archiveService = ''
             self.archivePlaylist = ''
 
-        self.updateCurrentChannel(channel)
+        self.updateCurrentChannel(program, channel)
         if program is not None:
             self.program = program
             if self.playRecordedProgram(program):
@@ -7643,13 +7621,18 @@ class Pla(xbmcgui.WindowXMLDialog):
         channel = self.database.getPreviousChannel(self.epg.currentChannel)
         self.playChannel(channel)
 
-    def playChannel(self, channel):
+    def playChannel(self, channel, program=None):
         debug('Pla playChannel')
         if channel.id != self.epg.currentChannel.id:
             self.ChannelChanged = 1
-            self.epg.updateCurrentChannel(channel)
-            self.program = self.getCurrentProgram()
-            self.epg.program = self.program
+            if program is None:
+                self.program = self.getCurrentProgram()
+                self.epg.program = self.program
+            else:
+                self.program = program
+                self.epg.program = self.program
+
+            self.epg.updateCurrentChannel(self.epg.program, channel)
             urlList = self.database.getStreamUrlList(channel)
             if len(urlList) > 0:
                 self.epg.playService.playUrlList(urlList, self.archiveService, self.archivePlaylist, resetReconnectCounter=True)

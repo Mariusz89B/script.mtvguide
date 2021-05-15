@@ -626,7 +626,7 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
             self.gu.onAction2(ACTION_STOP)
         elif controlId == C_PLAY:
             self.isClosing = True
-            self.gu.playChannel(self.program.channel)
+            self.gu.playChannel(self.program.channel, self.program)
         elif controlId == C_PAUSE:
             self.isClosing = False
             xbmc.executebuiltin('Action(PlayPause)')
