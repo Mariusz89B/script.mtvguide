@@ -4450,6 +4450,7 @@ class mTVGuide(xbmcgui.WindowXML):
             new_str = re.sub(r'^(.*{}.*)$'.format(re.escape('strm=""/>')), lambda g: g.group(0) + '\n\t'+item, s, count=1, flags=re.MULTILINE)
             f.seek(0)
             f.write(new_str.encode('utf-8'))
+            f.close()
             xbmcgui.Dialog().ok(strings(57051), strings(59993).format(epgChann.upper()))
             self.reloadList(add=True)
 
