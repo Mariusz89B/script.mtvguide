@@ -337,7 +337,7 @@ class PlayService(xbmc.Player, BasePlayService):
             customPlugin = True
         elif url[0:7] == 'service':
             cid, service = self.parseUrl(url)
-            success = self.LoadVideoLink(cid, service)
+            success = self.LoadVideoLink(cid, service, url)
             if success:
                 self.getStreamQualityFromCid(cid)
         else:
@@ -445,7 +445,7 @@ class PlayService(xbmc.Player, BasePlayService):
             return strmUrl
 
 
-    def LoadVideoLink(self, channel, service):
+    def LoadVideoLink(self, channel, service, url):
         with self.busyDialog():
             deb('LoadVideoLink {} service'.format(service))
             res = False
@@ -1011,6 +1011,8 @@ class PlayService(xbmc.Player, BasePlayService):
                         strmUrl = channelInfo.strm
                         strmUrl_catchup = channelInfo.catchup
 
+                        p = re.compile('service=playlist_\d&cid=\d+_TS.*')
+
                         duration = ''
 
                         try:
@@ -1019,6 +1021,9 @@ class PlayService(xbmc.Player, BasePlayService):
                                 if str(self.playlistArchive()) != '':
                                     archivePlaylist = str(self.playlistArchive())
                                     catchupList = archivePlaylist.split(', ')
+
+                                    if not p.match(url):
+                                        return res
 
                                     # Catchup strings
                                     duration = catchupList[0]
@@ -1043,7 +1048,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                                 strmUrl = re.sub('\$', '', str(strmUrl))
                                                 strmUrl = re.sub('mono', 'video', str(strmUrl))
                                         else:
-                                            if self.userStoppedPlayback:
+                                            if p.match(url):
                                                 deb('archive_type(4) wrong type')
                                                 xbmcgui.Dialog().ok(strings(30998), strings(59979))
                                             return res
@@ -1098,7 +1103,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                                 strmUrl = m_catchupSource
 
                                             else:
-                                                if self.userStoppedPlayback:
+                                                if p.match(url):
                                                     deb('archive_type(0) wrong type')
                                                     xbmcgui.Dialog().ok(strings(30998), strings(59979))
                                                 return res
@@ -1132,7 +1137,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                                 m_catchupSource = strmUrl + catchup
                                                 strmUrl = m_catchupSource + '?duration={duration}'.format(duration=str(int(duration)*60))
                                             else:
-                                                if self.userStoppedPlayback:
+                                                if p.match(url):
                                                     deb('archive_type(1) wrong type')
                                                     xbmcgui.Dialog().ok(strings(30998), strings(59979))
                                                 return res
@@ -1163,7 +1168,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                                 strmUrl = m_catchupSource
 
                                             else:
-                                                if self.userStoppedPlayback:
+                                                if p.match(url):
                                                     deb('archive_type(2) wrong type')
                                                     xbmcgui.Dialog().ok(strings(30998), strings(59979))
                                                 return res
