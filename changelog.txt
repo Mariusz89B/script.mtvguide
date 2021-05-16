@@ -1,5 +1,7 @@
-﻿[COLOR yellow][B]wersja 9.3.2[/B] - 2021-05-13[/COLOR]
+﻿[COLOR yellow][B]wersja 9.3.2[/B] - 2021-05-16[/COLOR]
 - poprawka memoryerror przy szybkim parsowaniu epg
+- poprawiono wydajność działania
+- usunięte błędy
 
 [COLOR yellow][B]wersja 9.3.1[/B] - 2021-05-12[/COLOR]
 - dodana opcja wprowadzenia kanałów bez epg 

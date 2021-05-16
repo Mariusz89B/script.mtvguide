@@ -256,9 +256,14 @@ class PlaylistUpdater(baseServiceUpdater):
             else:
                 try:
                     if sys.version_info[0] > 2:
-                    	tmpcontent = open(path, 'r', encoding='utf-8').read()
+                    	lf = open(path, 'r', encoding='utf-8')
                     else:
-                        tmpcontent = open(path, 'r').read()
+                        lf = open(path, 'r')
+
+                    tmpcontent = lf.read()
+                    lf.close()
+                    if tmpcontent is None or tmpcontent == "":
+                        raise Exception
                 except:
                     self.log('getPlaylistContent opening normally Error %s, type: %s, url: %s' % (getExceptionString(), urltype, path) )
                     self.log('getPlaylistContent trying to open file using xbmcvfs')
@@ -505,18 +510,18 @@ class PlaylistUpdater(baseServiceUpdater):
 
                             channelCid = ''
 
-                            fd = re.compile('.*(timeshift=|catchup-days=).*')
+                            catchupDaysList = ['catchup-days=', 'timeshift=']
 
-                            if fd.match(splitedLine[0]) and ADDON.getSetting('archive_support') == 'true':
+                            if any(x in splitedLine[0] for x in catchupDaysList) and ADDON.getSetting('archive_support') == 'true':
                                 pdays = re.compile('.*(timeshift=|catchup-days=)"(.*?)".*')
                                 
                                 days = pdays.search(splitedLine[0]).group(2)
                             else:
                                 days = '1'
 
-                            fc = re.compile('.*(timeshift|catchup).*')
+                            catchupList = ['catchup', 'timeshift']
 
-                            if fc.match(splitedLine[0]) and ADDON.getSetting('archive_support') == 'true':
+                            if any(x in splitedLine[0] for x in catchupList) and ADDON.getSetting('archive_support') == 'true':
                                 channelCid = str(nextFreeCid) + '_TS' + '_' + days
                             else:
                                 channelCid = str(nextFreeCid)

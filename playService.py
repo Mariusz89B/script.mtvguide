@@ -447,12 +447,14 @@ class PlayService(xbmc.Player, BasePlayService):
 
     def LoadVideoLink(self, channel, service):
         with self.busyDialog():
-            #deb('LoadVideoLink {} service'.format(service))
+            deb('LoadVideoLink {} service'.format(service))
             res = False
             startWindowed = False
 
             inputstream = self.CheckInputstreamInstalledAndEnabled()
             ffmpegdirect = self.CheckFFmpegDirectInstalledAndEnabled()
+
+            pl = re.compile('playlist_\d')
 
             if ADDON.getSetting('start_video_minimalized') == 'true':
                 startWindowed = True
@@ -469,7 +471,7 @@ class PlayService(xbmc.Player, BasePlayService):
                     self.unlockCurrentlyPlayedService()
                     return res
 
-                if self.currentlyPlayedService['service'] == 'C More':
+                if service == 'C More':
                     try:
                         self.playbackStopped = False
 
@@ -517,7 +519,7 @@ class PlayService(xbmc.Player, BasePlayService):
                         self.unlockCurrentlyPlayedService()
                         xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
 
-                if self.currentlyPlayedService['service'] == 'Cyfrowy Polsat GO':
+                if service == 'Cyfrowy Polsat GO':
                     try:
                         self.playbackStopped = False
 
@@ -568,7 +570,7 @@ class PlayService(xbmc.Player, BasePlayService):
                         self.unlockCurrentlyPlayedService()
                         xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
 
-                if self.currentlyPlayedService['service'] == 'Ipla':
+                if service == 'Ipla':
                     try:
                         self.playbackStopped = False
 
@@ -628,7 +630,7 @@ class PlayService(xbmc.Player, BasePlayService):
                         self.unlockCurrentlyPlayedService()
                         xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
 
-                if self.currentlyPlayedService['service'] == 'nc+ GO':
+                if service == 'nc+ GO':
                     try:
                         self.playbackStopped = False
 
@@ -682,7 +684,7 @@ class PlayService(xbmc.Player, BasePlayService):
                         self.unlockCurrentlyPlayedService()
                         xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
 
-                if self.currentlyPlayedService['service'] == 'PlayerPL':
+                if service == 'PlayerPL':
                     try:
                         self.playbackStopped = False
 
@@ -728,7 +730,7 @@ class PlayService(xbmc.Player, BasePlayService):
                         self.unlockCurrentlyPlayedService()
                         xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
 
-                if self.currentlyPlayedService['service'] == 'Telia Play':
+                if service == 'Telia Play':
                     try:
                         self.playbackStopped = False
 
@@ -807,7 +809,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                     'User-Agent': UA,
                                 }
 
-                                response = requests.get(url, headers=headers, verify=False).json()
+                                response = requests.get(url, headers=headers).json()
 
                                 try:
                                     cid = response['map'][channelInfo.cid][0]['assetId']
@@ -851,7 +853,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                     ('sessionId', six.text_type(uuid.uuid4())),
                                 )
 
-                                response = sess.post(url, headers=headers, params=params, cookies=sess.cookies, verify=False).json()
+                                response = sess.post(url, headers=headers, params=params, cookies=sess.cookies).json()
 
                                 streamingUrl = response["streamingUrl"]
                                 token = response["token"]
@@ -894,7 +896,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                     'User-Agent': UA,
                                 }
 
-                                mpdurl_re = sess.get(mpdurl, headers=xheaders, verify=False).json()
+                                mpdurl_re = sess.get(mpdurl, headers=xheaders).json()
                                 mpdurl = mpdurl_re["location"]
 
                                 strmUrl = mpdurl
@@ -958,7 +960,7 @@ class PlayService(xbmc.Player, BasePlayService):
                         xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
 
 
-                if self.currentlyPlayedService['service'] == 'WP Pilot':
+                if service == 'WP Pilot':
                     if self.archiveService == '' or self.archivePlaylist == '':
                         try:
                             self.playbackStopped = False
@@ -1002,7 +1004,7 @@ class PlayService(xbmc.Player, BasePlayService):
                             self.unlockCurrentlyPlayedService()
                             xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
 
-                if 'playlist_' in self.currentlyPlayedService['service']:
+                if pl.match(service):
                     playbackServices = ['C More', 'Cyfrowy Polsat GO', 'Ipla', 'nc+ GO', 'PlayerPL', 'Telia Play', 'WP Pilot']
                     if self.currentlyPlayedService['service'] not in playbackServices:
                         channelInfo.strm = self.getUrl(channelInfo.strm, channelInfo.cid)
@@ -1041,9 +1043,10 @@ class PlayService(xbmc.Player, BasePlayService):
                                                 strmUrl = re.sub('\$', '', str(strmUrl))
                                                 strmUrl = re.sub('mono', 'video', str(strmUrl))
                                         else:
-                                            deb('archive_type(4) wrong type')
-                                            xbmcgui.Dialog().ok(strings(30998), strings(59979))
-                                            return
+                                            if self.userStoppedPlayback:
+                                                deb('archive_type(4) wrong type')
+                                                xbmcgui.Dialog().ok(strings(30998), strings(59979))
+                                            return res
                                     else:
 
                                         # Default
@@ -1070,7 +1073,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                                     
                                                     elif 'hls-custom' in fsListType:
                                                         new_url = strmUrl + '?utc={utc}&lutc={lutc}'.format(utc=utc, lutc=lutc)
-                                                        response = requests.get(new_url, allow_redirects=False, verify=False, timeout=2)
+                                                        response = requests.get(new_url, allow_redirects=False, timeout=2)
                                                         strmUrlNew = response.headers.get('Location', None) if 'Location' in response.headers else strmUrl
 
                                                         if strmUrlNew:
@@ -1095,9 +1098,10 @@ class PlayService(xbmc.Player, BasePlayService):
                                                 strmUrl = m_catchupSource
 
                                             else:
-                                                deb('archive_type(0) wrong type')
-                                                xbmcgui.Dialog().ok(strings(30998), strings(59979))
-                                                return
+                                                if self.userStoppedPlayback:
+                                                    deb('archive_type(0) wrong type')
+                                                    xbmcgui.Dialog().ok(strings(30998), strings(59979))
+                                                return res
 
                                         # Append
                                         if ADDON.getSetting('archive_type') == '1':
@@ -1128,9 +1132,10 @@ class PlayService(xbmc.Player, BasePlayService):
                                                 m_catchupSource = strmUrl + catchup
                                                 strmUrl = m_catchupSource + '?duration={duration}'.format(duration=str(int(duration)*60))
                                             else:
-                                                deb('archive_type(1) wrong type')
-                                                xbmcgui.Dialog().ok(strings(30998), strings(59979))
-                                                return
+                                                if self.userStoppedPlayback:
+                                                    deb('archive_type(1) wrong type')
+                                                    xbmcgui.Dialog().ok(strings(30998), strings(59979))
+                                                return res
 
                                         # Xtream Codes
                                         if ADDON.getSetting('archive_type') == '2':
@@ -1158,9 +1163,10 @@ class PlayService(xbmc.Player, BasePlayService):
                                                 strmUrl = m_catchupSource
 
                                             else:
-                                                deb('archive_type(2) wrong type')
-                                                xbmcgui.Dialog().ok(strings(30998), strings(59979))
-                                                return
+                                                if self.userStoppedPlayback:
+                                                    deb('archive_type(2) wrong type')
+                                                    xbmcgui.Dialog().ok(strings(30998), strings(59979))
+                                                return res
 
                                         # Shift
                                         if ADDON.getSetting('archive_type') == '3':
