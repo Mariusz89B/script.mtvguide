@@ -616,6 +616,11 @@ class RecordService(BasePlayService):
                 archivePlaylist = str(self.archiveString)
                 catchupList = archivePlaylist.split(', ')
 
+                p = re.compile('service=playlist_\d&cid=\d+_TS.*')
+
+                if not p.match(url):
+                    return False
+
                 # Catchup strings
                 duration = catchupList[0]
                 offset = catchupList[1]
@@ -652,6 +657,8 @@ class RecordService(BasePlayService):
                     if ADDON.getSetting('archive_type') == '0':
                         matches = re.compile('^(http[s]?://[^/]+)/([^/]+)/([^/]*)(mpegts|\\.m3u8)(\\?.+=.+)?$')
 
+                        catchupList = ['hls-custom', 'mono']
+
                         if matches.match(strmUrl):
                             fsHost = matches.search(strmUrl).group(1)
                             fsChannelId = matches.search(strmUrl).group(2)
@@ -670,7 +677,7 @@ class RecordService(BasePlayService):
                                 elif fsListType == 'video':
                                     m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/video-' + str(utc) + '-' + str(lutc) + '.m3u8' + str(fsUrlAppend)
                                 
-                                elif 'hls-custom' in fsListType:
+                                elif any(x in fsListType for x in catchupList):
                                     new_url = strmUrl + '?utc={utc}&lutc={lutc}'.format(utc=utc, lutc=lutc)
                                     response = requests.get(new_url, allow_redirects=False, verify=False, timeout=2)
                                     strmUrlNew = response.headers.get('Location', None) if 'Location' in response.headers else strmUrl
