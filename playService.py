@@ -1058,7 +1058,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                         if ADDON.getSetting('archive_type') == '0':
                                             matches = re.compile('^(http[s]?://[^/]+)/([^/]+)/([^/]*)(mpegts|\\.m3u8)(\\?.+=.+)?$')
 
-                                            catchupList = ['hls-custom', 'mono']
+                                            #catchupList = ['hls-custom', 'mono']
 
                                             if matches.match(strmUrl):
                                                 fsHost = matches.search(strmUrl).group(1)
@@ -1078,7 +1078,36 @@ class PlayService(xbmc.Player, BasePlayService):
                                                     elif fsListType == 'video':
                                                         m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/video-' + str(utc) + '-' + str(lutc) + '.m3u8' + str(fsUrlAppend)
                                                     
-                                                    elif any(x in fsListType for x in catchupList):
+                                                    #elif any(x in fsListType for x in catchupList):
+                                                    elif 'mono' in fsListType: # Temporary fix for PlusX service
+                                                        day = datetime.datetime.now() - datetime.timedelta(days=1)
+                                                        timestamp = int(datetime.datetime.timestamp(day))
+
+                                                        if int(utc) > timestamp:
+                                                            new_url = strmUrl + '?utc={utc}&lutc={lutc}'.format(utc=utc, lutc=lutc)
+                                                            response = requests.get(new_url, allow_redirects=False, verify=False, timeout=2)
+                                                            strmUrlNew = response.headers.get('Location', None) if 'Location' in response.headers else strmUrl
+
+                                                            if strmUrlNew:
+                                                                strmUrlNew
+                                                            else:
+                                                                strmUrlNew = strmUrl
+
+                                                            fsHost = matches.search(strmUrlNew).group(1)
+                                                            fsChannelId = matches.search(strmUrlNew).group(2)
+                                                            fsListType = matches.search(strmUrlNew).group(3)
+                                                            fsStreamType = matches.search(strmUrlNew).group(4)
+                                                            fsUrlAppend = matches.search(strmUrlNew).group(5)
+                                                            
+                                                            fsUrlAppend = re.sub('&.*$', '', str(fsUrlAppend))
+                                                            fsListType = 'video'
+
+                                                            m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/' + str(fsListType) + '-' + str(utc) + '-' + str(offset) + str(fsStreamType) + str(fsUrlAppend)
+                                                        else:
+                                                            m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/' + 'timeshift_rel-' + str(offset) + '.m3u8' + str(fsUrlAppend)
+                                                    
+
+                                                    elif 'hls-custom' in fsListType:
                                                         new_url = strmUrl + '?utc={utc}&lutc={lutc}'.format(utc=utc, lutc=lutc)
                                                         response = requests.get(new_url, allow_redirects=False, timeout=2)
                                                         strmUrlNew = response.headers.get('Location', None) if 'Location' in response.headers else strmUrl

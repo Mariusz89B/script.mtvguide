@@ -1,4 +1,4 @@
-﻿[COLOR yellow][B]wersja 9.3.2[/B] - 2021-05-16[/COLOR]
+﻿[COLOR yellow][B]wersja 9.3.2[/B] - 2021-05-17[/COLOR]
 - poprawka memoryerror przy szybkim parsowaniu epg
 - poprawiono wydajność działania
 - usunięte błędy
