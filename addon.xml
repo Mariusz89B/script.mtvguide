@@ -30,7 +30,7 @@
 		<forum>http://mods-kodi.pl/forum/</forum>
 		<website>http://mods-kodi.pl/</website>
 		<email>support@m-tvguide.pl</email>
-	<news>v9.3.2 (2021-05-17)
+	<news>v9.3.2 (2021-05-18)
 - Fixed memoryerror while using fast epg parser.
 - Performance improvements.
 - Bug fixes.
