@@ -4195,7 +4195,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
                     else:
                         check = letterList[res]
-                        epgList = [idx for idx in n if idx[0].lower() == check.lower()]
+                        epgList = [idx for idx in n if idx[0].lower() == check.lower() and idx not in v]
                         epgList = sorted(epgList)
 
                 if epgList:
