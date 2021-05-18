@@ -1029,7 +1029,7 @@ class Database(object):
         return result
 
     def _getAllChannelList(self, onlyVisible):
-        if not self.channelListAll or not onlyVisible:
+        if not self.channelListAll:# or not onlyVisible:
 
             c = self.conn.cursor()
             channelList = list()

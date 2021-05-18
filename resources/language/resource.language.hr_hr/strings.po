@@ -516,6 +516,10 @@ msgctxt "#30375"
 msgid "Set order for category: {}"
 msgstr "Postavi redoslijed za kategoriju: {}"
 
+msgctxt "#30376"
+msgid "No channels could be found."
+msgstr "Nije pronađen nijedan kanal."
+
 msgctxt "#30500"
 msgid "Edit channel order and visibility"
 msgstr "Uredite redoslijed kanala i vidljivost"

@@ -516,6 +516,10 @@ msgctxt "#30375"
 msgid "Set order for category: {}"
 msgstr "Définir l'ordre de la catégorie: {}"
 
+msgctxt "#30376"
+msgid "No channels could be found."
+msgstr "Aucune chaîne n'a pu être trouvée."
+
 msgctxt "#30500"
 msgid "Edit channel order and visibility"
 msgstr "Modifier l'ordre des canaux et la visibilité"

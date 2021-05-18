@@ -4147,7 +4147,7 @@ class mTVGuide(xbmcgui.WindowXML):
         epgList = list()
 
 
-        v = ([channel.title.upper() for channel in self.database.getChannelList()])
+        v = ([channel.title.upper() for channel in self.database.getChannelList(customCategory=strings(30325))])
         n = ([channel.title.upper() for channel in self.database.getAllChannelList()])
 
         if channels < 2:
@@ -4161,6 +4161,12 @@ class mTVGuide(xbmcgui.WindowXML):
                     epgList = v + n
                     epgList = sorted(epgList)
 
+                    if epgList:
+                        self.channelsFromEPG(epgList, channels)
+                    else:
+                        xbmcgui.Dialog().ok(strings(31009), strings(30376))
+                        self.channelsSelect()
+
                 elif res == 1:
                     letterList = [chr(chNum) for chNum in list(range(ord('0'), ord('9')+1)) + list(range(ord('A'), ord('Z')+1))]
                     res = xbmcgui.Dialog().select(strings(59994), letterList)
@@ -4173,8 +4179,11 @@ class mTVGuide(xbmcgui.WindowXML):
                         epgList = [idx for idx in v + n if idx[0].lower() == check.lower()] 
                         epgList = sorted(epgList)
                 
-                if epgList:
-                    self.channelsFromEPG(epgList, channels)
+                        if epgList:
+                            self.channelsFromEPG(epgList, channels)
+                        else:
+                            xbmcgui.Dialog().ok(strings(31009), strings(30376))
+                            self.channelsSelect()
 
             elif channels == 1:
                 res = xbmcgui.Dialog().select(strings(59994), [strings(30988), strings(59997)])
@@ -4185,6 +4194,12 @@ class mTVGuide(xbmcgui.WindowXML):
                 if res == 0:
                     epgList = [idx for idx in n if not idx in v]
                     epgList = sorted(epgList)
+
+                    if epgList:
+                        self.channelsFromEPG(epgList, channels)
+                    else:
+                        xbmcgui.Dialog().ok(strings(31009), strings(30376))
+                        self.channelsSelect()
 
                 elif res == 1:
                     letterList = [chr(chNum) for chNum in list(range(ord('0'), ord('9')+1)) + list(range(ord('A'), ord('Z')+1))]
@@ -4198,9 +4213,11 @@ class mTVGuide(xbmcgui.WindowXML):
                         epgList = [idx for idx in n if idx[0].lower() == check.lower() and idx not in v]
                         epgList = sorted(epgList)
 
-                if epgList:
-                    self.channelsFromEPG(epgList, channels)
-
+                        if epgList:
+                            self.channelsFromEPG(epgList, channels)
+                        else:
+                            xbmcgui.Dialog().ok(strings(31009), strings(30376))
+                            self.channelsSelect()
         else:
             self.channelsSelect()
 
@@ -4230,15 +4247,22 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.channelsSelect()
 
         elif res == 0:
-            res = xbmcgui.Dialog().select(strings(59992), strmList)
-            if res < 0:
+            if strmList:
+                res = xbmcgui.Dialog().select(strings(59992), strmList)
+                if res < 0:
+                    if epgList != '':
+                        self.channelsFromStream(epgChann, epgList, channels)
+                    else:
+                        self.channelsSelect()
+                else:
+                    regChann = strmList[res]
+                    self.channelRegex(epgChann, regChann)
+            else:
+                xbmcgui.Dialog().ok(strings(31009), strings(30376))
                 if epgList != '':
                     self.channelsFromStream(epgChann, epgList, channels)
                 else:
                     self.channelsSelect()
-            else:
-                regChann = strmList[res]
-                self.channelRegex(epgChann, regChann)
 
         elif res == 1:
             letterList = [chr(chNum) for chNum in list(range(ord('0'), ord('9')+1)) + list(range(ord('A'), ord('Z')+1))]
@@ -4255,16 +4279,24 @@ class mTVGuide(xbmcgui.WindowXML):
                 strmList = [idx for idx in strmList if idx[0].lower() == check.lower()] 
                 strmList = sorted(strmList)
 
-                res = xbmcgui.Dialog().select(strings(59992), strmList)
-                
-                if res < 0:
+                if strmList:
+                    res = xbmcgui.Dialog().select(strings(59992), strmList)
+                    
+                    if res < 0:
+                        if epgList != '':
+                            self.channelsFromStream(epgChann, epgList, channels)
+                        else:
+                            self.channelsSelect()
+                    else:
+                        regChann = strmList[res]
+                        self.channelRegex(epgChann, regChann)
+                else:
+                    xbmcgui.Dialog().ok(strings(31009), strings(30376))
                     if epgList != '':
                         self.channelsFromStream(epgChann, epgList, channels)
                     else:
                         self.channelsSelect()
-                else:
-                    regChann = strmList[res]
-                    self.channelRegex(epgChann, regChann)
+
 
     def channelRegex(self, epgChann, regChann):
         # regex format
