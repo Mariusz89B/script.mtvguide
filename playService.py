@@ -801,9 +801,9 @@ class PlayService(xbmc.Player, BasePlayService):
                                 #seek_secs = int((n - t).total_seconds())
 
                                 if sys.version_info[0] > 2:
-                                    now = str(int(datetime.datetime.timestamp(n)) * 1000)
+                                    now = int(datetime.datetime.timestamp(n)) * 1000
                                 else:
-                                    now = str(int(time.mktime(n.timetuple())) * 1000)
+                                    now = int(time.mktime(n.timetuple())) * 1000
 
                                 url = '{base}/rest/v2/epg/{cid}/map?deviceType=WEB&fromTime={start}&toTime={end}&followingPrograms=0'.format(base=classic[country], cid=self.channCid(channelInfo.cid), start=utc, end=lutc)
 
