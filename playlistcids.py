@@ -165,10 +165,10 @@ class PlaylistUpdater(baseServiceUpdater):
         
         urlpath = os.path.join(self.profilePath, 'playlists', '{playlist}.url'.format(playlist=self.serviceName))
         if os.path.exists(urlpath):
-            try:
-                url = open(urlpath, 'r').read()
-            except:
+            if sys.version_info[0] > 2:
                 url = open(urlpath, 'r', encoding='utf-8').read()
+            else:
+                url = open(urlpath, 'r').read()
         else:
             url = url_setting
 
@@ -301,8 +301,8 @@ class PlaylistUpdater(baseServiceUpdater):
             regexRemoveList = list()
 
             #langReplaceList.append({ 'regex' : re.compile('(\s|^)(pl/en|Polska|Poland|PL:?)(?=\s|$)|^(PL:)', re.IGNORECASE), 'lang' : 'PL'})
-            regexRemoveList.append( re.compile('(\s|^)(L\s*)?(AE:?|AF:?|AFG:?|AFR:?|AL:?|ALB:?|AO:?|AU:?|AR:?|ARB:?|ARG:?|AT:?|AZ:?|BE:?|BD:?|BF:?|BG:?|BIH:?|BJ:?|BR:?|CAR:?|CG:?|CH:?|CM:?|CN:?|CY:?|DZ:?|EE:?|EG:?|EN:?|ES:?|EXYU:?|FI:?|GA:?|GH:?|GN:?|GR:?|HN:?|HU:?|ID:?|IL:?|IN:?|IQ:?|IR:?|IS:?|JO:?|JP:?|KE:?|KRD:?|KOR:?|KU:?|KW:?|LAM:?|LATINO:?|LB:?|LE:?|LT:?|LU:?|LY:?|MA:?|MK:?|ML:?|MN:?|MT:?|MY:?|MX:?|NG:?|OM:?|PH:?|PK:?|PT:?|QA:?|RO:?|RO/HU:?|RS:?|RU:?|RUS:?|SA:?|SAC:?|SC:?|SG:?|SI:?|SL:?|SN:?|SO:?|SY:?|TD:?|TH:?|TN:?|TR:?|UA:?|VN:?|YE:?|ZA|24/7:?:?|S\d+\sE\d+|19\d\d|20\d\d|S\s*\d\d\s*E\s*\d\d)(?=\s|$)', re.IGNORECASE) )
-            regexRemoveList.append( re.compile('(\s|^)(L\s*)?(Afghanistan:?|Africa:?|Albania:?|Algeria:?|America:?|Andorra:?|Angola:?|Antigua\sand\sBarbuda:?|Arab\sCountries:?|Argentina:?|Armenia:?|Asia:?|Australia:?|Austria:?|Azerbaijan:?|Bahamas:?|Bahrain:?|Bangladesh:?|Barbados:?|Belarus:?|Belize:?|Benin:?|Bhutan:?|Bolivia:?|Botswana:?|Brazil:?|Brunei:?|Bulgaria:?|Burkina\sFaso:?|Burma:?|Burundi:?|Cabo\sVerde:?|Cambodia:?|Cameroon:?|Canada:?|Central\sAfrican\sRepublic:?|Chad:?|Chile:?|China:?|Colombia:?|Comoros:?|Congo:?|Costa\sRica:?|Cote\sd\sIvoire:?|Cuba:?|Cyprus:?|Djibouti:?|Dominica:?|Dominican\sRepublic:?|Ecuador:?|Egypt:?|El\sSalvador:?|Equatorial\sGuinea:?|Eritrea:?|Estonia:?|Eswatini:?|Ethiopia:?|Fiji:?|Finland:?|Gabon:?|Gambia:?|Georgia:?|Ghana:?|Greece:?|Grenada:?|Guatemala:?|Guinea:?|Guinea-Bissau:?|Guyana:?|Haiti:?|Honduras:?|Hungary:?|Iceland:?|India:?|Indonesia:?|Iran:?|Iraq:?|Ireland:?|Israel:?|Jamaica:?|Japan:?|Jordan:?|Kazakhstan:?|Kenya:?|Kiribati:?|Korea:?|Kosovo:?|Kurdistan:?|Kuwait:?|Kyrgyzstan:?|Laos:?|Latvia:?|Lebanon:?|Lesotho:?|Liberia:?|Libya:?|Liechtenstein:?|Lithuania:?|Madagascar:?|Malawi:?|Malaysia:?|Maldives:?|Mali:?|Malta:?|Marshall\sIslands:?|Mauritania:?|Mauritius:?|Micronesia:?|Moldova:?|Monaco:?|Mongolia:?|Morocco:?|Mozambique:?|Myanmar:?|Namibia:?|Nauru:?|Nepal:?|New\sZealand:?|Nicaragua:?|Niger:?|Nigeria:?|North\sKorea:?|Oman:?|Pakistan:?|Palau:?|Palestine:?|Panama:?|Papua\sNew\sGuinea:?|Paraguay:?|Peru:?|Philippines:?|Portugal:?|Qatar:?|Romania:?|Russia:?|Rwanda:?|Saint\sKitts\sand\sNevis:?|Saint\sLucia:?|Saint\sVincent\sand\sthe\sGrenadines:?|Samoa:?|San\sMarino:?|Sao\sTome\sand\sPrincipe:?|Saudi\sArabia:?|Senegal:?|Seychelles:?|Sierra\sLeone:?|Singapore:?|Slovakia:?|Solomon\sIslands:?|Somalia:?|South\sAfrica:?|South\sKorea:?|South\sSudan:?|Spain:?|Sri\sLanka:?|Sudan:?|Suriname:?|Swaziland:?|Switzerland:?|Syria:?|Taiwan:?|Tajikistan:?|Tanzania:?|Thailand:?|Timor\sLeste:?|Togo:?|Tonga:?|Trinidad\sand\sTobago:?|Tunisia:?|Turkey:?|Turkmenistan:?|Tuvalu:?|Uganda:?|Ukraine:?|United\sArab\sEmirates:?|Uruguay:?|Uzbekistan:?|Vanuatu:?|Vatican\sCity:?|Venezuela:?|Vietnam:?|Viet\sNam:?|Yemen:?|Zambia:?|Zimbabwe)(?=\s|$)', re.IGNORECASE) )
+            #regexRemoveList.append( re.compile('(\s|^)(L\s*)?(AE:?|AF:?|AFG:?|AFR:?|AL:?|ALB:?|AO:?|AU:?|AR:?|ARB:?|ARG:?|AT:?|AZ:?|BE:?|BD:?|BF:?|BG:?|BIH:?|BJ:?|BR:?|CAR:?|CG:?|CH:?|CM:?|CN:?|CY:?|DZ:?|EE:?|EG:?|EN:?|ES:?|EXYU:?|FI:?|GA:?|GH:?|GN:?|GR:?|HN:?|HU:?|ID:?|IL:?|IN:?|IQ:?|IR:?|IS:?|JO:?|JP:?|KE:?|KRD:?|KOR:?|KU:?|KW:?|LAM:?|LATINO:?|LB:?|LE:?|LT:?|LU:?|LY:?|MA:?|MK:?|ML:?|MN:?|MT:?|MY:?|MX:?|NG:?|OM:?|PH:?|PK:?|PT:?|QA:?|RO:?|RO/HU:?|RS:?|RU:?|RUS:?|SA:?|SAC:?|SC:?|SG:?|SI:?|SL:?|SN:?|SO:?|SY:?|TD:?|TH:?|TN:?|TR:?|UA:?|VN:?|YE:?|ZA|24/7:?:?|S\d+\sE\d+|19\d\d|20\d\d|S\s*\d\d\s*E\s*\d\d)(?=\s|$)', re.IGNORECASE) )
+            #regexRemoveList.append( re.compile('(\s|^)(L\s*)?(Afghanistan:?|Africa:?|Albania:?|Algeria:?|America:?|Andorra:?|Angola:?|Antigua\sand\sBarbuda:?|Arab\sCountries:?|Argentina:?|Armenia:?|Asia:?|Australia:?|Austria:?|Azerbaijan:?|Bahamas:?|Bahrain:?|Bangladesh:?|Barbados:?|Belarus:?|Belize:?|Benin:?|Bhutan:?|Bolivia:?|Botswana:?|Brazil:?|Brunei:?|Bulgaria:?|Burkina\sFaso:?|Burma:?|Burundi:?|Cabo\sVerde:?|Cambodia:?|Cameroon:?|Canada:?|Central\sAfrican\sRepublic:?|Chad:?|Chile:?|China:?|Colombia:?|Comoros:?|Congo:?|Costa\sRica:?|Cote\sd\sIvoire:?|Cuba:?|Cyprus:?|Djibouti:?|Dominica:?|Dominican\sRepublic:?|Ecuador:?|Egypt:?|El\sSalvador:?|Equatorial\sGuinea:?|Eritrea:?|Estonia:?|Eswatini:?|Ethiopia:?|Fiji:?|Finland:?|Gabon:?|Gambia:?|Georgia:?|Ghana:?|Greece:?|Grenada:?|Guatemala:?|Guinea:?|Guinea-Bissau:?|Guyana:?|Haiti:?|Honduras:?|Hungary:?|Iceland:?|India:?|Indonesia:?|Iran:?|Iraq:?|Ireland:?|Israel:?|Jamaica:?|Japan:?|Jordan:?|Kazakhstan:?|Kenya:?|Kiribati:?|Korea:?|Kosovo:?|Kurdistan:?|Kuwait:?|Kyrgyzstan:?|Laos:?|Latvia:?|Lebanon:?|Lesotho:?|Liberia:?|Libya:?|Liechtenstein:?|Lithuania:?|Madagascar:?|Malawi:?|Malaysia:?|Maldives:?|Mali:?|Malta:?|Marshall\sIslands:?|Mauritania:?|Mauritius:?|Micronesia:?|Moldova:?|Monaco:?|Mongolia:?|Morocco:?|Mozambique:?|Myanmar:?|Namibia:?|Nauru:?|Nepal:?|New\sZealand:?|Nicaragua:?|Niger:?|Nigeria:?|North\sKorea:?|Oman:?|Pakistan:?|Palau:?|Palestine:?|Panama:?|Papua\sNew\sGuinea:?|Paraguay:?|Peru:?|Philippines:?|Portugal:?|Qatar:?|Romania:?|Russia:?|Rwanda:?|Saint\sKitts\sand\sNevis:?|Saint\sLucia:?|Saint\sVincent\sand\sthe\sGrenadines:?|Samoa:?|San\sMarino:?|Sao\sTome\sand\sPrincipe:?|Saudi\sArabia:?|Senegal:?|Seychelles:?|Sierra\sLeone:?|Singapore:?|Slovakia:?|Solomon\sIslands:?|Somalia:?|South\sAfrica:?|South\sKorea:?|South\sSudan:?|Spain:?|Sri\sLanka:?|Sudan:?|Suriname:?|Swaziland:?|Switzerland:?|Syria:?|Taiwan:?|Tajikistan:?|Tanzania:?|Thailand:?|Timor\sLeste:?|Togo:?|Tonga:?|Trinidad\sand\sTobago:?|Tunisia:?|Turkey:?|Turkmenistan:?|Tuvalu:?|Uganda:?|Ukraine:?|United\sArab\sEmirates:?|Uruguay:?|Uzbekistan:?|Vanuatu:?|Vatican\sCity:?|Venezuela:?|Vietnam:?|Viet\sNam:?|Yemen:?|Zambia:?|Zimbabwe)(?=\s|$)', re.IGNORECASE) )
 
             if ADDON.getSetting('country_code_be') == 'true':
                 langReplaceList.append({ 'regex' : re.compile('(\s|^)(BE:?|NL:?|HEVC:?)(?=\s|$)|^(BE:|NL:)', re.IGNORECASE), 'lang' : 'BE'})
@@ -408,10 +408,10 @@ class PlaylistUpdater(baseServiceUpdater):
                         title = ''
                         splitedLine = stripLine.split(',')
 
-                        p = re.compile('^.*catchup-source=http[s]?.*$', re.IGNORECASE)
+                        p = re.compile('^.*catchup-source="http[s]?.*$', re.IGNORECASE)
 
                         if p.match(stripLine) and ADDON.getSetting('archive_support') == 'true':
-                            catchup = re.compile('^.*catchup-source="(.*?)".*')
+                            catchup = re.compile('catchup-source="(.*?)"')
                             catchupLine = catchup.search(stripLine).group(1)
 
                         if len(splitedLine) > 1:
@@ -528,12 +528,12 @@ class PlaylistUpdater(baseServiceUpdater):
 
                             if UHDStream:
                                 channelCid = channelCid + '_UHD'
-                                uhdList.append(TvCid(channelCid, title, title, stripLine, catchupLine))
+                                uhdList.append(TvCid(channelCid, title, title, stripLine, catchup=catchupLine))
                             elif HDStream:
                                 channelCid = channelCid + '_HD'
-                                hdList.append(TvCid(channelCid, title, title, stripLine, catchupLine))
+                                hdList.append(TvCid(channelCid, title, title, stripLine, catchup=catchupLine))
                             else:
-                                sdList.append(TvCid(channelCid, title, title, stripLine, catchupLine))
+                                sdList.append(TvCid(channelCid, title, title, stripLine, catchup=catchupLine))
 
                             
                             self.log('[UPD] %-10s %-35s %-35s' % (channelCid, title, stripLine))

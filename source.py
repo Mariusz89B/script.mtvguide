@@ -1782,6 +1782,7 @@ class Database(object):
             # make sure we have a record in sources for this Source
             c.execute("INSERT OR IGNORE INTO sources(id, channels_updated) VALUES(?, ?)", [self.source.KEY, 0])
             c.execute('CREATE TABLE IF NOT EXISTS latestplayed(idx INTEGER, start_date TEXT)')
+            
             self.conn.commit()
             c.close()
 
@@ -2015,6 +2016,7 @@ class Database(object):
         c.execute('DELETE FROM recordings')
         c.execute('DELETE FROM updates')
         c.execute('DELETE FROM sources')
+        c.execute('DELETE FROM latestplayed')
         c.execute('UPDATE settings SET value=0 WHERE rowid=1')
         self.conn.commit()
         c.close()
@@ -2620,32 +2622,22 @@ def customParseXMLTV(xml, progress_callback):
     tnow = datetime.datetime.now()
     deb("[EPG] Parsing EPG by custom parser is done [{} sek.]".format(str((tnow-startTime).seconds)))
 
+    categoriesList = list()
+    for c in sorted(category_count):
+        s = "{}={}\n".format(c, category_count[c])
+        s = re.sub('[!"”#$%&’()*+,-.\/:;<>?@\[\]^_`{|}~]|ADDON.*', '', s)
+        s = re.sub(r'(^|\s)(\S)', lambda m: m.group(1) + m.group(2).upper(), s)
+        s = re.sub('^\s', '', s)
+        categoriesList.append(s)
+
     if sys.version_info[0] > 2:
         file_name = os.path.join(xbmcvfs.translatePath(ADDON.getAddonInfo('profile')), 'category_count.list')
     else:
         file_name = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('profile')), 'category_count.list')
+    
+    with open(file_name, 'wb+') as f:
+        f.write(bytearray(''.join(categoriesList), 'utf-8'))
 
-    if sys.version_info[0] > 2:
-        f = open(file_name, 'a+', encoding='utf-8')
-    else:
-        f = open(file_name, 'a+')
-    for c in sorted(category_count):
-        s = "{}={}\n".format(c, category_count[c])
-        s = re.sub(r'\$.*', '', s)
-        s = re.sub(r'(\(|\))', '', s)
-        s = re.sub(r'\\/', ' / ', s)
-        s = re.sub(r'.*(,|\.)(\s)?', '', s)
-        s = re.sub(r'^(\d+)?=\d+', '', s)
-        s = re.sub(r'^\W+(\d+)?(=|\s)', '', s)
-        s = re.sub(r'^(\d|\w)=\d+$', '', s)
-        s = re.sub(r'^(?:[\t ]*(?:\r?\n|\r))+', '', s)
-        s = re.sub(r'(^|\s)(\S)', lambda m: m.group(1) + m.group(2).upper(), s)
-        if sys.version_info[0] > 2:
-            f.write('{}'.format(s))
-        else:
-            f.write(bytearray(s, 'utf-8'))
-
-    f.close()
 
 def parseXMLTV(context, f, size, logoFolder, progress_callback):
     deb("[EPG] Parsing EPG")
@@ -2748,32 +2740,21 @@ def parseXMLTV(context, f, size, logoFolder, progress_callback):
     tnow = datetime.datetime.now()
     deb("[EPG] Parsing EPG is done [{} sek.]".format(str((tnow-start).seconds)))
 
+    categoriesList = list()
+    for c in sorted(category_count):
+        s = "{}={}\n".format(c, category_count[c])
+        s = re.sub('[!"”#$%&’()*+,-.\/:;<>?@\[\]^_`{|}~]|ADDON.*', '', s)
+        s = re.sub(r'(^|\s)(\S)', lambda m: m.group(1) + m.group(2).upper(), s)
+        s = re.sub('^\s', '', s)
+        categoriesList.append(s)
+
     if sys.version_info[0] > 2:
         file_name = os.path.join(xbmcvfs.translatePath(ADDON.getAddonInfo('profile')), 'category_count.list')
     else:
         file_name = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('profile')), 'category_count.list')
-
-    if sys.version_info[0] > 2:
-        f = open(file_name, 'a+', encoding='utf-8')
-    else:
-        f = open(file_name, 'a+')
-    for c in sorted(category_count):
-        s = "{}={}\n".format(c, category_count[c])
-        s = re.sub(r'\$.*', '', s)
-        s = re.sub(r'(\(|\))', '', s)
-        s = re.sub(r'\\/', ' / ', s)
-        s = re.sub(r'.*(,|\.)(\s)?', '', s)
-        s = re.sub(r'^(\d+)?=\d+', '', s)
-        s = re.sub(r'^\W+(\d+)?(=|\s)', '', s)
-        s = re.sub(r'^(\d|\w)=\d+$', '', s)
-        s = re.sub(r'^(?:[\t ]*(?:\r?\n|\r))+', '', s)
-        s = re.sub(r'(^|\s)(\S)', lambda m: m.group(1) + m.group(2).upper(), s)
-        if sys.version_info[0] > 2:
-            f.write('{}'.format(s))
-        else:
-            f.write(bytearray(s, 'utf-8'))
-
-    f.close()
+    
+    with open(file_name, 'wb+') as f:
+        f.write(bytearray(''.join(categoriesList), 'utf-8'))
 
 class FileWrapper(object):
     def __init__(self, filename):

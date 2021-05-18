@@ -229,9 +229,18 @@ class FranceTVUpdater(baseServiceUpdater):
 
         return results
 
+    def channCid(self, cid):
+        try:
+            r = re.compile('^(.*?)_TS_.*$', re.IGNORECASE)
+            cid = r.findall(cid)[0]
+        except:
+            cid 
+
+        return cid
+
     def getChannelStream(self, chann):
         data = None
-        video = chann.cid
+        video = self.channCid(chann.cid)
 
         try:
             data = self.get_video_stream(video)

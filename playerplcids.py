@@ -321,6 +321,15 @@ class PlayerPLUpdater(baseServiceUpdater):
             self.log('getChannelList exception: {}'.format(getExceptionString()))
         return result
 
+    def channCid(self, cid):
+        try:
+            r = re.compile('^(.*?)_TS_.*$', re.IGNORECASE)
+            cid = r.findall(cid)[0]
+        except:
+            cid 
+
+        return cid
+
     def refreshTokenTVN(self):
         POST_DATA = 'grant_type=refresh_token&refresh_token={}&client_id=Player_TV_Android_28d3dcc063672068'.format(self.REFRESH_TOKEN)
         data = self.getRequests(self.POSTTOKEN, data=POST_DATA, headers=self.HEADERS3)
@@ -410,12 +419,14 @@ class PlayerPLUpdater(baseServiceUpdater):
 
     def getChannelStream(self, chann):
         data = None
+
+        cid = self.channCid(chann.cid)
         
         try:
-            run = self.getTranslate(str(chann.cid))
+            run = self.getTranslate(str(cid))
 
-            stream_url, license_url, subtitles = self.getPlaylist(str(chann.cid))
-            check = any(chann.cid for item in self.mylist)
+            stream_url, license_url, subtitles = self.getPlaylist(str(cid))
+            check = any(cid for item in self.mylist)
 
             if check is False:
                 self.noPremiumMessage()

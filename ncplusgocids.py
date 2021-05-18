@@ -301,7 +301,7 @@ class NcPlusGoUpdater(baseServiceUpdater):
             for item in items:  
                 if item['IsActive']:
                     name = item['Channel']['Title'] + ' PL'
-                    cid = item['Channel']['Codename']
+                    cid = item['Channel']['Codename'] + '_TS_3H'
                     img = item['IconUrl']
 
                     program = TvCid(cid, name, name, img=img)
@@ -314,10 +314,19 @@ class NcPlusGoUpdater(baseServiceUpdater):
             self.log('getChannelList exception: {}'.format(getExceptionString()))
         return result 
 
+    def channCid(self, cid):
+        try:
+            r = re.compile('^(.*?)_TS_.*$', re.IGNORECASE)
+            cid = r.findall(cid)[0]
+        except:
+            cid 
+
+        return cid
+
     def getChannelStream(self, chann):
         data = None
         url = ncplusgoUrl
-        codename = chann.cid
+        codename = self.channCid(chann.cid)
 
         try:
             nctoken = ADDON.getSetting('ncplusgo_ncToken')

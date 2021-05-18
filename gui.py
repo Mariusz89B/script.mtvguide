@@ -2002,79 +2002,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.close()
         return None
 
-    def deleteFiles(self):
-        try:
-            if sys.version_info[0] > 2:
-                f = os.path.join(self.profilePath, 'catchup.list')
-            else:
-                f = os.path.join(self.profilePath, 'catchup.list').decode('utf-8')
-            os.remove(f)
-        except:
-            None
-
-        try:
-            if sys.version_info[0] > 2:
-                f = os.path.join(self.profilePath, 'playlist_ts.list')
-            else:
-                f = os.path.join(self.profilePath, 'playlist_ts.list').decode('utf-8')
-            os.remove(f)
-        except:
-            None
-
-        try:
-            if sys.version_info[0] > 2:
-                f = os.path.join(self.profilePath, 'cmore_ts.list')
-            else:
-                f = os.path.join(self.profilePath, 'cmore_ts.list').decode('utf-8')
-            os.remove(f)
-        except:
-            None
-            
-        try:
-            if sys.version_info[0] > 2:
-                f = os.path.join(self.profilePath, 'cpgo_ts.list')
-            else:
-                f = os.path.join(self.profilePath, 'cpgo_ts.list').decode('utf-8')
-            os.remove(f)
-        except:
-            None
-
-        try:
-            if sys.version_info[0] > 2:
-                f = os.path.join(self.profilePath, 'ipla_ts.list')
-            else:
-                f = os.path.join(self.profilePath, 'ipla_ts.list').decode('utf-8')
-            os.remove(f)
-        except:
-            None
-
-        #try:
-            #if sys.version_info[0] > 2:
-                #f = os.path.join(self.profilePath, 'playerpl_ts.list')
-            #else:
-                #f = os.path.join(self.profilePath, 'playerpl_ts.list').decode('utf-8')
-            #os.remove(f)
-        #except:
-            #None
-
-        try:
-            if sys.version_info[0] > 2:
-                f = os.path.join(self.profilePath, 'teliaplay_ts.list')
-            else:
-                f = os.path.join(self.profilePath, 'teliaplay_ts.list').decode('utf-8')
-            os.remove(f)
-        except:
-            None
-            
-        try:
-            if sys.version_info[0] > 2:
-                f = os.path.join(self.profilePath, 'stream_url.list')
-            else:
-                f = os.path.join(self.profilePath, 'stream_url.list').decode('utf-8')
-            os.remove(f)
-        except:
-            None
-            
+    def deleteFiles(self):           
         try:
             if ADDON.getSetting('skin_fontpack') == 'true':
                 xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Settings.SetSettingValue","id":1,"params":{"setting":"lookandfeel.font","value":"Default"}}')
@@ -2192,30 +2120,23 @@ class mTVGuide(xbmcgui.WindowXML):
         epgSize = ADDON.getSetting('epg_size')
         epgDbSize = ADDON.getSetting('epg_dbsize')
         if epgSize != epgDbSize:
-            self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus, sourceUpdate=True)
+            self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
 
         self.updateEpgTimer.stop()
         time.sleep(self.interval)
         self.updateEpgTimer.start()
-
         
     def getStreamsCid(self):
         streamsList = list()
-        CMoreStreamsList = list()
-        CPGOStreamsList = list()
-        IplaStreamsList = list()
-        NCGOStreamsList = list()
-        #PlayerPLStreamsList = list()
-        TeliaPlayStreamsList = list()
 
         streams = self.database.getAllStreamUrlList() 
-        #deb('getStreams: {}'.format(streams))
+        #deb('getAllStreamUrlList: {}'.format(streams))
 
-
-        # Catchup days
+        # Catchup
         catchupList = list()
+        catchupChannels = list()
 
-        p = re.compile('.*_TS_(.*?)(_.*)?$', re.DOTALL)
+        p = re.compile('^.*_TS_(.*?)(_.*)?$', re.DOTALL)
         c = re.compile('^(.*?),.*', re.DOTALL)
 
         for item in streams:
@@ -2224,145 +2145,31 @@ class mTVGuide(xbmcgui.WindowXML):
                 channel = c.search(item).group(1)
                 catchupList.append(channel.upper() + '=' + days)
 
-        file_name = os.path.join(self.profilePath, 'catchup.list')
-        with open(file_name, 'wb+') as f:
-            f.write(bytearray('\n'.join(sorted(catchupList)), 'utf-8'))
-        
-        # Playlist
-        for item in streams:
-            try:
-                item = re.findall('^(.+?),.*CID=\d+_TS.*$', str(item))
-            except:
-                item = re.findall('^(.+?),.*CID=\d+_TS.*$', str(item.encode('ascii', 'ignore').decode('ascii')))
-            
-            if len(item) > 0:
-                streamsList.append(item[0].upper())
+        return sorted(catchupList)
 
-        if streamsList:
-            file_name = os.path.join(self.profilePath, 'playlist_ts.list')
-            with open(file_name, 'wb+') as f:
-                f.write(bytearray('\n'.join(streamsList), 'utf-8'))
-
-        # C More
-        for item in streams:
-            try:
-                item = re.findall('^(.+?), SERVICE=C MORE&CID=\d+$', str(item))
-            except:
-                item = re.findall('^(.+?), SERVICE=C MORE&CID=\d+$', str(item.encode('ascii', 'ignore').decode('ascii')))
-
-            if len(item) > 0:
-                CMoreStreamsList.append(item[0].upper())
-
-        if CMoreStreamsList:
-            file_name = os.path.join(self.profilePath, 'cmore_ts.list')
-            with open(file_name, 'wb+') as f:
-                f.write(bytearray('\n'.join(CMoreStreamsList), 'utf-8'))
-
-        # Cyfrowy Polsat GO
-        for item in streams:
-            try:
-                item = re.findall('^(.+?), SERVICE=CYFROWY POLSAT GO&CID=\d+$', str(item))
-            except:
-                item = re.findall('^(.+?), SERVICE=CYFROWY POLSAT GO&CID=\d+$', str(item.encode('ascii', 'ignore').decode('ascii')))
-
-            if len(item) > 0:
-                CPGOStreamsList.append(item[0].upper())
-
-        if CPGOStreamsList:
-            file_name = os.path.join(self.profilePath, 'cpgo_ts.list')
-            with open(file_name, 'wb+') as f:
-                f.write(bytearray('\n'.join(CPGOStreamsList), 'utf-8'))
-
-        # Ipla
-        for item in streams:
-            try:
-                item = re.findall('^(.+?), SERVICE=IPLA&CID=\d+$', str(item))
-            except:
-                item = re.findall('^(.+?), SERVICE=IPLA&CID=\d+$', str(item.encode('ascii', 'ignore').decode('ascii')))
-
-            if len(item) > 0:
-                IplaStreamsList.append(item[0].upper())
-
-        if IplaStreamsList:
-            file_name = os.path.join(self.profilePath, 'ipla_ts.list')
-            with open(file_name, 'wb+') as f:
-                f.write(bytearray('\n'.join(IplaStreamsList), 'utf-8'))
-
-        # PlayerPL
-        #for item in streams:
-            #try:
-                #item = re.findall('^(.+?), SERVICE=PLAYERPL&CID=\d+:KANAL$', str(item))
-            #except:
-                #item = re.findall('^(.+?), SERVICE=PLAYERPL&CID=\d+:KANAL$', str(item.encode('ascii', 'ignore').decode('ascii')))
-
-            #if len(item) > 0:
-                #PlayerPLStreamsList.append(item[0].upper())
-
-        #if PlayerPLStreamsList:
-            #file_name = os.path.join(self.profilePath, 'playerpl_ts.list')
-            #with open(file_name, 'w+') as f:
-                #if sys.version_info[0] > 2:
-                    #f.write('\n'.join(PlayerPLStreamsList))
-                #else:
-                    #f.write(bytearray('\n'.join(PlayerPLStreamsList), 'utf-8'))
-
-        # Telia Play
-        for item in streams:
-            try:
-                item = re.findall('^(.+?), SERVICE=TELIA PLAY&CID=\d+$', str(item))
-            except:
-                item = re.findall('^(.+?), SERVICE=TELIA PLAY&CID=\d+$', str(item.encode('ascii', 'ignore').decode('ascii')))
-
-            if len(item) > 0:
-                TeliaPlayStreamsList.append(item[0].upper())
-
-        if TeliaPlayStreamsList:
-            file_name = os.path.join(self.profilePath, 'teliaplay_ts.list')
-            with open(file_name, 'wb+') as f:
-                f.write(bytearray('\n'.join(TeliaPlayStreamsList), 'utf-8'))
-
-
-        # nc+ GO
-        for item in streams:
-            try:
-                item = re.findall('^(.+?), SERVICE=NC+ GO&CID=\d+$', str(item))
-            except:
-                item = re.findall('^(.+?), SERVICE=NC+ GO&CID=\d+$', str(item.encode('ascii', 'ignore').decode('ascii')))
-
-            if len(item) > 0:
-                NCGOStreamsList.append(item[0].upper())
-
-        if NCGOStreamsList:
-            file_name = os.path.join(self.profilePath, 'ncgo_ts.list')
-            with open(file_name, 'wb+') as f:
-                f.write(bytearray('\n'.join(NCGOStreamsList), 'utf-8'))
-
-        return streamsList
-
-    def catchupEPG(self, program, cellWidth):
+    def catchupEPG(self, program, cellWidth, channelList):
         archive = ''
+        catchupChannel = ''
+        catchupDays = ''
 
-        archivePlaylist = self.getPlaylist() + self.getTeliaPlay()
-        archiveList = self.getCmore() + self.getPolsatGo() + self.getIpla()# + self.getPlayerPL()
+        r = re.compile(program.channel.title.upper())
+        chann = list(filter(r.match, channelList))
 
-        catchupList = list()
+        try:
+            catchupChannel = chann[0].split('=')[0]
+            catchupDays = chann[0].split('=')[1]
+        except:
+            pass
 
-        if sys.version_info[0] > 2:
-            catchupList = self.getCatchupDays()
-        else:
-            catchupList = self.getCatchupDays().decode('utf-8')
-
-        catchupDays = None
-
-        if program.channel.title.upper() in catchupList:
-            catchupDays = re.findall('.*=(.*?)$', catchupList)
-
-        if catchupDays:
-            self.catchupDays = catchupDays[0]
+        if catchupDays != '':
+            self.catchupDays = catchupDays
         else:
             self.catchupDays = ADDON.getSetting('archive_reverse_days')
 
-        if ADDON.getSetting('archive_reverse_auto') == '0' and self.catchupDays != '' or self.catchupDays !='0':
+        if self.catchupDays == '3H':
+            reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(3)) - datetime.timedelta(minutes = 5)
+
+        elif ADDON.getSetting('archive_reverse_auto') == '0' and self.catchupDays != '' or self.catchupDays !='0':
             try:
                 reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(self.catchupDays)) * 24 - datetime.timedelta(minutes = 5)
             except:
@@ -2373,13 +2180,11 @@ class mTVGuide(xbmcgui.WindowXML):
             except:
                 reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
 
-        reverseArchiveService = datetime.datetime.now() - datetime.timedelta(hours = int(3)) - datetime.timedelta(minutes = 5)
-
         addonSkin = ADDON.getSetting('Skin')
 
         if ADDON.getSetting('archive_support') == 'true': 
             if ADDON.getSetting('archive_finished_program') == 'true': 
-                if program.channel.title.upper() in archivePlaylist and program.endDate < datetime.datetime.now() and program.title != program.channel.title:
+                if program.channel.title.upper() == catchupChannel and catchupDays != '3H' and program.endDate < datetime.datetime.now() and program.title != program.channel.title:
                     #Download
                     if cellWidth < 35:
                         archive  = ''
@@ -2389,7 +2194,7 @@ class mTVGuide(xbmcgui.WindowXML):
                         else:
                             archive = '[UPPERCASE][COLOR FF01cdfe][B]● [/B][/COLOR][/UPPERCASE]'
                 
-                if program.channel.title.upper() in archivePlaylist and program.title != program.channel.title:
+                if program.channel.title.upper() == catchupChannel and catchupDays != '3H' and program.title != program.channel.title:
                     #Catchup
                     if program.endDate < datetime.datetime.now():
                         if program.startDate > reverseTime:
@@ -2400,11 +2205,11 @@ class mTVGuide(xbmcgui.WindowXML):
                                     archive = '[UPPERCASE][COLOR FF0cbe24][B]• [/B][/COLOR][/UPPERCASE]'
                                 else:
                                     archive = '[UPPERCASE][COLOR FF0cbe24][B]● [/B][/COLOR][/UPPERCASE]'
-
-                if program.channel.title.upper() in archiveList and program.title != program.channel.title:
+                
+                if program.channel.title.upper() == catchupChannel and catchupDays == '3H' and program.title != program.channel.title:
                     #Catchup
                     if program.endDate < datetime.datetime.now():
-                        if program.startDate > reverseArchiveService:
+                        if program.startDate > reverseTime:
                             if cellWidth < 35:
                                 archive  = ''
                             else:
@@ -2412,9 +2217,9 @@ class mTVGuide(xbmcgui.WindowXML):
                                     archive = '[UPPERCASE][COLOR FF0cbe24][B]• [/B][/COLOR][/UPPERCASE]'
                                 else:
                                     archive = '[UPPERCASE][COLOR FF0cbe24][B]● [/B][/COLOR][/UPPERCASE]'
-
+                
             else:
-                if program.channel.title.upper() in archivePlaylist and program.startDate < datetime.datetime.now() and program.title != program.channel.title:
+                if program.channel.title.upper() == catchupChannel and catchupDays != '3H' and program.startDate < datetime.datetime.now() and program.title != program.channel.title:
                     #Download
                     if cellWidth < 35:
                         archive  = ''
@@ -2424,7 +2229,7 @@ class mTVGuide(xbmcgui.WindowXML):
                         else:
                             archive = '[UPPERCASE][COLOR FF01cdfe][B]● [/B][/COLOR][/UPPERCASE]'
                 
-                if program.channel.title.upper() in archivePlaylist and program.title != program.channel.title:
+                if program.channel.title.upper() == catchupChannel and catchupDays != '3H' and program.title != program.channel.title:
                     #Catchup
                     if program.startDate < datetime.datetime.now():
                         if program.startDate > reverseTime:
@@ -2435,11 +2240,11 @@ class mTVGuide(xbmcgui.WindowXML):
                                     archive = '[UPPERCASE][COLOR FF0cbe24][B]• [/B][/COLOR][/UPPERCASE]'
                                 else:
                                     archive = '[UPPERCASE][COLOR FF0cbe24][B]● [/B][/COLOR][/UPPERCASE]'
-
-                if program.channel.title.upper() in archiveList and program.title != program.channel.title:
+                
+                if program.channel.title.upper() == catchupChannel and catchupDays == '3H' and program.title != program.channel.title:
                     #Catchup
                     if program.startDate < datetime.datetime.now():
-                        if program.startDate > reverseArchiveService:
+                        if program.startDate > reverseTime:
                             if cellWidth < 35:
                                 archive  = ''
                             else:
@@ -2447,6 +2252,7 @@ class mTVGuide(xbmcgui.WindowXML):
                                     archive = '[UPPERCASE][COLOR FF0cbe24][B]• [/B][/COLOR][/UPPERCASE]'
                                 else:
                                     archive = '[UPPERCASE][COLOR FF0cbe24][B]● [/B][/COLOR][/UPPERCASE]'
+                
         else:
             archive = ''
 
@@ -4409,9 +4215,8 @@ class mTVGuide(xbmcgui.WindowXML):
             self.channelsFromStream(epgChann, epgList, channels)
 
     def channelsFromStream(self, epgChann="", epgList="", channels=""):
-        file = xbmcvfs.File(os.path.join(self.profilePath, 'stream_url.list'), 'r')
-        getStreams = file.read().splitlines()
-        strmList = getStreams
+        file = xbmcvfs.File(os.path.join(self.profilePath, 'custom_channels.list'), 'r')
+        strmList = file.read().splitlines()
 
         strmList = sorted(set(strmList))
         strmList = [x.strip() for x in strmList if x.strip()]
@@ -4950,90 +4755,6 @@ class mTVGuide(xbmcgui.WindowXML):
     def getLastChannel(self):
         return self.lastChannel
 
-    def getCatchupDays(self):
-        CatchupList = ''
-        try:
-            file_name = os.path.join(self.profilePath, 'catchup.list')
-            f = xbmcvfs.File(file_name, 'rb')
-            CatchupList = f.read()
-            f.close()
-        except:
-            CatchupList += ''
-
-        return CatchupList
-
-    def getPlaylist(self):
-        ArchivePlaylistList = ''
-        try:
-            file_name = os.path.join(self.profilePath, 'playlist_ts.list')
-            f = xbmcvfs.File(file_name, 'rb')
-            ArchivePlaylistList = f.read()
-            f.close()
-        except:
-            ArchivePlaylistList += ''
-
-        return ArchivePlaylistList
-
-    def getCmore(self):
-        ArchiveCmoreList = ''
-        try:
-            file_name = os.path.join(self.profilePath, 'cmore_ts.list')
-            f = xbmcvfs.File(file_name, 'rb')
-            ArchiveCmoreList = f.read()
-            f.close()
-        except:
-            ArchiveCmoreList += ''
-
-        return ArchiveCmoreList
-
-    def getPolsatGo(self):
-        ArchiveCpGoList = ''
-        try:
-            file_name = os.path.join(self.profilePath, 'cpgo_ts.list')
-            f = xbmcvfs.File(file_name, 'rb')
-            ArchiveCpGoList = f.read()
-            f.close()
-        except:
-            ArchiveCpGoList += ''
-
-        return ArchiveCpGoList
-
-    def getIpla(self):
-        ArchiveIplaList = ''
-        try:
-            file_name = os.path.join(self.profilePath, 'ipla_ts.list')
-            f = xbmcvfs.File(file_name, 'rb')
-            ArchiveIplaList = f.read()
-            f.close()
-        except:
-            ArchiveIplaList += ''
-
-        return ArchiveIplaList
-
-    #def getPlayerPL(self):
-        #ArchivePlayerPLList = ''
-        #try:
-            #file_name = os.path.join(self.profilePath, 'playerpl_ts.list')
-            #f = xbmcvfs.File(file_name, 'r')
-            #ArchivePlayerPLList = f.read()
-            #f.close()
-        #except:
-            #ArchivePlayerPLList += ''
-
-        #return ArchivePlayerPLList
-
-    def getTeliaPlay(self):
-        ArchiveTeliaPlayList = ''
-        try:
-            file_name = os.path.join(self.profilePath, 'teliaplay_ts.list')
-            f = xbmcvfs.File(file_name, 'rb')
-            ArchiveTeliaPlayList = f.read()
-            f.close()
-        except:
-            ArchiveTeliaPlayList += ''
-
-        return ArchiveTeliaPlayList
-
     def elapsed_interval(self, start, end):
         elapsed = end - start
         min, secs = divmod(elapsed.days * 86400 + elapsed.seconds, 60)
@@ -5063,12 +4784,10 @@ class mTVGuide(xbmcgui.WindowXML):
             else:
                 finishedProgram = ProgramStartDate
 
-            if self.catchupDays is not None:
-                self.catchupDays = self.catchupDays
-            else:
-                self.catchupDays = ADDON.getSetting('archive_reverse_days')
+            if self.catchupDays == '3H':
+                reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(3)) - datetime.timedelta(minutes = 5)
 
-            if ADDON.getSetting('archive_reverse_auto') == '0' and self.catchupDays != '' or self.catchupDays != '0':
+            elif ADDON.getSetting('archive_reverse_auto') == '0' and self.catchupDays != '' or self.catchupDays != '0':
                 try:
                     reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(self.catchupDays)) * 24 - datetime.timedelta(minutes = 5)
                 except:
@@ -5078,32 +4797,34 @@ class mTVGuide(xbmcgui.WindowXML):
                     reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(ADDON.getSetting('archive_manual_days'))) * 24 - datetime.timedelta(minutes = 5)
                 except:
                     reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
-            
-            reverseArchiveService = datetime.datetime.now() - datetime.timedelta(hours = int(3)) - datetime.timedelta(minutes = 5)
 
             try:
                 if finishedProgram < datetime.datetime.now() and ADDON.getSetting('archive_support') == 'true' and program.title != program.channel.title:
-                    archiveList = self.getCmore() + self.getPolsatGo() + self.getIpla()# + self.getPlayerPL()
-                    archivePlaylist = self.getPlaylist() + self.getTeliaPlay()
+                    catchupList = self.getStreamsCid()
 
-                    if (program.channel.title.upper() in archiveList and program.startDate > reverseArchiveService) or (program.channel.title.upper() in archivePlaylist and program.startDate > reverseTime):
+                    r = re.compile(program.channel.title.upper())
+                    catchup = list(filter(r.match, catchupList))
+
+                    catchupChannel = catchup[0].split('=')[0]
+
+                    if (program.channel.title.upper() == catchupChannel and program.startDate > reverseTime):
                         res = xbmcgui.Dialog().yesno(strings(30998), strings(30999).format(program.title))
 
                         if res:
                             # archiveService
                             if ADDON.getSetting('archive_finished_program') == 'true': 
-                                if program.channel.title.upper() in archiveList and program.endDate < datetime.datetime.now():
+                                if program.channel.title.upper() == catchupChannel and program.endDate < datetime.datetime.now():
                                     self.archiveService = datetime.datetime.now() - ProgramStartDate
                                 else:
                                     self.archiveService = ''
                             else:
-                                if program.channel.title.upper() in archiveList and program.startDate < datetime.datetime.now():
+                                if program.channel.title.upper() == catchupChannel and program.startDate < datetime.datetime.now():
                                     self.archiveService = datetime.datetime.now() - ProgramStartDate
                                 else:
                                     self.archiveService = ''
 
                             if ADDON.getSetting('archive_finished_program') == 'true': 
-                                if program.channel.title.upper() in archivePlaylist and program.endDate < datetime.datetime.now():
+                                if program.channel.title.upper() == catchupChannel and program.endDate < datetime.datetime.now():
                                     from time import mktime
 
                                     n = datetime.datetime.now()
@@ -5140,7 +4861,7 @@ class mTVGuide(xbmcgui.WindowXML):
                                 else:
                                     self.archivePlaylist = ''
                             else:
-                                if program.channel.title.upper() in archivePlaylist and program.startDate < datetime.datetime.now():
+                                if program.channel.title.upper() == catchupChannel and program.startDate < datetime.datetime.now():
                                     from time import mktime
 
                                     n = datetime.datetime.now()
@@ -5188,7 +4909,7 @@ class mTVGuide(xbmcgui.WindowXML):
                                 return 'None'
 
                     else:
-                        if self.program.channel.title.upper() in archivePlaylist and program.endDate < datetime.datetime.now():
+                        if self.program.channel.title.upper() == catchupChannel and program.endDate < datetime.datetime.now():
                             self.recordProgram(self.program)
                             return 'None'
                         elif program.endDate > datetime.datetime.now():
@@ -5246,12 +4967,10 @@ class mTVGuide(xbmcgui.WindowXML):
             else:
                 finishedProgram = ProgramStartDate
 
-            if self.catchupDays is not None:
-                self.catchupDays = self.catchupDays
-            else:
-                self.catchupDays = ADDON.getSetting('archive_reverse_days')
+            if self.catchupDays == '3H':
+                reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(3)) - datetime.timedelta(minutes = 5)
 
-            if ADDON.getSetting('archive_reverse_auto') == '0' and self.catchupDays != '' or self.catchupDays != '0':
+            elif ADDON.getSetting('archive_reverse_auto') == '0' and self.catchupDays != '' or self.catchupDays != '0':
                 try:
                     reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(self.catchupDays)) * 24 - datetime.timedelta(minutes = 5)
                 except:
@@ -5261,32 +4980,34 @@ class mTVGuide(xbmcgui.WindowXML):
                     reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(ADDON.getSetting('archive_manual_days'))) * 24 - datetime.timedelta(minutes = 5)
                 except:
                     reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
-            
-            reverseArchiveService = datetime.datetime.now() - datetime.timedelta(hours = int(3)) - datetime.timedelta(minutes = 5)
 
             try:
                 if finishedProgram < datetime.datetime.now() and ADDON.getSetting('archive_support') == 'true' and program.title != program.channel.title:
-                    archiveList = self.getCmore() + self.getPolsatGo() + self.getIpla()# + self.getPlayerPL()
-                    archivePlaylist = self.getPlaylist() + self.getTeliaPlay()
+                    catchupList = self.getStreamsCid()
 
-                    if (program.channel.title.upper() in archiveList and program.startDate > reverseArchiveService) or (program.channel.title.upper() in archivePlaylist and program.startDate > reverseTime):
+                    r = re.compile(program.channel.title.upper())
+                    catchup = list(filter(r.match, catchupList))
+
+                    catchupChannel = catchup[0].split('=')[0]
+
+                    if (program.channel.title.upper() == catchupChannel and program.startDate > reverseTime):
                         res = xbmcgui.Dialog().yesno(strings(30998), strings(30999).format(program.title))
 
                         if res:
                             # archiveService
                             if ADDON.getSetting('archive_finished_program') == 'true': 
-                                if program.channel.title.upper() in archiveList and program.endDate < datetime.datetime.now():
+                                if program.channel.title.upper() == catchupChannel and program.endDate < datetime.datetime.now():
                                     self.archiveService = datetime.datetime.now() - ProgramStartDate
                                 else:
                                     self.archiveService = ''
                             else:
-                                if program.channel.title.upper() in archiveList and program.startDate < datetime.datetime.now():
+                                if program.channel.title.upper() == catchupChannel and program.startDate < datetime.datetime.now():
                                     self.archiveService = datetime.datetime.now() - ProgramStartDate
                                 else:
                                     self.archiveService = ''
 
                             if ADDON.getSetting('archive_finished_program') == 'true': 
-                                if program.channel.title.upper() in archivePlaylist and program.endDate < datetime.datetime.now():
+                                if program.channel.title.upper() == catchupChannel and program.endDate < datetime.datetime.now():
                                     from time import mktime
 
                                     n = datetime.datetime.now()
@@ -5323,7 +5044,7 @@ class mTVGuide(xbmcgui.WindowXML):
                                 else:
                                     self.archivePlaylist = ''
                             else:
-                                if program.channel.title.upper() in archivePlaylist and program.startDate < datetime.datetime.now():
+                                if program.channel.title.upper() == catchupChannel and program.startDate < datetime.datetime.now():
                                     from time import mktime
 
                                     n = datetime.datetime.now()
@@ -5441,7 +5162,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
         # przerysuj tylko wtedy gdy nie bylo epg! jak jest to nie przerysowuj - nie ustawi sie wtedy na aktualnej godzienie!
         if (self.mode == MODE_TV or self.redrawagain):
-            self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus, sourceUpdate=True)  # przerysuj
+            self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus)  # przerysuj
         if ADDON.getSetting('touch_panel') == 'true':
             self._showControl(self.C_MAIN_MOUSEPANEL_CONTROLS)
                     
@@ -5449,7 +5170,7 @@ class mTVGuide(xbmcgui.WindowXML):
         for idx in range(0, CHANNELS_PER_PAGE):
             self.disableControl(start_index + idx)
 
-    def onRedrawEPG(self, channelStart, startTime, focusFunction=None, sourceUpdate=''):
+    def onRedrawEPG(self, channelStart, startTime, focusFunction=None):
         deb('onRedrawEPG')
         if self.redrawingEPG or (self.database is not None and self.database.updateInProgress) or self.isClosing or strings2.M_TVGUIDE_CLOSING:
             deb('onRedrawEPG - already redrawing')
@@ -5493,9 +5214,7 @@ class mTVGuide(xbmcgui.WindowXML):
             return
 
         categories = self.getCategories()
-
-        if sourceUpdate == True:
-            streams = self.getStreamsCid()
+        channelList = self.getStreamsCid()
 
         for program in programs:
             idx = channels.index(program.channel)
@@ -5556,7 +5275,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 else:
                     title = program.title
 
-                archive = self.catchupEPG(program, cellWidth)
+                archive = self.catchupEPG(program, cellWidth, channelList)
 
                 control = xbmcgui.ControlButton(
                     cellStart,
@@ -5854,7 +5573,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 if ADDON.getSetting('categories_remember') == 'true' or ADDON.getSetting('category') != '':
                     self.database.setCategory(ADDON.getSetting('category'))
 
-                self.onRedrawEPG(0, self.viewStartDate, sourceUpdate=True)
+                self.onRedrawEPG(0, self.viewStartDate)
                 
                 if ADDON.getSetting('touch_panel') == 'true':
                     self._showControl(self.C_MAIN_MOUSEPANEL_CONTROLS)

@@ -480,7 +480,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
             channels = sess.get(url, headers=headers, verify=False).json() 
             for channel in channels:
                 if channel['id'] in self.engagementLiveChannels:
-                    cid = channel["id"]
+                    cid = channel["id"] + '_TS_1'
                     name = channel ["name"] + ' ' + ca[self.country]
                     img = channel["id"]
                 
@@ -496,6 +496,15 @@ class TeliaPlayUpdater(baseServiceUpdater):
         
         return result
 
+    def channCid(self, cid):
+        try:
+            r = re.compile('^(.*?)_TS_.*$', re.IGNORECASE)
+            cid = r.findall(cid)[0]
+        except:
+            cid 
+
+        return cid
+
     def getChannelStream(self, chann):
         data = None
 
@@ -507,7 +516,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
             except ImportError:
                 from urllib import urlencode, quote_plus, quote, unquote
 
-            cid = chann.cid
+            cid = self.channCid(chann.cid)
 
             streamType = 'CHANNEL'
 

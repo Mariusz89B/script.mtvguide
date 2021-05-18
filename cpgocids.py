@@ -246,7 +246,7 @@ class PolsatGoUpdater(baseServiceUpdater):
                 for j in myperms:
                     if j in channelperms or i['title']=='Polsat' or i['title']=='TV4':
                         img = i['thumbnails'][-1]['src']
-                        cid = i['id']
+                        cid = i['id'] + '_TS_3H'
                         name = i['title'].upper() + ' PL'
 
                         program = TvCid(cid, name, name, img=img)
@@ -260,10 +260,19 @@ class PolsatGoUpdater(baseServiceUpdater):
             self.log('getChannelList exception: {}'.format(getExceptionString()))
         return result
 
+    def channCid(self, cid):
+        try:
+            r = re.compile('^(.*?)_TS_.*$', re.IGNORECASE)
+            cid = r.findall(cid)[0]
+        except:
+            cid 
+
+        return cid
+
     def getChannelStream(self, chann):
         data = None
         cpid = int(0)
-        id = chann.cid
+        id = self.channCid(chann.cid)
 
         try:
             stoken = ADDON.getSetting('cpgo_sesstoken')

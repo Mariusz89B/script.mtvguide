@@ -382,7 +382,7 @@ class CmoreUpdater(baseServiceUpdater):
                 else:
                     continue  # no current live program
 
-                cid = channel['asset']['id']
+                cid = channel['asset']['id'] + '_TS_1' 
 
                 if self.locale == 'sv_SE':
                     name = channel['title']+' SE'
@@ -520,9 +520,20 @@ class CmoreUpdater(baseServiceUpdater):
         }
         asset = self.make_request(url, 'get', params=params)
         return asset
+
+    def channCid(self, cid):
+        try:
+            r = re.compile('^(.*?)_TS_.*$', re.IGNORECASE)
+            cid = r.findall(cid)[0]
+        except:
+            cid 
+
+        return cid
         
     def getChannelStream(self, chann):
         data = None
+
+        cid = self.channCid(chann.cid)
 
         try:
             login_token = ADDON.getSetting('cmore_login_token')
@@ -530,12 +541,12 @@ class CmoreUpdater(baseServiceUpdater):
                 login_token = self.get_token()
 
             try:
-                data = self.get_stream(chann.cid, login_token=login_token)
+                data = self.get_stream(cid, login_token=login_token)
             except self.CMoreError as error:
                 if str(error) == 'User is not authenticated':
                     login_token = self.get_token()
                     try:
-                        data = self.get_stream(chann.cid, login_token)
+                        data = self.get_stream(cid, login_token)
                     except:
                         data = None
                         self.noPremiumMessage()
@@ -545,9 +556,9 @@ class CmoreUpdater(baseServiceUpdater):
                 chann.lic = data
 
                 try:
-                    self.log('getChannelStream found matching channel: cid: {}, name: {}, rtmp:{}'.format(chann.cid, chann.name, chann.strm))
+                    self.log('getChannelStream found matching channel: cid: {}, name: {}, rtmp:{}'.format(cid, chann.name, chann.strm))
                 except:
-                    self.log('getChannelStream found matching channel: cid: {}, name: {}, rtmp:{}'.format(str(chann.cid), str(chann.name), str(chann.strm)))
+                    self.log('getChannelStream found matching channel: cid: {}, name: {}, rtmp:{}'.format(str(cid), str(chann.name), str(chann.strm)))
                 return chann
             else:
                 self.log('getChannelStream error getting channel stream2, result: {}'.format(str(data)))

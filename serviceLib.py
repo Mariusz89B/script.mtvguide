@@ -59,6 +59,7 @@ from strings import *
 import simplejson as json
 import strings as strings2
 import zlib
+
 try:
     import ssl
 except:
@@ -448,7 +449,7 @@ class ShowList:
         return ret_lst
 
 class TvCid:
-    def __init__(self, cid, name, title, strm = "", catchup = "", lic="", img = ""):
+    def __init__(self, cid, name, title, strm = "", catchup="", lic="", img = ""):
         self.cid = cid
         self.name = name
         self.title = title
@@ -1003,24 +1004,22 @@ class baseServiceUpdater:
                 except:
                     self.profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
 
-            file_name = os.path.join(self.profilePath, 'stream_url.list')
+            file_name = os.path.join(self.profilePath, 'custom_channels.list')
             if not os.path.exists(self.profilePath):
                 os.makedirs(self.profilePath)
 
-            if sys.version_info[0] > 2:
-                with open(file_name, 'ab+') as f:
-                    for y in self.channels:
-                        if y.src == '' or y.src != self.serviceName:
-                            if y.name != '':
-                                f.write(bytearray('{}\n'.format(y.name.upper()), 'utf-8'))
-                                self.log('[UPD] CID=%-12s NAME=%-40s TITLE=%-40s STRM=%-45s' % (y.cid, y.name, y.title, str(y.strm)))
-            else:
-                with open(file_name, 'a+') as f:
-                    for y in self.channels:
-                        if y.src.encode('utf-8') == '' or y.src != self.serviceName:
-                            if y.name != '':
-                                f.write(str('{}\n'.format(y.name.upper()).encode('utf-8')))
-                                self.log('[UPD] CID=%-12s NAME=%-40s TITLE=%-40s STRM=%-45s' % (y.cid, y.name, y.title, str(y.strm)))
+            channelList = list()
+            for y in self.channels:
+                if y.src == '' or y.src != self.serviceName:
+                    if y.name != '':
+                        channelList.append(y.name.upper())
+                        self.log('[UPD] CID=%-12s NAME=%-40s TITLE=%-40s STRM=%-45s' % (y.cid, y.name, y.title, str(y.strm)))
+
+            with open(file_name, 'wb+') as f:
+                if sys.version_info[0] > 2:
+                    f.write(bytearray('\n'.join(channelList), 'utf-8'))
+                else:
+                    f.write(str('\n'.join(channelList)))
 
             self.log("[UPD] Zakonczono analize...")
             self.log('Loading everything took: %s seconds' % (datetime.datetime.now() - startTime).seconds)

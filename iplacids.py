@@ -356,7 +356,7 @@ class IplaUpdater(baseServiceUpdater):
                 for j in myper:
                     if j in channelperms or i['title']=='Polsat' or i['title']=='TV4':
                         img = i['thumbnails'][-1]['src']
-                        cid = i['id']
+                        cid = i['id'] + '_TS_3H'
                         name = i['title'].upper() + ' PL'
                         name = name.replace(' SD', '')
 
@@ -370,6 +370,15 @@ class IplaUpdater(baseServiceUpdater):
         except Exception as e:
             self.log('getChannelList exception: %s' % getExceptionString())
         return result
+
+    def channCid(self, cid):
+        try:
+            r = re.compile('^(.*?)_TS_.*$', re.IGNORECASE)
+            cid = r.findall(cid)[0]
+        except:
+            cid 
+
+        return cid
 
     def getSesja(self):
         self.sesstoken = ADDON.getSetting('ipla_sesstoken')
@@ -390,7 +399,7 @@ class IplaUpdater(baseServiceUpdater):
         return
 
     def checkAccess(self, chann):
-        id_ = chann.cid
+        id_ = self.channCid(chann.cid)
         acc = False
 
         self.sesstoken = ADDON.getSetting('ipla_sesstoken')
@@ -415,7 +424,7 @@ class IplaUpdater(baseServiceUpdater):
 
     def getChannelStream(self, chann):
         data = None
-        id_ = chann.cid
+        id_ = self.channCid(chann.cid)
         cpid = 0
 
         try:

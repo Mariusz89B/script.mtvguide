@@ -445,6 +445,16 @@ class PlayService(xbmc.Player, BasePlayService):
             return strmUrl
 
 
+    def channCid(self, cid):
+        try:
+            r = re.compile('^(.*?)_TS_.*$', re.IGNORECASE)
+            cid = r.findall(cid)[0]
+        except:
+            cid 
+
+        return cid
+
+
     def LoadVideoLink(self, channel, service, url):
         with self.busyDialog():
             deb('LoadVideoLink {} service'.format(service))
@@ -791,7 +801,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                 #seek_secs = int((n - t).total_seconds())
                                 now = int(datetime.datetime.timestamp(n)) * 1000
 
-                                url = '{base}/rest/v2/epg/{cid}/map?deviceType=WEB&fromTime={start}&toTime={end}&followingPrograms=0'.format(base=classic[country], cid=channelInfo.cid, start=utc, end=lutc)
+                                url = '{base}/rest/v2/epg/{cid}/map?deviceType=WEB&fromTime={start}&toTime={end}&followingPrograms=0'.format(base=classic[country], cid=self.channCid(channelInfo.cid), start=utc, end=lutc)
 
                                 headers = {
                                     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
@@ -812,7 +822,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                 response = requests.get(url, headers=headers).json()
 
                                 try:
-                                    cid = response['map'][channelInfo.cid][0]['assetId']
+                                    cid = response['map'][self.channCid(channelInfo.cid)][0]['assetId']
                                 except:
                                     cid = ''
 
@@ -821,7 +831,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                 else:
                                     res = xbmcgui.Dialog().yesno(strings(30998), strings(59980))
                                     if res:
-                                        cid = channelInfo.cid
+                                        cid = self.channCid(channelInfo.cid)
                                         streamType = 'CHANNEL'
                                     else:
                                         return None
@@ -945,8 +955,8 @@ class PlayService(xbmc.Player, BasePlayService):
                                         'Accept-Language': 'en-US;q=0.9,en;q=0.8'
                                     }
 
-                                    thread = threading.Thread(name='seek', target=self.seek, args=[cc[country], streamType, channelInfo.cid, dashjs, xheaders])
-                                    thread = threading.Timer(3.0, self.seek, args=[cc[country], streamType, channelInfo.cid, dashjs, xheaders])
+                                    thread = threading.Thread(name='seek', target=self.seek, args=[cc[country], streamType, self.channCid(channelInfo.cid), dashjs, xheaders])
+                                    thread = threading.Timer(3.0, self.seek, args=[cc[country], streamType, self.channCid(channelInfo.cid), dashjs, xheaders])
                                     thread.start()
 
                         self.strmUrl = strmUrl

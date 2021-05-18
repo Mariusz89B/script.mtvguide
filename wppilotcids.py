@@ -252,14 +252,25 @@ class WpPilotUpdater(baseServiceUpdater):
             self.log('getChannelList exception: {}'.format(getExceptionString()))
         return result
 
+    def channCid(self, cid):
+        try:
+            r = re.compile('^(.*?)_TS_.*$', re.IGNORECASE)
+            cid = r.findall(cid)[0]
+        except:
+            cid 
+
+        return cid
+
     def getChannelStream(self, chann, retry=False):
         data = None
+
+        cid = self.channCid(chann.cid)
         
         free = self.acc
 
         try:
             cookies = self.readFromDB()
-            url = self.videoUrl + chann.cid
+            url = self.videoUrl + cid
             data = {'format_id': '2', 'device_type': 'android'}
 
             headers.update({'Cookie': cookies})
@@ -269,7 +280,7 @@ class WpPilotUpdater(baseServiceUpdater):
             if meta is not None:
                 token = meta.get('error', {}).get('info', {}).get('stream_token', None)
                 if token is not None:
-                    json = {'channelId': chann.cid, 't': token}
+                    json = {'channelId': cid, 't': token}
                     response = requests.post(
                         self.closeUrl,
                         json=json,
@@ -277,7 +288,7 @@ class WpPilotUpdater(baseServiceUpdater):
                         headers=headers).json()
 
                     if response.get('data', {}).get('status', '') == 'ok' and not retry:
-                        data = self.getChannelStream(chann.cid, True)
+                        data = self.getChannelStream(cid, True)
                     else:
                         return
 
