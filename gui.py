@@ -2002,7 +2002,18 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.close()
         return None
 
-    def deleteFiles(self):           
+    def deleteFiles(self):
+        """
+        try:
+            if sys.version_info[0] > 2:
+                f = os.path.join(self.profilePath, 'streams.temp')
+            else:
+                f = os.path.join(self.profilePath, 'streams.temp').decode('utf-8')
+            os.remove(f)
+        except:
+            None
+        """
+        
         try:
             if ADDON.getSetting('skin_fontpack') == 'true':
                 xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Settings.SetSettingValue","id":1,"params":{"setting":"lookandfeel.font","value":"Default"}}')
@@ -2116,6 +2127,10 @@ class mTVGuide(xbmcgui.WindowXML):
         self.interval = 300
         self.updateEpgTimer = epgTimer(self.interval, self.updateEpg)
 
+        self.getListLenght = self.getChannelListLenght()
+
+        #self.getStreamsCid()
+
     def updateEpg(self):
         epgSize = ADDON.getSetting('epg_size')
         epgDbSize = ADDON.getSetting('epg_dbsize')
@@ -2145,7 +2160,20 @@ class mTVGuide(xbmcgui.WindowXML):
                 channel = c.search(item).group(1)
                 catchupList.append(channel.upper() + '=' + days)
 
+        #file_name = os.path.join(self.profilePath, 'streams.temp')
+        #with open(file_name, 'wb+') as f:
+            #f.write(bytearray('\n'.join(catchupList), 'utf-8'))
+        
         return sorted(catchupList)
+
+    """
+    def getStreamsCidTemp(self):
+        file_name = os.path.join(self.profilePath, 'streams.temp')
+        with open(file_name, 'r') as f:
+            catchupList = f.read().splitlines()
+
+        return sorted(catchupList)
+    """
 
     def catchupEPG(self, program, cellWidth, channelList):
         archive = ''
@@ -4541,21 +4569,22 @@ class mTVGuide(xbmcgui.WindowXML):
         self.setControlLabel(C_MAIN_TITLE, '{}'.format(program.title))
         self.setControlLabel(C_MAIN_TIME, '{} - {}'.format(self.formatTime(program.startDate), self.formatTime(program.endDate)))
 
-        try:
-            if ADDON.getSetting('info_osd') == "false" or self.program is None:
-                chann, prog, idx = self.getLastPlayingChannel()
+        if xbmc.Player().isPlaying():
+            try:
+                if ADDON.getSetting('info_osd') == "false" or self.program is None:
+                    chann, prog, idx = self.getLastPlayingChannel()
 
-                self.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format(chann.id))
-                self.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(prog.title))
-                self.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format(self.formatTime(prog.startDate), self.formatTime(prog.endDate)))
-                self.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format((str(int(idx) + 1))))
+                    self.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format(chann.id))
+                    self.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(prog.title))
+                    self.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format(self.formatTime(prog.startDate), self.formatTime(prog.endDate)))
+                    self.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format((str(int(idx) + 1))))
 
-        except:
-            if ADDON.getSetting('info_osd') == "false" or self.program is None:
-                self.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format("N/A"))
-                self.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(strings(55016)))
-                self.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format("N/A", "N/A"))
-                self.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format("-"))
+            except:
+                if ADDON.getSetting('info_osd') == "false" or self.program is None:
+                    self.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format("N/A"))
+                    self.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(strings(55016)))
+                    self.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format("N/A", "N/A"))
+                    self.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format("-"))
 
         if program.description:
             description = program.description
@@ -5509,8 +5538,6 @@ class mTVGuide(xbmcgui.WindowXML):
         
         self.updateTimebar()
 
-        self.getListLenght = self.getChannelListLenght()
-
         self.redrawingEPG = False
         if self.redrawagain:
             debug('onRedrawEPG redrawing again')
@@ -5584,6 +5611,7 @@ class mTVGuide(xbmcgui.WindowXML):
             deb('Categories not supported by current skin')
             self.category = None
 
+        self.getListLenght = self.getChannelListLenght()
 
         del self.controlAndProgramList[:]
         debug('_clearEpg end')
