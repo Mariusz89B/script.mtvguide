@@ -184,6 +184,8 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
         self.timer = None
         self.channel_number_input = False
         self.channel_number = ADDON.getSetting('channel.arg')
+        self.keyboardTime = None
+        self.mousetime = None
         if ADDON.getSetting('show_osd_buttons') == 'true':
             self.showConfigButtons = True
         if not self.showConfigButtons and ADDON.getSetting('key_right_left_show_next') == 'true':
@@ -875,11 +877,17 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
         self.onPlayBackStopped()
 
     def waitForMouse(self):
+        if self.mousetime is None:
+            self.mousetime = time.mktime(datetime.datetime.now().timetuple())
+
         while time.mktime(datetime.datetime.now().timetuple()) < self.mousetime + self.osdDisplayTime and not self.isClosing:
             time.sleep(0.1)
         self.isClosing = True
 
     def waitForKeyboard(self):
+        if self.keyboardTime is None:
+            self.keyboardTime = time.mktime(datetime.datetime.now().timetuple())
+
         while (time.mktime(datetime.datetime.now().timetuple()) < self.keyboardTime + self.osdDisplayTime or self.blockOsd) and not self.isClosing:
             time.sleep(0.1)
         self.isClosing = True
