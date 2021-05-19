@@ -1,3 +1,9 @@
+[![GitHub release](https://img.shields.io/github/v/release/Mariusz89B/script.mtvguide.svg)](https://github.com/Mariusz89B/script.mtvguide/releases)
+![GitHub downloads](https://img.shields.io/github/downloads/Mariusz89B/script.mtvguide/total.svg)
+[![License: GNUv3](https://img.shields.io/badge/license-GNUv3-red.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
+[![License: MIT](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
+[![Kodi](https://img.shields.io/badge/platform-Kodi-lightgrey.svg)](https://kodi.tv/)
+
 # m-TVGuide
 
 This is a Kodi add-on with support for an electronic tvguide (EPG) and that allows 
