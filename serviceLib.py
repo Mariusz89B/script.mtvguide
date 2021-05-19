@@ -1016,10 +1016,8 @@ class baseServiceUpdater:
                         self.log('[UPD] CID=%-12s NAME=%-40s TITLE=%-40s STRM=%-45s' % (y.cid, y.name, y.title, str(y.strm)))
 
             with open(file_name, 'wb+') as f:
-                if sys.version_info[0] > 2:
-                    f.write(bytearray('\n'.join(channelList), 'utf-8'))
-                else:
-                    f.write(str('\n'.join(channelList)))
+                f.write(bytearray('\n'.join(channelList), 'utf-8'))
+
 
             self.log("[UPD] Zakonczono analize...")
             self.log('Loading everything took: %s seconds' % (datetime.datetime.now() - startTime).seconds)

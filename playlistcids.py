@@ -42,20 +42,18 @@
 
 import sys
 
-if sys.version_info[0] > 2:
-    import urllib.request as Request
-    from urllib.error import HTTPError, URLError
-else:
-    import urllib2 as Request
-    from urllib2 import HTTPError, URLError
-
 import requests
+#import mmap
 
 if sys.version_info[0] > 2:
     from requests.exceptions import HTTPError, ConnectionError, Timeout, RequestException
+    import urllib.request as Request
+    from urllib.error import HTTPError, URLError
 else:
     from requests import HTTPError, ConnectionError, Timeout, RequestException
-
+    import urllib2 as Request
+    from urllib2 import HTTPError, URLError
+    import io
 
 import copy, re
 import xbmc, xbmcgui, xbmcvfs
@@ -168,7 +166,7 @@ class PlaylistUpdater(baseServiceUpdater):
             if sys.version_info[0] > 2:
                 url = open(urlpath, 'r', encoding='utf-8').read()
             else:
-                url = open(urlpath, 'r').read()
+                url = io.open(urlpath, 'r').read()
         else:
             url = url_setting
 
@@ -192,17 +190,17 @@ class PlaylistUpdater(baseServiceUpdater):
                     f2.write(url_setting)
                     
             else:
-                with open(filepath, 'w') as f:
+                with io.open(filepath, 'w') as f:
                     f.write(content.encode('utf-8'))
 
-                with open(urlpath, 'w') as f2:
+                with io.open(urlpath, 'w') as f2:
                     f2.write(url_setting.encode('utf-8'))
 
         else:
-            try:
-                content = open(filepath, 'r').read()
-            except:
+            if sys.version_info[0] > 2:
                 content = open(filepath, 'r', encoding='utf-8').read()
+            else:
+                content = io.open(filepath, 'r').read()
 
         return content
 
@@ -255,10 +253,11 @@ class PlaylistUpdater(baseServiceUpdater):
                     raise Exception
             else:
                 try:
+                    #lf = mmap.mmap(path, 0, access=mmap.ACCESS_READ)
                     if sys.version_info[0] > 2:
                     	lf = open(path, 'r', encoding='utf-8')
                     else:
-                        lf = open(path, 'r')
+                        lf = io.open(path, 'r')
 
                     tmpcontent = lf.read()
                     lf.close()
