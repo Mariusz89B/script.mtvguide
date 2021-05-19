@@ -4549,7 +4549,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def getLastPlayingChannel(self):
         idx, date = self.database.getLastChannel()
-
+        
         idx = idx - 1
 
         channelList = self.database.getChannelList(onlyVisible=True)
@@ -4558,11 +4558,7 @@ class mTVGuide(xbmcgui.WindowXML):
         except:
             chann = channelList[0]
 
-        deb('TEST: {}, {}'.format(chann, date))
-
         prog = self.database.getProgramStartingAt(chann, date)
-
-        deb('TEST: {}'.format(prog))
 
         return chann, prog, idx
 
