@@ -2013,7 +2013,7 @@ class mTVGuide(xbmcgui.WindowXML):
         except:
             None
         """
-        
+
         try:
             if ADDON.getSetting('skin_fontpack') == 'true':
                 xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Settings.SetSettingValue","id":1,"params":{"setting":"lookandfeel.font","value":"Default"}}')
@@ -2626,11 +2626,18 @@ class mTVGuide(xbmcgui.WindowXML):
             C_MAIN_RETURN_STR = strings(30964)
 
         if action.getId() in [ACTION_PARENT_DIR, KEY_NAV_BACK, ACTION_PREVIOUS_MENU]:
-            if not background:
-                if xbmc.Player().isPlaying() or self.playService.isWorking():
+            if xbmc.Player().isPlaying() or self.playService.isWorking():
+                if not background:
                     self.playService.stopPlayback()
+                else:
+                    # Close by two returns
+                    if (datetime.datetime.now() - self.lastCloseKeystroke).seconds < 3:
+                        self.close(background=background)
+                    else:
+                        self.lastCloseKeystroke = datetime.datetime.now()
+                        xbmcgui.Dialog().notification(strings(30963), C_MAIN_RETURN_STR, time=3000, sound=False)
                     
-            if action.getButtonCode() != 0 or action.getId() == ACTION_SELECT_ITEM:
+            elif action.getButtonCode() != 0 or action.getId() == ACTION_SELECT_ITEM:
                 if ADDON.getSetting('exit') == '0' and not background:
                     # Ask to close
                     ret = xbmcgui.Dialog().yesno(strings(30963), '{}?'.format(C_MAIN_EXIT_STR))
@@ -4543,13 +4550,19 @@ class mTVGuide(xbmcgui.WindowXML):
     def getLastPlayingChannel(self):
         idx, date = self.database.getLastChannel()
 
+        idx = idx - 1
+
         channelList = self.database.getChannelList(onlyVisible=True)
         try:
             chann = channelList[idx]
         except:
             chann = channelList[0]
 
+        deb('TEST: {}, {}'.format(chann, date))
+
         prog = self.database.getProgramStartingAt(chann, date)
+
+        deb('TEST: {}'.format(prog))
 
         return chann, prog, idx
 

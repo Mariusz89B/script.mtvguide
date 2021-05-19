@@ -1368,7 +1368,7 @@ class Database(object):
     def _getProgramStartingAt(self, channel, startTime):
         program = None
         c = self.conn.cursor()
-        c.execute('SELECT * FROM programs WHERE channel=? AND source=? AND start_date = ? AND end_date >= ?', [channel.id, self.source.KEY, startTime, startTime])
+        c.execute('SELECT * FROM programs WHERE channel=? AND source=? AND start_date >= ? AND end_date >= ?', [channel.id, self.source.KEY, startTime, startTime])
         row = c.fetchone()
         if row:
             program = Program(channel, row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')])
