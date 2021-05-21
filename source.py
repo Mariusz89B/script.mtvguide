@@ -152,18 +152,17 @@ class Program(object):
 
 class ProgramDescriptionParser(object):
     DECORATE_REGEX = re.compile("\[COLOR\s*\w*\]|\[/COLOR\]|\[B\]|\[/B\]|\[I\]|\[/I\]",      re.IGNORECASE)
-    CATEGORY_REGEX = re.compile("((Kategoria:|Genre:|Genere:|Category:|Kategori:|Cat.?gorie:|Kategorie:|Kategorija:|Sjanger:).*?\[/B\])",        re.IGNORECASE)
 
     def __init__(self, description):
         self.description = description
 
     def extractCategory(self):
         try:
-            category = ProgramDescriptionParser.CATEGORY_REGEX.search(self.description).group(1)
+            category = re.search("((G:|Kategoria:|Genre:|Genere:|Category:|Kategori:|Cat.?gorie:|Kategorie:|Kategorija:|Sjanger:)(.*?\[\/B\]|.*?[^\.]*))", self.description).group(1)
             category = ProgramDescriptionParser.DECORATE_REGEX.sub("", category)
-            category = re.sub("Kategoria:|Genre:|Category:|Kategori:|Cat.?gorie:|Kategorie:|Kategorija:|Sjanger:|Genere:", "", category).strip()
+            category = re.sub("G:|Kategoria:|Genre:|Category:|Kategori:|Cat.?gorie:|Kategorie:|Kategorija:|Sjanger:|Genere:", "", category).strip()
 
-            self.description = ProgramDescriptionParser.CATEGORY_REGEX.sub("", self.description).strip()
+            self.description = re.sub("((G:|Kategoria:|Genre:|Genere:|Category:|Kategori:|Cat.?gorie:|Kategorie:|Kategorija:|Sjanger:)(.*?\[\/B\]|.*?[^\.]*)(\.)?)", "", self.description).strip()
         except:
             category = ''
 
@@ -171,11 +170,11 @@ class ProgramDescriptionParser(object):
 
     def extractProductionDate(self):
         try:
-            productionDate = re.search(".*((Rok produkcji:|Producerat .?r:|Production date:|Produktions dato:|Date de production:|Produktionsdatum:|Godina proizvodnje:|Datum proizvodnje:|Produksjonsdato:|Productie datum:|Datum v.?roby:|Anno prodotto:).*?\[/B\]).*", self.description).group(1)
+            productionDate = re.search("((R:|Rok produkcji:|Producerat .?r:|Production date:|Produktions dato:|Date de production:|Produktionsdatum:|Godina proizvodnje:|Datum proizvodnje:|Produksjonsdato:|Productie datum:|Datum v.?roby:|Anno prodotto:)\s*(\[B\])?(\d{2,4})(\[\/B\])?(\.)?)", self.description).group(4)
             productionDate = ProgramDescriptionParser.DECORATE_REGEX.sub("", productionDate)
-            productionDate = re.sub("Rok produkcji:|Producerat .?r:|Production date:|Produktions dato:|Date de production:|Produktionsdatum:|Godina proizvodnje:|Datum proizvodnje:|Produksjonsdato:|Productie datum:|Datum v.?roby:|Anno prodotto:", "", productionDate).strip()
+            productionDate = re.sub("R:|Rok produkcji:|Producerat .?r:|Production date:|Produktions dato:|Date de production:|Produktionsdatum:|Godina proizvodnje:|Datum proizvodnje:|Produksjonsdato:|Productie datum:|Datum v.?roby:|Anno prodotto:", "", productionDate).strip()
 
-            self.description = re.sub("(Rok produkcji:|Producerat .?r:|Production date:|Produktions dato:|Date de production:|Produktionsdatum:|Godina proizvodnje:|Datum proizvodnje:|Produksjonsdato:|Productie datum:|Datum v.?roby:|Anno prodotto:).*?\[/B\]", "", self.description).strip()
+            self.description = re.sub("((R:|Rok produkcji:|Producerat .?r:|Production date:|Produktions dato:|Date de production:|Produktionsdatum:|Godina proizvodnje:|Datum proizvodnje:|Produksjonsdato:|Productie datum:|Datum v.?roby:|Anno prodotto:)\s*(\[B\])?(\d{2,4})(\[\/B\])?(\.)?)", "", self.description).strip()
         except:
             productionDate = ''
 
@@ -183,56 +182,82 @@ class ProgramDescriptionParser(object):
 
     def extractDirector(self):
         try:
-            director = re.search(".*((Re.?yser:|Regiss.?r:|Director:|Instrukt.?r:|R.?alisateur:|Regisseur:|Direktor:|Re.?is.?r:|Direttore:).*?\[/B\]).*", self.description).group(1)
+            director = re.search(".*((Re.?yser:|Regiss.?r:|Director:|Instrukt.?r:|R.?alisateur:|Regisseur:|Direktor:|Re.?is.?r:|Direttore:)(.*?\[\/B\]|.*?[^\.]*)).*", self.description).group(1)
             director = ProgramDescriptionParser.DECORATE_REGEX.sub("", director)
             director = re.sub("Re.?yser:|Regiss.?r:|Director:|Instrukt.?r:|R.?alisateur:|Regisseur:|Direktor:|Re.?is.?r:|Direttore:", "", director).strip()
 
-            self.description = re.sub("(Re.?yser:|Regiss.?r:|Director:|Instrukt.?r:|R.?alisateur:|Regisseur:|Direktor:|Re.?is.?r:|Direttore:).*?\[/B\]", "", self.description).strip()
+            self.description = re.sub("(Re.?yser:|Regiss.?r:|Director:|Instrukt.?r:|R.?alisateur:|Regisseur:|Direktor:|Re.?is.?r:|Direttore:)(.*?\[\/B\]|.*?[^\.]*)(\.)?", "", self.description).strip()
         except:
             director = ''
 
         return director
 
+    
     def extractEpisode(self):
         try:
-            episode = re.search(".*((Odcinek:|Avsnitt:|Episode:|Episode:|.?pisode:|Folge:|Odjeljak:|Epizoda:|Aflevering:|Sezione:).*?\[/B\]).*", self.description).group(1)
-            episode = ProgramDescriptionParser.DECORATE_REGEX.sub("", episode)
-            episode = re.sub("Odcinek:|Avsnitt:|Episode:|Episode:|.?pisode:|Folge:|Odjeljak:|Epizoda:|Aflevering:|Sezione:", "", episode).strip()
+            episode = re.search('((S\d{1,3})?\s*((E)?\d{1,5}(\/\d{1,5})?))', self.description).group(1)
+            if 'S' in episode or 'E' in episode:
+                episode = ProgramDescriptionParser.DECORATE_REGEX.sub("", episode)
+            else:
+                episode = re.search(".*((Odcinek:|Avsnitt:|Episode:|Episode:|.?pisode:|Folge:|Odjeljak:|Epizoda:|Aflevering:|Sezione:)\s*(\[B\])?(.*?\/B\]|.*?[^\.]*)(\.)?).*", self.description).group(1)
+                episode = ProgramDescriptionParser.DECORATE_REGEX.sub("", episode)
 
-            self.description = re.sub("(Odcinek:|Avsnitt:|Episode:|Episode:|.?pisode:|Folge:|Odjeljak:|Epizoda:|Aflevering:|Sezione:).*?\[/B\]", "", self.description).strip()
+            episode = re.sub("Odcinek:|Avsnitt:|Episode:|.?pisode:|Folge:|Odjeljak:|Epizoda:|Aflevering:|Sezione:", "", episode).strip()
+
+            self.description = re.sub("(({Episode}|Odcinek:|Avsnitt:|Episode:|.?pisode:|Folge:|Odjeljak:|Epizoda:|Aflevering:|Sezione:)\s*(\[B\])?(.*?\/B\]|.*?[^\.]*)(\.)?)".format(Episode=episode), "", self.description).strip()
+
         except:
             episode = ''
 
         return episode
 
     def extractAllowedAge(self):
+        if sys.version_info[0] > 2:
+            addonPath = xbmcvfs.translatePath(ADDON.getAddonInfo('path'))
+        else:
+            addonPath = xbmc.translatePath(ADDON.getAddonInfo('path'))
         try:
-            icon = 'icon.png'
-            age = re.search(".*((Od lat:|.?r:|Rating:|Pendant des ann.?es:|Bewertung:|Godinama:|Jaar:|Rok:|Anni:).*?\[/B\]).*", self.description).group(1)
-            age = ProgramDescriptionParser.DECORATE_REGEX.sub("", age)
-            age = re.sub("\+\+O\?\.", "18", age)
-            age = re.sub("\+", "", age)
-            age = re.sub("\.", "", age)
-            age_number = re.search("(Od lat:\s*|.?r:\s*|Rating:\s*|Pendant des ann.?es:\s*|Bewertung:\s*|Godinama:\s*|Jaar:\s*|Rok:\s*|Anni:\s*)(.*)", age).group(1)
-            icon = 'icon_%s.png' % age_number
-            age = re.sub("Od lat:|.?r:|Rating:|Pendant des ann.?es:|Bewertung:|Godinama:|Jaar:|Rok:|Anni:", "", age).strip()
+            icon = ''
+            try:
+                age = re.search('(W:|Od lat:|.?r:|Rating:|Pendant des ann.?es:|Bewertung:|Godinama:|Jaar:|Rok:|Anni:).*?(\[B\])?(\d+)(\[\/B\])?(\.)?', self.description).group(3)
+                icon = os.path.join(addonPath, 'icons', 'age_rating', 'icon_{}.png'.format(age))
 
-            self.description = re.sub("(Od lat:|.?r:|Rating:|Pendant des ann.?es:|Bewertung:|Godinama:|Jaar:|Rok:|Anni:).*?\[/B\]", "", self.description).strip()
+            except:
+                age = re.search('(W:|Od lat:|.?r:|Rating:|Pendant des ann.?es:|Bewertung:|Godinama:|Jaar:|Rok:|Anni:).*?(\[B\])?(\w+)(\[\/B\])?(\.)?', self.description).group(3)
+
+            age = ProgramDescriptionParser.DECORATE_REGEX.sub("", age)
+            
+            self.description = re.sub("(W:|Od lat:|.?r:|Rating:|Pendant des ann.?es:|Bewertung:|Godinama:|Jaar:|Rok:|Anni:).*?(\[B\])?({Age}|.*)\s*(\+)?(\[\/B\])?(\.)?".format(Age=age), "", self.description).strip()
         except:
             icon = ''
+
+        self.extractRating()
+
         return icon
 
     def extractActors(self):
         try:
-            actors = re.search(".*((Aktorzy:|Sk.?despelare:|Actors:|Skuespillere:|Acteurs:|Schauspiel:|Glumci:|Herec:|Attori:).*?\[/B\]).*", self.description).group(1)
+            actors = re.search(".*((Aktorzy:|Sk.?despelare:|Actors:|Skuespillere:|Acteurs:|Schauspiel:|Glumci:|Herec:|Attori:)(.*?\[\/B\]|.*?[^\.]*)).*", self.description).group(1)
             actors = ProgramDescriptionParser.DECORATE_REGEX.sub("", actors)
             actors = re.sub("Aktorzy:|Sk.?despelare:|Actors:|Skuespillere:|Acteurs:|Schauspiel:|Glumci:|Herec:|Attori:", "", actors).strip()
 
-            self.description = re.sub("(Aktorzy:|Sk.?despelare:|Actors:|Skuespillere:|Acteurs:|Schauspiel:|Glumci:|Herec:|Attori:).*?\[/B\]", "", self.description).strip()
+            self.description = re.sub("(Aktorzy:|Sk.?despelare:|Actors:|Skuespillere:|Acteurs:|Schauspiel:|Glumci:|Herec:|Attori:)(.*?\[\/B\]|.*?[^\.]*)(\.)?", "", self.description).strip()
         except:
             actors = ''
 
         return actors
+
+    def extractRating(self):
+        try:
+            rating = re.search("((O:|Ocena:|Producerat .?r:|Rating:|Vurdering:|Notation:|Bewertung:|Ocjena:|Bed.?mmelse:|Valutazione:|Hodnocen.?:)\s*(\[B\])?(\d+/\d+)(\[\/B\])?(\.)?)", self.description).group(4)
+            rating = ProgramDescriptionParser.DECORATE_REGEX.sub("", rating)
+            rating = re.sub("O:|Ocena:|Producerat .?r:|Rating:|Vurdering:|Notation:|Bewertung:|Ocjena:|Bed.?mmelse:|Valutazione:|Hodnocen.?:", "", rating).strip()
+
+            self.description = re.sub("((O:|Ocena:|Producerat .?r:|Rating:|Vurdering:|Notation:|Bewertung:|Ocjena:|Bed.?mmelse:|Valutazione:|Hodnocen.?:)\s*(\[B\])?(\d+/\d+)(\[\/B\])?(\.)?)", "", self.description).strip()
+        except:
+            rating = ''
+
+        return rating
 
 class SourceException(Exception):
     pass
@@ -2582,6 +2607,7 @@ def customParseXMLTV(xml, progress_callback):
 
         try:
             episode  = decodeString(programEpisode.search(program).group(1))
+            episode = re.search('((S\d{1,3})?\s*((E)?\d{1,5}(\/\d{1,5})?))', episode).group(1)
         except:
             episode = ''
 

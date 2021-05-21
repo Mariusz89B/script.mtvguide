@@ -48,10 +48,6 @@
 				<visible>hidden</visible>
 			</control>
 			
-			<control type="image" id="4932">
-				<description>Program age</description>
-			</control>
-			
 			<control type="textbox" id="4926">
 				<visible>hidden</visible>
 			</control>
@@ -73,12 +69,12 @@
 		<animation effect="fade" end="100" delay="300" time="300">WindowOpen</animation>
 		<animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
 		
+		
 		<control type="label">
 			<top>40</top>
 			<left>100</left>
 			<width>1720</width>
 			<height>75</height>
-			<width>1200</width>
 			<textcolor>FFF0F0F0</textcolor>
 			<shadowcolor>22000000</shadowcolor>
 			<font>font52_title</font>
@@ -145,8 +141,10 @@
 				<top>0</top>
 				<width>461</width>
 				<height>461</height>
+				<label></label>
 				<texture>dialogs/mk_defaulttvshows.png</texture>
 				<aspectratio align="center" aligny="center">keep</aspectratio>
+				<visible>!Control.IsVisible(5000) + !String.IsEqual(Control.GetLabel(4923),)</visible>
 			</control>
 		</control>
 		
@@ -439,6 +437,25 @@
 					<posy>759</posy>
 					<width>120</width>
 					<height>37</height>
+					<animation type="WindowOpen">
+						<effect type="fade" end="100" time="200" />
+						<effect type="fade" start="0" end="100" time="300" tween="sine" easing="out" />
+						<effect type="slide" start="320" end="0" time="400" tween="cubic" easing="out" />
+					</animation>
+					<animation type="WindowClose">
+						<effect type="fade" start="100" end="0" time="200" />
+						<effect type="fade" start="100" end="0" time="300" tween="sine" easing="out" />
+						<effect type="slide" start="0" end="320" time="300" tween="cubic" easing="out" />
+					</animation>
+				</control>
+				
+				<control type="image" id="4932">
+					<description>Program age</description>
+					<top>900</top>
+					<left>1780</left>
+					<width>105</width>
+					<height>105</height>
+					<aspectratio>keep</aspectratio>
 					<animation type="WindowOpen">
 						<effect type="fade" end="100" time="200" />
 						<effect type="fade" start="0" end="100" time="300" tween="sine" easing="out" />

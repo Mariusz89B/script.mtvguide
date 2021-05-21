@@ -145,6 +145,7 @@ C_PROGRAM_ACTORS = 4928     #aktorzy
 C_PROGRAM_PRODUCTION_DATE = 4929    #data produkcji
 C_PROGRAM_DIRECTOR = 4930   #rezyser
 C_PROGRAM_AGE_ICON = 4932   #od lat
+C_PROGRAM_RATING = 4933     #ocena
 C_VOSD_SERVICE = 4940       #nazwa serwisu
 C_MAIN_CHAN_PLAY = 4952     #kanal odtwarzany
 C_MAIN_PROG_PLAY = 4953     #program odtwarzany

@@ -125,7 +125,7 @@ class PlaylistUpdater(baseServiceUpdater):
             headers['ContentType'] = 'application/x-www-form-urlencoded'
             headers['Accept-Encoding'] = 'gzip'
 
-            content = scraper.get(path, headers=headers, allow_redirects=False, verify=False, timeout=60).content.decode('utf-8')
+            content = scraper.get(path, headers=headers, allow_redirects=False, verify=False, timeout=60).text
 
         except:
             try:
@@ -254,8 +254,9 @@ class PlaylistUpdater(baseServiceUpdater):
             else:
                 try:
                     #lf = mmap.mmap(path, 0, access=mmap.ACCESS_READ)
+                    
                     if sys.version_info[0] > 2:
-                    	lf = open(path, 'r', encoding='utf-8')
+                        lf = open(path, 'r', encoding='utf-8')
                     else:
                         lf = io.open(path, 'r')
 
@@ -263,6 +264,7 @@ class PlaylistUpdater(baseServiceUpdater):
                     lf.close()
                     if tmpcontent is None or tmpcontent == "":
                         raise Exception
+                
                 except:
                     self.log('getPlaylistContent opening normally Error %s, type: %s, url: %s' % (getExceptionString(), urltype, path) )
                     self.log('getPlaylistContent trying to open file using xbmcvfs')
@@ -271,7 +273,7 @@ class PlaylistUpdater(baseServiceUpdater):
                     lf.close()
                     if tmpcontent is None or tmpcontent == "":
                         raise Exception
-
+                
             content = tmpcontent
         except:
             self.log('getPlaylistContent opening Error {}, type: {}, url: {}'.format(getExceptionString(), urltype, path) )

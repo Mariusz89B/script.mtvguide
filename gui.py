@@ -4550,10 +4550,9 @@ class mTVGuide(xbmcgui.WindowXML):
     def getLastPlayingChannel(self):
         idx, date = self.database.getLastChannel()
         
-        idx = idx - 1
-
         channelList = self.database.getChannelList(onlyVisible=True)
         try:
+            idx = int(idx) - 1
             chann = channelList[idx]
         except:
             chann = channelList[0]
@@ -4631,10 +4630,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.setControlText(C_PROGRAM_EPISODE, episode)
             if skin_separate_allowed_age_icon:
                 icon = descriptionParser.extractAllowedAge()
-                p = re.compile('^http(s)?:\/\/.*')
-
-                if p.match(icon):
-                    self.setControlImage(C_PROGRAM_AGE_ICON, icon)
+                self.setControlImage(C_PROGRAM_AGE_ICON, icon)
             if skin_separate_program_actors:
                 actors = descriptionParser.extractActors()
                 if actors == '':
