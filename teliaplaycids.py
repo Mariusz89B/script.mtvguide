@@ -111,7 +111,7 @@ class Threading(object):
                     ADDON.setSetting('teliaplay_refrtoken', str(refrtoken))
                     ADDON.setSetting('teliaplay_cookies', str(cookies))
 
-            if False:
+            if xbmc.Monitor().waitForAbort(1):
                 break
 
 

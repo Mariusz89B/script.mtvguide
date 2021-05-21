@@ -152,10 +152,24 @@ class Program(object):
 
 class ProgramDescriptionParser(object):
     DECORATE_REGEX = re.compile("\[COLOR\s*\w*\]|\[/COLOR\]|\[B\]|\[/B\]|\[I\]|\[/I\]",      re.IGNORECASE)
+    CATEGORY_REGEX = re.compile("((G:|Kategoria:|Genre:|Genere:|Category:|Kategori:|Cat.?gorie:|Kategorie:|Kategorija:|Sjanger:).*?\[/B\])",        re.IGNORECASE)
 
     def __init__(self, description):
         self.description = description
 
+    def extractCategory(self):
+        try:
+            category = ProgramDescriptionParser.CATEGORY_REGEX.search(self.description).group(1)
+            category = ProgramDescriptionParser.DECORATE_REGEX.sub("", category)
+            category = re.sub("G:|Kategoria:|Genre:|Category:|Kategori:|Cat.?gorie:|Kategorie:|Kategorija:|Sjanger:|Genere:", "", category).strip()
+
+            self.description = ProgramDescriptionParser.CATEGORY_REGEX.sub("", self.description).strip()
+        except:
+            category = ''
+
+        return category
+
+    """
     def extractCategory(self):
         try:
             category = re.search("((G:|Kategoria:|Genre:|Genere:|Category:|Kategori:|Cat.?gorie:|Kategorie:|Kategorija:|Sjanger:)(.*?\[\/B\]|.*?[^\.]*))", self.description).group(1)
@@ -167,6 +181,7 @@ class ProgramDescriptionParser(object):
             category = ''
 
         return category
+    """
 
     def extractProductionDate(self):
         try:
@@ -258,6 +273,7 @@ class ProgramDescriptionParser(object):
             rating = ''
 
         return rating
+
 
 class SourceException(Exception):
     pass
@@ -627,21 +643,18 @@ class Database(object):
 
                     p = re.compile('\s<channel id="(.*?)"', re.DOTALL)
 
-                    try:
-                        with open(os.path.join(profilePath, 'basemap_extra.xml'), 'rb') as f:
-                            if sys.version_info[0] > 2:
-                                base = str(f.read(), 'utf-8')
-                            else:
-                                base = f.read().decode('utf-8')
+                    with open(os.path.join(profilePath, 'basemap_extra.xml'), 'rb') as f:
+                        if sys.version_info[0] > 2:
+                            base = str(f.read(), 'utf-8')
+                        else:
+                            base = f.read().decode('utf-8')
 
-                            channList = p.findall(base)
-                            intList = range(len(channList))
+                        channList = p.findall(base)
+                        intList = range(len(channList))
 
-                            for chann in intList:
-                                ch = Channel(channList[chann], channList[chann])
-                                channelList.append(ch)
-                    except:
-                        pass
+                        for chann in intList:
+                            ch = Channel(channList[chann], channList[chann])
+                            channelList.append(ch)
 
                     # Clear program list only when there is at lease one valid row available
                     if not dbChannelsUpdated:
@@ -650,14 +663,11 @@ class Database(object):
                             c.execute('DELETE FROM channels WHERE source=?', [self.source.KEY])
                             c.execute('DELETE FROM programs WHERE source=?', [self.source.KEY])
                             c.execute('DELETE FROM updates WHERE source=?', [self.source.KEY])
-                            try:
-                                for channel in channelList:
-                                    c.execute('INSERT OR IGNORE INTO channels(id, title, logo, stream_url, visible, weight, source) VALUES(?, ?, ?, ?, ?, (CASE ? WHEN -1 THEN (SELECT COALESCE(MAX(weight)+1, 0) FROM channels WHERE source=?) ELSE ? END), ?)', [channel.id, channel.title, channel.logo, channel.streamUrl, channel.visible, channel.weight, self.source.KEY, channel.weight, self.source.KEY])
-                                    if not c.rowcount:
-                                        c.execute('UPDATE channels SET title=?, logo=?, stream_url=?, visible=?, weight=(CASE ? WHEN -1 THEN weight ELSE ? END) WHERE id=? AND source=?', [channel.title, channel.logo, channel.streamUrl, channel.visible, channel.weight, channel.weight, channel.id, self.source.KEY])
-                            except:
-                                 pass
-                                   
+                            for channel in channelList:
+                                c.execute('INSERT OR IGNORE INTO channels(id, title, logo, stream_url, visible, weight, source) VALUES(?, ?, ?, ?, ?, (CASE ? WHEN -1 THEN (SELECT COALESCE(MAX(weight)+1, 0) FROM channels WHERE source=?) ELSE ? END), ?)', [channel.id, channel.title, channel.logo, channel.streamUrl, channel.visible, channel.weight, self.source.KEY, channel.weight, self.source.KEY])
+                                if not c.rowcount:
+                                    c.execute('UPDATE channels SET title=?, logo=?, stream_url=?, visible=?, weight=(CASE ? WHEN -1 THEN weight ELSE ? END) WHERE id=? AND source=?', [channel.title, channel.logo, channel.streamUrl, channel.visible, channel.weight, channel.weight, channel.id, self.source.KEY])
+                               
                         self.settingsChanged = False # only want to update once due to changed settings
 
                         if clearExistingProgramList:
