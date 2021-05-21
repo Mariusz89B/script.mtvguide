@@ -1378,11 +1378,7 @@
 			</control>
 			<control type="image" id="4932">
 				<description>Program age</description>
-				<posx>1820</posx>
-				<posy>835</posy>
-				<width>64</width>
-				<height>64</height>
-				<aspectratio>keep</aspectratio>
+				<visible>hidden</visible>
 			</control>
 			
 			<control type="label">
@@ -1543,7 +1539,7 @@
 					<description>Program description</description>
 					<left>350</left>
 					<posy>835</posy>
-					<width>1460</width>
+					<width>1520</width>
 					<height>170</height>
 					<align>justify</align>
 					<textcolor>FFF0F0F0</textcolor>
