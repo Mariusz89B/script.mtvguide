@@ -1543,29 +1543,6 @@
 					<description>Program description</description>
 					<left>350</left>
 					<posy>835</posy>
-					<width>1520</width>
-					<height>170</height>
-					<align>justify</align>
-					<textcolor>FFF0F0F0</textcolor>
-					<shadowcolor>22000000</shadowcolor>
-					<autoscroll delay="10000" time="3000" repeat="10000">true</autoscroll>
-					<scrolltime tween="quadratic" easing="out">200</scrolltime>
-					<wrapmultiline>true</wrapmultiline>
-					<label></label>
-					<!--<animation type="WindowOpen">
-						<effect type="fade" start="0" end="100" time="300" tween="sine" easing="out"/>
-						<effect type="slide" start="320" end="0" time="400" tween="cubic" easing="out" />
-					</animation>
-					<animation type="WindowClose">
-						<effect type="fade" start="100" end="0" time="300" tween="sine" easing="out" />
-						<effect type="slide" start="0" end="320" time="300" tween="cubic" easing="out" />
-					</animation>-->
-					<visible>!Control.IsVisible(5000) + String.IsEqual(Control.GetLabel(4932),)</visible>
-				</control>
-				<control type="textbox" id="4922">
-					<description>Program description</description>
-					<left>350</left>
-					<posy>835</posy>
 					<width>1460</width>
 					<height>170</height>
 					<align>justify</align>
@@ -1574,7 +1551,6 @@
 					<autoscroll delay="10000" time="3000" repeat="10000">true</autoscroll>
 					<scrolltime tween="quadratic" easing="out">200</scrolltime>
 					<wrapmultiline>true</wrapmultiline>
-					<label></label>
 					<!--<animation type="WindowOpen">
 						<effect type="fade" start="0" end="100" time="300" tween="sine" easing="out"/>
 						<effect type="slide" start="320" end="0" time="400" tween="cubic" easing="out" />
@@ -1583,7 +1559,7 @@
 						<effect type="fade" start="100" end="0" time="300" tween="sine" easing="out" />
 						<effect type="slide" start="0" end="320" time="300" tween="cubic" easing="out" />
 					</animation>-->
-					<visible>!Control.IsVisible(5000) + !String.IsEqual(Control.GetLabel(4932),)</visible>
+					<visible>!Control.IsVisible(5000)</visible>
 				</control>
 				<control type="image" id="4923">
 					<description>Program logo / Source logo</description>
@@ -1593,7 +1569,6 @@
 					<height>167</height>
 					<texture>tvguide-logo-epg.png</texture>
 					<aspectratio align="center" aligny="center">keep</aspectratio>
-					<label></label>
 					<!--<animation type="WindowOpen">
 						<effect type="fade" start="0" end="100" time="300" tween="sine" easing="out"/>
 						<effect type="slide" start="320" end="0" time="400" tween="cubic" easing="out" />
@@ -1602,7 +1577,7 @@
 						<effect type="fade" start="100" end="0" time="300" tween="sine" easing="out" />
 						<effect type="slide" start="0" end="320" time="300" tween="cubic" easing="out" />
 					</animation>-->
-					<visible>!Control.IsVisible(5000) + !String.IsEqual(Control.GetLabel(4923),)</visible>
+					<visible>!Control.IsVisible(5000)</visible>
 				</control>
 			</control>
 					

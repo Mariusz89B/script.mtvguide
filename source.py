@@ -231,7 +231,7 @@ class ProgramDescriptionParser(object):
         except:
             icon = ''
 
-        self.extractRating()
+        #self.extractRating()
 
         return icon
 
@@ -627,18 +627,21 @@ class Database(object):
 
                     p = re.compile('\s<channel id="(.*?)"', re.DOTALL)
 
-                    with open(os.path.join(profilePath, 'basemap_extra.xml'), 'rb') as f:
-                        if sys.version_info[0] > 2:
-                            base = str(f.read(), 'utf-8')
-                        else:
-                            base = f.read().decode('utf-8')
+                    try:
+                        with open(os.path.join(profilePath, 'basemap_extra.xml'), 'rb') as f:
+                            if sys.version_info[0] > 2:
+                                base = str(f.read(), 'utf-8')
+                            else:
+                                base = f.read().decode('utf-8')
 
-                        channList = p.findall(base)
-                        intList = range(len(channList))
+                            channList = p.findall(base)
+                            intList = range(len(channList))
 
-                        for chann in intList:
-                            ch = Channel(channList[chann], channList[chann])
-                            channelList.append(ch)
+                            for chann in intList:
+                                ch = Channel(channList[chann], channList[chann])
+                                channelList.append(ch)
+                    except:
+                        pass
 
                     # Clear program list only when there is at lease one valid row available
                     if not dbChannelsUpdated:
@@ -647,11 +650,14 @@ class Database(object):
                             c.execute('DELETE FROM channels WHERE source=?', [self.source.KEY])
                             c.execute('DELETE FROM programs WHERE source=?', [self.source.KEY])
                             c.execute('DELETE FROM updates WHERE source=?', [self.source.KEY])
-                            for channel in channelList:
-                                c.execute('INSERT OR IGNORE INTO channels(id, title, logo, stream_url, visible, weight, source) VALUES(?, ?, ?, ?, ?, (CASE ? WHEN -1 THEN (SELECT COALESCE(MAX(weight)+1, 0) FROM channels WHERE source=?) ELSE ? END), ?)', [channel.id, channel.title, channel.logo, channel.streamUrl, channel.visible, channel.weight, self.source.KEY, channel.weight, self.source.KEY])
-                                if not c.rowcount:
-                                    c.execute('UPDATE channels SET title=?, logo=?, stream_url=?, visible=?, weight=(CASE ? WHEN -1 THEN weight ELSE ? END) WHERE id=? AND source=?', [channel.title, channel.logo, channel.streamUrl, channel.visible, channel.weight, channel.weight, channel.id, self.source.KEY])
-                               
+                            try:
+                                for channel in channelList:
+                                    c.execute('INSERT OR IGNORE INTO channels(id, title, logo, stream_url, visible, weight, source) VALUES(?, ?, ?, ?, ?, (CASE ? WHEN -1 THEN (SELECT COALESCE(MAX(weight)+1, 0) FROM channels WHERE source=?) ELSE ? END), ?)', [channel.id, channel.title, channel.logo, channel.streamUrl, channel.visible, channel.weight, self.source.KEY, channel.weight, self.source.KEY])
+                                    if not c.rowcount:
+                                        c.execute('UPDATE channels SET title=?, logo=?, stream_url=?, visible=?, weight=(CASE ? WHEN -1 THEN weight ELSE ? END) WHERE id=? AND source=?', [channel.title, channel.logo, channel.streamUrl, channel.visible, channel.weight, channel.weight, channel.id, self.source.KEY])
+                            except:
+                                 pass
+                                   
                         self.settingsChanged = False # only want to update once due to changed settings
 
                         if clearExistingProgramList:
@@ -2031,8 +2037,11 @@ class Database(object):
                 profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile'))
             except:
                 profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
-                
-        shutil.copyfile(os.path.join(ADDON.getAddonInfo('path'), 'resources', 'basemap_extra.xml'), os.path.join(profilePath, 'basemap_extra.xml'))
+        
+        try:
+            shutil.copyfile(os.path.join(ADDON.getAddonInfo('path'), 'resources', 'basemap_extra.xml'), os.path.join(profilePath, 'basemap_extra.xml'))
+        except:
+            pass
 
         c = self.conn.cursor()
         c.execute('DELETE FROM channels')
@@ -2074,6 +2083,11 @@ class Database(object):
             os.remove(self.databasePath)
             os.remove(self.databasePath + '-journal')
             os.remove(os.path.join(self.profilePath, 'skin_fonts.ini'))
+        except:
+            pass
+
+        try:
+            shutil.copyfile(os.path.join(ADDON.getAddonInfo('path'), 'resources', 'basemap_extra.xml'), os.path.join(profilePath, 'basemap_extra.xml'))
         except:
             pass
 
@@ -2607,7 +2621,6 @@ def customParseXMLTV(xml, progress_callback):
 
         try:
             episode  = decodeString(programEpisode.search(program).group(1))
-            episode = re.search('((S\d{1,3})?\s*((E)?\d{1,5}(\/\d{1,5})?))', episode).group(1)
         except:
             episode = ''
 
