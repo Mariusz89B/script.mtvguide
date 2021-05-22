@@ -674,10 +674,13 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def tutorialGetCountry(self):
         progExec = False
+        resExtra = False
+
+        ccList = (strings(59925), strings(59926), strings(59927), strings(59928), strings(59929), strings(59930),
+                 strings(59931), strings(59932), strings(59933), strings(59934), strings(59935), strings(59936), strings(59937), 'Radio')
 
         res = xbmcgui.Dialog().multiselect(strings(59943),
-                    [strings(59925), strings(59926), strings(59927), strings(59928), strings(59929), strings(59930),
-                 strings(59931), strings(59932), strings(59933), strings(59934), strings(59935), strings(59936), strings(59937), 'Radio'])
+                    ccList)
 
         if not res:
             resBack = xbmcgui.Dialog().yesno(strings(59924), strings(59938), yeslabel=strings(59939), nolabel=strings(30308))
@@ -689,7 +692,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 ADDON.setSetting('tutorial', 'true')
                 exit()
 
-        if set(res):
+        if len(res) > 1:
             resExtra = xbmcgui.Dialog().yesno(strings(59924), strings(59962))
 
         if 0 in res:
@@ -1374,17 +1377,20 @@ class mTVGuide(xbmcgui.WindowXML):
                     ADDON.setSetting('tutorial', 'false')
                     xbmcgui.Dialog().ok(strings(70100), strings(70102))
                     xbmc.executebuiltin("Quit")
+                    time.sleep(5)
                     
             else:
                 run = SettingsImp().downloadRecordApp()
                 ADDON.setSetting('tutorial', 'false')
                 xbmcgui.Dialog().ok(strings(70100), strings(70102))
                 xbmc.executebuiltin("Quit")
+                time.sleep(5)
 
         else:
             ADDON.setSetting('tutorial', 'false')
             xbmcgui.Dialog().ok(strings(70100), strings(70102))
             xbmc.executebuiltin("Quit")
+            time.sleep(5)
 
     def tutorialExec(self):
         if ADDON.getSetting('tutorial') == 'false':
@@ -5616,8 +5622,11 @@ class mTVGuide(xbmcgui.WindowXML):
             deb('Categories not supported by current skin')
             self.category = None
 
-        self.getListLenght = self.getChannelListLenght()
-
+        try:
+            self.getListLenght = self.getChannelListLenght()
+        except:
+            pass
+            
         del self.controlAndProgramList[:]
         debug('_clearEpg end')
 
