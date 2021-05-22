@@ -152,7 +152,7 @@ class Program(object):
 
 class ProgramDescriptionParser(object):
     DECORATE_REGEX = re.compile("\[COLOR\s*\w*\]|\[/COLOR\]|\[B\]|\[/B\]|\[I\]|\[/I\]",      re.IGNORECASE)
-    CATEGORY_REGEX = re.compile("((G:|Kategoria:|Genre:|Genere:|Category:|Kategori:|Cat.?gorie:|Kategorie:|Kategorija:|Sjanger:).*?\[/B\])",        re.IGNORECASE)
+    CATEGORY_REGEX = re.compile("((G:|Kategoria:|Genre:|Genere:|Category:|Kategori:|Cat.?gorie:|Kategorie:|Kategorija:|Sjanger:)(.*?\[\/B\]|.*?[^\.]*)(\.)?)",        re.IGNORECASE)
 
     def __init__(self, description):
         self.description = description
@@ -168,20 +168,6 @@ class ProgramDescriptionParser(object):
             category = ''
 
         return category
-
-    """
-    def extractCategory(self):
-        try:
-            category = re.search("((G:|Kategoria:|Genre:|Genere:|Category:|Kategori:|Cat.?gorie:|Kategorie:|Kategorija:|Sjanger:)(.*?\[\/B\]|.*?[^\.]*))", self.description).group(1)
-            category = ProgramDescriptionParser.DECORATE_REGEX.sub("", category)
-            category = re.sub("G:|Kategoria:|Genre:|Category:|Kategori:|Cat.?gorie:|Kategorie:|Kategorija:|Sjanger:|Genere:", "", category).strip()
-
-            self.description = re.sub("((G:|Kategoria:|Genre:|Genere:|Category:|Kategori:|Cat.?gorie:|Kategorie:|Kategorija:|Sjanger:)(.*?\[\/B\]|.*?[^\.]*)(\.)?)", "", self.description).strip()
-        except:
-            category = ''
-
-        return category
-    """
 
     def extractProductionDate(self):
         try:
@@ -246,7 +232,14 @@ class ProgramDescriptionParser(object):
         except:
             icon = ''
 
-        #self.extractRating()
+        try:
+            rating = re.search("((O:|Ocena:|Producerat .?r:|Rating:|Vurdering:|Notation:|Bewertung:|Ocjena:|Bed.?mmelse:|Valutazione:|Hodnocen.?:)\s*(\[B\])?(\d+/\d+)(\[\/B\])?(\.)?)", self.description).group(4)
+            rating = ProgramDescriptionParser.DECORATE_REGEX.sub("", rating)
+            rating = re.sub("O:|Ocena:|Producerat .?r:|Rating:|Vurdering:|Notation:|Bewertung:|Ocjena:|Bed.?mmelse:|Valutazione:|Hodnocen.?:", "", rating).strip()
+
+            self.description = re.sub("((O:|Ocena:|Producerat .?r:|Rating:|Vurdering:|Notation:|Bewertung:|Ocjena:|Bed.?mmelse:|Valutazione:|Hodnocen.?:)\s*(\[B\])?(\d+/\d+)(\[\/B\])?(\.)?)", "", self.description).strip()
+        except:
+            rating = ''
 
         return icon
 
@@ -261,19 +254,6 @@ class ProgramDescriptionParser(object):
             actors = ''
 
         return actors
-
-    def extractRating(self):
-        try:
-            rating = re.search("((O:|Ocena:|Producerat .?r:|Rating:|Vurdering:|Notation:|Bewertung:|Ocjena:|Bed.?mmelse:|Valutazione:|Hodnocen.?:)\s*(\[B\])?(\d+/\d+)(\[\/B\])?(\.)?)", self.description).group(4)
-            rating = ProgramDescriptionParser.DECORATE_REGEX.sub("", rating)
-            rating = re.sub("O:|Ocena:|Producerat .?r:|Rating:|Vurdering:|Notation:|Bewertung:|Ocjena:|Bed.?mmelse:|Valutazione:|Hodnocen.?:", "", rating).strip()
-
-            self.description = re.sub("((O:|Ocena:|Producerat .?r:|Rating:|Vurdering:|Notation:|Bewertung:|Ocjena:|Bed.?mmelse:|Valutazione:|Hodnocen.?:)\s*(\[B\])?(\d+/\d+)(\[\/B\])?(\.)?)", "", self.description).strip()
-        except:
-            rating = ''
-
-        return rating
-
 
 class SourceException(Exception):
     pass
