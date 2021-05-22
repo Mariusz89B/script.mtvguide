@@ -48,10 +48,6 @@
 				<visible>hidden</visible>
 			</control>
 			
-			<control type="image" id="4932">
-				<description>Program age</description>
-			</control>
-			
 			<control type="textbox" id="4926">
 				<visible>hidden</visible>
 			</control>
@@ -433,12 +429,32 @@
 					<height>0</height>
 					<visible>hidden</visible>
 				</control>
+				
 				<control type="image" id="4944">
 					<description>Live</description>
 					<posx>1666</posx>
 					<posy>759</posy>
 					<width>120</width>
 					<height>37</height>
+					<animation type="WindowOpen">
+						<effect type="fade" end="100" time="200" />
+						<effect type="fade" start="0" end="100" time="300" tween="sine" easing="out" />
+						<effect type="slide" start="320" end="0" time="400" tween="cubic" easing="out" />
+					</animation>
+					<animation type="WindowClose">
+						<effect type="fade" start="100" end="0" time="200" />
+						<effect type="fade" start="100" end="0" time="300" tween="sine" easing="out" />
+						<effect type="slide" start="0" end="320" time="300" tween="cubic" easing="out" />
+					</animation>
+				</control>
+				
+				<control type="image" id="4932">
+					<description>Program age</description>
+					<top>900</top>
+					<left>1780</left>
+					<width>105</width>
+					<height>105</height>
+					<aspectratio>keep</aspectratio>
 					<animation type="WindowOpen">
 						<effect type="fade" end="100" time="200" />
 						<effect type="fade" start="0" end="100" time="300" tween="sine" easing="out" />
