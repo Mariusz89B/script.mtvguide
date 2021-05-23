@@ -1097,9 +1097,9 @@ class PlayService(xbmc.Player, BasePlayService):
                                                         day = datetime.datetime.now() - datetime.timedelta(days=1)
 
                                                         if sys.version_info[0] > 2:
-                                                            timestamp = str(int(datetime.datetime.timestamp(day)))
+                                                            timestamp = int(datetime.datetime.timestamp(day))
                                                         else:
-                                                            timestamp = str(int(time.mktime(day.timetuple())))
+                                                            timestamp = int(time.mktime(day.timetuple()))
 
                                                         if int(utc) > timestamp:
                                                             new_url = strmUrl + '?utc={utc}&lutc={lutc}'.format(utc=utc, lutc=lutc)

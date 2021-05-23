@@ -680,8 +680,12 @@ class RecordService(BasePlayService):
                                 #elif any(x in fsListType for x in catchupList):
                                 elif 'mono' in fsListType: # Temporary fix for PlusX service
                                     day = datetime.datetime.now() - datetime.timedelta(days=1)
-                                    timestamp = int(datetime.datetime.timestamp(day))
 
+                                    if sys.version_info[0] > 2:
+                                        timestamp = int(datetime.datetime.timestamp(day))
+                                    else:
+                                        timestamp = int(time.mktime(day.timetuple()))
+                                        
                                     if int(utc) > timestamp:
                                         new_url = strmUrl + '?utc={utc}&lutc={lutc}'.format(utc=utc, lutc=lutc)
                                         response = requests.get(new_url, allow_redirects=False, verify=False, timeout=2)

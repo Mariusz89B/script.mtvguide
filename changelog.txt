@@ -1,4 +1,7 @@
-﻿[COLOR yellow][B]wersja 9.3.3[/B] - 2021-05-22[/COLOR]
+﻿[COLOR yellow][B]wersja 9.3.4[/B] - 2021-05-23[/COLOR]
+- poprawka działania archiwum
+
+[COLOR yellow][B]wersja 9.3.3[/B] - 2021-05-22[/COLOR]
 - optymalizacje
 - usunięte błędy
 

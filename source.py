@@ -220,24 +220,24 @@ class ProgramDescriptionParser(object):
         try:
             icon = ''
             try:
-                age = re.search('(W:|Od lat:|.?r:|Rating:|Pendant des ann.?es:|Bewertung:|Godinama:|Jaar:|Rok:|Anni:).*?(\[B\])?(\d+)(\[\/B\])?(\.)?', self.description).group(3)
+                age = re.search('(W:|Od lat:|.?r:|Rating:|Pendant des ann.?es:|.?ber die Jahre:|Godinama:|Jaar:|Rok:|Anni:).*?(\[B\])?(\d+)(\[\/B\])?(\.)?', self.description).group(3)
                 icon = os.path.join(addonPath, 'icons', 'age_rating', 'icon_{}.png'.format(age))
 
             except:
-                age = re.search('(W:|Od lat:|.?r:|Rating:|Pendant des ann.?es:|Bewertung:|Godinama:|Jaar:|Rok:|Anni:).*?(\[B\])?(\w+)(\[\/B\])?(\.)?', self.description).group(3)
+                age = re.search('(W:|Od lat:|.?r:|Rating:|Pendant des ann.?es:|.?ber die Jahre:|Godinama:|Jaar:|Rok:|Anni:).*?(\[B\])?(\w+)(\[\/B\])?(\.)?', self.description).group(3)
 
             age = ProgramDescriptionParser.DECORATE_REGEX.sub("", age)
             
-            self.description = re.sub("(W:|Od lat:|.?r:|Rating:|Pendant des ann.?es:|Bewertung:|Godinama:|Jaar:|Rok:|Anni:).*?(\[B\])?({Age}|.*)\s*(\+)?(\[\/B\])?(\.)?".format(Age=age), "", self.description).strip()
+            self.description = re.sub("(W:|Od lat:|.?r:|Rating:|Pendant des ann.?es:|.?ber die Jahre:|Godinama:|Jaar:|Rok:|Anni:).*?(\[B\])?({Age}|.*)\s*(\+)?(\[\/B\])?(\.)?".format(Age=age), "", self.description).strip()
         except:
             icon = ''
 
         try:
-            rating = re.search("((O:|Ocena:|Producerat .?r:|Rating:|Vurdering:|Notation:|Bewertung:|Ocjena:|Bed.?mmelse:|Valutazione:|Hodnocen.?:)\s*(\[B\])?(\d+/\d+)(\[\/B\])?(\.)?)", self.description).group(4)
+            rating = re.search("((O:|Ocena:|Betyg:|Starrating:|Bewertung:|Bed.?mmelse:|Bewertung:|Ocjena:|Notation:|Valutazione:|Hodnocen.?:)\s*(\[B\])?(\d+/\d+)(\[\/B\])?(\.)?)", self.description).group(4)
             rating = ProgramDescriptionParser.DECORATE_REGEX.sub("", rating)
-            rating = re.sub("O:|Ocena:|Producerat .?r:|Rating:|Vurdering:|Notation:|Bewertung:|Ocjena:|Bed.?mmelse:|Valutazione:|Hodnocen.?:", "", rating).strip()
+            rating = re.sub("O:|Ocena:|Betyg:|Starrating:|Bewertung:|Bed.?mmelse:|Bewertung:|Ocjena:|Notation:|Valutazione:|Hodnocen.?:", "", rating).strip()
 
-            self.description = re.sub("((O:|Ocena:|Producerat .?r:|Rating:|Vurdering:|Notation:|Bewertung:|Ocjena:|Bed.?mmelse:|Valutazione:|Hodnocen.?:)\s*(\[B\])?(\d+/\d+)(\[\/B\])?(\.)?)", "", self.description).strip()
+            self.description = re.sub("((O:|Ocena:|Betyg:|Bewertung:|Bed.?mmelse:|Ocjena:|Bewertung:|Ocjena:|Notation:|Valutazione:|Hodnocen.?:)\s*(\[B\])?(\d+/\d+)(\[\/B\])?(\.)?)", "", self.description).strip()
         except:
             rating = ''
 

@@ -2135,8 +2135,6 @@ class mTVGuide(xbmcgui.WindowXML):
 
         self.getListLenght = self.getChannelListLenght()
 
-        #self.getStreamsCid()
-
     def updateEpg(self):
         epgSize = ADDON.getSetting('epg_size')
         epgDbSize = ADDON.getSetting('epg_dbsize')
@@ -2181,29 +2179,23 @@ class mTVGuide(xbmcgui.WindowXML):
         return sorted(catchupList)
     """
 
-    def catchupEPG(self, program, cellWidth, channelList):
+    def catchupEPG(self, program, cellWidth, catchupList):
         archive = ''
         catchupChannel = ''
         catchupDays = ''
 
-        r = re.compile(program.channel.title.upper())
-        chann = list(filter(r.match, channelList))
+        if program.channel.title.upper() in [x.split('=')[0] for x in catchupList]:
+            catchupDays = [x.split('=')[1] for x in catchupList if x.split('=')[0] == program.channel.title.upper()]
 
-        try:
-            catchupChannel = chann[0].split('=')[0]
-            catchupDays = chann[0].split('=')[1]
-        except:
-            pass
+        self.catchupDays = catchupDays[0]
 
-        if catchupDays != '':
-            self.catchupDays = catchupDays
-        else:
+        if self.catchupDays == '':
             self.catchupDays = ADDON.getSetting('archive_reverse_days')
 
         if self.catchupDays == '3H':
             reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(3)) - datetime.timedelta(minutes = 5)
 
-        elif ADDON.getSetting('archive_reverse_auto') == '0' and self.catchupDays != '' or self.catchupDays !='0':
+        elif ADDON.getSetting('archive_reverse_auto') == '0' and self.catchupDays != '':
             try:
                 reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(self.catchupDays)) * 24 - datetime.timedelta(minutes = 5)
             except:
@@ -2218,7 +2210,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
         if ADDON.getSetting('archive_support') == 'true': 
             if ADDON.getSetting('archive_finished_program') == 'true': 
-                if program.channel.title.upper() == catchupChannel and catchupDays != '3H' and program.endDate < datetime.datetime.now() and program.title != program.channel.title:
+                if program.channel.title.upper() in [x.split('=')[0] for x in catchupList] and self.catchupDays != '3H' and program.endDate < datetime.datetime.now() and program.title != program.channel.title:
                     #Download
                     if cellWidth < 35:
                         archive  = ''
@@ -2228,7 +2220,7 @@ class mTVGuide(xbmcgui.WindowXML):
                         else:
                             archive = '[UPPERCASE][COLOR FF01cdfe][B]● [/B][/COLOR][/UPPERCASE]'
                 
-                if program.channel.title.upper() == catchupChannel and catchupDays != '3H' and program.title != program.channel.title:
+                if program.channel.title.upper() in [x.split('=')[0] for x in catchupList] and self.catchupDays != '3H' and program.title != program.channel.title:
                     #Catchup
                     if program.endDate < datetime.datetime.now():
                         if program.startDate > reverseTime:
@@ -2240,7 +2232,7 @@ class mTVGuide(xbmcgui.WindowXML):
                                 else:
                                     archive = '[UPPERCASE][COLOR FF0cbe24][B]● [/B][/COLOR][/UPPERCASE]'
                 
-                if program.channel.title.upper() == catchupChannel and catchupDays == '3H' and program.title != program.channel.title:
+                if program.channel.title.upper() in [x.split('=')[0] for x in catchupList] and self.catchupDays == '3H' and program.title != program.channel.title:
                     #Catchup
                     if program.endDate < datetime.datetime.now():
                         if program.startDate > reverseTime:
@@ -2253,7 +2245,7 @@ class mTVGuide(xbmcgui.WindowXML):
                                     archive = '[UPPERCASE][COLOR FF0cbe24][B]● [/B][/COLOR][/UPPERCASE]'
                 
             else:
-                if program.channel.title.upper() == catchupChannel and catchupDays != '3H' and program.startDate < datetime.datetime.now() and program.title != program.channel.title:
+                if program.channel.title.upper() in [x.split('=')[0] for x in catchupList] and self.catchupDays != '3H' and program.startDate < datetime.datetime.now() and program.title != program.channel.title:
                     #Download
                     if cellWidth < 35:
                         archive  = ''
@@ -2263,7 +2255,7 @@ class mTVGuide(xbmcgui.WindowXML):
                         else:
                             archive = '[UPPERCASE][COLOR FF01cdfe][B]● [/B][/COLOR][/UPPERCASE]'
                 
-                if program.channel.title.upper() == catchupChannel and catchupDays != '3H' and program.title != program.channel.title:
+                if program.channel.title.upper() in [x.split('=')[0] for x in catchupList] and self.catchupDays != '3H' and program.title != program.channel.title:
                     #Catchup
                     if program.startDate < datetime.datetime.now():
                         if program.startDate > reverseTime:
@@ -2275,7 +2267,7 @@ class mTVGuide(xbmcgui.WindowXML):
                                 else:
                                     archive = '[UPPERCASE][COLOR FF0cbe24][B]● [/B][/COLOR][/UPPERCASE]'
                 
-                if program.channel.title.upper() == catchupChannel and catchupDays == '3H' and program.title != program.channel.title:
+                if program.channel.title.upper() in [x.split('=')[0] for x in catchupList] and self.catchupDays == '3H' and program.title != program.channel.title:
                     #Catchup
                     if program.startDate < datetime.datetime.now():
                         if program.startDate > reverseTime:
@@ -4907,29 +4899,24 @@ class mTVGuide(xbmcgui.WindowXML):
                 if finishedProgram < datetime.datetime.now() and ADDON.getSetting('archive_support') == 'true' and program.title != program.channel.title:
                     catchupList = self.getStreamsCid()
 
-                    r = re.compile(program.channel.title.upper())
-                    catchup = list(filter(r.match, catchupList))
-
-                    catchupChannel = catchup[0].split('=')[0]
-
-                    if (program.channel.title.upper() == catchupChannel and program.startDate > reverseTime):
+                    if (program.channel.title.upper() in [x.split('=')[0] for x in catchupList] and program.startDate > reverseTime):
                         res = xbmcgui.Dialog().yesno(strings(30998), strings(30999).format(program.title))
 
                         if res:
                             # archiveService
                             if ADDON.getSetting('archive_finished_program') == 'true': 
-                                if program.channel.title.upper() == catchupChannel and program.endDate < datetime.datetime.now():
+                                if program.channel.title.upper() in [x.split('=')[0] for x in catchupList] and program.endDate < datetime.datetime.now():
                                     self.archiveService = datetime.datetime.now() - ProgramStartDate
                                 else:
                                     self.archiveService = ''
                             else:
-                                if program.channel.title.upper() == catchupChannel and program.startDate < datetime.datetime.now():
+                                if program.channel.title.upper() in [x.split('=')[0] for x in catchupList] and program.startDate < datetime.datetime.now():
                                     self.archiveService = datetime.datetime.now() - ProgramStartDate
                                 else:
                                     self.archiveService = ''
 
                             if ADDON.getSetting('archive_finished_program') == 'true': 
-                                if program.channel.title.upper() == catchupChannel and program.endDate < datetime.datetime.now():
+                                if program.channel.title.upper() in [x.split('=')[0] for x in catchupList] and program.endDate < datetime.datetime.now():
                                     from time import mktime
 
                                     n = datetime.datetime.now()
@@ -4966,7 +4953,7 @@ class mTVGuide(xbmcgui.WindowXML):
                                 else:
                                     self.archivePlaylist = ''
                             else:
-                                if program.channel.title.upper() == catchupChannel and program.startDate < datetime.datetime.now():
+                                if program.channel.title.upper() in [x.split('=')[0] for x in catchupList] and program.startDate < datetime.datetime.now():
                                     from time import mktime
 
                                     n = datetime.datetime.now()
@@ -5014,7 +5001,7 @@ class mTVGuide(xbmcgui.WindowXML):
                                 return 'None'
 
                     else:
-                        if self.program.channel.title.upper() == catchupChannel and program.endDate < datetime.datetime.now():
+                        if program.channel.title.upper() in [x.split('=')[0] for x in catchupList] and program.endDate < datetime.datetime.now():
                             self.recordProgram(self.program)
                             return 'None'
                         elif program.endDate > datetime.datetime.now():
@@ -5090,29 +5077,24 @@ class mTVGuide(xbmcgui.WindowXML):
                 if finishedProgram < datetime.datetime.now() and ADDON.getSetting('archive_support') == 'true' and program.title != program.channel.title:
                     catchupList = self.getStreamsCid()
 
-                    r = re.compile(program.channel.title.upper())
-                    catchup = list(filter(r.match, catchupList))
-
-                    catchupChannel = catchup[0].split('=')[0]
-
-                    if (program.channel.title.upper() == catchupChannel and program.startDate > reverseTime):
+                    if (program.channel.title.upper() in [x.split('=')[0] for x in catchupList] and program.startDate > reverseTime):
                         res = xbmcgui.Dialog().yesno(strings(30998), strings(30999).format(program.title))
 
                         if res:
                             # archiveService
                             if ADDON.getSetting('archive_finished_program') == 'true': 
-                                if program.channel.title.upper() == catchupChannel and program.endDate < datetime.datetime.now():
+                                if program.channel.title.upper() in [x.split('=')[0] for x in catchupList] and program.endDate < datetime.datetime.now():
                                     self.archiveService = datetime.datetime.now() - ProgramStartDate
                                 else:
                                     self.archiveService = ''
                             else:
-                                if program.channel.title.upper() == catchupChannel and program.startDate < datetime.datetime.now():
+                                if program.channel.title.upper() in [x.split('=')[0] for x in catchupList] and program.startDate < datetime.datetime.now():
                                     self.archiveService = datetime.datetime.now() - ProgramStartDate
                                 else:
                                     self.archiveService = ''
 
                             if ADDON.getSetting('archive_finished_program') == 'true': 
-                                if program.channel.title.upper() == catchupChannel and program.endDate < datetime.datetime.now():
+                                if program.channel.title.upper() in [x.split('=')[0] for x in catchupList] and program.endDate < datetime.datetime.now():
                                     from time import mktime
 
                                     n = datetime.datetime.now()
@@ -5149,7 +5131,7 @@ class mTVGuide(xbmcgui.WindowXML):
                                 else:
                                     self.archivePlaylist = ''
                             else:
-                                if program.channel.title.upper() == catchupChannel and program.startDate < datetime.datetime.now():
+                                if program.channel.title.upper() in [x.split('=')[0] for x in catchupList] and program.startDate < datetime.datetime.now():
                                     from time import mktime
 
                                     n = datetime.datetime.now()
@@ -5319,7 +5301,7 @@ class mTVGuide(xbmcgui.WindowXML):
             return
 
         categories = self.getCategories()
-        channelList = self.getStreamsCid()
+        catchupList = self.getStreamsCid()
 
         for program in programs:
             idx = channels.index(program.channel)
@@ -5380,7 +5362,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 else:
                     title = program.title
 
-                archive = self.catchupEPG(program, cellWidth, channelList)
+                archive = self.catchupEPG(program, cellWidth, catchupList)
 
                 control = xbmcgui.ControlButton(
                     cellStart,
