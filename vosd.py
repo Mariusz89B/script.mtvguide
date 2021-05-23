@@ -53,6 +53,7 @@ import datetime, time, re, os, threading
 import xbmc, xbmcgui
 from strings import *
 from skins import Skin
+import source as src
 from source import Program, Channel
 
 if sys.version_info[0] > 2:
@@ -60,6 +61,30 @@ if sys.version_info[0] > 2:
 else:
     config = ConfigParser.RawConfigParser()
 config.read(os.path.join(Skin.getSkinPath(), 'settings.ini'))
+try:
+    skin_separate_category = config.getboolean("Skin", "program_category_separated")
+except:
+    skin_separate_category = False
+try:
+    skin_separate_episode = config.getboolean("Skin", "program_episode_separated")
+except:
+    skin_separate_episode = False
+try:
+    skin_separate_allowed_age_icon = config.getboolean("Skin", "program_allowed_age_icon")
+except:
+    skin_separate_allowed_age_icon = False
+try:
+    skin_separate_director = config.getboolean("Skin", "program_director_separated")
+except:
+    skin_separate_director = False
+try:
+    skin_separate_year_of_production = config.getboolean("Skin", "program_year_of_production_separated")
+except:
+    skin_separate_year_of_production = False
+try:
+    skin_separate_program_actors = config.getboolean("Skin", "program_show_actors")
+except:
+    skin_separate_program_actors = False
 try:
     skin_resolution = config.getboolean("Skin", "resolution")
 except:
@@ -806,7 +831,22 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
 
         if self.ctrlProgramDesc is not None:
             if self.program.description and self.ctrlProgramDesc:
-                self.ctrlProgramDesc.setText(self.program.description)
+                descriptionParser = src.ProgramDescriptionParser(self.program.description)
+                if skin_separate_category:
+                    category = descriptionParser.extractCategory()
+                if skin_separate_year_of_production:
+                    year = descriptionParser.extractProductionDate()
+                if skin_separate_director:
+                    director = descriptionParser.extractDirector()
+                if skin_separate_episode:
+                    episode = descriptionParser.extractEpisode()
+                if skin_separate_allowed_age_icon:
+                    icon = descriptionParser.extractAllowedAge()
+                if skin_separate_program_actors:
+                    actors = descriptionParser.extractActors()
+                
+                description = descriptionParser.description
+                self.setControlText(C_MAIN_DESCRIPTION, description)
             else:
                 self.ctrlProgramDesc.setText(strings(NO_DESCRIPTION))
 
