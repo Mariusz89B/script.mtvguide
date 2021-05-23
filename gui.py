@@ -2187,7 +2187,10 @@ class mTVGuide(xbmcgui.WindowXML):
         if program.channel.title.upper() in [x.split('=')[0] for x in catchupList]:
             catchupDays = [x.split('=')[1] for x in catchupList if x.split('=')[0] == program.channel.title.upper()]
 
-        self.catchupDays = catchupDays[0]
+        try:
+            self.catchupDays = catchupDays[0]
+        except:
+            self.catchupDays = ''
 
         if self.catchupDays == '':
             self.catchupDays = ADDON.getSetting('archive_reverse_days')
