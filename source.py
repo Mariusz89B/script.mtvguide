@@ -221,7 +221,8 @@ class ProgramDescriptionParser(object):
             icon = ''
             try:
                 age = re.search('(W:|Od lat:|.?r:|Rating:|Pendant des ann.?es:|.?ber die Jahre:|Godinama:|Jaar:|Rok:|Anni:).*?(\[B\])?(\d+)(\[\/B\])?(\.)?', self.description).group(3)
-                icon = os.path.join(addonPath, 'icons', 'age_rating', 'icon_{}.png'.format(age))
+                age_icon = re.sub('+', '', age)
+                icon = os.path.join(addonPath, 'icons', 'age_rating', 'icon_{}.png'.format(age_icon))
 
             except:
                 age = re.search('(W:|Od lat:|.?r:|Rating:|Pendant des ann.?es:|.?ber die Jahre:|Godinama:|Jaar:|Rok:|Anni:).*?(\[B\])?(\w+)(\[\/B\])?(\.)?', self.description).group(3)
@@ -622,6 +623,12 @@ class Database(object):
                     channelList = list()
 
                     p = re.compile('\s<channel id="(.*?)"', re.DOTALL)
+
+                    if not xbmcvfs.exists(os.path.join(profilePath, 'basemap_extra.xml')):
+                        try:
+                            shutil.copyfile(os.path.join(ADDON.getAddonInfo('path'), 'resources', 'basemap_extra.xml'), os.path.join(profilePath, 'basemap_extra.xml'))
+                        except:
+                            pass
 
                     with open(os.path.join(profilePath, 'basemap_extra.xml'), 'rb') as f:
                         if sys.version_info[0] > 2:
