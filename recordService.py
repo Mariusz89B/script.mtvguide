@@ -226,18 +226,6 @@ class RecordService(BasePlayService):
         return minutes
 
 
-    def getTimeshift(self):
-        try:
-            file_name = os.path.join(self.profilePath, 'playlist_ts.list')
-            f = xbmcvfs.File(file_name, 'r')
-            ArchivePlayList = f.read()
-            f.close()
-        except:
-            ArchivePlayList += ''
-
-        return ArchivePlayList
-
-
     def formatFileSize(self, num):
         step_unit = 1000.0
         for x in ['bytes', 'KB', 'MB', 'GB', 'TB']:
@@ -258,7 +246,7 @@ class RecordService(BasePlayService):
         return self.progress
 
 
-    def recordProgramGui(self, program, watch='', length=''):
+    def recordProgramGui(self, program, catchupList, watch='', length=''):
         self.program = program
         self.isDownload = False
         updateDB = False
@@ -266,9 +254,8 @@ class RecordService(BasePlayService):
         try:
             if not watch:
                 if self.calculateTimeDifference(program.endDate) <= 0:
-                    archiveList = self.getTimeshift()
 
-                    if program.channel.id.upper() in archiveList and ADDON.getSetting('archive_support') == 'true' and program.startDate < datetime.datetime.now():
+                    if program.channel.title.upper() in [x.split('=')[0] for x in catchupList] and ADDON.getSetting('archive_support') == 'true' and program.startDate < datetime.datetime.now():
                         self.isDownload = True
                         if self.isProgramDownloadScheduled(program):
                             ret = xbmcgui.Dialog().yesno(strings(69064), strings(69063))
@@ -685,7 +672,7 @@ class RecordService(BasePlayService):
                                         timestamp = int(datetime.datetime.timestamp(day))
                                     else:
                                         timestamp = int(time.mktime(day.timetuple()))
-                                        
+
                                     if int(utc) > timestamp:
                                         new_url = strmUrl + '?utc={utc}&lutc={lutc}'.format(utc=utc, lutc=lutc)
                                         response = requests.get(new_url, allow_redirects=False, verify=False, timeout=2)

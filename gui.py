@@ -5212,13 +5212,15 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def recordProgram(self, program, watch='', length=''):
         deb('recordProgram')
+        catchupList = self.getStreamsCid()
+
         if watch and length != '':
-            if self.recordService.recordProgramGui(program, watch, length):
+            if self.recordService.recordProgramGui(program=program, watch=watch, length=length, catchupList=catchupList):
                 self.onRedrawEPG(self.channelIdx, self.viewStartDate)
                 self.playAndWatchRecordedProgram(program)
                 
         else:
-            if self.recordService.recordProgramGui(program):
+            if self.recordService.recordProgramGui(program=program, catchupList=catchupList):
                 self.onRedrawEPG(self.channelIdx, self.viewStartDate)
 
     def waitForPlayBackStopped(self):
