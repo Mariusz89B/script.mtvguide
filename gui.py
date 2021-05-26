@@ -5322,28 +5322,35 @@ class mTVGuide(xbmcgui.WindowXML):
                 cellWidth = self.epgView.right - cellStart
             if cellWidth > 1:
 
-                if program.categoryA in categories['Movie']:
+                noFocusTexture = self.backgroundTexture
+
+                try:
+                    categoryA = program.categoryA.split(' ')
+                except:
+                    categoryA = ''
+
+                if any(x in categories['Movie'] for x in categoryA):
                     noFocusTexture = self.moviesTexture
 
-                elif program.categoryA in categories['Series']:
+                elif any(x in categories['Series'] for x in categoryA):
                     noFocusTexture = self.seriesTexture
 
-                elif program.categoryA in categories['Information']:
+                elif any(x in categories['Information'] for x in categoryA):
                     noFocusTexture = self.informationTexture
 
-                elif program.categoryA in categories['Entertainment']:
+                elif any(x in categories['Entertainment'] for x in categoryA):
                     noFocusTexture = self.entertainmentTexture
 
-                elif program.categoryA in categories['Document']:
+                elif any(x in categories['Document'] for x in categoryA):
                     noFocusTexture = self.documentsTexture
 
-                elif program.categoryA in categories['Kids']:
+                elif any(x in categories['Kids'] for x in categoryA):
                     noFocusTexture = self.kidsTexture
 
-                elif program.categoryA in categories['Sport']:
+                elif any(x in categories['Sport'] for x in categoryA):
                     noFocusTexture = self.sportsTexture
-
-                elif program.categoryA in categories['Interactive Entertainment']:
+                
+                elif any(x in categories['Interactive Entertainment'] for x in categoryA):
                     noFocusTexture = self.interactiveTexture
                 else:
                     noFocusTexture = self.backgroundTexture
