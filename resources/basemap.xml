@@ -117,6 +117,7 @@
 	<channel id="Food Network PL"                          	title="(?=(Polsat\s*)?Food(\s*Network)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Formula 1 PL"                             	title="(?=Formula\s*1(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="FunBox 4K PL"                             	title="(?=Fun\s*Box(\s*TV)?(\s*UHD|\s*4K)(\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="GOLD TV PL"                            	title="(?=GOLD(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Game Show PL"                             	title="(?=Game\s*Show(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Gametoon PL"                              	title="(?=Gametoon(\s*E)?(sport)?(s)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Ginx TV PL"                               	title="(?=Ginx(\s*E)?(sport)?(s)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -127,7 +128,9 @@
 	<channel id="HGTV PL"                                  	title="(?=(HGTV|TVN\s*METEO\s*Active)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="History 2 PL"                             	title="(?=(H|History)\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="History PL"                               	title="(?=History(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Home TV PL"                            	title="(?=Home(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="ID PL"                                    	title="(?=(DISCOVERY\s*)?(INVESTIGATION|ID)(\s*DISCOVERY)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="JAZZ TV PL"                            	title="(?=JAZZ(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="JimJam Polsat PL"                         	title="(?=(Polsat\s*)?Jim\s*Jam(\s*Polsat)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="KSW PL"                                   	title="(?=.*KSW.*(\s*PL)?$)" strm=""/>
 	<channel id="Kino Polska International PL"             	title="(?=Kino\s*Polska\s*Int(ernational)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -162,6 +165,7 @@
 	<channel id="Miejska TV PL"                            	title="(?=Miejska(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Minimini+ PL"                             	title="(?=MINI\s*MINI\s*(\+|PLUS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Motowizja PL"                             	title="(?=(Motowizja|Motorwizja)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Music Box PL"                            	title="(?=Music\s*Box(\s*Polska)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="NOVELA TV PL"                             	title="(?=NOVELA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="NOWA TV PL"                               	title="(?=NOWA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="NTL Radomsko PL"                          	title="(?=NTL(\s*Radomsko)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -302,6 +306,7 @@
 	<channel id="Tenis 1 Premium PL"                       	title="(?=Tenis\s*1(\s*Premium)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Tenis 2 Premium PL"                       	title="(?=Tenis\s*2(\s*Premium)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="To!TV PL"                                 	title="(?=TO(!)?\s*TV(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="Top Kids Jr PL"                            title="(?=TOP\s*KIDS\s*JR(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Top Kids PL"                              	title="(?=Top\s*Kids(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Toya PL"                                  	title="(?=Toya(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Trace Urban PL"                           	title="(?=Trace(\s*Urban)?(\s*Muzik)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -309,6 +314,7 @@
 	<channel id="Travel XP PL"                             	title="(?=TRAVEL(\s*XP)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="Twoja Telewizja Morska PL"                	title="(?=(TTM|Twoja\s*Telewisja\s*Morska)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="ULTRA TV 4K PL"                   			title="(?=ULTRA(\s*TV)?(\s*UHD|\s*4K)(\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="ULTRA TV 4K PL"                            title="(?=ULTRA(\s*TV)?(\s*HD|\s*UHD|\s*4K)?(\s*PL)?$)" strm=""/>
 	<channel id="Universal Channel PL"                     	title="(?=Universal\s*(Channel)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="VEVO PL"                                  	title="(?=VEVO(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="VEVO TV FLOW PL"                          	title="(?=Vevo\s*TV\s*Flow(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -985,10 +991,10 @@
 	
 	<category name="Movie" 									tags="Czarna|Dramat|Film|Filmy|Horror|Impresja|Kino|Komedia|Komediodramat|Komediowy|Melodramat|Musical|Romans|Thriller|Western"/>
 	<category name="Series" 								tags="Odcinek|Programy|Seria|Serial|Seriale|Telenowela"/>
-	<category name="Information" 							tags="Cykl|Debata|Dziennik|Felieton|Główna|Informacja|Informator|Kronika|Kurs|Magazyn|Newsy|Pasmo|Podsumowanie|Poranek|Reportaż|Rozmowy|Rozmowa|Serwis|Studio|Telewizyjny|Transmisja|Wiadomości|Wieczorna|Wieczorny|Wydanie|Wywiad"/>
+	<category name="Information" 							tags="Cykl|Debata|Dziennik|Felieton|Główna|Informacja|Informator|Kronika|Kurs|Magazyn|Newsy|Pasmo|Podsumowanie|Poranek|Reportaż|Rozmowy|Rozmowa|Serwis|Studio|Telewizyjny|Transmisja|Wiadomości|Wieczorna|Wieczorny|Wydanie|Wywiad|Publicystyka"/>
 	<category name="Entertainment" 							tags="Audycja|Balet|Blok|Ceremonia|Chochliki|Classical|Concert|Codzienny|Dance|Docu-reality|Flesz|Gala|Kabaret|Koncert|Koncerty|Lista|Lifestyle|Opera|Pokaz|Program|Program / Muzyczny|Reality|Relacja|Rozrywka|Talk-show|Taniec|Teledyski|Teleturniej|Widowisko|Wielki|World Music"/>
-	<category name="Document" 								tags="Dokument|Etiuda|Filozofia|Historia|Kultura|Militaria|Motoryzacja|Przyroda|Program dokumentalny|Socjologia|Sztuka|Technika"/>
+	<category name="Document" 								tags="Dokument|Etiuda|Filozofia|Historia|Kultura|Militaria|Motoryzacja|Przyroda|Program dokumentalny|Socjologia|Sztuka|Technika|Poradnik"/>
 	<category name="Kids" 									tags="Baśń|Dla dzieci|Program dla dzieci"/>
 	<category name="Sport" 									tags="Badminton|Biatlon|Biegi|Bilard|Boks|Formuła|Gimnastyka|Golf|Hokej|Jeździectwo|Kajakarstwo|Kolarstwo|Koszykówka|Lekkoatletyka|Łyżwiarstwo|Narciarstwo|Olimpiada|Piłka|Pływanie|Poker|Rajdy|Rugby|Rzutki|Saneczkarstwo|Siatkówka|Skoki|Sport|Sporty|Szermierka|Tenis|Tenis squash|Triatlon|Wyścigi|Zapowiedź|Żeglarstwo|Żużel"/>
-	<category name="Interactive Entertainment" 				tags="Extra|Interaktywne|Interaktywny|Interaktywny Program Rozrywkowy|Kulinaria|Magazy|Magazyn Mody|Medycyna|Opera|Program Familijny|Spektakl|Świętokrzyski|Telezakupy|Turystyka|Usa"/>
+	<category name="Interactive Entertainment" 				tags="Extra|Interaktywne|Interaktywny|Interaktywny Program Rozrywkowy|Kulinaria|Magazy|Magazyn Mody|Medycyna|Opera|Program Familijny|Spektakl|Świętokrzyski|Telezakupy|Turystyka|Usa|Zagranica"/>
 </map>

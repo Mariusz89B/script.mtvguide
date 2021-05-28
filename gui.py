@@ -5325,7 +5325,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 noFocusTexture = self.backgroundTexture
 
                 try:
-                    categoryA = program.categoryA.split(' ')
+                    categoryA = program.categoryA.lower().split(' ')
                 except:
                     categoryA = ''
 

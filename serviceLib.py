@@ -514,9 +514,9 @@ class MapString:
             category_tags = tagsRe.search(cat).group(1).split('|')
             for tag in category_tags:
                 if sys.version_info[0] > 2:
-                    category_tags_set.add(('' + tag))
+                    category_tags_set.add(('' + tag.lower()))
                 else:
-                    category_tags_set.add((u'' + tag))
+                    category_tags_set.add((u'' + tag.lower()))
             categories[category_name] = category_tags_set
 
         return [result, rstrm, categories]
@@ -554,9 +554,9 @@ class MapString:
                     category_tags = elem.get("tags").split('|')
                     for tag in category_tags:
                         if sys.version_info[0] > 2:
-                            category_tags_set.add(('' + tag))
+                            category_tags_set.add(('' + tag.lower()))
                         else:
-                            category_tags_set.add((u'' + tag))
+                            category_tags_set.add((u'' + tag.lower()))
                     categories[category_name] = category_tags_set
         #if logCall:
             #logCall('\n')
