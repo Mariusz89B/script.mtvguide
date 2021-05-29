@@ -2289,8 +2289,11 @@ class mTVGuide(xbmcgui.WindowXML):
         return archive
 
     def getChannelListLenght(self):
-        channelList = self.database.getChannelList(onlyVisible=True)
-        indexList = len(channelList)
+        try:
+            channelList = self.database.getChannelList(onlyVisible=True)
+            indexList = len(channelList)
+        except:
+            indexList = 0
         return indexList
 
     def getChannelNumber(self):

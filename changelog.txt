@@ -1,4 +1,4 @@
-﻿[COLOR yellow][B]wersja 9.3.5[/B] - 2021-05-26[/COLOR]
+﻿[COLOR yellow][B]wersja 9.3.5[/B] - 2021-05-29[/COLOR]
 - zaktualizowany algorytm kategorii programu
 
 [COLOR yellow][B]wersja 9.3.4[/B] - 2021-05-23[/COLOR]
