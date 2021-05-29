@@ -5864,20 +5864,26 @@ class mTVGuide(xbmcgui.WindowXML):
         """
         Visibility is inverted in skin
         """
-        for controlId in controlIds:
-            control = self.getControl(controlId)
-            if control:
-                control.setVisible(True)
+        try:
+            for controlId in controlIds:
+                control = self.getControl(controlId)
+                if control:
+                    control.setVisible(True)
+        except:
+            pass
 
     def _showControl(self, *controlIds):
         debug('_showControl')
         """
         Visibility is inverted in skin
         """
-        for controlId in controlIds:
-            control = self.getControl(controlId)
-            if control:
-                control.setVisible(False)
+        try:
+            for controlId in controlIds:
+                control = self.getControl(controlId)
+                if control:
+                    control.setVisible(False)
+        except:
+            pass
 
     def disableControl(self, controlId):
         # debug('disableControl {}'.format(controlId))
