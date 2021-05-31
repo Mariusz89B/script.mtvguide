@@ -30,8 +30,9 @@
 		<forum>http://mods-kodi.pl/forum/</forum>
 		<website>http://mods-kodi.pl/</website>
 		<email>support@m-tvguide.pl</email>
-	<news>v9.3.5 (2021-05-29)
+	<news>v9.3.5 (2021-05-31)
 - Updated program category algorithm.
+- Bug fixes.
 
 v9.3.4 (2021-05-23)
 - Fixed catchup function.
