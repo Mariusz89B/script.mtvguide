@@ -241,8 +241,6 @@ class ProgramDescriptionParser(object):
         except:
             rating = ''
 
-        deb('TEST: {}'.format(icon))
-
         return icon
 
     def extractActors(self):
