@@ -56,7 +56,7 @@
 	<channel id="CNBC PL" title="(?=CNBC(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="CNN PL" title="(?=CNN(\s*INTERNATIONAL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="COMEDY CENTRAL FAMILY PL" title="(?=(COMEDY\s*CENTRAL|CC)\s*(FAMILY|EXTRA\s*POLSAT)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="COMEDY CENTRAL PL" title="(?=(COMEDY\s*(CENTRAL|CENTERAL|CENTER)?|CC)(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>	
+	<channel id="COMEDY CENTRAL PL" title="(?=(COMEDY|CC)\s*(CENTRAL|CENTERAL|CENTER)?(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>	
 	<channel id="CZWÓRKA POLSKIE RADIO PL" title="(?=CZW.*RKA\s*POLSKIE\s*RADIO(\s*LIVE)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="DA VINCI LEARNING PL" title="(?=DA\s*VINCI(\s*LEARNING)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="DAMI SKARŻYSKO-KAMIENNA PL" title="(?=DAMI(\s*SKAR(Z|.)YSKO)?(\s*KAMIENNA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -166,7 +166,7 @@
 	<channel id="POLSAT 2 PL" title="(?=POLSAT\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT BOXING NIGHT PL" title="(?=POLSAT\s*BOXING(\s*NIGHT)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT CAFÉ PL" title="(?=POLSAT\s*CAF(E|.)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="POLSAT COMEDY CENTRAL EXTRA PL" title="(?=POLSAT\s*COMEDY\s*(CC|CENT(ER|RAL)(\s*EXTRA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="POLSAT COMEDY CENTRAL EXTRA PL" title="(?=(POLSAT\s*COMEDY\s*)(CC|CENT(ER|RAL))(\s*EXTRA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT DOKU PL" title="(?=POLSAT\s*DOKU(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT FILM PL" title="(?=POLSAT\s*FILM(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT GAMES PL" title="(?=POLSAT\s*GAMES(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -224,7 +224,7 @@
 	<channel id="TOP KIDS JR PL" title="(?=TOP\s*KIDS\s*(JR(\.)?|JUNIOR)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TOP KIDS PL" title="(?=TOP\s*KIDS(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TOYA PL" title="(?=TOYA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="TRACE URBAN PL" title="(?=TRACE\s*URBAN(\s*MU(S|Z)I(C|K)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TRACE URBAN PL" title="(?=TRACE\s*URBAN(\s*MU(S|Z)I(C|K))?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TRAVEL CHANNEL PL" title="(?=TRAVEL(\s*CHANNEL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TRAVEL XP 4K PL" title="(?=TRAVEL(\s*XP)?(\s*TV)?\s*UHD(\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TRAVEL XP PL" title="(?=TRAVEL(\s*XP)?(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
@@ -352,7 +352,7 @@
 	<channel id="CNBC.PL" title="(?=CNBC(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="CNN.PL" title="(?=CNN(\s*INTERNATIONAL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="COMEDY CENTRAL FAMILY.PL" title="(?=(COMEDY\s*CENTRAL|CC)\s*(FAMILY|EXTRA\s*POLSAT)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="COMEDY CENTRAL.PL" title="(?=(COMEDY\s*(CENTRAL|CENTERAL|CENTER)?|CC)(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>	
+	<channel id="COMEDY CENTRAL.PL" title="(?=(COMEDY|CC)\s*(CENTRAL|CENTERAL|CENTER)?(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>	
 	<channel id="CZWÓRKA POLSKIE RADIO.PL" title="(?=CZW.*RKA\s*POLSKIE\s*RADIO(\s*LIVE)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="DA VINCI LEARNING.PL" title="(?=DA\s*VINCI(\s*LEARNING)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="DAMI SKARŻYSKO-KAMIENNA.PL" title="(?=DAMI(\s*SKAR(Z|.)YSKO)?(\s*KAMIENNA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -462,7 +462,7 @@
 	<channel id="POLSAT 2.PL" title="(?=POLSAT\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT BOXING NIGHT.PL" title="(?=POLSAT\s*BOXING(\s*NIGHT)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT CAFÉ.PL" title="(?=POLSAT\s*CAF(E|.)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="POLSAT COMEDY CENTRAL EXTRA.PL" title="(?=POLSAT\s*COMEDY\s*(CC|CENT(ER|RAL)(\s*EXTRA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="POLSAT COMEDY CENTRAL EXTRA.PL" title="(?=(POLSAT\s*COMEDY\s*)(CC|CENT(ER|RAL))(\s*EXTRA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT DOKU.PL" title="(?=POLSAT\s*DOKU(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT FILM.PL" title="(?=POLSAT\s*FILM(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT GAMES.PL" title="(?=POLSAT\s*GAMES(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -520,7 +520,7 @@
 	<channel id="TOP KIDS JR.PL" title="(?=TOP\s*KIDS\s*(JR(\.)?|JUNIOR)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TOP KIDS.PL" title="(?=TOP\s*KIDS(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TOYA.PL" title="(?=TOYA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="TRACE URBAN.PL" title="(?=TRACE\s*URBAN(\s*MU(S|Z)I(C|K)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TRACE URBAN.PL" title="(?=TRACE\s*URBAN(\s*MU(S|Z)I(C|K))?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TRAVEL CHANNEL.PL" title="(?=TRAVEL(\s*CHANNEL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TRAVEL XP 4K.PL" title="(?=TRAVEL(\s*XP)?(\s*TV)?\s*UHD(\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TRAVEL XP.PL" title="(?=TRAVEL(\s*XP)?(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
@@ -648,7 +648,7 @@
 	<channel id="CNBC" title="(?=CNBC(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="CNN" title="(?=CNN(\s*INTERNATIONAL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="COMEDY CENTRAL FAMILY" title="(?=(COMEDY\s*CENTRAL|CC)\s*(FAMILY|EXTRA\s*POLSAT)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="COMEDY CENTRAL" title="(?=(COMEDY\s*(CENTRAL|CENTERAL|CENTER)?|CC)(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>	
+	<channel id="COMEDY CENTRAL" title="(?=(COMEDY|CC)\s*(CENTRAL|CENTERAL|CENTER)?(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>	
 	<channel id="CZWÓRKA POLSKIE RADIO" title="(?=CZW.*RKA\s*POLSKIE\s*RADIO(\s*LIVE)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="DA VINCI LEARNING" title="(?=DA\s*VINCI(\s*LEARNING)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="DAMI SKARŻYSKO-KAMIENNA" title="(?=DAMI(\s*SKAR(Z|.)YSKO)?(\s*KAMIENNA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -758,7 +758,7 @@
 	<channel id="POLSAT 2" title="(?=POLSAT\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT BOXING NIGHT" title="(?=POLSAT\s*BOXING(\s*NIGHT)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT CAFÉ" title="(?=POLSAT\s*CAF(E|.)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="POLSAT COMEDY CENTRAL EXTRA" title="(?=POLSAT\s*COMEDY\s*(CC|CENT(ER|RAL)(\s*EXTRA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="POLSAT COMEDY CENTRAL EXTRA" title="(?=(POLSAT\s*COMEDY\s*)(CC|CENT(ER|RAL))(\s*EXTRA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT DOKU" title="(?=POLSAT\s*DOKU(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT FILM" title="(?=POLSAT\s*FILM(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT GAMES" title="(?=POLSAT\s*GAMES(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -816,7 +816,7 @@
 	<channel id="TOP KIDS JR" title="(?=TOP\s*KIDS\s*(JR(\.)?|JUNIOR)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TOP KIDS" title="(?=TOP\s*KIDS(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TOYA" title="(?=TOYA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="TRACE URBAN" title="(?=TRACE\s*URBAN(\s*MU(S|Z)I(C|K)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TRACE URBAN" title="(?=TRACE\s*URBAN(\s*MU(S|Z)I(C|K))?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TRAVEL CHANNEL" title="(?=TRAVEL(\s*CHANNEL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TRAVEL XP 4K" title="(?=TRAVEL(\s*XP)?(\s*TV)?\s*UHD(\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TRAVEL XP" title="(?=TRAVEL(\s*XP)?(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
