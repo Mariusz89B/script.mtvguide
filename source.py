@@ -221,8 +221,7 @@ class ProgramDescriptionParser(object):
             icon = ''
             try:
                 age = re.search('(W:|Od lat:|.?r:|Rating:|Pendant des ann.?es:|.?ber die Jahre:|Godinama:|Jaar:|Rok:|Anni:).*?(\[B\])?(\d+)(\[\/B\])?(\.)?', self.description).group(3)
-                age_icon = re.sub('+', '', age)
-                icon = os.path.join(addonPath, 'icons', 'age_rating', 'icon_{}.png'.format(age_icon))
+                icon = os.path.join(addonPath, 'icons', 'age_rating', 'icon_{}.png'.format(age))
 
             except:
                 age = re.search('(W:|Od lat:|.?r:|Rating:|Pendant des ann.?es:|.?ber die Jahre:|Godinama:|Jaar:|Rok:|Anni:).*?(\[B\])?(\w+)(\[\/B\])?(\.)?', self.description).group(3)
@@ -241,6 +240,8 @@ class ProgramDescriptionParser(object):
             self.description = re.sub("((O:|Ocena:|Betyg:|Bewertung:|Bed.?mmelse:|Ocjena:|Bewertung:|Ocjena:|Notation:|Valutazione:|Hodnocen.?:)\s*(\[B\])?(\d+/\d+)(\[\/B\])?(\.)?)", "", self.description).strip()
         except:
             rating = ''
+
+        deb('TEST: {}'.format(icon))
 
         return icon
 
