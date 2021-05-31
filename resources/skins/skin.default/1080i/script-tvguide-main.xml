@@ -1430,9 +1430,9 @@
 			<control type="image" id="4932">
 				<description>Program age</description>
 				<posy>5</posy>
-				<left>0</left>
-				<width>36</width>
-				<height>36</height>
+				<left>3</left>
+				<width>34</width>
+				<height>34</height>
 				<aspectratio>keep</aspectratio>
 			</control>
 		</control>
