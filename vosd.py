@@ -719,6 +719,8 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
                 self.refreshControls()
 
     def refreshControls(self):
+        programs = self.gu.database.getNextProgram(self.program)
+
         if not self.initialized:
             return
 
@@ -796,16 +798,15 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
                 self.ctrlCalcProgramTimeLeft.setLabel('%s' % (rt_obj))
 
         if self.ctrlCalcProgramTimeNext is not None:
-            programs = self.gu.database.getNextProgram(self.program)
-            for program in [programs]:
-                if program is None:
-                    startDate = self.program.startDate
-                    endDate = self.program.endDate
-                else:
-                    startDate = program.startDate
-                    endDate = program.endDate
+            try:
+                for program in [programs]:
+                    if program is None:
+                        startDate = self.program.startDate
+                        endDate = self.program.endDate
+                    else:
+                        startDate = program.startDate
+                        endDate = program.endDate
 
-                try:
                     start_date = time.mktime(startDate.timetuple())
                     end_date = time.mktime(endDate.timetuple()) - 60 * float(ADDON.getSetting('timebar_adjust'))
                     result = (end_date - start_date)
@@ -816,17 +817,18 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
                     rt_obj = re.sub('0:', '', rt_obj)
                     rt_obj = re.sub(':', 'h ', rt_obj)
                     rt_obj = re.sub(r'$', r' min', rt_obj)
-                except:
-                    None
-            self.ctrlCalcProgramTimeNext.setLabel('%s' % (rt_obj))
+
+                self.ctrlCalcProgramTimeNext.setLabel('%s' % (rt_obj))
+            except:
+                self.ctrlCalcProgramTimeNext.setLabel('%s' % ('N/A'))
 
         if self.ctrlNextProgram is not None:
-            programs = self.gu.database.getNextProgram(self.program)
             for program in [programs]:
                 if program is None:
                     title = self.program.title
                 else:
                     title = program.title
+
                 self.ctrlNextProgram.setLabel('%s' % (title))
 
         if self.ctrlProgramDesc is not None:

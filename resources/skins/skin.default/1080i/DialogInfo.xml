@@ -452,8 +452,8 @@
 					<description>Program age</description>
 					<top>900</top>
 					<left>1780</left>
-					<width>105</width>
-					<height>105</height>
+					<width>72</width>
+					<height>72</height>
 					<aspectratio>keep</aspectratio>
 					<animation type="WindowOpen">
 						<effect type="fade" end="100" time="200" />

@@ -428,7 +428,7 @@
 			<posy>856</posy>
 			<width>1630</width>
 			<height>36</height>
-			<label>[COLOR FFA0A0A0]$LOCALIZE[209]:[/COLOR] $INFO[Control.GetLabel(4957)]</label>
+			<label>[COLOR FFA0A0A0]$LOCALIZE[209]:[/COLOR] +$INFO[Control.GetLabel(4958)]: $INFO[Control.GetLabel(4957)]</label>
 			<visible>Control.IsVisible(105)</visible>
 		</control>
 		

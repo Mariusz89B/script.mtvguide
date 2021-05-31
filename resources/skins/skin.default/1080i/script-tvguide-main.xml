@@ -1376,10 +1376,6 @@
 				<description>Program director</description>
 				<visible>hidden</visible>
 			</control>
-			<control type="image" id="4932">
-				<description>Program age</description>
-				<visible>hidden</visible>
-			</control>
 			
 			<control type="label">
 				<description>Program title</description>
@@ -1399,7 +1395,7 @@
 				<posy>785</posy>
 				<right>30</right>
 				<width>1920</width>
-				<height>1080</height>
+				<height>50</height>
 				<itemgap>10</itemgap>
 				<fadetime>400</fadetime>
 				<usecontrolcoords>true</usecontrolcoords>
@@ -1429,6 +1425,15 @@
 				<font>font13</font>
 				<align>left</align>
 				<label>[I]$INFO[Control.GetLabel(4920)][/I]</label>
+			</control>
+			
+			<control type="image" id="4932">
+				<description>Program age</description>
+				<posy>5</posy>
+				<left>0</left>
+				<width>36</width>
+				<height>36</height>
+				<aspectratio>keep</aspectratio>
 			</control>
 		</control>
 			

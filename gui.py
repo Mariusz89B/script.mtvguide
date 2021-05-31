@@ -5639,7 +5639,10 @@ class mTVGuide(xbmcgui.WindowXML):
         deb('onSourceNotConfigured')
         self.redrawingEPG = False
         self._hideControl(self.C_MAIN_LOADING)
-        xbmcgui.Dialog().ok(strings(LOAD_ERROR_TITLE), strings(LOAD_ERROR_LINE1) + strings(CONFIGURATION_ERROR_LINE2) + '\n' + strings(69036) + ADDON.getSetting('m-TVGuide').strip())
+        if ADDON.getSetting('source') == '0':
+            xbmcgui.Dialog().ok(strings(LOAD_ERROR_TITLE), strings(LOAD_ERROR_LINE1) + '\n' + strings(CONFIGURATION_ERROR_LINE2))
+        else:
+            xbmcgui.Dialog().ok(strings(LOAD_ERROR_TITLE), strings(LOAD_ERROR_LINE1) + '\n' + ADDON.getSetting('m-TVGuide').strip())
         self.close()
 
     def isSourceInitializationCancelled(self):
