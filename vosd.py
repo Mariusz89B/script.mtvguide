@@ -112,6 +112,7 @@ C_MAIN_TIME = 4921
 C_MAIN_DESCRIPTION = 4922
 C_MAIN_IMAGE = 4923
 C_MAIN_CHAN_NUMBER = 4925
+C_MAIN_AGE_ICON = 4932
 C_MAIN_START_TIME = 4950
 C_MAIN_END_TIME = 4951
 C_MAIN_CHAN_PLAY = 4952
@@ -844,6 +845,7 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
                     episode = descriptionParser.extractEpisode()
                 if skin_separate_allowed_age_icon:
                     icon = descriptionParser.extractAllowedAge()
+                    self.setControlImage(C_MAIN_AGE_ICON, icon)
                 if skin_separate_program_actors:
                     actors = descriptionParser.extractActors()
                 

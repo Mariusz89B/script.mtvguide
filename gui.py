@@ -4556,7 +4556,7 @@ class mTVGuide(xbmcgui.WindowXML):
         
         channelList = self.database.getChannelList(onlyVisible=True)
         try:
-            idx = int(idx) - 1
+            idx = int(idx)
             chann = channelList[idx]
         except:
             chann = channelList[0]
