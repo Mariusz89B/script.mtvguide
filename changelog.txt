@@ -1,5 +1,6 @@
 ﻿[COLOR yellow][B]wersja 9.3.6[/B] - 2021-06-01[/COLOR]
-- poprawki
+- dodano ikonę nadzoru rodzicielskiego w vosd
+- usunięte błędy
 
 [COLOR yellow][B]wersja 9.3.5[/B] - 2021-05-31[/COLOR]
 - zaktualizowany algorytm kategorii programu
