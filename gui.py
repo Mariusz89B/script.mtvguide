@@ -2148,7 +2148,10 @@ class mTVGuide(xbmcgui.WindowXML):
     def getStreamsCid(self, channels):
         streamsList = list()
 
-        streams = self.database.getAllCatchupUrlList(channels) 
+        if channels is None:
+            streams = self.database.getAllStreamUrlList()
+        else:
+            streams = self.database.getAllCatchupUrlList(channels) 
         #deb('getAllCatchupUrlList: {}'.format(streams))
 
         # Catchup
@@ -4900,7 +4903,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
             try:
                 if finishedProgram < datetime.datetime.now() and ADDON.getSetting('archive_support') == 'true' and program.title != program.channel.title:
-                    catchupList = self.getStreamsCid()
+                    catchupList = self.getStreamsCid(None)
 
                     if (program.channel.title.upper() in [x.split('=')[0] for x in catchupList] and program.startDate > reverseTime):
                         res = xbmcgui.Dialog().yesno(strings(30998), strings(30999).format(program.title))
@@ -5078,7 +5081,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
             try:
                 if finishedProgram < datetime.datetime.now() and ADDON.getSetting('archive_support') == 'true' and program.title != program.channel.title:
-                    catchupList = self.getStreamsCid()
+                    catchupList = self.getStreamsCid(None)
 
                     if (program.channel.title.upper() in [x.split('=')[0] for x in catchupList] and program.startDate > reverseTime):
                         res = xbmcgui.Dialog().yesno(strings(30998), strings(30999).format(program.title))
@@ -5212,7 +5215,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def recordProgram(self, program, watch='', length=''):
         deb('recordProgram')
-        catchupList = self.getStreamsCid()
+        catchupList = self.getStreamsCid(None)
 
         if watch and length != '':
             if self.recordService.recordProgramGui(program=program, watch=watch, length=length, catchupList=catchupList):
