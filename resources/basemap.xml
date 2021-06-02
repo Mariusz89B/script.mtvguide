@@ -52,7 +52,7 @@
 	<channel id="CI POLSAT PL" title="(?=(CI|CRIME(\s*AND|\s*\+|\s*PLUS)?\s*INVESTIGATION)(\s*POLSAT)?(\s*CRIME)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="CINEMAX 2 PL" title="(?=CINEMAX\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="CINEMAX PL" title="(?=CINEMAX(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="CLUB MTV PL" title="(?=(CLUB\s*MTV|MTV\s*DANCE)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="CLUB MTV PL" title="(?=(CLUB\s*MTV|MTV\s*DANCE|MTV\s*CLUB)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="CNBC PL" title="(?=CNBC(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="CNN PL" title="(?=CNN(\s*INTERNATIONAL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="COMEDY CENTRAL PL" title="(?=(COMEDY|CC)\s*(CENTRAL|CENTERAL|CENTER)?(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>	
@@ -136,13 +136,13 @@
 	<channel id="MIXTAPE PL" title="(?=MIXTAPE(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="MOTOWIZJA PL" title="(?=(MOTOWIZJA|MOTORWIZJA)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="MTV 80S PL" title="(?=MTV.*(80(s)?)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="MTV 90S PL" title="(?=MTV.*((90(s)?)|ROCKS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV 90S PL" title="(?=MTV.*((90(s)?)|ROCKS)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="MTV HITS PL" title="(?=MTV\s*HITS(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="MTV LIVE HD PL" title="(?=MTV\s*LIVE(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="MTV MUSIC 24 PL" title="(?=MTV\s*MUSIC\s*24(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="NICKMUSIC PL" title="(?=(MTV\s*MUSIC\s*24|NICK\s*MUSIC)(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="MTV POLSKA PL" title="(?=MTV(\s*MUSIC)?(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="MUSEUM UHD PL" title="(?=MUSEUM(\s*TV)?(\s*HD|\s*UHD)?(\s*UHD)?(\s*ULTRA)?(\s*PL)?$)" strm=""/>
-	<channel id="MUSIC BOX PL" title="(?=MUSIC\s*BOX(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MUSIC BOX PL" title="(?=MUSIC\s*BOX(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="MYZEN.TV PL" title="(?=MY\s*ZEN(\.)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="NASA TV PL" title="(?=NASA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="NAT GEO PEOPLE PL" title="(?=(NAT|NATIONAL)\s*(GEO|GEOGRAPHIC)\s*PEOPLE(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -150,7 +150,7 @@
 	<channel id="NATIONAL GEOGRAPHIC WILD PL" title="(?=(NAT|NATIONAL)\s*(GEO|GEOGRAPHIC)\s*WILD(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="NAUTICAL CHANNEL PL" title="(?=NAUTICAL(\s*CHANNEL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="NICK JR. PL" title="(?=NICK(ELODEON)?\s*(JR|JUNIOR)(\.)?(POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="NICKELODEON PL" title="(?=NICKELODEON(\s*POLSKA)?(\s*TV)?\s*HD(\s*PL)?$)" strm=""/>
+	<channel id="NICKELODEON PL" title="(?=(NICKELODEON)(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="NICKTOONS PL" title="(?=NICKTOONS(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="NOVELA TV PL" title="(?=NOVELA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="NOWA TV PL" title="(?=NOWA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -283,7 +283,7 @@
 	<channel id="TVT PL" title="(?=TVT(\s*ZGORZELEC)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TWOJA TELEWIZJA MORSKA PL" title="(?=(TTM|TWOJA\s*TELEWIZJA\s*MORSKA)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TWOJA TV PL" title="(?=TWOJA(\.)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="ULTRA TV 4K PL" title="(?=ULTRA(\s*TV)?(\s*UHD|\s*4K)(\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="ULTRA TV 4K PL" title="(?=(ULTRA)(\s*TV)?(\s*UHD|\s*4K)?(\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="VH1 CLASSIC PL" title="(?=VH1\s*Classic(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="VH1 PL" title="(?=VH1(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="VIVA POLSKA" title="(?=VIVA(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -347,7 +347,7 @@
 	<channel id="CI POLSAT.PL" title="(?=(CI|CRIME(\s*AND|\s*\+|\s*PLUS)?\s*INVESTIGATION)(\s*POLSAT)?(\s*CRIME)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="CINEMAX 2.PL" title="(?=CINEMAX\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="CINEMAX.PL" title="(?=CINEMAX(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="CLUB MTV.PL" title="(?=(CLUB\s*MTV|MTV\s*DANCE)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="CLUB MTV.PL" title="(?=(CLUB\s*MTV|MTV\s*DANCE|MTV\s*CLUB)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="CNBC.PL" title="(?=CNBC(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="CNN.PL" title="(?=CNN(\s*INTERNATIONAL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="COMEDY CENTRAL.PL" title="(?=(COMEDY|CC)\s*(CENTRAL|CENTERAL|CENTER)?(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>	
@@ -431,13 +431,13 @@
 	<channel id="MIXTAPE.PL" title="(?=MIXTAPE(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="MOTOWIZJA.PL" title="(?=(MOTOWIZJA|MOTORWIZJA)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="MTV 80S.PL" title="(?=MTV.*(80(s)?)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="MTV 90S.PL" title="(?=MTV.*((90(s)?)|ROCKS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV 90S.PL" title="(?=MTV.*((90(s)?)|ROCKS)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="MTV HITS.PL" title="(?=MTV\s*HITS(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="MTV LIVE HD.PL" title="(?=MTV\s*LIVE(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="MTV MUSIC 24.PL" title="(?=MTV\s*MUSIC\s*24(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="NICKMUSIC.PL" title="(?=(MTV\s*MUSIC\s*24|NICK\s*MUSIC)(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="MTV POLSKA.PL" title="(?=MTV(\s*MUSIC)?(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="MUSEUM UHD.PL" title="(?=MUSEUM(\s*TV)?(\s*HD|\s*UHD)?(\s*UHD)?(\s*ULTRA)?(\s*PL)?$)" strm=""/>
-	<channel id="MUSIC BOX.PL" title="(?=MUSIC\s*BOX(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MUSIC BOX.PL" title="(?=MUSIC\s*BOX(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="MYZEN.TV.PL" title="(?=MY\s*ZEN(\.)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="NASA TV.PL" title="(?=NASA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="NAT GEO PEOPLE.PL" title="(?=(NAT|NATIONAL)\s*(GEO|GEOGRAPHIC)\s*PEOPLE(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -445,7 +445,7 @@
 	<channel id="NATIONAL GEOGRAPHIC WILD.PL" title="(?=(NAT|NATIONAL)\s*(GEO|GEOGRAPHIC)\s*WILD(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="NAUTICAL CHANNEL.PL" title="(?=NAUTICAL(\s*CHANNEL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="NICK JR..PL" title="(?=NICK(ELODEON)?\s*(JR|JUNIOR)(\.)?(POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="NICKELODEON.PL" title="(?=NICKELODEON(\s*POLSKA)?(\s*TV)?\s*HD(\s*PL)?$)" strm=""/>
+	<channel id="NICKELODEON.PL" title="(?=(NICKELODEON)(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="NICKTOONS.PL" title="(?=NICKTOONS(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="NOVELA TV.PL" title="(?=NOVELA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="NOWA TV.PL" title="(?=NOWA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -578,7 +578,7 @@
 	<channel id="TVT.PL" title="(?=TVT(\s*ZGORZELEC)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TWOJA TELEWIZJA MORSKA.PL" title="(?=(TTM|TWOJA\s*TELEWIZJA\s*MORSKA)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TWOJA TV.PL" title="(?=TWOJA(\.)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="ULTRA TV 4K.PL" title="(?=ULTRA(\s*TV)?(\s*UHD|\s*4K)(\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="ULTRA TV 4K.PL" title="(?=(ULTRA)(\s*TV)?(\s*UHD|\s*4K)?(\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="VH1 CLASSIC.PL" title="(?=VH1\s*Classic(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="VH1.PL" title="(?=VH1(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="VIVA POLSKA" title="(?=VIVA(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -642,7 +642,7 @@
 	<channel id="CI POLSAT" title="(?=(CI|CRIME(\s*AND|\s*\+|\s*PLUS)?\s*INVESTIGATION)(\s*POLSAT)?(\s*CRIME)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="CINEMAX 2" title="(?=CINEMAX\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="CINEMAX" title="(?=CINEMAX(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="CLUB MTV" title="(?=(CLUB\s*MTV|MTV\s*DANCE)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="CLUB MTV" title="(?=(CLUB\s*MTV|MTV\s*DANCE|MTV\s*CLUB)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="CNBC" title="(?=CNBC(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="CNN" title="(?=CNN(\s*INTERNATIONAL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="COMEDY CENTRAL" title="(?=(COMEDY|CC)\s*(CENTRAL|CENTERAL|CENTER)?(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>	
@@ -726,13 +726,13 @@
 	<channel id="MIXTAPE" title="(?=MIXTAPE(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="MOTOWIZJA" title="(?=(MOTOWIZJA|MOTORWIZJA)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="MTV 80S" title="(?=MTV.*(80(s)?)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="MTV 90S" title="(?=MTV.*((90(s)?)|ROCKS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV 90S" title="(?=MTV.*((90(s)?)|ROCKS)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="MTV HITS" title="(?=MTV\s*HITS(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="MTV LIVE HD" title="(?=MTV\s*LIVE(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="MTV MUSIC 24" title="(?=MTV\s*MUSIC\s*24(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="NICKMUSIC" title="(?=(MTV\s*MUSIC\s*24|NICK\s*MUSIC)(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="MTV POLSKA" title="(?=MTV(\s*MUSIC)?(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="MUSEUM UHD" title="(?=MUSEUM(\s*TV)?(\s*HD|\s*UHD)?(\s*UHD)?(\s*ULTRA)?(\s*PL)?$)" strm=""/>
-	<channel id="MUSIC BOX" title="(?=MUSIC\s*BOX(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MUSIC BOX" title="(?=MUSIC\s*BOX(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="MYZEN.TV" title="(?=MY\s*ZEN(\.)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="NASA TV" title="(?=NASA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="NAT GEO PEOPLE" title="(?=(NAT|NATIONAL)\s*(GEO|GEOGRAPHIC)\s*PEOPLE(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -740,7 +740,7 @@
 	<channel id="NATIONAL GEOGRAPHIC WILD" title="(?=(NAT|NATIONAL)\s*(GEO|GEOGRAPHIC)\s*WILD(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="NAUTICAL CHANNEL" title="(?=NAUTICAL(\s*CHANNEL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="NICK JR." title="(?=NICK(ELODEON)?\s*(JR|JUNIOR)(\.)?(POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="NICKELODEON" title="(?=NICKELODEON(\s*POLSKA)?(\s*TV)?\s*HD(\s*PL)?$)" strm=""/>
+	<channel id="NICKELODEON" title="(?=(NICKELODEON)(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="NICKTOONS" title="(?=NICKTOONS(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="NOVELA TV" title="(?=NOVELA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="NOWA TV" title="(?=NOWA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -873,7 +873,7 @@
 	<channel id="TVT" title="(?=TVT(\s*ZGORZELEC)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TWOJA TELEWIZJA MORSKA" title="(?=(TTM|TWOJA\s*TELEWIZJA\s*MORSKA)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TWOJA TV" title="(?=TWOJA(\.)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="ULTRA TV 4K" title="(?=ULTRA(\s*TV)?(\s*UHD|\s*4K)(\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="ULTRA TV 4K" title="(?=(ULTRA)(\s*TV)?(\s*UHD|\s*4K)?(\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="VH1 CLASSIC" title="(?=VH1\s*Classic(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="VH1" title="(?=VH1(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="VIVA POLSKA" title="(?=VIVA(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
