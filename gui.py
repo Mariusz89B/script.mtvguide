@@ -2142,18 +2142,17 @@ class mTVGuide(xbmcgui.WindowXML):
         if epgSize != epgDbSize:
             self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
 
+        """
         self.updateEpgTimer.stop()
         time.sleep(self.interval)
         self.updateEpgTimer.start()
+        """
         
     def getStreamsCid(self, channels):
         streamsList = list()
 
-        if channels is None:
-            streams = self.database.getAllStreamUrlList()
-        else:
-            streams = self.database.getAllCatchupUrlList(channels) 
-        #deb('getAllCatchupUrlList: {}'.format(streams))
+        streams = self.database.getAllCatchupUrlList(channels) 
+        deb('getAllCatchupUrlList: {}'.format(streams))
 
         # Catchup
         catchupList = list()
@@ -2167,21 +2166,8 @@ class mTVGuide(xbmcgui.WindowXML):
                 days = p.search(item).group(1)
                 channel = c.search(item).group(1)
                 catchupList.append(channel.upper() + '=' + days)
-
-        #file_name = os.path.join(self.profilePath, 'streams.temp')
-        #with open(file_name, 'wb+') as f:
-            #f.write(bytearray('\n'.join(catchupList), 'utf-8'))
         
         return sorted(catchupList)
-
-    """
-    def getStreamsCidTemp(self):
-        file_name = os.path.join(self.profilePath, 'streams.temp')
-        with open(file_name, 'r') as f:
-            catchupList = f.read().splitlines()
-
-        return sorted(catchupList)
-    """
 
     def catchupEPG(self, program, cellWidth, catchupList):
         archive = ''

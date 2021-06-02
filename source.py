@@ -1521,13 +1521,13 @@ class Database(object):
         channelList = list()
 
         for chann in channels:
-            channelList.append(chann.id)
+            channelList.append(chann.id.upper())
 
         c = self.conn.cursor()
         c.execute("SELECT channel, stream_url FROM custom_stream_url")
 
         for row in c:
-            if row[str('channel')] in channelList:
+            if row[str('channel')].upper() in channelList:
                 url = row[str('channel')]
                 cid = row[str('stream_url')]
                 result.append(url+', '+cid.upper())
