@@ -1513,6 +1513,29 @@ class Database(object):
         c.close()
         return result
 
+    def getAllCatchupUrlList(self, channels):
+        return self._invokeAndBlockForResult(self._getAllCatchupUrlList, channels)
+
+    def _getAllCatchupUrlList(self, channels):
+        result = list()
+        channelList = list()
+
+        for chann in channels:
+            channelList.append(chann.id)
+
+        c = self.conn.cursor()
+        c.execute("SELECT channel, stream_url FROM custom_stream_url")
+
+        for row in c:
+            if row[str('channel')] in channelList:
+                url = row[str('channel')]
+                cid = row[str('stream_url')]
+                result.append(url+', '+cid.upper())
+        
+        c.close()
+
+        return result
+
     def deleteCustomStreamUrl(self, channel):
         self.eventQueue.append([self._deleteCustomStreamUrl, None, channel])
         self.event.set()

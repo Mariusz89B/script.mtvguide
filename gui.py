@@ -2145,11 +2145,11 @@ class mTVGuide(xbmcgui.WindowXML):
         time.sleep(self.interval)
         self.updateEpgTimer.start()
         
-    def getStreamsCid(self):
+    def getStreamsCid(self, channels):
         streamsList = list()
 
-        streams = self.database.getAllStreamUrlList() 
-        #deb('getAllStreamUrlList: {}'.format(streams))
+        streams = self.database.getAllCatchupUrlList(channels) 
+        #deb('getAllCatchupUrlList: {}'.format(streams))
 
         # Catchup
         catchupList = list()
@@ -2298,10 +2298,9 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def getChannelNumber(self):
         try:
-            channelList = self.database.getChannelList(onlyVisible=True)
             controlInFocus = self.getFocus()
             program = self._getProgramFromControl(controlInFocus)
-            index = channelList.index(program.channel) + 1
+            index = self.database.getCurrentChannelIdx(program.channel) + 1
             return index
         except:
             pass
@@ -2736,15 +2735,13 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action.getId() == ACTION_UP:
             if self.getFocusId() == 7900:
                 self.focusPoint.y = self.epgView.bottom
-                self.onRedrawEPG(0 - CHANNELS_PER_PAGE, self.viewStartDate,
-                             focusFunction=self._findControlAbove)
+                self.onRedrawEPG(0 - CHANNELS_PER_PAGE, self.viewStartDate, focusFunction=self._findControlAbove)
             else:
                 self._up(currentFocus)
         elif action.getId() == ACTION_DOWN:
             if self.getFocusId() == 7900:
                 self.focusPoint.y = self.epgView.top
-                self.onRedrawEPG(0, self.viewStartDate,
-                             focusFunction=self._findControlAbove)
+                self.onRedrawEPG(0, self.viewStartDate, focusFunction=self._findControlAbove)
             else:
                 self._down(currentFocus)
         elif action.getId() == ACTION_NEXT_ITEM:
@@ -5309,7 +5306,7 @@ class mTVGuide(xbmcgui.WindowXML):
             return
 
         categories = self.getCategories()
-        catchupList = self.getStreamsCid()
+        catchupList = self.getStreamsCid(channels)
 
         for program in programs:
             idx = channels.index(program.channel)
