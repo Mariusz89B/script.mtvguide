@@ -389,10 +389,11 @@ class Database(object):
                 time.sleep(uniform(0, 0.2))
                 self.conn = sqlite3.connect(self.databasePath, detect_types=sqlite3.PARSE_DECLTYPES, cached_statements=2000)
                 self.conn.execute('PRAGMA foreign_keys = ON')
+                self.conn.execute('PRAGMA mmap_size = 268435456');
                 #self.conn.execute('PRAGMA synchronous = OFF')
-                #self.conn.execute('PRAGMA journal_mode = OFF')
+                self.conn.execute('PRAGMA journal_mode = OFF')
                 #self.conn.execute("PRAGMA page_size = 16384");
-                #self.conn.execute("PRAGMA cache_size = 64000");
+                self.conn.execute("PRAGMA cache_size = 64000");
                 #self.conn.execute("PRAGMA temp_store = MEMORY");
                 #self.conn.execute("PRAGMA locking_mode = NORMAL");
                 self.conn.execute("PRAGMA locking_mode = EXCLUSIVE");

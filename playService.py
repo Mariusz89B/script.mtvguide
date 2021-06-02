@@ -1250,7 +1250,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                     ListItem.setProperty('inputstream.adaptive.license_type', DRM)
                                     ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl)
 
-                                elif 'm3u8' in strmUrl and ffmpegdirect:
+                                elif ('m3u8' in strmUrl or 'hls' in strmUrl) and ffmpegdirect:
                                     mimeType = 'application/x-mpegURL'
                                     #mimeType = 'application/vnd.apple.mpegstream_url'
                                     PROTOCOL = 'hls'
