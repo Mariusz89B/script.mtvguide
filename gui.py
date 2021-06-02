@@ -570,6 +570,7 @@ class mTVGuide(xbmcgui.WindowXML):
         self.recordService = RecordService(self)
         self.getListLenght = list()
         self.catchupDays = None
+        self.catchupChannels = None
         self.context = False
 
         # find nearest half hour
@@ -4903,7 +4904,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
             try:
                 if finishedProgram < datetime.datetime.now() and ADDON.getSetting('archive_support') == 'true' and program.title != program.channel.title:
-                    catchupList = self.getStreamsCid(None)
+                    catchupList = self.getStreamsCid(self.catchupChannels)
 
                     if (program.channel.title.upper() in [x.split('=')[0] for x in catchupList] and program.startDate > reverseTime):
                         res = xbmcgui.Dialog().yesno(strings(30998), strings(30999).format(program.title))
@@ -5081,7 +5082,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
             try:
                 if finishedProgram < datetime.datetime.now() and ADDON.getSetting('archive_support') == 'true' and program.title != program.channel.title:
-                    catchupList = self.getStreamsCid(None)
+                    catchupList = self.getStreamsCid(self.catchupChannels)
 
                     if (program.channel.title.upper() in [x.split('=')[0] for x in catchupList] and program.startDate > reverseTime):
                         res = xbmcgui.Dialog().yesno(strings(30998), strings(30999).format(program.title))
@@ -5215,7 +5216,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def recordProgram(self, program, watch='', length=''):
         deb('recordProgram')
-        catchupList = self.getStreamsCid(None)
+        catchupList = self.getStreamsCid(self.catchupChannels)
 
         if watch and length != '':
             if self.recordService.recordProgramGui(program=program, watch=watch, length=length, catchupList=catchupList):
@@ -5293,6 +5294,8 @@ class mTVGuide(xbmcgui.WindowXML):
             self.onEPGLoadError()
             return
 
+        self.catchupChannels = channels
+
         if cacheExpired == True and ADDON.getSetting('notifications_enabled') == 'true':
             # make sure notifications are scheduled for newly downloaded programs
             self.notification.scheduleNotifications()
@@ -5309,7 +5312,7 @@ class mTVGuide(xbmcgui.WindowXML):
             return
 
         categories = self.getCategories()
-        catchupList = self.getStreamsCid(channels)
+        catchupList = self.getStreamsCid(self.catchupChannels)
 
         for program in programs:
             idx = channels.index(program.channel)
