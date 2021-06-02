@@ -2142,17 +2142,11 @@ class mTVGuide(xbmcgui.WindowXML):
         if epgSize != epgDbSize:
             self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
 
-        """
-        self.updateEpgTimer.stop()
-        time.sleep(self.interval)
-        self.updateEpgTimer.start()
-        """
-        
     def getStreamsCid(self, channels):
         streamsList = list()
 
         streams = self.database.getAllCatchupUrlList(channels) 
-        deb('getAllCatchupUrlList: {}'.format(streams))
+        #deb('getAllCatchupUrlList: {}'.format(streams))
 
         # Catchup
         catchupList = list()
