@@ -51,6 +51,7 @@ from skins import Skin
 from settings import Settings
 Skin.fixSkinIfNeeded()
 import gui
+import time
 
 class Start:
     def __init__(self):
@@ -60,6 +61,9 @@ class Start:
         try:
             Settings.formatter()
             Skin.checkForUpdates()
+            time.sleep(1)
+            if ADDON.getSetting('skin_update') == 'true':
+                gui.mTVGuide().close()
             w = gui.mTVGuide()
             w.doModal()
             w.close()

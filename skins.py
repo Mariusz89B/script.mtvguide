@@ -350,7 +350,9 @@ class Skin:
         if usedSkinUpdated:
             if not xbmc.getCondVisibility('Window.IsVisible(yesnodialog)'):
                 xbmcgui.Dialog().ok(strings(30709), strings(30979))
-                exit()
+                ADDON.setSetting('skin_update', 'true')
+        else:
+            ADDON.setSetting('skin_update', 'false')
         deb('Skin finished update')
 
     @staticmethod
