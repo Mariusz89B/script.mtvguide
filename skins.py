@@ -321,13 +321,13 @@ class Skin:
 
         return matching_skins
 
-    @staticmethod
-    def checkForUpdates():
-        import threading
-        threading.Timer(0, Skin._checkForUpdates).start()
+    #@staticmethod
+    #def checkForUpdates():
+        #import threading
+        #threading.Timer(0, Skin._checkForUpdates).start()
 
-    @staticmethod
-    def _checkForUpdates():
+    #@staticmethod
+    def checkForUpdates():
         deb('_checkForUpdates')
         skins = Skin.getSkinList()
         regex = re.compile('version\s*=\s*(.*)', re.IGNORECASE)
@@ -350,10 +350,10 @@ class Skin:
         if usedSkinUpdated:
             if not xbmc.getCondVisibility('Window.IsVisible(yesnodialog)'):
                 xbmcgui.Dialog().ok(strings(30709), strings(30979))
-                ADDON.setSetting('skin_update', 'true')
         else:
-            ADDON.setSetting('skin_update', 'false')
+            usedSkinUpdated = False
         deb('Skin finished update')
+        return usedSkinUpdated
 
     @staticmethod
     def parseVersion(version):

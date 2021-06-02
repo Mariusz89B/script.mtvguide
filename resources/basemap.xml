@@ -86,7 +86,7 @@
 	<channel id="EUROCHANNEL PL" title="(?=EURO\s*CHANNEL(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="EURONEWS PL" title="(?=EURO\s*NEWS(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="EUROSPORT 2 PL" title="(?=(EURO\s*SPORT\s*2|EUTOSPORT\s*2)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="EUROSPORT PL" title="(?=EURO\s*SPORT(\s*1)?(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="EUROSPORT PL" title="(?=EURO\s*SPORT(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="EXTREME SPORTS CHANNEL PL" title="(?=(EXTREME|EXTREM)(\s*SPORT(S)?)?(\s*CHANNEL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="FANKLUB TV PL" title="(?=FAN\s*KLUB(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="FASHION TV PL" title="(?=FASHION(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -125,7 +125,7 @@
 	<channel id="KINO POLSKA MUZYKA PL" title="(?=KINO(\s*POLSKA)?\s*MUZYKA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="KINO POLSKA PL" title="(?=KINO(\s*POLSKA)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="KINO TV PL" title="(?=(FILMBOX|KINO)(\s*TV)?(\s*\(FILMBOX\))?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="KSW PL" title="(?=KSW(\s*PPV)?(\s*Match)?(\s*Time)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="KSW PL" title="(.*KSW.*(\s*PL)?$)" strm=""/>
 	<channel id="LIFETIME PL" title="(?=LIFETIME(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="LOVE PL" title="(?=LOVE(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="LUBELSKA TV PL" title="(?=LUBELSKA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -165,11 +165,11 @@
 	<channel id="POLSAT 2 PL" title="(?=POLSAT\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT BOXING NIGHT PL" title="(?=POLSAT\s*BOXING(\s*NIGHT)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT CAFÉ PL" title="(?=POLSAT\s*CAF(E|.)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="POLSAT COMEDY CENTRAL EXTRA PL" title="(?=((POLSAT\s*)?COMEDY\s*)(CC|CENT(ER|RAL))(\s*EXTRA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="POLSAT COMEDY CENTRAL EXTRA PL" title="(?=((POLSAT\s*)?COMEDY\s*)(CC|CENT(ER|RAL))(\s*EXTRA|\s*FAMILY)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT DOKU PL" title="(?=POLSAT\s*DOKU(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT FILM PL" title="(?=POLSAT\s*FILM(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT GAMES PL" title="(?=POLSAT\s*GAMES(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="POLSAT JIMJAM PL" title="(?=(POLSAT\s*)?JIM\s*JAM(\s*POLSAT)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="POLSAT JIMJAM PL" title="(?=(POLSAT\s*)?JIM\s*JAM(\s*POLSA(T)?)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT MUSIC PL" title="(?=(MUZO(\.)?(\s*TV)?|POLSAT\s*MUSIC)(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT NEWS 2 PL" title="(?=POLSAT\s*NEWS\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT NEWS PL" title="(?=POLSAT\s*NEWS(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -239,7 +239,7 @@
 	<channel id="TV REPUBLIKA PL" title="(?=(TV\s*)?Republika(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TV TORUŃ PL" title="(?=(TV\s*)?TORU(N|.)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TV TRWAM PL" title="(?=(TV\s*)?TRWAM(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="TVC PL" title="(?=(TELEWIZJA\s*)?(TVC|NTL|RADOMSKO)(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVC PL" title="(?=(TELEWIZJA\s*|NTL\s*)?(TVC|NTL|RADOMSKO)(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVE PL" title="(?=TVE(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVN 24 BIS PL" title="(?=TVN\s*24\s*(BIS|BIZNES\s*I\s*.*WIAT)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVN 24 PL" title="(?=(TVN\s*24|24\s*TVN)(\+|PLUS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -381,7 +381,7 @@
 	<channel id="EUROCHANNEL.PL" title="(?=EURO\s*CHANNEL(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="EURONEWS.PL" title="(?=EURO\s*NEWS(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="EUROSPORT 2.PL" title="(?=(EURO\s*SPORT\s*2|EUTOSPORT\s*2)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="EUROSPORT.PL" title="(?=EURO\s*SPORT(\s*1)?(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="EUROSPORT.PL" title="(?=EURO\s*SPORT(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="EXTREME SPORTS CHANNEL.PL" title="(?=(EXTREME|EXTREM)(\s*SPORT(S)?)?(\s*CHANNEL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="FANKLUB TV.PL" title="(?=FAN\s*KLUB(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="FASHION TV.PL" title="(?=FASHION(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -420,7 +420,7 @@
 	<channel id="KINO POLSKA MUZYKA.PL" title="(?=KINO(\s*POLSKA)?\s*MUZYKA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="KINO POLSKA.PL" title="(?=KINO(\s*POLSKA)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="KINO TV.PL" title="(?=(FILMBOX|KINO)(\s*TV)?(\s*\(FILMBOX\))?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="KSW.PL" title="(?=KSW(\s*PPV)?(\s*Match)?(\s*Time)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="KSW.PL" title="(.*KSW.*(\s*PL)?$)" strm=""/>
 	<channel id="LIFETIME.PL" title="(?=LIFETIME(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="LOVE.PL" title="(?=LOVE(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="LUBELSKA TV.PL" title="(?=LUBELSKA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -460,11 +460,11 @@
 	<channel id="POLSAT 2.PL" title="(?=POLSAT\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT BOXING NIGHT.PL" title="(?=POLSAT\s*BOXING(\s*NIGHT)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT CAFÉ.PL" title="(?=POLSAT\s*CAF(E|.)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="POLSAT COMEDY CENTRAL EXTRA.PL" title="(?=((POLSAT\s*)?COMEDY\s*)(CC|CENT(ER|RAL))(\s*EXTRA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="POLSAT COMEDY CENTRAL EXTRA.PL" title="(?=((POLSAT\s*)?COMEDY\s*)(CC|CENT(ER|RAL))(\s*EXTRA|\s*FAMILY)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT DOKU.PL" title="(?=POLSAT\s*DOKU(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT FILM.PL" title="(?=POLSAT\s*FILM(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT GAMES.PL" title="(?=POLSAT\s*GAMES(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="POLSAT JIMJAM.PL" title="(?=(POLSAT\s*)?JIM\s*JAM(\s*POLSAT)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="POLSAT JIMJAM.PL" title="(?=(POLSAT\s*)?JIM\s*JAM(\s*POLSA(T)?)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT MUSIC.PL" title="(?=(MUZO(\.)?(\s*TV)?|POLSAT\s*MUSIC)(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT NEWS 2.PL" title="(?=POLSAT\s*NEWS\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT NEWS.PL" title="(?=POLSAT\s*NEWS(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -534,7 +534,7 @@
 	<channel id="TV REPUBLIKA.PL" title="(?=(TV\s*)?Republika(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TV TORUŃ.PL" title="(?=(TV\s*)?TORU(N|.)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TV TRWAM.PL" title="(?=(TV\s*)?TRWAM(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="TVC.PL" title="(?=(TELEWIZJA\s*)?(TVC|NTL|RADOMSKO)(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVC.PL" title="(?=(TELEWIZJA\s*|NTL\s*)?(TVC|NTL|RADOMSKO)(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVE.PL" title="(?=TVE(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVN 24 BIS.PL" title="(?=TVN\s*24\s*(BIS|BIZNES\s*I\s*.*WIAT)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVN 24.PL" title="(?=(TVN\s*24|24\s*TVN)(\+|PLUS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -676,7 +676,7 @@
 	<channel id="EUROCHANNEL" title="(?=EURO\s*CHANNEL(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="EURONEWS" title="(?=EURO\s*NEWS(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="EUROSPORT 2" title="(?=(EURO\s*SPORT\s*2|EUTOSPORT\s*2)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="EUROSPORT" title="(?=EURO\s*SPORT(\s*1)?(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="EUROSPORT" title="(?=EURO\s*SPORT(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="EXTREME SPORTS CHANNEL" title="(?=(EXTREME|EXTREM)(\s*SPORT(S)?)?(\s*CHANNEL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="FANKLUB TV" title="(?=FAN\s*KLUB(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="FASHION TV" title="(?=FASHION(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -715,7 +715,7 @@
 	<channel id="KINO POLSKA MUZYKA" title="(?=KINO(\s*POLSKA)?\s*MUZYKA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="KINO POLSKA" title="(?=KINO(\s*POLSKA)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="KINO TV" title="(?=(FILMBOX|KINO)(\s*TV)?(\s*\(FILMBOX\))?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="KSW" title="(?=KSW(\s*PPV)?(\s*Match)?(\s*Time)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="KSW" title="(.*KSW.*(\s*PL)?$)" strm=""/>
 	<channel id="LIFETIME" title="(?=LIFETIME(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="LOVE" title="(?=LOVE(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="LUBELSKA TV" title="(?=LUBELSKA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -755,11 +755,11 @@
 	<channel id="POLSAT 2" title="(?=POLSAT\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT BOXING NIGHT" title="(?=POLSAT\s*BOXING(\s*NIGHT)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT CAFÉ" title="(?=POLSAT\s*CAF(E|.)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="POLSAT COMEDY CENTRAL EXTRA" title="(?=((POLSAT\s*)?COMEDY\s*)(CC|CENT(ER|RAL))(\s*EXTRA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="POLSAT COMEDY CENTRAL EXTRA" title="(?=((POLSAT\s*)?COMEDY\s*)(CC|CENT(ER|RAL))(\s*EXTRA|\s*FAMILY)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT DOKU" title="(?=POLSAT\s*DOKU(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT FILM" title="(?=POLSAT\s*FILM(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT GAMES" title="(?=POLSAT\s*GAMES(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="POLSAT JIMJAM" title="(?=(POLSAT\s*)?JIM\s*JAM(\s*POLSAT)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="POLSAT JIMJAM" title="(?=(POLSAT\s*)?JIM\s*JAM(\s*POLSA(T)?)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT MUSIC" title="(?=(MUZO(\.)?(\s*TV)?|POLSAT\s*MUSIC)(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT NEWS 2" title="(?=POLSAT\s*NEWS\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT NEWS" title="(?=POLSAT\s*NEWS(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -794,7 +794,7 @@
 	<channel id="STINGRAY CMUSIC" title="(?=STINGRAY\s*CMUSIC(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="STINGRAY DJAZZ" title="(?=STINGRAY\s*DJAZZ(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="STINGRAY FESTIVAL 4K" title="(?=STINGRAY\s*FESTIVAL(\s*TV)?(\s*UHD|\s*4K)(\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="STINGRAY ICONCERTS" title="(?=STINGRAY\s*ICONCERT(S)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="STINGRAY ICONCERTS" title="(?=(STINGRAY\s*)?ICONCERT(S)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="STINGRAY JUICEBOX HD" title="(?=STINGRAY\s*JUICE\s*BOX(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="STINGRAY LOUD HD" title="(?=STINGRAY\s*LOUD(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="STINGRAY RETRO" title="(?=STINGRAY\s*RETRO(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -829,7 +829,7 @@
 	<channel id="TV REPUBLIKA" title="(?=(TV\s*)?Republika(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TV TORUŃ" title="(?=(TV\s*)?TORU(N|.)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TV TRWAM" title="(?=(TV\s*)?TRWAM(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="TVC" title="(?=(TELEWIZJA\s*)?(TVC|NTL|RADOMSKO)(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVC" title="(?=(TELEWIZJA\s*|NTL\s*)?(TVC|NTL|RADOMSKO)(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVE" title="(?=TVE(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVN 24 BIS" title="(?=TVN\s*24\s*(BIS|BIZNES\s*I\s*.*WIAT)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVN 24" title="(?=(TVN\s*24|24\s*TVN)(\+|PLUS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>

@@ -46,12 +46,12 @@ import sys
 
 import re, os
 import xbmc, xbmcaddon, xbmcgui, xbmcplugin, xbmcvfs
+import gui
+import time
 from strings import *
 from skins import Skin
 from settings import Settings
 Skin.fixSkinIfNeeded()
-import gui
-import time
 
 class Start:
     def __init__(self):
@@ -60,9 +60,8 @@ class Start:
     def Run(self):
         try:
             Settings.formatter()
-            Skin.checkForUpdates()
-            time.sleep(1)
-            if ADDON.getSetting('skin_update') == 'true':
+            result = Skin.checkForUpdates()
+            if result:
                 gui.mTVGuide().close()
             w = gui.mTVGuide()
             w.doModal()

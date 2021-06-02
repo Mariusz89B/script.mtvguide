@@ -1,4 +1,4 @@
-﻿[COLOR yellow][B]wersja 9.3.6[/B] - 2021-06-01[/COLOR]
+﻿[COLOR yellow][B]wersja 9.3.6[/B] - 2021-06-02[/COLOR]
 - dodano ikonę nadzoru rodzicielskiego w vosd
 - usunięte błędy
 
