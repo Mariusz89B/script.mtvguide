@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.mtvguide" name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]" version="9.3.6" provider-name="Team Mods-Kodi">
+<addon id="script.mtvguide" name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]" version="9.3.7" provider-name="Team Mods-Kodi">
 	<requires>
 		<import addon="xbmc.addon" version="17.0.0"/>
 		<import addon="script.module.inputstreamhelper" />
@@ -30,7 +30,10 @@
 		<forum>http://mods-kodi.pl/forum/</forum>
 		<website>http://mods-kodi.pl/</website>
 		<email>support@m-tvguide.pl</email>
-	<news>v9.3.6 (2021-06-03)
+	<news>v9.3.7 (2021-06-04)
+- Fixed running .mpd protocol with inputstream helper. 
+
+v9.3.6 (2021-06-03)
 - Added parental guidance icon in vosd
 - Performance improvements.
 - Bug fixes.

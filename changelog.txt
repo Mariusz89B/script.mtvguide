@@ -1,4 +1,7 @@
-﻿[COLOR yellow][B]wersja 9.3.6[/B] - 2021-06-03[/COLOR]
+﻿[COLOR yellow][B]wersja 9.3.7[/B] - 2021-06-04[/COLOR]
+- poprawka odpalenia protokołu .mpd w inputstream helper
+
+[COLOR yellow][B]wersja 9.3.6[/B] - 2021-06-03[/COLOR]
 - dodano ikonę nadzoru rodzicielskiego w vosd
 - poprawiono wydajność działania
 - usunięte błędy

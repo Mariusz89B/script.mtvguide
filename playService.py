@@ -1258,7 +1258,7 @@ class PlayService(xbmc.Player, BasePlayService):
 
                                 elif '.mpd' in strmUrl or 'format=mpd' in strmUrl:
                                     mimeType = 'application/xml+dash'
-                                    PROTOCOL = 'dash'
+                                    PROTOCOL = 'mpd'
 
                                 elif '.ism' in strmUrl:
                                     mimeType = 'application/vnd.ms-sstr+xml'
