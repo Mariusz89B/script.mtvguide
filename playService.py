@@ -128,6 +128,7 @@ class BasePlayService:
         service = None
         try:
             params = url[8:].split('&')
+            deb('TEST: {}'.format(params))
             service = params[0]
             cid = params[1].split('=')[1]
             deb(self.__class__.__name__ + ' parseUrl: cid {}, service {}'.format(cid, service))
@@ -258,9 +259,6 @@ class PlayService(xbmc.Player, BasePlayService):
                 return
 
             playStarted, customPlugin = self.playUrl(url)
-
-            if playStarted is None:
-                return
 
             if not playStarted:
                 deb('_playUrlList playback not started - checking next stream')
@@ -1487,6 +1485,7 @@ class PlayService(xbmc.Player, BasePlayService):
             elif status >= 300 and status < 400:
                 xbmcgui.Dialog().notification(strings(57058) + ' Status: ' + str(status), strings(31019), xbmcgui.NOTIFICATION_WARNING)
 
+            deb('TEST: {}'.format(status))
             return status
 
     def CheckInputstreamInstalledAndEnabled(self):
