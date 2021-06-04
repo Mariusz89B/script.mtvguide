@@ -262,7 +262,8 @@ class PlayService(xbmc.Player, BasePlayService):
             if not playStarted:
                 deb('_playUrlList playback not started - checking next stream')
             else:
-
+                time.sleep(1)
+                
                 if customPlugin:
                     waitTime = self.maxStreamStartupTime + 30
                 else:
