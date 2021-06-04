@@ -31,6 +31,7 @@
 		<website>http://mods-kodi.pl/</website>
 		<email>support@m-tvguide.pl</email>
 	<news>v9.3.7 (2021-06-04)
+- Staticmethod hotfix. 
 - Fixed running .mpd protocol with inputstream helper. 
 
 v9.3.6 (2021-06-03)
