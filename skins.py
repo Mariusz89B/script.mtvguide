@@ -326,7 +326,7 @@ class Skin:
         #import threading
         #threading.Timer(0, Skin._checkForUpdates).start()
 
-    #@staticmethod
+    @staticmethod
     def checkForUpdates():
         deb('_checkForUpdates')
         skins = Skin.getSkinList()
