@@ -912,6 +912,10 @@ msgctxt "#30760"
 msgid "Enable subtitles"
 msgstr "Omogući titlove"
 
+msgctxt "#30761"
+msgid "Enable detection of alternative channel names"
+msgstr "Omogućite otkrivanje alternativnih naziva kanala"
+
 msgctxt "#30802"
 msgid "m-TVGuide is configured to stream using"
 msgstr "TV vodič konfiguriran je za streaming"

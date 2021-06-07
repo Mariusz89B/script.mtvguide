@@ -912,6 +912,10 @@ msgctxt "#30760"
 msgid "Enable subtitles"
 msgstr "Aktivera undertexter"
 
+msgctxt "#30761"
+msgid "Enable detection of alternative channel names"
+msgstr "Aktivera detektering av alternativa kanalnamn"
+
 msgctxt "#30802"
 msgid "m-TVGuide is configured to stream using"
 msgstr "m-TVGuide är konfigurerat att strömma med hjälp av"

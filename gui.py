@@ -2295,7 +2295,7 @@ class mTVGuide(xbmcgui.WindowXML):
         self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
         channelList = self.database.getChannelList(onlyVisible=True)
         self.channelIdx = int(ADDON.getSetting('autostart_channel_number')) - 1
-        channel = Channel(id='', title='', logo='', streamUrl='', visible='', weight='')
+        channel = Channel(id='', title='', logo='', titles='', streamUrl='', visible='', weight='')
         try:
             program = Program(channel=channelList[self.channelIdx], title='', startDate='', endDate='', description='', productionDate='', director='', actor='', episode='', 
                             imageLarge='', imageSmall='', categoryA='', categoryB='')
@@ -7130,7 +7130,7 @@ class Pla(xbmcgui.WindowXMLDialog):
             self.channel_number = ""
             self.getControl(9999).setLabel(self.channel_number)
 
-        channel = Channel(id='', title='', logo='', streamUrl='', visible='', weight='')
+        channel = Channel(id='', title='', logo='', titles='', streamUrl='', visible='', weight='')
         program = Program(channel=channelList[self.channelIdx], title='', startDate='', endDate='', description='', productionDate='', director='', actor='', episode='', imageLarge='', imageSmall='', categoryA='', categoryB='')
         self.playChannel(program.channel)
 

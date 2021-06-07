@@ -912,6 +912,10 @@ msgctxt "#30760"
 msgid "Enable subtitles"
 msgstr "Włącz napisy"
 
+msgctxt "#30761"
+msgid "Enable detection of alternative channel names"
+msgstr "Włącz wykrywanie alternatywnych nazw kanałów"
+
 msgctxt "#30802"
 msgid "m-TVGuide is configured to stream using"
 msgstr "m-TVGuide jest skonfigurowany, aby używać dodatku"

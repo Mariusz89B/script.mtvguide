@@ -1,5 +1,7 @@
-﻿[COLOR yellow][B]wersja 9.3.7[/B] - 2021-06-04[/COLOR]
-- poprawka metody statycznej
+﻿[COLOR yellow][B]wersja 9.3.8[/B] - 2021-06-07[/COLOR]
+- dodana opcja wykrywania alternatywnych nazw kanałów
+
+[COLOR yellow][B]wersja 9.3.7[/B] - 2021-06-04[/COLOR]
 - poprawka odpalenia protokołu .mpd w inputstream helper
 
 [COLOR yellow][B]wersja 9.3.6[/B] - 2021-06-03[/COLOR]

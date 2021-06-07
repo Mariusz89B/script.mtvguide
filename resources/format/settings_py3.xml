@@ -1915,7 +1915,7 @@
 			</group>
 		</category>
 		<category help="95024" id="epg" label="30101">
-			<group id="1">
+			<group id="1" label="30101">			
 				<setting help="95025" id="source" label="30701" type="integer">
 					<level>0</level>
 					<default>1</default>
@@ -1927,6 +1927,40 @@
 					</constraints>
 					<control format="string" type="spinner"/>
 				</setting>
+				<setting id="countryFileChannels" type="string" label="30740" help="95130">
+					<level>0</level>
+					<default></default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="source">0</condition>
+						</dependency>
+					</dependencies>
+					<control type="button" format="action">
+						<data>RunScript(special://home/addons/script.mtvguide/settingsImportExport.py,CountryFile)</data>
+						<close>true</close>
+					</control>
+				</setting>			
+				<setting id="countryUrlChannels" type="string" label="30740" help="95130">
+					<level>0</level>
+					<default></default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="source">1</condition>
+						</dependency>
+					</dependencies>
+					<control type="button" format="action">
+						<data>RunScript(special://home/addons/script.mtvguide/settingsImportExport.py,CountryUrl)</data>
+						<close>true</close>
+					</control>
+				</setting>
+			</group>
+			<group id="2">
 				<setting help="95026" id="AutoUpdateCid" label="30703" type="boolean">
 					<level>3</level>
 					<default>true</default>
@@ -1956,6 +1990,19 @@
 				<setting help="95028" id="UpdateEPGOnModifiedDate" label="30706" type="boolean">
 					<level>3</level>
 					<default>true</default>
+					<dependencies>
+						<dependency type="visible">
+							<or>
+								<condition operator="is" setting="source">0</condition>
+								<condition operator="is" setting="source">1</condition>
+							</or>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting help="95134" id="epg_display_name" label="30761" type="boolean">
+					<level>1</level>
+					<default>false</default>
 					<dependencies>
 						<dependency type="visible">
 							<or>
@@ -2008,40 +2055,6 @@
 						</dependency>
 					</dependencies>
 					<control type="toggle"/>
-				</setting>
-			</group>
-			<group id="2" label="30101">			
-				<setting id="countryFileChannels" type="string" label="30740" help="95130">
-					<level>0</level>
-					<default></default>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="is" setting="source">0</condition>
-						</dependency>
-					</dependencies>
-					<control type="button" format="action">
-						<data>RunScript(special://home/addons/script.mtvguide/settingsImportExport.py,CountryFile)</data>
-						<close>true</close>
-					</control>
-				</setting>			
-				<setting id="countryUrlChannels" type="string" label="30740" help="95130">
-					<level>0</level>
-					<default></default>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="is" setting="source">1</condition>
-						</dependency>
-					</dependencies>
-					<control type="button" format="action">
-						<data>RunScript(special://home/addons/script.mtvguide/settingsImportExport.py,CountryUrl)</data>
-						<close>true</close>
-					</control>
 				</setting>
 			</group>
 			<group id="4"/>

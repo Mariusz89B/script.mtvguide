@@ -97,10 +97,11 @@ SETTINGS_TO_CHECK = ['source', 'xmltv_file', 'xmltv_logo_folder',
 
 
 class Channel(object):
-    def __init__(self, id, title, logo = None, streamUrl = None, visible = True, weight = -1):
+    def __init__(self, id, title, logo = None, titles = None, streamUrl = None, visible = True, weight = -1):
         self.id = id
         self.title = title
         self.logo = logo
+        self.titles = titles
         self.streamUrl = streamUrl
         self.visible = visible
         self.weight = weight
@@ -114,8 +115,8 @@ class Channel(object):
         return self.id == other.id
 
     def __repr__(self):
-        return 'Channel(id={}, title={}, logo={}, streamUrl={})' \
-               .format(self.id, self.title, self.logo, self.streamUrl)
+        return 'Channel(id={}, title={}, logo={}, titles={}, streamUrl={})' \
+               .format(self.id, self.title, self.logo, self.titles, self.streamUrl)
 
 class Program(object):
     def __init__(self, channel, title, startDate, endDate, description, productionDate = None, director = None, actor = None, episode = None, imageLarge = None, imageSmall=None, categoryA=None, categoryB=None, notificationScheduled = None, recordingScheduled = None):
@@ -365,7 +366,7 @@ class Database(object):
         self.eventQueue.append(event)
         self.event.set()
         while method.__name__ not in self.eventResults:
-            time.sleep(0.01)
+            time.sleep(0.02)
         result = self.eventResults.get(method.__name__)
         del self.eventResults[method.__name__]
         self.lock.release()
@@ -651,9 +652,9 @@ class Database(object):
                             c.execute('DELETE FROM programs WHERE source=?', [self.source.KEY])
                             c.execute('DELETE FROM updates WHERE source=?', [self.source.KEY])
                             for channel in channelList:
-                                c.execute('INSERT OR IGNORE INTO channels(id, title, logo, stream_url, visible, weight, source) VALUES(?, ?, ?, ?, ?, (CASE ? WHEN -1 THEN (SELECT COALESCE(MAX(weight)+1, 0) FROM channels WHERE source=?) ELSE ? END), ?)', [channel.id, channel.title, channel.logo, channel.streamUrl, channel.visible, channel.weight, self.source.KEY, channel.weight, self.source.KEY])
+                                c.execute('INSERT OR IGNORE INTO channels(id, title, logo, titles, stream_url, visible, weight, source) VALUES(?, ?, ?, ?, ?, ?, (CASE ? WHEN -1 THEN (SELECT COALESCE(MAX(weight)+1, 0) FROM channels WHERE source=?) ELSE ? END), ?)', [channel.id, channel.title, channel.logo, channel.titles, channel.streamUrl, channel.visible, channel.weight, self.source.KEY, channel.weight, self.source.KEY])
                                 if not c.rowcount:
-                                    c.execute('UPDATE channels SET title=?, logo=?, stream_url=?, visible=?, weight=(CASE ? WHEN -1 THEN weight ELSE ? END) WHERE id=? AND source=?', [channel.title, channel.logo, channel.streamUrl, channel.visible, channel.weight, channel.weight, channel.id, self.source.KEY])
+                                    c.execute('UPDATE channels SET title=?, logo=?, titles=?, stream_url=?, visible=?, weight=(CASE ? WHEN -1 THEN weight ELSE ? END) WHERE id=? AND source=?', [channel.title, channel.logo, channel.titles, channel.streamUrl, channel.visible, channel.weight, channel.weight, channel.id, self.source.KEY])
                                
                         self.settingsChanged = False # only want to update once due to changed settings
 
@@ -674,10 +675,10 @@ class Database(object):
                         self.conn.commit()
 
                     if isinstance(item, Channel):
-                        c.execute('INSERT OR IGNORE INTO channels(id, title, logo, stream_url, visible, weight, source) VALUES(?, ?, ?, ?, ?, (CASE ? WHEN -1 THEN (SELECT COALESCE(MAX(weight)+1, 0) FROM channels WHERE source=?) ELSE ? END), ?)', [item.id, item.title, item.logo, item.streamUrl, item.visible, item.weight, self.source.KEY, item.weight, self.source.KEY])
+                        c.execute('INSERT OR IGNORE INTO channels(id, title, logo, titles, stream_url, visible, weight, source) VALUES(?, ?, ?, ?, ?, ?, (CASE ? WHEN -1 THEN (SELECT COALESCE(MAX(weight)+1, 0) FROM channels WHERE source=?) ELSE ? END), ?)', [item.id, item.title, item.logo, item.titles, item.streamUrl, item.visible, item.weight, self.source.KEY, item.weight, self.source.KEY])
                         if not c.rowcount:
-                            c.execute('UPDATE channels SET title=?, logo=?, stream_url=?, visible=(CASE ? WHEN -1 THEN visible ELSE ? END), weight=(CASE ? WHEN -1 THEN weight ELSE ? END) WHERE id=? AND source=?',
-                                [item.title, item.logo, item.streamUrl, item.weight, item.visible, item.weight, item.weight, item.id, self.source.KEY])
+                            c.execute('UPDATE channels SET title=?, logo=?, titles=?, stream_url=?, visible=(CASE ? WHEN -1 THEN visible ELSE ? END), weight=(CASE ? WHEN -1 THEN weight ELSE ? END) WHERE id=? AND source=?',
+                                [item.title, item.logo, item.titles, item.streamUrl, item.weight, item.visible, item.weight, item.weight, item.id, self.source.KEY])
 
                     elif isinstance(item, Program):
                         try:
@@ -802,11 +803,24 @@ class Database(object):
             deb('[UPD] Updating databse')
             nrOfChannelsUpdated = 0
             c = self.conn.cursor()
+
+            if ADDON.getSetting('epg_display_name') == 'true':
+                channelList = dict()
+
+                c.execute('SELECT id, titles FROM channels')
+                for row in c:
+                    channelList.update({row[str('id')]: row[str('titles')].upper()})
+
             for x in streams.automap:
                 if x.strm is not None and x.strm != '':
                     #deb('[UPD] Updating: CH=%-35s STRM=%-30s SRC={}'.format(x.channelid, x.strm, x.src))
                     try:
-                        c.execute("INSERT INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid, x.strm])
+                        if ADDON.getSetting('epg_display_name') == 'true':
+                            value = [k for k, v in channelList.items() if x.channelid in v]
+                            if value:
+                                c.execute("INSERT INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [value[0], x.strm])
+                        else:
+                            c.execute("INSERT INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid, x.strm])
                         nrOfChannelsUpdated += 1
                     except Exception as ex:
                         deb('[UPD] Error updating stream: {}'.format(getExceptionString()))
@@ -974,9 +988,9 @@ class Database(object):
     def _addChannel(self, channel):
         if channel is not None:
             c = self.conn.cursor()
-            c.execute('INSERT OR IGNORE INTO channels(id, title, logo, stream_url, visible, weight, source) VALUES(?, ?, ?, ?, ?, (CASE ? WHEN -1 THEN (SELECT COALESCE(MAX(weight)+1, 0) FROM channels WHERE source=?) ELSE ? END), ?)', [channel.id, channel.title, channel.logo, channel.streamUrl, channel.visible, channel.weight, self.source.KEY, channel.weight, self.source.KEY])
+            c.execute('INSERT OR IGNORE INTO channels(id, title, logo, titles, stream_url, visible, weight, source) VALUES(?, ?, ?, ?, ?, ?, (CASE ? WHEN -1 THEN (SELECT COALESCE(MAX(weight)+1, 0) FROM channels WHERE source=?) ELSE ? END), ?)', [channel.id, channel.title, channel.logo, channel.titles, channel.streamUrl, channel.visible, channel.weight, self.source.KEY, channel.weight, self.source.KEY])
             if not c.rowcount:
-                c.execute('UPDATE channels SET title=?, logo=?, stream_url=?, visible=?, weight=(CASE ? WHEN -1 THEN weight ELSE ? END) WHERE id=? AND source=?', [channel.title, channel.logo, channel.streamUrl, channel.visible, channel.weight, channel.weight, channel.id, self.source.KEY])
+                c.execute('UPDATE channels SET title=?, logo=?, titles=?, stream_url=?, visible=?, weight=(CASE ? WHEN -1 THEN weight ELSE ? END) WHERE id=? AND source=?', [channel.title, channel.logo, channel.titles, channel.streamUrl, channel.visible, channel.weight, channel.weight, channel.id, self.source.KEY])
             self.conn.commit()
             c.close()
 
@@ -1002,12 +1016,13 @@ class Database(object):
     def _saveChannelList(self, channelList):
         c = self.conn.cursor()
         for idx, channel in enumerate(channelList):
-            c.execute('INSERT OR IGNORE INTO channels(id, title, logo, stream_url, visible, weight, source) VALUES(?, ?, ?, ?, ?, (CASE ? WHEN -1 THEN (SELECT COALESCE(MAX(weight)+1, 0) FROM channels WHERE source=?) ELSE ? END), ?)', [channel.id, channel.title, channel.logo, channel.streamUrl, channel.visible, channel.weight, self.source.KEY, channel.weight, self.source.KEY])
+            c.execute('INSERT OR IGNORE INTO channels(id, title, logo, titles, stream_url, visible, weight, source) VALUES(?, ?, ?, ?, ?, ?, (CASE ? WHEN -1 THEN (SELECT COALESCE(MAX(weight)+1, 0) FROM channels WHERE source=?) ELSE ? END), ?)', [channel.id, channel.title, channel.logo, channel.titles, channel.streamUrl, channel.visible, channel.weight, self.source.KEY, channel.weight, self.source.KEY])
             if not c.rowcount:
-                c.execute('UPDATE channels SET title=?, logo=?, stream_url=?, visible=?, weight=(CASE ? WHEN -1 THEN weight ELSE ? END) WHERE id=? AND source=?', [channel.title, channel.logo, channel.streamUrl, channel.visible, channel.weight, channel.weight, channel.id, self.source.KEY])
+                c.execute('UPDATE channels SET title=?, logo=?, titles=?, stream_url=?, visible=?, weight=(CASE ? WHEN -1 THEN weight ELSE ? END) WHERE id=? AND source=?', [channel.title, channel.logo, channel.titles, channel.streamUrl, channel.visible, channel.weight, channel.weight, channel.id, self.source.KEY])
         c.execute("UPDATE sources SET channels_updated=? WHERE id=?", [self.source.getNewUpdateTime(), self.source.KEY])
         self.conn.commit()
         self.channelList = None
+
 
     def getChannelList(self, onlyVisible = True, customCategory=None, excludeCurrentCategory = False):
         result = self._invokeAndBlockForResult(self._getChannelList, onlyVisible, customCategory, excludeCurrentCategory)
@@ -1070,7 +1085,7 @@ class Database(object):
             else:
                 c.execute('SELECT * FROM channels WHERE source=? ORDER BY weight', [self.source.KEY])
             for row in c:
-                channel = Channel(row[str('id')], row[str('title')],row[str('logo')], row[str('stream_url')], row[str('visible')], row[str('weight')])
+                channel = Channel(row[str('id')], row[str('title')],row[str('logo')], row[str('titles')], row[str('stream_url')], row[str('visible')], row[str('weight')])
                 channelList.append(channel)
             c.close()
 
@@ -1829,6 +1844,11 @@ class Database(object):
                 c.execute('UPDATE version SET major=6, minor=7, patch=3')
                 self.conn.commit()
 
+            if version < [6, 7, 4]:
+                c.execute('ALTER TABLE channels ADD COLUMN titles TEXT')
+                c.execute('UPDATE version SET major=6, minor=7, patch=4')
+                self.conn.commit()
+
                 if neededRestart:
                     deb('Required m-TVGuide restart')
                     raise RestartRequired()
@@ -2574,6 +2594,13 @@ def customParseXMLTV(xml, progress_callback):
         id = decodeString(channelIdRe.search(channel).group(1).upper())
 
         try:
+            titleList = channelTitleRe.findall(channel)
+            titles = ','.join([str(elem) for elem in titleList])
+            #titles = '\', \''.join(titleList)
+        except:
+            titles = None
+
+        try:
             title = decodeString(channelTitleRe.search(channel).group(1))
         except:
             title = decodeString(id)
@@ -2584,7 +2611,7 @@ def customParseXMLTV(xml, progress_callback):
             logo = None
 
         channel = None
-        yield Channel(id, title, logo)
+        yield Channel(id, title, logo, titles)
 
     if strings2.M_TVGUIDE_CLOSING:
         raise SourceUpdateCanceledException()

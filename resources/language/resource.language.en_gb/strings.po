@@ -912,6 +912,10 @@ msgctxt "#30760"
 msgid "Enable subtitles"
 msgstr ""
 
+msgctxt "#30761"
+msgid "Enable detection of alternative channel names"
+msgstr ""
+
 msgctxt "#30802"
 msgid "m-TVGuide is configured to stream using"
 msgstr ""
@@ -3234,6 +3238,10 @@ msgstr ""
 
 msgctxt "#95133"
 msgid "If enabled add-on will continue to run play and record services upon exit."
+msgstr ""
+
+msgctxt "#95134"
+msgid "If enabled add-on will detect display names in EPG."
 msgstr ""
 
 msgctxt "#99995" 

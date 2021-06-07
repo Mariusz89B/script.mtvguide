@@ -443,7 +443,7 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
             self.channel_number = ""
             self.getControl(9999).setLabel(self.channel_number)
 
-        channel = Channel(id='', title='', logo='', streamUrl='', visible='', weight='')
+        channel = Channel(id='', title='', logo='', titles='', streamUrl='', visible='', weight='')
         program = Program(channel=channelList[self.channelIdx], title='', startDate='', endDate='', description='', imageLarge='', imageSmall='', categoryA='',categoryB='')
         self.gu.playChannel(program.channel)
         self.isClosing = True
