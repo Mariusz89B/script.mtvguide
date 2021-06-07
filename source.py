@@ -819,7 +819,7 @@ class Database(object):
                     #deb('[UPD] Updating: CH=%-35s STRM=%-30s SRC={}'.format(x.channelid, x.strm, x.src))
                     try:
                         if ADDON.getSetting('epg_display_name') == 'true':
-                            value = [k for k, v in channelList.items() if x.channelid in v]
+                            value = [k for k, v in channelList.items() if x.channelid.upper() in v]
                             if value:
                                 c.execute("INSERT INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [value[0], x.strm])
                         else:
@@ -1850,9 +1850,9 @@ class Database(object):
             if version < [6, 7, 4]:
                 c.execute('ALTER TABLE channels ADD COLUMN titles TEXT')
                 c.execute('UPDATE version SET major=6, minor=7, patch=4')
-                self.conn.commit()
-
                 neededRestart = False
+
+                self.conn.commit()
 
                 if neededRestart:
                     deb('Required m-TVGuide restart')
@@ -2600,7 +2600,7 @@ def customParseXMLTV(xml, progress_callback):
 
         try:
             titleList = channelTitleRe.findall(channel)
-            titles = ','.join([str(elem) for elem in titleList])
+            titles = ','.join([str(elem.upper()) for elem in titleList])
         except:
             titles = None
 
@@ -2804,7 +2804,7 @@ def parseXMLTV(context, f, size, logoFolder, progress_callback):
                 id = elem.get("id").upper()
                 
                 titleList = elem.findall("display-name")
-                titles = ','.join([str(x.text) for x in titleList])
+                titles = ','.join([str(x.text.upper()) for x in titleList])
 
                 if titles == "":
                     titles = None
