@@ -809,7 +809,10 @@ class Database(object):
 
                 c.execute('SELECT id, titles FROM channels')
                 for row in c:
-                    channelList.update({row[str('id')]: row[str('titles')].upper()})
+                    try:
+                        channelList.update({row[str('id')]: row[str('titles')].upper()})
+                    except:
+                        channelList.update({row[str('id')]: row[str('id')].upper()})
 
             for x in streams.automap:
                 if x.strm is not None and x.strm != '':
@@ -1849,6 +1852,8 @@ class Database(object):
                 c.execute('UPDATE version SET major=6, minor=7, patch=4')
                 self.conn.commit()
 
+                neededRestart = False
+
                 if neededRestart:
                     deb('Required m-TVGuide restart')
                     raise RestartRequired()
@@ -2596,7 +2601,6 @@ def customParseXMLTV(xml, progress_callback):
         try:
             titleList = channelTitleRe.findall(channel)
             titles = ','.join([str(elem) for elem in titleList])
-            #titles = '\', \''.join(titleList)
         except:
             titles = None
 
@@ -2798,7 +2802,15 @@ def parseXMLTV(context, f, size, logoFolder, progress_callback):
 
             elif elem.tag == "channel":
                 id = elem.get("id").upper()
+                
+                titleList = elem.findall("display-name")
+                titles = ','.join([str(x.text) for x in titleList])
+
+                if titles == "":
+                    titles = None
+
                 title = elem.findtext("display-name")
+                
                 if title == "":
                     title = id
                 logo = None
@@ -2810,7 +2822,7 @@ def parseXMLTV(context, f, size, logoFolder, progress_callback):
                     iconElement = elem.find("icon")
                     if iconElement is not None:
                         logo = iconElement.get("src")
-                result = Channel(id, title, logo)
+                result = Channel(id, title, logo, titles)
 
             if result:
                 elements_parsed += 1
