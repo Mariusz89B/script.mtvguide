@@ -1048,16 +1048,16 @@ class Database(object):
 
                 if self.ChannelsWithStream == 'true':
                     if onlyVisible:
-                        c.execute('SELECT DISTINCT chann.id, chann.title, chann.logo, chann.stream_url, chann.source, chann.visible, chann.weight from channels as chann INNER JOIN custom_stream_url AS custom ON (UPPER(chann.id)) = (UPPER(custom.channel)) WHERE source=? AND visible=? ORDER BY weight', [self.source.KEY, True])
+                        c.execute('SELECT DISTINCT chann.id, chann.title, chann.logo, chann.stream_url, chann.source, chann.visible, chann.weight, chann.titles FROM channels AS chann INNER JOIN custom_stream_url AS custom ON (UPPER(chann.id)) = (UPPER(custom.channel)) WHERE source=? AND visible=? ORDER BY weight', [self.source.KEY, True])
                     else:
-                        c.execute('SELECT DISTINCT chann.id, chann.title, chann.logo, chann.stream_url, chann.source, chann.visible, chann.weight from channels as chann INNER JOIN custom_stream_url AS custom ON (UPPER(chann.id)) = (UPPER(custom.channel)) WHERE source=? ORDER BY weight', [self.source.KEY])
+                        c.execute('SELECT DISTINCT chann.id, chann.title, chann.logo, chann.stream_url, chann.source, chann.visible, chann.weight, chann.titles FROM channels AS chann INNER JOIN custom_stream_url AS custom ON (UPPER(chann.id)) = (UPPER(custom.channel)) WHERE source=? ORDER BY weight', [self.source.KEY])
                 else:
                     if onlyVisible:
                         c.execute('SELECT * FROM channels WHERE source=? AND visible=? ORDER BY weight', [self.source.KEY, True])
                     else:
                         c.execute('SELECT * FROM channels WHERE source=? ORDER BY weight', [self.source.KEY])
                 for row in c:
-                    channel = Channel(row[str('id')], row[str('title')],row[str('logo')], row[str('stream_url')], row[str('visible')], row[str('weight')])
+                    channel = Channel(row[str('id')], row[str('title')], row[str('logo')], row[str('titles')], row[str('stream_url')], row[str('visible')], row[str('weight')])
                     channelList.append(channel)
                 c.close()
 
