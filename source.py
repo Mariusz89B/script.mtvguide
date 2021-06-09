@@ -829,9 +829,9 @@ class Database(object):
                                 for k, v in sorted(channelList.iteritems()):
                                     for item in v.split(','):
                                         if x.channelid.upper() == item:
-                                            result = k
+                                            result = k.lower()
 
-                            c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [result.lower(), x.strm])
+                            c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [result, x.strm])
                         else:
                             c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid, x.strm])
                         nrOfChannelsUpdated += 1
