@@ -1,4 +1,4 @@
-﻿[COLOR yellow][B]wersja 9.3.8[/B] - 2021-06-07[/COLOR]
+﻿[COLOR yellow][B]wersja 9.3.8[/B] - 2021-06-09[/COLOR]
 - dodana opcja wykrywania alternatywnych nazw kanałów
 
 [COLOR yellow][B]wersja 9.3.7[/B] - 2021-06-04[/COLOR]
