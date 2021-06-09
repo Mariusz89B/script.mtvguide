@@ -809,21 +809,29 @@ class Database(object):
 
                 c.execute('SELECT id, titles FROM channels')
                 for row in c:
-                    try:
-                        channelList.update({row[str('id')]: row[str('titles')].upper()})
-                    except:
-                        channelList.update({row[str('id')]: row[str('id')].upper()})
+                    ids = row[str('id')]
+                    xs = row[str('titles')]
+
+                    if xs is not None:
+                        if sys.version_info[0] > 2:
+                            channelList.update({ids: xs.upper()})
+                        else:
+                            channelList.update({ids.encode('utf-8'): xs.encode('utf-8').upper()})
 
             for x in streams.automap:
                 if x.strm is not None and x.strm != '':
                     #deb('[UPD] Updating: CH=%-35s STRM=%-30s SRC={}'.format(x.channelid, x.strm, x.src))
                     try:
                         if ADDON.getSetting('epg_display_name') == 'true':
-                            value = [k for k, v in channelList.items() if x.channelid.upper() in v]
+                            if sys.version_info[0] > 2:
+                                value = [k for k, v in sorted(channelList.items()) if x.channelid.upper() in v]
+                            else:
+                                import unicodedata
+                                value = [k for k, v in sorted(channelList.iteritems()) if unicodedata.normalize('NFKD', x.channelid.upper()).encode('ascii', 'ignore') in v]
                             if value:
-                                c.execute("INSERT INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [value[0], x.strm])
+                                c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [value[0], x.strm])
                         else:
-                            c.execute("INSERT INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid, x.strm])
+                            c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid, x.strm])
                         nrOfChannelsUpdated += 1
                     except Exception as ex:
                         deb('[UPD] Error updating stream: {}'.format(getExceptionString()))
