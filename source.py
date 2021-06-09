@@ -812,17 +812,13 @@ class Database(object):
                     ids = row[str('id')]
                     xs = row[str('titles')]
 
-                    if sys.version_info[0] > 2:
-                        channelList.update({ids.upper(): xs.upper()})
-                    else:
-                        channelList.update({ids.encode('ascii', 'ignore').upper(): xs.encode('ascii', 'ignore').upper()})
+                    channelList.update({ids.upper(): xs.upper()})
 
             for x in streams.automap:
                 if x.strm is not None and x.strm != '':
                     #deb('[TEST] Updating: CH=%-35s STRM=%-30s SRC={}'.format(x.channelid, x.strm, x.src))
                     try: 
                         if ADDON.getSetting('epg_display_name') == 'true':
-                            result = ''
                             if sys.version_info[0] > 2:
                                 for k, v in sorted(channelList.items()):
                                     for item in v.split(','):
@@ -834,8 +830,8 @@ class Database(object):
                                     for item in v.split(','):
                                         if x.channelid.upper() == item:
                                             result = k
-                                
-                            c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [result, x.strm])
+
+                            c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [result.lower(), x.strm])
                         else:
                             c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid, x.strm])
                         nrOfChannelsUpdated += 1
@@ -2600,8 +2596,6 @@ def customParseXMLTV(xml, progress_callback):
 
     if sys.version_info[0] > 2:
         xml = xml.decode('utf-8')
-    else:
-        pass
 
     channels = channelRe.findall(xml)
     if len(channels) == 0:
