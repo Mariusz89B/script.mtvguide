@@ -812,29 +812,30 @@ class Database(object):
                     ids = row[str('id')]
                     xs = row[str('titles')]
 
-                    if xs is not None:
-                        if sys.version_info[0] > 2:
-                            channelList.update({ids.upper(): xs.upper()})
-                        else:
-                            channelList.update({ids.encode('ascii', 'ignore').upper(): xs.encode('ascii', 'ignore').upper()})
-                    
+                    if sys.version_info[0] > 2:
+                        channelList.update({ids.upper(): xs.upper()})
                     else:
-                        if sys.version_info[0] > 2:
-                            channelList.update({ids.upper(): ids.upper()})
-                        else:
-                            channelList.update({ids.encode('ascii', 'ignore').upper(): ids.encode('ascii', 'ignore').upper()})
+                        channelList.update({ids.encode('ascii', 'ignore').upper(): xs.encode('ascii', 'ignore').upper()})
 
             for x in streams.automap:
                 if x.strm is not None and x.strm != '':
-                    #deb('[UPD] Updating: CH=%-35s STRM=%-30s SRC={}'.format(x.channelid, x.strm, x.src))
+                    #deb('[TEST] Updating: CH=%-35s STRM=%-30s SRC={}'.format(x.channelid, x.strm, x.src))
                     try: 
                         if ADDON.getSetting('epg_display_name') == 'true':
+                            result = ''
                             if sys.version_info[0] > 2:
-                                value = [k for k, v in sorted(channelList.items()) if x.channelid.upper() in v]
+                                for k, v in sorted(channelList.items()):
+                                    for item in v.split(','):
+                                        if x.channelid.upper() == item:
+                                            result = k
+                                
                             else:
-                                value = [k for k, v in sorted(channelList.iteritems()) if x.channelid.upper() in v]
-                            if value:
-                                c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [value[0], x.strm])
+                                for k, v in sorted(channelList.iteritems()):
+                                    for item in v.split(','):
+                                        if x.channelid.upper() == item:
+                                            result = k
+                                
+                            c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [result, x.strm])
                         else:
                             c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid, x.strm])
                         nrOfChannelsUpdated += 1
