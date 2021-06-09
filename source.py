@@ -812,7 +812,10 @@ class Database(object):
                     ids = row[str('id')]
                     xs = row[str('titles')]
 
-                    channelList.update({ids.upper(): xs.upper()})
+                    try:
+                        channelList.update({ids.upper(): xs.upper()})
+                    except:
+                        channelList.update({ids.upper(): ids.upper()})
 
             for x in streams.automap:
                 if x.strm is not None and x.strm != '':
