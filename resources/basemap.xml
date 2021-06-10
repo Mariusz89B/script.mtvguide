@@ -86,7 +86,8 @@
 	<channel id="EUROCHANNEL PL" title="(?=EURO\s*CHANNEL(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="EURONEWS PL" title="(?=EURO\s*NEWS(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="EUROSPORT 2 PL" title="(?=(EURO\s*SPORT\s*2|EUTOSPORT\s*2)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="EUROSPORT PL" title="(?=EURO\s*SPORT(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="EUROSPORT 4K PL" title="(?=(EURO\s*SPORT)(\s*1)?(\s*TV)?(\s*UHD|\s*4K)(\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="EUROSPORT PL" title="(?=EURO\s*SPORT(\s*1)?(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
 	<channel id="EXTREME SPORTS CHANNEL PL" title="(?=(EXTREME|EXTREM)(\s*SPORT(S)?)?(\s*CHANNEL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="FANKLUB TV PL" title="(?=FAN\s*KLUB(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="FASHION TV PL" title="(?=FASHION(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -165,7 +166,7 @@
 	<channel id="POLSAT 2 PL" title="(?=POLSAT\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT BOXING NIGHT PL" title="(?=POLSAT\s*BOXING(\s*NIGHT)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT CAFÉ PL" title="(?=POLSAT\s*CAF(E|.)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="POLSAT COMEDY CENTRAL EXTRA PL" title="(?=((POLSAT\s*)?COMEDY\s*)(CC|CENT(ER|RAL))(\s*EXTRA|\s*FAMILY)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="POLSAT COMEDY CENTRAL EXTRA PL" title="(?=((POLSAT\s*)?COMEDY\s*)(CC|CENT(ER|RAL))(\s*EXTRA|\s*FAMILY)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT DOKU PL" title="(?=POLSAT\s*DOKU(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT FILM PL" title="(?=POLSAT\s*FILM(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT GAMES PL" title="(?=POLSAT\s*GAMES(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -204,7 +205,7 @@
 	<channel id="STINGRAY CMUSIC PL" title="(?=STINGRAY\s*CMUSIC(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="STINGRAY DJAZZ PL" title="(?=STINGRAY\s*DJAZZ(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="STINGRAY FESTIVAL 4K PL" title="(?=STINGRAY\s*FESTIVAL(\s*TV)?(\s*UHD|\s*4K)(\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="STINGRAY ICONCERTS PL" title="(?=STINGRAY\s*ICONCERT(S)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="STINGRAY ICONCERTS PL" title="(?=(STINGRAY\s*)?(ICONCERT(S)?)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="STINGRAY JUICEBOX HD PL" title="(?=STINGRAY\s*JUICE\s*BOX(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="STINGRAY LOUD HD PL" title="(?=STINGRAY\s*LOUD(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="STINGRAY RETRO PL" title="(?=STINGRAY\s*RETRO(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -268,7 +269,7 @@
 	<channel id="TVP 3 WROCŁAW PL" title="(?=TVP(\s*3)?(\s*WROCLAW|\s*WROC.?AW)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP 3 ŁÓDŹ PL" title="(?=TVP(\s*3)?(\s*LODZ|\s*(L|.)(O|.)D(Z|.))(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP ABC PL" title="(?=(TVP\s*ABC|ABC\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="TVP DOKUMENT" title="(?=(TVP\s*DOKUMENT|DOKUMENT\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP DOKUMENT PL" title="(?=(TVP\s*DOKUMENT|DOKUMENT\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP HD PL" title="(?=TVP(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP HISTORIA PL" title="(?=(TVP\s*HISTORIA|HISTORIA\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP INFO PL" title="(?=(TVP\s*INFO|INFO\s*TVP)(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -293,6 +294,7 @@
 	<channel id="WPOLSCE.PL PL" title="(?=W\s*POLSCE[\s.]*(PL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="WTK PL" title="(?=WTK(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="ZOOM TV PL" title="(?=ZOOM(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+
 	
 	<category name="Movie" 									tags="Czarna|Dramat|Film|Filmy|Horror|Impresja|Kino|Komedia|Komediodramat|Komediowy|Melodramat|Musical|Romans|Thriller|Western"/>
 	<category name="Series" 								tags="Odcinek|Programy|Seria|Serial|Seriale|Telenowela"/>

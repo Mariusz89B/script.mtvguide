@@ -819,19 +819,19 @@ class Database(object):
 
             for x in streams.automap:
                 if x.strm is not None and x.strm != '':
-                    #deb('[TEST] Updating: CH=%-35s STRM=%-30s SRC={}'.format(x.channelid, x.strm, x.src))
+                    #deb('[UPD] Updating: CH=%-35s STRM=%-30s SRC={}'.format(x.channelid, x.strm, x.src))
                     try: 
                         if ADDON.getSetting('epg_display_name') == 'true':
                             if sys.version_info[0] > 2:
                                 for k, v in sorted(channelList.items()):
                                     for item in v.split(','):
-                                        if x.channelid.upper() == item:
+                                        if x.channelid.upper() == item.upper():
                                             result = k
                                 
                             else:
                                 for k, v in sorted(channelList.iteritems()):
                                     for item in v.split(','):
-                                        if x.channelid.upper() == item:
+                                        if x.channelid.upper() == item.upper():
                                             result = k.lower()
 
                             c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [result, x.strm])
