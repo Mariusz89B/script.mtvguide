@@ -1120,7 +1120,7 @@ class PlayService(xbmc.Player, BasePlayService):
 
                                                             m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/' + str(fsListType) + '-' + str(utc) + '-' + str(offset) + str(fsStreamType) + str(fsUrlAppend)
                                                         else:
-                                                            m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/' + 'timeshift_rel-' + str(offset) + '.m3u8' + str(fsUrlAppend)
+                                                            m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/' + 'mono-timeshift_rel-' + str(offset) + '.m3u8' + str(fsUrlAppend)
                                                     
 
                                                     elif 'hls-custom' in fsListType:

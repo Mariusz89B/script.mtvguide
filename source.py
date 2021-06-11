@@ -821,6 +821,7 @@ class Database(object):
                 if x.strm is not None and x.strm != '':
                     #deb('[UPD] Updating: CH=%-35s STRM=%-30s SRC={}'.format(x.channelid, x.strm, x.src))
                     try: 
+                        result = None
                         if ADDON.getSetting('epg_display_name') == 'true':
                             if sys.version_info[0] > 2:
                                 for k, v in sorted(channelList.items()):
@@ -833,8 +834,8 @@ class Database(object):
                                     for item in v.split(','):
                                         if x.channelid.upper() == item.upper():
                                             result = k.lower()
-
-                            c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [result, x.strm])
+                            if result is not None:
+                                c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [result, x.strm])
                         else:
                             c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid, x.strm])
                         nrOfChannelsUpdated += 1
