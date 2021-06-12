@@ -292,7 +292,7 @@ class PlaylistUpdater(baseServiceUpdater):
 
             regexReplaceList.append( re.compile('[^A-Za-z0-9+/:]+',                                                re.IGNORECASE) )
             regexReplaceList.append( re.compile('\sL\s',                                                           re.IGNORECASE) )
-            regexReplaceList.append( re.compile('(\s|^)(Feed|Europe|SD|FULL|ADULT:|EXTRA:|VIP:|VIP|Audio|Backup|Multi|Sub|VIASAT:|XXX|XXX:|\d{1,2}\s*fps)(?=\s|$)',  re.IGNORECASE) )
+            regexReplaceList.append( re.compile('(\s|^)(Feed|Europe|SD|FULL|ADULT:|EXTRA:|VIP:|VIP|Audio|Backup|Multi|Sub|VIASAT:|XXX|XXX:|\d{1,2}\s*fps|low|high|quality)(?=\s|$)',  re.IGNORECASE) )
 
             langReplaceList = list()
             regexRemoveList = list()
