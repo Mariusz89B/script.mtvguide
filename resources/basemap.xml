@@ -86,7 +86,7 @@
 	<channel id="EUROCHANNEL PL" title="(?=EURO\s*CHANNEL(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="EURONEWS PL" title="(?=EURO\s*NEWS(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="EUROSPORT 2 PL" title="(?=(EURO\s*SPORT\s*2|EUTOSPORT\s*2)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="EUROSPORT 4K PL" title="(?=(EURO\s*SPORT)(\s*1)?(\s*TV)?(\s*UHD|\s*4K)(\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="EUROSPORT 4K PL" title="(?=(EURO\s*SPORT)(\s*1)?(\s*TV)?(\s*UHD)(\s*PL)?$)" strm=""/>
 	<channel id="EUROSPORT PL" title="(?=EURO\s*SPORT(\s*1)?(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
 	<channel id="EXTREME SPORTS CHANNEL PL" title="(?=(EXTREME|EXTREM)(\s*SPORT(S)?)?(\s*CHANNEL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="FANKLUB TV PL" title="(?=FAN\s*KLUB(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -119,6 +119,7 @@
 	<channel id="HISTORY 2 PL" title="(?=(H|HISTORY)\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="HISTORY PL" title="(?=HISTORY(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="HOME TV PL" title="(?=(HOME|TVR)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="HOME 4K PL" title="(?=(HOME|TVR)(\s*TV)?(\s*4K)(\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="ID PL" title="(?=(DISCOVERY\s*)?(INVESTIGATION|ID)(\s*DISCOVERY)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="ITVN EXTRA INTERNATIONAL PL" title="(?=ITVN\s*EXTRA(\s*INT|\s*INTERNATIONAL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="ITVS PL" title="(?=ITVS(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -268,9 +269,10 @@
 	<channel id="TVP 3 WARSZAWA PL" title="(?=(TVP\s*3\s*)?(WARSZAWA)(TVP\s*3\s*)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP 3 WROCŁAW PL" title="(?=TVP(\s*3)?(\s*WROCLAW|\s*WROC.?AW)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP 3 ŁÓDŹ PL" title="(?=TVP(\s*3)?(\s*LODZ|\s*(L|.)(O|.)D(Z|.))(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 4K PL" title="(?=(TVP)(\s*TV)?(\s*UHD)(\s*PL)?$)" strm=""/>
 	<channel id="TVP ABC PL" title="(?=(TVP\s*ABC|ABC\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP DOKUMENT PL" title="(?=(TVP\s*DOKUMENT|DOKUMENT\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="TVP HD PL" title="(?=TVP(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP HD PL" title="(?=TVP(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP HISTORIA PL" title="(?=(TVP\s*HISTORIA|HISTORIA\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP INFO PL" title="(?=(TVP\s*INFO|INFO\s*TVP)(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP KOBIETA PL" title="(?=TVP\s*KOBIETA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
