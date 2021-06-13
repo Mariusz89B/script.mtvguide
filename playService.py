@@ -359,15 +359,9 @@ class PlayService(xbmc.Player, BasePlayService):
         archiveStr = self.archivePlaylist
         return archiveStr
 
-    def seek(self, cc, streamType, cid, dashjs, headers):
+    def deleteSession(self, cc, streamType, cid, dashjs, headers):
         # Wait for player to start playing. This is not exactly bulletproof...
         xbmc.sleep(2000)
-        while not xbmc.Player().isPlaying():
-            xbmc.sleep(100)
-        # if we want to play a live program from the beginning we must set it here.
-        # Setting the StartOffset property on play_item does not work
-        xbmc.sleep(200)
-        xbmc.Player().seekTime(0.0)
         # we need to send a delete request to close the session after playback stops
         while xbmc.Player().isPlaying():
             xbmc.sleep(300)
@@ -957,8 +951,10 @@ class PlayService(xbmc.Player, BasePlayService):
                                         'Accept-Language': 'en-US;q=0.9,en;q=0.8'
                                     }
 
-                                    thread = threading.Thread(name='seek', target=self.seek, args=[cc[country], streamType, self.channCid(channelInfo.cid), dashjs, xheaders])
-                                    thread = threading.Timer(3.0, self.seek, args=[cc[country], streamType, self.channCid(channelInfo.cid), dashjs, xheaders])
+                                    ListItem.setProperty('inputstream.adaptive.play_timeshift_buffer', 'true')
+
+                                    thread = threading.Thread(name='deleteSession', target=self.deleteSession, args=[cc[country], streamType, self.channCid(channelInfo.cid), dashjs, xheaders])
+                                    thread = threading.Timer(3.0, self.deleteSession, args=[cc[country], streamType, self.channCid(channelInfo.cid), dashjs, xheaders])
                                     thread.start()
 
                         self.strmUrl = strmUrl
