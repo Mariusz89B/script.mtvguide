@@ -827,13 +827,13 @@ class Database(object):
                                 for k, v in sorted(channelList.items()):
                                     for item in v.split(','):
                                         if x.channelid.upper() == item.upper():
-                                            result = k
+                                            result = k.upper()
                                 
                             else:
                                 for k, v in sorted(channelList.iteritems()):
                                     for item in v.split(','):
                                         if x.channelid.upper() == item.upper():
-                                            result = k.lower()
+                                            result = k.upper()
                             if result is not None:
                                 c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [result, x.strm])
                         else:
@@ -2608,11 +2608,12 @@ def customParseXMLTV(xml, progress_callback):
         raise SourceFaultyEPGException('')
 
     for channel in channels:
-        id = decodeString(channelIdRe.search(channel).group(1).upper())
+        id = (decodeString(channelIdRe.search(channel).group(1))).upper()
 
         try:
             titleList = channelTitleRe.findall(channel)
-            titles = ','.join([decodeString(str(elem.upper())) for elem in titleList])
+            titles = ','.join([(decodeString(str(elem))).upper() for elem in titleList])
+
         except:
             titles = decodeString(id)
 
@@ -2641,7 +2642,7 @@ def customParseXMLTV(xml, progress_callback):
     totalElement = len(programs)
 
     for program in programs:
-        channel = decodeString(programChannelRe.search(program).group(1).upper())
+        channel = (decodeString(programChannelRe.search(program).group(1))).upper()
         try:
             title = decodeString(programTitleRe.search(program).group(1))
         except AttributeError:
