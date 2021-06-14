@@ -489,7 +489,6 @@ class TeliaPlayUpdater(baseServiceUpdater):
 
             if len(result) <= 0:
                 self.log('Error while parsing service {}'.format(self.serviceName))
-                self.loginErrorMessage()
         
         except:
             self.log('getChannelList exception: {}'.format(getExceptionString()))

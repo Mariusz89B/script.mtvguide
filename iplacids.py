@@ -365,7 +365,6 @@ class IplaUpdater(baseServiceUpdater):
 
             if len(result) <= 0:
                 self.log('Error while parsing service %s' % (self.serviceName))
-                self.loginErrorMessage()
 
         except Exception as e:
             self.log('getChannelList exception: %s' % getExceptionString())

@@ -254,7 +254,6 @@ class PolsatGoUpdater(baseServiceUpdater):
             
             if len(result) <= 0:
                 self.log('Error while parsing service {}, returned data is: {}'.format(self.serviceName, str(response)))
-                self.loginErrorMessage()
 
         except:
             self.log('getChannelList exception: {}'.format(getExceptionString()))

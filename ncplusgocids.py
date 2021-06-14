@@ -229,8 +229,12 @@ class NcPlusGoUpdater(baseServiceUpdater):
                         ab = True
                     elif response['Result']["MessageCodename"]=="wsi_error_13":
                         xbmcgui.Dialog().notification(strings(30353), msg,xbmcgui.NOTIFICATION_INFO, 8000)
+                        ab = False
+                        self.loginErrorMessage()
                     else:
                         xbmcgui.Dialog().notification(strings(30353), msg,xbmcgui.NOTIFICATION_INFO, 8000)
+                        ab = False
+                        self.loginErrorMessage()
                     return ab
 
             else:
@@ -309,7 +313,6 @@ class NcPlusGoUpdater(baseServiceUpdater):
 
             if len(result) <= 0:
                 self.log('Error while parsing service {}, returned data is: {}'.format(self.serviceName, str(html)))
-                self.loginErrorMessage()
         except:
             self.log('getChannelList exception: {}'.format(getExceptionString()))
         return result 

@@ -809,13 +809,13 @@ class Database(object):
 
                 c.execute('SELECT id, titles FROM channels')
                 for row in c:
-                    ids = row[str('id')]
-                    xs = row[str('titles')]
+                    id = row[str('id')]
+                    titles = row[str('titles')]
 
                     try:
-                        channelList.update({ids.upper(): xs.upper()})
+                        channelList.update({id.upper(): titles.upper()})
                     except:
-                        channelList.update({ids.upper(): ids.upper()})
+                        channelList.update({id.upper(): id.upper()})
 
             for x in streams.automap:
                 if x.strm is not None and x.strm != '':
@@ -828,12 +828,13 @@ class Database(object):
                                     for item in v.split(','):
                                         if x.channelid.upper() == item.upper():
                                             result = k.upper()
-                                
+
                             else:
                                 for k, v in sorted(channelList.iteritems()):
                                     for item in v.split(','):
                                         if x.channelid.upper() == item.upper():
                                             result = k.upper()
+
                             if result is not None:
                                 c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [result, x.strm])
                         else:

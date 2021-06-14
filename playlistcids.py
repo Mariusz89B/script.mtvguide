@@ -115,6 +115,14 @@ class PlaylistUpdater(baseServiceUpdater):
         else:
             self.stopPlaybackOnStart = False
 
+    def decodeBackslashPath(self, s):
+        if sys.version_info[0] < 3:
+            s = s.replace('\\', '/').decode('utf-8').encode('utf-8')
+        else:
+            s = s
+        
+        return s
+
     def requestUrl(self, path):
         content = None
         try:
@@ -252,10 +260,15 @@ class PlaylistUpdater(baseServiceUpdater):
                     raise Exception
             else:
                 try:
-                    if sys.version_info[0] > 2:
-                    	lf = open(path, 'r', encoding='utf-8')
+                    p = re.compile('http[s]?:\/\/')
+                    
+                    if p.match(path):
+                        if sys.version_info[0] > 2:
+                        	lf = open(path, 'r', encoding='utf-8')
+                        else:
+                            lf = open(path, 'r')
                     else:
-                        lf = open(path, 'r')
+                        lf = xbmcvfs.File(path)
 
                     tmpcontent = lf.read()
                     lf.close()
