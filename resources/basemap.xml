@@ -239,7 +239,7 @@
 	<channel id="TV REGIONALNA PL" title="(?=(TV\s*)?REGIONALNA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TV RELAX PL" title="(?=(TV\s*)?RELAX(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TV REPUBLIKA PL" title="(?=(TV\s*)?Republika(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="TV TORUŃ PL" title="(?=(TV\s*)?TORU(N|.)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TV TORUŃ PL" title="(?=(TV\s*)?TORUN(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TV TRWAM PL" title="(?=(TV\s*)?TRWAM(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVC PL" title="(?=(TELEWIZJA\s*|NTL\s*)?(TVC|NTL|RADOMSKO)(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVE PL" title="(?=TVE(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -253,22 +253,22 @@
 	<channel id="TVP 1 PL" title="(?=(TVP\s*1|1\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP 2 PL" title="(?=(TVP\s*2|2\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP 3 PL" title="(?=(TVP\s*3|3\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="TVP 3 BIAŁYSTOK PL" title="(?=TVP(\s*3)?(\s*BIALYSTOK|\s*BIA.?YSTOK)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 BIAŁYSTOK PL" title="(?=TVP(\s*3)?\s*BIALYSTOK(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP 3 BYDGOSZCZ PL" title="(?=TVP(\s*3)?\s*BYDGOSZCZ(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="TVP 3 GDAŃSK PL" title="(?=TVP(\s*3)?(\s*GDANSK|\s*GDA.?SK)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="TVP 3 GORZÓW WIELKOPOLSKI PL" title="(?=TVP(\s*3)?(\s*GORZOW\s*WIELKOPOLSKI|\s*GORZ.?W\s*WIELKOPOLSKI)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 GDAŃSK PL" title="(?=TVP(\s*3)?\s*GDANSK(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 GORZÓW WIELKOPOLSKI PL" title="(?=TVP(\s*3)?\s*GORZOW\s*WIELKOPOLSKI(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP 3 KATOWICE PL" title="(?=TVP(\s*3)?(\s*KATOWICE|\s*KATOWICE\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP 3 KIELCE PL" title="(?=TVP(\s*3)?\s*KIELCE(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="TVP 3 KRAKÓW PL" title="(?=TVP(\s*3)?(\s*KRAK.?W|\s*KRAKOW|\s*KRAKOW\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 KRAKÓW PL" title="(?=TVP(\s*3)?\s*KRAKOW(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP 3 LUBLIN PL" title="(?=TVP(\s*3)?\s*LUBLIN(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP 3 OLSZTYN PL" title="(?=TVP(\s*3)?\s*OLSZTYN(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP 3 OPOLE PL" title="(?=TVP(\s*3)?\s*OPOLE(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="TVP 3 POZNAŃ PL" title="(?=TVP(\s*3)?(\s*POZNAN|\s*POZNA.?)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="TVP 3 RZESZÓW PL" title="(?=TVP(\s*3)?(\s*RZESZOW|\s*RZESZ.?W)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 POZNAŃ PL" title="(?=TVP(\s*3)?\s*POZNAN(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 RZESZÓW PL" title="(?=TVP(\s*3)?\s*RZESZOW(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP 3 SZCZECIN PL" title="(?=TVP(\s*3)?\s*SZCZECIN(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="TVP 3 WARSZAWA PL" title="(?=(TVP\s*3\s*)?(WARSZAWA)(TVP\s*3\s*)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="TVP 3 WROCŁAW PL" title="(?=TVP(\s*3)?(\s*WROCLAW|\s*WROC.?AW)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="TVP 3 ŁÓDŹ PL" title="(?=TVP(\s*3)?(\s*LODZ|\s*(L|.)(O|.)D(Z|.))(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 WARSZAWA PL" title="(?=TVP(\s*3)?(\s*WARSZAWA)(TVP\s*3\s*)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 WROCŁAW PL" title="(?=TVP(\s*3)?\s*WROCLAW(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TVP 3 ŁÓDŹ PL" title="(?=(TVP)(\s*3)?\s*LODZ(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP 4K PL" title="(?=(TVP)(\s*TV)?(\s*UHD)(\s*PL)?$)" strm=""/>
 	<channel id="TVP ABC PL" title="(?=(TVP\s*ABC|ABC\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TVP DOKUMENT PL" title="(?=(TVP\s*DOKUMENT|DOKUMENT\s*TVP)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
