@@ -43,7 +43,6 @@
 import sys
 
 import requests
-#import mmap
 
 if sys.version_info[0] > 2:
     from requests.exceptions import HTTPError, ConnectionError, Timeout, RequestException
@@ -114,14 +113,6 @@ class PlaylistUpdater(baseServiceUpdater):
             self.stopPlaybackOnStart = True
         else:
             self.stopPlaybackOnStart = False
-
-    def decodeBackslashPath(self, s):
-        if sys.version_info[0] < 3:
-            s = s.replace('\\', '/').decode('utf-8').encode('utf-8')
-        else:
-            s = s
-        
-        return s
 
     def requestUrl(self, path):
         content = None
@@ -268,7 +259,10 @@ class PlaylistUpdater(baseServiceUpdater):
                         else:
                             lf = open(path, 'r')
                     else:
-                        lf = xbmcvfs.File(path)
+                        if sys.version_info[0] > 2:
+                            lf = open(path, 'r', encoding='utf-8')
+                        else:
+                            lf = open(path, 'r')
 
                     tmpcontent = lf.read()
                     lf.close()
@@ -303,7 +297,8 @@ class PlaylistUpdater(baseServiceUpdater):
 
             cleanup_regex      =     re.compile("\[COLOR\s*\w*\]|\[/COLOR\]|\[B\]|\[/B\]|\[I\]|\[/I\]|^\s*|\s*$",  re.IGNORECASE)
 
-            regexReplaceList.append( re.compile('[^A-Za-z0-9+/:]+',                                                re.IGNORECASE) )
+            #regexReplaceList.append( re.compile('[^A-Za-z0-9+/:]+',                                                re.IGNORECASE) )
+            regexReplaceList.append( re.compile('[^A-Za-zÀ-ȕ0-9+/:]+',                                                re.IGNORECASE) )
             regexReplaceList.append( re.compile('\sL\s',                                                           re.IGNORECASE) )
             regexReplaceList.append( re.compile('(\s|^)(Feed|Europe|SD|FULL|ADULT:|EXTRA:|VIP:|VIP|Audio|Backup|Multi|Sub|VIASAT:|XXX|XXX:|\d{1,2}\s*fps|low|high|quality)(?=\s|$)',  re.IGNORECASE) )
 
@@ -405,7 +400,7 @@ class PlaylistUpdater(baseServiceUpdater):
             self.log('[UPD] -------------------------------------------------------------------------------------')
             self.log('[UPD] %-10s %-35s %-35s' % ( '-CID-', '-NAME-', '-STREAM-'))
 
-            channelsArray = self.getPlaylistContent(self.url.strip(), self.source)
+            channelsArray = self.getPlaylistContent(self.url.strip(), self.source).strip()
 
             if channelsArray is not None and channelsArray != "" and len(channelsArray) > 0:
                 cleaned_playlist = cleanup_regex.sub('', channelsArray)

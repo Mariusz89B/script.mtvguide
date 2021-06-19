@@ -40,8 +40,6 @@
 #   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #   SOFTWARE.
 
-from __future__ import unicode_literals
-
 import sys
 
 if sys.version_info[0] > 2: 
@@ -54,6 +52,7 @@ else:
 import os, sys, io, re, socket, copy, threading
 import time, datetime
 import xbmc, xbmcgui, xbmcvfs
+import unicodedata
 from xml.etree import ElementTree
 from strings import *
 import simplejson as json
@@ -478,7 +477,7 @@ class MapString:
         if sys.version_info[0] > 2:
             xmlstr = xmlstr.decode('utf-8')
         else:
-            xmlstr = xmlstr if isinstance(xmlstr, unicode) else xmlstr.decode('utf-8')
+            xmlstr = xmlstr if isinstance(xmlstr, unicode) else xmlstr.decode('utf-8').encode('utf-8')
 
         if logCall:
             logCall('[UPD] %-35s %-50s %s' % ('ID' , 'TITLE_REGEX', 'STRM'))
@@ -513,10 +512,7 @@ class MapString:
             category_name = categoryRe.search(cat).group(1)
             category_tags = tagsRe.search(cat).group(1).split('|')
             for tag in category_tags:
-                if sys.version_info[0] > 2:
-                    category_tags_set.add(('' + tag.lower()))
-                else:
-                    category_tags_set.add((u'' + tag.lower()))
+                category_tags_set.add(('' + tag.lower()))
             categories[category_name] = category_tags_set
 
         return [result, rstrm, categories]
@@ -821,14 +817,14 @@ class baseServiceUpdater:
         return copy.deepcopy(baseServiceUpdater.baseMapContent)
 
     def loadSingleBaseMap(self, lang, mapFilePath):
-        self.log('Loading %s channel map' % lang)
+        self.log('Loading {} channel map'.format(lang))
         onlineMapFilename   = onlineMapPathBase + mapFilePath
         map                 = self.sl.getJsonFromExtendedAPI(onlineMapFilename, max_conn_time=9, http_timeout=5, verbose=False)
         if map:
-            self.log('successfully downloaded online %s map file: %s' % (lang, onlineMapFilename))
+            self.log('successfully downloaded online {} map file: {}'.format(lang, onlineMapFilename))
         else:
             localMapFilename      = os.path.join(pathMapBase, mapFilePath)
-            self.log('%s file download failed - using local map: %s' % (lang, localMapFilename))
+            self.log('{} file download failed - using local map: {}'.format(lang, localMapFilename))
             map                   = MapString.loadFile(localMapFilename, self.log)
         #entries, _, seCat         = MapString.Parse(map, None) #None so content wont be printed in logs
         entries, _, seCat         = MapString.FastParse(map, None) #None so content wont be printed in logs
@@ -840,7 +836,7 @@ class baseServiceUpdater:
                 baseServiceUpdater.categories[id] = seCat[id]
 
     def loadExtraBaseMap(self, lang, mapFilePath):
-        self.log('Loading %s channel map' % lang)
+        self.log('Loading {} channel map'.format(lang))
         if not xbmcvfs.exists(os.path.join(pathMapExtraBase, mapFilePath)):
             xbmcvfs.copy(os.path.join(pathMapBase, mapFilePath), os.path.join(pathMapExtraBase, mapFilePath))
         localMapFilename      = os.path.join(pathMapExtraBase, mapFilePath)
@@ -929,6 +925,17 @@ class baseServiceUpdater:
             self.log('getBaseChannelList exception: %s' % getExceptionString())
         return result
 
+    def normalize_char(self, c):
+        try:
+            cname = unicodedata.name(c)
+            cname = cname[:cname.index(' WITH')]
+            return unicodedata.lookup(cname)
+        except (ValueError, KeyError):
+            return c
+
+    def normalize(self, s):
+        return ''.join(self.normalize_char(c) for c in s)
+
     def loadChannelList(self):
         try:
             startTime = datetime.datetime.now()
@@ -966,7 +973,10 @@ class baseServiceUpdater:
                 try:
                     p = re.compile(x.titleRegex, re.IGNORECASE)
                     for y in self.channels:
-                        b=p.match(y.title)
+                        if sys.version_info[0] > 2:
+                            b = p.match(self.normalize(y.title))
+                        else:
+                            b = p.match(self.normalize(y.title.decode('utf-8')))
                         if (b):
                             if x.strm != '' and self.addDuplicatesToList == True:
                                 newMapElement = copy.deepcopy(x)
@@ -987,7 +997,7 @@ class baseServiceUpdater:
                                 self.log('[UPD]     %-30s %-30s %-20s %-35s ' % (x.channelid, y.name, x.src, x.strm))
 
                 except Exception as ex:
-                    self.log('%s Error %s %s' % (x.channelid, x.titleRegex, getExceptionString()))
+                    self.log('{} Error {} {}'.format(x.channelid, x.titleRegex, getExceptionString()))
 
             self.log('\n')
             self.log('[UPD] Nie wykorzystano STRM nadawanych przez %s programow:' % self.serviceName)
@@ -1012,11 +1022,15 @@ class baseServiceUpdater:
             for y in self.channels:
                 if y.src == '' or y.src != self.serviceName:
                     if y.name != '':
-                        channelList.append(y.name.upper())
+                        channelList.append(y.name)
                         self.log('[UPD] CID=%-12s NAME=%-40s TITLE=%-40s STRM=%-45s' % (y.cid, y.name, y.title, str(y.strm)))
 
-            with open(file_name, 'wb+') as f:
-                f.write(bytearray('\n'.join(channelList), 'utf-8'))
+            if sys.version_info[0] > 2:
+                with open(file_name, 'wb+') as f:
+                    f.write(bytearray('\n'.join(channelList), 'utf-8'))
+            else:
+                with open(file_name, 'w+') as f:
+                    f.write(str('\n'.join(channelList)))
 
 
             self.log("[UPD] Zakonczono analize...")

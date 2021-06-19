@@ -819,7 +819,7 @@ class Database(object):
 
             for x in streams.automap:
                 if x.strm is not None and x.strm != '':
-                    #deb('[UPD] Updating: CH=%-35s STRM=%-30s SRC={}'.format(x.channelid, x.strm, x.src))
+                    #deb('[UDP] Updating: CH=%-35s STRM=%-30s SRC={}'.format(x.channelid, x.strm, x.src))
                     try: 
                         result = None
                         if ADDON.getSetting('epg_display_name') == 'true':
@@ -832,7 +832,7 @@ class Database(object):
                             else:
                                 for k, v in sorted(channelList.iteritems()):
                                     for item in v.split(','):
-                                        if x.channelid.upper() == item.upper():
+                                        if x.channelid.upper() == item.encode('utf-8').upper():
                                             result = k.upper()
 
                             if result is not None:
