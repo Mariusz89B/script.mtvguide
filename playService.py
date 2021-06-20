@@ -557,6 +557,7 @@ class PlayService(xbmc.Player, BasePlayService):
                             ListItem.setProperty('inputstream.adaptive.manifest_update_parameter', 'full')
                             ListItem.setProperty('inputstream.adaptive.license_key', licServ+'|Content-Type=application%2Fjson&Referer=https://go.cyfrowypolsat.pl/&User-Agent='+quote(UA)+'|'+licenseUrl+'|JBlicense')                      
                             ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
+                            ListItem.setProperty('inputstream.adaptive.play_timeshift_buffer', 'true')
                             ListItem.setProperty('IsPlayable', 'true')
 
                             thread = threading.Thread(name='reverse', target=self.reverse, args=[])

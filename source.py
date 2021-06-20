@@ -2602,6 +2602,9 @@ def customParseXMLTV(xml, progress_callback):
     if sys.version_info[0] > 2:
         xml = xml.decode('utf-8')
 
+    titlesList = dict()
+    logosList = dict()
+
     channels = channelRe.findall(xml)
     if len(channels) == 0:
         deb('Error, no channels in EPG!')
@@ -2627,6 +2630,34 @@ def customParseXMLTV(xml, progress_callback):
             logo = decodeString(channelIconRe.search(channel).group(1))
         except:
             logo = None
+
+        if ADDON.getSetting('epg_display_name') == 'true':
+            if sys.version_info[0] > 2:
+                for t, ts in list(titlesList.items()):
+                    if id == t:
+                        titles = titles + ',' + ts
+
+            else:
+                for t, ts in list(titlesList.iteritems()):
+                    if id == t:
+                        titles = titles + ',' + ts
+
+            if titles is not None:
+                titlesList.update({id: titles})
+
+            if sys.version_info[0] > 2:
+                for l, ls in list(logosList.items()):
+                    if id == l:
+                        if logo is None:
+                            logo = ls
+            else:
+                for l, ls in list(logosList.iteritems()):
+                    if id == l:
+                        if logo is None:
+                            logo = ls
+         
+            if logo is not None:
+                logosList.update({id: logo})
 
         channel = None
         yield Channel(id, title, logo, titles)
@@ -2757,6 +2788,9 @@ def parseXMLTV(context, f, size, logoFolder, progress_callback):
     elements_parsed = 0
     category_count = {}
 
+    titlesList = dict()
+    logosList = dict()
+
     for event, elem in context:
         if event == "end":
             result = None
@@ -2816,18 +2850,22 @@ def parseXMLTV(context, f, size, logoFolder, progress_callback):
 
             elif elem.tag == "channel":
                 id = elem.get("id").upper()
+
+                titles = None
                 
                 titleList = elem.findall("display-name")
                 titles = ','.join([str(x.text.upper()) for x in titleList])
 
-                if titles == "":
-                    titles = None
+                if not titles:
+                    titles = elem.get("id").upper()
 
                 title = elem.findtext("display-name")
                 
                 if title == "":
                     title = id
+
                 logo = None
+
                 if logoFolder:
                     logoFile = os.path.join(logoFolder, title + '.png')
                     if xbmcvfs.exists(logoFile):
@@ -2836,6 +2874,36 @@ def parseXMLTV(context, f, size, logoFolder, progress_callback):
                     iconElement = elem.find("icon")
                     if iconElement is not None:
                         logo = iconElement.get("src")
+
+                if ADDON.getSetting('epg_display_name') == 'true':
+                    if sys.version_info[0] > 2:
+                        for t, ts in list(titlesList.items()):
+                            if id == t:
+                                titles = titles + ',' + ts
+
+                    else:
+                        for t, ts in list(titlesList.iteritems()):
+                            if id == t:
+                                titles = titles + ',' + ts
+
+                    if titles is not None:
+                        titlesList.update({id: titles})
+
+
+                    if sys.version_info[0] > 2:
+                        for l, ls in list(logosList.items()):
+                            if id == l:
+                                if logo is None:
+                                    logo = ls
+                    else:
+                        for l, ls in list(logosList.iteritems()):
+                            if id == l:
+                                if logo is None:
+                                    logo = ls
+
+                    if logo is not None:
+                        logosList.update({id: logo})
+
                 result = Channel(id, title, logo, titles)
 
             if result:

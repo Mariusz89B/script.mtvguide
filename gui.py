@@ -2158,7 +2158,7 @@ class mTVGuide(xbmcgui.WindowXML):
     def getStreamsCid(self, channels):
         streamsList = list()
 
-        streams = self.database.getAllCatchupUrlList(channels) 
+        streams = self.database.getAllCatchupUrlList(channels)
         #deb('getAllCatchupUrlList: {}'.format(streams))
 
         # Catchup
