@@ -5542,10 +5542,10 @@ class mTVGuide(xbmcgui.WindowXML):
         else:
             self.timebar = xbmcgui.ControlImage(tmp_control.getX(), tmp_control.getY(), tmp_control.getWidth(), tmp_control.getHeight(), os.path.join(Skin.getSkinPath(), 'media', 'tvguide-timebar.png'), colorDiffuse=skin_timebar_colour)
         
+        self.updateTimebar()
+
         timebars = [self.timebar, self.timebarBack]
         self.addControls(timebars)
-        
-        self.updateTimebar()
 
         self.redrawingEPG = False
         if self.redrawagain:
@@ -6012,20 +6012,23 @@ class mTVGuide(xbmcgui.WindowXML):
                 try:
                     # Sometimes raises:
                     # exceptions.RuntimeError: Unknown exception thrown from the call "setVisible"
-                    if self.lastKeystroke < self.viewStartDate:
-                        self.timebarBack.setVisible(True)
+                    if self.lastKeystroke >= self.viewStartDate and xbmc.getCondVisibility('!Control.IsVisible(5000)'):
+                        if self.viewStartDate.date() == self.lastKeystroke.date():
+                            self.timebar.setVisible(True)
+                            self.timebar.setAnimations([('visible', 'effect=fade time=400',)])
+                        else:
+                            self.timebar.setVisible(False)
+                            self.timebar.setAnimations([('hidden', 'effect=fade time=0',)])
                         
-                    if self.viewStartDate > self.lastKeystroke:
-                        self.timebarBack.setVisible(False)
+                        self.timebarBack.setVisible(True)
+                        self.timebarBack.setAnimations([('visible', 'effect=fade time=500',)])
 
-                    if self.viewStartDate.date() == self.lastKeystroke.date():
-                        self.timebar.setVisible(True)
                     else:
-                        self.timebar.setVisible(False)
-
-                    if not xbmc.getCondVisibility('!Control.IsVisible(5000)'):
                         self.timebarBack.setVisible(False)
+                        self.timebarBack.setAnimations([('hidden', 'effect=fade time=0',)])
                         self.timebar.setVisible(False)
+                        self.timebar.setAnimations([('hidden', 'effect=fade time=0',)])
+
                 except:
                     pass
 
