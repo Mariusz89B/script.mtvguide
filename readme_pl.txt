@@ -29,7 +29,7 @@ Przepisy prawne
 Szczegółowe przepisy koncesjonowanego dostawcy można znaleźć na stronie operatora.
 	
 C More - https://www.cmore.se/artiklar/anvandarvillkor
-Cyfrowy Polsat GO - https://www.cyfrowypolsat.pl/do-pobrania/regulanki-i-cenniki.cp
+Cyfrowy Polsat GO - https://www.cyfrowypolsat.pl/do-pobrania/regulaminy-i-cenniki.cp/
 Ipla - https://www.ipla.tv/regulamins
 nc + GO - https://ncplusgo.pl/Cms/Page?codename=regulamin&mobile=False
 PlayerPL - https://player.pl/regulamin.pdf
@@ -39,7 +39,7 @@ WP Pilot - https://pilot.wp.pl/pomoc/
 Rejestracja konta odbywa się na stronie operatora.
 
 C More - https://www.cmore.se/skapakonto/
-Cyfrowy Polsat GO - https://icok.cyfrowypolsat.pl/rejestracja.cp/
+Cyfrowy Polsat GO - https://icok.cyfrowypolsat.pl/rejestracja.cp
 Ipla - https://www.ipla.tv/register/
 nc+ GO - https://ncplusgo.pl/konto/rejestracja/
 PlayerPL - https://player.pl/
