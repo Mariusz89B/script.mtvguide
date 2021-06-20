@@ -55,7 +55,7 @@
 	<channel id="CLUB MTV PL" title="(?=(CLUB\s*MTV|MTV\s*DANCE|MTV\s*CLUB)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="CNBC PL" title="(?=CNBC(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="CNN PL" title="(?=CNN(\s*INTERNATIONAL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="COMEDY CENTRAL PL" title="(?=(COMEDY|CC)\s*(CENTRAL|CENTERAL|CENTER)?(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>	
+	<channel id="COMEDY CENTRAL PL" title="(?=(POLSAT\s*)?(COMEDY|CC)(\s*(CENTRAL|CENTERAL|CENTER))?(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>	
 	<channel id="CZWÓRKA POLSKIE RADIO PL" title="(?=CZW.*RKA\s*POLSKIE\s*RADIO(\s*LIVE)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="DA VINCI LEARNING PL" title="(?=DA\s*VINCI(\s*LEARNING)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="DAMI SKARŻYSKO-KAMIENNA PL" title="(?=DAMI(\s*SKAR(Z|.)YSKO)?(\s*KAMIENNA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -90,7 +90,7 @@
 	<channel id="EUROSPORT PL" title="(?=EURO\s*SPORT(\s*1)?(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
 	<channel id="EXTREME SPORTS CHANNEL PL" title="(?=(EXTREME|EXTREM)(\s*SPORT(S)?)?(\s*CHANNEL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="FANKLUB TV PL" title="(?=FAN\s*KLUB(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="FASHION TV PL" title="(?=FASHION(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="FASHION TV PL" title="(?=FASHION(\s*TV)?(\s*HD|\s*UHD)?(\s*4K)?(\s*PL)?$)" strm=""/>
 	<channel id="FASHIONBOX PL" title="(?=FASHION\s*BOX(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="FAST&amp;FUNBOX PL" title="(?=FAST\s*(BOX\s*)?(and|&amp;)?FUN(\s*BOX)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="FIGHT CHANNEL PL" title="(?=FIGHT\s*CHANNEL(\s*WORLD)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -119,7 +119,7 @@
 	<channel id="HISTORY 2 PL" title="(?=(H|HISTORY)\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="HISTORY PL" title="(?=HISTORY(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="HOME TV PL" title="(?=(HOME|TVR)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="HOME 4K PL" title="(?=(HOME|TVR)(\s*TV)?(\s*4K)(\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="HOME 4K PL" title="(?=(HOME|TVR)(\s*TV)?(\s*UHD)?(\s*4K)(\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="ID PL" title="(?=(DISCOVERY\s*)?(INVESTIGATION|ID)(\s*DISCOVERY)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="ITVN EXTRA INTERNATIONAL PL" title="(?=ITVN\s*EXTRA(\s*INT|\s*INTERNATIONAL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="ITVS PL" title="(?=ITVS(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -167,7 +167,7 @@
 	<channel id="POLSAT 2 PL" title="(?=POLSAT\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT BOXING NIGHT PL" title="(?=POLSAT\s*BOXING(\s*NIGHT)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT CAFÉ PL" title="(?=POLSAT\s*CAF(E|.)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="POLSAT COMEDY CENTRAL EXTRA PL" title="(?=((POLSAT\s*)?COMEDY\s*)(CC|CENT(ER|RAL))(\s*EXTRA|\s*FAMILY)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="POLSAT COMEDY CENTRAL EXTRA PL" title="(?=((POLSAT\s*)?COMEDY\s*)(CC|CENT(ER|RAL))(\s*EXTRA|\s*FAMILY)(\s*POLSAT)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT DOKU PL" title="(?=POLSAT\s*DOKU(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT FILM PL" title="(?=POLSAT\s*FILM(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="POLSAT GAMES PL" title="(?=POLSAT\s*GAMES(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
