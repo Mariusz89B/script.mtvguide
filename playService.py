@@ -372,19 +372,6 @@ class PlayService(xbmc.Player, BasePlayService):
 
         response = sess.delete(url, headers=headers)
 
-    def reverse(self):
-        getsec = self.archiveService
-        try:
-            sec = getsec.total_seconds()
-            seek_secs = int(sec)
-            while not xbmc.Player().isPlaying():
-                xbmc.Monitor().waitForAbort(0.25)
-            
-            if xbmc.Player().isPlaying():
-                xbmc.Player().seekTime(int(seek_secs))
-        except:
-            pass
-
     @contextmanager
     def busyDialog(self):
         xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
@@ -508,9 +495,18 @@ class PlayService(xbmc.Player, BasePlayService):
                                 ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl['license']['castlabsServer'] + '|Content-Type=&x-dt-auth-token=%s|R{SSM}|' % licenseUrl['license']['castlabsToken'])
                                 ListItem.setProperty('IsPlayable', 'true')
 
-                                thread = threading.Thread(name='reverse', target=self.reverse, args=[])
-                                thread = threading.Timer(3.0, self.reverse, args=[])
-                                thread.start()
+                                catchup = self.archiveService
+
+                                if catchup == '':
+                                    sec = 90.0 
+                                else:
+                                    sec = catchup.total_seconds()
+
+                                # 3H stream
+                                playTime = 11160 - sec 
+
+                                ListItem.setProperty('StartOffset', str(playTime))
+                                ListItem.setProperty('inputstream.adaptive.play_timeshift_buffer', 'true')
 
                         self.strmUrl = strmUrl
                         xbmc.Player().play(item=str(self.strmUrl), listitem=ListItem, windowed=startWindowed)
@@ -557,12 +553,20 @@ class PlayService(xbmc.Player, BasePlayService):
                             ListItem.setProperty('inputstream.adaptive.manifest_update_parameter', 'full')
                             ListItem.setProperty('inputstream.adaptive.license_key', licServ+'|Content-Type=application%2Fjson&Referer=https://go.cyfrowypolsat.pl/&User-Agent='+quote(UA)+'|'+licenseUrl+'|JBlicense')                      
                             ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
-                            ListItem.setProperty('inputstream.adaptive.play_timeshift_buffer', 'true')
                             ListItem.setProperty('IsPlayable', 'true')
 
-                            thread = threading.Thread(name='reverse', target=self.reverse, args=[])
-                            thread = threading.Timer(3.0, self.reverse, args=[])
-                            thread.start()
+                            catchup = self.archiveService
+
+                            if catchup == '':
+                                sec = 90.0 
+                            else:
+                                sec = catchup.total_seconds()
+
+                            # 3H stream
+                            playTime = 11160 - sec 
+
+                            ListItem.setProperty('StartOffset', str(playTime))
+                            ListItem.setProperty('inputstream.adaptive.play_timeshift_buffer', 'true')
                         
                         self.strmUrl = strmUrl
                         xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
@@ -620,9 +624,18 @@ class PlayService(xbmc.Player, BasePlayService):
                             ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
                             ListItem.setProperty("IsPlayable", "true")
 
-                            thread = threading.Thread(name='reverse', target=self.reverse, args=[])
-                            thread = threading.Timer(3.0, self.reverse, args=[])
-                            thread.start()
+                            catchup = self.archiveService
+
+                            if catchup == '':
+                                sec = 90.0 
+                            else:
+                                sec = catchup.total_seconds()
+
+                            # 3H stream
+                            playTime = 11160 - sec 
+
+                            ListItem.setProperty('StartOffset', str(playTime))
+                            ListItem.setProperty('inputstream.adaptive.play_timeshift_buffer', 'true')
 
                         self.strmUrl = strmUrl
                         xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
@@ -674,9 +687,18 @@ class PlayService(xbmc.Player, BasePlayService):
                             #ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
                             ListItem.setProperty('IsPlayable', 'true')
 
-                            thread = threading.Thread(name='reverse', target=self.reverse, args=[])
-                            thread = threading.Timer(3.0, self.reverse, args=[])
-                            thread.start()
+                            catchup = self.archiveService
+
+                            if catchup == '':
+                                sec = 90.0 
+                            else:
+                                sec = catchup.total_seconds()
+
+                            # 3H stream
+                            playTime = 11160 - sec 
+
+                            ListItem.setProperty('StartOffset', str(playTime))
+                            ListItem.setProperty('inputstream.adaptive.play_timeshift_buffer', 'true')
 
                         self.strmUrl = strmUrl
                         xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
@@ -719,10 +741,6 @@ class PlayService(xbmc.Player, BasePlayService):
                             ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl+'|Content-Type=|R{SSM}|')
                             ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
                             ListItem.setProperty('IsPlayable', 'true')
-
-                            #thread = threading.Thread(name='reverse', target=self.reverse, args=[])
-                            #thread = threading.Timer(3.0, self.reverse, args=[])
-                            #thread.start()
 
                         self.strmUrl = strmUrl
                         xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)

@@ -156,7 +156,7 @@ class PolsatGoUpdater(baseServiceUpdater):
                 if usernameCP and passwordCP:
                     data = {"jsonrpc":"2.0","method":"login","id":1,"params":{"authData":{"loginICOK":usernameCP,"passwordICOK":passwordCP,"deviceIdICOK":{"value":devid,"type":"other"}},"ua":"cpgo_www/2015"}}
                     response = requests.post(auth_url, headers = headers, json = data, verify = False, timeout = 15).json()
-                    deb('Print: {}'.format(response))
+
                     try:
                         error = response['error']
                         if response['error']['message'] == 'Unauthorized access':
@@ -248,6 +248,8 @@ class PolsatGoUpdater(baseServiceUpdater):
                         img = i['thumbnails'][-1]['src']
                         cid = i['id'] + '_TS_3H'
                         name = i['title'].upper() + ' PL'
+
+                        name = re.sub(' SD', '', name)
 
                         program = TvCid(cid, name, name, img=img)
                         result.append(program)
