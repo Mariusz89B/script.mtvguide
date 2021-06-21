@@ -60,7 +60,7 @@ else:
 import re, os, datetime, time, platform, threading, zipfile, shutil, glob
 import xbmc, xbmcaddon, xbmcgui, xbmcplugin, xbmcvfs
 import source as src
-import unicodedata
+from unidecode import unidecode
 from notification import Notification
 from strings import *
 import strings as strings2
@@ -286,19 +286,6 @@ def replace_formatting(label):
     label = re.sub(r"\s\$ADDON\[script.mtvguide.*?\]\.", '', label)
     label = re.sub(r"\$ADDON\[script.mtvguide.*?\]", '[B]N/A', label)
     return label
-
-
-def normalize_char(c):
-        try:
-            cname = unicodedata.name(c)
-            cname = cname[:cname.index(' WITH')]
-            return unicodedata.lookup(cname)
-        except (ValueError, KeyError):
-            return c
-
-def normalize(s):
-    return ''.join(normalize_char(c) for c in s)
-
 
 def timedelta_total_seconds(timedelta):
     return (
@@ -4334,9 +4321,9 @@ class mTVGuide(xbmcgui.WindowXML):
     def channelRegex(self, epgChann, regChann):
         # regex format
         if sys.version_info[0] > 2:
-            regChann = normalize(regChann)
+            regChann = unidecode(regChann)
         else:
-            regChann = normalize(regChann.decode('utf-8'))
+            regChann = unidecode(regChann.decode('utf-8'))
 
         regChann = re.sub('[ ](?=[ ])|[^-_,^A-Za-z0-9 ]+', '.?', regChann)
 

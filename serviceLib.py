@@ -52,7 +52,7 @@ else:
 import os, sys, io, re, socket, copy, threading
 import time, datetime
 import xbmc, xbmcgui, xbmcvfs
-import unicodedata
+from unidecode import unidecode
 from xml.etree import ElementTree
 from strings import *
 import simplejson as json
@@ -925,17 +925,6 @@ class baseServiceUpdater:
             self.log('getBaseChannelList exception: %s' % getExceptionString())
         return result
 
-    def normalize_char(self, c):
-        try:
-            cname = unicodedata.name(c)
-            cname = cname[:cname.index(' WITH')]
-            return unicodedata.lookup(cname)
-        except (ValueError, KeyError):
-            return c
-
-    def normalize(self, s):
-        return ''.join(self.normalize_char(c) for c in s)
-
     def loadChannelList(self):
         try:
             startTime = datetime.datetime.now()
@@ -974,9 +963,9 @@ class baseServiceUpdater:
                     p = re.compile(x.titleRegex, re.IGNORECASE)
                     for y in self.channels:
                         if sys.version_info[0] > 2:
-                            b = p.match(self.normalize(y.title))
+                            b = p.match(unidecode(y.title))
                         else:
-                            b = p.match(self.normalize(y.title.decode('utf-8')))
+                            b = p.match(unidecode(y.title.decode('utf-8')))
                         if (b):
                             if x.strm != '' and self.addDuplicatesToList == True:
                                 newMapElement = copy.deepcopy(x)
