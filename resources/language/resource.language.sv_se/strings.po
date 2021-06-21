@@ -997,7 +997,7 @@ msgid "[COLOR]Playlist 3[/COLOR]"
 msgstr "[COLOR]Spellista 3[/COLOR]"
 
 msgctxt "#59914"
-msgid "Display name"
+msgid 'display name'
 msgstr "Visnings namn"
 
 msgctxt "#59915"
@@ -1181,8 +1181,8 @@ msgid "Would you like to start a configuration tutorial for m-TVGuide?"
 msgstr "Vill du starta konfigurationshandledning för m-TVGuide?"
 
 msgctxt "#59960"
-msgid "• Select electronic program guide (EPG). [COLOR grey]Supported program guides are URL link and/or .xml, .gz and .zip file extensions.[/COLOR][CR]• Select regions that are supported by the provided EPG.[CR]• Select a TV service and/or M3U playlist."
-msgstr "• Välj elektronisk programguide (EPG). [COLOR grey]Programguider som stöds är URL länk och/eller .xml, .gz och .zip filändelser.[/COLOR][CR]• Välj regioner som stöds av den medföljande EPG.[CR]• Välj en TV-tjänst och/eller M3U spellista."
+msgid "• Select electronic program guide (EPG). [COLOR grey]Program guides (EPG) supported by the add-on is XMLTV type provided with a [Url path] and/or [File path].[/COLOR][CR]• Select regions that are supported by the provided EPG.[CR]• Select a TV service and/or M3U playlist."
+msgstr "• Välj elektronisk programguide (EPG). [COLOR grey]Programguider (EPG) som stöds av tillägget är XMLTV-typer försedda med en [Url adress] och/eller [Fil sökväg]. [/COLOR][CR]• Välj regioner som stöds av den tillhandahållna EPG.[CR]• Välj en TV tjänst och/eller M3U spellista."
 
 msgctxt "#59961"
 msgid "All settings are now configurated, you can now start m-TVGuide."
@@ -1383,6 +1383,14 @@ msgstr "Uppdatera spellista (dagar)"
 msgctxt "#60010"
 msgid "Add logo to selected channel"
 msgstr "Lägg till logotyp till vald kanal"
+
+msgctxt "#60011"
+msgid "Detection of alternative channel names"
+msgstr "Detektering av alternativa kanalnamn"
+
+msgctxt "#60012"
+msgid "If enabled channels from basemap are matched with both 'channel id' and 'display name' tags in EPG. Enabling this feature might improve channel recognition as for default add-on is only matching 'channel id' tag for improved loading times. Would you like to activate this function?"
+msgstr "Om aktiverat matchas kanaler ifrån basemap med både 'channel id' och 'display name' i EPG. Att aktivera den här funktionen kan förbättra kanaligenkänning eftersom tillägget normalt endast matchar 'channel id' taggen för snabbare laddningstider. Vill du aktivera den här funktionen?"
 
 msgctxt "#30913"
 msgid "Settings"

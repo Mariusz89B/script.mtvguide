@@ -997,7 +997,7 @@ msgid "[COLOR]Playlist 3[/COLOR]"
 msgstr "[COLOR]Liste de lecture 3[/COLOR]"
 
 msgctxt "#59914"
-msgid "Display name"
+msgid 'display name'
 msgstr "Afficher le nom"
 
 msgctxt "#59915"
@@ -1181,8 +1181,8 @@ msgid "Would you like to start a configuration tutorial for m-TVGuide?"
 msgstr "Souhaitez-vous lancer un didacticiel de configuration pour m-TVGuide?"
 
 msgctxt "#59960"
-msgid "• Select electronic program guide (EPG). [COLOR grey]Supported program guides are URL link and/or .xml, .gz and .zip file extensions.[/COLOR][CR]• Select regions that are supported by the provided EPG.[CR]• Select a TV service and/or M3U playlist."
-msgstr "• Sélectionnez le guide électronique des programmes (EPG). [COLOR grey]Les guides de programmes pris en charge sont le lien URL et/ou les extensions de fichier .xml, .gz et .zip.[/COLOR][CR]• Sélectionnez les régions pris en charge par l'EPG fourni.[CR]• Sélectionnez un service TV et/ou liste de lecture M3U."
+msgid "• Select electronic program guide (EPG). [COLOR grey]Program guides (EPG) supported by the add-on is XMLTV type provided with a [Url path] and/or [File path].[/COLOR][CR]• Select regions that are supported by the provided EPG.[CR]• Select a TV service and/or M3U playlist."
+msgstr "• Sélectionnez le guide électronique des programmes (EPG). [COLOR grey]Les guides des programmes (EPG) pris en charge par le module complémentaire sont de type XMLTV fournis avec un [chemin d'URL] et/ou un [chemin de Fichier].[/COLOR][CR]• Sélectionnez les régions prises en charge par l'EPG fourni.[CR]• Sélectionnez un service de télévision et/ou une liste de lecture M3U."
 
 msgctxt "#59961"
 msgid "All settings are now configurated, you can now start m-TVGuide."
@@ -1383,6 +1383,14 @@ msgstr "Mettre à jour la playlist (jours)"
 msgctxt "#60010"
 msgid "Add logo to selected channel"
 msgstr "Ajouter le logo à la chaîne sélectionnée"
+
+msgctxt "#60011"
+msgid "Detection of alternative channel names"
+msgstr "Détection de noms de canaux alternatifs"
+
+msgctxt "#60012"
+msgid "If enabled channels from basemap are matched with both 'channel id' and 'display name' tags in EPG. Enabling this feature might improve channel recognition as for default add-on is only matching 'channel id' tag for improved loading times. Would you like to activate this function?"
+msgstr "S'il est activé, les canaux du fond de carte sont mis en correspondance avec 'channel id' et le 'display name' dans l'EPG. L'activation de cette fonctionnalité peut améliorer la reconnaissance des chaînes, car l'extension ne correspond normalement qu'à la balise 'channel id' pour des temps de chargement plus rapides. Souhaitez vous activer cette fonction?"
 
 msgctxt "#30913"
 msgid "Settings"

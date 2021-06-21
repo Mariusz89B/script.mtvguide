@@ -997,7 +997,7 @@ msgid "[COLOR]Playlist 3[/COLOR]"
 msgstr "[COLOR]Afspeellijst 3[/COLOR]"
 
 msgctxt "#59914"
-msgid "Display name"
+msgid 'display name'
 msgstr "Weergavenaam"
 
 msgctxt "#59915"
@@ -1181,8 +1181,8 @@ msgid "Would you like to start a configuration tutorial for m-TVGuide?"
 msgstr "Wilt u een configuratiehandleiding voor m-TVGuide starten?"
 
 msgctxt "#59960"
-msgid "• Select electronic program guide (EPG). [COLOR grey]Supported program guides are URL link and/or .xml, .gz and .zip file extensions.[/COLOR][CR]• Select regions that are supported by the provided EPG.[CR]• Select a TV service and/or M3U playlist."
-msgstr "• Selecteer elektronische programmagids (EPG). [COLOR grey]Ondersteunde programmagidsen zijn URL-koppeling en/of .xml-, .gz- en .zip bestandsextensies.[/COLOR][CR]• Selecteer regio's die worden ondersteund door de geleverde EPG.[CR]• Selecteer een tv-service en/of M3U-afspeellijst."
+msgid "• Select electronic program guide (EPG). [COLOR grey]Program guides (EPG) supported by the add-on is XMLTV type provided with a [Url path] and/or [File path].[/COLOR][CR]• Select regions that are supported by the provided EPG.[CR]• Select a TV service and/or M3U playlist."
+msgstr "• Selecteer elektronische programmagids (EPG). [COLOR grey]Programmagidsen (EPG) ondersteund door de add-on is XMLTV type voorzien van een [Url path] en/of [File path].[/COLOR][CR]• Selecteer regio's die worden ondersteund door de meegeleverde EPG.[CR]• Selecteer een TV service en/of M3U afspeellijst."
 
 msgctxt "#59961"
 msgid "All settings are now configurated, you can now start m-TVGuide."
@@ -1383,6 +1383,14 @@ msgstr "Update afspeellijst (dagen)"
 msgctxt "#60010"
 msgid "Add logo to selected channel"
 msgstr "Logo toevoegen aan geselecteerd kanaal"
+
+msgctxt "#60011"
+msgid "Detection of alternative channel names"
+msgstr "Detectie van alternatieve kanaalnamen"
+
+msgctxt "#60012"
+msgid "If enabled channels from basemap are matched with both 'channel id' and 'display name' tags in EPG. Enabling this feature might improve channel recognition as for default add-on is only matching 'channel id' tag for improved loading times. Would you like to activate this function?"
+msgstr "Indien ingeschakeld, worden kanalen van de basiskaart gekoppeld aan zowel 'channel id' als 'display name' in de EPG. Door deze functie in te schakelen, kan de kanaalherkenning worden verbeterd, omdat de extensie normaal gesproken alleen overeenkomt met de tag 'channel id' voor snellere laadtijden. Wilt u deze functie activeren?"
 
 msgctxt "#30913"
 msgid "Settings"

@@ -997,7 +997,7 @@ msgid "[COLOR]Playlist 3[/COLOR]"
 msgstr "[COLOR]Popis za reprodukciju 3[/COLOR]"
 
 msgctxt "#59914"
-msgid "Display name"
+msgid 'display name'
 msgstr "Naziv za prikaz"
 
 msgctxt "#59915"
@@ -1181,8 +1181,8 @@ msgid "Would you like to start a configuration tutorial for m-TVGuide?"
 msgstr "Želite li pokrenuti vodič za konfiguraciju za m-TVGuide?"
 
 msgctxt "#59960"
-msgid "• Select electronic program guide (EPG). [COLOR grey]Supported program guides are URL link and/or .xml, .gz and .zip file extensions.[/COLOR][CR]• Select regions that are supported by the provided EPG.[CR]• Select a TV service and/or M3U playlist."
-msgstr "• Odaberite elektronički vodič programa (EPG). [COLOR grey] Podržani programski vodiči su URL adresa i/ili .xml, .gz i .zip ekstenzije. [/COLOR][CR]• Odaberite regije koje su podržane osigurati EPG.[CR]• Odaberite TV uslugu i/ili M3U playlista."
+msgid "• Select electronic program guide (EPG). [COLOR grey]Program guides (EPG) supported by the add-on is XMLTV type provided with a [Url path] and/or [File path].[/COLOR][CR]• Select regions that are supported by the provided EPG.[CR]• Select a TV service and/or M3U playlist."
+msgstr "• Odaberite elektronički programski vodič (EPG). [COLOR grey]Programski vodiči (EPG) podržani dodatkom su XMLTV tipa s [Url adresa] i/ili [Put datoteke].[/COLOR][CR]• Odaberite regije koje podržava ponuđeni EPG.[CR]• Odaberite TV uslugu i/ili popis za reprodukciju M3U. "
 
 msgctxt "#59961"
 msgid "All settings are now configurated, you can now start m-TVGuide."
@@ -1383,6 +1383,14 @@ msgstr "Ažuriraj popis pjesama (dana)"
 msgctxt "#60010"
 msgid "Add logo to selected channel"
 msgstr "Dodaj logotip na odabrani kanal"
+
+msgctxt "#60011"
+msgid "Detection of alternative channel names"
+msgstr "Otkrivanje alternativnih naziva kanala"
+
+msgctxt "#60012"
+msgid "If enabled channels from basemap are matched with both 'channel id' and 'display name' tags in EPG. Enabling this feature might improve channel recognition as for default add-on is only matching 'channel id' tag for improved loading times. Would you like to activate this function?"
+msgstr "Ako je ova opcija omogućena, osnovni kanali se podudaraju s oznakama 'channel id' i 'display name' u EPG-u. Omogućivanje ove značajke može poboljšati prepoznavanje kanala jer dodatak prema zadanim postavkama pretražuje samo oznaku 'channel id' kako bi smanjio vrijeme učitavanja. Želite li aktivirati ovu funkciju?"
 
 msgctxt "#30913"
 msgid "Settings"

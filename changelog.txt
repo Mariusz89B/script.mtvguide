@@ -1,4 +1,7 @@
-﻿[COLOR yellow][B]wersja 9.3.9[/B] - 2021-06-21[/COLOR]
+﻿[COLOR yellow][B]wersja 9.4.0[/B] - 2021-06-22[/COLOR]
+- zaktualizowane tłumaczenia
+
+[COLOR yellow][B]wersja 9.3.9[/B] - 2021-06-21[/COLOR]
 - dodano ulepszone rozpoznawanie kanałów
 - aktualizacja bazy mapowej
 

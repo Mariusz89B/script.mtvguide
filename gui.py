@@ -639,7 +639,7 @@ class mTVGuide(xbmcgui.WindowXML):
         if res < 0:
             res = xbmcgui.Dialog().yesno(strings(59924), strings(59938))
             if res:
-                ADDON.setSetting('m-TVGuide', 'http://mods-kodi.pl/')
+                ADDON.setSetting('m-TVGuide', 'http://')
                 ADDON.setSetting('xmltv_file', '')
                 ADDON.setSetting('tutorial', 'true')
                 exit()
@@ -648,7 +648,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
         if res == 0:
             ADDON.setSetting('source', '1')
-            kb = xbmc.Keyboard('','')
+            kb = xbmc.Keyboard('http://','')
             kb.setHeading(strings(59941))
             kb.setHiddenInput(False)
             kb.doModal()
@@ -674,6 +674,13 @@ class mTVGuide(xbmcgui.WindowXML):
 
 
     def tutorialGetCountry(self):
+        ans = xbmcgui.Dialog().yesno(strings(60011), strings(60012))
+
+        if ans:
+            ADDON.setSetting('epg_display_name', 'true')
+        else:
+            ADDON.setSetting('epg_display_name', 'false')
+
         progExec = False
         resExtra = False
 
