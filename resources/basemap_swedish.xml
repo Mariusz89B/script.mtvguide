@@ -191,6 +191,198 @@
 	<channel id="Vstmanlands TV SE"							title="(?=Vstmanlands(\s*TV)?(\s*HD)?\s*SE$)" strm=""/>
 	<channel id="eSports TV SE"								title="(?=eSport(s)?(\s*TV)?(\s*HD)?\s*SE$)" strm=""/>
 	
+	<!-- .SE -->
+	<channel id="24 Corren.se"								title="(?=24\s*Corren(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="ATG.se"									title="(?=ATG\s*Live\s*SE$)" strm=""/>
+	<channel id="Al Jazeera.se"								title="(?=Al\s*Jazeera(\s*English)?(\s*News)?(\s*International)?(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="Animal Planet HD.se"						title="(?=Animal\s*Planet\s*HD\s*SE$)" strm=""/>
+	<channel id="Animal Planet.se"							title="(?=Animal\s*Planet\s*SE$)" strm=""/>
+	<channel id="Axess TV.se"								title="(?=Axess(\s*TV)?(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="BBC Brit.se"								title="(?=BBC\s*Brit(\s*HD)?\s*SE$)" strm=""/> 
+	<channel id="BBC Earth HD.se"							title="(?=BBC\s*Earth\s*HD\s*SE$)" strm=""/>
+	<channel id="BBC Earth.se"								title="(?=BBC\s*Earth\s*SE$)" strm=""/>
+	<channel id="BBC HD.se"									title="(?=BBC\s*HD\s*SE$)" strm=""/>
+	<channel id="BBC Lifestyle.se"							title="(?=BBC\s*Lifestyle\s*SE$)" strm=""/>
+	<channel id="BBC World News.se"							title="(?=BBC\s*World(\s*News)?\s*SE$)" strm=""/>
+	<channel id="Barn Musik TV.se"							title="(?=Barn\s*Program(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="Barnkanalen.se"							title="(?=(SVT\s*)?(Barn|Barnkanalen|SVTB)(\s*\/)?(\s*SVT24)?\s*SE$)" strm=""/>
+	<channel id="Bloomberg TV.se"							title="(?=Bloomberg(\s*TV)?(\s*HD)?\s*UK$)" strm=""/>
+	<channel id="Boomerang.se"								title="(?=Boomerang(\s*TV)?(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="C More First HD.se"						title="(?=C\s*More\s*First\s*HD\s*SE$)" strm=""/>
+	<channel id="C More First.se"							title="(?=C\s*More\s*First\s*SE$)" strm=""/>
+	<channel id="C More Fotboll HD.se"						title="(?=C\s*More\s*Fotboll\s*HD(\s*B)?\s*SE$)" strm=""/>
+	<channel id="C More Fotboll.se"							title="(?=C\s*More\s*Fotboll\s*SE$)" strm=""/>
+	<channel id="C More Golf HD.se"							title="(?=C\s*More\s*Golf\s*HD\s*SE$)" strm=""/>
+	<channel id="C More Golf.se"							title="(?=C\s*More\s*Golf\s*SE$)" strm=""/>
+	<channel id="C More Hits HD.se"							title="(?=C\s*More\s*Hits\s*HD\s*SE$)" strm=""/>
+	<channel id="C More Hits.se"							title="(?=C\s*More\s*Hits\s*SE$)" strm=""/>
+	<channel id="C More Hockey HD.se"						title="(?=C\s*More\s*Hockey\s*HD\s*SE$)" strm=""/>
+	<channel id="C More Hockey.se"							title="(?=C\s*More\s*Hockey\s*SE$)" strm=""/>
+	<channel id="C More Live 2 HD.se"						title="(?=C\s*More\s*Live\s*2\s*HD(\s*B)?\s*SE$)" strm=""/>
+	<channel id="C More Live 2.se"							title="(?=C\s*More\s*Live\s*2(\s*B)?\s*SE$)" strm=""/>
+	<channel id="C More Live 3 HD.se"						title="(?=C\s*More\s*Live\s*3\s*HD(\s*B)?\s*SE$)" strm=""/>
+	<channel id="C More Live 3.se"							title="(?=C\s*More\s*Live\s*3(\s*B)?\s*SE$)" strm=""/>
+	<channel id="C More Live 4 HD.se"						title="(?=C\s*More\s*Live\s*4\s*HD(\s*B)?\s*SE$)" strm=""/>
+	<channel id="C More Live 4.se"							title="(?=C\s*More\s*Live\s*4(\s*B)?\s*SE$)" strm=""/>
+	<channel id="C More Live 5 HD.se"						title="(?=C\s*More\s*Live\s*5\s*HD(\s*B)?\s*SE$)" strm=""/>
+	<channel id="C More Live 5.se"							title="(?=C\s*More\s*Live\s*5(\s*B)?\s*SE$)" strm=""/>
+	<channel id="C More Live HD.se"							title="(?=(C\s*More\s*Live)(\s*1)?\s*HD(\s*B)?\s*SE$)" strm=""/>
+	<channel id="C More Live.se"							title="(?=(C\s*More\s*Live)(\s*1)?(\s*B)?\s*SE$)" strm=""/>
+	<channel id="C More Series HD.se"						title="(?=C\s*More\s*Series\s*HD\s*SE$)" strm=""/>
+	<channel id="C More Series.se"							title="(?=C\s*More\s*Series\s*SE$)" strm=""/>
+	<channel id="C More Sport HD.se"						title="(?=C\s*More\s*Sport\s*HD\s*SE$)" strm=""/>
+	<channel id="C More Sport.se"							title="(?=C\s*More\s*Sport\s*SE$)" strm=""/>
+	<channel id="C More Stars HD.se"						title="(?=C\s*More\s*Stars\s*HD\s*SE$)" strm=""/>
+	<channel id="C More Stars.se"							title="(?=C\s*More\s*Stars\s*SE$)" strm=""/>
+	<channel id="C More Tennis HD.se"						title="(?=C\s*More\s*Tennis\s*HD\s*SE$)" strm=""/>
+	<channel id="C More Tennis.se"							title="(?=C\s*More\s*Tennis\s*SE$)" strm=""/>
+	<channel id="CBS Reality.se"							title="(?=CBS\s*Reality\s*SE$)" strm=""/>
+	<channel id="CNBC.se"									title="(?=CNBC\s*SE$)" strm=""/>
+	<channel id="CNN.se"									title="(?=CNN(\s*International)?(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="Cartoon Network.se"						title="(?=Cartoon\s*Network(\s*TV)?(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="Comedy Central.se"							title="(?=Comedy\s*Central(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="DR1.se" 									title="(?=DR\s*1(\s*TV)?(\s*HD)?\s*DK$)" strm=""/>
+	<channel id="DR2.se" 									title="(?=DR\s*2(\s*TV)?(\s*HD)?\s*DK$)" strm=""/>
+	<channel id="Dagens Industri TV.se"						title="(?=Dagens\s*Industri(\s*TV)(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="Discovery Channel HD.se"					title="(?=(Discovery|Disc)(.)?(\s*Channel)?\s*HD\s*SE$)" strm=""/>
+	<channel id="Discovery Channel.se"						title="(?=(Discovery|Disc)(.)?(\s*Channel)?\s*SE$)" strm=""/>
+	<channel id="Discovery Science.se"						title="(?=(Discovery|Disc)(.)?\s*Science(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="Discovery Showcase HD.se"					title="(?=(Discovery|Disc)(.)?(\s*HD)?\s*Showcase(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="Discovery World.se"						title="(?=(Discovery|Disc)(.)?\s*World(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="Disney Channel HD.se"						title="(?=Disney\s*Channel\s*HD\s*SE$)" strm=""/>
+	<channel id="Disney Channel.se"							title="(?=Disney\s*Channel\s*SE$)" strm=""/>
+	<channel id="Disney Junior.se"							title="(?=Disney\s*Junior(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="Disney XD.se"								title="(?=Disney\s*XD(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="E!.se"										title="(?=(E(!)?\s*|Entertainment)(Entertainment)?(\s*TV)?(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="Euronews.se"								title="(?=Euronews\s*SE$)" strm=""/>
+	<channel id="Eurosport 1 HD.se"							title="(?=Euro\s*sport(\s*1)?\s*(HD|UHD)\s*SE$)" strm=""/>
+	<channel id="Eurosport 1.se"							title="(?=Euro\s*sport(\s*1)?\s*SE$)" strm=""/>
+	<channel id="Eurosport 2 HD.se"							title="(?=Euro\s*sport\s*2\s*(HD|UHD)\s*SE$)" strm=""/>
+	<channel id="Eurosport 2.se"							title="(?=Euro\s*sport\s*2\s*SE$)" strm=""/>
+	<channel id="Expressen TV.se"							title="(?=Expressen(\s*TV)?(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="Extreme Sports.se"							title="(?=EXTREME\s*SPORT(S)?(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="FOX HD.se"									title="(?=FOX(\s*TV)?\s*HD\s*SE$)" strm=""/>
+	<channel id="FOX.se"									title="(?=FOX(\s*TV)?\s*SE$)" strm=""/>
+	<channel id="FUEL TV.se"								title="(?=Fuel(\s*TV)?\s*HD\s*SE$)" strm=""/>
+	<channel id="Fashion TV.se" 							title="(?=(Fashion|FTV)(\s*TV)?(\s*HD)?\s*SE$)" strm=""/>-->
+	<channel id="Fashion 4K.se"								title="(?=Fashion(\s*TV)?(\s*UHD|\s*4K)(\s*SE)?(\s*Only\s*On(\s*UHD|\s*4K)\s*Devices)?\s*(SE|UK)$)" strm=""/>
+	<channel id="Fight Sports.se"							title="(?=Fight\s*Sports(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="Fjorton HD.se"								title="(?=Fjorton(\s*Music)?(\s*TV)?\s*HD\s*SE$)" strm=""/>
+	<channel id="Fjorton.se"								title="(?=Fjorton(\s*Music)?(\s*TV)?\s*SE$)" strm=""/>
+	<channel id="Ginx eSports.se"							title="(?=GINX(\s*Esport(s)?)?(\s*TV)?(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="H2 HD.se" 									title="(?=(H|History)\s*2\s*HD\s*SE$)" strm=""/>
+	<channel id="H2.se" 									title="(?=(H|History)\s*2\s*SE$)" strm=""/>
+	<channel id="History HD.se"								title="(?=History\s*HD\s*SE$)" strm=""/>
+	<channel id="History.se"								title="(?=History\s*SE$)" strm=""/>
+	<channel id="Horse &amp; Country TV.se"					title="(?=Horse(\s*&amp;)?\s*Country(\s*TV)?\s*SE$)" strm=""/>
+	<channel id="Investigation Discovery.se"				title="(?=(Discovery\s*)?(Investigation|ID)(\s*Discovery)?(\s*TV)?(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="Kanal 10.se"								title="(?=Kanal\s*10(\s*Norge)?\s*SE$)" strm=""/>
+	<channel id="Kanal 11 HD.se" 							title="(?=Kanal\s*11\s*HD\s*SE$)" strm=""/>
+	<channel id="Kanal 11.se"								title="(?=Kanal\s*11\s*SE$)" strm=""/>
+	<channel id="Kanal 5 HD.se" 							title="(?=Kanal\s*5\s*HD\s*SE$)" strm=""/>
+	<channel id="Kanal 5.se" 								title="(?=Kanal\s*5\s*SE$)" strm=""/>
+	<channel id="Kanal 9 HD.se" 							title="(?=Kanal\s*9\s*HD\s*SE$)" strm=""/>
+	<channel id="Kanal 9.se" 								title="(?=Kanal\s*9\s*SE$)" strm=""/>
+	<channel id="Kunskapskanalen HD.se"						title="(?=(SVT\s*)?Kunskapskanalen\s*HD\s*SE$)" strm=""/>
+	<channel id="Kunskapskanalen.se"						title="(?=(SVT\s*)?Kunskapskanalen\s*SE$)" strm=""/>
+	<channel id="MTV HD.se"									title="(?=MTV\s*HD\s*SE$)" strm=""/>
+	<channel id="MTV Live HD.se" 							title="(?=MTV\s*Live\s*HD\s*SE$)" strm=""/>
+	<channel id="MTV Rocks.se" 								title="(?=MTV\s*Rocks(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="MTV.se"									title="(?=MTV\s*SE$)" strm=""/>
+	<channel id="Mezzo.se" 									title="(?=Mezzo\s*SE$)" strm=""/>
+	<channel id="Motorvision TV.se"							title="(?=Motor\s*vision(\s*TV)?(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="NFL Network HD.se"							title="(?=NFL(\s*Network)(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="NFL Network.se"							title="(?=NFL(\s*Network)\s*SE$)" strm=""/>
+	<channel id="NRK1.se"									title="(?=NRK(\s*1)?(\s*TV)?(\s*HD)?\s*NO$)" strm=""/>
+	<channel id="NRK2.se"									title="(?=NRK\s*2(\s*TV)?(\s*HD)?\s*NO$)" strm=""/>
+	<channel id="Nat Geo Wild HD.se"						title="(?=(Nat|National)\s*(Geo|Geographic|Geographiic)\s*Wild\s*HD\s*SE$)" strm=""/>
+	<channel id="Nat Geo Wild.se"							title="(?=(Nat|National)\s*(Geo|Geographic|Geographiic)\s*Wild\s*SE$)" strm=""/>
+	<channel id="National Geographic HD.se"					title="(?=(Nat|National)\s*(Geo|Geographic|Geographiic)\s*HD\s*SE\s*(\/)?(\s*(S/F))?(\s*FI)?$)" strm=""/>
+	<channel id="National Geographic.se"					title="(?=(Nat|National)\s*(Geo|Geographic|Geographiic)(\s*FI)?\s*(/)?(\s*(S/F))?\s*SE$)" strm=""/>
+	<channel id="Nautical Channel.se"						title="(?=Nautical\s*Channel(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="Nick Jr..se"								title="(?=Nick(\s*Jr.|Jr)(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="Nickelodeon HD.se"							title="(?=Nickelodeon\s*HD\s*SE$)" strm=""/>
+	<channel id="Nickelodeon.se"							title="(?=Nickelodeon\s*SE$)" strm=""/>
+	<channel id="Nicktoons HD.se"							title="(?=(Nick\s*Toons|NickToon|Nicktoons)\s*HD\s*SE$)" strm=""/>
+	<channel id="Nicktoons.se"								title="(?=(Nick\s*Toons|NickToon|Nicktoons)\s*SE$)" strm=""/>
+	<channel id="OUTtv.se"									title="(?=OUT(\s*TV)?\s*SE$)" strm=""/>
+	<channel id="Outdoor Channel HD.se"						title="(?=Outdoor(\s*Channel)?(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="Paramount Network.se"						title="(?=Paramount(\s*Network)?(\s*Channel)?(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="Pink Plus.se"								title="(?=Pink(\s*Plus)(\s*HD)?\s*ex(\s*|-)Yu$)" strm=""/>
+	<channel id="SBN International.se"						title="(?=SBN\s*International\s*SE$)" strm=""/>
+	<channel id="SF-Kanalen.se"								title="(?=SF(\s*|-)Kanalen\s*SE$)" strm=""/>
+	<channel id="SVT World.se"								title="(?=SVT\s*World\s*SE$)" strm=""/>
+	<channel id="SVT1 HD.se"								title="(?=SVT\s*1\s*HD\s*SE$)" strm=""/>
+	<channel id="SVT1.se"									title="(?=SVT\s*1\s*SE$)" strm=""/>	
+	<channel id="SVT2 HD.se"								title="(?=SVT\s*2\s*HD\s*SE$)" strm=""/>	
+	<channel id="SVT2.se"									title="(?=SVT\s*2\s*SE$)" strm=""/>	
+	<channel id="SVT24 HD.se"								title="(?=(Barnkanalen|SVT24|SVTB|SVTB(\/)?SVT24)(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="SVT24.se"									title="(?=(Barnkanalen|SVT24|SVTB|SVTB(\/)?SVT24)\s*SE$)" strm=""/>
+	<channel id="Sjuan HD.se"								title="(?=Sjuan\s*HD\s*SE$)" strm=""/>
+	<channel id="Sjuan.se"									title="(?=Sjuan\s*SE$)" strm=""/>
+	<channel id="Sky News.se"								title="(?=Sky\s*News\s*SE$)" strm=""/>
+	<channel id="Sportkanalen.se"							title="(?=Sportkanalen(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="TCM.se"									title="(?=TCM\s*SE$)" strm=""/>	
+	<channel id="TLC HD.se"									title="(?=TLC\s*HD\s*SE$)" strm=""/>
+	<channel id="TLC.se"									title="(?=TLC\s*SE$)" strm=""/>
+	<channel id="TNT.se"									title="(?=TNT(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="TV Malmo.se"								title="(?=TV\s*Malm(o)?(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="TV10 HD.se"								title="(?=TV\s*10\s*HD\s*SE$)" strm=""/>
+	<channel id="TV10.se"									title="(?=TV\s*10\s*SE$)" strm=""/>
+	<channel id="TV12 HD.se"								title="(?=TV\s*12\s*HD\s*SE$)" strm=""/>	
+	<channel id="TV12.se"									title="(?=TV\s*12\s*SE$)" strm=""/>	
+	<channel id="TV2 Danmark.se"							title="(?=TV\s*2(\s*HD)?\s*DK$)" strm=""/>
+	<channel id="TV3 HD.se"									title="(?=(Viasat)?\s*TV(\s*3)\s*HD\s*SE$)" strm=""/>	
+	<channel id="TV3.se"									title="(?=(Viasat)?\s*TV(\s*3)\s*SE$)" strm=""/>
+	<channel id="TV3 Sport HD.se"							title="(?=TV\s*3\s*Sport\s*HD\s*SE$)" strm=""/>
+	<channel id="TV3 Sport.se"								title="(?=TV\s*3\s*Sport\s*SE$)" strm=""/>
+	<channel id="TV4 Fakta.se"								title="(?=TV\s*4\s*Fakta(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="TV4 Fakta XL.se"							title="(?=TV\s*4\s*Fakta\s*XL(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="TV4 Film.se"								title="(?=TV\s*4\s*Film(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="TV4 Guld.se"								title="(?=TV\s*4\s*Guld(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="TV4 HD.se" 								title="(?=TV\s*4\s*HD\s*SE$)" strm=""/>
+	<channel id="TV4 Komedi.se"								title="(?=TV\s*4\s*Komedi(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="TV4.se"									title="(?=TV\s*4\s*SE$)" strm=""/>
+	<channel id="TV4 Sport HD.se"							title="(?=TV\s*4\s*Sport\s*HD\s*SE$)" strm=""/>
+	<channel id="TV4 Sport.se"								title="(?=TV\s*4\s*Sport\s*SE$)" strm=""/>
+	<channel id="TV6 HD.se"									title="(?=TV\s*6\s*HD\s*SE$)" strm=""/>
+	<channel id="TV6.se"									title="(?=TV\s*6\s*SE$)" strm=""/>
+	<channel id="TV8 HD.se"									title="(?=TV\s*8\s*HD\s*SE$)" strm=""/>
+	<channel id="TV8.se"									title="(?=TV\s*8\s*SE$)" strm=""/>
+	<channel id="Trace Urban.se"							title="(?=Trace\s*Urban(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="Travel Channel HD.se"						title="(?=Travel\s*Channel\s*HD\s*SE$)" strm=""/>
+	<channel id="Travel Channel.se"							title="(?=Travel\s*Channel\s*SE$)" strm=""/>
+	<channel id="VH-1 Classic.se"							title="(?=VH1\s*Classic(\s*TV)?(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="VH-1.se"									title="(?=VH1(\s*TV)?(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="Viasat Explore.se"							title="(?=(Viasat\s*Explore)(r)?(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="V Film Action HD.se"						title="(?=(V|Viasat)\s*Film\s*Action\s*HD\s*SE$)" strm=""/>
+	<channel id="V Film Action.se"							title="(?=(V|Viasat)\s*Film\s*Action\s*SE$)" strm=""/>
+	<channel id="V Film Classic.se"							title="(?=(V|Viasat)\s*Film\s*Classic\s*SE$)" strm=""/>
+	<channel id="V Film Comedy HD.se"						title="(?=(V|Viasat)\s*Film\s*Comedy\s*HD\s*SE$)" strm=""/>
+	<channel id="V Film Comedy.se"							title="(?=(V|Viasat)\s*Film\s*Comedy\s*SE$)" strm=""/>
+	<channel id="V Film Drama.se"							title="(?=(V|Viasat)\s*Film\s*Drama\s*SE$)" strm=""/>
+	<channel id="V Film Family HD.se"						title="(?=(V|Viasat)\s*Film\s*Family\s*HD\s*SE$)" strm=""/>
+	<channel id="V Film Family.se"							title="(?=(V|Viasat)\s*Film\s*Family\s*SE$)" strm=""/>
+	<channel id="V Film Hits HD.se"							title="(?=(V|Viasat)\s*Film\s*Hits\s*HD\s*SE$)" strm=""/>
+	<channel id="V Film Hits.se"							title="(?=(V|Viasat)\s*Film\s*Hits\s*SE$)" strm=""/>
+	<channel id="V Film Premiere HD.se"						title="(?=(V|Viasat)\s*Film\s*Premiere\s*HD\s*SE$)" strm=""/>
+	<channel id="V Film Premiere.se"						title="(?=(V|Viasat)\s*Film\s*Premiere\s*SE$)" strm=""/>
+	<channel id="V Sport Fotboll.se"						title="(?=(V|Viasat)(\s*Sport)?\s*(Football|Fotboll|Fotball)(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="V Sport Golf.se"							title="(?=(V|Viasat)(\s*Sport)?\s*Golf(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="V History.se"								title="(?=(V|Viasat)\s*History\s*SE$)" strm=""/>
+	<channel id="V Sport Hockey.se"							title="(?=(V|Viasat)(\s*Sport)?\s*Hockey(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="V Sport Motor.se"							title="(?=(V|Viasat)(\s*Sport)?\s*Motor(\s*HD)?(\s*B)?\s*SE$)" strm=""/>
+	<channel id="Viasat Nature.se"							title="(?=(V|Viasat)\s*Nature(\s*Nature/Crime/Playboy)?\s*SE$)" strm=""/>
+	<channel id="V Series HD.se"							title="(?=(V|Viasat)\s*Series\s*HD\s*SE$)" strm=""/>
+	<channel id="V Series.se"								title="(?=(V|Viasat)\s*Series\s*SE$)" strm=""/>
+	<channel id="V Sport 1.se"								title="(?=(V|Viasat)\s*Sport(\s*1)?(\s*HD)?(\s*B)?\s*SE$)" strm=""/>
+	<channel id="V Sport Extra.se"							title="(?=(V|Viasat)\s*Sport\s*Extra(\s*HD)?(\s*B)?\s*SE$)" strm=""/>
+	<channel id="V Sport Premium.se"						title="(?=(V|Viasat)\s*Sport\s*Premium(\s*B)?\s*SE$)" strm=""/>
+	<channel id="V Sport.se"								title="(?=(V|Viasat)\s*Sport(\s*1)?(\s*HD)?(\s*B)?\s*SE$)" strm=""/>
+	<channel id="V Sport Ultra HD.se"						title="(?=(V|Viasat)\s*Ultra(\s*HD)?(\s*B)?\s*SE$)" strm=""/>
+	<channel id="Vstmanlands TV.se"							title="(?=Vstmanlands(\s*TV)?(\s*HD)?\s*SE$)" strm=""/>
+	<channel id="eSports TV.se"								title="(?=eSport(s)?(\s*TV)?(\s*HD)?\s*SE$)" strm=""/>
+
 	<category name="Movie" 									tags="Action|Fantasy|Film|Mysterium|Science fiction|Short Film|Skräck|Spänning|Thriller|Västern"/>
 	<category name="Series" 								tags="Drama|Dramakomedi|Gay/Lesbiskt|Historisk drama|Holiday|Högtid|Komedi|Kriminalare|Kriminaldrama|Miniserie|Miniseries|Romantik|Romantisk komedi|Serie|Sitcom|Svart komedi|Såpa"/>
 	<category name="Information" 							tags="Debatt|Diskussion|Ekonomi|Event|Intervju|Nyheter|Nyhetsmagasin|Politik|Public affairs|Samhälle|Special|Teknologi|Väder"/>

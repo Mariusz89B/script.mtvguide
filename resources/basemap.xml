@@ -115,7 +115,7 @@
 	<channel id="HBO 2 PL" title="(?=HBO\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="HBO 3 PL" title="(?=HBO\s*(3|COMEDY)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="HBO PL" title="(?=HBO(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="HGTV PL" title="(?=(HGTV|TVN\s*METEO\s*ACTIVE)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="HGTV PL" title="(?=(HG\s*TV|TVN\s*METEO\s*ACTIVE)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="HISTORY 2 PL" title="(?=(H|HISTORY)\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="HISTORY PL" title="(?=HISTORY(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="HOME TV PL" title="(?=(HOME|TVR)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -292,7 +292,7 @@
 	<channel id="VIVA POLSKA" title="(?=VIVA(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="VOX MUSIC TV PL" title="(?=(MUSIC\s*VOX|VOX\s*MUSIC)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="WATER PLANET PL" title="(?=WATER(\s*PLANET)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="WP PL" title="(?=(TV\s*|TELEWIZJA\s*)?WP(\s*1)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="WP PL" title="(?=(TV\s*|TELEWIZJA\s*)?WP(\s*1)?(\s*PL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="WPOLSCE.PL PL" title="(?=W\s*POLSCE[\s.]*(PL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="WTK PL" title="(?=WTK(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="ZOOM TV PL" title="(?=ZOOM(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
