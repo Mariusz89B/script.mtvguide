@@ -125,6 +125,7 @@ C_MAIN_CALC_TIME_LEFT = 4958
 C_MAIN_CALC_TIME_PASS = 4959
 C_MAIN_DAY = 4960
 C_MAIN_DATE = 4961
+C_MAIN_EPISODE = 4962
 C_STOP = 101
 C_SHOW_INFO = 102
 C_PAGE_DOWN = 103
@@ -352,6 +353,7 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
         self.ctrlChanNumberPlay    = self.getControl(C_MAIN_NUMB_PLAY)
         self.ctrlWeekDay        = self.getControl(C_MAIN_DAY)
         self.ctrlDate          = self.getControl(C_MAIN_DATE)
+        self.ctrlEpisode       = self.getControl(C_MAIN_EPISODE)
 
         self.mousetime = time.mktime(datetime.datetime.now().timetuple())
         self.keyboardTime = time.mktime(datetime.datetime.now().timetuple())
@@ -743,6 +745,8 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
             self.ctrlStartProgramTime.setLabel('%s' % (self.formatTime(self.program.startDate)))
         if self.ctrlEndProgramTime is not None:
             self.ctrlEndProgramTime.setLabel('%s' % (self.formatTime(self.program.endDate)))
+        if self.ctrlEpisode is not None:
+            self.ctrlEpisode.setLabel('%s' % (self.program.episode))
 
         if self.ctrlWeekDay is not None:
             startDate = str(self.program.startDate)

@@ -57,6 +57,10 @@
 		<control type="label" id="4959">
 			<visible>hidden</visible>
 		</control>
+		
+		<control type="label" id="4962">
+			<visible>hidden</visible>
+		</control>
 				
 		<!-- Osd Fade -->
 		<control type="image">
@@ -240,6 +244,20 @@
 			<font>font13</font>
 			<align>left</align>
 			<label>[B]$INFO[Control.GetLabel(4920)][/B]</label>
+		</control>
+		
+		<control type="label">
+			<description>Program episode</description>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width min="20" max="1000">auto</width>
+			<height>30</height>
+			<textcolor>FFA0A0A0</textcolor>
+			<shadowcolor>22000000</shadowcolor>
+			<font>font13</font>
+			<align>left</align>
+			<label>[B]$INFO[Control.GetLabel(4962)][/B]</label>
+			<visible>!String.IsEmpty(Control.GetLabel(4962))</visible>
 		</control>
 		
 		<control type="image" id="4932">
