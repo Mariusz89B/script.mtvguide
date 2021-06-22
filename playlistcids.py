@@ -300,7 +300,7 @@ class PlaylistUpdater(baseServiceUpdater):
             #regexReplaceList.append( re.compile('[^A-Za-z0-9+/:]+',                                                re.IGNORECASE) )
             regexReplaceList.append( re.compile('[^A-Za-zÀ-ȕ0-9+/:]+',                                                re.IGNORECASE) )
             regexReplaceList.append( re.compile('\sL\s',                                                           re.IGNORECASE) )
-            regexReplaceList.append( re.compile('(\s|^)(Feed|Europe|SD|FULL|ADULT:|EXTRA:|VIP:|VIP|Audio|Backup|Multi|Sub|VIASAT:|XXX|XXX:|\d{1,2}\s*fps|low|high|quality)(?=\s|$)',  re.IGNORECASE) )
+            regexReplaceList.append( re.compile('(\s|^)(Feed|Europe|SD|FULL|ADULT:|EXTRA:|VIP:|VIP|Audio|Backup|Multi|Sub|VIASAT:|XXX|XXX:|\d{1,2}\s*fps|low|high|quality|Live\s*During\s*Events\s*Only)(?=\s|$)',  re.IGNORECASE) )
 
             langReplaceList = list()
             regexRemoveList = list()
@@ -365,9 +365,9 @@ class PlaylistUpdater(baseServiceUpdater):
                 regexRemoveList.append( re.compile('(\s|^)(L\s*)?(BH:?|SRB:?|SLO:?|SR:?|Yu:|Srbija:?|Crna\sGora:?|Macedonia:?)(?=\s|$)', re.IGNORECASE) )
 
             if ADDON.getSetting('country_code_se') == 'true':
-                langReplaceList.append({ 'regex' : re.compile('(\s|^)(SE:?|SW:?|Sweden:?)(?=\s|$)|^(SE:|SW:|Sweden:)', re.IGNORECASE), 'lang' : 'SE'})
+                langReplaceList.append({ 'regex' : re.compile('(\s|^)(SE:?|SW:?|Sweden:?|Sverige:?|Scandinavia:?|Nordic:?)(?=\s|$)|^(SE:|SW:|Sweden:|Sverige:|Scandinavia:|Nordic:)', re.IGNORECASE), 'lang' : 'SE'})
             if ADDON.getSetting('country_code_se') == 'false':
-                regexRemoveList.append( re.compile('(\s|^)(L\s*)?(SE:?|SW:?|Sweden:?)(?=\s|$)', re.IGNORECASE) )
+                regexRemoveList.append( re.compile('(\s|^)(L\s*)?(SE:?|SW:?|Sweden:?|Sverige:?)(?=\s|$)', re.IGNORECASE) )
 
             if ADDON.getSetting('country_code_us') == 'true':
                 langReplaceList.append({ 'regex' : re.compile('(\s|^)(Chicago:?|AM:?|CA:?|US:?|USA:?)(?=\s|$)|^(Chicago:?|AM:|CA:?|US:|USA:)', re.IGNORECASE), 'lang' : 'US'})
