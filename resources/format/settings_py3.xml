@@ -813,6 +813,19 @@
 					</dependencies>
 					<control format="string" type="spinner"/>
 				</setting>
+				<setting help="95013" id="clear_teliaplay" label="30371" type="action">
+					<level>0</level>
+					<data>RunScript(special://home/addons/script.mtvguide/clearteliaplay.py,clearTeliaPlay)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="teliaplay_enabled">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="action" type="button"/>
+				</setting>
 				<setting help="" id="teliaplay_sess_id" type="string">
 					<level>0</level>
 					<default/>

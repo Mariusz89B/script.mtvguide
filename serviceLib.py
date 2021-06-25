@@ -923,6 +923,7 @@ class baseServiceUpdater:
             self.channelList = copy.deepcopy(result)
         except:
             self.log('getBaseChannelList exception: %s' % getExceptionString())
+
         return result
 
     def loadChannelList(self):

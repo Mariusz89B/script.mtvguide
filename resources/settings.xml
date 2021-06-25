@@ -83,6 +83,7 @@
 		<setting id="teliaplay_username" type="text" label="55002" default="" visible="eq(-2,true)"/>
 		<setting id="teliaplay_password" type="text" option="hidden" label="55003" default="" visible="eq(-3,true)"/>
 		<setting id="priority_teliaplay" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-4,true)"/>
+		<setting label="30371" type="action" action="RunScript($CWD/clearteliaplay.py, clearTeliaPlay)" visible="eq(-5,true)"/>
 		<setting id="teliaplay_sess_id" visible="false"/>
 		<setting id="teliaplay_devush" visible="false"/>
 		<setting id="teliaplay_beartoken" visible="false"/>

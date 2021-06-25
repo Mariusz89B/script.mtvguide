@@ -1,4 +1,4 @@
-﻿wersja 9.4.0 - 2021-06-22
+﻿wersja 9.4.0 - 2021-06-25
 - naprawiono migotanie paska czasu
 - zaktualizowane tłumaczenia
 

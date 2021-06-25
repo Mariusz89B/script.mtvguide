@@ -702,7 +702,6 @@ class Database(object):
                             xbmcgui.Dialog().ok(ADDON.getAddonInfo('name'), strings(DATABASE_SCHEMA_ERROR_1) + '\n' + strings(DATABASE_SCHEMA_ERROR_2) + ' ' + strings(DATABASE_SCHEMA_ERROR_3))
                             c.close()
 
-
                 # channels updated
                 if imported > 0:
                     c.execute("UPDATE sources SET channels_updated=? WHERE id=?", [self.source.getNewUpdateTime(), self.source.KEY])
