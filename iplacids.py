@@ -90,6 +90,7 @@ if sys.version_info[0] > 2:
 else:
     sess.cookies = cookielib.LWPCookieJar(COOKIEFILE)
 
+timeouts = (30, 60)
 
 class IplaUpdater(baseServiceUpdater):
     def __init__(self):
@@ -151,9 +152,9 @@ class IplaUpdater(baseServiceUpdater):
 
     def getRequests(self, url, data={}, headers={}, params ={}):
         if data:
-            content = sess.post(url, headers=headers, json=data, params=params, verify=False).json()
+            content = sess.post(url, headers=headers, json=data, params=params, verify=False, timeout=timeouts).json()
         else:
-            content = sess.get(url, headers=headers, params=params, verify=False).json()
+            content = sess.get(url, headers=headers, params=params, verify=False, timeout=timeouts).json()
         return content
 
     def loginService(self):

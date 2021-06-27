@@ -76,6 +76,8 @@ serviceName         = 'C More'
 
 base_url = 'https://cmore-mobile-bff.b17g.services'
 
+timeouts = (30, 60)
+
 class CmoreUpdater(baseServiceUpdater):
     def __init__(self):
         self.serviceName        = serviceName
@@ -183,11 +185,11 @@ class CmoreUpdater(baseServiceUpdater):
             #deb('Headers: {}'.format(headers))
 
         if method == 'get':
-            req = self.http_session.get(url, params=params, headers=headers)
+            req = self.http_session.get(url, params=params, headers=headers, timeout=timeouts)
         elif method == 'put':
-            req = self.http_session.put(url, params=params, data=payload, headers=headers)
+            req = self.http_session.put(url, params=params, data=payload, headers=headers, timeout=timeouts)
         else:  # post
-            req = self.http_session.post(url, params=params, data=payload, headers=headers)
+            req = self.http_session.post(url, params=params, data=payload, headers=headers, timeout=timeouts)
         deb('Response code: {}'.format(req.status_code))
         deb('Response: {}'.format(req.content))
 

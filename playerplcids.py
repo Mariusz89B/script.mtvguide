@@ -79,6 +79,8 @@ else:
 
 sess = requests.Session()
 
+timeouts = (30, 60)
+
 class PlayerPLUpdater(baseServiceUpdater):
     def __init__(self):
         self.serviceName        = serviceName
@@ -193,13 +195,13 @@ class PlayerPLUpdater(baseServiceUpdater):
     def getRequests(self, url, data={}, headers={}, params ={}):
         if data:
             if headers.get('Content-Type', '').startswith('application/json'):
-                content = sess.post(url, headers=headers, json=data, params=params, verify=False).json()
+                content = sess.post(url, headers=headers, json=data, params=params, verify=False, timeout=timeouts).json()
 
             else:
-                content = sess.post(url, headers=headers, data=data, params=params, verify=False).json()
+                content = sess.post(url, headers=headers, data=data, params=params, verify=False, timeout=timeouts).json()
 
         else:
-            content = sess.get(url, headers=headers, params=params, verify=False).json()
+            content = sess.get(url, headers=headers, params=params, verify=False, timeout=timeouts).json()
 
         return content
 

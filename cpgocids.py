@@ -89,6 +89,8 @@ stoken = ADDON.getSetting('cpgo_sesstoken')
 sexpir = ADDON.getSetting('cpgo_sessexpir')
 skey = ADDON.getSetting('cpgo_sesskey')
 
+timeouts = (30, 60)
+
 class PolsatGoUpdater(baseServiceUpdater):
     def __init__(self):
         self.serviceName        = serviceName
@@ -155,7 +157,7 @@ class PolsatGoUpdater(baseServiceUpdater):
                 passwordCP = self.password
                 if usernameCP and passwordCP:
                     data = {"jsonrpc":"2.0","method":"login","id":1,"params":{"authData":{"loginICOK":usernameCP,"passwordICOK":passwordCP,"deviceIdICOK":{"value":devid,"type":"other"}},"ua":"cpgo_www/2015"}}
-                    response = requests.post(auth_url, headers = headers, json = data, verify = False, timeout = 15).json()
+                    response = requests.post(auth_url, headers=headers, json=data, verify=False, timeout=timeouts).json()
 
                     try:
                         error = response['error']
@@ -237,7 +239,7 @@ class PolsatGoUpdater(baseServiceUpdater):
             dane = stoken+'|'+sexpir+'|navigation|getTvChannels'
             authdata = getHmac(dane)
             data = {"jsonrpc":"2.0","method":"getTvChannels","id":1,"params":{"filters":[],"ua":"cpgo_www/2015","authData":{"sessionToken":authdata}}}
-            response = requests.post(navigate_url, headers=headers, json=data, timeout=15).json()
+            response = requests.post(navigate_url, headers=headers, json=data, timeout=timeouts).json()
             aa = response['result']['results']
             for i in aa:
                 item = {}
@@ -293,7 +295,7 @@ class PolsatGoUpdater(baseServiceUpdater):
             
             cdata = {"jsonrpc":"2.0","method":"getSession","id":1,"params":{"ua":"cpgo_www/2015","authData":{"sessionToken":authdata}}}
             
-            response = requests.post(auth_url, headers=headers, json=cdata, timeout=15).json()
+            response = requests.post(auth_url, headers=headers, json=cdata, timeout=timeouts).json()
             sesja = response['result']['session']
             
             sesstoken = sesja['id']
@@ -321,7 +323,7 @@ class PolsatGoUpdater(baseServiceUpdater):
             authdata = getHmac(dane)
             cdata = {"jsonrpc":"2.0","id":1,"method":"prePlayData","params":{"ua":"cpgo_www_html5/2 (Windows 10; widevine=true)","cpid":cpid,"mediaId":id,"authData":{"sessionToken":authdata}}}
             
-            response = requests.post(navigate_url, headers=headers, json=cdata ,timeout=15).json()
+            response = requests.post(navigate_url, headers=headers, json=cdata ,timeout=timeouts).json()
             playback = response['result']['mediaItem']['playback']
             mediaid = playback['mediaId']['id']
             mediaSources = playback['mediaSources'][0]

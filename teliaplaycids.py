@@ -91,6 +91,7 @@ else:
 
 sess = requests.Session()
 
+timeouts = (30, 60)
 
 class Threading(object):
     def __init__(self):
@@ -200,7 +201,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
             }
 
             try:
-                response = sess.post(url, headers=headers, data=json.dumps(data), verify=False, timeout=3)
+                response = sess.post(url, headers=headers, data=json.dumps(data), verify=False, timeout=timeouts)
             except:
                 self.connErrorMessage()
                 return False
@@ -229,7 +230,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 "deviceType": "WEB",
             }
             
-            response = sess.post(url, headers=headers, data=json.dumps(data), verify=False).json()
+            response = sess.post(url, headers=headers, data=json.dumps(data), verify=False, timeout=timeouts).json()
 
             try:
                 if 'Username/password was incorrect' in response['errorMessage']:
@@ -280,7 +281,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 "platformVersion": "NT 6.1"
             }
 
-            response = sess.post(url, headers=headers, data=json.dumps(data), verify=False)#.json()
+            response = sess.post(url, headers=headers, data=json.dumps(data), verify=False, timeout=timeouts)#.json()
 
             try:
                 response = response.json()
@@ -312,7 +313,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                     'tv-client-boot-id': self.tv_client_boot_id,
                 }
 
-            response = sess.get(url, headers=headers, cookies=sess.cookies, allow_redirects=False).json()
+            response = sess.get(url, headers=headers, cookies=sess.cookies, allow_redirects=False, timeout=timeouts).json()
 
             self.usern = response['channels']['engagement']
             ADDON.setSetting('teliaplay_usern', str(self.usern))
@@ -546,7 +547,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 ('sessionId', six.text_type(uuid.uuid4())),
             )
 
-            response = sess.post(url, headers=headers, params=params, cookies=sess.cookies, verify=False).json()
+            response = sess.post(url, headers=headers, params=params, cookies=sess.cookies, verify=False, timeout=timeouts).json()
 
             try:
                 if 'Content not authorized' in response['errorMessage']:

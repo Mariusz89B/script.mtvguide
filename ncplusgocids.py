@@ -86,6 +86,8 @@ headers = {
     'Host': 'api-ncplusgo.ncplus.pl',
 }
 
+timeouts = (30, 60)
+
 class NcPlusGoUpdater(baseServiceUpdater):
     def __init__(self):
         self.serviceName        = serviceName
@@ -197,7 +199,7 @@ class NcPlusGoUpdater(baseServiceUpdater):
                 else:
                     devicekey = imei
                     data = {"DeviceTypeId":14454, "AddDevice":False, "Email":email, "Password":pwd, "DeviceName":"GT-I8200", "Token":"", "DeviceKey":devicekey, "PlatformCodename":"android", "IsHomeNetwork":False, "ServiceType":"1"}
-                response = sess.post(ncplusgoUrl+'NcAccount/Login', headers = headers, json = data).json()
+                response = sess.post(ncplusgoUrl+'NcAccount/Login', headers = headers, json = data, timeout=timeouts).json()
 
                 if response['Result']['Success']:
                     token = response['Token']
@@ -251,24 +253,24 @@ class NcPlusGoUpdater(baseServiceUpdater):
         email = self.login
         pwd = self.password 
         devicekey = ADDON.getSetting('ncplusgo_imei')
-        response = sess.get(ncplusgoUrl+url, headers = headers, params = params).json()
+        response = sess.get(ncplusgoUrl+url, headers = headers, params = params, timeout=timeouts).json()
         try:
             if response['Result']['MessageCodename']=='token_is_not_valid':
                 data = {"DeviceTypeId":14454, "AddDevice":False, "Email":email, "Password":pwd, "DeviceName":"GT-I8200","Token":"", "DeviceKey":devicekey, "PlatformCodename":"android", "IsHomeNetwork":False, "ServiceType":"1"}
-                response = sess.post(ncplusgoUrl+'NcAccount/Login', headers=headers, json=data).json()
+                response = sess.post(ncplusgoUrl+'NcAccount/Login', headers=headers, json=data, timeout=timeouts).json()
                 token = response['Token']
                 tokenexpir = response['TokenExpirationTime']
                 ADDON.setSetting('ncplusgo_tokenexpir', str(tokenexpir/1000))
                 ADDON.setSetting('ncplusgo_ncToken', token)
-                response = sess.get(ncplusgoUrl+url, headers = headers, params = params).json()
+                response = sess.get(ncplusgoUrl+url, headers = headers, params = params, timeout=timeouts).json()
             elif response['Result']['MessageCodename']=="wsi_error_10":
                 data = {"DeviceTypeId":14454, "AddDevice":False, "Email":email, "Password":pwd, "DeviceName":"GT-I8200","Token":"", "DeviceKey":devicekey, "PlatformCodename":"android", "IsHomeNetwork":False, "ServiceType":"1"}
-                response = requests.post(ncplusgoUrl+'NcAccount/Login', headers = headers, json = data).json()
+                response = requests.post(ncplusgoUrl+'NcAccount/Login', headers = headers, json = data, timeout=timeouts).json()
                 token = response['Token']
                 tokenexpir = response['TokenExpirationTime']
                 ADDON.setSetting('ncplusgo_tokenexpir', str(tokenexpir/1000))
                 ADDON.setSetting('ncplusgo_ncToken', token)
-                response = requests.get(ncplusgoUrl+url, headers = headers, params = params).json()
+                response = requests.get(ncplusgoUrl+url, headers = headers, params = params, timeout=timeouts).json()
         except:
             pass
         return response
@@ -349,7 +351,7 @@ class NcPlusGoUpdater(baseServiceUpdater):
 
             if not "DrmInfo" in response:
                 data={"DeviceTypeId":14454, "AddDevice":False, "Email":self.login, "Password":self.password, "DeviceName":"GT-I8200", "Token":nctoken, "DeviceKey":devicekey, "PlatformCodename":"android", "IsHomeNetwork":False, "ServiceType":"1"}
-                response = sess.post(ncplusgoUrl + 'NcAccount/Login', headers=headers, json=data, verify=False).json()
+                response = sess.post(ncplusgoUrl + 'NcAccount/Login', headers=headers, json=data, verify=False, timeout=timeouts).json()
                 if response['Result']['Success']:
                     token = response['Token']
                     tokenexpir = response['TokenExpirationTime']

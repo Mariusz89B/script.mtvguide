@@ -2765,7 +2765,7 @@ msgid "Select priority of playback service with 0 being the lowest and 11 the hi
 msgstr ""
 
 msgctxt "#95013"
-msgid "Resets all C More login settings to thier default values."
+msgid "Resets all login credentials to their default values."
 msgstr ""
 
 msgctxt "#95014"

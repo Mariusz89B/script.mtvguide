@@ -86,6 +86,8 @@ cacheFile = os.path.join(profilePath, 'cache.db')
 
 sess = requests.Session()
 
+timeouts = (30, 60)
+
 class WpPilotUpdater(baseServiceUpdater):
     def __init__(self):
         self.serviceName        = serviceName
@@ -143,7 +145,7 @@ class WpPilotUpdater(baseServiceUpdater):
                     cookies = None
                 headers.update({'Cookie': cookies})
 
-                account = requests.get('https://pilot.wp.pl/api/v1/user', verify=False, headers=headers).json()
+                account = requests.get('https://pilot.wp.pl/api/v1/user', verify=False, headers=headers, timeout=timeouts).json()
 
                 try:
                     if not self.login == account['data']['login']:
@@ -165,7 +167,7 @@ class WpPilotUpdater(baseServiceUpdater):
                 except:
                     None
 
-                response = requests.get('https://pilot.wp.pl/api/v1/user/sessions', verify=False, headers=headers).json()
+                response = requests.get('https://pilot.wp.pl/api/v1/user/sessions', verify=False, headers=headers, timeout=timeouts).json()
 
                 device_id = ''
 
@@ -184,7 +186,8 @@ class WpPilotUpdater(baseServiceUpdater):
                         wpLoginUrl,
                         json=data,
                         verify=False,
-                        headers=headers
+                        headers=headers, 
+                        timeout=timeouts
                     )
 
                     account = response.json()
@@ -223,7 +226,7 @@ class WpPilotUpdater(baseServiceUpdater):
         try:
             cookies = self.readFromDB()
             headers.update({'Cookie': cookies})
-            httpdata = requests.get(self.url + '/v1/channels/list?device=androidtv', verify=False, headers=headers).json()
+            httpdata = requests.get(self.url + '/v1/channels/list?device=androidtv', verify=False, headers=headers, timeout=timeouts).json()
 
             if httpdata is None:
                 self.log('Error while trying to get channel list, result: {}'.format(str(httpdata)))
@@ -273,7 +276,7 @@ class WpPilotUpdater(baseServiceUpdater):
             data = {'format_id': '2', 'device_type': 'android'}
 
             headers.update({'Cookie': cookies})
-            response = requests.get(url, params=data, verify=False, headers=headers).json()
+            response = requests.get(url, params=data, verify=False, headers=headers, timeout=timeouts).json()
 
             meta = response.get('_meta', None)
             if meta is not None:
