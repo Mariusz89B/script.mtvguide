@@ -4332,7 +4332,7 @@ class mTVGuide(xbmcgui.WindowXML):
             if program.notificationScheduled:
                 self.notification.removeNotification(program)
             else:
-                self.notification.addNotification(program)
+                self.notification.addNotification(program, onlyOnce = True)
 
             self.onRedrawEPG(self.channelIdx, self.viewStartDate)
 
@@ -6943,9 +6943,9 @@ class InfoDialog(xbmcgui.WindowXMLDialog):
                     return
             else:
                 if xbmc.Player().isPlaying():
-                    self.notification.addNotification(self.program)
+                    self.notification.addNotification(self.program, onlyOnce = True)
                 else:
-                    self.notification.addNotification(self.program)
+                    self.notification.addNotification(self.program, onlyOnce = True)
                     self.onRedrawEPG(self.channelIdx, self.viewStartDate)
                     return
 
