@@ -603,7 +603,7 @@ class RecordService(BasePlayService):
                 archivePlaylist = str(self.archiveString)
                 catchupList = archivePlaylist.split(', ')
 
-                p = re.compile('service=playlist_\d&cid=\d+_TS.*')
+                p = re.compile('service=playlist_\d&cid=\d+_AR.*')
 
                 if not p.match(url):
                     return False
