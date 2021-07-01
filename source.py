@@ -1549,7 +1549,8 @@ class Database(object):
         return self._invokeAndBlockForResult(self._getAllCatchupUrlList, channels)
 
     def _getAllCatchupUrlList(self, channels):
-        result = list()
+        result = dict()
+
         channelList = list()
 
         for chann in channels:
@@ -1560,9 +1561,14 @@ class Database(object):
 
         for row in c:
             if row[str('channel')].upper() in channelList:
+            
                 url = row[str('channel')]
                 cid = row[str('stream_url')]
-                result.append(url+', '+cid.upper())
+
+                if url in result:
+                    result[url].append(cid)
+                else:
+                    result[url]=[cid]
         
         c.close()
 

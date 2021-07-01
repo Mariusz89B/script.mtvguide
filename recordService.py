@@ -1232,25 +1232,12 @@ class RecordService(BasePlayService):
         cid, service = self.parseUrl(url)
         channelInfo = self.getChannel(cid, service)
 
-        if channelInfo is not None:
-            try:
-                if 'streaming.telia.com' in channelInfo.strm:
-                    self.epg.database.removeRecording(self.program)
-                    self.cancelProgramRecord(self.program)
-                    updateDB = True
-                    xbmcgui.Dialog().ok(strings(70006) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30373))
-                    self.processIsCanceled = True
-                    self.unlockService(service) 
-                    return
+        if channelInfo is None:
+            threadData['nrOfReattempts'] += 1
+            deb('RecordService recordUrl - locked service {} - trying next, nrOfReattempts: {}, max: {}'.format(service, threadData['nrOfReattempts'], maxNrOfReattempts))
+            return #go to next stream - this one seems to be locked
 
-            except:
-                pass
-
-            if channelInfo is None:
-                threadData['nrOfReattempts'] += 1
-                deb('RecordService recordUrl - locked service {} - trying next, nrOfReattempts: {}, max: {}'.format(service, threadData['nrOfReattempts'], maxNrOfReattempts))
-                return #go to next stream - this one seems to be locked
-
+        else:
             self.findNextUnusedOutputFilename(threadData)
             
             if self.rtmpdumpAvailable and self.useOnlyFFmpeg == 'false' and (channelInfo.rtmpdumpLink is not None or (threadData['recordOptions']['forceRTMPDump'] == True and 'rtmp:' in channelInfo.strm) ):
@@ -1268,16 +1255,7 @@ class RecordService(BasePlayService):
             else:
                 threadData['nrOfReattempts'] += 1
 
-            self.unlockService(service)
-
-        else:
-            self.epg.database.removeRecording(self.program)
-            self.cancelProgramRecord(self.program)
-            updateDB = True
-            xbmcgui.Dialog().ok(strings(70006) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', strings(69065))
-            self.processIsCanceled = True
-            self.unlockService(service) 
-                          
+            self.unlockService(service)                          
 
     def record(self, recordCommand, threadData):
         deb('RecordService record command: {}'.format(str(recordCommand)))

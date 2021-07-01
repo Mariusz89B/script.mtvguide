@@ -505,8 +505,8 @@ msgid "Login credentials have been reset"
 msgstr "Akreditivi za prijavu su vraćeni"
 
 msgctxt "#30373"
-msgid "DRM protected material is encrypted, not possible to record."
-msgstr "DRM zaštićeni materijal je šifriran, nije ga moguće snimiti."
+msgid "Selected program is missing catchup playback. Would you like to play this channel?"
+msgstr "Odabranom programu nedostaje reprodukcije catchup. Želite li igrati ovaj kanal?"
 
 msgctxt "#30374"
 msgid "Sort all channels"

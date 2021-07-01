@@ -1038,7 +1038,7 @@ class PlayService(xbmc.Player, BasePlayService):
                         strmUrl = channelInfo.strm
                         strmUrl_catchup = channelInfo.catchup
 
-                        p = re.compile('service=playlist_\d&cid=\d+_TS.*')
+                        p = re.compile('service=playlist_\d&cid=\d+_AR.*')
 
                         duration = ''
 

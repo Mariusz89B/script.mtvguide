@@ -505,8 +505,8 @@ msgid "Login credentials have been reset"
 msgstr "Inloggningsuppgifter har återställts"
 
 msgctxt "#30373"
-msgid "DRM protected material is encrypted, not possible to record."
-msgstr "DRM skyddade materialet är krypterat, går inte att spela in."
+msgid "Selected program is missing catchup playback. Would you like to play this channel?"
+msgstr "Det valda programmet saknar catchup uppspelning. Vill du spela upp den här kanalen?""
 
 msgctxt "#30374"
 msgid "Sort all channels"

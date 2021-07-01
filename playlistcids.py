@@ -300,7 +300,8 @@ class PlaylistUpdater(baseServiceUpdater):
             #regexReplaceList.append( re.compile('[^A-Za-z0-9+/:]+',                                                re.IGNORECASE) )
             regexReplaceList.append( re.compile('[^A-Za-zÀ-ȕ0-9+/:]+',                                                re.IGNORECASE) )
             regexReplaceList.append( re.compile('\sL\s',                                                           re.IGNORECASE) )
-            regexReplaceList.append( re.compile('(\s|^)(Feed|Europe|SD|FULL|ADULT:|EXTRA:|VIP:|VIP|Audio|Backup|Multi|Sub|VIASAT:|XXX|XXX:|\d{1,2}\s*fps|low|high|quality|Live\s*During\s*Events\s*Only)(?=\s|$)',  re.IGNORECASE) )
+            regexReplaceList.append( re.compile('(\s|^)(Feed|Europe|SD|FULL|ADULT:|EXTRA:|VIP:|VIP|Audio|Backup|Multi|Sub|VIASAT:|XXX|XXX:|\d{1,2}\s*fps|Live\s*During\s*Events\s*Only)(?=\s|$)',  re.IGNORECASE) )
+            regexReplaceList.append( re.compile('(\s|^)(LQ|HQ|RAW|LOW|HIGH|QUALITY)(?=\s|$)',  re.IGNORECASE) )
 
             langReplaceList = list()
             regexRemoveList = list()
@@ -528,7 +529,7 @@ class PlaylistUpdater(baseServiceUpdater):
                             catchupList = ['catchup', 'timeshift']
 
                             if any(x in splitedLine[0] for x in catchupList) and ADDON.getSetting('archive_support') == 'true':
-                                channelCid = str(nextFreeCid) + '_TS' + '_' + days
+                                channelCid = str(nextFreeCid) + '_AR' + '_' + days
                             else:
                                 channelCid = str(nextFreeCid)
 

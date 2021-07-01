@@ -1,4 +1,7 @@
-﻿wersja 9.4.0 - 2021-06-27
+﻿wersja 9.4.1 - 2021-07-01
+- zaktualizowano rozpoznawanie kanałów z archiwum
+
+wersja 9.4.0 - 2021-06-27
 - naprawiono migotanie paska czasu
 - zaktualizowane tłumaczenia
 
