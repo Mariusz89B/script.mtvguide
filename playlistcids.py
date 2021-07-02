@@ -437,13 +437,15 @@ class PlaylistUpdater(baseServiceUpdater):
                             for regexReplace in regexReplaceList:
                                 title = regexReplace.sub(' ', title)
                             
-                            title, match = regexHD.subn(' HD ', title, count=1)
+                            title, match = regexHD.subn(' HD ', title)
                             if match > 0:
                                 HDStream = True
 
-                            title, match = regexUHD.subn(' UHD ', title, count=1)
+                            title, match = regexUHD.subn(' UHD ', title)
                             if match > 0:
                                 UHDStream = True
+
+                            title = self.removeDuplicates(title)
 
                             for langReplaceMap in langReplaceList:
                                 title, match = langReplaceMap['regex'].subn('', title)
@@ -476,29 +478,36 @@ class PlaylistUpdater(baseServiceUpdater):
 
                                 ccListInt = len(ccList)
                                 
-                                if any(ccExt not in title for ccExt in ccList):   
+                                if any(ccExt not in title for ccExt in ccList):
+
+                                    p = re.compile('group-title=".*(L\s*)?({a}|{b}|{c}|{d})(?=\W|\s|$).*"'.format(a=langA, b=langB, c=langC, d=langD), re.IGNORECASE)
                                     try:
                                         if sys.version_info[0] > 2:
-                                            groupList = re.findall('group-title=".*[^\w]({a}|{b}|{c}|{d})[^\w]?.*"'.format(a=langA, b=langB, c=langC, d=langD), str(splitedLine[0]))
+                                            group = p.search(str(splitedLine[0])).group(2)
                                         else:
-                                            groupList = re.findall('group-title=".*[^\w]({a}|{b}|{c}|{d})[^\w]?.*"'.format(a=langA, b=langB, c=langC, d=langD), str(splitedLine[0].encode('utf-8')))
+                                            group = p.search(str(splitedLine[0]).encode('utf-8')).group(2)
 
-                                        if groupList:
+                                        if group:
                                             for item in range(ccListInt):
-                                                if groupList[0] == langAList[item]:
+                                                if group.upper() == langAList[item].upper():
                                                     subsLangA = {langAList[item]: ccList[item]}
-                                                    cc = [subsLangA.get(item, item) for item in groupList]
-                                                    ccCh = cc[0]
+                                                    cc = ccList[subsLangA.get(item, item)]
+                                                    ccCh = cc
 
-                                                elif groupList[0] == langBList[item]:         
+                                                elif group.upper() == langBList[item].upper():        
                                                     subsLangB = {langBList[item]: ccList[item]}
-                                                    cc = [subsLangB.get(item, item) for item in groupList]
-                                                    ccCh = cc[0]
+                                                    cc = ccList[subsLangB.get(item, item)]
+                                                    ccCh = cc
 
-                                                elif groupList[0] == ccList[item]:         
+                                                elif group.upper() == ccList[item].upper():
                                                     subsLangC = {ccList[item]: ccList[item]}
-                                                    cc = [subsLangC.get(item, item) for item in groupList]
-                                                    ccCh = cc[0]
+                                                    cc = ccList[subsLangC.get(item, item)]
+                                                    ccCh = cc
+
+                                                elif group.upper() == langDList[item].upper():
+                                                    subsLangD = {langDList[item]: ccList[item]}
+                                                    cc = ccList[subsLangD.get(item, item)]
+                                                    ccCh = cc
 
                                                 else:
                                                     ccCh = ''
@@ -562,6 +571,9 @@ class PlaylistUpdater(baseServiceUpdater):
             self.log('getChannelList Error %s' % getExceptionString())
         return result
 
+    def removeDuplicates(self, s):
+      p = r"\b(HD|UHD)(?:\W+\1\b)+"
+      return re.sub(p, r"\1", s, flags=re.IGNORECASE)
 
     def getChannelStream(self, chann):
         try:
