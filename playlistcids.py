@@ -300,8 +300,8 @@ class PlaylistUpdater(baseServiceUpdater):
             #regexReplaceList.append( re.compile('[^A-Za-z0-9+/:]+',                                                re.IGNORECASE) )
             regexReplaceList.append( re.compile('[^A-Za-zÀ-ȕ0-9+/:]+',                                                re.IGNORECASE) )
             regexReplaceList.append( re.compile('\sL\s',                                                           re.IGNORECASE) )
-            regexReplaceList.append( re.compile('(\s|^)(Feed|Europe|SD|FULL|ADULT:|EXTRA:|VIP:|VIP|Audio|Backup|Multi|Sub|VIASAT:|XXX|XXX:|\d{1,2}\s*fps|Live\s*During\s*Events\s*Only)(?=\s|$)',  re.IGNORECASE) )
-            regexReplaceList.append( re.compile('(\s|^)(LQ|HQ|RAW|LOW|HIGH|QUALITY)(?=\s|$)',  re.IGNORECASE) )
+            regexReplaceList.append( re.compile('(\s|^)(FEED|EUROPE|ADULT:|EXTRA:|VIP:|VIP|AUDIO|BACKUP|MULTI|SUB|SUBTITLE(S)?|NAPISY|VIASAT:|XXX|XXX:|\d{1,2}\s*FPS|LIVE\s*DURING\s*EVENTS\s*ONLY)(?=\s|$)',  re.IGNORECASE) )
+            regexReplaceList.append( re.compile('(\s|^)(FULL|SD|LQ|HQ|RAW|LOW|HIGH|QUALITY)(?=\s|$)',  re.IGNORECASE) )
 
             langReplaceList = list()
             regexRemoveList = list()
@@ -476,16 +476,20 @@ class PlaylistUpdater(baseServiceUpdater):
                                 langDList = ['BEL', 'CZE', 'GER', 'DEN', 'FRA', 'HRT', 'ITA', 'NOR', 'POL', 'SWE', 'SRB', 'ENG', 'AME']
                                 langD = '|'.join(langDList)
 
+                                langEList = ['.BE', '.CZ', '.DE', '.DK', '.FR', '.HR', '.IT', '.NO', '.PL', '.SE', '.SRB', '.UK', '.US']
+                                langE = '|'.join(ccList)
+
                                 ccListInt = len(ccList)
                                 
                                 if any(ccExt not in title for ccExt in ccList):
 
-                                    p = re.compile('group-title=".*(L\s*)?({a}|{b}|{c}|{d})(?=\W|\s|$).*"'.format(a=langA, b=langB, c=langC, d=langD), re.IGNORECASE)
+                                    p = re.compile('(?:^|[^a-zA-Z\d])({a}|{b}|{c}|{d})(?:[^a-zA-Z\d]|$)'.format(a=langA, b=langB, c=langC, d=langD), re.IGNORECASE)
+
                                     try:
                                         if sys.version_info[0] > 2:
-                                            group = p.search(str(splitedLine[0])).group(2)
+                                            group = p.search(str(splitedLine[0])).group(1)
                                         else:
-                                            group = p.search(str(splitedLine[0]).encode('utf-8')).group(2)
+                                            group = p.search(str(splitedLine[0]).encode('utf-8')).group(1)
 
                                         if group:
                                             for item in range(ccListInt):
@@ -507,6 +511,11 @@ class PlaylistUpdater(baseServiceUpdater):
                                                 elif group.upper() == langDList[item].upper():
                                                     subsLangD = {langDList[item]: ccList[item]}
                                                     cc = ccList[subsLangD.get(item, item)]
+                                                    ccCh = cc
+
+                                                elif group.upper() == langEList[item].upper():
+                                                    subsLangE = {langEList[item]: ccList[item]}
+                                                    cc = ccList[subsLangE.get(item, item)]
                                                     ccCh = cc
 
                                                 else:
