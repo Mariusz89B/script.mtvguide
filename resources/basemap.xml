@@ -33,7 +33,7 @@
 	<channel id="BIZNES 24" title="(?=BIZNES\s*24(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="BOOMERANG PL" title="(?=BOOMERANG(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="CANAL+ 1 PL" title="(?=(CANAL|C)\s*(\+|PLUS)?\s*1(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="CANAL+ 4K ULTRA HD PL" title="(?=(CANAL|C)\s*(\+|PLUS)?(\s*TV)?(\s*UHD|\s*4K)(\s*UHD)?(\s*ULTRA)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="CANAL+ 4K ULTRA HD PL" title="(?=(CANAL|C)\s*(\+|PLUS)?(\s*TV)?(\s*4K)(\s*UHD)?(\s*ULTRA)?(\s*HD)?(\s*PL)?$)" strm=""/>
 	<channel id="CANAL+ DOKUMENT PL" title="(?=(CANAL|C)\s*(\+|PLUS)?\s*(DOKUMENT|DISCOVERY)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="CANAL+ DOMO PL" title="(?=((CANAL|C)\s*(\+\s*|PLUS\s*)?)?DOMO(\s*\+|\s*PLUS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="CANAL+ FAMILY PL" title="(?=(CANAL|C)\s*(\+|PLUS)?\s*FAMILY(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -74,7 +74,7 @@
 	<channel id="DUCK TV PL" title="(?=DUCK(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="E! ENTERTAINMENT PL" title="(?=E(!)?(\s*ENTERTAINMENT)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="E-SPORT PL" title="(?=E(\-|\s*)?SPORT(S)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="ELEVEN SPORTS 1 4K PL" title="(?=(ELEVEN|11)(\s*SPORT(S)?)?(\s*1)?(\s*UHD|S*4K)(\s*TV)?(\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="ELEVEN SPORTS 1 4K PL" title="(?=(ELEVEN|11)(\s*SPORT(S)?)?(\s*1)?(\s*UHD|S*4K)(\s*TV)?(\s*PL)?$)" strm=""/>
 	<channel id="ELEVEN SPORTS 1 PL" title="(?=(ELEVEN|11)(\s*SPORT(S)?)?(\s*1)?(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
 	<channel id="ELEVEN SPORTS 2 PL" title="(?=(ELEVEN|11|E)(\s*SPORT)(S)?(\s*2)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="ELEVEN SPORTS 3 PL" title="(?=(ELEVEN|11|E)\s*(SPORT(S)?(\s*3)|EXTRA)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -118,8 +118,8 @@
 	<channel id="HGTV PL" title="(?=(HG\s*TV|TVN\s*METEO\s*ACTIVE)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="HISTORY 2 PL" title="(?=(H|HISTORY)\s*2(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="HISTORY PL" title="(?=HISTORY(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="HOME TV PL" title="(?=(HOME|TVR)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="HOME 4K PL" title="(?=(HOME|TVR)(\s*TV)?(\s*UHD)?(\s*4K)(\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="HOME TV PL" title="(?=(HOME|TVR)(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
+	<channel id="HOME 4K PL" title="(?=(HOME)(\s*TV)?(\s*(4K|UHD))?(\s*PL)?$)" strm=""/>
 	<channel id="ID PL" title="(?=(DISCOVERY\s*)?(INVESTIGATION|ID)(\s*DISCOVERY)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="ITVN EXTRA INTERNATIONAL PL" title="(?=ITVN\s*EXTRA(\s*INT|\s*INTERNATIONAL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="ITVS PL" title="(?=ITVS(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -137,13 +137,13 @@
 	<channel id="MINIMINI+ PL" title="(?=MINI\s*MINI\s*(\+|PLUS)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="MIXTAPE PL" title="(?=MIXTAPE(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="MOTOWIZJA PL" title="(?=(MOTOWIZJA|MOTORWIZJA)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="MTV 80S PL" title="(?=MTV.*(80(s)?)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="MTV 90S PL" title="(?=MTV.*((90(s)?)|ROCKS)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV 80S PL" title="(?=MTV.*(80\s*(s)?)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="MTV 90S PL" title="(?=MTV.*((90\s*(s)?)|ROCKS)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="MTV HITS PL" title="(?=MTV\s*HITS(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="MTV LIVE HD PL" title="(?=MTV\s*LIVE(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="NICKMUSIC PL" title="(?=(MTV\s*MUSIC\s*24|NICK\s*MUSIC)(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="MTV POLSKA PL" title="(?=MTV(\s*MUSIC)?(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="MUSEUM UHD PL" title="(?=MUSEUM(\s*TV)?(\s*HD|\s*UHD)?(\s*UHD)?(\s*ULTRA)?(\s*PL)?$)" strm=""/>
+	<channel id="MUSEUM UHD PL" title="(?=MUSEUM(\s*TV)?(\s*HD|\s*UHD)?(\s*ULTRA)?(\s*PL)?$)" strm=""/>
 	<channel id="MUSIC BOX PL" title="(?=MUSIC\s*BOX(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="MYZEN.TV PL" title="(?=MY\s*ZEN(\.)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="NASA TV PL" title="(?=NASA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -205,7 +205,7 @@
 	<channel id="STINGRAY CLASSICA PL" title="(?=STINGRAY\s*CLASSICA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="STINGRAY CMUSIC PL" title="(?=STINGRAY\s*CMUSIC(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="STINGRAY DJAZZ PL" title="(?=STINGRAY\s*DJAZZ(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="STINGRAY FESTIVAL 4K PL" title="(?=STINGRAY\s*FESTIVAL(\s*TV)?(\s*UHD|\s*4K)(\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="STINGRAY FESTIVAL 4K PL" title="(?=STINGRAY\s*FESTIVAL(\s*TV)?(\s*UHD|\s*4K)(\s*PL)?$)" strm=""/>
 	<channel id="STINGRAY ICONCERTS PL" title="(?=(STINGRAY\s*)?(ICONCERT(S)?)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="STINGRAY JUICEBOX HD PL" title="(?=STINGRAY\s*JUICE\s*BOX(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="STINGRAY LOUD HD PL" title="(?=STINGRAY\s*LOUD(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -227,7 +227,7 @@
 	<channel id="TOYA PL" title="(?=TOYA(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TRACE URBAN PL" title="(?=TRACE\s*URBAN(\s*MU(S|Z)I(C|K))?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TRAVEL CHANNEL PL" title="(?=TRAVEL(\s*CHANNEL)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="TRAVEL XP 4K PL" title="(?=TRAVEL(\s*XP)?(\s*TV)?\s*UHD(\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="TRAVEL XP 4K PL" title="(?=TRAVEL(\s*XP)?(\s*TV)?(\s*(4K|UHD))(\s*PL)?$)" strm=""/>
 	<channel id="TRAVEL XP PL" title="(?=TRAVEL(\s*XP)?(\s*TV)?(\s*HD)?(\s*PL)?$)" strm=""/>
 	<channel id="TTV PL" title="(?=TTV(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TV 4 PL" title="(?=(TV\s*4|CZW(O|.)RKA)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
@@ -286,7 +286,7 @@
 	<channel id="TVT PL" title="(?=TVT(\s*ZGORZELEC)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TWOJA TELEWIZJA MORSKA PL" title="(?=(TTM|TWOJA\s*TELEWIZJA\s*MORSKA)(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="TWOJA TV PL" title="(?=TWOJA(\.)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
-	<channel id="ULTRA TV 4K PL" title="(?=(ULTRA)(\s*TV)?(\s*UHD|\s*4K)?(\s*UHD)?(\s*PL)?$)" strm=""/>
+	<channel id="ULTRA TV 4K PL" title="(?=(ULTRA)(\s*TV)?(\s*(UHD|4K))?(\s*PL)?$)" strm=""/>
 	<channel id="VH1 CLASSIC PL" title="(?=VH1\s*Classic(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="VH1 PL" title="(?=VH1(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
 	<channel id="VIVA POLSKA" title="(?=VIVA(\s*POLSKA)?(\s*TV)?(\s*HD|\s*UHD)?(\s*PL)?$)" strm=""/>
