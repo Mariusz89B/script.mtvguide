@@ -207,10 +207,14 @@ class ShowList:
                     opener = urllib2.build_opener( *customOpeners )
                 response = opener.open(req, timeout = http_timeout)
             else:
-                if sys.version_info[0] > 2:
-                    response = urllib.request.urlopen(req, timeout = http_timeout)
-                else:
-                    response = urllib2.urlopen(req, timeout = http_timeout)
+                try:
+                    if sys.version_info[0] > 2:
+                        response = urllib.request.urlopen(req, timeout = http_timeout)
+                    else:
+                        response = urllib2.urlopen(req, timeout = http_timeout)
+                except:
+                    response = None
+                    
             return response
 
         try:
@@ -253,18 +257,22 @@ class ShowList:
             while (datetime.datetime.now() - startTime).seconds < max_conn_time and strings2.M_TVGUIDE_CLOSING == False:
                 try:
                     raw_json = urlOpen(reqUrl, customOpeners)
-                    if getResponseUrl:
-                        result = raw_json.geturl()
-                        raw_json.close()
-                        return result
-                    result_json = raw_json.read()
-                    if raw_json.headers.get("Content-Encoding", "") == "gzip":
-                        result_json = zlib.decompressobj(16 + zlib.MAX_WBITS).decompress(result_json)
+                    if raw_json:
+                        if getResponseUrl:
+                            result = raw_json.geturl()
+                            raw_json.close()
+                            return result
+                        result_json = raw_json.read()
+                        if raw_json.headers.get("Content-Encoding", "") == "gzip":
+                            result_json = zlib.decompressobj(16 + zlib.MAX_WBITS).decompress(result_json)
 
-                    if jsonLoadsResult == True:
-                        result_json = json.loads(result_json)
-                    raw_json.close()
-                    break
+                        if jsonLoadsResult == True:
+                            result_json = json.loads(result_json)
+                        raw_json.close()
+                        break
+                    else:
+                        result_json = None
+                        return result_json
                 except (httplibIncompleteRead, socket.timeout) as ex:
                     if verbose:
                         self.logCall('ShowList getJsonFromExtendedAPI exception: %s, url: %s - retrying seconds = %s' % (str(ex), url, (datetime.datetime.now() - startTime).seconds))

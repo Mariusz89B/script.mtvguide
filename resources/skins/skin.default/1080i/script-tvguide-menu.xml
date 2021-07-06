@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <window type="dialog">
 	<allowoverlay>no</allowoverlay>
-	<defaultcontrol always="false">4000</defaultcontrol>
+	<defaultcontrol always="true">100</defaultcontrol>
 	<aspectratio>scale</aspectratio>
 	<coordinates>
 		<system>1</system><posx>0</posx><posy>0</posy>
@@ -22,8 +22,8 @@
 		<control type="image">
 			<posx>0</posx>
 			<posy>0</posy>
-			<width>1920</width>
-			<height>1080</height>
+			<width>100%</width>
+			<height>100%</height>
 			<texture colordiffuse="9F000000">osd/white.png</texture>
 			<animation type="WindowOpen" reversible="false">
 				<effect type="zoom" start="100" end="100" center="960,540" delay="160" tween="back" time="240" />
@@ -34,25 +34,6 @@
 				<effect type="fade" start="100" end="0" time="240" />
 			</animation>
 		</control>
-
-		<control type="image">
-			<description>Background</description>
-			<posx>735</posx>
-			<posy>220</posy>
-			<width>450</width>
-			<height>720</height>
-			<texture>dialogs/dialog-bg-solid.png</texture>
-		</control>
-		
-		<control type="image">
-			<description>Background</description>
-			<posx>735</posx>
-			<posy>140</posy>
-			<width>450</width>
-			<height>70</height>
-			<texture colordiffuse="button_focus">osd/grey.png</texture>
-			<visible>hidden</visible>
-		</control>
 		
 		<control type="button" id="1000">
 			<description>Close Window button</description>
@@ -60,26 +41,27 @@
 			<posy>150</posy>
 			<width>48</width>
 			<height>48</height>
-			<onclick>Dialog.Close(all,true)</onclick>
-			<onclick>FullScreen</onclick>
+			<onclick></onclick>
+			<onclick></onclick>
 			<texturefocus colordiffuse="EEFFFFFF">dialogs/close.png</texturefocus>
 			<texturenofocus colordiffuse="EEFFFFFF">dialogs/mk_logo.png</texturenofocus>
 			<animation effect="fade" time="200">VisibleChange</animation>
 			<visible>hidden</visible>
 		</control>
+
+		<control type="button" id="4000">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>0</width>
+			<height>0</height>
+			<visible>hidden</visible>
+		</control>
 		
-		<control type="label" id="1">
-			<description>Header label</description>
-			<posx>756</posx>
-			<posy>162</posy>
-			<width>555</width>
-			<height>30</height>
-			<font>font32_title</font>
-			<label>$ADDON[script.mtvguide 68007]</label>
-			<align>left</align>
-			<aligny>center</aligny>
-			<textcolor>FFF0F0F0</textcolor>
-			<shadowcolor>FF000000</shadowcolor>
+		<control type="button" id="4006"> 
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>0</width>
+			<height>0</height>
 			<visible>hidden</visible>
 		</control>
 		
@@ -98,15 +80,6 @@
 			<visible>hidden</visible>
 		</control>
 		
-		<!-- Play -->
-		<control type="button" id="4000">
-			<posx>0</posx>
-			<posy>0</posy>
-			<width>0</width>
-			<height>0</height>
-			<visible>hidden</visible>
-		</control>
-		
 		<control type="label" id="4102">
 			<posx>0</posx>
 			<posy>0</posy>
@@ -116,241 +89,13 @@
 		</control>
 		
 		<control type="label" id="4103">
-			<posx>0</posx>
-			<posy>0</posy>
-			<width>0</width>
-			<height>0</height>
+			<posx>10</posx>
+			<posy>10</posy>
+			<width>100</width>
+			<height>100</height>
 			<visible>hidden</visible>
 		</control>
-		
-		<!-- Remind me / not -->
-		<control type="button" id="4002"> 
-			<posx>735</posx>
-			<posy>400</posy>
-			<width>450</width>
-			<height>60</height>
-			<onup>4011</onup>
-			<ondown>4007</ondown>
-			<onleft>4013</onleft>
-			<align>center</align>
-			<aligny>center</aligny>
-			<font>font13</font>
-			<textcolor>FFFFFFFF</textcolor>
-			<focusedcolor>FFFFFFFF</focusedcolor>
-			<texturefocus colordiffuse="button_focus">osd/grey.png</texturefocus>
-			<texturenofocus></texturenofocus>
-		</control>
-
-		<!-- Button Add/Remove Strm -->
-		<control type="button" id="4001">
-			<posx>737</posx>
-			<posy>820</posy>
-			<width>450</width>
-			<height>60</height>
-			<onup>4014</onup>
-			<ondown>4004</ondown>
-			<onleft>4013</onleft>
-			<align>center</align>
-			<aligny>center</aligny>
-			<font>font13</font>
-			<textcolor>FFFFFFFF</textcolor>
-			<focusedcolor>FFFFFFFF</focusedcolor>
-			<texturefocus colordiffuse="button_focus">osd/grey.png</texturefocus>
-			<texturenofocus></texturenofocus>
-		</control>
-		
-				<!-- Channels -->
-		<control type="button" id="4003">
-			<posx>735</posx>
-			<posy>580</posy>
-			<width>450</width>
-			<height>60</height>
-			<onup>4006</onup>
-			<ondown>4009</ondown>
-			<onleft>4013</onleft>
-			<align>center</align>
-			<aligny>center</aligny>
-			<font>font13</font>
-			<textcolor>FFFFFFFF</textcolor>
-			<focusedcolor>FFFFFFFF</focusedcolor>
-			<label>$ADDON[script.mtvguide 30307]</label>
-			<texturefocus colordiffuse="button_focus">osd/grey.png</texturefocus>
-			<texturenofocus></texturenofocus>
-		</control>
-
-				<!-- Exit -->
-		<control type="button" id="4004">
-			<posx>735</posx>
-			<posy>880</posy>
-			<width>450</width>
-			<height>60</height>
-			<onup>4001</onup>
-			<ondown>4010</ondown>
-			<onleft>4013</onleft>
-			<align>center</align>
-			<aligny>center</aligny>
-			<font>font13</font>
-			<textcolor>FFFFFFFF</textcolor>
-			<focusedcolor>FFFFFFFF</focusedcolor>
-			<label>$ADDON[script.mtvguide 30308]</label>
-			<texturefocus colordiffuse="button_focus">osd/grey.png</texturefocus>
-			<texturenofocus></texturenofocus>
-		</control>
-		
-				<!-- Settings -->
-		<control type="button" id="4005">
-			<posx>735</posx>
-			<posy>700</posy>
-			<width>450</width>
-			<height>60</height>
-			<onup>4009</onup>
-			<ondown>4014</ondown>
-			<onleft>4013</onleft>
-			<align>center</align>
-			<aligny>center</aligny>
-			<font>font13</font>
-			<textcolor>FFFFFFFF</textcolor>
-			<focusedcolor>FFFFFFFF</focusedcolor>
-			<label>$ADDON[script.mtvguide 68005]</label>
-			<onclick>Addon.OpenSettings(script.mtvguide)</onclick>
-			<texturefocus colordiffuse="button_focus">osd/grey.png</texturefocus>
-			<texturenofocus></texturenofocus>
-		</control>
-		
-				<!-- Recordings -->
-		<control type="button" id="4006"> 
-			<posx>735</posx>
-			<posy>520</posy>
-			<width>450</width>
-			<height>60</height>
-			<onup>4007</onup>
-			<ondown>4003</ondown>
-			<onleft>4013</onleft>
-			<align>center</align>
-			<aligny>center</aligny>
-			<font>font13</font>
-			<textcolor>FFFFFFFF</textcolor>
-			<focusedcolor>FFFFFFFF</focusedcolor>
-			<label>$ADDON[script.mtvguide 30337]</label>
-			<texturefocus colordiffuse="button_focus">osd/grey.png</texturefocus>
-			<texturenofocus></texturenofocus>
-		</control>
-		
-				<!-- Record -->
-		<control type="button" id="4007"> 
-			<posx>735</posx>
-			<posy>460</posy>
-			<width>450</width>
-			<height>60</height>
-			<onup>4002</onup>
-			<ondown>4006</ondown>
-			<onleft>4013</onleft>
-			<align>center</align>
-			<aligny>center</aligny>
-			<font>font13</font>
-			<textcolor>FFFFFFFF</textcolor>
-			<focusedcolor>FFFFFFFF</focusedcolor>
-			<label>$ADDON[script.mtvguide 69039]</label>
-			<texturefocus colordiffuse="button_focus">osd/grey.png</texturefocus>
-			<texturenofocus></texturenofocus>
-		</control>
-		
-				<!-- Info -->
-		<control type="button" id="4008"> 
-			<posx>735</posx>
-			<posy>280</posy>
-			<width>450</width>
-			<height>60</height>
-			<onup>4010</onup>
-			<ondown>4011</ondown>
-			<onleft>4013</onleft>
-			<align>center</align>
-			<aligny>center</aligny>
-			<font>font13</font>
-			<textcolor>FFFFFFFF</textcolor>
-			<focusedcolor>FFFFFFFF</focusedcolor>
-			<label>$ADDON[script.mtvguide 58000]</label>
-			<texturefocus colordiffuse="button_focus">osd/grey.png</texturefocus>
-			<texturenofocus></texturenofocus>
-		</control>
-		
-				<!-- Listing -->
-		<control type="button" id="4009"> 
-			<posx>735</posx>
-			<posy>640</posy>
-			<width>450</width>
-			<height>60</height>
-			<onup>4003</onup>
-			<ondown>4005</ondown>
-			<onleft>4013</onleft>
-			<align>center</align>
-			<aligny>center</aligny>
-			<font>font13</font>
-			<textcolor>FFFFFFFF</textcolor>
-			<focusedcolor>FFFFFFFF</focusedcolor>
-			<label>$ADDON[script.mtvguide 30309]</label>
-			<texturefocus colordiffuse="button_focus">osd/grey.png</texturefocus>
-			<texturenofocus></texturenofocus>
-		</control>
-		
-				<!-- Number -->
-		<control type="button" id="4010"> 
-			<posx>735</posx>
-			<posy>220</posy>
-			<width>450</width>
-			<height>60</height>
-			<onup>4004</onup>
-			<ondown>4008</ondown>
-			<onleft>4013</onleft>
-			<align>center</align>
-			<aligny>center</aligny>
-			<font>font13</font>
-			<textcolor>FFFFFFFF</textcolor>
-			<focusedcolor>FFFFFFFF</focusedcolor>
-			<label>$ADDON[script.mtvguide 30346]</label>
-			<texturefocus colordiffuse="button_focus">osd/grey.png</texturefocus>
-			<texturenofocus></texturenofocus>
-		</control>
-		
-				<!-- Extended info -->
-		<control type="button" id="4011"> 
-			<posx>735</posx>
-			<posy>340</posy>
-			<width>450</width>
-			<height>60</height>
-			<onup>4008</onup>
-			<ondown>4002</ondown>
-			<onleft>4013</onleft>
-			<align>center</align>
-			<aligny>center</aligny>
-			<font>font13</font>
-			<textcolor>FFFFFFFF</textcolor>
-			<focusedcolor>FFFFFFFF</focusedcolor>
-			<label>$ADDON[script.mtvguide 30356]</label>
-			<texturefocus colordiffuse="button_focus">osd/grey.png</texturefocus>
-			<texturenofocus></texturenofocus>
-		</control>
-		
-				<!-- Favorites -->
-		<control type="button" id="4014"> 
-			<posx>735</posx>
-			<posy>760</posy>
-			<width>450</width>
-			<height>60</height>
-			<onup>4005</onup>
-			<ondown>4001</ondown>
-			<onleft>4013</onleft>
-			<align>center</align>
-			<aligny>center</aligny>
-			<font>font13</font>
-			<textcolor>FFFFFFFF</textcolor>
-			<focusedcolor>FFFFFFFF</focusedcolor>
-			<label>$ADDON[script.mtvguide 30602]</label>
-			<texturefocus colordiffuse="button_focus">osd/grey.png</texturefocus>
-			<texturenofocus></texturenofocus>
-		</control>
 	</control>
-		
 		
 		<!-- Left menu -->
 		<control type="group">
@@ -368,8 +113,8 @@
 		<control type="group">
 			<posx>-520</posx>
 			<posy>0</posy>
-			<width>1920</width>
-			<height>1080</height>
+			<width>100%</width>
+			<height>100%</height>
 			<animation effect="slide" start="0" end="520" time="400" tween="cubic" easing="out">WindowOpen</animation>
 			<animation effect="slide" start="520" end="0" time="400" tween="cubic" easing="in">WindowClose</animation>
 		
@@ -381,37 +126,6 @@
 			<height>100%</height>
 			<texture border="0,0,52,0">dialogs/panel-mediamenu.png</texture>
 		</control>
-		
-		<control type="group">
-			<top>20</top>
-			<left>20</left>
-			<control type="image">
-				<aspectratio>keep</aspectratio>
-				<width>56</width>
-				<height>56</height>
-				<texture colordiffuse="button_focus">dialogs/mk_logo.png</texture>
-				<visible>hidden</visible>
-			</control>
-			<control type="image">
-				<left>40</left>
-				<top>10</top>
-				<aspectratio>keep</aspectratio>
-				<width>192</width>
-				<height>36</height>
-				<texture>dialogs/logo-text.png</texture>
-				<visible>hidden</visible>
-			</control>
-		</control>
-		
-			<control type="image">
-				<left>66.5</left>
-				<bottom>20</bottom>
-				<width>337</width>
-				<height>100</height>
-				<texture>dialogs/logo.png</texture>
-				<animation effect="slide" end="0,-70" time="0" condition="Skin.HasSetting(touchmode)">Conditional</animation>
-				<visible>hidden</visible>
-			</control>
 	
 		<control type="group" id="60520">
 			<top>50</top>
@@ -477,7 +191,6 @@
 				<left>0</left>
 				<height>120</height>
 				<onleft>6056</onleft>
-				<onright>4010</onright>
 				<onup>4016</onup>
 				<ondown>6051</ondown>
 				<width>1000</width>
@@ -568,7 +281,6 @@
 			<height>70</height>
 			<onup>60560</onup>
 			<ondown>7004</ondown>
-			<onright>4010</onright>
 			<align>left</align>
 			<aligny>center</aligny>
 			<font>font13</font>
@@ -602,7 +314,6 @@
 			<height>70</height>
 			<onup>7004</onup>
 			<ondown>4016</ondown>
-			<onright>4010</onright>
 			<align>left</align>
 			<aligny>center</aligny>
 			<font>font13</font>
@@ -624,7 +335,6 @@
 			<height>70</height>
 			<onup>4015</onup>
 			<ondown>60560</ondown>
-			<onright>4010</onright>
 			<align>left</align>
 			<aligny>center</aligny>
 			<font>font13</font>

@@ -86,6 +86,10 @@ try:
 except:
     skin_separate_program_actors = False
 try:
+    skin_separate_rating = config.getboolean("Skin", "program_show_rating")
+except:
+    skin_separate_rating = False
+try:
     skin_resolution = config.getboolean("Skin", "resolution")
 except:
     skin_resolution = '720p'
@@ -113,6 +117,7 @@ C_MAIN_DESCRIPTION = 4922
 C_MAIN_IMAGE = 4923
 C_MAIN_CHAN_NUMBER = 4925
 C_MAIN_AGE_ICON = 4932
+C_MAIN_RATING = 4933
 C_MAIN_START_TIME = 4950
 C_MAIN_END_TIME = 4951
 C_MAIN_CHAN_PLAY = 4952
@@ -852,6 +857,9 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
                     self.setControlImage(C_MAIN_AGE_ICON, icon)
                 if skin_separate_program_actors:
                     actors = descriptionParser.extractActors()
+                if skin_separate_rating:
+                    rating = descriptionParser.extractRating()
+                    self.setControlText(C_MAIN_RATING, rating)
                 
                 description = descriptionParser.description
                 self.setControlText(C_MAIN_DESCRIPTION, description)

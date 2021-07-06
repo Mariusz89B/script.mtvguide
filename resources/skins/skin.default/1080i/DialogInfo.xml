@@ -64,6 +64,10 @@
 			<control type="textbox" id="4930">
 				<visible>hidden</visible>
 			</control>
+			
+			<control type="textbox" id="4933">
+				<visible>hidden</visible>
+			</control>
 		
 	<control type="group">
 		<animation effect="fade" end="100" delay="300" time="300">WindowOpen</animation>

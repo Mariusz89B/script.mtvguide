@@ -233,6 +233,9 @@ class ProgramDescriptionParser(object):
         except:
             icon = ''
 
+        return icon
+
+    def extractRating(self):
         try:
             rating = re.search("((O:|Ocena:|Betyg:|Starrating:|Bewertung:|Bed.?mmelse:|Bewertung:|Ocjena:|Notation:|Valutazione:|Hodnocen.?:)\s*(\[B\])?(\d+/\d+)(\[\/B\])?(\.)?)", self.description).group(4)
             rating = ProgramDescriptionParser.DECORATE_REGEX.sub("", rating)
@@ -242,7 +245,7 @@ class ProgramDescriptionParser(object):
         except:
             rating = ''
 
-        return icon
+        return rating
 
     def extractActors(self):
         try:

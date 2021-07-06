@@ -148,6 +148,10 @@ try:
 except:
     skin_separate_program_actors = False
 try:
+    skin_separate_rating = config.getboolean("Skin", "program_show_rating")
+except:
+    skin_separate_rating = False
+try:
     skin_resolution = config.get("Skin", "resolution")
 except:
     skin_resolution = '720p'
@@ -513,7 +517,11 @@ class mTVGuide(xbmcgui.WindowXML):
 
     C_MAIN_DAY = 4960 
     C_MAIN_REAL_DATE = 4961         
-    C_MAIN_CALC_TIME_EPG = 4232    
+    C_MAIN_CALC_TIME_EPG = 4232
+
+    C_MAIN_SLIDE = 4975
+
+    C_MAIN_SLIDE_CLICK = 4976
 
     def __new__(cls):
         return super(mTVGuide, cls).__new__(cls, 'script-tvguide-main.xml', Skin.getSkinBasePath(), Skin.getSkinName(), defaultRes=skin_resolution)
@@ -2723,6 +2731,18 @@ class mTVGuide(xbmcgui.WindowXML):
             if program is not None:
                 self._showContextMenu(program)
                 return
+            
+            if program is None and not self.database.getAllStreamUrlList():
+                if self.getFocusId() != 7900:
+                    ret = xbmcgui.Dialog().contextmenu([strings(68005), strings(30308)])
+
+                    if ret == 0:
+                        #xbmcaddon.Addon(id=ADDON_ID).openSettings()
+                        self.popupMenu(program)
+
+                    elif ret == 1:
+                        self.close()
+
         elif action.getButtonCode() == KEY_RECORD:
             program = self._getProgramFromControl(controlInFocus)
             self.recordProgram(program)
@@ -2783,6 +2803,9 @@ class mTVGuide(xbmcgui.WindowXML):
             return
         self.lastKeystroke = datetime.datetime.now()
         channel = None
+
+        if controlId == self.C_MAIN_SLIDE_CLICK:
+            self.popupMenu(self.program)
 
         if controlId == self.C_MAIN_CATEGORY:
             cList = self.getControl(self.C_MAIN_CATEGORY)
@@ -4319,16 +4342,64 @@ class mTVGuide(xbmcgui.WindowXML):
             xbmcgui.Dialog().ok(strings(57051), strings(59993).format(epgChann.upper()))
             self.reloadList(add=True)
 
+
     def _showContextMenu(self, program):
         deb('_showContextMenu')
         self._hideControl(self.C_MAIN_MOUSEPANEL_CONTROLS)
-        d = PopupMenu(self.database, program, not program.notificationScheduled)
-        d.doModal()
-        buttonClicked = d.buttonClicked
-        new_category = d.category
-        del d
 
-        if buttonClicked == PopupMenu.C_POPUP_REMIND:
+        if program.notificationScheduled:
+            remindControl = (strings(DONT_REMIND_PROGRAM))
+        else:
+            remindControl = (strings(REMIND_PROGRAM))
+
+        if program.endDate < datetime.datetime.now():
+            if program.recordingScheduled:
+                programRecordControl = (strings(DOWNLOAD_PROGRAM_CANCEL_STRING))
+            else:
+                programRecordControl = (strings(DOWNLOAD_PROGRAM_STRING))
+        else:
+            if program.recordingScheduled:
+                programRecordControl = (strings(RECORD_PROGRAM_CANCEL_STRING))
+            else:
+                programRecordControl = (strings(RECORD_PROGRAM_STRING))
+
+        removeStrm = False
+
+        if self.database.getCustomStreamUrl(program.channel):
+            chooseStrmControl = (strings(REMOVE_STRM_FILE))
+            removeStrm = True
+        else:
+            chooseStrmControl = (strings(CHOOSE_STRM_FILE))
+        
+        ret = xbmcgui.Dialog().contextmenu([strings(30346), strings(58000), strings(30356), remindControl, programRecordControl, strings(30337), strings(30307), strings(30309), strings(68005), strings(30602), chooseStrmControl, strings(30308)])
+
+        if ret == 0:
+            if ADDON.getSetting('channel_shortcut') == 'false':
+                xbmcgui.Dialog().notification(strings(30353), strings(30354))
+            else:
+                if ADDON.getSetting('channel_shortcut') == 'true':
+                    d = xbmcgui.Dialog()
+                    number = d.input(strings(30346), type=xbmcgui.INPUT_NUMERIC)
+                    if number:
+                        self.channel_number = number
+                        if self.timer and self.timer.is_alive():
+                            self.timer.cancel()
+                        self.playShortcut()
+
+        elif ret == 1:
+            deb('Info')
+            self.infoDialog = InfoDialog(program, self.playChannel2, self.recordProgram, self.notification,
+                                         self.ExtendedInfo, self.onRedrawEPG, self.channelIdx, self.viewStartDate)
+            self.infoDialog.setChannel(program)
+            self.infoDialog.doModal()
+            del self.infoDialog
+            self.infoDialog = None
+
+        elif ret == 2:
+            deb('ExtendedInfo')
+            self.ExtendedInfo(program)
+
+        elif ret == 3:
             if program.notificationScheduled:
                 self.notification.removeNotification(program)
             else:
@@ -4336,27 +4407,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
             self.onRedrawEPG(self.channelIdx, self.viewStartDate)
 
-        elif buttonClicked == PopupMenu.C_POPUP_CHOOSE_STREAM:
-            d = StreamSetupDialog(self.database, program.channel)
-            d.doModal()
-            del d
-
-        elif buttonClicked == PopupMenu.C_POPUP_PLAY:
-            self.playChannel(program.channel)
-
-        elif buttonClicked == PopupMenu.C_POPUP_CHANNELS:
-            d = ChannelsMenu(self.database, program.channel)
-            d.doModal()
-            del d
-            self.onRedrawEPG(self.channelIdx, self.viewStartDate)
-
-        elif buttonClicked == PopupMenu.C_POPUP_QUIT:
-            self.close()
-
-        elif buttonClicked == PopupMenu.C_POPUP_ADDON_SETTINGS:
-            xbmcaddon.Addon(id=ADDON_ID).openSettings()
-
-        elif buttonClicked == PopupMenu.C_POPUP_RECORD:
+        elif ret == 4:
             if program.recordingScheduled:
                 self.recordProgram(program)
 
@@ -4378,16 +4429,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 if res == 1:
                     self.recordProgram(program)
 
-        elif buttonClicked == PopupMenu.C_POPUP_INFO:
-            deb('Info')
-            self.infoDialog = InfoDialog(program, self.playChannel2, self.recordProgram, self.notification,
-                                         self.ExtendedInfo, self.onRedrawEPG, self.channelIdx, self.viewStartDate)
-            self.infoDialog.setChannel(program)
-            self.infoDialog.doModal()
-            del self.infoDialog
-            self.infoDialog = None
-
-        elif buttonClicked == PopupMenu.C_POPUP_RECORDINGS:
+        elif ret == 5:
             if sys.version_info[0] > 2:
                 record_folder = ADDON.getSetting('record_folder')
                 xbmc.executebuiltin('ActivateWindow(Videos,{record_folder},return)'.format(record_folder=record_folder))
@@ -4395,7 +4437,13 @@ class mTVGuide(xbmcgui.WindowXML):
                 record_folder = native(ADDON.getSetting('record_folder'))
                 xbmc.executebuiltin(b'ActivateWindow(Videos,{record_folder},return)'.format(record_folder=record_folder))
 
-        elif buttonClicked == PopupMenu.C_POPUP_LISTS:
+        elif ret == 6:
+            d = ChannelsMenu(self.database, program.channel)
+            d.doModal()
+            del d
+            self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+
+        elif ret == 7:
             d = xbmcgui.Dialog()
             list = d.select(strings(30309), [strings(30315), strings(30310), strings(30311), strings(30312), strings(30336), strings(30337)])
 
@@ -4415,45 +4463,61 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.showFullRecordings(program.channel)
             return
 
+        elif ret == 8:
+            self.popupMenu(program)
+
+        elif ret == 9:
+            xbmc.executebuiltin("ActivateWindow(10134)")
+
+        elif ret == 10:
+            if removeStrm:
+                self.database.deleteCustomStreamUrl(program.channel)
+            d = StreamSetupDialog(self.database, program.channel)
+            d.doModal()
+            del d
+
+        elif ret == 11:
+            self.close()
+
+
+    def popupMenu(self, program):
+        d = PopupMenu(self.database, program)
+        d.doModal()
+        buttonClicked = d.buttonClicked
+        new_category = d.category
+        del d
+
+        if buttonClicked == PopupMenu.C_POPUP_PLAY:
+            self.playChannel(program.channel)
+
+        elif buttonClicked == PopupMenu.C_POPUP_RECORDINGS:
+            if sys.version_info[0] > 2:
+                record_folder = ADDON.getSetting('record_folder')
+                xbmc.executebuiltin('ActivateWindow(Videos,{record_folder},return)'.format(record_folder=record_folder))
+            else:
+                record_folder = native(ADDON.getSetting('record_folder'))
+                xbmc.executebuiltin(b'ActivateWindow(Videos,{record_folder},return)'.format(record_folder=record_folder))
+
+        elif buttonClicked == PopupMenu.C_POPUP_FAQ:
+            xbmcgui.Dialog().textviewer(strings(30994), strings(99996))
+            self.popupMenu(program)
+
         elif buttonClicked == PopupMenu.C_POPUP_CATEGORY:
             self.database.setCategory(new_category)
             ADDON.setSetting('category', new_category)
             with self.busyDialog():
                 self.onRedrawEPG(self.channelIdx == 1, self.viewStartDate)
-
-        elif buttonClicked == PopupMenu.C_POPUP_NUMBER:
-            if ADDON.getSetting('channel_shortcut') == 'false':
-                xbmcgui.Dialog().notification(strings(30353), strings(30354))
-            else:
-                if ADDON.getSetting('channel_shortcut') == 'true':
-                    d = xbmcgui.Dialog()
-                    number = d.input(strings(30346), type=xbmcgui.INPUT_NUMERIC)
-                    if number:
-                        self.channel_number = number
-                        if self.timer and self.timer.is_alive():
-                            self.timer.cancel()
-                        self.playShortcut()
-
-        elif buttonClicked == PopupMenu.C_POPUP_EXTENDED:
-            deb('ExtendedInfo')
-            self.ExtendedInfo(program)
-
-        elif buttonClicked == PopupMenu.C_POPUP_FAQ:
-            xbmcgui.Dialog().textviewer(strings(30994), strings(99996))
-            return
-
-        elif buttonClicked == PopupMenu.C_POPUP_FAVOURITES:
-            xbmc.executebuiltin("ActivateWindow(10134)")
+                self.popupMenu(program)
 
         elif buttonClicked == PopupMenu.C_POPUP_ADD_CHANNEL:
             deb('AddChannel')
             self.channelsSelect()
-            return
+            self.popupMenu(program)
 
         elif buttonClicked == PopupMenu.C_POPUP_REMOVE_CHANNEL:
             deb('RemoveChannel')
             self.channelsRemove()
-            return
+            self.popupMenu(program)
 
     def setFocusId(self, controlId):
         debug('setFocusId')
@@ -4479,6 +4543,9 @@ class mTVGuide(xbmcgui.WindowXML):
             self.onFocusTimer.start()
         except:
             pass
+
+        if controlId == self.C_MAIN_SLIDE and xbmc.getCondVisibility('!Control.IsVisible(4100)'):
+            self.popupMenu(self.program)
 
     def realtimeDate(self, program):
         #Realtime date & weekday
@@ -4596,6 +4663,9 @@ class mTVGuide(xbmcgui.WindowXML):
                 if actors == '':
                     actors = program.actor
                 self.setControlText(C_PROGRAM_ACTORS, actors)
+            if skin_separate_rating:
+                rating = descriptionParser.extractRating()
+                self.setControlText(C_PROGRAM_RATING, rating)
             if skin_separate_program_progress:
                 try:
                     programProgressControl = self.getControl(C_MAIN_PROGRAM_PROGRESS)
@@ -4852,40 +4922,43 @@ class mTVGuide(xbmcgui.WindowXML):
             else:
                 catchupList = catchupList.iteritems()
 
-            if program.channel.title.upper() in [k for k,v in catchupList]:
-                day = [v for k,v in catchupList if k == program.channel.title.upper()][0]
+            try:
+                if program.channel.title.upper() in [k for k,v in catchupList]:
+                    day = [v for k,v in catchupList if k == program.channel.title.upper()][0]
 
-            if day == '':
-                day = ADDON.getSetting('archive_reverse_days')
+                if day == '':
+                    day = ADDON.getSetting('archive_reverse_days')
 
-            if day == '3H':
-                reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(3)) - datetime.timedelta(minutes = 5)
+                if day == '3H':
+                    reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(3)) - datetime.timedelta(minutes = 5)
 
-            elif ADDON.getSetting('archive_reverse_auto') == '0' and day != '':
-                try:
-                    reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(day)) * 24 - datetime.timedelta(minutes = 5)
-                except:
-                    reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
-            else:
-                try:
-                    reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(ADDON.getSetting('archive_manual_days'))) * 24 - datetime.timedelta(minutes = 5)
-                except:
-                    reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
+                elif ADDON.getSetting('archive_reverse_auto') == '0' and day != '':
+                    try:
+                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(day)) * 24 - datetime.timedelta(minutes = 5)
+                    except:
+                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
+                else:
+                    try:
+                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(ADDON.getSetting('archive_manual_days'))) * 24 - datetime.timedelta(minutes = 5)
+                    except:
+                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
 
-            if day == '3H':
-                reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(3)) - datetime.timedelta(minutes = 5)
+                if day == '3H':
+                    reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(3)) - datetime.timedelta(minutes = 5)
 
-            elif ADDON.getSetting('archive_reverse_auto') == '0' and day != '':
-                try:
-                    reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(day)) * 24 - datetime.timedelta(minutes = 5)
-                except:
-                    reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
+                elif ADDON.getSetting('archive_reverse_auto') == '0' and day != '':
+                    try:
+                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(day)) * 24 - datetime.timedelta(minutes = 5)
+                    except:
+                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
 
-            else:
-                try:
-                    reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(ADDON.getSetting('archive_manual_days'))) * 24 - datetime.timedelta(minutes = 5)
-                except:
-                    reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
+                else:
+                    try:
+                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(ADDON.getSetting('archive_manual_days'))) * 24 - datetime.timedelta(minutes = 5)
+                    except:
+                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
+            except:
+                reverseTime = datetime.datetime.now()
 
             try:
                 if finishedProgram < datetime.datetime.now() and ADDON.getSetting('archive_support') == 'true' and program.title != program.channel.title:
@@ -5055,40 +5128,43 @@ class mTVGuide(xbmcgui.WindowXML):
             else:
                 catchupList = catchupList.iteritems()
 
-            if program.channel.title.upper() in [k for k,v in catchupList]:
-                day = [v for k,v in catchupList if k == program.channel.title.upper()][0]
+            try:
+                if program.channel.title.upper() in [k for k,v in catchupList]:
+                    day = [v for k,v in catchupList if k == program.channel.title.upper()][0]
 
-            if day == '':
-                day = ADDON.getSetting('archive_reverse_days')
+                if day == '':
+                    day = ADDON.getSetting('archive_reverse_days')
 
-            if day == '3H':
-                reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(3)) - datetime.timedelta(minutes = 5)
+                if day == '3H':
+                    reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(3)) - datetime.timedelta(minutes = 5)
 
-            elif ADDON.getSetting('archive_reverse_auto') == '0' and day != '':
-                try:
-                    reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(day)) * 24 - datetime.timedelta(minutes = 5)
-                except:
-                    reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
-            else:
-                try:
-                    reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(ADDON.getSetting('archive_manual_days'))) * 24 - datetime.timedelta(minutes = 5)
-                except:
-                    reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
+                elif ADDON.getSetting('archive_reverse_auto') == '0' and day != '':
+                    try:
+                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(day)) * 24 - datetime.timedelta(minutes = 5)
+                    except:
+                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
+                else:
+                    try:
+                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(ADDON.getSetting('archive_manual_days'))) * 24 - datetime.timedelta(minutes = 5)
+                    except:
+                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
 
-            if day == '3H':
-                reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(3)) - datetime.timedelta(minutes = 5)
+                if day == '3H':
+                    reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(3)) - datetime.timedelta(minutes = 5)
 
-            elif ADDON.getSetting('archive_reverse_auto') == '0' and day != '':
-                try:
-                    reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(day)) * 24 - datetime.timedelta(minutes = 5)
-                except:
-                    reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
+                elif ADDON.getSetting('archive_reverse_auto') == '0' and day != '':
+                    try:
+                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(day)) * 24 - datetime.timedelta(minutes = 5)
+                    except:
+                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
 
-            else:
-                try:
-                    reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(ADDON.getSetting('archive_manual_days'))) * 24 - datetime.timedelta(minutes = 5)
-                except:
-                    reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
+                else:
+                    try:
+                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(ADDON.getSetting('archive_manual_days'))) * 24 - datetime.timedelta(minutes = 5)
+                    except:
+                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
+            except:
+                reverseTime = datetime.datetime.now()
 
             try:
                 if finishedProgram < datetime.datetime.now() and ADDON.getSetting('archive_support') == 'true' and program.title != program.channel.title:
@@ -6101,33 +6177,22 @@ class mTVGuide(xbmcgui.WindowXML):
 
 class PopupMenu(xbmcgui.WindowXMLDialog):
     C_POPUP_PLAY = 4000
-    C_POPUP_CHOOSE_STREAM = 4001
-    C_POPUP_REMIND = 4002
-    C_POPUP_CHANNELS = 4003
-    C_POPUP_QUIT = 4004
     C_POPUP_RECORDINGS = 4006
-    C_POPUP_RECORD = 4007
-    C_POPUP_INFO = 4008
-    C_POPUP_LISTS = 4009
-    C_POPUP_NUMBER = 4010
-    C_POPUP_EXTENDED = 4011
     C_POPUP_CHANNEL_LOGO = 4100
     C_POPUP_CHANNEL_TITLE = 4101
     C_POPUP_PROGRAM_TITLE = 4102
     C_POPUP_PROGRAM_TIME_RANGE = 4103
-    C_POPUP_ADDON_SETTINGS = 4110
     C_POPUP_CATEGORY = 7004
+    C_POPUP_GROUP = 4012
     C_POPUP_FAQ = 4013
     C_POPUP_FAVOURITES = 4014
     C_POPUP_ADD_CHANNEL = 4015
     C_POPUP_REMOVE_CHANNEL = 4016
 
-    LABEL_CHOOSE_STRM = CHOOSE_STRM_FILE
-
-    def __new__(cls, database, program, showRemind):
+    def __new__(cls, database, program):
         return super(PopupMenu, cls).__new__(cls, 'script-tvguide-menu.xml', Skin.getSkinBasePath(), Skin.getSkinName(), skin_resolution)
 
-    def __init__(self, database, program, showRemind):
+    def __init__(self, database, program):
         """
 
         @type database: source.Database
@@ -6138,20 +6203,16 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
         super(PopupMenu, self).__init__()
         self.database = database
         self.program = program
-        self.showRemind = showRemind
         self.buttonClicked = None
         self.category = self.database.category
         self.categories = self.database.getAllCategories()
 
     def onInit(self):
         playControl = self.getControl(self.C_POPUP_PLAY)
-        remindControl = self.getControl(self.C_POPUP_REMIND)
         channelLogoControl = self.getControl(self.C_POPUP_CHANNEL_LOGO)
         channelTitleControl = self.getControl(self.C_POPUP_CHANNEL_TITLE)
         programTitleControl = self.getControl(self.C_POPUP_PROGRAM_TITLE)
-        chooseStrmControl = self.getControl(self.C_POPUP_CHOOSE_STREAM)
         programTimeRangeControl = self.getControl(self.C_POPUP_PROGRAM_TIME_RANGE)
-        programRecordControl = self.getControl(self.C_POPUP_RECORD)
 
         try:
             listControl = self.getControl(self.C_POPUP_CATEGORY)
@@ -6180,48 +6241,23 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
             deb('Categories not supported by current skin')
             self.category = None
 
-        playControl.setLabel(strings(WATCH_CHANNEL, self.program.channel.title))
-        if not self.program.channel.isPlayable():
-            playControl.setEnabled(False)
-            self.setFocusId(self.C_POPUP_NUMBER)
+        if self.program is not None:
+            if self.program.channel.title:
+                playControl.setLabel(strings(WATCH_CHANNEL, self.program.channel.title))
+                if not self.program.channel.isPlayable():
+                    playControl.setEnabled(False)
 
-        self.LABEL_CHOOSE_STRM = getStateLabel(chooseStrmControl, 0, CHOOSE_STRM_FILE)
-        LABEL_REMOVE_STRM = getStateLabel(chooseStrmControl, 1, REMOVE_STRM_FILE)
-        LABEL_REMIND = getStateLabel(remindControl, 0, REMIND_PROGRAM)
-        LABEL_DONT_REMIND = getStateLabel(remindControl, 1, DONT_REMIND_PROGRAM)
-
-        if self.database.getCustomStreamUrl(self.program.channel):
-            chooseStrmControl.setLabel(strings(LABEL_REMOVE_STRM))
-        else:
-            chooseStrmControl.setLabel(strings(self.LABEL_CHOOSE_STRM))
-
-        if self.program.channel.logo is not None:
-            channelLogoControl.setImage(self.program.channel.logo)
-            channelTitleControl.setVisible(False)
-        else:
-            channelTitleControl.setLabel(self.program.channel.title)
-            channelLogoControl.setVisible(False)
-
-        programTitleControl.setLabel(self.program.title)
-
-        if self.showRemind:
-            remindControl.setLabel(strings(LABEL_REMIND))
-        else:
-            remindControl.setLabel(strings(LABEL_DONT_REMIND))
-
-        if self.program.endDate < datetime.datetime.now():
-            if self.program.recordingScheduled:
-                programRecordControl.setLabel(strings(DOWNLOAD_PROGRAM_CANCEL_STRING))
+            if self.program.channel.logo is not None:
+                channelLogoControl.setImage(self.program.channel.logo)
+                channelTitleControl.setVisible(False)
             else:
-                programRecordControl.setLabel(strings(DOWNLOAD_PROGRAM_STRING))
-        else:
-            if self.program.recordingScheduled:
-                programRecordControl.setLabel(strings(RECORD_PROGRAM_CANCEL_STRING))
-            else:
-                programRecordControl.setLabel(strings(RECORD_PROGRAM_STRING))
+                channelTitleControl.setLabel(self.program.channel.title)
+                channelLogoControl.setVisible(False)
 
-        if programTimeRangeControl is not None:
-            programTimeRangeControl.setLabel('{} - {}'.format(self.formatTime(self.program.startDate), self.formatTime(self.program.endDate)))
+            programTitleControl.setLabel(self.program.title)
+
+            if programTimeRangeControl is not None:
+                programTimeRangeControl.setLabel('{} - {}'.format(self.formatTime(self.program.startDate), self.formatTime(self.program.endDate)))
 
     def onAction(self, action):
         if action.getId() in [ACTION_PARENT_DIR, ACTION_PREVIOUS_MENU, KEY_NAV_BACK]:
@@ -6300,16 +6336,7 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
             self.close()
 
     def onClick(self, controlId):
-        if controlId == self.C_POPUP_CHOOSE_STREAM and self.database.getCustomStreamUrl(self.program.channel):
-            self.database.deleteCustomStreamUrl(self.program.channel)
-            chooseStrmControl = self.getControl(self.C_POPUP_CHOOSE_STREAM)
-            chooseStrmControl.setLabel(strings(self.LABEL_CHOOSE_STRM))
-
-            if not self.program.channel.isPlayable():
-                playControl = self.getControl(self.C_POPUP_PLAY)
-                playControl.setEnabled(False)
-
-        elif controlId == self.C_POPUP_CATEGORY:
+        if controlId == self.C_POPUP_CATEGORY:
             cList = self.getControl(self.C_POPUP_CATEGORY)
             if cList.getSelectedPosition() == 0:
                 self.category = None
@@ -6321,7 +6348,8 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
                         self.category = self.category.decode('utf-8')
             self.buttonClicked = controlId
             self.close()
-        elif controlId == 4012:
+
+        elif controlId == self.C_POPUP_GROUP:
             dialog = xbmcgui.Dialog()
             cat = dialog.input(strings(30984), type=xbmcgui.INPUT_ALPHANUM)
             if cat:
@@ -6352,11 +6380,8 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
             self.buttonClicked = controlId
             self.close()
 
-    def onFocus(self, controlId):
-        pass
-
     def formatTime(self, timestamp):
-        deb('formatTime')
+        #deb('formatTime')
         format = xbmc.getRegion('time').replace(':%S', '').replace('%H%H', '%H')
         return timestamp.strftime(format)
 
@@ -6566,13 +6591,23 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
 
         items = list()
         for id in self.streamingService.getAddons():
-            try:
-                addon = xbmcaddon.Addon(id)  # raises Exception if addon is not installed
-                item = xbmcgui.ListItem(addon.getAddonInfo('name'), iconImage=addon.getAddonInfo('icon'))
-                item.setProperty('addon_id', id)
-                items.append(item)
-            except Exception:
-                pass
+            if sys.version_info[0] > 2:
+                try:
+                    addon = xbmcaddon.Addon(id)  # raises Exception if addon is not installed
+                    item = xbmcgui.ListItem(addon.getAddonInfo('name'))
+                    item.setArt({'icon': addon.getAddonInfo('icon'), 'thumb': addon.getAddonInfo('icon')})
+                    item.setProperty('addon_id', id)
+                    items.append(item)
+                except Exception:
+                    pass
+            else:
+                try:
+                    addon = xbmcaddon.Addon(id)  # raises Exception if addon is not installed
+                    item = xbmcgui.ListItem(addon.getAddonInfo('name'), iconImage=addon.getAddonInfo('icon'))
+                    item.setProperty('addon_id', id)
+                    items.append(item)
+                except Exception:
+                    pass
         listControl = self.getControl(StreamSetupDialog.C_STREAM_ADDONS)
         listControl.addItems(items)
         self.updateAddonInfo()
@@ -6860,6 +6895,7 @@ class InfoDialog(xbmcgui.WindowXMLDialog):
                     ageImageControl.setImage(icon)
                 except:
                     pass
+
             if skin_separate_program_actors:
                 try:
                     actorsControl = self.getControl(C_PROGRAM_ACTORS)
@@ -6867,6 +6903,14 @@ class InfoDialog(xbmcgui.WindowXMLDialog):
                     if actors == '':
                         actors = self.program.actor
                     actorsControl.setText(actors)
+                except:
+                    pass
+
+            if skin_separate_rating:
+                try:
+                    ratingControl = self.getControl(C_PROGRAM_RATING)
+                    rating = descriptionParser.extractRating()
+                    ratingControl.setText(rating)
                 except:
                     pass
 

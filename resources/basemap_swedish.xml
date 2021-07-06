@@ -170,7 +170,7 @@
 	<channel id="ZDF SE" title="(?=ZDF(\s*(HD|UHD))?\s*DE$)" strm=""/>
 	
 	<category name="Movie" 									tags="Action|Fantasy|Film|Mysterium|Science fiction|Short Film|Skräck|Spänning|Thriller|Västern"/>
-	<category name="Series" 								tags="Drama|Dramakomedi|Gay/Lesbiskt|Historisk drama|Holiday|Högtid|Komedi|Kriminalare|Kriminaldrama|Miniserie|Miniseries|Romantik|Romantisk komedi|Serie|Sitcom|Svart komedi|Såpa"/>
+	<category name="Series" 								tags="Drama|Dramakomedi|Gay/Lesbiskt|Historisk drama|Holiday|Högtid|Komedi|Kriminalare|Kriminaldrama|Lesbiskt|Miniserie|Miniseries|Romantik|Romantisk komedi|Serie|Sitcom|Svart komedi|Såpa"/>
 	<category name="Information" 							tags="Debatt|Diskussion|Ekonomi|Event|Information|Intervju|Nyheter|Nyhetsmagasin|Politik|Public affairs|Samhälle|Special|Teknologi|Väder"/>
 	<category name="Entertainment" 							tags="Dans|E-sport|Game|Game show|Hip-Hop &amp; Rap|Klassiskt|Konsert|Mode|Musik|Paranormal|Underhållning"/>
 	<category name="Document" 								tags="Antologi|Auktion|Aviation|Bilar|Biografi|Båt|Datorer|Djur|Dokumentär|Dramadokumentär|Fiske|Friluftsliv|Föräldraskap|Hantverk|How-to|Juridik|Konst|Konsument|Krig|Miljö|Natur|Pris|Reality|Religion|Renovering|Resor|Samlande|Scenkonst|Utbildning|Vetenskap|Äventyr"/>

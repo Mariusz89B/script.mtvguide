@@ -379,6 +379,9 @@
 		<control type="label" id="4232">	
 			<visible>hidden</visible>
 		</control>
+		<control type="label" id="4933">	
+			<visible>hidden</visible>
+		</control>
 		<control type="label" id="4952">	
 			<visible>hidden</visible>
 		</control>
@@ -730,7 +733,7 @@
 					<animation effect="slide" end="0,90" time="300" tween="sine" easing="inout" condition="Window.IsActive(DialogInfo.xml)">conditional</animation>
 					<visible>Control.IsVisible(4300)</visible>
 					
-				<control type="button" id="4301">
+				<control type="button" id="4976">
 					<description>Options</description>
 					<posx>12</posx>
 					<posy>1024</posy>
@@ -750,7 +753,6 @@
 					<aligny>center</aligny>
 					<textoffsetx>58</textoffsetx>
 					<textwidth>300</textwidth>
-					<onclick>Action(ContextMenu)</onclick>
 					<onfocus></onfocus>
 					<onunfocus></onunfocus>
 					<onup></onup>
@@ -1376,6 +1378,10 @@
 				<description>Program director</description>
 				<visible>hidden</visible>
 			</control>
+			<control type="textbox" id="4933">
+				<description>Program rating</description>
+				<visible>hidden</visible>
+			</control>
 			
 			<control type="label">
 				<description>Program title</description>
@@ -1579,6 +1585,16 @@
 						<effect type="slide" start="0" end="320" time="300" tween="cubic" easing="out" />
 					</animation>-->
 					<visible>!Control.IsVisible(5000)</visible>
+				</control>
+				
+				<control type="button" id="4975">
+				    <description></description>
+				    <left>0</left>
+				    <top>0</top>
+				    <width>2</width>
+				    <height>100%</height>
+				    <texturefocus></texturefocus>
+				    <texturenofocus></texturenofocus>
 				</control>
 			</control>
 					

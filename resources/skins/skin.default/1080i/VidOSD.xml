@@ -12,8 +12,8 @@
 			<left>auto</left>
 			<width>48</width>
 			<height>48</height>
-			<label>-</label>
-			<font>-</font>
+			<label></label>
+			<font></font>
 			<onclick>Dialog.Close(VideoOSD,true)</onclick>
 			<onclick>FullScreen</onclick>
 			<texturefocus colordiffuse="EEFFFFFF">dialogs/close.png</texturefocus>
@@ -59,6 +59,11 @@
 		</control>
 		
 		<control type="label" id="4962">
+			<visible>hidden</visible>
+		</control>
+		
+		<control type="textbox" id="4933">
+			<description>Program rating</description>
 			<visible>hidden</visible>
 		</control>
 				
@@ -333,7 +338,7 @@
 		</control>
 		
 		<control type="label">
-			<description>-</description>
+			<description></description>
 			<posx>20</posx>
 			<posy>922</posy>
 			<width min="20" max="300">auto</width>
@@ -347,7 +352,7 @@
 		</control>
 		
 		<control type="label">
-			<description>-</description>
+			<description></description>
 			<posx>1900</posx>
 			<posy>922</posy>
 			<width min="20" max="300">auto</width>
@@ -467,9 +472,9 @@
 			<height>8</height>
 			<texturebg border="3" colordiffuse="60FFFFFF">osd/white.png</texturebg>
 			<midtexture colordiffuse="button_focus">osd/white70.png</midtexture>
-			<lefttexture>-</lefttexture>
-			<righttexture>-</righttexture>
-			<overlaytexture>-</overlaytexture>
+			<lefttexture></lefttexture>
+			<righttexture></righttexture>
+			<overlaytexture></overlaytexture>
 		</control>
 		
 		<control type="image">
