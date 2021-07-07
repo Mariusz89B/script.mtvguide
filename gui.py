@@ -4348,20 +4348,20 @@ class mTVGuide(xbmcgui.WindowXML):
         self._hideControl(self.C_MAIN_MOUSEPANEL_CONTROLS)
 
         if program.notificationScheduled:
-            remindControl = (strings(DONT_REMIND_PROGRAM))
+            remindControl = (xbmc.getLocalizedString(DONT_REMIND_PROGRAM))
         else:
-            remindControl = (strings(REMIND_PROGRAM))
+            remindControl = (xbmc.getLocalizedString(REMIND_PROGRAM))
 
         if program.endDate < datetime.datetime.now():
             if program.recordingScheduled:
                 programRecordControl = (strings(DOWNLOAD_PROGRAM_CANCEL_STRING))
             else:
-                programRecordControl = (strings(DOWNLOAD_PROGRAM_STRING))
+                programRecordControl = (xbmc.getLocalizedString(DOWNLOAD_PROGRAM_STRING))
         else:
             if program.recordingScheduled:
-                programRecordControl = (strings(RECORD_PROGRAM_CANCEL_STRING))
+                programRecordControl = (xbmc.getLocalizedString(RECORD_PROGRAM_CANCEL_STRING))
             else:
-                programRecordControl = (strings(RECORD_PROGRAM_STRING))
+                programRecordControl = (xbmc.getLocalizedString(RECORD_PROGRAM_STRING))
 
         removeStrm = False
 
@@ -4371,7 +4371,7 @@ class mTVGuide(xbmcgui.WindowXML):
         else:
             chooseStrmControl = (strings(CHOOSE_STRM_FILE))
         
-        ret = xbmcgui.Dialog().contextmenu([strings(30346), strings(58000), strings(30356), remindControl, programRecordControl, strings(30337), strings(30307), strings(30309), strings(68005), strings(30602), chooseStrmControl, strings(30308)])
+        ret = xbmcgui.Dialog().contextmenu([xbmc.getLocalizedString(19103), xbmc.getLocalizedString(19047), strings(30356), remindControl, programRecordControl, xbmc.getLocalizedString(19017), xbmc.getLocalizedString(10604), strings(30309), xbmc.getLocalizedString(33063), xbmc.getLocalizedString(1036), chooseStrmControl, xbmc.getLocalizedString(13012)])
 
         if ret == 0:
             if ADDON.getSetting('channel_shortcut') == 'false':

@@ -53,24 +53,6 @@ import xbmcgui, xbmc, xbmcvfs
 from strings import *
 from serviceLib import ShowList
 
-ACTION_UP = 3
-ACTION_DOWN = 4
-ACTION_PAGE_UP = 5
-ACTION_PAGE_DOWN = 6
-ACTION_SELECT_ITEM = 7
-ACTION_PARENT_DIR = 9
-ACTION_PREVIOUS_MENU = 10
-KEY_NAV_BACK = 92
-ACTION_MOUSE_WHEEL_UP = 104
-ACTION_MOUSE_WHEEL_DOWN = 105
-
-SKIN_IMAGE_CONTROL_ID = 5000
-SKIN_NAME_CONTROL_ID = 5001
-
-NAV_DOWN_BUTTON = 9000
-NAV_UP_BUTTON = 9001
-MOUSE_SELECT_BUTTON = 9002
-
 try:
     skin_resolution = '1080i'
 except:
@@ -212,8 +194,6 @@ class Skin:
     @staticmethod
     def selectSkin():
         picker = SkinPicker()
-        picker.doModal()
-        picker.close()
 
     @staticmethod
     def getCurrentSkinsList():
@@ -223,7 +203,7 @@ class Skin:
         skin_list = list()
 
         for skin in custom_skins:
-            deb('Skins custom %s' % skin)
+            #deb('Skins custom %s' % skin)
             image = os.path.join(Skin.ADDON_CUSTOM_SKINS, skin, 'fanart.jpg')
             if not os.path.isfile(image):
                 image = os.path.join(Skin.NEW_SKINS_BASE_URL, skin, 'fanart.jpg')
@@ -233,7 +213,7 @@ class Skin:
             skin_list.append(SkinObject(skin, icon=icon, fanart=image))
 
         for skin in embedded_skins:
-            deb('Skins basic: %s' % skin)
+            #deb('Skins basic: %s' % skin)
             if skin not in custom_skins:
                 image = os.path.join(Skin.ADDON_EMBEDDED_SKINS, skin, 'fanart.jpg')
                 if not os.path.isfile(image):
@@ -378,73 +358,43 @@ class Skin:
             xbmcgui.Dialog().ok(strings(31004), strings(30969))
 
 
-class SkinPicker(xbmcgui.WindowXMLDialog):
-    def __new__(cls):
-        return super(SkinPicker, cls).__new__(cls, 'script-tvguide-skins.xml', Skin.getSkinBasePath(), Skin.getSkinName(), defaultRes=skin_resolution)
-
+class SkinPicker():
     def __init__(self):
-        self.go_down_control = None
-        self.go_up_control = None
-        self.select_control = None
-        self.currentlySelectedSkin = None
-        self.skin_image_control = None
+        self.picker = self.picker()
         self.download_skin_list = self.getDownloadSkinList()
         self.skin_list = self.getAllSkinList()
 
-    def onInit(self):
-        self.go_down_control = self.getControl(NAV_DOWN_BUTTON)
-        self.go_up_control = self.getControl(NAV_UP_BUTTON)
-        self.select_control = self.getControl(MOUSE_SELECT_BUTTON)
-        self.skin_image_control = self.getControl(SKIN_IMAGE_CONTROL_ID)
-        self.skin_name_control = self.getControl(SKIN_NAME_CONTROL_ID)
-        self.resetVisibleSkin()
+    def picker(self):
+        listitems = list()
 
-    def resetVisibleSkin(self):
-        if len(self.skin_list) > 0:
-            self.currentlySelectedSkin = self.skin_list[0]
+        skins = Skin.getCurrentSkinsList()
+        for skin in skins:
+            listitem = xbmcgui.ListItem(skin.name)
+            listitem.setArt({'thumb': self.setFanartImage(skin)})
+            listitems.append(listitem)
+
+        picker = xbmcgui.Dialog().select(strings(30702), listitems, useDetails=True)
+
+        if picker >= 0:
+            c = skins[picker]
+            self.setCurrentSkin(c)
         else:
-             self.currentlySelectedSkin = None
-        self.updateVisibleSkin()
-
-    def showNextSkin(self):
-        try:
-            currentIndex = self.skin_list.index(self.currentlySelectedSkin)
-            newIndex = currentIndex + 1
-            if(newIndex < len(self.skin_list)):
-                self.currentlySelectedSkin = self.skin_list[newIndex]
-            self.updateVisibleSkin()
-        except:
-            self.resetVisibleSkin()
-
-    def showPreviousSkin(self):
-        try:
-            currentIndex = self.skin_list.index(self.currentlySelectedSkin)
-            newIndex = currentIndex -1
-            if(newIndex >= 0):
-                self.currentlySelectedSkin = self.skin_list[newIndex]
-            self.updateVisibleSkin()
-        except:
-            self.resetVisibleSkin()
-
-    def updateVisibleSkin(self):
-        if self.currentlySelectedSkin is not None:
-            self.setFanartImage(self.currentlySelectedSkin)
+            return
 
     def setFanartImage(self, skin):
         if skin:
-            self.skin_image_control.setImage(skin.fanart)
-            self.skin_name_control.setImage(skin.icon)
+            return skin.icon
 
-    def setCurrentSkin(self):
+    def setCurrentSkin(self, currentlySelectedSkin):
         try:
-            if self.currentlySelectedSkin is not None:
+            if currentlySelectedSkin is not None:
                 success = True
-                if self.currentlySelectedSkin in self.download_skin_list:
-                    success = Skin.downloadSkin(self.currentlySelectedSkin)
+                if currentlySelectedSkin in self.getDownloadSkinList():
+                    success = Skin.downloadSkin(currentlySelectedSkin)
                     if success:
-                        xbmcgui.Dialog().notification(strings(30710), strings(30709) + ": " + self.currentlySelectedSkin.name, time=7000, sound=False)
+                        xbmcgui.Dialog().notification(strings(30710), strings(30709) + ": " + currentlySelectedSkin.name, time=7000, sound=False)
                 if success:
-                    Skin.setAddonSkin(self.currentlySelectedSkin.name)
+                    Skin.setAddonSkin(currentlySelectedSkin.name)
                     if sys.version_info[0] > 2:
                         try:
                             profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
@@ -462,28 +412,11 @@ class SkinPicker(xbmcgui.WindowXMLDialog):
                         deb('Error: fonts.list is missing')
 
                 else:
-                    deb('Failed to wnload skin %s' % self.currentlySelectedSkin.name)
+                    deb('Failed to wnload skin %s' % currentlySelectedSkin.name)
             else:
                 deb('setCurrentSkin selected skin is none!')
         except:
             deb('setCurrentSkin exception: %s' % getExceptionString() )
-
-
-    def onClick(self, controlId):
-        deb('onClick controlId: %s' % controlId )
-        clicked_control = self.getControl(controlId).getId()
-
-        if clicked_control == self.go_down_control.getId():
-            deb('SkinPicker godown control')
-            self.showNextSkin()
-        elif clicked_control == self.go_up_control.getId():
-            deb('SkinPicker goup control')
-            self.showPreviousSkin()
-        elif clicked_control == self.select_control.getId():
-            deb('SkinPicker select control')
-            self.setCurrentSkin()
-            self.close()
-
 
     def getAllSkinList(self):
         skin_list = Skin.getCurrentSkinsList()
@@ -513,26 +446,6 @@ class SkinPicker(xbmcgui.WindowXMLDialog):
             except:
                 pass
         return download_list
-
-
-    def onAction(self, action):
-        deb('SkinPicker onAction actId %d, buttonCode %d' % (action.getId(), action.getButtonCode()))
-        if action.getId() in [ACTION_PARENT_DIR, KEY_NAV_BACK, ACTION_PREVIOUS_MENU]:
-            self.close()
-
-        elif action.getId() in [ACTION_MOUSE_WHEEL_UP, ACTION_PAGE_UP, ACTION_UP]:
-            self.showPreviousSkin()
-
-        elif action.getId() in [ACTION_DOWN, ACTION_MOUSE_WHEEL_DOWN, ACTION_PAGE_DOWN]:
-            self.showNextSkin()
-
-        elif action.getId() in [ACTION_SELECT_ITEM]:
-            self.setCurrentSkin()
-            self.close()
-
-
-    def close(self):
-        super(SkinPicker, self).close()
 
 
 if len(sys.argv) > 1 and sys.argv[1] == 'SelectSkin':
