@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window type="dialog">
+	<allowoverlay>no</allowoverlay>
+	<defaultcontrol always="false">9002</defaultcontrol>
+	<zorder>9</zorder>
+	<coordinates>
+		<system>1</system><posx>0</posx><posy>0</posy>
+	</coordinates>
+	<controls>
+
+		<control type="label" id="6001"><description>visibility marker for selection box</description></control>
+
+		<control type="group">
+			<animation effect="fade" end="100" time="200">WindowOpen</animation>
+			<animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
+	
+		<!-- Background -->
+		<control type="image">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1920</width>
+			<height>1080</height>
+			<aspectratio>scale</aspectratio>
+			<texture fallback="tvguide-background-default.jpg" colordiffuse="FF0E597E">$INFO[Skin.String(CustomDefaultBackground.path)]</texture>
+		</control>
+		
+		<control type="image">
+			<depth>DepthBackground</depth>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1920</width>
+			<height>1080</height>
+			<aspectratio>scale</aspectratio>
+			<texture colordiffuse="330BAA8E" fallback="special://skin/extras/backgrounds/pattern1.jpg">$INFO[Skin.String(background_overlay),special://skin/extras/backgrounds/pattern,.jpg]</texture>
+		</control>
+		
+		<!-- InfoBar -->
+		<control type="image">
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>110%</width>
+			<height>130</height>
+			<texture colordiffuse="">dialogs/infobar.png</texture>
+			<!--<animation type="WindowClose">
+				<effect type="fade" start="100" end="0" time="300" />
+			</animation>-->	
+		</control>
+			
+		<control type="image">
+			<posx>0</posx>
+			<posy>965</posy>
+			<width>110%</width>
+			<height>115</height>
+			<texture flipy="true" colordiffuse="">dialogs/infobar.png</texture>
+			<!--<animation type="WindowClose">
+				<effect type="fade" start="100" end="0" time="300" />
+			</animation>-->
+		</control>
+		
+		<!-- Menu -->	
+		<control type="image">
+			<left>100</left>
+			<top>30</top>
+			<aspectratio>keep</aspectratio>
+			<width>112</width>
+			<height>36</height>
+			<texture>dialogs/logo-text.png</texture>
+			<animation effect="slide" end="0,-112" time="300" tween="sine" easing="inout" condition="Window.IsActive(DialogInfo.xml)">conditional</animation>
+			<animation type="WindowOpen">
+				<effect type="fade" start="0" end="100" time="300" />
+			</animation>
+			<!--<animation type="WindowClose">
+				<effect type="fade" start="100" end="0" time="300" />
+			</animation>-->	
+		</control>
+		
+		<control type="image">
+			<top>20</top>
+			<left>20</left>
+			<aspectratio>keep</aspectratio>
+			<width>56</width>
+			<height>56</height>
+			<texture colordiffuse="FF12A0C7">dialogs/mk_logo.png</texture>
+			<animation effect="slide" end="0,-112" time="300" tween="sine" easing="inout" condition="Window.IsActive(DialogInfo.xml)">conditional</animation>
+			<animation type="WindowOpen">
+				<effect type="fade" start="0" end="100" time="300" />
+			</animation>
+			<!--<animation type="WindowClose">
+				<effect type="fade" start="100" end="0" time="300" />
+			</animation>-->
+		</control>
+	
+		<control type="label">
+			<description>Apperance</description>
+			<top>0</top>
+			<align>right</align>
+			<left>1000</left>
+			<orientation>horizontal</orientation>
+			<font>font_clock</font>
+			<textcolor>FFF0F0F0</textcolor>
+			<shadowcolor>22000000</shadowcolor>
+			<height>96.5</height>
+			<width min="0" max="900">auto</width>
+			<label>[B]$ADDON[script.mtvguide 30702][/B]</label>
+			<animation type="WindowOpen">
+				<effect type="fade" start="0" end="100" time="300" />
+			</animation>
+		</control>
+		
+		<!-- Mouse control panel -->
+		<control type="label" id="">
+			<description>visibility marker for mouse control group</description>
+			<posx>0</posx>
+			<posy>0</posy>
+			<width>1920</width>
+			<height>1080</height>
+		</control>
+
+			<control type="button" id="9000">
+				<description>Navigate down</description>
+				<posx>910</posx>
+				<posy>905</posy>
+				<width>80</width>
+				<height>80</height>
+				<texturefocus colordiffuse="FF12A0C7">buttons/down.png</texturefocus>
+				<texturenofocus>buttons/down.png</texturenofocus>
+				<onup>9001</onup>
+				<ondown></ondown>
+				<onleft>9002</onleft>
+				<onright>9002</onright>
+			</control>
+			<control type="button" id="9001">
+				<description>Navigate up</description>
+				<posx>910</posx>
+				<posy>35</posy>
+				<width>80</width>
+				<height>80</height>
+				<texturefocus colordiffuse="FF12A0C7">buttons/up.png</texturefocus>
+				<texturenofocus>buttons/up.png</texturenofocus>
+				<onup></onup>
+				<ondown>9000</ondown>
+				<onleft>9002</onleft>
+				<onright>9002</onright>
+			</control>
+			<control type="button" id="9002">
+				<description>Select</description>
+				<posx>1650</posx>
+				<posy>460</posy>
+				<width>100</width>
+				<height>100</height>
+				<texturefocus colordiffuse="FF12A0C7">buttons/selectFO.png</texturefocus>
+				<texturenofocus>buttons/selectFO.png</texturenofocus>
+				<onup>9001</onup>
+				<ondown>9000</ondown>
+				<onleft>9000</onleft>
+				<onright></onright>
+			</control>
+			
+		<control type="image" id="5001">
+			<description>Skin Name</description>
+			<posx>96</posx>
+			<posy>919.5</posy>
+			<width>128</width>
+			<height>128</height>
+			<texture>dialogs/name.png</texture>
+		</control>
+			
+		<control type="image">
+			<description>Shadow</description>
+			<posx>300</posx>
+			<posy>130</posy>
+			<width>1320</width>
+			<height>760</height>
+			<texture colordiffuse="C2FFFFFFF">osd/black.png</texture>
+			<bordertexture border="21">dialogs/shadow.png</bordertexture>
+			<bordersize>20</bordersize>
+		</control>
+		
+		<control type="image" id="5000">
+			<description>Skin Background</description>
+			<posx>320</posx>
+			<posy>150</posy>
+			<width>1280</width>
+			<height>720</height>
+		</control>
+		</control>
+	</controls>
+</window>

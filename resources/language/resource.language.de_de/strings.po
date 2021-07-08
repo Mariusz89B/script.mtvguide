@@ -133,8 +133,8 @@ msgid "Error initializing EPG file:"
 msgstr "Fehler beim Laden der EPG Datei:"
 
 msgctxt "#30152"
-msgid "[CR]Error loading EPG (electronic program guide). Please check if EPG url is correct or if internet connection is available and try again."
-msgstr "[CR]Fehler beim Laden des EPG (elektronischer Programmführer). Bitte überprüfen Sie ob die EPG url korrekt ist oder ob eine Internetverbindung verfügbar ist, und versuchen Sie es erneut."
+msgid "Please check if EPG url is valid or if internet connection is available and try again."
+msgstr "Bitte überprüfen Sie ob die EPG url gültig ist oder ob eine Internetverbindung verfügbar ist, und versuchen Sie es erneut."
 
 msgctxt "#30153"
 msgid "because the settings are invalid!"

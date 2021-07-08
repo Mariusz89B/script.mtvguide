@@ -726,7 +726,7 @@ class Database(object):
             except SourceFaultyEPGException:
                 deb('SourceFaultyEPGException unable to load main EPG, trying to continue despite of that')
                 self.skipUpdateRetries = True
-                xbmcgui.Dialog().ok(strings(LOAD_ERROR_TITLE), strings(LOAD_ERROR_LINE1) + '\n' + ADDON.getSetting('m-TVGuide').strip() + strings(LOAD_ERROR_LINE2))
+                xbmcgui.Dialog().ok(strings(LOAD_ERROR_TITLE), strings(LOAD_ERROR_LINE1) + ' ' + ADDON.getSetting('m-TVGuide').strip() + '\n' + strings(LOAD_ERROR_LINE2))
 
             except Exception:
                 import traceback as tb
@@ -2421,7 +2421,10 @@ class MTVGUIDESource(Source):
 
             if not b'<channel' in xml:
                 deb('Detected not valid EPG XML, url: {}'.format(url))
-                deb('Faulty EPG content: {}'.format(str(xml[:15000])))
+                try:
+                    deb('Faulty EPG content: {}'.format(str(xml[:15000])))
+                except:
+                    deb('Faulty EPG content: {}'.format(str(xml[:15000]).decode('utf-8')))
                 #not a valid EPG XML
                 raise SourceFaultyEPGException(url)
 

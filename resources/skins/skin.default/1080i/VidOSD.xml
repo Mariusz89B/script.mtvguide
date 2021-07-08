@@ -62,6 +62,42 @@
 			<visible>hidden</visible>
 		</control>
 		
+		<control type="label" id="4918">
+			<visible>hidden</visible>
+		</control>
+
+		<control type="label" id="4952">
+			<visible>hidden</visible>
+		</control>
+
+		<control type="label" id="4953">
+			<visible>hidden</visible>
+		</control>
+
+		<control type="label" id="4954">
+			<visible>hidden</visible>
+		</control>
+
+		<control type="label" id="4956">
+			<visible>hidden</visible>
+		</control>
+
+		<control type="image" id="4923">
+			<visible>hidden</visible>
+		</control>
+
+		<control type="label" id="4955">
+			<visible>hidden</visible>
+		</control>
+
+		<control type="label" id="4960">
+			<visible>hidden</visible>
+		</control>
+
+		<control type="label" id="4961">
+			<visible>hidden</visible>
+		</control>
+		
 		<control type="textbox" id="4933">
 			<description>Program rating</description>
 			<visible>hidden</visible>

@@ -133,7 +133,7 @@ msgid "Error initializing EPG file:"
 msgstr ""
 
 msgctxt "#30152"
-msgid "[CR]Error loading EPG (electronic program guide). Please check if EPG url is correct or if internet connection is available and try again."
+msgid "Please check if EPG url is valid or if internet connection is available and try again."
 msgstr ""
 
 msgctxt "#30153"
