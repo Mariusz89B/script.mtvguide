@@ -2196,13 +2196,11 @@ class mTVGuide(xbmcgui.WindowXML):
         archive = ''
         day = ''
 
-        if sys.version_info[0] > 2:
-            catchupList = catchupList.items()
-        else:
-            catchupList = catchupList.iteritems()
+        catchupList = catchupList.items()
 
-        if program.channel.title.upper() in [k for k,v in catchupList]:
-            day = [v for k,v in catchupList if k == program.channel.title.upper()][0]
+        if catchupList:
+            if program.channel.title.upper() in [k for k,v in catchupList]:
+                day = [v for k,v in catchupList if k == program.channel.title.upper()][0]
 
         if day == '':
             day = ADDON.getSetting('archive_reverse_days')
@@ -4917,14 +4915,12 @@ class mTVGuide(xbmcgui.WindowXML):
 
             day = ''
 
-            if sys.version_info[0] > 2:
-                catchupList = catchupList.items()
-            else:
-                catchupList = catchupList.iteritems()
+            catchupList = catchupList.items()
 
             try:
-                if program.channel.title.upper() in [k for k,v in catchupList]:
-                    day = [v for k,v in catchupList if k == program.channel.title.upper()][0]
+                if catchupList:
+                    if program.channel.title.upper() in [k for k,v in catchupList]:
+                        day = [v for k,v in catchupList if k == program.channel.title.upper()][0]
 
                 if day == '':
                     day = ADDON.getSetting('archive_reverse_days')
@@ -5123,14 +5119,12 @@ class mTVGuide(xbmcgui.WindowXML):
 
             day = ''
 
-            if sys.version_info[0] > 2:
-                catchupList = catchupList.items()
-            else:
-                catchupList = catchupList.iteritems()
+            catchupList = catchupList.items()
 
             try:
-                if program.channel.title.upper() in [k for k,v in catchupList]:
-                    day = [v for k,v in catchupList if k == program.channel.title.upper()][0]
+                if catchupList:
+                    if program.channel.title.upper() in [k for k,v in catchupList]:
+                        day = [v for k,v in catchupList if k == program.channel.title.upper()][0]
 
                 if day == '':
                     day = ADDON.getSetting('archive_reverse_days')

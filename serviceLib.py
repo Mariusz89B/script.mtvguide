@@ -974,7 +974,10 @@ class baseServiceUpdater:
                         if sys.version_info[0] > 2:
                             b = p.match(unidecode(y.title))
                         else:
-                            b = p.match(unidecode(y.title.decode('utf-8')))
+                            try:
+                                b = p.match(unidecode(y.title.decode('utf-8')))
+                            except:
+                                b = p.match(unidecode(y.title.decode('utf-8').encode('uft-8')))
                         if (b):
                             if x.strm != '' and self.addDuplicatesToList == True:
                                 newMapElement = copy.deepcopy(x)
