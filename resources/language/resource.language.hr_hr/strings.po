@@ -56,6 +56,22 @@ msgctxt "#30009"
 msgid "Enter captcha"
 msgstr "Unesite captcha"
 
+msgctxt "#30010"
+msgid "Reset all keys"
+msgstr "Poništi sve tipke"
+
+msgctxt "#30011"
+msgid "Press the key you want to assign now"
+msgstr "Pritisnite tipku koju sada želite dodijeliti"
+
+msgctxt "#30012"
+msgid "Timeout in {:.0f} seconds..."
+msgstr "Istek vremena za {:.0f} sekundi..."
+
+msgctxt "#30013"
+msgid "All keys have been deleted."
+msgstr "Svi su tipku izbrisani."
+
 msgctxt "#30100"
 msgid "General"
 msgstr "Općenito"
