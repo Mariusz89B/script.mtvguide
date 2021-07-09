@@ -367,7 +367,7 @@ class SkinPicker():
     def picker(self):
         listitems = list()
 
-        skins = Skin.getCurrentSkinsList()
+        skins = Skin.getSkinList()
         for skin in skins:
             listitem = xbmcgui.ListItem(skin.name)
             listitem.setArt({'thumb': self.setFanartImage(skin)})
