@@ -56,22 +56,6 @@ msgctxt "#30009"
 msgid "Enter captcha"
 msgstr "Ange captcha"
 
-msgctxt "#30010"
-msgid "Reset all keys"
-msgstr "Återställ alla tangenter"
-
-msgctxt "#30011"
-msgid "Press the key you want to assign now"
-msgstr "Tryck på tangenten du vill tilldela nu"
-
-msgctxt "#30012"
-msgid "Timeout in {:.0f} seconds..."
-msgstr "Stängs om {:.0f} sekunder..."
-
-msgctxt "#30013"
-msgid "All keys have been deleted."
-msgstr "Alla tangenter har raderats."
-
 msgctxt "#30100"
 msgid "General"
 msgstr "Allmänt"

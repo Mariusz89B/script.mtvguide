@@ -4,7 +4,7 @@
 #   GNU General Public License
 
 #   m-TVGuide KODI Addon
-#   Copyright (C) 2021 Mariusz89B
+#   Copyright (C) 2020 Mariusz89B
 #   Copyright (C) 2016 Andrzej Mleczko
 #   Copyright (C) 2013 Szakalit
 
@@ -45,112 +45,230 @@ from __future__ import unicode_literals
 
 import sys
 
-from threading import Timer
+if sys.version_info[0] > 2:
+  import configparser
+else:
+  import ConfigParser
 
 import os
 import xbmc, xbmcaddon, xbmcgui, xbmcplugin, xbmcvfs
-import time
 from strings import *
+from skins import Skin
 
-ACTION_MOUSE_MOVE = 107
-
-class start():
-
-    def __init__(self):
-        self.set_key = self.set_key()
-
-    def set_key(self):
-        a_info = ADDON.getSetting(id="info_key")
-        a_stop = ADDON.getSetting(id="stop_key")
-        a_pp = ADDON.getSetting(id="pp_key")
-        a_pm = ADDON.getSetting(id="pm_key")
-        a_home = ADDON.getSetting(id="home_key")
-        a_ctxt = ADDON.getSetting(id="context_key")
-        a_rec = ADDON.getSetting(id="record_key")
-        a_list = ADDON.getSetting(id="list_key")
-        a_volUp = ADDON.getSetting(id="volume_up_key")
-        a_volDown = ADDON.getSetting(id="volume_down_key")
-        a_switchLastKey = ADDON.getSetting(id="switch_to_last_key")
-
-        keyList = ['info_key', 'stop_key', 'pp_key', 'pm_key', 'home_key', 'context_key', 'record_key', 'list_key', 'volume_up_key', 'volume_down_key', 'switch_to_last_key']
-
-        info = strings(31009) + '     ' + '[COLOR selected]' + a_info + '[/COLOR]'
-        stop = strings(31008) + '     ' + '[COLOR selected]' + a_stop + '[/COLOR]'
-        pp = strings(31007) + '     ' + '[COLOR selected]' + a_pp + '[/COLOR]'
-        pm = strings(31006) + '     ' + '[COLOR selected]' + a_pm + '[/COLOR]'
-        home = strings(31005) + '     ' + '[COLOR selected]' + a_home + '[/COLOR]'
-        ctxt = strings(31010) + '     ' + '[COLOR selected]' + a_ctxt + '[/COLOR]'
-        rec = strings(31011) + '     ' + '[COLOR selected]' + a_rec + '[/COLOR]'
-        listing = strings(31018) + '     ' + '[COLOR selected]' + a_list + '[/COLOR]'
-        volUp = strings(31015) + '     ' + '[COLOR selected]' + a_volUp + '[/COLOR]'
-        volDown = strings(31016) + '     ' + '[COLOR selected]' + a_volDown + '[/COLOR]'
-        switchLastKey = strings(31017) + '     ' + '[COLOR selected]' + a_switchLastKey + '[/COLOR]'
-        resetAll = '[COLOR red]' + strings(30010) + '[/COLOR]'
-
-        ret = xbmcgui.Dialog().select(strings(31002), [info, stop, pp, pm, home, ctxt, rec, listing, volUp, volDown, switchLastKey, resetAll])
-
-        if ret >= 0 and ret < len(keyList):
-            newkey = KeyListener.record_key()
-            newid = keyList[ret]
-            ADDON.setSetting(id=newid, value=newkey)
-            xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)
-
-        elif ret == len(keyList):
-            xbmcgui.Dialog().ok(strings(31002), strings(30013))
-            a_info = ADDON.setSetting(id="info_key", value="")
-            a_stop = ADDON.setSetting(id="stop_key", value="")
-            a_pp = ADDON.setSetting(id="pp_key", value="")
-            a_pm = ADDON.setSetting(id="pm_key", value="")
-            a_home = ADDON.setSetting(id="home_key", value="")
-            a_ctxt = ADDON.setSetting(id="context_key", value="")
-            a_rec = ADDON.setSetting(id="record_key", value="")
-            a_list = ADDON.setSetting(id="list_key", value="")
-            a_volUp = ADDON.setSetting(id="volume_up_key", value="")
-            a_volDown = ADDON.setSetting(id="volume_down_key", value="")
-            a_switchLastKey = ADDON.setSetting(id="switch_to_last_key", value="")
-
-        else:
-            return
+if sys.version_info[0] > 2:
+  config = configparser.RawConfigParser()
+else:
+  config = ConfigParser.RawConfigParser()
+config.read(os.path.join(Skin.getSkinPath(), 'settings.ini'))
+try:
+    skin_resolution = config.getboolean("Skin", "resolution")
+except:
+    skin_resolution = '720p'
 
 class KeyListener(xbmcgui.WindowXMLDialog):
-    TIMEOUT = 10
 
-    def __new__(cls):
-        gui_api = tuple(map(int, xbmcaddon.Addon('xbmc.gui').getAddonInfo('version').split('.')))
-        file_name = "DialogNotification.xml" if gui_api >= (5, 11, 0) else "DialogKaiToast.xml"
-        return super(KeyListener, cls).__new__(cls, file_name, "")
+  def __new__(cls):
+    return super(KeyListener, cls).__new__(cls, 'DialogSetKey.xml', Skin.getSkinBasePath(), Skin.getSkinName(), skin_resolution)
 
-    def __init__(self):
-        """Initialize key variable."""
-        self.key = None
+  def onInit(self):
+    self.key = 0
+    self.a_info = 0
+    self.a_home = 0
+    self.a_stop = 0
+    self.a_pp = 0
+    self.a_pm = 0
+    self.a_ctxt = 0
+    self.a_rec = 0
+    self.a_list = 0
+    self.a_volUp = 0
+    self.a_volDown = 0
+    self.a_switchLastKey = 0
+    self.getControl(7001).setLabel(str(ADDON.getSetting('info_key')))
+    self.getControl(7002).setLabel(str(ADDON.getSetting('stop_key')))
+    self.getControl(7003).setLabel(str(ADDON.getSetting('pp_key')))
+    self.getControl(7004).setLabel(str(ADDON.getSetting('pm_key')))
+    self.getControl(7005).setLabel(str(ADDON.getSetting('home_key')))
+    self.getControl(7006).setLabel(str(ADDON.getSetting('context_key')))
+    self.getControl(7007).setLabel(str(ADDON.getSetting('record_key')))
+    self.getControl(7021).setLabel(str(ADDON.getSetting('list_key')))
+    self.getControl(7009).setLabel(str(ADDON.getSetting('volume_up_key')))
+    self.getControl(7010).setLabel(str(ADDON.getSetting('volume_down_key')))
+    try:
+        self.getControl(7020).setLabel(str(ADDON.getSetting('switch_to_last_key')))
+    except:
+        pass
 
-    def onInit(self):
-        icon = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('path')), 'icon.png')
+  def onAction(self, action):
 
-        self.getControl(400).setImage(icon)
-        try:
-            self.getControl(401).addLabel(strings(30011))
-            self.getControl(402).addLabel(strings(30012).format(self.TIMEOUT))
-        except AttributeError:
-            self.getControl(401).setLabel(strings(30011))
-            self.getControl(402).setLabel(strings(30012).format(self.TIMEOUT))
+    if action.getId() == 107 or action.getId() == 100 or action.getId() == 7 or action.getButtonCode() == 61453 or action.getId() == 10:
+        return
+    else:
+       self.key = action.getButtonCode()
+       if self.key == 0:
+            self.key = action.getId()
 
-    def onAction(self, action):
-        if action.getId() != ACTION_MOUSE_MOVE:
-            code = action.getButtonCode()
-            self.key = None if code == 0 else str(code)
+       if self.a_info == 1 and self.a_stop == 0 and self.a_pp == 0 and self.a_pm == 0 and self.a_home == 0 and self.a_ctxt == 0 and self.a_rec == 0 and self.a_list == 0 and self.a_volUp == 0 and self.a_volDown == 0 and self.a_switchLastKey == 0:
+          ADDON.setSetting(id="info_key", value=str(self.key))
+          self.getControl(7001).setLabel(str(self.key))
+          self.getControl(7001).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=False pulse=True')])
+          self.getControl(8001).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=False pulse=True')])
+          self.getControl(9001).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=False pulse=True')])
+          self.a_info = 0
+       if self.a_info == 0 and self.a_stop == 1 and self.a_pp == 0 and self.a_pm == 0 and self.a_home == 0 and self.a_ctxt == 0 and self.a_rec == 0 and self.a_list == 0 and self.a_volUp == 0 and self.a_volDown == 0 and self.a_switchLastKey == 0:
+          ADDON.setSetting(id="stop_key", value=str(self.key))
+          self.getControl(7002).setLabel(str(self.key))
+          self.getControl(7002).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=False pulse=True')])
+          self.getControl(8002).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=False pulse=True')])
+          self.getControl(9002).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=False pulse=True')])
+          self.a_stop = 0
+       if self.a_info == 0 and self.a_stop == 0 and self.a_pp == 1 and self.a_pm == 0 and self.a_home == 0 and self.a_ctxt == 0 and self.a_rec == 0 and self.a_list == 0 and self.a_volUp == 0 and self.a_volDown == 0 and self.a_switchLastKey == 0:
+          ADDON.setSetting(id="pp_key", value=str(self.key))
+          self.getControl(7003).setLabel(str(self.key))
+          self.getControl(7003).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=False pulse=True')])
+          self.getControl(8003).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=False pulse=True')])
+          self.getControl(9003).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=False pulse=True')])
+          self.a_pp = 0
+       if self.a_info == 0 and self.a_stop == 0 and self.a_pp == 0 and self.a_pm == 1 and self.a_home == 0 and self.a_ctxt == 0 and self.a_rec == 0 and self.a_list == 0 and self.a_volUp == 0 and self.a_volDown == 0 and self.a_switchLastKey == 0:
+          ADDON.setSetting(id="pm_key", value=str(self.key))
+          self.getControl(7004).setLabel(str(self.key))
+          self.getControl(7004).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=False pulse=True')])
+          self.getControl(8004).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=False pulse=True')])
+          self.getControl(9004).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=False pulse=True')])
+          self.a_pm = 0
+       if self.a_info == 0 and self.a_stop == 0 and self.a_pp == 0 and self.a_pm == 0 and self.a_home == 1 and self.a_ctxt == 0 and self.a_rec == 0 and self.a_list == 0 and self.a_volUp == 0 and self.a_volDown == 0 and self.a_switchLastKey == 0:
+          ADDON.setSetting(id="home_key", value=str(self.key))
+          self.getControl(7005).setLabel(str(self.key))
+          self.getControl(7005).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=False pulse=True')])
+          self.getControl(8005).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=False pulse=True')])
+          self.getControl(9005).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=False pulse=True')])
+          self.a_home = 0
+       if self.a_info == 0 and self.a_stop == 0 and self.a_pp == 0 and self.a_pm == 0 and self.a_home == 0 and self.a_ctxt == 1 and self.a_rec == 0 and self.a_list == 0 and self.a_volUp == 0 and self.a_volDown == 0 and self.a_switchLastKey == 0:
+          ADDON.setSetting(id="context_key", value=str(self.key))
+          self.getControl(7006).setLabel(str(self.key))
+          self.getControl(7006).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=False pulse=True')])
+          self.getControl(8006).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=False pulse=True')])
+          self.getControl(9006).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=False pulse=True')])
+          self.a_ctxt = 0
+       if self.a_info == 0 and self.a_stop == 0 and self.a_pp == 0 and self.a_pm == 0 and self.a_home == 0 and self.a_ctxt == 0 and self.a_rec == 1 and self.a_list == 0 and self.a_volUp == 0 and self.a_volDown == 0 and self.a_switchLastKey == 0:
+          ADDON.setSetting(id="record_key", value=str(self.key))
+          self.getControl(7007).setLabel(str(self.key))
+          self.getControl(7007).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=False pulse=True')])
+          self.getControl(8007).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=False pulse=True')])
+          self.getControl(9007).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=False pulse=True')])
+          self.a_rec = 0
+       if self.a_info == 0 and self.a_stop == 0 and self.a_pp == 0 and self.a_pm == 0 and self.a_home == 0 and self.a_ctxt == 0 and self.a_rec == 0 and self.a_list == 1 and self.a_volUp == 0 and self.a_volDown == 0 and self.a_switchLastKey == 0:
+          ADDON.setSetting(id="list_key", value=str(self.key))
+          self.getControl(7021).setLabel(str(self.key))
+          self.getControl(7021).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=False pulse=True')])
+          self.getControl(8021).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=False pulse=True')])
+          self.getControl(9021).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=False pulse=True')])
+          self.a_list = 0
+       if self.a_info == 0 and self.a_stop == 0 and self.a_pp == 0 and self.a_pm == 0 and self.a_home == 0 and self.a_ctxt == 0 and self.a_rec == 0 and self.a_list == 0 and self.a_volUp == 1 and self.a_volDown == 0 and self.a_switchLastKey == 0:
+          ADDON.setSetting(id="volume_up_key", value=str(self.key))
+          self.getControl(7009).setLabel(str(self.key))
+          self.getControl(7009).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=False pulse=True')])
+          self.getControl(8009).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=False pulse=True')])
+          self.getControl(9009).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=False pulse=True')])
+          self.a_volUp = 0
+       if self.a_info == 0 and self.a_stop == 0 and self.a_pp == 0 and self.a_pm == 0 and self.a_home == 0 and self.a_ctxt == 0 and self.a_rec == 0 and self.a_list == 0 and self.a_volUp == 0 and self.a_volDown == 1 and self.a_switchLastKey == 0:
+          ADDON.setSetting(id="volume_down_key", value=str(self.key))
+          self.getControl(7010).setLabel(str(self.key))
+          self.getControl(7010).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=False pulse=True')])
+          self.getControl(8010).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=False pulse=True')])
+          self.getControl(9010).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=False pulse=True')])
+          self.a_volDown = 0
+       if self.a_info == 0 and self.a_stop == 0 and self.a_pp == 0 and self.a_pm == 0 and self.a_home == 0 and self.a_ctxt == 0 and self.a_rec == 0 and self.a_list == 0 and self.a_volUp == 0 and self.a_volDown == 0 and self.a_switchLastKey == 1:
+          ADDON.setSetting(id="switch_to_last_key", value=str(self.key))
+          self.getControl(7020).setLabel(str(self.key))
+          self.getControl(7020).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=False pulse=True')])
+          self.getControl(8020).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=False pulse=True')])
+          self.getControl(9020).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=False pulse=True')])
+          self.a_switchLastKey = 0
+
+  def onClick(self, controlId):
+        if controlId == 9001 and self.a_info == 0 and self.a_stop == 0 and self.a_pp == 0 and self.a_pm == 0 and self.a_home == 0 and self.a_ctxt == 0 and self.a_rec == 0 and self.a_list == 0 and self.a_volUp == 0 and self.a_volDown == 0 and self.a_switchLastKey == 0:
+            self.a_info = 1
+            self.getControl(7001).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=True pulse=True')])
+            self.getControl(8001).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=True pulse=True')])
+            self.getControl(9001).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=True pulse=True')])
+        if controlId == 9002 and self.a_info == 0 and self.a_stop == 0 and self.a_pp == 0 and self.a_pm == 0 and self.a_home == 0 and self.a_ctxt == 0 and self.a_rec == 0 and self.a_list == 0 and self.a_volUp == 0 and self.a_volDown == 0 and self.a_switchLastKey == 0:
+            self.a_stop = 1
+            self.getControl(7002).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=True pulse=True')])
+            self.getControl(8002).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=True pulse=True')])
+            self.getControl(9002).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=True pulse=True')])
+        if controlId == 9003 and self.a_info == 0 and self.a_stop == 0 and self.a_pp == 0 and self.a_pm == 0 and self.a_home == 0 and self.a_ctxt == 0 and self.a_rec == 0 and self.a_list == 0 and self.a_volUp == 0 and self.a_volDown == 0 and self.a_switchLastKey == 0:
+            self.a_pp = 1
+            self.getControl(7003).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=True pulse=True')])
+            self.getControl(8003).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=True pulse=True')])
+            self.getControl(9003).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=True pulse=True')])
+        if controlId == 9004 and self.a_info == 0 and self.a_stop == 0 and self.a_pp == 0 and self.a_pm == 0 and self.a_home == 0 and self.a_ctxt == 0 and self.a_rec == 0 and self.a_list == 0 and self.a_volUp == 0 and self.a_volDown == 0 and self.a_switchLastKey == 0:
+            self.a_pm = 1
+            self.getControl(7004).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=True pulse=True')])
+            self.getControl(8004).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=True pulse=True')])
+            self.getControl(9004).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=True pulse=True')])
+        if controlId == 9005 and self.a_info == 0 and self.a_stop == 0 and self.a_pp == 0 and self.a_pm == 0 and self.a_home == 0 and self.a_ctxt == 0 and self.a_rec == 0 and self.a_list == 0 and self.a_volUp == 0 and self.a_volDown == 0 and self.a_switchLastKey == 0:
+            self.a_home = 1
+            self.getControl(7005).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=True pulse=True')])
+            self.getControl(8005).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=True pulse=True')])
+            self.getControl(9005).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=True pulse=True')])
+
+        if controlId == 9006 and self.a_info == 0 and self.a_stop == 0 and self.a_pp == 0 and self.a_pm == 0 and self.a_home == 0 and self.a_ctxt == 0 and self.a_rec == 0 and self.a_list == 0 and self.a_volUp == 0 and self.a_volDown == 0 and self.a_switchLastKey == 0:
+            self.a_ctxt = 1
+            self.getControl(7006).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=True pulse=True')])
+            self.getControl(8006).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=True pulse=True')])
+            self.getControl(9006).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=True pulse=True')])
+
+        if controlId == 9007 and self.a_info == 0 and self.a_stop == 0 and self.a_pp == 0 and self.a_pm == 0 and self.a_home == 0 and self.a_ctxt == 0 and self.a_rec == 0 and self.a_list == 0 and self.a_volUp == 0 and self.a_volDown == 0 and self.a_switchLastKey == 0:
+            self.a_rec = 1
+            self.getControl(7007).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=True pulse=True')])
+            self.getControl(8007).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=True pulse=True')])
+            self.getControl(9007).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=True pulse=True')])
+
+        if controlId == 9021 and self.a_info == 0 and self.a_stop == 0 and self.a_pp == 0 and self.a_pm == 0 and self.a_home == 0 and self.a_ctxt == 0 and self.a_rec == 0 and self.a_list == 0 and self.a_volUp == 0 and self.a_volDown == 0 and self.a_switchLastKey == 0:
+            self.a_list = 1
+            self.getControl(7021).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=True pulse=True')])
+            self.getControl(8021).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=True pulse=True')])
+            self.getControl(9021).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=True pulse=True')])
+
+        if controlId == 9020 and self.a_info == 0 and self.a_stop == 0 and self.a_pp == 0 and self.a_pm == 0 and self.a_home == 0 and self.a_ctxt == 0 and self.a_rec == 0 and self.a_list == 0 and self.a_volUp == 0 and self.a_volDown == 0 and self.a_switchLastKey == 0:
+            self.a_switchLastKey = 1
+            self.getControl(7020).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=True pulse=True')])
+            self.getControl(8020).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=True pulse=True')])
+            self.getControl(9020).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=True pulse=True')])
+
+        if controlId == 9008 and self.a_info == 0 and self.a_stop == 0 and self.a_pp == 0 and self.a_pm == 0 and self.a_home == 0 and self.a_ctxt == 0 and self.a_rec == 0 and self.a_list == 0 and self.a_volUp == 0 and self.a_volDown == 0 and self.a_switchLastKey == 0:
+            deb('Key settings reset!')
+            ADDON.setSetting(id="info_key", value=str(''))
+            ADDON.setSetting(id="stop_key", value=str(''))
+            ADDON.setSetting(id="pp_key", value=str(''))
+            ADDON.setSetting(id="pm_key", value=str(''))
+            ADDON.setSetting(id="home_key", value=str(''))
+            ADDON.setSetting(id="context_key", value=str(''))
+            ADDON.setSetting(id="record_key", value=str(''))
+            ADDON.setSetting(id="list_key", value=str(''))
+            ADDON.setSetting(id="volume_up_key", value=str(''))
+            ADDON.setSetting(id="volume_down_key", value=str(''))
+            ADDON.setSetting(id="switch_to_last_key", value=str(''))
+            self.close()
+            xbmcgui.Dialog().ok(strings(31013),"\n" + strings(310014))
+
+        if controlId == 9009 and self.a_info == 0 and self.a_stop == 0 and self.a_pp == 0 and self.a_pm == 0 and self.a_home == 0 and self.a_ctxt == 0 and self.a_rec == 0 and self.a_list == 0 and self.a_volUp == 0 and self.a_volDown == 0 and self.a_switchLastKey == 0:
+            self.a_volUp = 1
+            self.getControl(7009).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=True pulse=True')])
+            self.getControl(8009).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=True pulse=True')])
+            self.getControl(9009).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=True pulse=True')])
+
+        if controlId == 9010 and self.a_info == 0 and self.a_stop == 0 and self.a_pp == 0 and self.a_pm == 0 and self.a_home == 0 and self.a_ctxt == 0 and self.a_rec == 0 and self.a_list == 0 and self.a_volUp == 0 and self.a_volDown == 0 and self.a_switchLastKey == 0:
+            self.a_volDown = 1
+            self.getControl(7010).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=True pulse=True')])
+            self.getControl(8010).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=True pulse=True')])
+            self.getControl(9010).setAnimations([('Conditional', 'effect=fade start=0 end=100 time=1000 condition=True pulse=True')])
+
+        if controlId == 9099 and self.a_info == 0 and self.a_stop == 0 and self.a_pp == 0 and self.a_pm == 0 and self.a_home == 0 and self.a_ctxt == 0 and self.a_rec == 0 and self.a_list == 0 and self.a_volUp == 0 and self.a_volDown == 0 and self.a_switchLastKey == 0:
             self.close()
 
-    @staticmethod
-    def record_key():
-        dialog = KeyListener()
-        timeout = Timer(KeyListener.TIMEOUT, dialog.close)
-        timeout.start()
-        dialog.doModal()
-        timeout.cancel()
-        key = dialog.key
-        del dialog
-        return key
 
 if __name__ == '__main__':
-    dialog = start()
+    dialog = KeyListener()
+    dialog.doModal()
+    del dialog

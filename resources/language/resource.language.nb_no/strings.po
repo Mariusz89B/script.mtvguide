@@ -56,22 +56,6 @@ msgctxt "#30009"
 msgid "Enter captcha"
 msgstr "Skriv inn captcha"
 
-msgctxt "#30010"
-msgid "Reset all keys"
-msgstr "Tilbakestill alle tasten"
-
-msgctxt "#30011"
-msgid "Press the key you want to assign now"
-msgstr "Trykk på tasten du vil tilordne nå"
-
-msgctxt "#30012"
-msgid "Timeout in {:.0f} seconds..."
-msgstr "Stenger om {: .0f} sekunder..."
-
-msgctxt "#30013"
-msgid "All keys have been deleted."
-msgstr "Alle tasten er slettet."
-
 msgctxt "#30100"
 msgid "General"
 msgstr "Generelt"
