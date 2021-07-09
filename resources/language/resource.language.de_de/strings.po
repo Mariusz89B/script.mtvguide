@@ -56,6 +56,22 @@ msgctxt "#30009"
 msgid "Enter captcha"
 msgstr "Captcha eingeben"
 
+msgctxt "#30010"
+msgid "Reset all keys"
+msgstr "Alle tasten zurücksetzen"
+
+msgctxt "#30011"
+msgid "Press the key you want to assign now"
+msgstr "Drücken Sie die Taste die Sie jetzt belegen möchten"
+
+msgctxt "#30012"
+msgid "Timeout in {:.0f} seconds..."
+msgstr "Zeitüberschreitung in {:.0f} Sekunden..."
+
+msgctxt "#30013"
+msgid "All keys have been deleted."
+msgstr "Alle tasten wurden gelöscht."
+
 msgctxt "#30100"
 msgid "General"
 msgstr "Allgemein"
