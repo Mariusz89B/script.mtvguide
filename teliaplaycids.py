@@ -92,7 +92,6 @@ else:
         profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
 
 sess = requests.Session()
-
 timeouts = (15, 30)
 
 def sendRequest(url, post=False, json=False, headers=None, data=None, params=None, cookies=None, verify=False, allow_redirects=False, timeout=None):
