@@ -387,7 +387,7 @@ class PlaylistUpdater(baseServiceUpdater):
 
             regex_chann_name   =     re.compile('tvg-id="[^"]*"',                                                  re.IGNORECASE)
             if ADDON.getSetting('VOD_EPG') == "":
-                regexCorrectStream =     re.compile('^(plugin|http|rtmp)(?!.*?[.](mp4|mkv|avi|mov|wma))',                 re.IGNORECASE)
+                regexCorrectStream =     re.compile('^(plugin|http|rtmp)(?!.*?[.]((\.)(mp4|mkv|avi|mov|wma)))',                 re.IGNORECASE)
                 regexRemoveList.append( re.compile('(\s|^)(L\s*)?((?i)VOD)(?=\s|$)', re.IGNORECASE) )
             else:
                 regexCorrectStream =     re.compile('^plugin|http|^rtmp',                                                 re.IGNORECASE)

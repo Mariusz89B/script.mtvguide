@@ -49,9 +49,11 @@ import xbmc
 if sys.version_info[0] > 2:
     import urllib.request, urllib.parse, urllib.error
     import http.cookiejar as cookielib
+    from requests.exceptions import HTTPError, ConnectionError, Timeout, RequestException
 else:
     import urllib
     import cookielib
+    from requests import HTTPError, ConnectionError, Timeout, RequestException
 
 import os, copy, re
 
@@ -91,7 +93,43 @@ else:
 
 sess = requests.Session()
 
-timeouts = (30, 60)
+timeouts = (15, 30)
+
+def sendRequest(url, post=False, json=False, headers=None, data=None, params=None, cookies=None, verify=False, allow_redirects=False, timeout=None):
+    try:
+        if post:
+            response = sess.post(url, headers=headers, data=data, params=params, cookies=cookies, verify=verify, allow_redirects=allow_redirects, timeout=timeout)
+        else:
+            response = sess.get(url, headers=headers, data=data, params=params, cookies=cookies, verify=verify, allow_redirects=allow_redirects, timeout=timeout)
+
+    except HTTPError as e:
+        deb('HTTPError: {}'.format(str(e)))
+        self.connErrorMessage()
+        response = False
+
+    except ConnectionError as e:
+        deb('ConnectionError: {}'.format(str(e)))
+        self.connErrorMessage()
+        response = False
+
+    except Timeout as e:
+        deb('Timeout: {}'.format(str(e))) 
+        self.connErrorMessage()
+        response = False
+
+    except RequestException as e:
+        deb('RequestException: {}'.format(str(e))) 
+        self.connErrorMessage()
+        response = False
+
+    except:
+        self.connErrorMessage()
+        response = False
+
+    if json:
+        return response.json()
+    else:
+        return response
 
 class Threading(object):
     def __init__(self):
@@ -200,10 +238,8 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 'Accept-Language': 'en-US,en;q=0.9',
             }
 
-            try:
-                response = sess.post(url, headers=headers, data=json.dumps(data), verify=False, timeout=timeouts)
-            except:
-                self.connErrorMessage()
+            response = sendRequest(url, post=True, headers=headers, data=json.dumps(data), verify=False, timeout=timeouts)
+            if not response:
                 return False
 
             url = 'https://ottapi.prod.telia.net/web/{cc}/logingateway/rest/v1/login'.format(cc=cc[self.country])
@@ -230,12 +266,14 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 "deviceType": "WEB",
             }
             
-            response = sess.post(url, headers=headers, data=json.dumps(data), verify=False, timeout=timeouts).json()
+            response = sendRequest(url, post=True, json=True, headers=headers, data=json.dumps(data), verify=False, timeout=timeouts)
+            if not response:
+                return False
 
             try:
                 if 'Username/password was incorrect' in response['errorMessage']:
                     self.loginErrorMessage()
-                    return False 
+                    return False
             except:
                 pass
 
@@ -281,7 +319,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 "platformVersion": "NT 6.1"
             }
 
-            response = sess.post(url, headers=headers, data=json.dumps(data), verify=False, timeout=timeouts)#.json()
+            response = sendRequest(url, post=True, json=False, headers=headers, data=json.dumps(data), verify=False, timeout=timeouts)
 
             try:
                 response = response.json()
@@ -313,7 +351,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                     'tv-client-boot-id': self.tv_client_boot_id,
                 }
 
-            response = sess.get(url, headers=headers, cookies=sess.cookies, allow_redirects=False, timeout=timeouts).json()
+            response = sendRequest(url, json=True, headers=headers, cookies=sess.cookies, allow_redirects=False, timeout=timeouts)
 
             self.usern = response['channels']['engagement']
             ADDON.setSetting('teliaplay_usern', str(self.usern))
@@ -335,18 +373,21 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 except ImportError:
                     from bs4 import BeautifulSoup
 
-                html = sess.get('https://www.telia.se/privat/support/info/registrerade-enheter-telia-play', verify=False).text
+                try:
+                    html = sess.get('https://www.telia.se/privat/support/info/registrerade-enheter-telia-play', verify=False, timeout=timeouts).text
 
-                soup = BeautifulSoup(html, "html.parser")
+                    soup = BeautifulSoup(html, "html.parser")
 
-                msg = soup.body.find('div', attrs={'class' : 'stepbystep__wrapper'}).text
-                msg = re.sub('   ', '[CR]', msg)
+                    msg = soup.body.find('div', attrs={'class' : 'stepbystep__wrapper'}).text
+                    msg = re.sub('   ', '[CR]', msg)
 
-                msg = msg[75:]
-                if sys.version_info[0] > 2:
-                    xbmcgui.Dialog().ok(strings(30904), str(msg))
-                else:
-                    xbmcgui.Dialog().ok(strings(30904), str(msg.encode('utf-8')))
+                    msg = msg[75:]
+                    if sys.version_info[0] > 2:
+                        xbmcgui.Dialog().ok(strings(30904), str(msg))
+                    else:
+                        xbmcgui.Dialog().ok(strings(30904), str(msg.encode('utf-8')))
+                except:
+                    pass
             
                 self.createData()
 
@@ -451,7 +492,9 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 "Authorization": "Bearer " + self.beartoken,
             }
             
-            engagementjson = sess.get(url, headers=headers).json()
+            engagementjson = sendRequest(url, json=True, headers=headers, verify=False)
+            if not engagementjson:
+                return result
 
             try:
                 self.engagementLiveChannels = engagementjson['channelIds']
@@ -478,7 +521,10 @@ class TeliaPlayUpdater(baseServiceUpdater):
 
             }
 
-            channels = sess.get(url, headers=headers, verify=False).json() 
+            channels = sendRequest(url, json=True, headers=headers, verify=False) 
+            if not channels:
+                return result
+
             for channel in channels:
                 if channel['id'] in self.engagementLiveChannels:
                     cid = channel["id"] + '_TS_1'
@@ -547,14 +593,10 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 ('sessionId', six.text_type(uuid.uuid4())),
             )
 
-            response = sess.post(url, headers=headers, params=params, cookies=sess.cookies, verify=False, timeout=timeouts).json()
-
-            try:
-                if 'Content not authorized' in response['errorMessage']:
-                    self.noPremiumMessage()
-                    return
-            except:
-                deb('Content available')
+            response = sendRequest(url, post=True, json=True, headers=headers, params=params, cookies=sess.cookies, verify=False, timeout=timeouts)
+            if not response:
+                data = None
+                return data 
 
             streamingUrl = response["streamingUrl"]
             token = response["token"]
@@ -562,6 +604,13 @@ class TeliaPlayUpdater(baseServiceUpdater):
             expires = response["expires"]
 
             mpdurl = '{base}?ssl=true&time={time}&token={token}&expires={expires}&c={user_id}&d={dev_id}'.format(base=streamingUrl, time=currentTime, token=token, expires=expires, user_id=self.usern, dev_id=self.dashjs)
+
+            try:
+                if 'Content not authorized' in response['errorMessage']:
+                    self.noPremiumMessage()
+                    return
+            except:
+                deb('Content available')
             
             headers = {
                 'Accept': '*/*',
@@ -597,7 +646,11 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 'User-Agent': UA,
             }
 
-            mpdurl_re = sess.get(mpdurl, headers=xheaders, verify=False).json()
+            mpdurl_re = sendRequest(mpdurl, json=True, headers=xheaders, verify=False)
+            if not mpdurl_re:
+                data = None
+                return data 
+
             mpdurl = mpdurl_re["location"]
             
             if sys.version_info[0] > 2:

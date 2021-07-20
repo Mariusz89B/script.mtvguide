@@ -436,7 +436,7 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
 
     def playShortcut(self):
         self.channel_number_input = False
-        self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(ADDON.getSetting('timebar_adjust')))
+        self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(self.timebarAdjust()))
         self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30,
                                                  seconds=self.viewStartDate.second)
         channelList = self.gu.database.getChannelList(onlyVisible=True)
@@ -783,8 +783,8 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
 
         if self.ctrlCalcProgramTimeLeft is not None:
             if self.program.endDate < datetime.datetime.now():
-                start_date = time.mktime(self.program.startDate.timetuple()) - 60 * float(ADDON.getSetting('timebar_adjust'))
-                end_date = time.mktime(self.program.endDate.timetuple()) - 60 * float(ADDON.getSetting('timebar_adjust'))
+                start_date = time.mktime(self.program.startDate.timetuple()) - 60 * float(self.timebarAdjust())
+                end_date = time.mktime(self.program.endDate.timetuple()) - 60 * float(self.timebarAdjust())
                 result = (end_date - start_date)
                 dt_obj = datetime.datetime.utcfromtimestamp(result)
                 rt_obj = dt_obj.strftime('%H:%M')
@@ -796,7 +796,7 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
                 self.ctrlCalcProgramTimeLeft.setLabel('%s' % (rt_obj))
             else:
                 now_date = time.mktime(datetime.datetime.now().timetuple())
-                end_date = time.mktime(self.program.endDate.timetuple()) - 60 * float(ADDON.getSetting('timebar_adjust'))
+                end_date = time.mktime(self.program.endDate.timetuple()) - 60 * float(self.timebarAdjust())
                 result = (end_date - now_date + float(60))
                 dt_obj = datetime.datetime.utcfromtimestamp(result)
                 rt_obj = dt_obj.strftime('%H:%M')
@@ -818,7 +818,7 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
                         endDate = program.endDate
 
                     start_date = time.mktime(startDate.timetuple())
-                    end_date = time.mktime(endDate.timetuple()) - 60 * float(ADDON.getSetting('timebar_adjust'))
+                    end_date = time.mktime(endDate.timetuple()) - 60 * float(self.timebarAdjust())
                     result = (end_date - start_date)
                     dt_obj = datetime.datetime.utcfromtimestamp(result)
                     rt_obj = dt_obj.strftime('%H:%M')
@@ -853,7 +853,7 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
                 if skin_separate_episode:
                     episode = descriptionParser.extractEpisode()
                 if skin_separate_allowed_age_icon:
-                    icon = descriptionParser.extractAllowedAge()
+                    icon, age = descriptionParser.extractAllowedAge()
                     self.setControlImage(C_MAIN_AGE_ICON, icon)
                 if skin_separate_program_actors:
                     actors = descriptionParser.extractActors()
@@ -884,7 +884,7 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
         if self.ctrlProgramSlider:
             self.stdat = time.mktime(self.program.startDate.timetuple())
             self.endat = time.mktime(self.program.endDate.timetuple())
-            self.nodat = time.mktime(datetime.datetime.now().timetuple()) + 60 * float(ADDON.getSetting('timebar_adjust'))
+            self.nodat = time.mktime(datetime.datetime.now().timetuple()) + 60 * float(self.timebarAdjust())
             try:
                 self.per =  100 -  ((self.endat - self.nodat)/ ((self.endat - self.stdat)/100))
             except:
@@ -898,7 +898,7 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
         if self.ctrlProgramProgress:
             self.stdat = time.mktime(self.program.startDate.timetuple())
             self.endat = time.mktime(self.program.endDate.timetuple())
-            self.nodat = time.mktime(datetime.datetime.now().timetuple()) + 60 * float(ADDON.getSetting('timebar_adjust'))
+            self.nodat = time.mktime(datetime.datetime.now().timetuple()) + 60 * float(self.timebarAdjust())
             try:
                 self.per =  100 -  ((self.endat - self.nodat)/ ((self.endat - self.stdat)/100))
             except:
@@ -947,6 +947,12 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
         while (time.mktime(datetime.datetime.now().timetuple()) < self.keyboardTime + self.osdDisplayTime or self.blockOsd) and not self.isClosing:
             time.sleep(0.1)
         self.isClosing = True
+
+    def timebarAdjust(self):
+        timebar_adjust = ADDON.getSetting('timebar_adjust')
+        if timebar_adjust == '':
+            timebar_adjust = 0
+        return timebar_adjust
 
     def formatTime(self, timestamp):
         format = xbmc.getRegion('time').replace(':%S', '').replace('%H%H', '%H')
