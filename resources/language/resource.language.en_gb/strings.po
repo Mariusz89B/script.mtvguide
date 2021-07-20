@@ -233,15 +233,15 @@ msgid "Watch {}"
 msgstr ""
 
 msgctxt "#30301"
-msgid "Set reminder"
+msgid "Remind"
 msgstr ""
 
 msgctxt "#30302"
-msgid "Delete reminder"
+msgid "Don't remind"
 msgstr ""
 
 msgctxt "#30303"
-msgid "Stop recording"
+msgid "Cancel recording"
 msgstr ""
 
 msgctxt "#30304"
@@ -536,10 +536,6 @@ msgctxt "#30376"
 msgid "No channels could be found."
 msgstr ""
 
-msgctxt "#30377"
-msgid "PVR channel manager"
-msgstr ""
-
 msgctxt "#30500"
 msgid "Edit channel order and visibility"
 msgstr ""
@@ -605,7 +601,7 @@ msgid "ADDON SETTINGS"
 msgstr ""
 
 msgctxt "#30403"
-msgid "Set reminder"
+msgid "REMIND"
 msgstr ""
 
 msgctxt "#30404"
@@ -617,7 +613,7 @@ msgid "CHANNEL SETTINGS"
 msgstr ""
 
 msgctxt "#30406"
-msgid "Delete reminder"
+msgid "DON'T REMIND"
 msgstr ""
 
 msgctxt "#30407"
