@@ -297,6 +297,12 @@ def timedelta_total_seconds(timedelta):
                    (timedelta.seconds + timedelta.days * 24 * 3600) * 10 ** 6) // 10 ** 6
 
 
+def timebarAdjust():
+    timebar_adjust = ADDON.getSetting('timebar_adjust')
+    if timebar_adjust == '':
+        timebar_adjust = 0
+    return timebar_adjust
+
 class proxydt(datetime.datetime):
     @staticmethod
     def strptime(date_string, format):
@@ -322,6 +328,8 @@ class ControlAndProgram(object):
     def __init__(self, control, program):
         self.control = control
         self.program = program
+
+
 
 class Event:
     def __init__(self):
@@ -582,7 +590,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
         # find nearest half hour
         self.viewStartDate = datetime.datetime.today() + datetime.timedelta(
-            minutes=int(ADDON.getSetting('timebar_adjust')))
+            minutes=int(timebarAdjust()))
         self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
 
         self.lastKeystroke = datetime.datetime.now()
@@ -2267,7 +2275,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def AutoPlayByNumber(self):
         self.viewStartDate = datetime.datetime.today() + datetime.timedelta(
-            minutes=int(ADDON.getSetting('timebar_adjust')))
+            minutes=int(timebarAdjust()))
         self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
         channelList = self.database.getChannelList(onlyVisible=True)
         self.channelIdx = int(ADDON.getSetting('autostart_channel_number')) - 1
@@ -2283,7 +2291,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def AutoPlayLastChannel(self):
         self.viewStartDate = datetime.datetime.today() + datetime.timedelta(
-            minutes=int(ADDON.getSetting('timebar_adjust')))
+            minutes=int(timebarAdjust()))
         self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
         channelList = self.database.getChannelList(onlyVisible=True)
         idx, date = self.database.getLastChannel()
@@ -2422,7 +2430,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def playShortcut(self):
         self.channel_number_input = False
-        self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(ADDON.getSetting('timebar_adjust')))
+        self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(timebarAdjust()))
         self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
         channelList = self.database.getChannelList(onlyVisible=True)
         if ADDON.getSetting('channel_shortcut') == 'false':
@@ -2717,11 +2725,11 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action.getId() == ACTION_MOUSE_WHEEL_DOWN and self.getFocusId() != 7900:
             self._moveDown(scrollEvent=True)
         elif action.getId() == KEY_HOME or (action.getButtonCode() == KEY_HOME2 and KEY_HOME2 != 0) or (action.getId() == KEY_HOME2 and KEY_HOME2 != 0):
-            self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(ADDON.getSetting('timebar_adjust')))
+            self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(timebarAdjust()))
             self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
             self.onRedrawEPG(0, self.viewStartDate)
         elif action.getId() == KEY_END:
-            self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(ADDON.getSetting('timebar_adjust')))
+            self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(timebarAdjust()))
             self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
             self.onRedrawEPG(-1, self.viewStartDate)
         elif (action.getId() in [KEY_CONTEXT_MENU, ACTION_MOUSE_RIGHT_CLICK] or action.getButtonCode() in [KEY_CONTEXT]) and controlInFocus is not None:
@@ -2847,7 +2855,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
         if controlId == self.C_MAIN_MOUSEPANEL_HOME:
             self.viewStartDate = datetime.datetime.today() + datetime.timedelta(
-                minutes=int(ADDON.getSetting('timebar_adjust')))
+                minutes=int(timebarAdjust()))
             self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
             self.onRedrawEPG(self.channelIdx, self.viewStartDate)
             return
@@ -4340,26 +4348,25 @@ class mTVGuide(xbmcgui.WindowXML):
             xbmcgui.Dialog().ok(strings(57051), strings(59993).format(epgChann.upper()))
             self.reloadList(add=True)
 
-
     def _showContextMenu(self, program):
         deb('_showContextMenu')
         self._hideControl(self.C_MAIN_MOUSEPANEL_CONTROLS)
 
         if program.notificationScheduled:
-            remindControl = (xbmc.getLocalizedString(DONT_REMIND_PROGRAM))
+            remindControl = (strings(DONT_REMIND_PROGRAM))
         else:
-            remindControl = (xbmc.getLocalizedString(REMIND_PROGRAM))
+            remindControl = (strings(REMIND_PROGRAM))
 
         if program.endDate < datetime.datetime.now():
             if program.recordingScheduled:
                 programRecordControl = (strings(DOWNLOAD_PROGRAM_CANCEL_STRING))
             else:
-                programRecordControl = (xbmc.getLocalizedString(DOWNLOAD_PROGRAM_STRING))
+                programRecordControl = (strings(DOWNLOAD_PROGRAM_STRING))
         else:
             if program.recordingScheduled:
-                programRecordControl = (xbmc.getLocalizedString(RECORD_PROGRAM_CANCEL_STRING))
+                programRecordControl = (strings(RECORD_PROGRAM_CANCEL_STRING))
             else:
-                programRecordControl = (xbmc.getLocalizedString(RECORD_PROGRAM_STRING))
+                programRecordControl = (strings(RECORD_PROGRAM_STRING))
 
         removeStrm = False
 
@@ -4369,7 +4376,7 @@ class mTVGuide(xbmcgui.WindowXML):
         else:
             chooseStrmControl = (strings(CHOOSE_STRM_FILE))
         
-        ret = xbmcgui.Dialog().contextmenu([xbmc.getLocalizedString(19103), xbmc.getLocalizedString(19047), strings(30356), remindControl, programRecordControl, xbmc.getLocalizedString(19017), xbmc.getLocalizedString(10604), strings(30309), xbmc.getLocalizedString(33063), xbmc.getLocalizedString(1036), chooseStrmControl, xbmc.getLocalizedString(13012)])
+        ret = xbmcgui.Dialog().contextmenu([strings(30346), strings(58000), strings(30356), remindControl, programRecordControl, strings(30337), strings(30377), strings(30309), strings(68005), strings(30602), chooseStrmControl, strings(30308)])
 
         if ret == 0:
             if ADDON.getSetting('channel_shortcut') == 'false':
@@ -4654,7 +4661,7 @@ class mTVGuide(xbmcgui.WindowXML):
                     episode = program.episode
                 self.setControlText(C_PROGRAM_EPISODE, episode)
             if skin_separate_allowed_age_icon:
-                icon = descriptionParser.extractAllowedAge()
+                icon, age = descriptionParser.extractAllowedAge()
                 self.setControlImage(C_PROGRAM_AGE_ICON, icon)
             if skin_separate_program_actors:
                 actors = descriptionParser.extractActors()
@@ -5327,7 +5334,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
         # aktualna godzina!
         try:
-            self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(ADDON.getSetting('timebar_adjust')))
+            self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(timebarAdjust()))
         except:
             self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(0))
         self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
@@ -5553,6 +5560,10 @@ class mTVGuide(xbmcgui.WindowXML):
                     title = program.title
 
                 archive = self.catchupEPG(program, cellWidth, catchupList)
+
+                item = xbmcgui.ListItem(program.channel.title)
+                if program.imageSmall is not None:
+                    item.setArt({'icon':program.imageSmall})
 
                 control = xbmcgui.ControlButton(
                     cellStart,
@@ -5825,7 +5836,7 @@ class mTVGuide(xbmcgui.WindowXML):
     def onPlayBackStopped(self):
         deb('onPlayBackStopped')
         if not xbmc.Player().isPlaying() and not self.isClosing:
-            self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(ADDON.getSetting('timebar_adjust')))
+            self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(timebarAdjust()))
             self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
             self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
 
@@ -6027,10 +6038,10 @@ class mTVGuide(xbmcgui.WindowXML):
             self.lastKeystroke = datetime.datetime.now()
         try:
             # move timebar to current time
-            timeDelta = datetime.datetime.today() - self.viewStartDate + datetime.timedelta(minutes=int(ADDON.getSetting('timebar_adjust')))
+            timeDelta = datetime.datetime.today() - self.viewStartDate + datetime.timedelta(minutes=int(timebarAdjust()))
             control = self.getControl(self.C_MAIN_TIMEBAR)
 
-            timeDeltaBg = datetime.datetime.today() - self.viewStartDate + datetime.timedelta(minutes=int(ADDON.getSetting('timebar_adjust')))
+            timeDeltaBg = datetime.datetime.today() - self.viewStartDate + datetime.timedelta(minutes=int(timebarAdjust()))
             background = self.getControl(self.C_MAIN_TIMEBAR_BACK)
 
             if control and background:
@@ -6107,7 +6118,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.timebar.setVisible(False)
 
                 except:
-                    pass
+                    self.timebarBack.setVisible(True)
+                    self.timebar.setVisible(True)
 
             if scheduleTimer and not strings2.M_TVGUIDE_CLOSING and not self.isClosing:
                 if self.updateTimebarTimer is not None:
@@ -6824,7 +6836,7 @@ class InfoDialog(xbmcgui.WindowXMLDialog):
 
         elif matchMin:
             calcTime = re.sub(r'^0', '', str(calcTime))
-
+        
         return calcTime
 
     def onInit(self):
@@ -6991,6 +7003,8 @@ class InfoDialog(xbmcgui.WindowXMLDialog):
             self.ExtendedInfo(self.program)
             return
 
+    def close(self):
+        super(InfoDialog, self).close()
 
 class Pla(xbmcgui.WindowXMLDialog):
     def __new__(cls, program, database, urlList, archiveService, archivePlaylist, epg):
@@ -7183,7 +7197,7 @@ class Pla(xbmcgui.WindowXMLDialog):
 
     def playShortcut(self):
         self.channel_number_input = False
-        self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(ADDON.getSetting('timebar_adjust')))
+        self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(timebarAdjust()))
         self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
         channelList = self.database.getChannelList(onlyVisible=True)
         if ADDON.getSetting('channel_shortcut') == 'false':
@@ -7645,7 +7659,7 @@ class ProgramListDialog(xbmcgui.WindowXMLDialog):
             start = program.startDate
             end = program.endDate
             duration = end - start
-            now = datetime.datetime.now() + datetime.timedelta(minutes=int(ADDON.getSetting('timebar_adjust')))
+            now = datetime.datetime.now() + datetime.timedelta(minutes=int(timebarAdjust()))
 
             if now > start:
                 when = datetime.timedelta(-1)
@@ -7754,7 +7768,7 @@ class ProgramListDialog(xbmcgui.WindowXMLDialog):
     # TODO make global function
     def formatDateTodayTomorrow(self, timestamp):
         if timestamp:
-            today = datetime.datetime.today() + datetime.timedelta(minutes=int(ADDON.getSetting('timebar_adjust')))
+            today = datetime.datetime.today() + datetime.timedelta(minutes=int(timebarAdjust()))
             tomorrow = today + datetime.timedelta(days=1)
             yesterday = today - datetime.timedelta(days=1)
             if today.date() == timestamp.date():
