@@ -220,11 +220,8 @@ class ProgramDescriptionParser(object):
             addonPath = xbmc.translatePath(ADDON.getAddonInfo('path'))
         try:
             icon = ''
-            age = ''
             try:
                 age = re.search('(W:|Od lat:|.?r:|Rating:|Pendant des ann.?es:|.?ber die Jahre:|Godinama:|Jaar:|Rok:|Anni:).*?(\[B\])?(\d+)(\[\/B\])?(\.)?', self.description).group(3)
-                if age == '3':
-                    age = '0'
                 icon = os.path.join(addonPath, 'icons', 'age_rating', 'icon_{}.png'.format(age))
 
             except:
@@ -235,9 +232,8 @@ class ProgramDescriptionParser(object):
             self.description = re.sub("(W:|Od lat:|.?r:|Rating:|Pendant des ann.?es:|.?ber die Jahre:|Godinama:|Jaar:|Rok:|Anni:).*?(\[B\])?({Age}|.*)\s*(\+)?(\[\/B\])?(\.)?".format(Age=age), "", self.description).strip()
         except:
             icon = ''
-            age = ''
 
-        return icon, age
+        return icon
 
     def extractRating(self):
         try:
