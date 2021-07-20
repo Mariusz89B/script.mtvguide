@@ -233,16 +233,16 @@ msgid "Watch {}"
 msgstr "Se {}"
 
 msgctxt "#30301"
-msgid "Remind"
-msgstr "Påmind"
+msgid "Set reminder"
+msgstr "Sæt påmindelse"
 
 msgctxt "#30302"
-msgid "Don't remind"
-msgstr "Påmind ikke"
+msgid "Delete reminder"
+msgstr "Slet påmindelse"
 
 msgctxt "#30303"
-msgid "Cancel recording"
-msgstr "Afbryd optagelsen"
+msgid "Stop recording"
+msgstr "Stop optagelse"
 
 msgctxt "#30304"
 msgid "Choose stream"
@@ -536,6 +536,10 @@ msgctxt "#30376"
 msgid "No channels could be found."
 msgstr "Ingen kanaler kunne findes."
 
+msgctxt "#30377"
+msgid "PVR channel manager"
+msgstr "PVR kanalhåndtering"
+
 msgctxt "#30500"
 msgid "Edit channel order and visibility"
 msgstr "Rediger kanal rækkefølge og synlighed"
@@ -601,7 +605,7 @@ msgid "ADDON SETTINGS"
 msgstr "TILFØJ INDSTILLINGER"
 
 msgctxt "#30403"
-msgid "REMIND"
+msgid "Set reminder"
 msgstr "MINDE OM"
 
 msgctxt "#30404"
@@ -613,7 +617,7 @@ msgid "CHANNEL SETTINGS"
 msgstr "KANALINDSTILLINGER"
 
 msgctxt "#30406"
-msgid "DON'T REMIND"
+msgid "Delete reminder"
 msgstr "MIND IKKE"
 
 msgctxt "#30407"
