@@ -2151,8 +2151,6 @@ class mTVGuide(xbmcgui.WindowXML):
 
         self.database.initialize(self.onSourceInitialized, self.isSourceInitializationCancelled)
 
-        self.updateTimebar()
-
         self.interval = 300
         self.updateEpgTimer = epgTimer(self.interval, self.updateEpg)
 
@@ -5352,7 +5350,7 @@ class mTVGuide(xbmcgui.WindowXML):
         for idx in range(0, CHANNELS_PER_PAGE):
             self.disableControl(start_index + idx)
 
-    def onTimebar(self):
+    def onTimebar(self, scheduleTimer):
         # Redraw timebar
         addonSkin = ADDON.getSetting('Skin')
 
@@ -5440,7 +5438,7 @@ class mTVGuide(xbmcgui.WindowXML):
         else:
             self.timebar = xbmcgui.ControlImage(tmp_control.getX(), tmp_control.getY(), tmp_control.getWidth(), tmp_control.getHeight(), os.path.join(Skin.getSkinPath(), 'media', 'tvguide-timebar.png'), colorDiffuse=skin_timebar_colour)
         
-        self.updateTimebar()
+        self.updateTimebar(scheduleTimer)
 
         timebars = [self.timebar, self.timebarBack]
         self.addControls(timebars)
@@ -5461,7 +5459,6 @@ class mTVGuide(xbmcgui.WindowXML):
             self.infoDialog.close()
 
         self._showControl(self.C_MAIN_EPG)
-        self.updateTimebar(scheduleTimer=False)
 
         # remove existing controls
         self._clearEpg()
@@ -5587,7 +5584,7 @@ class mTVGuide(xbmcgui.WindowXML):
             focusControl = self._findControlAt(self.focusPoint)
         controls = [elem.control for elem in self.controlAndProgramList]
         self.addControls(controls)
-        self.onTimebar()
+        self.onTimebar(scheduleTimer=False)
         if focusControl is not None:
             self.setFocus(focusControl)
         self.ignoreMissingControlIds.extend([elem.control.getId() for elem in self.controlAndProgramList])
@@ -6031,7 +6028,7 @@ class mTVGuide(xbmcgui.WindowXML):
         except:
             pass
 
-    def updateTimebar(self, scheduleTimer=True):
+    def updateTimebar(self, scheduleTimer):
         # debug('updateTimebar')
 
         if xbmc.Player().isPlaying():
@@ -6118,8 +6115,7 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.timebar.setVisible(False)
 
                 except:
-                    self.timebarBack.setVisible(True)
-                    self.timebar.setVisible(True)
+                    pass
 
             if scheduleTimer and not strings2.M_TVGUIDE_CLOSING and not self.isClosing:
                 if self.updateTimebarTimer is not None:

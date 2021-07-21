@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.mtvguide" name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]" version="9.4.3" provider-name="Team Mods-Kodi">
+<addon id="script.mtvguide" name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]" version="9.4.4" provider-name="Team Mods-Kodi">
 	<requires>
 		<import addon="xbmc.addon" version="17.0.0"/>
 		<import addon="script.module.inputstreamhelper" />
@@ -16,6 +16,16 @@
 	<extension point="xbmc.python.script" library="addon.py">
 		<provides>video</provides>
 	</extension>
+	<extension point="xbmc.gui.skin" debugging="true">
+		<res width="1920" height="1440" aspect="4:3" default="false" folder="xml" />
+		<res width="1920" height="1280" aspect="3:2" default="false" folder="xml" />
+		<res width="1920" height="1200" aspect="16:10" default="false" folder="xml" />
+		<res width="2040" height="1080" aspect="17:9" default="false" folder="xml" />
+		<res width="1920" height="1080" aspect="16:9" default="true" folder="xml" />
+		<res width="2560" height="1080" aspect="21:9" default="false" folder="xml" />
+		<res width="2338" height="1080" aspect="19.5:9" default="false" folder="xml" />
+		<res width="2160" height="1080" aspect="18:9" default="false" folder="xml" />
+	</extension>
 	<extension point="xbmc.service" library="service.py" start="login"/>
 	<extension point="xbmc.addon.metadata">
 		<summary lang="en_GB">m-TVGuide EPG</summary>
@@ -30,7 +40,10 @@
 		<forum>http://mods-kodi.pl/forum/</forum>
 		<website>http://mods-kodi.pl/</website>
 		<email>support@m-tvguide.pl</email>
-	<news>v9.4.3 (2021-07-20)
+	<news>v9.4.4 (2021-07-21)
+- Timebar fixes.
+
+v9.4.3 (2021-07-20)
 - Updated set keys setting.
 - Bug fixes.
 
