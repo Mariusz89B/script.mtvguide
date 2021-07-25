@@ -12,6 +12,7 @@ Ipla - Cyfrowy Polsat S.A.
 nc + GO - ITI Neovision S.A.
 PlayerPL - TVN S.A.
 Telia Play - Telia Company AB
+Telewizja Polska - Telewizja Polska S.A.
 WP Pilot - Wirtualna Polska Media S.A.
 
 
@@ -34,6 +35,7 @@ Ipla - https://www.ipla.tv/regulamins
 nc + GO - https://ncplusgo.pl/Cms/Page?codename=regulamin&mobile=False
 PlayerPL - https://player.pl/regulamin.pdf
 Telia Play - https://www.telia.se/privat/om/villkor/villkor-mitt-telia
+Telewizja Polska - https://vod.tvp.pl/page/regulamin,1653650/
 WP Pilot - https://pilot.wp.pl/pomoc/
 
 Rejestracja konta odbywa się na stronie operatora.
@@ -44,6 +46,7 @@ Ipla - https://www.ipla.tv/register/
 nc+ GO - https://ncplusgo.pl/konto/rejestracja/
 PlayerPL - https://player.pl/
 Telia Play - https://www.telia.se/privat/mitt-telia/logga-in/
+Telewizja Polska - https://www.tvp.pl/sess/user-2.0/register.php?ref=aHR0cHM6Ly9jZW50cnVtaW5mb3JtYWNqaS50dnAucGwv
 WP Pilot - https://pilot.wp.pl/register/
 
 Opłaty abonamentowe, są dokonywane na stronie nadawcy i nie są powiązane ze wtyczką.

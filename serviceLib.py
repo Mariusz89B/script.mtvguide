@@ -702,11 +702,11 @@ class baseServiceUpdater:
 
     def connErrorMessage(self):
         self.log('connection error for service: {}'.format(self.serviceName))
-        xbmcgui.Dialog().notification(self.serviceName, strings(SERVICE_ERROR), time=15000, sound=True)
+        xbmcgui.Dialog().notification(self.serviceName, strings(SERVICE_ERROR), xbmcgui.NOTIFICATION_WARNING, time=15000, sound=True)
 
     def loginErrorMessage(self):
         self.log('login error for service: {}'.format(self.serviceName))
-        xbmcgui.Dialog().notification(self.serviceName, strings(SERVICE_LOGIN_INCORRECT), time=15000, sound=True)
+        xbmcgui.Dialog().notification(self.serviceName, strings(SERVICE_LOGIN_INCORRECT), xbmcgui.NOTIFICATION_ERROR, time=15000, sound=True)
 
     def proxyErrorMessage(self):
         self.log('proxy error for service: {}'.format(self.serviceName))

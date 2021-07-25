@@ -84,6 +84,7 @@ import cpgocids
 #import francetvcids
 import cmorecids
 import teliaplaycids
+import tvpcids
 import playerplcids
 
 sess = cloudscraper.create_scraper()
@@ -102,6 +103,7 @@ SERVICES = {
     #francetvcids.serviceName        : francetvcids.FranceTVUpdater(),
     cmorecids.serviceName           : cmorecids.CmoreUpdater(),
     teliaplaycids.serviceName       : teliaplaycids.TeliaPlayUpdater(),
+    tvpcids.serviceName             : tvpcids.TvpUpdater(),
     playerplcids.serviceName        : playerplcids.PlayerPLUpdater()
 }
 
@@ -986,6 +988,55 @@ class PlayService(xbmc.Player, BasePlayService):
                         self.unlockCurrentlyPlayedService()
                         xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
 
+                if service == 'Telewizja Polska':
+                    if self.archiveService == '' or self.archivePlaylist == '':
+                        try:
+                            self.playbackStopped = False
+
+                            strmUrl = channelInfo.strm
+
+                            try:
+                                from urllib.parse import urlencode, quote_plus, quote, unquote
+                            except ImportError:
+                                from urllib import urlencode, quote_plus, quote, unquote
+                                
+                            UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36 Edg/92.0.902.55'
+
+                            PROTOCOL = ''
+                            DRM = 'com.widevine.alpha'
+
+                            if '.m3u8' in strmUrl:
+                                mimeType = 'application/x-mpegURL'
+                                #mimeType = 'application/vnd.apple.mpegstream_url'
+                                PROTOCOL = 'hls'
+
+                            import inputstreamhelper
+                            is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
+                            if is_helper.check_inputstream():  
+                                ListItem = xbmcgui.ListItem(path=strmUrl)
+                                ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
+                                ListItem.setContentLookup(False)
+                                if sys.version_info[0] > 2:
+                                    ListItem.setProperty('inputstream', is_helper.inputstream_addon)
+                                else:
+                                    ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
+                                ListItem.setMimeType(mimeType)
+                                ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
+                                ListItem.setProperty('inputstream.adaptive.stream_headers', 'Referer: https://tvpstream.vod.tvp.pl/&User-Agent=' + quote(UA))
+                                #ListItem.setProperty('inputstream.adaptive.license_type', DRM)
+                                #ListItem.setProperty('inputstream.adaptive.license_key','')
+                                #ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
+                                ListItem.setProperty('IsPlayable', 'true')
+                            
+                            self.strmUrl = strmUrl
+                            xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
+
+                            res = True
+
+                        except Exception as ex:
+                            deb('Exception while trying to play video: {}'.format(getExceptionString()))
+                            self.unlockCurrentlyPlayedService()
+                            xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
 
                 if service == 'WP Pilot':
                     if self.archiveService == '' or self.archivePlaylist == '':

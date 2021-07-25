@@ -893,6 +893,39 @@
 					</control>
 				</setting>
 			</group>
+			<group id="7" label="80007">
+				<setting help="95007" id="tvp_enabled" label="59904" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="95012" id="priority_tvp" label="55009" type="integer">
+					<level>0</level>
+					<default>6</default>
+					<constraints>
+						<options>
+							<option label="55010">0</option>
+							<option label="55011">1</option>
+							<option label="55017">2</option>
+							<option label="55012">3</option>
+							<option label="55018">4</option>
+							<option label="55013">5</option>
+							<option label="55019">6</option>
+							<option label="55014">7</option>
+							<option label="55020">8</option>
+							<option label="55021">9</option>
+							<option label="55022">10</option>
+							<option label="55023">11</option>
+						</options>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="tvp_enabled">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="spinner"/>
+				</setting>
+			</group>
 			<group id="19" label="80005">
 				<setting help="95007" id="videostar_enabled" label="59904" type="boolean">
 					<level>0</level>

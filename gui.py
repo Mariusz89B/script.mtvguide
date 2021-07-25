@@ -2278,12 +2278,14 @@ class mTVGuide(xbmcgui.WindowXML):
         channelList = self.database.getChannelList(onlyVisible=True)
         self.channelIdx = int(ADDON.getSetting('autostart_channel_number')) - 1
         channel = Channel(id='', title='', logo='', titles='', streamUrl='', visible='', weight='')
+        
         try:
-            program = Program(channel=channelList[self.channelIdx], title='', startDate='', endDate='', description='', productionDate='', director='', actor='', episode='', 
-                            imageLarge='', imageSmall='', categoryA='', categoryB='')
+            index = channelList[self.channelIdx]
         except:
-            program = Program(channel=channelList[0], title='', startDate='', endDate='', description='', productionDate='', director='', actor='', episode='',
-                            imageLarge='', imageSmall='', categoryA='', categoryB='')
+            index = channelList[0]
+        program = Program(channel=index, title='', startDate='', endDate='', description='', productionDate='', director='', actor='', episode='', 
+                        imageLarge='', imageSmall='', categoryA='', categoryB='')
+
         xbmc.sleep(350)
         self.playChannel(program.channel)
 
@@ -2294,12 +2296,13 @@ class mTVGuide(xbmcgui.WindowXML):
         channelList = self.database.getChannelList(onlyVisible=True)
         idx, date = self.database.getLastChannel()
         self.channelIdx = int(idx)
+
         try:
-            program = Program(channel=channelList[self.channelIdx], title='', startDate='', endDate='', description='', productionDate='', director='', actor='', episode='',
-                              imageLarge='', imageSmall='', categoryA='', categoryB='')
+            index = channelList[self.channelIdx]
         except:
-            program = Program(channel=channelList[0], title='', startDate='', endDate='', description='', productionDate='', director='', actor='', episode='',
-                              imageLarge='', imageSmall='', categoryA='', categoryB='')
+            index = channelList[0]
+        program = Program(channel=index, title='', startDate='', endDate='', description='', productionDate='', director='', actor='', episode='', 
+                        imageLarge='', imageSmall='', categoryA='', categoryB='')
         xbmc.sleep(350)
         if not xbmc.Player().isPlaying():
             self.playChannel(program.channel)
@@ -2443,7 +2446,11 @@ class mTVGuide(xbmcgui.WindowXML):
 
         behaviour = int(ADDON.getSetting('channel_shortcut_behaviour'))
         if (self.mode != MODE_EPG) and (behaviour > 0):
-            program = Program(channel=channelList[self.channelIdx], title='', startDate=None, endDate=None, description='', productionDate='', director='', actor='', episode='', categoryA='', categoryB='')
+            try:
+                index = channelList[self.channelIdx]
+            except:
+                index = channelList[0]
+            program = Program(channel=index, title='', startDate='', endDate='', description='', productionDate='', director='', actor='', episode='', categoryA='', categoryB='')
             self.playChannel2(program)
         elif (behaviour == 1) or (behaviour == 1 and self.mode != MODE_EPG):
             self.focusPoint.y = self.epgView.top
@@ -7207,7 +7214,14 @@ class Pla(xbmcgui.WindowXMLDialog):
             self.getControl(9999).setLabel(self.channel_number)
 
         channel = Channel(id='', title='', logo='', titles='', streamUrl='', visible='', weight='')
-        program = Program(channel=channelList[self.channelIdx], title='', startDate='', endDate='', description='', productionDate='', director='', actor='', episode='', imageLarge='', imageSmall='', categoryA='', categoryB='')
+
+        try:
+            index = channelList[self.channelIdx]
+        except:
+            index = channelList[0]
+
+        program = Program(channel=index, title='', startDate='', endDate='', description='', productionDate='', director='', actor='', episode='', imageLarge='', imageSmall='', categoryA='', categoryB='')
+        
         self.playChannel(program.channel)
 
     def onAction(self, action):

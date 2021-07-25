@@ -278,6 +278,14 @@ class WpPilotUpdater(baseServiceUpdater):
             headers.update({'Cookie': cookies})
             response = requests.get(url, params=data, verify=False, headers=headers, timeout=timeouts).json()
 
+            if 'user_channel_other_stream_playing' in str(response):
+                self.maxDeviceIdMessage()
+                return
+
+            if 'user_not_verified_eu' in str(response):
+                self.geoBlockErrorMessage()
+                return
+
             meta = response.get('_meta', None)
             if meta is not None:
                 token = meta.get('error', {}).get('info', {}).get('stream_token', None)
@@ -293,12 +301,6 @@ class WpPilotUpdater(baseServiceUpdater):
                         data = self.getChannelStream(cid, True)
                     else:
                         return
-
-            if 'user_channel_other_stream_playing' in str(response):
-                self.maxDeviceIdMessage()
-
-            if 'user_not_verified_eu' in str(response):
-                self.geoBlockErrorMessage()
 
             if 'hls@live:abr' in response['data']['stream_channel']['streams'][0]['type']:
                 data = response['data']['stream_channel']['streams'][0]['url'][0] + '|user-agent=' + headers['user-agent'] + '&cookie=' + cookies
