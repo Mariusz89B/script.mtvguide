@@ -5380,7 +5380,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
             matchAddon = re.findall('<texture colordiffuse="(.*?)">osd/back.png</texture>', str(line))
         except:
-            None
+            pass
 
         try:
             f = xbmcvfs.File(os.path.join(self.kodiSkinPath, 'colors', 'defaults.xml'), 'r')
@@ -5407,7 +5407,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
             matchAddon = re.findall('<texture colordiffuse="(.*?)">tvguide-timebar.png</texture>', str(line))
         except:
-            None
+            pass
 
         try:
             f = xbmcvfs.File(os.path.join(self.kodiSkinPath, 'colors', 'defaults.xml'), 'r')
@@ -5466,6 +5466,11 @@ class mTVGuide(xbmcgui.WindowXML):
             self.infoDialog.close()
 
         self._showControl(self.C_MAIN_EPG)
+
+        loading = self.getControl(self.C_MAIN_LOADING)
+
+        if self.timebarBack is None and not loading:
+            self.onTimebar(scheduleTimer=False)
 
         # remove existing controls
         self._clearEpg()
@@ -5591,12 +5596,13 @@ class mTVGuide(xbmcgui.WindowXML):
             focusControl = self._findControlAt(self.focusPoint)
         controls = [elem.control for elem in self.controlAndProgramList]
         self.addControls(controls)
-        self.onTimebar(scheduleTimer=False)
         if focusControl is not None:
             self.setFocus(focusControl)
         self.ignoreMissingControlIds.extend([elem.control.getId() for elem in self.controlAndProgramList])
         if focusControl is None and len(self.controlAndProgramList) > 0:
             self.setFocus(self.controlAndProgramList[0].control)
+
+        self.onTimebar(scheduleTimer=True)
 
         self._showControl(self.C_MAIN_LOADING_BACKGROUND)
         self._hideControl(self.C_MAIN_LOADING)

@@ -94,42 +94,6 @@ else:
 sess = requests.Session()
 timeouts = (15, 30)
 
-def sendRequest(url, post=False, json=False, headers=None, data=None, params=None, cookies=None, verify=False, allow_redirects=False, timeout=None):
-    try:
-        if post:
-            response = sess.post(url, headers=headers, data=data, params=params, cookies=cookies, verify=verify, allow_redirects=allow_redirects, timeout=timeout)
-        else:
-            response = sess.get(url, headers=headers, data=data, params=params, cookies=cookies, verify=verify, allow_redirects=allow_redirects, timeout=timeout)
-
-    except HTTPError as e:
-        deb('HTTPError: {}'.format(str(e)))
-        self.connErrorMessage()
-        response = False
-
-    except ConnectionError as e:
-        deb('ConnectionError: {}'.format(str(e)))
-        self.connErrorMessage()
-        response = False
-
-    except Timeout as e:
-        deb('Timeout: {}'.format(str(e))) 
-        self.connErrorMessage()
-        response = False
-
-    except RequestException as e:
-        deb('RequestException: {}'.format(str(e))) 
-        self.connErrorMessage()
-        response = False
-
-    except:
-        self.connErrorMessage()
-        response = False
-
-    if json:
-        return response.json()
-    else:
-        return response
-
 class Threading(object):
     def __init__(self):
         self.thread = threading.Thread(target=self.run, args=())
@@ -180,6 +144,43 @@ class TeliaPlayUpdater(baseServiceUpdater):
         self.cookies            = ADDON.getSetting('teliaplay_cookies')
         self.usern              = ADDON.getSetting('teliaplay_usern')
         self.subtoken           = ADDON.getSetting('teliaplay_subtoken')
+
+
+    def sendRequest(self, url, post=False, json=False, headers=None, data=None, params=None, cookies=None, verify=False, allow_redirects=False, timeout=None):
+        try:
+            if post:
+                response = sess.post(url, headers=headers, data=data, params=params, cookies=cookies, verify=verify, allow_redirects=allow_redirects, timeout=timeout)
+            else:
+                response = sess.get(url, headers=headers, data=data, params=params, cookies=cookies, verify=verify, allow_redirects=allow_redirects, timeout=timeout)
+
+        except HTTPError as e:
+            deb('HTTPError: {}'.format(str(e)))
+            self.connErrorMessage()
+            response = False
+
+        except ConnectionError as e:
+            deb('ConnectionError: {}'.format(str(e)))
+            self.connErrorMessage()
+            response = False
+
+        except Timeout as e:
+            deb('Timeout: {}'.format(str(e))) 
+            self.connErrorMessage()
+            response = False
+
+        except RequestException as e:
+            deb('RequestException: {}'.format(str(e))) 
+            self.connErrorMessage()
+            response = False
+
+        except:
+            self.connErrorMessage()
+            response = False
+
+        if json:
+            return response.json()
+        else:
+            return response
 
 
     def createData(self):
@@ -237,7 +238,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 'Accept-Language': 'en-US,en;q=0.9',
             }
 
-            response = sendRequest(url, post=True, headers=headers, data=json.dumps(data), verify=False, timeout=timeouts)
+            response = self.sendRequest(url, post=True, headers=headers, data=json.dumps(data), verify=False, timeout=timeouts)
             if not response:
                 return False
 
@@ -265,7 +266,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 "deviceType": "WEB",
             }
             
-            response = sendRequest(url, post=True, json=True, headers=headers, data=json.dumps(data), verify=False, timeout=timeouts)
+            response = self.sendRequest(url, post=True, json=True, headers=headers, data=json.dumps(data), verify=False, timeout=timeouts)
             if not response:
                 return False
 
@@ -318,7 +319,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 "platformVersion": "NT 6.1"
             }
 
-            response = sendRequest(url, post=True, json=False, headers=headers, data=json.dumps(data), verify=False, timeout=timeouts)
+            response = self.sendRequest(url, post=True, json=False, headers=headers, data=json.dumps(data), verify=False, timeout=timeouts)
 
             try:
                 response = response.json()
@@ -350,7 +351,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                     'tv-client-boot-id': self.tv_client_boot_id,
                 }
 
-            response = sendRequest(url, json=True, headers=headers, cookies=sess.cookies, allow_redirects=False, timeout=timeouts)
+            response = self.sendRequest(url, json=True, headers=headers, cookies=sess.cookies, allow_redirects=False, timeout=timeouts)
 
             self.usern = response['channels']['engagement']
             ADDON.setSetting('teliaplay_usern', str(self.usern))
@@ -491,7 +492,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 "Authorization": "Bearer " + self.beartoken,
             }
             
-            engagementjson = sendRequest(url, json=True, headers=headers, verify=False)
+            engagementjson = self.sendRequest(url, json=True, headers=headers, verify=False)
             if not engagementjson:
                 return result
 
@@ -520,7 +521,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
 
             }
 
-            channels = sendRequest(url, json=True, headers=headers, verify=False) 
+            channels = self.sendRequest(url, json=True, headers=headers, verify=False) 
             if not channels:
                 return result
 
@@ -592,7 +593,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 ('sessionId', six.text_type(uuid.uuid4())),
             )
 
-            response = sendRequest(url, post=True, json=True, headers=headers, params=params, cookies=sess.cookies, verify=False, timeout=timeouts)
+            response = self.sendRequest(url, post=True, json=True, headers=headers, params=params, cookies=sess.cookies, verify=False, timeout=timeouts)
             if not response:
                 data = None
                 return data 
@@ -645,7 +646,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 'User-Agent': UA,
             }
 
-            mpdurl_re = sendRequest(mpdurl, json=True, headers=xheaders, verify=False)
+            mpdurl_re = self.sendRequest(mpdurl, json=True, headers=xheaders, verify=False)
             if not mpdurl_re:
                 data = None
                 return data 

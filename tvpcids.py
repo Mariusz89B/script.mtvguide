@@ -80,42 +80,6 @@ else:
 sess = requests.Session()
 timeouts = (15, 30)
 
-def sendRequest(url, post=False, json=False, headers=None, data=None, params=None, cookies=None, verify=False, allow_redirects=False, timeout=None):
-    try:
-        if post:
-            response = sess.post(url, headers=headers, data=data, params=params, cookies=cookies, verify=verify, allow_redirects=allow_redirects, timeout=timeout)
-        else:
-            response = sess.get(url, headers=headers, data=data, params=params, cookies=cookies, verify=verify, allow_redirects=allow_redirects, timeout=timeout)
-
-    except HTTPError as e:
-        deb('HTTPError: {}'.format(str(e)))
-        self.connErrorMessage()
-        response = False
-
-    except ConnectionError as e:
-        deb('ConnectionError: {}'.format(str(e)))
-        self.connErrorMessage()
-        response = False
-
-    except Timeout as e:
-        deb('Timeout: {}'.format(str(e))) 
-        self.connErrorMessage()
-        response = False
-
-    except RequestException as e:
-        deb('RequestException: {}'.format(str(e))) 
-        self.connErrorMessage()
-        response = False
-
-    except:
-        self.connErrorMessage()
-        response = False
-
-    if json:
-        return response.json()
-    else:
-        return response
-
 class TvpUpdater(baseServiceUpdater):
     def __init__(self):
         self.serviceName        = serviceName
@@ -125,8 +89,44 @@ class TvpUpdater(baseServiceUpdater):
         self.servicePriority    = int(ADDON.getSetting('priority_tvp'))
         self.url = url
 
+    def sendRequest(self, url, post=False, json=False, headers=None, data=None, params=None, cookies=None, verify=False, allow_redirects=False, timeout=None):
+        try:
+            if post:
+                response = sess.post(url, headers=headers, data=data, params=params, cookies=cookies, verify=verify, allow_redirects=allow_redirects, timeout=timeout)
+            else:
+                response = sess.get(url, headers=headers, data=data, params=params, cookies=cookies, verify=verify, allow_redirects=allow_redirects, timeout=timeout)
+
+        except HTTPError as e:
+            deb('HTTPError: {}'.format(str(e)))
+            self.connErrorMessage()
+            response = False
+
+        except ConnectionError as e:
+            deb('ConnectionError: {}'.format(str(e)))
+            self.connErrorMessage()
+            response = False
+
+        except Timeout as e:
+            deb('Timeout: {}'.format(str(e))) 
+            self.connErrorMessage()
+            response = False
+
+        except RequestException as e:
+            deb('RequestException: {}'.format(str(e))) 
+            self.connErrorMessage()
+            response = False
+
+        except:
+            self.connErrorMessage()
+            response = False
+
+        if json:
+            return response.json()
+        else:
+            return response
+
     def loginService(self):
-        response = sendRequest(url, headers=headers).status_code
+        response = self.sendRequest(url, headers=headers).status_code
         if response == 200:
             return True
         else:
@@ -143,7 +143,7 @@ class TvpUpdater(baseServiceUpdater):
         self.log('[UPD] %-10s %-35s %-15s %-20s %-35s' % ( '-CID-', '-NAME-', '-GEOBLOCK-', '-ACCESS STATUS-', '-IMG-'))
 
         try:
-            response = sendRequest(url, headers=headers)
+            response = self.sendRequest(url, headers=headers)
 
             channels  = re.findall('data-channel-id="(\d+)".*data-video-id="(\d+)".*data-stationname="(.*?)"', response.text)
             for item in channels:
@@ -184,7 +184,7 @@ class TvpUpdater(baseServiceUpdater):
         timestamp = int(time.time() * 1000)
 
         callback = random.randint(1000, 9999)
-        response = sendRequest('https://tvpstream.vod.tvp.pl/sess/TVPlayer2/api.php?id={cid}&@method=getTvpConfig&@callback=__tp2JSONP{callback}T{time}'.format(cid=chann.cid, callback=callback, time=timestamp), headers=headers)
+        response = self.sendRequest('https://tvpstream.vod.tvp.pl/sess/TVPlayer2/api.php?id={cid}&@method=getTvpConfig&@callback=__tp2JSONP{callback}T{time}'.format(cid=chann.cid, callback=callback, time=timestamp), headers=headers)
 
         response_json = response.text
 
