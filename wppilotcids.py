@@ -273,7 +273,7 @@ class WpPilotUpdater(baseServiceUpdater):
         try:
             cookies = self.readFromDB()
             url = self.videoUrl + cid
-            data = {'format_id': '2', 'device_type': 'android'}
+            data = {'format_id': '2', 'device_type': 'android_tv'}
 
             headers.update({'Cookie': cookies})
             response = requests.get(url, params=data, verify=False, headers=headers, timeout=timeouts).json()
