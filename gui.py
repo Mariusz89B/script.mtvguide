@@ -6041,7 +6041,7 @@ class mTVGuide(xbmcgui.WindowXML):
         except:
             pass
 
-    def updateTimebar(self, scheduleTimer=None):
+    def updateTimebar(self, scheduleTimer=False):
         # debug('updateTimebar')
 
         if xbmc.Player().isPlaying():
