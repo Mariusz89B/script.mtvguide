@@ -1,4 +1,4 @@
-﻿wersja 9.4.4 - 2021-07-25
+﻿wersja 9.4.4 - 2021-07-31
 - poprawka paska postepu czasu
 - dodany nowy serwis Telewizja Polska
 

@@ -307,7 +307,11 @@ class proxydt(datetime.datetime):
     @staticmethod
     def strptime(date_string, format):
         import time
-        return datetime.datetime(*(time.strptime(date_string, format)[0:6]))
+        try:
+            res = datetime.datetime.strptime(date_string, format)
+        except:
+            res = datetime.datetime(*(time.strptime(date_string, format)[0:6]))
+        return res
 
 datetime.proxydt = proxydt
 
@@ -463,7 +467,7 @@ class VideoPlayerStateChange(xbmc.Player):
         deb("################# Playback Stopped")
         self.updatePositionTimerData['stop'] = True
         self.onStateChange("Stopped")
-        ADDON.setSetting('vosd.arg', 'false') 
+        ADDON.setSetting('vosd.arg', 'false')
 
     def updatePosition(self, updatePositionTimerData):
         try:
@@ -3015,13 +3019,19 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                    self.osd.closeOSD()
+                    try:
+                        self.osd.closeOSD()
+                    except:
+                        pass
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
-                self.viewStartDate = programList[index].startDate
-                self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
-                self.focusPoint.y = self.epgView.top
-                self.onRedrawEPG(channelIdx, self.viewStartDate)
+                try:
+                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
+                except:
+                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(0))
+                self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
+                
+                self.onRedrawEPG(channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
 
         elif action == KEY_RECORD:
             if index > -1:
@@ -3031,6 +3041,12 @@ class mTVGuide(xbmcgui.WindowXML):
                     with self.busyDialog():
                         time.sleep(1)
                         self.showListing(programList[index].channel)
+                else:
+                    if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
+                        try:
+                            self.osd.closeOSD()
+                        except:
+                            pass
 
 
         elif action == ACTION_STOP:
@@ -3106,13 +3122,19 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                    self.osd.closeOSD()
+                    try:
+                        self.osd.closeOSD()
+                    except:
+                        pass
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
-                self.viewStartDate = programList[index].startDate
-                self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
-                self.focusPoint.y = self.epgView.top
-                self.onRedrawEPG(channelIdx, self.viewStartDate)
+                try:
+                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
+                except:
+                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(0))
+                self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
+                
+                self.onRedrawEPG(channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
 
         elif action == KEY_RECORD:
             if index > -1:
@@ -3123,7 +3145,10 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.showNow(programList[index].channel)
                 else:
                     if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                        self.osd.closeOSD() 
+                        try:
+                            self.osd.closeOSD()
+                        except:
+                            pass
 
         elif action == ACTION_STOP:
             return
@@ -3198,13 +3223,19 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                    self.osd.closeOSD()
+                    try:
+                        self.osd.closeOSD()
+                    except:
+                        pass
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
-                self.viewStartDate = programList[index].startDate
-                self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
-                self.focusPoint.y = self.epgView.top
-                self.onRedrawEPG(channelIdx, self.viewStartDate)
+                try:
+                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
+                except:
+                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(0))
+                self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
+                
+                self.onRedrawEPG(channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
 
         elif action == KEY_RECORD:
             if index > -1:
@@ -3215,7 +3246,10 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.showNext(programList[index].channel)
                 else:
                     if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                        self.osd.closeOSD()
+                        try:
+                            self.osd.closeOSD()
+                        except:
+                            pass
 
         elif action == ACTION_STOP:
             return
@@ -3377,13 +3411,19 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                    self.osd.closeOSD()
+                    try:
+                        self.osd.closeOSD()
+                    except:
+                        pass
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
-                self.viewStartDate = programList[index].startDate
-                self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
-                self.focusPoint.y = self.epgView.top
-                self.onRedrawEPG(channelIdx, self.viewStartDate)
+                try:
+                    self.viewStartDate = programList[index].startDate + datetime.timedelta(seconds=5, microseconds=000) + datetime.timedelta(minutes=int(timebarAdjust()))
+                except:
+                    self.viewStartDate = programList[index].startDate + datetime.timedelta(seconds=5, microseconds=000) + datetime.timedelta(minutes=int(0))
+                self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
+                
+                self.onRedrawEPG(channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
 
         elif action == KEY_RECORD:
             if index > -1:
@@ -3394,7 +3434,10 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.programSearch(programList[index].channel)
                 else:
                     if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                        self.osd.closeOSD() 
+                        try:
+                            self.osd.closeOSD()
+                        except:
+                            pass
 
         elif action == ACTION_STOP:
             return
@@ -3488,13 +3531,19 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                    self.osd.closeOSD()
+                    try:
+                        self.osd.closeOSD()
+                    except:
+                        pass
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
-                self.viewStartDate = programList[index].startDate
-                self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
-                self.focusPoint.y = self.epgView.top
-                self.onRedrawEPG(channelIdx, self.viewStartDate)
+                try:
+                    self.viewStartDate = programList[index].startDate + datetime.timedelta(seconds=5, microseconds=000) + datetime.timedelta(minutes=int(timebarAdjust()))
+                except:
+                    self.viewStartDate = programList[index].startDate + datetime.timedelta(seconds=5, microseconds=000) + datetime.timedelta(minutes=int(0))
+                self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
+                
+                self.onRedrawEPG(channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
 
         elif action == KEY_RECORD:
             if index > -1:
@@ -3505,7 +3554,10 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.descriptionSearch(programList[index].channel)
                 else:
                     if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                        self.osd.closeOSD() 
+                        try:
+                            self.osd.closeOSD()
+                        except:
+                            pass
 
         elif action == ACTION_STOP:
             return
@@ -3598,13 +3650,19 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                    self.osd.closeOSD()
+                    try:
+                        self.osd.closeOSD()
+                    except:
+                        pass
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
-                self.viewStartDate = programList[index].startDate
-                self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
-                self.focusPoint.y = self.epgView.top
-                self.onRedrawEPG(channelIdx, self.viewStartDate)
+                try:
+                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
+                except:
+                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(0))
+                self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
+                
+                self.onRedrawEPG(channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
 
         elif action == KEY_RECORD:
             if index > -1:
@@ -3615,7 +3673,10 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.categorySearchInput(programList[index].channel)
                 else:
                     if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                        self.osd.closeOSD() 
+                        try:
+                            self.osd.closeOSD()
+                        except:
+                            pass
 
         elif action == ACTION_STOP:
             return
@@ -3683,13 +3744,19 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                    self.osd.closeOSD()
+                    try:
+                        self.osd.closeOSD()
+                    except:
+                        pass
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
-                self.viewStartDate = programList[index].startDate
-                self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
-                self.focusPoint.y = self.epgView.top
-                self.onRedrawEPG(channelIdx, self.viewStartDate)
+                try:
+                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
+                except:
+                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(0))
+                self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
+                
+                self.onRedrawEPG(channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
 
         elif action == KEY_RECORD:
             if index > -1:
@@ -3700,7 +3767,10 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.categorySearch(programList[index].channel)
                 else:
                     if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                        self.osd.closeOSD() 
+                        try:
+                            self.osd.closeOSD()
+                        except:
+                            pass 
 
         elif action == ACTION_STOP:
             return
@@ -3751,13 +3821,19 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                    self.osd.closeOSD()
+                    try:
+                        self.osd.closeOSD()
+                    except:
+                        pass
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
-                self.viewStartDate = programList[index].startDate
-                self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
-                self.focusPoint.y = self.epgView.top
-                self.onRedrawEPG(channelIdx, self.viewStartDate)
+                try:
+                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
+                except:
+                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(0))
+                self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
+                
+                self.onRedrawEPG(channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
 
         elif action == KEY_RECORD:
             if index > -1:
@@ -3768,7 +3844,10 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.channelSearch(programList[index].channel)
                 else:
                     if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                        self.osd.closeOSD() 
+                        try:
+                            self.osd.closeOSD()
+                        except:
+                            pass
 
         elif action == ACTION_STOP:
             return
@@ -3827,13 +3906,19 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                    self.osd.closeOSD()
+                    try:
+                        self.osd.closeOSD()
+                    except:
+                        pass
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
-                self.viewStartDate = programList[index].startDate
-                self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
-                self.focusPoint.y = self.epgView.top
-                self.onRedrawEPG(channelIdx, self.viewStartDate)
+                try:
+                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
+                except:
+                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(0))
+                self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
+                
+                self.onRedrawEPG(channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
 
         elif action == ACTION_SHOW_INFO:
             try:
@@ -3858,7 +3943,10 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.showReminders(programList[index].channel)
                 else:
                     if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                        self.osd.closeOSD() 
+                        try:
+                            self.osd.closeOSD()
+                        except:
+                            pass 
 
         elif action == ACTION_STOP:
             return
@@ -3917,13 +4005,19 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                    self.osd.closeOSD()
+                    try:
+                        self.osd.closeOSD()
+                    except:
+                        pass
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
-                self.viewStartDate = programList[index].startDate
-                self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
-                self.focusPoint.y = self.epgView.top
-                self.onRedrawEPG(channelIdx, self.viewStartDate)
+                try:
+                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
+                except:
+                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(0))
+                self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
+                
+                self.onRedrawEPG(channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
 
         elif action == ACTION_SHOW_INFO:
             try:
@@ -3948,7 +4042,10 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.showFullReminders(programList[index].channel)
                 else:
                     if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                        self.osd.closeOSD() 
+                        try:
+                            self.osd.closeOSD()
+                        except:
+                            pass
 
         elif action == ACTION_STOP:
             return
@@ -4007,13 +4104,19 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                    self.osd.closeOSD()
+                    try:
+                        self.osd.closeOSD()
+                    except:
+                        pass
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
-                self.viewStartDate = programList[index].startDate
-                self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 1, seconds=self.viewStartDate.second)
-                self.focusPoint.y = self.epgView.top
-                self.onRedrawEPG(channelIdx, self.viewStartDate)
+                try:
+                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
+                except:
+                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(0))
+                self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
+                
+                self.onRedrawEPG(channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
 
         elif action == ACTION_SHOW_INFO:
             try:
@@ -4038,7 +4141,10 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.showFullRecordings(programList[index].channel)
                 else:
                     if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                        self.osd.closeOSD() 
+                        try:
+                            self.osd.closeOSD()
+                        except:
+                            pass
 
         elif action == ACTION_STOP:
             return
@@ -5334,14 +5440,23 @@ class mTVGuide(xbmcgui.WindowXML):
         self.mode = MODE_TV
         self._clearEpg()
 
+
     def _showEPG(self):
         deb('_showEpg')
 
         # aktualna godzina!
-        try:
-            self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(timebarAdjust()))
-        except:
-            self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(0))
+        if self.program.endDate < datetime.datetime.today(): 
+            try:
+                self.viewStartDate = self.program.startDate + datetime.timedelta(minutes=int(timebarAdjust()))
+            except:
+                self.viewStartDate = self.program.startDate + datetime.timedelta(minutes=int(0))
+
+        else:
+            try:
+                self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(timebarAdjust()))
+            except:
+                self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(0))
+
         self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
         if self.currentChannel is not None:
             currentChannelIndex = self.database.getCurrentChannelIdx(self.currentChannel)
@@ -5958,7 +6073,10 @@ class mTVGuide(xbmcgui.WindowXML):
     def _getCurrentProgramFocus(self, point=None):
         try:
             if self.currentChannel:
-                program = self.database.getCurrentProgram(self.currentChannel)
+                try:
+                    program = self.program
+                except:
+                    program = self.database.getCurrentProgram(self.currentChannel)
                 if program is not None:
                     for elem in self.controlAndProgramList:
                         if elem.program.channel.id == program.channel.id and elem.program.startDate == program.startDate:
