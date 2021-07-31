@@ -86,7 +86,7 @@ cacheFile = os.path.join(profilePath, 'cache.db')
 
 sess = requests.Session()
 
-timeouts = (30, 60)
+timeouts = (15, 30)
 
 class WpPilotUpdater(baseServiceUpdater):
     def __init__(self):
@@ -97,12 +97,14 @@ class WpPilotUpdater(baseServiceUpdater):
         self.login              = ADDON.getSetting('videostar_username').strip()
         self.password           = ADDON.getSetting('videostar_password').strip()
         self.servicePriority    = int(ADDON.getSetting('priority_videostar'))
+        self.netviapisessid     = ADDON.getSetting('videostar_netviapisessid')
+        self.netviapisessval    = ADDON.getSetting('videostar_netviapisessval')
         self.url                = wpUrl
         self.videoUrl           = wpVideoUrl
         self.closeUrl           = wpCloseUrl
         self.addDuplicatesToList = True
         self.acc                = None
-
+        
     def saveToDB(self, table_name, value):
         import sqlite3
         import os
@@ -141,11 +143,14 @@ class WpPilotUpdater(baseServiceUpdater):
             if len(self.password) > 0 and len(self.login) > 0:
                 try:
                     cookies = self.readFromDB()
+                    headers.update({'Cookie': cookies})
                 except:
-                    cookies = None
-                headers.update({'Cookie': cookies})
+                    cookies = {
+                        'netviapisessid': self.netviapisessid,
+                        'netviapisessval': self.netviapisessval
+                    }
 
-                account = requests.get('https://pilot.wp.pl/api/v1/user', verify=False, headers=headers, timeout=timeouts).json()
+                account = requests.get('https://pilot.wp.pl/api/v1/user', verify=False, headers=headers, cookies=cookies, timeout=timeouts).json()
 
                 try:
                     if not self.login == account['data']['login']:

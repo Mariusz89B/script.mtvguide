@@ -89,7 +89,7 @@ stoken = ADDON.getSetting('cpgo_sesstoken')
 sexpir = ADDON.getSetting('cpgo_sessexpir')
 skey = ADDON.getSetting('cpgo_sesskey')
 
-timeouts = (30, 60)
+timeouts = (15, 30)
 
 class PolsatGoUpdater(baseServiceUpdater):
     def __init__(self):

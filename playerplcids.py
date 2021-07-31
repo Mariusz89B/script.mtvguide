@@ -79,7 +79,7 @@ else:
 
 sess = requests.Session()
 
-timeouts = (30, 60)
+timeouts = (15, 30)
 
 class PlayerPLUpdater(baseServiceUpdater):
     def __init__(self):

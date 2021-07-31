@@ -299,87 +299,76 @@ class PlaylistUpdater(baseServiceUpdater):
 
             #regexReplaceList.append( re.compile('[^A-Za-z0-9+/:]+',                                                re.IGNORECASE) )
             regexReplaceList.append( re.compile('[^A-Za-zÀ-ȕ0-9+/:]+',                                                re.IGNORECASE) )
+
             regexReplaceList.append( re.compile('\sL\s',                                                           re.IGNORECASE) )
             regexReplaceList.append( re.compile('(\s|^)(FEED|EUROPE|ADULT:|EXTRA:|VIP:|VIP|AUDIO|L1|B|BACKUP|MULTI|SUB|SUBTITLE(S)?|NAPISY|VIASAT:|XXX|XXX:|\d{1,2}\s*FPS|LIVE\s*DURING\s*EVENTS\s*ONLY)(?=\s|$)',  re.IGNORECASE) )
             regexReplaceList.append( re.compile('(\s|^)(FULL|SD|LQ|HQ|RAW|LOW|HIGH|QUALITY)(?=\s|$)',  re.IGNORECASE) )
 
             langReplaceList = list()
             regexRemoveList = list()
+            regexAddList = list()
+            prefixList = list()
 
-            #langReplaceList.append({ 'regex' : re.compile('(\s|^)(pl/en|Polska|Poland|PL:?)(?=\s|$)|^(PL:)', re.IGNORECASE), 'lang' : 'PL'})
-            #if ADDON.getSetting('show_group_channels') == 'false':
-            regexRemoveList.append( re.compile('(\s|^)(L\s*)?(AE:?|AF:?|AFG:?|AFR:?|AL:?|ALB:?|AO:?|AU:?|AR:?|ARB:?|ARG:?|AT:?|AZ:?|BE:?|BD:?|BF:?|BG:?|BIH:?|BJ:?|BR:?|CAR:?|CG:?|CH:?|CM:?|CN:?|CY:?|DZ:?|EE:?|EG:?|EN:?|ES:?|EXYU:?|FI:?|GA:?|GH:?|GN:?|GR:?|HN:?|HU:?|IL:?|IN:?|IQ:?|IR:?|IS:?|JO:?|JP:?|KE:?|KRD:?|KOR:?|KU:?|KW:?|LAM:?|LATINO:?|LB:?|LE:?|LT:?|LU:?|LY:?|MA:?|MK:?|ML:?|MN:?|MT:?|MY:?|MX:?|NG:?|OM:?|PH:?|PK:?|PT:?|QA:?|RO:?|RO/HU:?|RU:?|RUS:?|SA:?|SAC:?|SC:?|SG:?|SI:?|SL:?|SN:?|SO:?|SY:?|TD:?|TH:?|TN:?|TR:?|UA:?|VN:?|YE:?|ZA|24/7:?:?|S\d+\sE\d+|19\d\d|20\d\d|S\s*\d\d\s*E\s*\d\d)(?=\s|$)', re.IGNORECASE) )
-            regexRemoveList.append( re.compile('(\s|^)(L\s*)?(Afghanistan:?|Africa:?|Albania:?|Algeria:?|America:?|Andorra:?|Angola:?|Antigua\sand\sBarbuda:?|Arab\sCountries:?|Argentina:?|Armenia:?|Asia:?|Australia:?|Austria:?|Azerbaijan:?|Bahamas:?|Bahrain:?|Bangladesh:?|Barbados:?|Belarus:?|Belize:?|Benin:?|Bhutan:?|Bolivia:?|Botswana:?|Brazil:?|Brunei:?|Bulgaria:?|Burkina\sFaso:?|Burma:?|Burundi:?|Cabo\sVerde:?|Cambodia:?|Cameroon:?|Canada:?|Central\sAfrican\sRepublic:?|Chad:?|Chile:?|China:?|Colombia:?|Comoros:?|Congo:?|Costa\sRica:?|Cote\sd\sIvoire:?|Cuba:?|Cyprus:?|Djibouti:?|Dominica:?|Dominican\sRepublic:?|Ecuador:?|Egypt:?|El\sSalvador:?|Equatorial\sGuinea:?|Eritrea:?|Estonia:?|Eswatini:?|Ethiopia:?|Fiji:?|Finland:?|Gabon:?|Gambia:?|Georgia:?|Ghana:?|Greece:?|Grenada:?|Guatemala:?|Guinea:?|Guinea-Bissau:?|Guyana:?|Haiti:?|Honduras:?|Hungary:?|Iceland:?|India:?|Indonesia:?|Iran:?|Iraq:?|Ireland:?|Israel:?|Jamaica:?|Japan:?|Jordan:?|Kazakhstan:?|Kenya:?|Kiribati:?|Korea:?|Kosovo:?|Kurdistan:?|Kuwait:?|Kyrgyzstan:?|Laos:?|Latvia:?|Lebanon:?|Lesotho:?|Liberia:?|Libya:?|Liechtenstein:?|Lithuania:?|Madagascar:?|Malawi:?|Malaysia:?|Maldives:?|Mali:?|Malta:?|Marshall\sIslands:?|Mauritania:?|Mauritius:?|Micronesia:?|Moldova:?|Monaco:?|Mongolia:?|Morocco:?|Mozambique:?|Myanmar:?|Namibia:?|Nauru:?|Nepal:?|New\sZealand:?|Nicaragua:?|Niger:?|Nigeria:?|North\sKorea:?|Oman:?|Pakistan:?|Palau:?|Palestine:?|Panama:?|Papua\sNew\sGuinea:?|Paraguay:?|Peru:?|Philippines:?|Portugal:?|Qatar:?|Romania:?|Russia:?|Rwanda:?|Saint\sKitts\sand\sNevis:?|Saint\sLucia:?|Saint\sVincent\sand\sthe\sGrenadines:?|Samoa:?|San\sMarino:?|Sao\sTome\sand\sPrincipe:?|Saudi\sArabia:?|Senegal:?|Seychelles:?|Sierra\sLeone:?|Singapore:?|Slovakia:?|Solomon\sIslands:?|Somalia:?|South\sAfrica:?|South\sKorea:?|South\sSudan:?|Spain:?|Sri\sLanka:?|Sudan:?|Suriname:?|Swaziland:?|Switzerland:?|Syria:?|Taiwan:?|Tajikistan:?|Tanzania:?|Thailand:?|Timor\sLeste:?|Togo:?|Tonga:?|Trinidad\sand\sTobago:?|Tunisia:?|Turkey:?|Turkmenistan:?|Tuvalu:?|Uganda:?|Ukraine:?|United\sArab\sEmirates:?|Uruguay:?|Uzbekistan:?|Vanuatu:?|Vatican\sCity:?|Venezuela:?|Vietnam:?|Viet\sNam:?|Yemen:?|Zambia:?|Zimbabwe)(?=\s|$)', re.IGNORECASE) )
+            regexRemoveList.append( re.compile('(\s|^)(L\s*)?(24/7:?:?|19\d\d|20\d\d|S\s*\d{1,3}\s*E\s*\d{1,4})(?=\s|$)', re.IGNORECASE) )
 
             if ADDON.getSetting('country_code_be') == 'true':
                 langReplaceList.append({ 'regex' : re.compile('(\s|^)(BE:?|NL:?|HEVC:?)(?=\s|$)|^(BE:|NL:)', re.IGNORECASE), 'lang' : 'BE'})
-            else:
-                regexRemoveList.append( re.compile('(\s|^)(L\s*)?(BE:?|NL:?|HEVC:?|Belgium:?|Netherland:?|Luxemburg:?)(?=\s|$)', re.IGNORECASE) )
+                prefixList.append('BE:?|NL:?|BEL:?|NED:?|BELGIQUE:?|BELGIUM:?')
 
             if ADDON.getSetting('country_code_cz') == 'true':
                 langReplaceList.append({ 'regex' : re.compile('(\s|^)(CZ:?)(?=\s|$)|^(CZ:)', re.IGNORECASE), 'lang' : 'CZ'})
-            if ADDON.getSetting('country_code_cz') == 'false':
-                regexRemoveList.append( re.compile('(\s|^)(L\s*)?(CZ:?|Czech:?)(?=\s|$)', re.IGNORECASE) )
+                prefixList.append('CZ:?|CZE:?|CESKO:?|CZECH:?')
 
             if ADDON.getSetting('country_code_hr') == 'true':
                 langReplaceList.append({ 'regex' : re.compile('(\s|^)(CRO:?|HR:?|HRV:?|Yu:?)(?=\s|$)|^(CRO:|HR:|HRV:|Yu:)', re.IGNORECASE), 'lang' : 'HR'})
-            if ADDON.getSetting('country_code_hr') == 'false':
-                regexRemoveList.append( re.compile('(\s|^)(L\s*)?(CRO:?|HR:?|HRV:?|Yu:?|Hrvatska:?|Slovenia:?)(?=\s|$)', re.IGNORECASE) )
+                prefixList.append('HR:?|HRV:?|CRO:?|HRVATSKA:?|CROATIA:?')
 
             if ADDON.getSetting('country_code_dk') == 'true':
                 langReplaceList.append({ 'regex' : re.compile('(\s|^)(DK:?)(?=\s|$)|^(DK:)', re.IGNORECASE), 'lang' : 'DK'})
-            if ADDON.getSetting('country_code_dk') == 'false':
-                regexRemoveList.append( re.compile('(\s|^)(L\s*)?(DK:?|Denmark:?)(?=\s|$)', re.IGNORECASE) )
+                prefixList.append('DK:?|DEN:?|DANMARK:?|DENMARK:?')
 
             if ADDON.getSetting('country_code_uk') == 'true':
                 langReplaceList.append({ 'regex' : re.compile('(\s|^)(UK:?|ENG:?)(?=\s|$)|^(UK:|ENG:)', re.IGNORECASE), 'lang' : 'UK'})
-            if ADDON.getSetting('country_code_uk') == 'false':
-                regexRemoveList.append( re.compile('(\s|^)(L\s*)?(UK:?|ENG:?|United\sKingdom:?|Great\sBritain:?)(?=\s|$)', re.IGNORECASE) )
+                prefixList.append('UK:?|GB:?|ENG:?|ENGLAND:?')
 
             if ADDON.getSetting('country_code_fr') == 'true':
                 langReplaceList.append({ 'regex' : re.compile('(\s|^)(FR:?)(?=\s|$)|^(FR:)', re.IGNORECASE), 'lang' : 'FR'})
-            if ADDON.getSetting('country_code_fr') == 'false':
-                regexRemoveList.append( re.compile('(\s|^)(L\s*)?(FR:?|France:?)(?=\s|$)', re.IGNORECASE) )
+                prefixList.append('FR:?|FRA:?|FRANCE:?')
 
             if ADDON.getSetting('country_code_de') == 'true':
                 langReplaceList.append({ 'regex' : re.compile('(\s|^)(DE:?)(?=\s|$)|^(DE:)', re.IGNORECASE), 'lang' : 'DE'})
-            if ADDON.getSetting('country_code_de') == 'false':
-                regexRemoveList.append( re.compile('(\s|^)(L\s*)?(DE:?|Germany:?)(?=\s|$)', re.IGNORECASE) )
+                prefixList.append('DE:?|DEU:?|DEUTSCHLAND:?|GERMANY:?')
 
             if ADDON.getSetting('country_code_it') == 'true':
                 langReplaceList.append({ 'regex' : re.compile('(\s|^)(IT:?)(?=\s|$)|^(IT:)', re.IGNORECASE), 'lang' : 'IT'})
-            if ADDON.getSetting('country_code_it') == 'false':
-                regexRemoveList.append( re.compile('(\s|^)(L\s*)?(IT:?|Ital(y|ia):?)(?=\s|$)', re.IGNORECASE) )
+                prefixList.append('IT:?|ITA:?|ITALIA:?|ITALY:?')
 
             if ADDON.getSetting('country_code_pl') == 'true':
                 langReplaceList.append({ 'regex' : re.compile('(\s|^)(PL:?|pl/en|Polska|Poland)(?=\s|$)|^(PL:)', re.IGNORECASE), 'lang' : 'PL'})
-            if ADDON.getSetting('country_code_pl') == 'false':
-                regexRemoveList.append( re.compile('(\s|^)(L\s*)?(PL:?|pl/en|Polska:?|Poland:?)(?=\s|$)', re.IGNORECASE) )
+                prefixList.append('PL:?|POL:?|POLSKA:?|POLAND:?')
 
             if ADDON.getSetting('country_code_no') == 'true':
                 langReplaceList.append({ 'regex' : re.compile('(\s|^)(NO:?)(?=\s|$)|^(NO:)', re.IGNORECASE), 'lang' : 'NO'})
-            if ADDON.getSetting('country_code_no') == 'false':
-                regexRemoveList.append( re.compile('(\s|^)(L\s*)?(NO:?|Norway:?)(?=\s|$)', re.IGNORECASE) )
+                prefixList.append('NO:?|NOR:?|NORGE:?|NORWAY:?')
 
             if ADDON.getSetting('country_code_srb') == 'true':
                 langReplaceList.append({ 'regex' : re.compile('(\s|^)(BH:?|SRB:?|SLO:?|RS:?|SR:?|Yu:?)(?=\s|$)|^(SRB:|SLO:|RS:?|SR:|Yu:)', re.IGNORECASE), 'lang' : 'SRB'})
-            if ADDON.getSetting('country_code_srb') == 'false':
-                regexRemoveList.append( re.compile('(\s|^)(L\s*)?(BH:?|SRB:?|SLO:?|SR:?|RS:?|Yu:|Srbija:?|Crna\sGora:?|Macedonia:?)(?=\s|$)', re.IGNORECASE) )
+                prefixList.append('RS:?|BH:?|SR:?|SLO:?|SRB:?|SRBIJA:?|SERBIA:?|Yu:?')
 
             if ADDON.getSetting('country_code_se') == 'true':
                 langReplaceList.append({ 'regex' : re.compile('(\s|^)(SE:?|SW:?|Sweden:?|Sverige:?|Scandinavia:?|Nordic:?)(?=\s|$)|^(SE:|SW:|Sweden:|Sverige:|Scandinavia:|Nordic:)', re.IGNORECASE), 'lang' : 'SE'})
-            if ADDON.getSetting('country_code_se') == 'false':
-                regexRemoveList.append( re.compile('(\s|^)(L\s*)?(SE:?|SW:?|Sweden:?|Sverige:?)(?=\s|$)', re.IGNORECASE) )
+                prefixList.append('SE:?|SWE:?|SVERIGE:?|SWEDEN:?')
 
             if ADDON.getSetting('country_code_us') == 'true':
-                langReplaceList.append({ 'regex' : re.compile('(\s|^)(Chicago:?|AM:?|CA:?|US:?|USA:?)(?=\s|$)|^(Chicago:?|AM:|CA:?|US:|USA:)', re.IGNORECASE), 'lang' : 'US'})
-            if ADDON.getSetting('country_code_us') == 'false':
-                regexRemoveList.append( re.compile('(\s|^)(L\s*)?(AM:?|CA:?|USA:?|US:?|(Latin\s)?America:?|United\sStates:?)(?=\s|$)', re.IGNORECASE) )
+                langReplaceList.append({ 'regex' : re.compile('(\s|^)(AM:?|CA:?|US:?|USA:?)(?=\s|$)|^(AM:|CA:?|US:|USA:)', re.IGNORECASE), 'lang' : 'US'})
+                prefixList.append('US:?|AM:?|CA:?|CAN:?|USA:?|CANADA:?|AMERICA:?')
 
             if ADDON.getSetting('country_code_radio') == 'true':
                 langReplaceList.append({ 'regex' : re.compile('(\s|^)(Radio:?)(?=\s|$)|^(Radio:)', re.IGNORECASE), 'lang' : 'Radio'})
-            if ADDON.getSetting('country_code_radio') == 'false':
-                regexRemoveList.append( re.compile('(\s|^)(L\s*)?(Radio:?)(?=\s|$)', re.IGNORECASE) )
+                prefixList.append('RADIO:?')
+
+            prefix = '|'.join(map(str, prefixList))
+            regexAddList.append( re.compile('(\s|^)(L\s*)?({prefix})(?=\s|$)'.format(prefix=prefix), re.IGNORECASE) )
 
 
             regexHD            =     re.compile('(\s|^)(720p|720|FHD|1080p|1080|HD\sHD|HD)(?=\s|$)',                              re.IGNORECASE)
@@ -447,24 +436,10 @@ class PlaylistUpdater(baseServiceUpdater):
 
                             title = self.removeDuplicates(title)
 
-                            for langReplaceMap in langReplaceList:
-                                title, match = langReplaceMap['regex'].subn('', title)
-                                if match > 0:
-                                    title += ' ' + langReplaceMap['lang']
-
-                            for regexRemove in regexRemoveList:
-                                if( regexRemove.search(title) ):
-                                    title = ''
-
-                            title = title.replace('  ', ' ').strip()
-                                
-
-                    elif title is not None and regexCorrectStream.match(stripLine):
-                        if title != '':
                             p = re.compile(r'.*\s[a-zA-Z]{2,3}$', re.DOTALL)
 
                             if not p.match(title):
-                                langAList = ['Belgium', 'Czech', 'Germany', 'Danmark', 'France', 'Croatia', 'Italy', 'Norway', 'Poland', 'Sweden', 'EX-Yu', 'United Kingdom', 'USA'] 
+                                langAList = ['Belgium', 'Czech', 'Germany', 'Danmark', 'France', 'Croatia', 'Italy', 'Norway', 'Poland', 'Sweden', 'Ex-Yu', 'United Kingdom', 'USA'] 
                                 langA = '|'.join(langAList)
 
                                 langBList = ['Belgique', 'Cesko', 'Deutschland', 'Danmark', 'France', 'Hrvatska', 'Italia', 'Norge', 'Polska', 'Sverige', 'Serbia', 'Britain', 'America'] 
@@ -473,7 +448,7 @@ class PlaylistUpdater(baseServiceUpdater):
                                 ccList = ['BE', 'CZ', 'DE', 'DK', 'FR', 'HR', 'IT', 'NO', 'PL', 'SE', 'SRB', 'UK', 'US']
                                 langC = '|'.join(ccList)
 
-                                langDList = ['BEL', 'CZE', 'GER', 'DEN', 'FRA', 'HRT', 'ITA', 'NOR', 'POL', 'SWE', 'SRB', 'ENG', 'AME']
+                                langDList = ['BEL', 'CZE', 'GER', 'DEN', 'FRA', 'HRT', 'ITA', 'NOR', 'POL', 'SWE', 'SRB', 'ENG', 'USA']
                                 langD = '|'.join(langDList)
 
                                 langEList = ['.BE', '.CZ', '.DE', '.DK', '.FR', '.HR', '.IT', '.NO', '.PL', '.SE', '.SRB', '.UK', '.US']
@@ -528,6 +503,25 @@ class PlaylistUpdater(baseServiceUpdater):
                                     except:
                                         pass
 
+                            for langReplaceMap in langReplaceList:
+                                title, match = langReplaceMap['regex'].subn('', title)
+                                if match > 0:
+                                    title += ' ' + langReplaceMap['lang']
+
+                            for regexRemove in regexRemoveList:
+                                if( regexRemove.search(title) ):
+                                    title = ''      
+
+                            #if ADDON.getSetting('show_group_channels') == 'false':
+                            for regexAdd in regexAddList:
+                                if not ( regexAdd.search(title) ):
+                                    title = ''                  
+
+                            title = title.replace('  ', ' ').strip()
+                                
+
+                    elif title is not None and regexCorrectStream.match(stripLine):
+                        if title != '':
                             try:
                                 catchupLine
                             except:

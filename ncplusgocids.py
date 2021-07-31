@@ -86,7 +86,7 @@ headers = {
     'Host': 'api-ncplusgo.ncplus.pl',
 }
 
-timeouts = (30, 60)
+timeouts = (15, 30)
 
 class NcPlusGoUpdater(baseServiceUpdater):
     def __init__(self):

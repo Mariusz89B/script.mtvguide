@@ -69,7 +69,6 @@ serviceName         = 'Ipla'
 
 kukz = ''
 
-TIMEOUT = 15
 UAIPLA = "www_iplatv/12345 (Mozilla/5.0 Windows NT 6.1; Win64; x64; rv:84.0 Gecko/20100101 Firefox/84.0)"
 OSINFO = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:84.0) Gecko/20100101 Firefox/84.0"
 
@@ -90,7 +89,7 @@ if sys.version_info[0] > 2:
 else:
     sess.cookies = cookielib.LWPCookieJar(COOKIEFILE)
 
-timeouts = (30, 60)
+timeouts = (15, 30)
 
 class IplaUpdater(baseServiceUpdater):
     def __init__(self):
