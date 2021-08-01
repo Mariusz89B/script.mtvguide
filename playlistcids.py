@@ -512,10 +512,10 @@ class PlaylistUpdater(baseServiceUpdater):
                                 if( regexRemove.search(title) ):
                                     title = ''      
 
-                            #if ADDON.getSetting('show_group_channels') == 'false':
-                            for regexAdd in regexAddList:
-                                if not ( regexAdd.search(title) ):
-                                    title = ''                  
+                            if ADDON.getSetting('show_group_channels') == 'true':
+                                for regexAdd in regexAddList:
+                                    if not ( regexAdd.search(title) ):
+                                        title = ''                  
 
                             title = title.replace('  ', ' ').strip()
                                 

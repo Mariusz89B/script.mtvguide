@@ -936,6 +936,10 @@ msgctxt "#30761"
 msgid "Enable detection of alternative channel names"
 msgstr "Erkennung alternativer Kanalnamen aktivieren"
 
+msgctxt "#30762"
+msgid "Enable only channels in pre-defined groups"
+msgstr "Nur Kanäle in vordefinierten Gruppen aktivieren"
+
 msgctxt "#30802"
 msgid "m-TVGuide is configured to stream using"
 msgstr "Tv guide ist konfiguriert auf stream mit"

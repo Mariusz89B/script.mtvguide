@@ -187,30 +187,31 @@
 		<setting id="AutoUpdateCid" label="30703" type="bool" default="true" visible="eq(-4,0) | eq(-4,1)"/>
 		<setting id="OnlyChannelsWithStream" label="30705" type="bool" default="true" visible="eq(-5,0) | eq(-5,1)"/>
 		<setting id="UpdateEPGOnModifiedDate" label="30706" type="bool" default="true" visible="eq(-6,0) | eq(-6,1)"/>
-		<setting id="epg_display_name" label="30761" type="bool" default="false" visible="eq(-7,0) | eq(-7,1)"/>
-		<setting id="useCustomParser" label="30708" type="bool" default="true" visible="eq(-8,1)"/>
-		<setting id="refresh_streams" label="30976" type="bool" default="true" visible="eq(-9,0) | eq(-9,1)"/>
-		<setting id="show_logo" label="30355" type="bool" default="true" visible="eq(-10,0) | eq(-10,1)"/>
-		<setting id="show_program_logo" label="30364" type="bool" default="true" visible="eq(-11,0) | eq(-11,1)"/>
-		<setting type="sep" visible="eq(-12,0) | eq(-12,1)"/>
-		<setting label="30101" type="lsep" visible="eq(-13,0) | eq(-13,1)"/>
-		<setting type="sep" visible="eq(-14,0) | eq(-14,1)"/>
-		<setting label="30111" type="lsep" visible="eq(-15,0) | eq(-15,1)"/>
-		<setting id="xmltv_file" label="30103" type="file" visible="eq(-16,0)"/>
-		<setting id="xmltv_logo_folder" label="30116" type="folder" visible="eq(-17,0)"/>
-		<setting id="m-TVGuide" label="30118" type="text" visible="eq(-18,1)" default=""/>
-		<setting id="m-TVGuide2" label="30119" type="text" visible="eq(-19,1)" default=""/>
-		<setting id="m-TVGuide3" label="30120" type="text" visible="eq(-20,1)" default=""/>
-		<setting type="sep" visible="eq(-21,0) | eq(-21,1) + eq(-1,false)"/>
-		<setting label="30741" type="lsep" visible="lt(-22,2)"/>
-		<setting id="showAdultChannels" label="30715" action="RunScript($CWD/settingsImportExport.py, Adult)" option="close" type="action" default="" visible="lt(-23,2)"/>
-		<setting label="30746" type="lsep" visible="lt(-24,2)"/>
-		<setting id="showVodChannels" label="30745" action="RunScript($CWD/settingsImportExport.py, Vod)" option="close" type="action" default="" visible="lt(-25,2)"/>
-		<setting type="sep" visible="lt(-26,2)"/>
-		<setting label="30742" type="lsep" visible="lt(-27,2)"/>
-		<setting type="sep" visible="lt(-28,2)"/>
-		<setting label="30365" type="lsep" visible="lt(-29,2)"/>
-		<setting id="time_zone" label="30911" type="labelenum" default="+01:00" values="-12:00|-11:00|-10:00|-09:30|-09:00|-08:00|-07:00|-06:00|-05:00|-04:30|-04:00|-03:30|-03:00|-02:00|-01:00|00:00|+01:00|+02:00|+03:00|+03:30|+04:00|+04:30|+05:00|+05:30|+05:45|+06:00|+06:30|+07:00|+08:00|+09:00|+09:30|+10:00|+10:30|+11:00|+11:30|+12:00|+12:45|+13:00|+14:00|" visible="lt(-30,2)"/>
+		<setting id="show_group_channels" label="30762" type="bool" default="false" visible="eq(-7,0) | eq(-7,1)"/>
+		<setting id="epg_display_name" label="30761" type="bool" default="false" visible="eq(-8,0) | eq(-8,1)"/>
+		<setting id="useCustomParser" label="30708" type="bool" default="true" visible="eq(-9,1)"/>
+		<setting id="refresh_streams" label="30976" type="bool" default="true" visible="eq(-10,0) | eq(-10,1)"/>
+		<setting id="show_logo" label="30355" type="bool" default="true" visible="eq(-11,0) | eq(-11,1)"/>
+		<setting id="show_program_logo" label="30364" type="bool" default="true" visible="eq(-12,0) | eq(-12,1)"/>
+		<setting type="sep" visible="eq(-13,0) | eq(-13,1)"/>
+		<setting label="30101" type="lsep" visible="eq(-14,0) | eq(-14,1)"/>
+		<setting type="sep" visible="eq(-15,0) | eq(-15,1)"/>
+		<setting label="30111" type="lsep" visible="eq(-16,0) | eq(-16,1)"/>
+		<setting id="xmltv_file" label="30103" type="file" visible="eq(-17,0)"/>
+		<setting id="xmltv_logo_folder" label="30116" type="folder" visible="eq(-18,0)"/>
+		<setting id="m-TVGuide" label="30118" type="text" visible="eq(-19,1)" default=""/>
+		<setting id="m-TVGuide2" label="30119" type="text" visible="eq(-20,1)" default=""/>
+		<setting id="m-TVGuide3" label="30120" type="text" visible="eq(-21,1)" default=""/>
+		<setting type="sep" visible="eq(-22,0) | eq(-22,1) + eq(-1,false)"/>
+		<setting label="30741" type="lsep" visible="lt(-23,2)"/>
+		<setting id="showAdultChannels" label="30715" action="RunScript($CWD/settingsImportExport.py, Adult)" option="close" type="action" default="" visible="lt(-24,2)"/>
+		<setting label="30746" type="lsep" visible="lt(-25,2)"/>
+		<setting id="showVodChannels" label="30745" action="RunScript($CWD/settingsImportExport.py, Vod)" option="close" type="action" default="" visible="lt(-26,2)"/>
+		<setting type="sep" visible="lt(-27,2)"/>
+		<setting label="30742" type="lsep" visible="lt(-28,2)"/>
+		<setting type="sep" visible="lt(-29,2)"/>
+		<setting label="30365" type="lsep" visible="lt(-30,2)"/>
+		<setting id="time_zone" label="30911" type="labelenum" default="+01:00" values="-12:00|-11:00|-10:00|-09:30|-09:00|-08:00|-07:00|-06:00|-05:00|-04:30|-04:00|-03:30|-03:00|-02:00|-01:00|00:00|+01:00|+02:00|+03:00|+03:30|+04:00|+04:30|+05:00|+05:30|+05:45|+06:00|+06:30|+07:00|+08:00|+09:00|+09:30|+10:00|+10:30|+11:00|+11:30|+12:00|+12:45|+13:00|+14:00|" visible="lt(-31,2)"/>
 		<setting id="country_code_be" default="false" visible="false"/>
 		<setting id="country_code_cz" default="false" visible="false"/>
 		<setting id="country_code_de" default="false" visible="false"/>

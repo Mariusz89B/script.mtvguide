@@ -936,6 +936,10 @@ msgctxt "#30761"
 msgid "Enable detection of alternative channel names"
 msgstr "Omogućite otkrivanje alternativnih naziva kanala"
 
+msgctxt "#30762"
+msgid "Enable only channels in pre-defined groups"
+msgstr "Omogući samo kanale u unaprijed definiranim grupama"
+
 msgctxt "#30802"
 msgid "m-TVGuide is configured to stream using"
 msgstr "TV vodič konfiguriran je za streaming"
