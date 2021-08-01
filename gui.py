@@ -5444,8 +5444,21 @@ class mTVGuide(xbmcgui.WindowXML):
     def _showEPG(self):
         deb('_showEpg')
 
-        # aktualna godzina!
-        if self.program.endDate < datetime.datetime.today(): 
+        ### current time! ###
+        if self.archivePlaylist != '':
+            archivePlaylist = self.archivePlaylist.split(', ')
+            endDateStamp = int(archivePlaylist[3])
+
+            playlistEndDate = datetime.datetime.fromtimestamp(endDateStamp)
+        else:
+            playlistEndDate = datetime.datetime.today()
+
+        if self.archiveService != '':
+            serviceEndDate = self.archiveService
+        else:
+            serviceEndDate = datetime.datetime.today()
+
+        if playlistEndDate < datetime.datetime.today() or serviceEndDate < datetime.datetime.today():
             try:
                 self.viewStartDate = self.program.startDate + datetime.timedelta(minutes=int(timebarAdjust()))
             except:

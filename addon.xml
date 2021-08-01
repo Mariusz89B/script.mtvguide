@@ -41,8 +41,8 @@
 		<website>http://mods-kodi.pl/</website>
 		<email>support@m-tvguide.pl</email>
 	<news>v9.4.5 (2021-08-01)
-- Increased loading speed for playlist channels groups.
 - Fixed login for service WP Pilot.
+- Added setting to only load pre-defined channel groups, reduced loading for large playlists.
 
 v9.4.4 (2021-07-31)
 - Timebar fixes.

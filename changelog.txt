@@ -1,6 +1,6 @@
 ﻿wersja 9.4.5 - 2021-08-01
-- przyspieszenie ładowania kanałów z grup dla playlisty
 - poprawka logowania w serwisie WP Pilot
+- dodano ustawienie umożliwiające wczytywanie tylko wstępnie zdefiniowanych grup kanałów, zmniejsza czas wczytywania dużych playlist
 
 wersja 9.4.4 - 2021-07-31
 - poprawka paska postepu czasu
