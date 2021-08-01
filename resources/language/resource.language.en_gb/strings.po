@@ -2496,6 +2496,14 @@ msgctxt "#69065"
 msgid "Ongoing recording, record service locked."
 msgstr ""
 
+msgctxt "#69066"
+msgid "Netviapisessid"
+msgstr ""
+
+msgctxt "#69067"
+msgid "Netviapisessval"
+msgstr ""
+
 msgctxt "#70000"
 msgid "Program title"
 msgstr ""

@@ -1,5 +1,6 @@
 ﻿wersja 9.4.5 - 2021-08-01
 - przyspieszenie ładowania kanałów z grup dla playlisty
+- poprawka logowania w serwisie WP Pilot
 
 wersja 9.4.4 - 2021-07-31
 - poprawka paska postepu czasu

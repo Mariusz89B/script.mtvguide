@@ -963,6 +963,36 @@
 						<hidden>true</hidden>
 					</control>
 				</setting>
+				<setting help="" id="videostar_netviapisessid" label="69066" type="string">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="videostar_enabled">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>69066</heading>
+					</control>
+				</setting>
+				<setting help="" id="videostar_netviapisessval" label="69067" type="string">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="videostar_enabled">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>69067</heading>
+					</control>
+				</setting>
 				<setting help="95012" id="priority_videostar" label="55009" type="integer">
 					<level>0</level>
 					<default>6</default>

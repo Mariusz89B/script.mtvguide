@@ -104,6 +104,7 @@ class WpPilotUpdater(baseServiceUpdater):
         self.closeUrl           = wpCloseUrl
         self.addDuplicatesToList = True
         self.acc                = None
+        self.netvia             = None
         
     def saveToDB(self, table_name, value):
         import sqlite3
@@ -140,17 +141,25 @@ class WpPilotUpdater(baseServiceUpdater):
 
     def loginService(self, checked=''):
         try:
+            self.netvia = False
             if len(self.password) > 0 and len(self.login) > 0:
-                try:
-                    cookies = self.readFromDB()
+                cookies = self.readFromDB()
+                if cookies != '': 
                     headers.update({'Cookie': cookies})
-                except:
+                else:
                     cookies = {
                         'netviapisessid': self.netviapisessid,
                         'netviapisessval': self.netviapisessval
                     }
 
-                account = requests.get('https://pilot.wp.pl/api/v1/user', verify=False, headers=headers, cookies=cookies, timeout=timeouts).json()
+                    self.netvia = True
+
+                if self.netvia:
+                    account = requests.get('https://pilot.wp.pl/api/v1/user', verify=False, headers=headers, cookies=cookies, timeout=timeouts).json()
+                    return True
+
+                else:
+                    account = requests.get('https://pilot.wp.pl/api/v1/user', verify=False, headers=headers, timeout=timeouts).json()
 
                 try:
                     if not self.login == account['data']['login']:
@@ -229,16 +238,28 @@ class WpPilotUpdater(baseServiceUpdater):
         self.log('[UPD] %-10s %-35s %-15s %-20s %-35s' % ( '-CID-', '-NAME-', '-GEOBLOCK-', '-ACCESS STATUS-', '-IMG-'))
 
         try:
-            cookies = self.readFromDB()
-            headers.update({'Cookie': cookies})
-            httpdata = requests.get(self.url + '/v1/channels/list?device=androidtv', verify=False, headers=headers, timeout=timeouts).json()
 
-            if httpdata is None:
-                self.log('Error while trying to get channel list, result: {}'.format(str(httpdata)))
-                self.noPremiumMessage()
-                return result
+            if self.netvia:
+                cookies = {
+                    'netviapisessid': self.netviapisessid,
+                    'netviapisessval': self.netviapisessval
+                }
 
-            data = httpdata.get('data', [])
+                response = requests.get(self.url + '/channels/list/android-plus', verify=False, headers=headers, cookies=cookies).json()
+
+                data = response.get('channels', [])
+
+            else:
+                cookies = self.readFromDB()
+                headers.update({'Cookie': cookies})
+                response = requests.get(self.url + '/v1/channels/list?device=androidtv', verify=False, headers=headers, timeout=timeouts).json()
+
+                if response is None:
+                    self.log('Error while trying to get channel list, result: {}'.format(str(response)))
+                    self.noPremiumMessage()
+                    return result
+
+                data = response.get('data', [])
 
             for channel in data:
                 if channel.get('access_status', '') != 'unsubscribed':
@@ -253,7 +274,7 @@ class WpPilotUpdater(baseServiceUpdater):
                         result.append(program)
 
             if len(result) <= 0:
-                self.log('Error while parsing service {}, returned data is: {}'.format(self.serviceName, str(httpdata)))
+                self.log('Error while parsing service {}, returned data is: {}'.format(self.serviceName, str(response)))
 
         except:
             self.log('getChannelList exception: {}'.format(getExceptionString()))
@@ -276,12 +297,21 @@ class WpPilotUpdater(baseServiceUpdater):
         free = self.acc
 
         try:
-            cookies = self.readFromDB()
             url = self.videoUrl + cid
             data = {'format_id': '2', 'device_type': 'android_tv'}
 
-            headers.update({'Cookie': cookies})
-            response = requests.get(url, params=data, verify=False, headers=headers, timeout=timeouts).json()
+            if self.netvia:
+                cookies = {
+                        'netviapisessid': self.netviapisessid,
+                        'netviapisessval': self.netviapisessval
+                    }
+
+                response = requests.get(url, params=data, verify=False, headers=headers, cookies=cookies, timeout=timeouts).json()
+
+            else:
+                cookies = self.readFromDB()
+                headers.update({'Cookie': cookies})
+                response = requests.get(url, params=data, verify=False, headers=headers, timeout=timeouts).json()
 
             if 'user_channel_other_stream_playing' in str(response):
                 self.maxDeviceIdMessage()
@@ -307,10 +337,16 @@ class WpPilotUpdater(baseServiceUpdater):
                     else:
                         return
 
-            if 'hls@live:abr' in response['data']['stream_channel']['streams'][0]['type']:
-                data = response['data']['stream_channel']['streams'][0]['url'][0] + '|user-agent=' + headers['user-agent'] + '&cookie=' + cookies
-            else:
-                data = response['data']['stream_channel']['streams'][1]['url'][0] + '|user-agent=' + headers['user-agent'] + '&cookie=' + cookies
+            if self.netvia:
+                if 'hls@live:abr' in response['data']['stream_channel']['streams'][0]['type']:
+                    data = response['data']['stream_channel']['streams'][0]['url'][0] + '|user-agent=' + headers['user-agent'] + '&cookie=' + self.cookiesToString(cookies)
+                else:
+                    data = response['data']['stream_channel']['streams'][1]['url'][0] + '|user-agent=' + headers['user-agent'] + '&cookie=' + self.cookiesToString(cookies)
+            else:           
+                if 'hls@live:abr' in response['data']['stream_channel']['streams'][0]['type']:
+                    data = response['data']['stream_channel']['streams'][0]['url'][0] + '|user-agent=' + headers['user-agent'] + '&cookie=' + cookies
+                else:
+                    data = response['data']['stream_channel']['streams'][1]['url'][0] + '|user-agent=' + headers['user-agent'] + '&cookie=' + cookies
 
             # Advertisement
             #adList = list()

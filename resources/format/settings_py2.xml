@@ -101,7 +101,9 @@
 		<setting id="videostar_enabled" type="bool" label="59904" default="false"/>
 		<setting id="videostar_username" type="text" label="55002" default="" visible="eq(-1,true)"/>
 		<setting id="videostar_password" type="text" option="hidden" label="55003" default="" visible="eq(-2,true)"/>
-		<setting id="priority_videostar" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-3,true)"/>
+		<setting id="videostar_netviapisessid" type="text" label="69066" default="" visible="eq(-3,true)"/>
+		<setting id="videostar_netviapisessval" type="text" label="69067" default="" visible="eq(-4,true)"/>
+		<setting id="priority_videostar" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-5,true)"/>
 
 	</category>
 	<category label="59905">
