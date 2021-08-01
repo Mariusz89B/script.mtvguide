@@ -312,59 +312,59 @@ class PlaylistUpdater(baseServiceUpdater):
             regexRemoveList.append( re.compile('(\s|^)(L\s*)?(24/7:?:?|19\d\d|20\d\d|S\s*\d{1,3}\s*E\s*\d{1,4})(?=\s|$)', re.IGNORECASE) )
 
             if ADDON.getSetting('country_code_be') == 'true':
-                langReplaceList.append({ 'regex' : re.compile('(\s|^)(BE:?|NL:?|HEVC:?)(?=\s|$)|^(BE:|NL:)', re.IGNORECASE), 'lang' : 'BE'})
-                prefixList.append('BE:?|NL:?|BEL:?|NED:?|BELGIQUE:?|BELGIUM:?')
+                langReplaceList.append({ 'regex' : re.compile('(\s|^)(BE:?|NL:?|BEL:?|NED:?|HEVC:?|BELGIQUE:?|BELGIUM:?)(?=\s|$)|^(BE:|NL:|BEL:|NED:|HEVC:|BELGIQUE:|BELGIUM:)', re.IGNORECASE), 'lang' : 'BE'})
+                prefixList.append('BE:?|NL:?|BEL:?|NED:?|HEVC:?|BELGIQUE:?|BELGIUM:?')
 
             if ADDON.getSetting('country_code_cz') == 'true':
-                langReplaceList.append({ 'regex' : re.compile('(\s|^)(CZ:?)(?=\s|$)|^(CZ:)', re.IGNORECASE), 'lang' : 'CZ'})
+                langReplaceList.append({ 'regex' : re.compile('(\s|^)(CZ:?|CZE:?|CESKO:?|CZECH:?)(?=\s|$)|^(CZ:|CZE:|CESKO:|CZECH:)', re.IGNORECASE), 'lang' : 'CZ'})
                 prefixList.append('CZ:?|CZE:?|CESKO:?|CZECH:?')
 
             if ADDON.getSetting('country_code_hr') == 'true':
-                langReplaceList.append({ 'regex' : re.compile('(\s|^)(CRO:?|HR:?|HRV:?|Yu:?)(?=\s|$)|^(CRO:|HR:|HRV:|Yu:)', re.IGNORECASE), 'lang' : 'HR'})
-                prefixList.append('HR:?|HRV:?|CRO:?|HRVATSKA:?|CROATIA:?')
+                langReplaceList.append({ 'regex' : re.compile('(\s|^)(HR:?|HRV:?|CRO:?|HRVATSKA:?|CROATIA:?|YU:?)(?=\s|$)|^(HR:|HRV:|CRO:|HRVATSKA:|CROATIA:|YU:)', re.IGNORECASE), 'lang' : 'HR'})
+                prefixList.append('HR:?|HRV:?|CRO:?|HRVATSKA:?|CROATIA:?|YU:?')
 
             if ADDON.getSetting('country_code_dk') == 'true':
-                langReplaceList.append({ 'regex' : re.compile('(\s|^)(DK:?)(?=\s|$)|^(DK:)', re.IGNORECASE), 'lang' : 'DK'})
+                langReplaceList.append({ 'regex' : re.compile('(\s|^)(DK:?|DEN:?|DANMARK:?|DENMARK:?)(?=\s|$)|^(DK:|DEN:|DANMARK:|DENMARK:)', re.IGNORECASE), 'lang' : 'DK'})
                 prefixList.append('DK:?|DEN:?|DANMARK:?|DENMARK:?')
 
             if ADDON.getSetting('country_code_uk') == 'true':
-                langReplaceList.append({ 'regex' : re.compile('(\s|^)(UK:?|ENG:?)(?=\s|$)|^(UK:|ENG:)', re.IGNORECASE), 'lang' : 'UK'})
-                prefixList.append('UK:?|GB:?|ENG:?|ENGLAND:?')
+                langReplaceList.append({ 'regex' : re.compile('(\s|^)(UK:?|GB:?|EN:?|ENG:?|GBR:?|ENGLAND:?|GREAT\sBRITAIN:?)(?=\s|$)|^(UK:|GB:|EN:|ENG:|GBR:|ENGLAND:|GREAT\sBRITAIN:)', re.IGNORECASE), 'lang' : 'UK'})
+                prefixList.append('UK:?|GB:?|EN:?|ENG:?|GBR:?|ENGLAND:?|GREAT\sBRITAIN:?')
 
             if ADDON.getSetting('country_code_fr') == 'true':
-                langReplaceList.append({ 'regex' : re.compile('(\s|^)(FR:?)(?=\s|$)|^(FR:)', re.IGNORECASE), 'lang' : 'FR'})
+                langReplaceList.append({ 'regex' : re.compile('(\s|^)(FR:?|FRA:?|FRANCE:?)(?=\s|$)|^(FR:|FRA:|FRANCE:)', re.IGNORECASE), 'lang' : 'FR'})
                 prefixList.append('FR:?|FRA:?|FRANCE:?')
 
             if ADDON.getSetting('country_code_de') == 'true':
-                langReplaceList.append({ 'regex' : re.compile('(\s|^)(DE:?)(?=\s|$)|^(DE:)', re.IGNORECASE), 'lang' : 'DE'})
+                langReplaceList.append({ 'regex' : re.compile('(\s|^)(DE:?|DEU:?|DEUTSCHLAND:?|GERMANY:?)(?=\s|$)|^(DE:|DEU:|DEUTSCHLAND:|GERMANY:)', re.IGNORECASE), 'lang' : 'DE'})
                 prefixList.append('DE:?|DEU:?|DEUTSCHLAND:?|GERMANY:?')
 
             if ADDON.getSetting('country_code_it') == 'true':
-                langReplaceList.append({ 'regex' : re.compile('(\s|^)(IT:?)(?=\s|$)|^(IT:)', re.IGNORECASE), 'lang' : 'IT'})
+                langReplaceList.append({ 'regex' : re.compile('(\s|^)(IT:?|ITA:?|ITALIA:?|ITALY:?)(?=\s|$)|^(IT:|ITA:|ITALIA:|ITALY:)', re.IGNORECASE), 'lang' : 'IT'})
                 prefixList.append('IT:?|ITA:?|ITALIA:?|ITALY:?')
 
             if ADDON.getSetting('country_code_pl') == 'true':
-                langReplaceList.append({ 'regex' : re.compile('(\s|^)(PL:?|pl/en|Polska|Poland)(?=\s|$)|^(PL:)', re.IGNORECASE), 'lang' : 'PL'})
-                prefixList.append('PL:?|POL:?|POLSKA:?|POLAND:?')
+                langReplaceList.append({ 'regex' : re.compile('(\s|^)(PL:?|POL:?|POLSKA:?|POLAND:?|PL/EN:?)(?=\s|$)|^(PL:|POL:|POLSKA:|POLAND:|PL/EN:)', re.IGNORECASE), 'lang' : 'PL'})
+                prefixList.append('PL:?|POL:?|POLSKA:?|POLAND:?|PL/EN:?')
 
             if ADDON.getSetting('country_code_no') == 'true':
-                langReplaceList.append({ 'regex' : re.compile('(\s|^)(NO:?)(?=\s|$)|^(NO:)', re.IGNORECASE), 'lang' : 'NO'})
+                langReplaceList.append({ 'regex' : re.compile('(\s|^)(NO:?|NOR:?|NORGE:?|NORWAY:?)(?=\s|$)|^(NO:|NOR:|NORGE:|NORWAY:)', re.IGNORECASE), 'lang' : 'NO'})
                 prefixList.append('NO:?|NOR:?|NORGE:?|NORWAY:?')
 
             if ADDON.getSetting('country_code_srb') == 'true':
-                langReplaceList.append({ 'regex' : re.compile('(\s|^)(BH:?|SRB:?|SLO:?|RS:?|SR:?|Yu:?)(?=\s|$)|^(SRB:|SLO:|RS:?|SR:|Yu:)', re.IGNORECASE), 'lang' : 'SRB'})
-                prefixList.append('RS:?|BH:?|SR:?|SLO:?|SRB:?|SRBIJA:?|SERBIA:?|Yu:?')
+                langReplaceList.append({ 'regex' : re.compile('(\s|^)(RS:?|BH:?|SR:?|SI:?|SLO:?|SLV:?|SRB:?|SRBIJA:?|SERBIA:?|BOSNIA:?|SLOVENIA:?|YU:?)(?=\s|$)|^(RS:|BH:|SR:|SI:|SLO:|SLV:|SRB:|SRBIJA:|SERBIA:|BOSNIA:|SLOVENIA:|YU:)', re.IGNORECASE), 'lang' : 'SRB'})
+                prefixList.append('RS:?|BH:?|SR:?|SI:?|SLO:?|SLV:?|SRB:?|SRBIJA:?|SERBIA:?|BOSNIA:?|SLOVENIA:?|YU:?')
 
             if ADDON.getSetting('country_code_se') == 'true':
-                langReplaceList.append({ 'regex' : re.compile('(\s|^)(SE:?|SW:?|Sweden:?|Sverige:?|Scandinavia:?|Nordic:?)(?=\s|$)|^(SE:|SW:|Sweden:|Sverige:|Scandinavia:|Nordic:)', re.IGNORECASE), 'lang' : 'SE'})
-                prefixList.append('SE:?|SWE:?|SVERIGE:?|SWEDEN:?')
+                langReplaceList.append({ 'regex' : re.compile('(\s|^)(SE:?|SW:?|SWE:?|SVERIGE:?|SWEDEN:?|NORDIC:?|SCANDINAVIA:?)(?=\s|$)|^(SE:|SW:|SWE:|SVERIGE:|SWEDEN:|NORDIC:|SCANDINAVIA:)', re.IGNORECASE), 'lang' : 'SE'})
+                prefixList.append('SE:?|SW:?|SWE:?|SVERIGE:?|SWEDEN:?|NORDIC:?|SCANDINAVIA:?')
 
             if ADDON.getSetting('country_code_us') == 'true':
-                langReplaceList.append({ 'regex' : re.compile('(\s|^)(AM:?|CA:?|US:?|USA:?)(?=\s|$)|^(AM:|CA:?|US:|USA:)', re.IGNORECASE), 'lang' : 'US'})
+                langReplaceList.append({ 'regex' : re.compile('(\s|^)(US:?|AM:?|CA:?|CAN:?|USA:?|CANADA:?|AMERICA:?)(?=\s|$)|^(US:|AM:|CA:|CAN:|USA:|CANADA:|AMERICA:)', re.IGNORECASE), 'lang' : 'US'})
                 prefixList.append('US:?|AM:?|CA:?|CAN:?|USA:?|CANADA:?|AMERICA:?')
 
             if ADDON.getSetting('country_code_radio') == 'true':
-                langReplaceList.append({ 'regex' : re.compile('(\s|^)(Radio:?)(?=\s|$)|^(Radio:)', re.IGNORECASE), 'lang' : 'Radio'})
+                langReplaceList.append({ 'regex' : re.compile('(\s|^)(RADIO:?)(?=\s|$)|^(RADIO:)', re.IGNORECASE), 'lang' : 'Radio'})
                 prefixList.append('RADIO:?')
 
             prefix = '|'.join(map(str, prefixList))
@@ -436,72 +436,73 @@ class PlaylistUpdater(baseServiceUpdater):
 
                             title = self.removeDuplicates(title)
 
-                            p = re.compile(r'.*\s[a-zA-Z]{2,3}$', re.DOTALL)
+                            if ADDON.getSetting('show_group_channels') == 'false':
+                                p = re.compile(r'.*\s[a-zA-Z]{2,3}$', re.DOTALL)
 
-                            if not p.match(title):
-                                langAList = ['Belgium', 'Czech', 'Germany', 'Danmark', 'France', 'Croatia', 'Italy', 'Norway', 'Poland', 'Sweden', 'Ex-Yu', 'United Kingdom', 'USA'] 
-                                langA = '|'.join(langAList)
+                                if not p.match(title):
+                                    langAList = ['Belgium', 'Czech', 'Germany', 'Danmark', 'France', 'Croatia', 'Italy', 'Norway', 'Poland', 'Sweden', 'Ex-Yu', 'United Kingdom', 'USA'] 
+                                    langA = '|'.join(langAList)
 
-                                langBList = ['Belgique', 'Cesko', 'Deutschland', 'Danmark', 'France', 'Hrvatska', 'Italia', 'Norge', 'Polska', 'Sverige', 'Serbia', 'Britain', 'America'] 
-                                langB = '|'.join(langBList)
+                                    langBList = ['Belgique', 'Cesko', 'Deutschland', 'Danmark', 'France', 'Hrvatska', 'Italia', 'Norge', 'Polska', 'Sverige', 'Serbia', 'Britain', 'America'] 
+                                    langB = '|'.join(langBList)
 
-                                ccList = ['BE', 'CZ', 'DE', 'DK', 'FR', 'HR', 'IT', 'NO', 'PL', 'SE', 'SRB', 'UK', 'US']
-                                langC = '|'.join(ccList)
+                                    ccList = ['BE', 'CZ', 'DE', 'DK', 'FR', 'HR', 'IT', 'NO', 'PL', 'SE', 'SRB', 'UK', 'US']
+                                    langC = '|'.join(ccList)
 
-                                langDList = ['BEL', 'CZE', 'GER', 'DEN', 'FRA', 'HRT', 'ITA', 'NOR', 'POL', 'SWE', 'SRB', 'ENG', 'USA']
-                                langD = '|'.join(langDList)
+                                    langDList = ['BEL', 'CZE', 'GER', 'DEN', 'FRA', 'HRT', 'ITA', 'NOR', 'POL', 'SWE', 'SRB', 'ENG', 'USA']
+                                    langD = '|'.join(langDList)
 
-                                langEList = ['.BE', '.CZ', '.DE', '.DK', '.FR', '.HR', '.IT', '.NO', '.PL', '.SE', '.SRB', '.UK', '.US']
-                                langE = '|'.join(ccList)
+                                    langEList = ['.BE', '.CZ', '.DE', '.DK', '.FR', '.HR', '.IT', '.NO', '.PL', '.SE', '.SRB', '.UK', '.US']
+                                    langE = '|'.join(ccList)
 
-                                ccListInt = len(ccList)
-                                
-                                if any(ccExt not in title for ccExt in ccList):
+                                    ccListInt = len(ccList)
+                                    
+                                    if any(ccExt not in title for ccExt in ccList):
 
-                                    p = re.compile('(?:^|[^a-zA-Z\d])({a}|{b}|{c}|{d})(?:[^a-zA-Z\d]|$)'.format(a=langA, b=langB, c=langC, d=langD), re.IGNORECASE)
+                                        p = re.compile('(?:^|[^a-zA-Z\d])({a}|{b}|{c}|{d})(?:[^a-zA-Z\d]|$)'.format(a=langA, b=langB, c=langC, d=langD), re.IGNORECASE)
 
-                                    try:
-                                        if sys.version_info[0] > 2:
-                                            group = p.search(str(splitedLine[0])).group(1)
-                                        else:
-                                            group = p.search(str(splitedLine[0]).encode('utf-8')).group(1)
+                                        try:
+                                            if sys.version_info[0] > 2:
+                                                group = p.search(str(splitedLine[0])).group(1)
+                                            else:
+                                                group = p.search(str(splitedLine[0]).encode('utf-8')).group(1)
 
-                                        if group:
-                                            for item in range(ccListInt):
-                                                if group.upper() == langAList[item].upper():
-                                                    subsLangA = {langAList[item]: ccList[item]}
-                                                    cc = ccList[subsLangA.get(item, item)]
-                                                    ccCh = cc
+                                            if group:
+                                                for item in range(ccListInt):
+                                                    if group.upper() == langAList[item].upper():
+                                                        subsLangA = {langAList[item]: ccList[item]}
+                                                        cc = ccList[subsLangA.get(item, item)]
+                                                        ccCh = cc
 
-                                                elif group.upper() == langBList[item].upper():        
-                                                    subsLangB = {langBList[item]: ccList[item]}
-                                                    cc = ccList[subsLangB.get(item, item)]
-                                                    ccCh = cc
+                                                    elif group.upper() == langBList[item].upper():        
+                                                        subsLangB = {langBList[item]: ccList[item]}
+                                                        cc = ccList[subsLangB.get(item, item)]
+                                                        ccCh = cc
 
-                                                elif group.upper() == ccList[item].upper():
-                                                    subsLangC = {ccList[item]: ccList[item]}
-                                                    cc = ccList[subsLangC.get(item, item)]
-                                                    ccCh = cc
+                                                    elif group.upper() == ccList[item].upper():
+                                                        subsLangC = {ccList[item]: ccList[item]}
+                                                        cc = ccList[subsLangC.get(item, item)]
+                                                        ccCh = cc
 
-                                                elif group.upper() == langDList[item].upper():
-                                                    subsLangD = {langDList[item]: ccList[item]}
-                                                    cc = ccList[subsLangD.get(item, item)]
-                                                    ccCh = cc
+                                                    elif group.upper() == langDList[item].upper():
+                                                        subsLangD = {langDList[item]: ccList[item]}
+                                                        cc = ccList[subsLangD.get(item, item)]
+                                                        ccCh = cc
 
-                                                elif group.upper() == langEList[item].upper():
-                                                    subsLangE = {langEList[item]: ccList[item]}
-                                                    cc = ccList[subsLangE.get(item, item)]
-                                                    ccCh = cc
+                                                    elif group.upper() == langEList[item].upper():
+                                                        subsLangE = {langEList[item]: ccList[item]}
+                                                        cc = ccList[subsLangE.get(item, item)]
+                                                        ccCh = cc
 
-                                                else:
-                                                    ccCh = ''
+                                                    else:
+                                                        ccCh = ''
 
-                                                if ccCh not in title:
-                                                    string = ' ' + ccCh
-                                                    title = re.sub('$', string, title)
+                                                    if ccCh not in title:
+                                                        string = ' ' + ccCh
+                                                        title = re.sub('$', string, title)
 
-                                    except:
-                                        pass
+                                        except:
+                                            pass
 
                             for langReplaceMap in langReplaceList:
                                 title, match = langReplaceMap['regex'].subn('', title)
