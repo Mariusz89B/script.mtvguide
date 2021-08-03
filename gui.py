@@ -2298,7 +2298,7 @@ class mTVGuide(xbmcgui.WindowXML):
             minutes=int(timebarAdjust()))
         self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
         channelList = self.database.getChannelList(onlyVisible=True)
-        idx, date = self.database.getLastChannel()
+        idx, start, end, played = self.database.getLastChannel()
         self.channelIdx = int(idx)
 
         try:
@@ -4691,7 +4691,7 @@ class mTVGuide(xbmcgui.WindowXML):
         self.setControlLabel(C_MAIN_CALC_TIME_EPG, '{}'.format(calcTime))
 
     def getLastPlayingChannel(self):
-        idx, date = self.database.getLastChannel()
+        idx, start, end, played = self.database.getLastChannel()
         
         channelList = self.database.getChannelList(onlyVisible=True)
         try:
@@ -4700,7 +4700,7 @@ class mTVGuide(xbmcgui.WindowXML):
         except:
             chann = channelList[0]
 
-        prog = self.database.getProgramStartingAt(chann, date)
+        prog = self.database.getProgramStartingAt(chann, start)
 
         return chann, prog, idx
 
@@ -4991,11 +4991,18 @@ class mTVGuide(xbmcgui.WindowXML):
         idx = self.currentChannel.weight
         
         try:
-            date = program.startDate
+            start = program.startDate
         except:
-            date = datetime.datetime.now()
+            start = datetime.datetime.now()
+        
+        try:
+            end = program.endDate
+        except:
+            end = datetime.datetime.now()
 
-        self.database.lastChannel(idx, date)
+        played = datetime.datetime.now()
+
+        self.database.lastChannel(idx, start, end, played)
 
     def getLastChannel(self):
         return self.lastChannel
@@ -5443,22 +5450,14 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def _showEPG(self):
         deb('_showEpg')
-
         ### current time! ###
-        if self.archivePlaylist != '':
-            archivePlaylist = self.archivePlaylist.split(', ')
-            endDateStamp = int(archivePlaylist[3])
+        idx, start, end, played = self.database.getLastChannel()
 
-            playlistEndDate = datetime.datetime.fromtimestamp(endDateStamp)
-        else:
-            playlistEndDate = datetime.datetime.today()
+        endedAt = datetime.datetime.fromtimestamp(int(float(end)) )
 
-        if self.archiveService != '':
-            serviceEndDate = self.archiveService
-        else:
-            serviceEndDate = datetime.datetime.today()
+        playedAt = datetime.datetime.fromtimestamp(int(float(played)) )
 
-        if playlistEndDate < datetime.datetime.today() or serviceEndDate < datetime.datetime.today():
+        if endedAt < playedAt:
             try:
                 self.viewStartDate = self.program.startDate + datetime.timedelta(minutes=int(timebarAdjust()))
             except:

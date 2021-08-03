@@ -969,22 +969,22 @@ class Database(object):
             idx = len(channels) - 1
         return channels[idx]
 
-    def lastChannel(self, idx, date):
-        self._invokeAndBlockForResult(self._lastChannel, idx, date)
+    def lastChannel(self, idx, start, end, played):
+        self._invokeAndBlockForResult(self._lastChannel, idx, start, end, played)
 
-    def _lastChannel(self, idx, date):
+    def _lastChannel(self, idx, start, end, played):
         c = self.conn.cursor()
-        c.execute("DELETE FROM latestplayed")
+        c.execute("DELETE FROM lastplayed")
         try:
-            c.execute("INSERT INTO latestplayed(idx, start_date) VALUES(?, ?)", [idx, date])
+            c.execute("INSERT INTO lastplayed(idx, start_date, end_date, played_date) VALUES(?, ?, ?, ?)", [idx, start, end, played])
         except:
             now = datetime.datetime.now()
             if sys.version_info[0] > 2:
-                date = datetime.datetime.timestamp(now)
+                start = datetime.datetime.timestamp(now)
             else:
                 from time import time
-                date = str(time()).split('.')[0]
-            c.execute("INSERT INTO latestplayed(idx, start_date) VALUES(?, ?)", [idx, date])
+                start = str(time()).split('.')[0]
+            c.execute("INSERT INTO lastplayed(idx, start_date, end_date, played_date) VALUES(?, ?, ?, ?)", [idx, start, end, played])
         self.conn.commit()
         c.close()
 
@@ -992,19 +992,25 @@ class Database(object):
         return self._invokeAndBlockForResult(self._getLastChannel)
 
     def _getLastChannel(self):
-        c = self.conn.cursor()
         idx = ''
-        date = ''
+        start = ''
+        end = ''
+        played = ''
+
+        c = self.conn.cursor()
+
         try:
-            c.execute("SELECT idx, start_date FROM latestplayed")
+            c.execute("SELECT idx, start_date, end_date, played_date FROM lastplayed")
             row = c.fetchone()
             idx = row[str('idx')]
-            date = row[str('start_date')]
+            start = row[str('start_date')]
+            end = row[str('end_date')]
+            played = row[str('played_date')]
             c.close()
         except:
             pass
 
-        return idx, date
+        return idx, start, end, played
 
     def addChannel(self, channel):
         self._invokeAndBlockForResult(self._addChannel, channel)
@@ -1887,7 +1893,7 @@ class Database(object):
 
             # make sure we have a record in sources for this Source
             c.execute("INSERT OR IGNORE INTO sources(id, channels_updated) VALUES(?, ?)", [self.source.KEY, 0])
-            c.execute('CREATE TABLE IF NOT EXISTS latestplayed(idx INTEGER, start_date TEXT)')
+            c.execute('CREATE TABLE IF NOT EXISTS lastplayed(idx INTEGER, start_date TEXT, end_date TEXT, played_date TEXT)')
             
             self.conn.commit()
             c.close()
@@ -2125,7 +2131,7 @@ class Database(object):
         c.execute('DELETE FROM recordings')
         c.execute('DELETE FROM updates')
         c.execute('DELETE FROM sources')
-        c.execute('DELETE FROM latestplayed')
+        c.execute('DELETE FROM lastplayed')
         c.execute('UPDATE settings SET value=0 WHERE rowid=1')
         self.conn.commit()
         c.close()
