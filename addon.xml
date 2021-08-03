@@ -43,6 +43,7 @@
 	<news>v9.4.5 (2021-08-03)
 - Fixed login for service WP Pilot.
 - Added setting to only load pre-defined channel groups, reduced loading for large playlists.
+- Timebar fixes.
 
 v9.4.4 (2021-07-31)
 - Timebar fixes.
