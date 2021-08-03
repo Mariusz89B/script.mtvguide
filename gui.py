@@ -2154,7 +2154,7 @@ class mTVGuide(xbmcgui.WindowXML):
             return
 
         self.database.initialize(self.onSourceInitialized, self.isSourceInitializationCancelled)
-
+        self.updateTimebar()
         self.interval = 300
         self.updateEpgTimer = epgTimer(self.interval, self.updateEpg)
 
@@ -5484,99 +5484,6 @@ class mTVGuide(xbmcgui.WindowXML):
         for idx in range(0, CHANNELS_PER_PAGE):
             self.disableControl(start_index + idx)
 
-    def onTimebar(self, scheduleTimer):
-        # Redraw timebar
-        addonSkin = ADDON.getSetting('Skin')
-
-         # Addon
-        if xbmcvfs.exists(os.path.join(self.profilePath, 'resources', 'skins', addonSkin, 'xml', 'script-tvguide-main.xml')):
-            x = 'xml'
-        elif xbmcvfs.exists(os.path.join(self.profilePath, 'resources', 'skins', addonSkin, '720p', 'script-tvguide-main.xml')):
-            x = '720p'
-        elif xbmcvfs.exists(os.path.join(self.profilePath, 'resources', 'skins', addonSkin, '1080i', 'script-tvguide-main.xml')):
-            x = '1080i'
-        elif xbmcvfs.exists(os.path.join(self.profilePath, 'resources', 'skins', addonSkin, '16x9', 'script-tvguide-main.xml')):
-            x = '16x9'
-        else:
-            x = '16x9'
-
-        # TimebarBack Color
-        try:
-            f = xbmcvfs.File(os.path.join(self.profilePath, 'resources', 'skins', addonSkin, x, 'script-tvguide-main.xml'), 'r')
-            line = f.read()
-
-            matchAddon = re.findall('<texture colordiffuse="(.*?)">osd/back.png</texture>', str(line))
-        except:
-            pass
-
-        try:
-            f = xbmcvfs.File(os.path.join(self.kodiSkinPath, 'colors', 'defaults.xml'), 'r')
-            line = f.read()
-
-            matchKodi = re.findall('<color name="'+matchAddon[0]+'">(.*?)</color>', str(line))
-            resBack = matchKodi[0]
-
-        except:
-            try:
-                resBack = matchAddon[0]
-            except:
-                resBack = ''
-
-        try:
-            colorTimebarBack = resBack
-        except:
-            colorTimebarBack = ''
-
-        # Timebar Color
-        try:
-            f = xbmcvfs.File(os.path.join(self.profilePath, 'resources', 'skins', addonSkin, x, 'script-tvguide-main.xml'), 'r')
-            line = f.read()
-
-            matchAddon = re.findall('<texture colordiffuse="(.*?)">tvguide-timebar.png</texture>', str(line))
-        except:
-            pass
-
-        try:
-            f = xbmcvfs.File(os.path.join(self.kodiSkinPath, 'colors', 'defaults.xml'), 'r')
-            line = f.read()
-
-            matchKodi = re.findall('<color name="'+matchAddon[0]+'">(.*?)</color>', str(line))
-            resBar = matchKodi[0]
-
-        except:
-            try:
-                resBar = matchAddon[0]
-            except:
-                resBack = ''
-
-        try:
-            colorTimebar = resBar
-        except:
-            colorTimebar = ''
-
-        tmp_background = self.getControl(self.C_MAIN_TIMEBAR_BACK)
-        if self.timebarBack:
-            self.removeControl(self.timebarBack)
-
-        tmp_control = self.getControl(self.C_MAIN_TIMEBAR)
-        if self.timebar:
-            self.removeControl(self.timebar)
-
-        if self.getControl(self.C_DYNAMIC_COLORS):
-            self.timebarBack = xbmcgui.ControlImage(tmp_background.getX(), tmp_background.getY(), tmp_background.getWidth(), tmp_background.getHeight(), os.path.join(Skin.getSkinPath(), 'media', 'osd', 'back.png'), colorDiffuse=colorTimebarBack)
-        else:
-            self.timebarBack = xbmcgui.ControlImage(tmp_background.getX(), tmp_background.getY(), tmp_background.getWidth(), tmp_background.getHeight(), os.path.join(Skin.getSkinPath(), 'media', 'osd', 'back.png'), colorDiffuse=skin_timebarback_colour)
-
-        if self.getControl(self.C_DYNAMIC_COLORS):
-            self.timebar = xbmcgui.ControlImage(tmp_control.getX(), tmp_control.getY(), tmp_control.getWidth(), tmp_control.getHeight(), os.path.join(Skin.getSkinPath(), 'media', 'tvguide-timebar.png'), colorDiffuse=colorTimebar)
-        else:
-            self.timebar = xbmcgui.ControlImage(tmp_control.getX(), tmp_control.getY(), tmp_control.getWidth(), tmp_control.getHeight(), os.path.join(Skin.getSkinPath(), 'media', 'tvguide-timebar.png'), colorDiffuse=skin_timebar_colour)
-        
-        self.updateTimebar(scheduleTimer)
-
-        timebars = [self.timebar, self.timebarBack]
-        self.addControls(timebars)
-
     def onRedrawEPG(self, channelStart, startTime, focusFunction=None):
         deb('onRedrawEPG')
         if self.redrawingEPG or (self.database is not None and self.database.updateInProgress) or self.isClosing or strings2.M_TVGUIDE_CLOSING:
@@ -5593,11 +5500,7 @@ class mTVGuide(xbmcgui.WindowXML):
             self.infoDialog.close()
 
         self._showControl(self.C_MAIN_EPG)
-
-        loading = self.getControl(self.C_MAIN_LOADING)
-
-        if self.timebarBack is None and not loading:
-            self.onTimebar(scheduleTimer=False)
+        self.updateTimebar(scheduleTimer=False)
 
         # remove existing controls
         self._clearEpg()
@@ -5729,8 +5632,6 @@ class mTVGuide(xbmcgui.WindowXML):
         if focusControl is None and len(self.controlAndProgramList) > 0:
             self.setFocus(self.controlAndProgramList[0].control)
 
-        self.onTimebar(scheduleTimer=True)
-
         self._showControl(self.C_MAIN_LOADING_BACKGROUND)
         self._hideControl(self.C_MAIN_LOADING)
 
@@ -5777,6 +5678,98 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.setControlImage(CHANNEL_IMAGE + idx, ' ')
 
                     self.a[idx] = channel
+
+        # Redraw timebar
+        addonSkin = ADDON.getSetting('Skin')
+
+         # Addon
+        if xbmcvfs.exists(os.path.join(self.profilePath, 'resources', 'skins', addonSkin, 'xml', 'script-tvguide-main.xml')):
+            x = 'xml'
+        elif xbmcvfs.exists(os.path.join(self.profilePath, 'resources', 'skins', addonSkin, '720p', 'script-tvguide-main.xml')):
+            x = '720p'
+        elif xbmcvfs.exists(os.path.join(self.profilePath, 'resources', 'skins', addonSkin, '1080i', 'script-tvguide-main.xml')):
+            x = '1080i'
+        elif xbmcvfs.exists(os.path.join(self.profilePath, 'resources', 'skins', addonSkin, '16x9', 'script-tvguide-main.xml')):
+            x = '16x9'
+        else:
+            x = '16x9'
+
+        # TimebarBack Color
+        try:
+            f = xbmcvfs.File(os.path.join(self.profilePath, 'resources', 'skins', addonSkin, x, 'script-tvguide-main.xml'), 'r')
+            line = f.read()
+
+            matchAddon = re.findall('<texture colordiffuse="(.*?)">osd/back.png</texture>', str(line))
+        except:
+            pass
+
+        try:
+            f = xbmcvfs.File(os.path.join(self.kodiSkinPath, 'colors', 'defaults.xml'), 'r')
+            line = f.read()
+
+            matchKodi = re.findall('<color name="'+matchAddon[0]+'">(.*?)</color>', str(line))
+            resBack = matchKodi[0]
+
+        except:
+            try:
+                resBack = matchAddon[0]
+            except:
+                resBack = ''
+
+        try:
+            colorTimebarBack = resBack
+        except:
+            colorTimebarBack = ''
+
+        # Timebar Color
+        try:
+            f = xbmcvfs.File(os.path.join(self.profilePath, 'resources', 'skins', addonSkin, x, 'script-tvguide-main.xml'), 'r')
+            line = f.read()
+
+            matchAddon = re.findall('<texture colordiffuse="(.*?)">tvguide-timebar.png</texture>', str(line))
+        except:
+            pass
+
+        try:
+            f = xbmcvfs.File(os.path.join(self.kodiSkinPath, 'colors', 'defaults.xml'), 'r')
+            line = f.read()
+
+            matchKodi = re.findall('<color name="'+matchAddon[0]+'">(.*?)</color>', str(line))
+            resBar = matchKodi[0]
+
+        except:
+            try:
+                resBar = matchAddon[0]
+            except:
+                resBack = ''
+
+        try:
+            colorTimebar = resBar
+        except:
+            colorTimebar = ''
+
+        tmp_background = self.getControl(self.C_MAIN_TIMEBAR_BACK)
+        if self.timebarBack:
+            self.removeControl(self.timebarBack)
+
+        tmp_control = self.getControl(self.C_MAIN_TIMEBAR)
+        if self.timebar:
+            self.removeControl(self.timebar)
+
+        if self.getControl(self.C_DYNAMIC_COLORS):
+            self.timebarBack = xbmcgui.ControlImage(tmp_background.getX(), tmp_background.getY(), tmp_background.getWidth(), tmp_background.getHeight(), os.path.join(Skin.getSkinPath(), 'media', 'osd', 'back.png'), colorDiffuse=colorTimebarBack)
+        else:
+            self.timebarBack = xbmcgui.ControlImage(tmp_background.getX(), tmp_background.getY(), tmp_background.getWidth(), tmp_background.getHeight(), os.path.join(Skin.getSkinPath(), 'media', 'osd', 'back.png'), colorDiffuse=skin_timebarback_colour)
+
+        if self.getControl(self.C_DYNAMIC_COLORS):
+            self.timebar = xbmcgui.ControlImage(tmp_control.getX(), tmp_control.getY(), tmp_control.getWidth(), tmp_control.getHeight(), os.path.join(Skin.getSkinPath(), 'media', 'tvguide-timebar.png'), colorDiffuse=colorTimebar)
+        else:
+            self.timebar = xbmcgui.ControlImage(tmp_control.getX(), tmp_control.getY(), tmp_control.getWidth(), tmp_control.getHeight(), os.path.join(Skin.getSkinPath(), 'media', 'tvguide-timebar.png'), colorDiffuse=skin_timebar_colour)
+
+        timebars = [self.timebar, self.timebarBack]
+        self.addControls(timebars)
+
+        self.updateTimebar()
 
         self.redrawingEPG = False
         if self.redrawagain:
@@ -6171,7 +6164,7 @@ class mTVGuide(xbmcgui.WindowXML):
         except:
             pass
 
-    def updateTimebar(self, scheduleTimer=False):
+    def updateTimebar(self, scheduleTimer=True):
         # debug('updateTimebar')
 
         if xbmc.Player().isPlaying():
