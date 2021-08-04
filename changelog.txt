@@ -1,4 +1,7 @@
-﻿wersja 9.4.5 - 2021-08-03
+﻿wersja 9.4.6 - 2021-08-04
+- poprawka logowania w serwisie WP Pilot
+
+wersja 9.4.5 - 2021-08-03
 - poprawka logowania w serwisie WP Pilot
 - dodano ustawienie umożliwiające wczytywanie tylko wstępnie zdefiniowanych grup kanałów, zmniejsza czas wczytywania dużych playlist
 - poprawka paska postepu czasu

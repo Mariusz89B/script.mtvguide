@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.mtvguide" name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]" version="9.4.5" provider-name="Team Mods-Kodi">
+<addon id="script.mtvguide" name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]" version="9.4.6" provider-name="Team Mods-Kodi">
 	<requires>
 		<import addon="xbmc.addon" version="17.0.0"/>
 		<import addon="script.module.inputstreamhelper" />
@@ -40,7 +40,10 @@
 		<forum>http://mods-kodi.pl/forum/</forum>
 		<website>http://mods-kodi.pl/</website>
 		<email>support@m-tvguide.pl</email>
-	<news>v9.4.5 (2021-08-03)
+	<news>v9.4.6 (2021-08-04)
+- Fixed login for service WP Pilot.
+
+v9.4.5 (2021-08-03)
 - Fixed login for service WP Pilot.
 - Added setting to only load pre-defined channel groups, reduced loading for large playlists.
 - Timebar fixes.

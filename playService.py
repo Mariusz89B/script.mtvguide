@@ -299,7 +299,7 @@ class PlayService(xbmc.Player, BasePlayService):
 
             try:
                 #move stream to the end of list
-                if self.strmUrl is not None:
+                if url is not None:
                     self.urlList.remove(url)
                     self.urlList.append(url)
             except Exception as ex:
@@ -744,6 +744,8 @@ class PlayService(xbmc.Player, BasePlayService):
                             ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
                             ListItem.setProperty('IsPlayable', 'true')
 
+                            ListItem.setProperty('inputstream.adaptive.play_timeshift_buffer', 'true')
+
                         self.strmUrl = strmUrl
                         xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
                         res = True
@@ -1027,6 +1029,8 @@ class PlayService(xbmc.Player, BasePlayService):
                                 #ListItem.setProperty('inputstream.adaptive.license_key','')
                                 #ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
                                 ListItem.setProperty('IsPlayable', 'true')
+
+                                ListItem.setProperty('inputstream.adaptive.play_timeshift_buffer', 'true')
                             
                             self.strmUrl = strmUrl
                             xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
@@ -1070,6 +1074,8 @@ class PlayService(xbmc.Player, BasePlayService):
                                 ListItem.setMimeType(mimeType)
                                 ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
                                 ListItem.setProperty('IsPlayable', 'true')
+
+                                ListItem.setProperty('inputstream.adaptive.play_timeshift_buffer', 'true')
                             
                             self.strmUrl = strmUrl
                             xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
@@ -1365,6 +1371,8 @@ class PlayService(xbmc.Player, BasePlayService):
                                                 ListItem.setProperty('inputstream.ffmpegarchive.default_programme_duration', duration)
 
                                         ListItem.setProperty("IsPlayable", "true")
+
+                            ListItem.setProperty('inputstream.adaptive.play_timeshift_buffer', 'true')
 
                             ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
 

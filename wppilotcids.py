@@ -122,15 +122,18 @@ class WpPilotUpdater(baseServiceUpdater):
         c.close()
 
     def readFromDB(self):
-        import sqlite3
-        conn = sqlite3.connect(cacheFile, detect_types=sqlite3.PARSE_DECLTYPES,
-                               cached_statements=20000)
-        c = conn.cursor()
-        c.execute("SELECT * FROM Cache")
-        for row in c:
-            if row:
-                c.close()
-                return row[0]
+        try:
+            import sqlite3
+            conn = sqlite3.connect(cacheFile, detect_types=sqlite3.PARSE_DECLTYPES,
+                                   cached_statements=20000)
+            c = conn.cursor()
+            c.execute("SELECT * FROM Cache")
+            for row in c:
+                if row:
+                    c.close()
+                    return row[0]
+        except:
+            return ''
 
     def cookiesToString(self, cookies):
         try:
