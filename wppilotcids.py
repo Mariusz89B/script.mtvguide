@@ -145,17 +145,20 @@ class WpPilotUpdater(baseServiceUpdater):
     def loginService(self, checked=''):
         try:
             self.netvia = False
+
+            if self.netviapisessid != '' and self.netviapisessval != '':
+                self.netvia = True
+
             if len(self.password) > 0 and len(self.login) > 0:
-                cookies = self.readFromDB()
-                if cookies != '': 
-                    headers.update({'Cookie': cookies})
+                if not self.netvia:
+                    cookies = self.readFromDB()
+                    if cookies != '': 
+                        headers.update({'Cookie': cookies})
                 else:
                     cookies = {
                         'netviapisessid': self.netviapisessid,
                         'netviapisessval': self.netviapisessval
                     }
-
-                    self.netvia = True
 
                 if self.netvia:
                     account = requests.get('https://pilot.wp.pl/api/v1/user', verify=False, headers=headers, cookies=cookies, timeout=timeouts).json()

@@ -4487,7 +4487,7 @@ class mTVGuide(xbmcgui.WindowXML):
         else:
             chooseStrmControl = (strings(CHOOSE_STRM_FILE))
         
-        ret = xbmcgui.Dialog().contextmenu([strings(30346), strings(58000), strings(30356), remindControl, programRecordControl, strings(30337), strings(30377), strings(30309), strings(68005), strings(30602), chooseStrmControl, strings(30308)])
+        ret = xbmcgui.Dialog().contextmenu([strings(30346), strings(58000), strings(30356), remindControl, programRecordControl, strings(30337), strings(30377), strings(30309), strings(68005), strings(30913), strings(30602), chooseStrmControl, strings(30308)])
 
         if ret == 0:
             if ADDON.getSetting('channel_shortcut') == 'false':
@@ -4583,16 +4583,19 @@ class mTVGuide(xbmcgui.WindowXML):
             self.popupMenu(program)
 
         elif ret == 9:
-            xbmc.executebuiltin("ActivateWindow(10134)")
+            xbmcaddon.Addon(id=ADDON_ID).openSettings()
 
         elif ret == 10:
+            xbmc.executebuiltin("ActivateWindow(10134)")
+
+        elif ret == 11:
             if removeStrm:
                 self.database.deleteCustomStreamUrl(program.channel)
             d = StreamSetupDialog(self.database, program.channel)
             d.doModal()
             del d
 
-        elif ret == 11:
+        elif ret == 12:
             self.close()
 
 
@@ -5451,10 +5454,13 @@ class mTVGuide(xbmcgui.WindowXML):
     def _showEPG(self):
         deb('_showEpg')
         ### current time! ###
-        idx, start, end, played = self.database.getLastChannel()
+        try:
+            idx, start, end, played = self.database.getLastChannel()
+        except:
+            end = 0.0
+            played = 0.0
 
         endedAt = datetime.datetime.fromtimestamp(int(float(end)) )
-
         playedAt = datetime.datetime.fromtimestamp(int(float(played)) )
 
         if endedAt < playedAt:
