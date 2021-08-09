@@ -1416,6 +1416,10 @@ msgctxt "#60012"
 msgid "If enabled channels from basemap are matched with both 'channel id' and 'display name' tags in EPG. Enabling this feature might improve channel recognition as for default add-on is only matching 'channel id' tag for improved loading times. Would you like to activate this function?"
 msgstr "Hvis det er aktiveret, matches kanaler fra basemap med både 'channel id' og 'display name' tag i EPG. Aktivering af denne funktion kan forbedre kanalgenkendelse, da tillægget normalt kun matcher 'channel id' tagget for hurtigere indlæsningstider. Vil du aktivere denne funktion?"
 
+msgctxt "#60013"
+msgid "Would you like to enable catchup?"
+msgstr "Vil du aktivere catchup funktion?"
+
 msgctxt "#30913"
 msgid "Settings"
 msgstr "Indstillinger"

@@ -1344,7 +1344,7 @@ class mTVGuide(xbmcgui.WindowXML):
                     self.tutorialGetService()
 
             if progExec is True:
-                self.tutorialGetRecording()
+                self.tutorialCatchup(False)
 
         elif res == 1:
             ADDON.setSetting('nr_of_playlists', '1')
@@ -1374,7 +1374,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 
                 ADDON.setSetting('playlist_1_url', c)
                 if c is not None:
-                    self.tutorialGetRecording()
+                    self.tutorialCatchup(True)
 
                 else:
                     self.tutorialGetService()
@@ -1384,9 +1384,51 @@ class mTVGuide(xbmcgui.WindowXML):
                 fn = xbmcgui.Dialog().browse(1, strings(59956), '')
                 ADDON.setSetting('playlist_1_file', fn)
                 if fn != '':
-                    self.tutorialGetRecording()
+                    self.tutorialCatchup(True)
                 else:
                     self.tutorialGetService()
+
+    def tutorialCatchup(self, playlist):
+        res = xbmcgui.Dialog().yesno(strings(59924), strings(60013))
+        if res:
+            ADDON.setSetting('archive_support', 'true')
+            if playlist:
+                ret = xbmcgui.Dialog().select(strings(59989), [strings(70007), strings(59990), strings(59996), strings(59999)])
+                if ret < 0:
+                    self.tutorialCatchup(playlist)
+
+                if ret == 0:
+                    ADDON.setSetting('archive_type', '0')
+                    self.tutorialGetRecording()
+
+                elif ret == 1:
+                    ADDON.setSetting('archive_type', '1')
+                    kb = xbmc.Keyboard('?utc={utc}&lutc={lutc}','')
+                    kb.setHeading(strings(59977))
+                    kb.setHiddenInput(False)
+                    kb.doModal()
+                    c = kb.getText() if kb.isConfirmed() else None
+                    if c == '': c = None
+
+                    if c is not None:
+                        self.tutorialGetRecording()
+                    else:
+                        self.tutorialCatchup(playlist)
+
+                elif ret == 2:
+                    ADDON.setSetting('archive_type', '2')
+                    self.tutorialGetRecording()
+
+                elif ret == 3:
+                    ADDON.setSetting('archive_type', '3')
+                    self.tutorialGetRecording()
+
+            else:
+                ADDON.setSetting('archive_type', '0')
+                self.tutorialGetRecording()
+        else:
+            ADDON.setSetting('archive_support', 'false')
+            self.tutorialGetRecording()
 
     def tutorialGetRecording(self):
         res = xbmcgui.Dialog().yesno(strings(59924), strings(59957))
