@@ -1,4 +1,4 @@
-﻿wersja 9.4.6 - 2021-08-04
+﻿wersja 9.4.6 - 2021-08-09
 - poprawka logowania w serwisie WP Pilot
 
 wersja 9.4.5 - 2021-08-03

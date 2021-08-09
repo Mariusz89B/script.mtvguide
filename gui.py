@@ -5786,6 +5786,14 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def _clearEpg(self):
         deb('_clearEpg')    
+        if self.timebar:
+            self.removeControl(self.timebar)
+            self.timebar = None
+
+        if self.timebarBack:
+            self.removeControl(self.timebarBack)
+            self.timebarBack = None
+
         controls = [elem.control for elem in self.controlAndProgramList]
         try:
             self.removeControls(controls)
@@ -5793,7 +5801,7 @@ class mTVGuide(xbmcgui.WindowXML):
             debug('_clearEpg failed to delete all controls, deleting one by one')
             for elem in self.controlAndProgramList:
                 try:
-                    deb('Debug removeControl: {}'.format(str(elem.control.getId())))
+                    #deb('Debug removeControl: {}'.format(str(elem.control.getId())))
                     self.removeControl(elem.control)
 
                 except RuntimeError as ex:
@@ -5803,26 +5811,17 @@ class mTVGuide(xbmcgui.WindowXML):
                 except Exception as ex:
                     deb('_clearEpg unhandled exception: {}'.format(getExceptionString()))
 
-        try:
-            if self.timebar:
-                self.removeControl(self.timebar)
-                self.timebar = None
-
-            if self.timebarBack:
-                self.removeControl(self.timebarBack)
-                self.timebarBack = None
-        except:
-            pass
+        del self.controlAndProgramList[:]
 
         try:
             self.category = self.database.category
             if sys.version_info[0] < 3:
-                self.category = self.category.decode('utf-8', 'replace')
+                self.category = self.category.decode('utf-8')
             self.categories = self.database.getAllCategories()
         except:
-            pass
+            self.category = None
 
-        try:
+        if self.category is not None:
             listControl = self.getControl(self.C_MAIN_CATEGORY)
             listControl.reset()
 
@@ -5846,16 +5845,9 @@ class mTVGuide(xbmcgui.WindowXML):
                 index = categories.index(self.category)
                 if index >= 0:
                     listControl.selectItem(index)
-        except:
-            deb('Categories not supported by current skin')
-            self.category = None
 
-        try:
-            self.getListLenght = self.getChannelListLenght()
-        except:
-            pass
-            
-        del self.controlAndProgramList[:]
+        self.getListLenght = self.getChannelListLenght()
+        
         debug('_clearEpg end')
 
     def onEPGLoadError(self):
