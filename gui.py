@@ -1355,13 +1355,13 @@ class mTVGuide(xbmcgui.WindowXML):
             if res < 0:
                 res = xbmcgui.Dialog().yesno(strings(59924), strings(59938), yeslabel=strings(59939), nolabel=strings(30308))
                 if res: 
+                    self.tutorialGetService()
+                else:
                     ADDON.setSetting('nr_of_playlists', '0')
                     ADDON.setSetting('playlist_1_enabled', 'false')
                     ADDON.setSetting('playlist_1_file', '')
                     ADDON.setSetting('tutorial', 'true')
                     exit()
-                else:
-                    self.tutorialGetService()
 
             elif res == 0:
                 ADDON.setSetting('playlist_1_source', '0')
