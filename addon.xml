@@ -40,8 +40,10 @@
 		<forum>http://mods-kodi.pl/forum/</forum>
 		<website>http://mods-kodi.pl/</website>
 		<email>support@m-tvguide.pl</email>
-	<news>v9.4.6 (2021-08-09)
+	<news>v9.4.6 (2021-08-10)
 - Fixed login for service WP Pilot.
+- Added tutorial query for catchup setting.
+- Added clearEpg function fix.
 
 v9.4.5 (2021-08-03)
 - Fixed login for service WP Pilot.
