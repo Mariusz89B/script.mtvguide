@@ -1,4 +1,7 @@
-﻿wersja 9.4.6 - 2021-08-10
+﻿wersja 9.4.7 - 2021-08-11
+- poprawka migotania paska czasu
+
+wersja 9.4.6 - 2021-08-10
 - poprawka logowania w serwisie WP Pilot
 - dodano zapytanie do przewodnika dotyczące ustawień archiwum
 - dodano poprawkę funkcji clearEpg
