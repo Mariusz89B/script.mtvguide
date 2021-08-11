@@ -5858,38 +5858,34 @@ class mTVGuide(xbmcgui.WindowXML):
 
         del self.controlAndProgramList[:]
 
-        try:
-            self.category = self.database.category
-            if sys.version_info[0] < 3:
-                self.category = self.category.decode('utf-8')
-            self.categories = self.database.getAllCategories()
-        except:
-            self.category = None
+        self.category = self.database.category
+        if sys.version_info[0] < 3:
+            self.category = self.category.decode('utf-8')
+        self.categories = self.database.getAllCategories()
 
-        if self.category is not None:
-            listControl = self.getControl(self.C_MAIN_CATEGORY)
-            listControl.reset()
+        listControl = self.getControl(self.C_MAIN_CATEGORY)
+        listControl.reset()
 
-            items = list()
+        items = list()
 
-            ccList = ['be', 'cz', 'de', 'dk', 'fr', 'hr', 'it', 'no', 'pl', 'se', 'srb', 'uk', 'us', 'radio']
-            
-            categories = PREDEFINED_CATEGORIES + list(self.categories)
-            for item in ccList:
-                if ADDON.getSetting('country_code_{cc}'.format(cc=item)) == "false":
-                    categories.remove('Group: {cc}'.format(cc=item.upper()))
+        ccList = ['be', 'cz', 'de', 'dk', 'fr', 'hr', 'it', 'no', 'pl', 'se', 'srb', 'uk', 'us', 'radio']
+        
+        categories = PREDEFINED_CATEGORIES + list(self.categories)
+        for item in ccList:
+            if ADDON.getSetting('country_code_{cc}'.format(cc=item)) == "false":
+                categories.remove('Group: {cc}'.format(cc=item.upper()))
 
-            categories = [label.replace('Group', strings(30995)) for label in categories]
+        categories = [label.replace('Group', strings(30995)) for label in categories]
 
-            for label in categories:
-                item = xbmcgui.ListItem(label)
-                items.append(item)
+        for label in categories:
+            item = xbmcgui.ListItem(label)
+            items.append(item)
 
-            listControl.addItems(items)
-            if self.category and self.category in categories:
-                index = categories.index(self.category)
-                if index >= 0:
-                    listControl.selectItem(index)
+        listControl.addItems(items)
+        if self.category and self.category in categories:
+            index = categories.index(self.category)
+            if index >= 0:
+                listControl.selectItem(index)
 
         self.getListLenght = self.getChannelListLenght()
         
@@ -6278,16 +6274,17 @@ class mTVGuide(xbmcgui.WindowXML):
                 try:
                     # Sometimes raises:
                     # exceptions.RuntimeError: Unknown exception thrown from the call "setVisible"
-                    if self.lastKeystroke >= self.viewStartDate and xbmc.getCondVisibility('!Control.IsVisible(5000)'):
-                        self.timebarBack.setVisible(True)
+                    if self.lastKeystroke >= self.viewStartDate and xbmc.getCondVisibility('!Control.IsVisible(5000)'):               
                         if self.viewStartDate.date() == self.lastKeystroke.date():
                             self.timebar.setVisible(True)
+                            self.timebarBack.setVisible(True)
                         else:
                             self.timebar.setVisible(False)
+                            self.timebarBack.setVisible(True)
                         
                     else:
-                        self.timebarBack.setVisible(False)
                         self.timebar.setVisible(False)
+                        self.timebarBack.setVisible(False)
 
                 except:
                     pass
@@ -6382,6 +6379,8 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
         self.program = program
         self.buttonClicked = None
         self.category = self.database.category
+        if sys.version_info[0] < 3:
+            self.category = self.category.decode('utf-8')
         self.categories = self.database.getAllCategories()
 
     def onInit(self):
@@ -6393,6 +6392,7 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
 
         try:
             listControl = self.getControl(self.C_POPUP_CATEGORY)
+            listControl.reset()
 
             items = list()
 
