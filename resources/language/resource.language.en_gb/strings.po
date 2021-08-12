@@ -2508,6 +2508,10 @@ msgctxt "#69067"
 msgid "Netviapisessval"
 msgstr ""
 
+msgctxt "#69068"
+msgid "Remote cookies"
+msgstr ""
+
 msgctxt "#70000"
 msgid "Program title"
 msgstr ""

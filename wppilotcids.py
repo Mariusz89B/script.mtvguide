@@ -57,19 +57,22 @@ import requests
 import base64
 import json
 
+if sys.version_info[0] > 2:
+    import urllib3
+    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
 serviceName         = 'WP Pilot'
-wpUrl               = 'https://pilot.wp.pl/api/'
-wpVideoUrl          = 'https://pilot.wp.pl/api/v1/channel/'
-wpCloseUrl          = 'https://pilot.wp.pl/api/v1/channels/close'
+login_url = 'https://pilot.wp.pl/api/v1/user_auth/login?device_type=android_tv'
+main_url = 'https://pilot.wp.pl/api/v1/channels/list?device_type=android_tv'
+video_url = 'https://pilot.wp.pl/api/v1/channel/'
+close_stream_url = 'https://pilot.wp.pl/api/v1/channels/close?device_type=android_tv'
 
 headers = {
     'user-agent': 'ExoMedia 4.3.0 (43000) / Android 8.0.0 / foster_e',
     'accept': 'application/json',
-    'x-version': 'pl.videostar|3.25.0|Android|26|foster_e',
+    'x-version': 'pl.videostar|3.53.0-gms|Android|26|foster_e',
     'content-type': 'application/json; charset=UTF-8'
 }
-
-wpLoginUrl = 'https://pilot.wp.pl/api/v1/user_auth/login'
 
 if sys.version_info[0] > 2:
     try:
@@ -86,8 +89,6 @@ cacheFile = os.path.join(profilePath, 'cache.db')
 
 sess = requests.Session()
 
-timeouts = (15, 30)
-
 class WpPilotUpdater(baseServiceUpdater):
     def __init__(self):
         self.serviceName        = serviceName
@@ -99,12 +100,7 @@ class WpPilotUpdater(baseServiceUpdater):
         self.servicePriority    = int(ADDON.getSetting('priority_videostar'))
         self.netviapisessid     = ADDON.getSetting('videostar_netviapisessid')
         self.netviapisessval    = ADDON.getSetting('videostar_netviapisessval')
-        self.url                = wpUrl
-        self.videoUrl           = wpVideoUrl
-        self.closeUrl           = wpCloseUrl
-        self.addDuplicatesToList = True
-        self.acc                = None
-        self.netvia             = None
+        self.remote_cookies     = ADDON.getSetting('videostar_remote_cookies')
         
     def saveToDB(self, table_name, value):
         import sqlite3
@@ -113,8 +109,7 @@ class WpPilotUpdater(baseServiceUpdater):
             os.remove(cacheFile)
         else:
             print('File does not exists')
-        conn = sqlite3.connect(cacheFile, detect_types=sqlite3.PARSE_DECLTYPES,
-                               cached_statements=20000)
+        conn = sqlite3.connect(cacheFile, detect_types=sqlite3.PARSE_DECLTYPES, cached_statements=20000)
         c = conn.cursor()
         c.execute('CREATE TABLE IF NOT EXISTS Cache(%s TEXT)' % table_name)
         c.execute("INSERT INTO Cache('%s') VALUES ('%s')" % (table_name, value))
@@ -122,116 +117,62 @@ class WpPilotUpdater(baseServiceUpdater):
         c.close()
 
     def readFromDB(self):
-        try:
-            import sqlite3
-            conn = sqlite3.connect(cacheFile, detect_types=sqlite3.PARSE_DECLTYPES,
-                                   cached_statements=20000)
-            c = conn.cursor()
-            c.execute("SELECT * FROM Cache")
-            for row in c:
-                if row:
-                    c.close()
-                    return row[0]
-        except:
-            return ''
+        import sqlite3
+        conn = sqlite3.connect(cacheFile, detect_types=sqlite3.PARSE_DECLTYPES, cached_statements=20000)
+        c = conn.cursor()
+        c.execute("SELECT * FROM Cache")
+        for row in c:
+            if row:
+                c.close()
+                return row[0]
 
     def cookiesToString(self, cookies):
         try:
-            return "; ".join([str(x) + "=" + str(y) for x, y in cookies.get_dict().items()])
+            return "; ".join([str(x) + "=" + str(y) for x, y in cookies.items()])
         except Exception as e:
-            print (e)
+            print('exception: ' + e)
             return ''
 
-    def loginService(self, checked=''):
-        try:
-            self.netvia = False
-
-            if self.netviapisessid != '' and self.netviapisessval != '':
-                self.netvia = True
-
+    def loginService(self):
+        if self.netviapisessval == '' and self.netviapisessid == '':
             if len(self.password) > 0 and len(self.login) > 0:
-                if not self.netvia:
-                    cookies = self.readFromDB()
-                    if cookies != '': 
-                        headers.update({'Cookie': cookies})
-                else:
-                    cookies = {
-                        'netviapisessid': self.netviapisessid,
-                        'netviapisessval': self.netviapisessval
-                    }
+                data = {'device': 'android_tv',
+                        'login': self.login,
+                        'password': self.password}
 
-                if self.netvia:
-                    account = requests.get('https://pilot.wp.pl/api/v1/user', verify=False, headers=headers, cookies=cookies, timeout=timeouts).json()
-                    return True
+                response = requests.post(
+                    login_url,
+                    json=data,
+                    verify=False,
+                    headers=headers
+                )
 
-                else:
-                    account = requests.get('https://pilot.wp.pl/api/v1/user', verify=False, headers=headers, timeout=timeouts).json()
+                meta = response.json().get('_meta', None)
+                if meta is not None:
+                    if meta.get('error', {}).get('name', None) is not None:
+                        self.loginErrorMessage()
+                        return False
 
-                try:
-                    if not self.login == account['data']['login']:
-                        os.remove(cacheFile)
-                        self.loginService(checked=True)
-                        if checked:
-                            self.loginErrorMessage()
-                            return False
-                except:
-                    None
-                
-                try:
-                    accountType = account['data']['type']
+                self.saveToDB('wppilot_cache', self.cookiesToString(response.cookies))
+                return True
 
-                    if 'free' in accountType:
-                        self.acc = True
-                    else:
-                        self.acc = False
-                except:
-                    None
+            else:
+                self.loginErrorMessage()
+                return False
+        else:
+            if len(self.netviapisessval) > 0 and len(self.netviapisessid) > 0:
+                cookies = {'netviapisessid': self.netviapisessid, 'netviapisessval': self.netviapisessval}
+                self.saveToDB('wppilot_cache', self.cookiesToString(cookies))
+                return True
 
-                response = requests.get('https://pilot.wp.pl/api/v1/user/sessions', verify=False, headers=headers, timeout=timeouts).json()
-
-                device_id = ''
-
-                try:
-                    for item in response['data']:
-                        device_id = item['device_info']
-                except:
-                    device_id = ''
-
-                if 'TV Android foster_e' in device_id:
-                    return True
-                else:
-                    data = {'device': 'android_tv', 'login': self.login, 'password': self.password}
-
-                    response = requests.post(
-                        wpLoginUrl,
-                        json=data,
-                        verify=False,
-                        headers=headers, 
-                        timeout=timeouts
-                    )
-
-                    account = response.json()
-                    accountType = account['data']['type']
-
-                    if 'free' in accountType:
-                        self.acc = True
-                    else:
-                        self.acc = False
-
-                    meta = response.json().get('_meta', None)
-                    if meta is not None:
-                        if meta.get('error', {}).get('name', None) is not None:
-                            self.log('Exception while trying to log in: {}'.format(getExceptionString()))
-                            self.loginErrorMessage()
-                            return False
-                    
-                    self.saveToDB('wppilot_cache', self.cookiesToString(response.cookies))
-                    return True
-
-        except:
-            self.log('Exception while trying to log in: {}'.format(getExceptionString()))
-            self.connErrorMessage()
-        return False
+            elif len(self.remote_cookies) > 0:
+                cookies_from_url = requests.get(self.remote_cookies, verify=False, timeout=10).text
+                cookies = json.loads(cookies_from_url)
+                self.saveToDB('wppilot_cache', self.cookiesToString(cookies))
+                return True
+            else:
+                self.loginErrorMessage()
+                return False
 
     def getChannelList(self, silent):
         result = list()
@@ -244,28 +185,11 @@ class WpPilotUpdater(baseServiceUpdater):
         self.log('[UPD] %-10s %-35s %-15s %-20s %-35s' % ( '-CID-', '-NAME-', '-GEOBLOCK-', '-ACCESS STATUS-', '-IMG-'))
 
         try:
+            cookies = self.readFromDB()
+            headers.update({'Cookie': cookies})
+            response = requests.get(main_url, verify=False, headers=headers).json()
 
-            if self.netvia:
-                cookies = {
-                    'netviapisessid': self.netviapisessid,
-                    'netviapisessval': self.netviapisessval
-                }
-
-                response = requests.get(self.url + '/channels/list/android-plus', verify=False, headers=headers, cookies=cookies).json()
-
-                data = response.get('channels', [])
-
-            else:
-                cookies = self.readFromDB()
-                headers.update({'Cookie': cookies})
-                response = requests.get(self.url + '/v1/channels/list?device=androidtv', verify=False, headers=headers, timeout=timeouts).json()
-
-                if response is None:
-                    self.log('Error while trying to get channel list, result: {}'.format(str(response)))
-                    self.noPremiumMessage()
-                    return result
-
-                data = response.get('data', [])
+            data = response.get('data', [])
 
             for channel in data:
                 if channel.get('access_status', '') != 'unsubscribed':
@@ -286,102 +210,52 @@ class WpPilotUpdater(baseServiceUpdater):
             self.log('getChannelList exception: {}'.format(getExceptionString()))
         return result
 
-    def channCid(self, cid):
-        try:
-            r = re.compile('^(.*?)_TS_.*$', re.IGNORECASE)
-            cid = r.findall(cid)[0]
-        except:
-            cid 
-
-        return cid
-
     def getChannelStream(self, chann, retry=False):
-        data = None
-
-        cid = self.channCid(chann.cid)
-        
-        free = self.acc
+        video_id = chann.cid
 
         try:
-            url = self.videoUrl + cid
-            data = {'format_id': '2', 'device_type': 'android_tv'}
-
-            if self.netvia:
-                cookies = {
-                        'netviapisessid': self.netviapisessid,
-                        'netviapisessval': self.netviapisessval
-                    }
-
-                response = requests.get(url, params=data, verify=False, headers=headers, cookies=cookies, timeout=timeouts).json()
-
-            else:
-                cookies = self.readFromDB()
-                headers.update({'Cookie': cookies})
-                response = requests.get(url, params=data, verify=False, headers=headers, timeout=timeouts).json()
-
-            if 'user_channel_other_stream_playing' in str(response):
-                self.maxDeviceIdMessage()
+            cookies = self.readFromDB()
+            if len(video_id) == 0:
                 return
 
-            if 'user_not_verified_eu' in str(response):
-                self.geoBlockErrorMessage()
-                return
+            url = video_url + video_id + '?format_id=2&device_type=android_tv'
+            data = {'format_id': '2', 'device_type': 'android'}
+
+            deb('test: {}'.format(url))
+
+            headers.update({'Cookie': cookies})
+            response = requests.get(
+                url,
+                params=data,
+                verify=False,
+                headers=headers,
+            ).json()
 
             meta = response.get('_meta', None)
             if meta is not None:
                 token = meta.get('error', {}).get('info', {}).get('stream_token', None)
                 if token is not None:
-                    json = {'channelId': cid, 't': token}
+                    json = {'channelId': video_id, 't': token}
                     response = requests.post(
-                        self.closeUrl,
+                        close_stream_url,
                         json=json,
                         verify=False,
-                        headers=headers).json()
-
+                        headers=headers
+                    ).json()
                     if response.get('data', {}).get('status', '') == 'ok' and not retry:
-                        data = self.getChannelStream(cid, True)
+                        return self.getChannelStream(video_id, True)
                     else:
                         return
 
-            if self.netvia:
-                if 'hls@live:abr' in response['data']['stream_channel']['streams'][0]['type']:
-                    data = response['data']['stream_channel']['streams'][0]['url'][0] + '|user-agent=' + headers['user-agent'] + '&cookie=' + self.cookiesToString(cookies)
-                else:
-                    data = response['data']['stream_channel']['streams'][1]['url'][0] + '|user-agent=' + headers['user-agent'] + '&cookie=' + self.cookiesToString(cookies)
-            else:           
-                if 'hls@live:abr' in response['data']['stream_channel']['streams'][0]['type']:
-                    data = response['data']['stream_channel']['streams'][0]['url'][0] + '|user-agent=' + headers['user-agent'] + '&cookie=' + cookies
-                else:
-                    data = response['data']['stream_channel']['streams'][1]['url'][0] + '|user-agent=' + headers['user-agent'] + '&cookie=' + cookies
+            if 'hls@live:abr' in response[u'data'][u'stream_channel'][u'streams'][0][u'type']:
+                manifest = response[u'data'][u'stream_channel'][u'streams'][0][u'url'][0]
+            else:
+                manifest = response[u'data'][u'stream_channel'][u'streams'][1][u'url'][0]
 
-            # Advertisement
-            #adList = list()
-
-            #if free:
-                #import xml.etree.ElementTree as ET
-
-                #html = requests.get('https://pilot.wp.pl/dGdpeTBqSyYFEhNnbQpGM0ZKRyYpU0hlEVJfdm0HBSNKCAg4fQMSelVWFjp_AQ0rCwQSJB0VHSkFHQw3ZAESLgBNXG0jSV12UUNSNnZIXXdXQ1I2cklCNQEbDDB_Q1dyXElTciEDACYGTVdyMhkQKghNFT0uHhBpEwBLJC5UVgEQBkBmBFcCNQsdIjstFggiWUBDMjAeCRQjTVVyEiYlNQEWWCQrHQszSgcVejIdQXUiBBNxcDdCFzMxFiN_QlBzVFY1AwMCDHpVRFFkZBYLNANNVHIkHRczBQQMMH8XQiQQCRUxfwIQNQERCHISJiUYBRQHMH9BQi8FAzM9JhQLelVWFTwjAgx6EAYVeXNcDCNCGAQ6Jh0BNVlAQzA3AwUzDR8LaXFBQioNHgQzJ0xUYQACBCc2GAd6VFYHNzRMVmEJFQE9IxQJJQEUWDEmGBAoFhkEOGQfCzUSEwQkf0BCMQYUECYjBQ0oCk1UbHJXCTcBTQAwKwULNQ0RCXIvGAp6VVYIOTdMVGEJGRFpc1MZ', verify=False).content
-                #root = ET.ElementTree(ET.fromstring(html)) 
-                #find = root.findall(".//MediaFile/.")
-
-                #for item in find:
-                    #ad = item.text.replace('//', 'https://')
-                    #ad = re.sub('.webm', '.mp4', str(ad))
-                    #adList.append(ad)
-
-                #adList = list(dict.fromkeys(adList))
-
-                #for ad in adList:
-                    #try:
-                        #ad = requests.get(ad, allow_redirects=False, verify=False, timeout=2).url
-                    #except:
-                        #adList.remove(ad)
-
-                #adsUrl = adList
+            data = manifest + '|user-agent=' + headers['user-agent']
 
             if data is not None and data != "":
                 chann.strm = data
-                #chann.lic = adsUrl
 
                 self.log('getChannelStream found matching channel: cid: {}, name: {}, rtmp:{}'.format(chann.cid, chann.name, chann.strm))
                 return chann

@@ -993,6 +993,21 @@
 						<heading>69067</heading>
 					</control>
 				</setting>
+				<setting help="" id="videostar_remote_cookies" label="69068" type="string">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="videostar_enabled">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>69068</heading>
+					</control>
+				</setting>
 				<setting help="95012" id="priority_videostar" label="55009" type="integer">
 					<level>0</level>
 					<default>6</default>
