@@ -1,5 +1,6 @@
-﻿wersja 9.4.7 - 2021-08-11
+﻿wersja 9.4.7 - 2021-08-16
 - poprawka migotania paska czasu
+- poprawka logowania w serwisie WP Pilot
 
 wersja 9.4.6 - 2021-08-10
 - poprawka logowania w serwisie WP Pilot

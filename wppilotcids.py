@@ -221,8 +221,6 @@ class WpPilotUpdater(baseServiceUpdater):
             url = video_url + video_id + '?format_id=2&device_type=android_tv'
             data = {'format_id': '2', 'device_type': 'android'}
 
-            deb('test: {}'.format(url))
-
             headers.update({'Cookie': cookies})
             response = requests.get(
                 url,

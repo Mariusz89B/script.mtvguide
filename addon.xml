@@ -30,8 +30,9 @@
 		<forum>http://mods-kodi.pl/forum/</forum>
 		<website>http://mods-kodi.pl/</website>
 		<email>support@m-tvguide.pl</email>
-	<news>v9.4.7 (2021-08-11)
+	<news>v9.4.7 (2021-08-16)
 - Fixed timebar flickering.
+- Fixed login for service WP Pilot.
 
 v9.4.6 (2021-08-10)
 - Fixed login for service WP Pilot.
