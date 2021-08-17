@@ -117,7 +117,9 @@ class StreamsService(object):
                     return stream
 
             # Second check all addons and return all matches
-            matches = list()
+            matches = []
+            exact_matches = []
+
             for id in self.getAddons():
                 try:
                     xbmcaddon.Addon(id)
@@ -125,11 +127,21 @@ class StreamsService(object):
                     continue # ignore addons that are not installed
 
                 for (label, stream) in self.getAddonStreams(id):
+                    if type(stream) is list:
+                        stream = stream[0]
+
+                    if label.lower() == channel.title.lower(): #TODO unicode
+                        exact_matches.append((id, label, stream))
+
                     try:
                         if label == channel.title or label.startswith(channel.title+' @'):
                             matches.append((id, label, stream))
                     except:
                         continue
+
+            exact_matches = set(exact_matches)
+            sorted_exact_matches = sorted(exact_matches, key=lambda match: match[1])
+            matches = sorted_exact_matches
 
             if len(matches) == 1:
                 return matches[0][2]

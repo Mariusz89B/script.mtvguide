@@ -361,16 +361,13 @@ class PlayService(xbmc.Player, BasePlayService):
         archiveStr = self.archivePlaylist
         return archiveStr
 
-    def deleteSession(self, cc, streamType, cid, dashjs, headers):
+    def deleteSession(self, url, headers):
         # Wait for player to start playing. This is not exactly bulletproof...
         xbmc.sleep(2000)
         # we need to send a delete request to close the session after playback stops
         while xbmc.Player().isPlaying():
             xbmc.sleep(300)
             #deb('looping while playing')
-
-        url = 'https://ottapi.prod.telia.net/web/{cc}/streaminggateway/rest/secure/v1/streamingticket/'\
-                         '{type}/{cid}?sessionId={dev_id}'.format(cc=cc, type=streamType, cid=cid, dev_id=dashjs)
 
         response = sess.delete(url, headers=headers)
 
@@ -974,11 +971,14 @@ class PlayService(xbmc.Player, BasePlayService):
                                         'Accept-Language': 'en-US;q=0.9,en;q=0.8'
                                     }
 
-                                    ListItem.setProperty('inputstream.adaptive.play_timeshift_buffer', 'true')
+                                    deleteUrl = 'https://ottapi.prod.telia.net/web/{cc}/streaminggateway/rest/secure/v1/streamingticket/'\
+                                                    '{type}/{cid}?sessionId={dev_id}'.format(cc=cc[country], type=streamType, cid=self.channCid(channelInfo.cid), dev_id=dashjs)
 
-                                    thread = threading.Thread(name='deleteSession', target=self.deleteSession, args=[cc[country], streamType, self.channCid(channelInfo.cid), dashjs, xheaders])
-                                    thread = threading.Timer(3.0, self.deleteSession, args=[cc[country], streamType, self.channCid(channelInfo.cid), dashjs, xheaders])
+                                    thread = threading.Thread(name='deleteSession', target=self.deleteSession, args=[deleteUrl, xheaders])
+                                    thread = threading.Timer(3.0, self.deleteSession, args=[deleteUrl, xheaders])
                                     thread.start()
+
+                                    ListItem.setProperty('inputstream.adaptive.play_timeshift_buffer', 'true')
 
                         self.strmUrl = strmUrl
                         xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)

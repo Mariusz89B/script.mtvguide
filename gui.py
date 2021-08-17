@@ -4762,25 +4762,34 @@ class mTVGuide(xbmcgui.WindowXML):
             return
 
         self.setControlLabel(C_MAIN_CHAN_NAME, '{}'.format(program.channel.title))
-        self.setControlLabel(C_MAIN_TITLE, '{}'.format(program.title))
+        self.setControlLabel(C_MAIN_TITLE, '{} '.format(program.title))
         self.setControlLabel(C_MAIN_TIME, '{} - {}'.format(self.formatTime(program.startDate), self.formatTime(program.endDate)))
 
         if xbmc.Player().isPlaying():
-            try:
-                if ADDON.getSetting('info_osd') == "false" or self.program is None:
-                    chann, prog, idx = self.getLastPlayingChannel()
+            if ADDON.getSetting('info_osd') == "false" or self.program is None:
+                try:
+                    latest_playing = True
+                    last_channel, last_program, idx = self.getLastPlayingChannel()
+                except:
+                    latest_playing = False
+                    idx, start, end, played = self.database.getLastChannel()
 
-                    self.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format(chann.id))
-                    self.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(prog.title))
+                try:
+                    self.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format(program.id))
+                    self.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(program.title))
                     self.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format(self.formatTime(prog.startDate), self.formatTime(prog.endDate)))
                     self.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format((str(int(idx) + 1))))
-
-            except:
-                if ADDON.getSetting('info_osd') == "false" or self.program is None:
-                    self.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format("N/A"))
-                    self.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(strings(55016)))
-                    self.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format("N/A", "N/A"))
-                    self.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format("-"))
+                except:
+                    if latest_playing:
+                        self.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format(last_channel.id))
+                        self.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(last_program.title))
+                        self.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format(self.formatTime(prog.startDate), self.formatTime(prog.endDate)))
+                        self.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format((str(int(idx) + 1))))
+                    else:
+                        self.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format("N/A"))
+                        self.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(strings(55016)))
+                        self.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format("N/A", "N/A"))
+                        self.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format("-"))
 
         if program.description:
             description = program.description

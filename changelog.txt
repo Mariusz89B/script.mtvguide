@@ -1,4 +1,7 @@
-﻿wersja 9.4.7 - 2021-08-16
+﻿wersja 9.4.8 - 2021-08-17
+- poprawka wideoOSD
+
+wersja 9.4.7 - 2021-08-16
 - poprawka migotania paska czasu
 - poprawka logowania w serwisie WP Pilot
 

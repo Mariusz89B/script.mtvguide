@@ -265,7 +265,7 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
         self.actionnumber = self.getControl(C_ACTION_NUMBER)
         self.actiondesc = self.getControl(C_ACTION_DESC)
 
-        if self.controlledByMouse or self.showConfigButtons:
+        if self.showConfigButtons:
             self.pausePlaybackControl.controlRight(self.infoControl)
             self.infoControl.controlLeft(self.pausePlaybackControl)
             self.infoControl.controlRight(self.setupControl)
@@ -301,9 +301,7 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
             self.nextSubtitle.setVisible(False)
             self.audioNextLanguage.setVisible(False)
             self.actionnumber.setVisible(False)
-            self.actionback.setVisible(False)
-            self.actionright.setVisible(False)
-            self.actiondesc.setVisible(False)
+
             self.pageUpControl.setEnabled(False)
             self.pageDownControl.setEnabled(False)
             self.pausePlaybackControl.setEnabled(False)
@@ -312,17 +310,29 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
             self.nextSubtitle.setEnabled(False)
             self.audioNextLanguage.setEnabled(False)
             self.actionnumber.setEnabled(False)
-            self.actionback.setEnabled(False)
-            self.actionright.setEnabled(False)
             self.unscheduleControl.setVisible(True)
             self.unscheduleControl.setEnabled(True)
-            self.actiondesc.setEnabled(True)
+            if self.keyRightLeftChangeProgram:
+                self.actiondesc.setVisible(True)
+                self.actiondesc.setEnabled(True)
+                self.actionback.setVisible(True)
+                self.actionright.setVisible(True)
+                self.actionback.setEnabled(True)
+                self.actionright.setEnabled(True)
+            else:
+                self.actiondesc.setVisible(False)
+                self.actiondesc.setEnabled(False)
+                self.actionback.setVisible(False)
+                self.actionright.setVisible(False)
+                self.actionback.setEnabled(False)
+                self.actionright.setEnabled(False)
 
         self.playControl.setVisible(False)
         self.stopPlaybackControl.setVisible(False)
         self.scheduleControl.setVisible(False)
-        self.actionback.setVisible(True)
-        self.actionright.setVisible(True)
+        if self.keyRightLeftChangeProgram:
+            self.actionback.setVisible(True)
+            self.actionright.setVisible(True)
         self.stopPlaybackControl.setEnabled(False)
         self.playControl.setEnabled(True)
         self.scheduleControl.setEnabled(False)
@@ -488,11 +498,11 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
             self.program = self.gu.getProgramDown(self.program)
             self.refreshControls()
 
-        elif (action.getId() == ACTION_LEFT):
+        elif (action.getId() == ACTION_LEFT) and self.keyRightLeftChangeProgram:
             if not self.showConfigButtons:
                 self.showPreviousProgram()
 
-        elif (action.getId() == ACTION_RIGHT):
+        elif (action.getId() == ACTION_RIGHT) and self.keyRightLeftChangeProgram:
             if not self.showConfigButtons:
                 self.showNextProgram()
 
@@ -650,6 +660,17 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
                 self.program = program
                 self.refreshControls()
 
+    def showNextChannel(self):
+        program = self.gu.getProgramDown(self.program)
+        if program is not None:
+            self.program = program
+            self.refreshControls()
+
+    def showPreviousChannel(self):
+        program = self.gu.getProgramUp(self.program)
+        if program is not None:
+            self.program = program
+            self.refreshControls()
 
     def onClick(self, controlId):
         self.keyboardTime = time.mktime(datetime.datetime.now().timetuple())
@@ -712,10 +733,12 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
 
     def onClickKeyboard(self, controlId):
         if controlId == C_PAGE_DOWN:
-            self.showPreviousProgram()
+            #self.showPreviousProgram()
+            self.showPreviousChannel()
             self.setFocusId(C_PAGE_DOWN)
         elif controlId == C_PAGE_UP:
-            self.showNextProgram()
+            #self.showNextProgram()
+            self.showNextChannel()
             self.setFocusId(C_PAGE_UP)
         elif controlId == C_SCHEDULE:
             if self.gu.epg.notification:

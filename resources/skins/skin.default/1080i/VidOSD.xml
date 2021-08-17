@@ -202,7 +202,7 @@
 			<align>center</align>
 			<aligny>center</aligny>
 			<label>$ADDON[script.mtvguide 30311]</label>
-			<visible>!Control.IsVisible(107) + !Control.IsVisible(108)</visible>
+			<visible>Control.IsVisible(118) + !Control.IsVisible(107) + !Control.IsVisible(108)</visible>
 		</control>
 		
 		<control type="label">
