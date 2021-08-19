@@ -229,6 +229,9 @@ class WpPilotUpdater(baseServiceUpdater):
                 headers=headers,
             ).json()
 
+            if response['_meta']['error']['name'] == 'user_not_verified_eu':
+                self.geoBlockErrorMessage()
+
             meta = response.get('_meta', None)
             if meta is not None:
                 token = meta.get('error', {}).get('info', {}).get('stream_token', None)

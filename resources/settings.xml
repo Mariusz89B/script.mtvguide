@@ -190,8 +190,8 @@
 		<setting id="AutoUpdateCid" label="30703" type="bool" default="true" visible="eq(-4,0) | eq(-4,1)"/>
 		<setting id="OnlyChannelsWithStream" label="30705" type="bool" default="true" visible="eq(-5,0) | eq(-5,1)"/>
 		<setting id="UpdateEPGOnModifiedDate" label="30706" type="bool" default="true" visible="eq(-6,0) | eq(-6,1)"/>
-		<setting id="show_group_channels" label="30762" type="bool" default="false" visible="eq(-7,0) | eq(-7,1)"/>
-		<setting id="epg_display_name" label="30761" type="bool" default="false" visible="eq(-8,0) | eq(-8,1)"/>
+		<setting id="epg_display_name" label="30761" type="bool" default="false" visible="eq(-7,0) | eq(-7,1)"/>
+		<setting id="show_group_channels" label="30762" type="bool" default="false" visible="eq(-1,false)"/>
 		<setting id="useCustomParser" label="30708" type="bool" default="true" visible="eq(-9,1)"/>
 		<setting id="refresh_streams" label="30976" type="bool" default="true" visible="eq(-10,0) | eq(-10,1)"/>
 		<setting id="show_logo" label="30355" type="bool" default="true" visible="eq(-11,0) | eq(-11,1)"/>

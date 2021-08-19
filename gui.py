@@ -5869,34 +5869,37 @@ class mTVGuide(xbmcgui.WindowXML):
 
         self.category = self.database.category
 
-        if self.category is not None:
+        try:
             if sys.version_info[0] < 3:
                 self.category = self.category.decode('utf-8')
-            self.categories = self.database.getAllCategories()
+        except:
+            self.category = ''
 
-            listControl = self.getControl(self.C_MAIN_CATEGORY)
-            listControl.reset()
+        self.categories = self.database.getAllCategories()
 
-            items = list()
+        listControl = self.getControl(self.C_MAIN_CATEGORY)
+        listControl.reset()
 
-            ccList = ['be', 'cz', 'de', 'dk', 'fr', 'hr', 'it', 'no', 'pl', 'se', 'srb', 'uk', 'us', 'radio']
-            
-            categories = PREDEFINED_CATEGORIES + list(self.categories)
-            for item in ccList:
-                if ADDON.getSetting('country_code_{cc}'.format(cc=item)) == "false":
-                    categories.remove('Group: {cc}'.format(cc=item.upper()))
+        items = list()
 
-            categories = [label.replace('Group', strings(30995)) for label in categories]
+        ccList = ['be', 'cz', 'de', 'dk', 'fr', 'hr', 'it', 'no', 'pl', 'se', 'srb', 'uk', 'us', 'radio']
+        
+        categories = PREDEFINED_CATEGORIES + list(self.categories)
+        for item in ccList:
+            if ADDON.getSetting('country_code_{cc}'.format(cc=item)) == "false":
+                categories.remove('Group: {cc}'.format(cc=item.upper()))
 
-            for label in categories:
-                item = xbmcgui.ListItem(label)
-                items.append(item)
+        categories = [label.replace('Group', strings(30995)) for label in categories]
 
-            listControl.addItems(items)
-            if self.category and self.category in categories:
-                index = categories.index(self.category)
-                if index >= 0:
-                    listControl.selectItem(index)
+        for label in categories:
+            item = xbmcgui.ListItem(label)
+            items.append(item)
+
+        listControl.addItems(items)
+        if self.category and self.category in categories:
+            index = categories.index(self.category)
+            if index >= 0:
+                listControl.selectItem(index)
 
         self.getListLenght = self.getChannelListLenght()
         

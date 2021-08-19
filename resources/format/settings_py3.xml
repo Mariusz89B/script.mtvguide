@@ -2091,7 +2091,7 @@
 					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<setting help="95135" id="show_group_channels" label="30762" type="boolean">
+				<setting help="95134" id="epg_display_name" label="30761" type="boolean">
 					<level>1</level>
 					<default>false</default>
 					<dependencies>
@@ -2104,15 +2104,14 @@
 					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<setting help="95134" id="epg_display_name" label="30761" type="boolean">
+				<setting help="95135" id="show_group_channels" label="30762" type="boolean">
 					<level>1</level>
 					<default>false</default>
 					<dependencies>
 						<dependency type="visible">
-							<or>
-								<condition operator="is" setting="source">0</condition>
-								<condition operator="is" setting="source">1</condition>
-							</or>
+							<and>
+								<condition operator="is" setting="epg_display_name">false</condition>
+							</and>
 						</dependency>
 					</dependencies>
 					<control type="toggle"/>
