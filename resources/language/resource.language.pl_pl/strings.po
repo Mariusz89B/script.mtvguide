@@ -940,6 +940,10 @@ msgctxt "#30762"
 msgid "Enable only channels in pre-defined groups"
 msgstr "Wyświetlaj tylko kanały we wstępnie zdefiniowanych grupach"
 
+msgctxt "#30763"
+msgid "Append fixed country code for all channels"
+msgstr "Dodaj stały kod kraju dla wszystkich kanałów"
+
 msgctxt "#30802"
 msgid "m-TVGuide is configured to stream using"
 msgstr "m-TVGuide jest skonfigurowany, aby używać dodatku"

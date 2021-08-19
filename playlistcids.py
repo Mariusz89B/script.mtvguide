@@ -436,6 +436,12 @@ class PlaylistUpdater(baseServiceUpdater):
 
                             title = self.removeDuplicates(title)
 
+                            if ADDON.getSetting('append_country_code') != '':
+                                p = re.compile(r'.*\s[a-zA-Z]{2,3}$', re.DOTALL)
+
+                                if not p.match(title):
+                                    title = title + ' ' + ADDON.getSetting('append_country_code')
+
                             if ADDON.getSetting('show_group_channels') == 'false':
                                 p = re.compile(r'.*\s[a-zA-Z]{2,3}$', re.DOTALL)
 

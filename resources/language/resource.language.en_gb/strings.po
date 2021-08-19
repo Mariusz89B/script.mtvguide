@@ -940,6 +940,10 @@ msgctxt "#30762"
 msgid "Enable only channels in pre-defined groups"
 msgstr ""
 
+msgctxt "#30763"
+msgid "Append fixed country code for all channels"
+msgstr ""
+
 msgctxt "#30802"
 msgid "m-TVGuide is configured to stream using"
 msgstr ""
@@ -3298,6 +3302,10 @@ msgstr ""
 
 msgctxt "#95135"
 msgid "If enabled only channels in pre-defined groups are displayed in the EPG list, might reduce loading time."
+msgstr ""
+
+msgctxt "#95136"
+msgid "Append a country code for all channels."
 msgstr ""
 
 msgctxt "#99995" 

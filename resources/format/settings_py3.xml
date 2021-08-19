@@ -2116,6 +2116,21 @@
 					</dependencies>
 					<control type="toggle"/>
 				</setting>
+				<setting help="95136" id="append_country_code" label="30763" type="string">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="epg_display_name">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>30763</heading>
+					</control>
+				</setting>
 				<setting help="95029" id="useCustomParser" label="30708" type="boolean">
 					<level>3</level>
 					<default>true</default>
