@@ -942,7 +942,7 @@ msgstr "Wyświetlaj tylko kanały we wstępnie zdefiniowanych grupach"
 
 msgctxt "#30763"
 msgid "Append fixed country code for all channels"
-msgstr "Dodaj stały kod kraju dla wszystkich kanałów"
+msgstr "Dodaj stały kod krajowy dla wszystkich kanałów"
 
 msgctxt "#30802"
 msgid "m-TVGuide is configured to stream using"
