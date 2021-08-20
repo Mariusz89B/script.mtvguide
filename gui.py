@@ -395,7 +395,7 @@ class epgTimer(object):
 class VideoPlayerStateChange(xbmc.Player):
 
     def __init__(self, *args, **kwargs):
-        deb("################ Starting control VideoPlayer events")
+        deb("################ Starting control VideoPlayer events ################")
         self.playerStateChanged = Event()
         self.updatePositionTimerData = {}
         self.recordedFilesPositions = {}
@@ -413,22 +413,22 @@ class VideoPlayerStateChange(xbmc.Player):
         self.playerStateChanged(state)
 
     def onPlayBackError(self):
-        deb("################ PlayBackError")
+        deb("################ PlayBackError ################")
         self.updatePositionTimerData['stop'] = True
         self.onStateChange("PlayBackError")
         ADDON.setSetting('vosd.arg', 'false')
 
     def onPlayBackPaused(self):
-        deb("################ Im paused")
+        deb("################ Im paused ################")
         # self.playerStateChanged("Paused")
         # threading.Timer(0.3, self.stopplaying).start()
 
     def onPlayBackResumed(self):
-        deb("################ Im Resumed")
+        deb("################ Im Resumed ################")
         # self.onStateChange("Resumed")
 
     def onPlayBackStarted(self):
-        deb("################ Playback Started")
+        deb("################ Playback Started ################")
         self.updatePositionTimerData['stop'] = True
         self.onStateChange("Started")
         try:
@@ -457,14 +457,14 @@ class VideoPlayerStateChange(xbmc.Player):
 
     def onPlayBackEnded(self):
         xbmc.sleep(100)
-        deb("################# Playback Ended")
+        deb("################# Playback Ended #################")
         self.updatePositionTimerData['stop'] = True
         self.onStateChange("Ended")
         ADDON.setSetting('vosd.arg', 'false')
 
     def onPlayBackStopped(self):
         xbmc.sleep(100)
-        deb("################# Playback Stopped")
+        deb("################# Playback Stopped #################")
         self.updatePositionTimerData['stop'] = True
         self.onStateChange("Stopped")
         ADDON.setSetting('vosd.arg', 'false')
@@ -2037,7 +2037,7 @@ class mTVGuide(xbmcgui.WindowXML):
         return
 
     def onPlayerStateChanged(self, pstate):
-        deb("########### onPlayerStateChanged {} {}".format(pstate, ADDON.getSetting('info_osd')))
+        deb("########### onPlayerStateChanged {}, pstate: {} ###########".format(pstate, ADDON.getSetting('info_osd')))
         if self.isClosing:
             return
 
@@ -7409,7 +7409,7 @@ class Pla(xbmcgui.WindowXMLDialog):
     def onAction(self, action):
         debug('Pla onAction keyId {}, buttonCode {}'.format(action.getId(), action.getButtonCode()))
 
-        if action.getId() == ACTION_PREVIOUS_MENU or action.getId() == ACTION_STOP or (action.getButtonCode() == KEY_STOP and KEY_STOP != 0) or (action.getId() == KEY_STOP and KEY_STOP != 0):
+        if action.getId() == ACTION_STOP or (action.getButtonCode() == KEY_STOP and KEY_STOP != 0) or (action.getId() == KEY_STOP and KEY_STOP != 0):
             self.epg.playService.stopPlayback()
             self.closeOSD()
 
@@ -7440,7 +7440,7 @@ class Pla(xbmcgui.WindowXMLDialog):
                 self.epg.showFullRecordings(program.channel)
             return
 
-        elif action.getId() == KEY_NAV_BACK:
+        elif action.getId() in [ACTION_PARENT_DIR, KEY_NAV_BACK, ACTION_PREVIOUS_MENU]:
             self.closeOSD()
             if ADDON.getSetting('navi_back_stop_play') == 'true':
                 self.epg.playService.stopPlayback()
