@@ -197,7 +197,7 @@ class ProgramDescriptionParser(object):
     
     def extractEpisode(self):
         try:
-            episode = re.search('((S\d{1,3})?\s*((E)?\d{1,5}(\/\d{1,5})?))', self.description).group(1)
+            episode = re.search('([*S|E]((S)?(\d{1,3})?s*((E)?\d{1,5}(\/\d{1,5})?)))', self.description).group(1)
             if 'S' in episode or 'E' in episode:
                 episode = ProgramDescriptionParser.DECORATE_REGEX.sub("", episode)
             else:
@@ -851,7 +851,7 @@ class Database(object):
 
             self.conn.commit()
             c.close()
-            deb('[UPD] Finished updating databse, stored: {} streams from service: {}'.format(nrOfChannelsUpdated, streamSource))
+            deb('[UPD] Finished updating database, stored: {} streams from service: {}'.format(nrOfChannelsUpdated, streamSource))
         except Exception as ex:
             deb('[UPD] Error updating streams: {}'.format(getExceptionString()))
 
@@ -2741,6 +2741,12 @@ def customParseXMLTV(xml, progress_callback):
 
         try:
             episode  = decodeString(programEpisode.search(program).group(1))
+
+            try:
+                episode = re.search('([*S|E]((S)?(\d{1,3})?s*((E)?\d{1,5}(\/\d{1,5})?)))', episode).group(1)
+            except:
+                pass
+
         except:
             episode = ''
 
@@ -2856,6 +2862,12 @@ def parseXMLTV(context, f, size, logoFolder, progress_callback):
                 except:
                     catb = ""
 
+                try:
+                    episode = re.search('([*S|E]((S)?(\d{1,3})?s*((E)?\d{1,5}(\/\d{1,5})?)))', episode).group(1)
+
+                except:
+                    pass
+    
                 icon = None
                 if iconElement is not None:
                     if 'http' in iconElement:

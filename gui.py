@@ -5774,9 +5774,6 @@ class mTVGuide(xbmcgui.WindowXML):
             focusControl = self._findControlAt(self.focusPoint)
         controls = [elem.control for elem in self.controlAndProgramList]
         self.addControls(controls)
-
-        self.onTimebarEPG()
-        self.updateTimebar()
         
         if focusControl is not None:
             self.setFocus(focusControl)
@@ -5788,6 +5785,9 @@ class mTVGuide(xbmcgui.WindowXML):
         self._hideControl(self.C_MAIN_LOADING)
 
         self.blockInputDueToRedrawing = False
+
+        self.onTimebarEPG()
+        self.updateTimebar()
 
         if ADDON.getSetting('channel_shortcut') == 'true':
             channel_index_format = "%%0%sd" % 1
