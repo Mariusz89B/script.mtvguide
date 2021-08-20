@@ -7862,7 +7862,7 @@ class ProgramListDialog(xbmcgui.WindowXMLDialog):
 
             day = self.formatDateTodayTomorrow(start)
             start_str = start.strftime("%H:%M")
-            start_str = "{} {} - {}".format(start_str, start.strftime("%d-%m").replace('-', '/').replace('0', ''), day)
+            start_str = "{} {} - {}".format(start_str, start.strftime("%d-%m").replace('-', '/').replace(r'^0', '').replace('/0', '/'), day)
             
             if len(start_str) > 18 and xbmcgui.getScreenWidth() < 2560:
                 start_str = start_str[0:18] + '.'
