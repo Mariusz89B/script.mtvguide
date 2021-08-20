@@ -4720,11 +4720,13 @@ class mTVGuide(xbmcgui.WindowXML):
             nowDay = now.strftime("%a").replace('Mon', strings(70109)).replace('Tue', strings(70110)).replace('Wed', strings(70111)).replace('Thu', strings(70112)).replace('Fri', strings(70113)).replace('Sat', strings(70114)).replace('Sun', strings(70115))
         except:
             nowDay = now.strftime("%a").replace('Mon', strings(70109).encode('UTF-8')).replace('Tue', strings(70110).encode('UTF-8')).replace('Wed', strings(70111).encode('UTF-8')).replace('Thu', strings(70112).encode('UTF-8')).replace('Fri', strings(70113).encode('UTF-8')).replace('Sat', strings(70114).encode('UTF-8')).replace('Sun', strings(70115).encode('UTF-8'))
-        
-        nowDate = now.strftime("%d-%m-%Y")
 
-        self.setControlLabel(C_MAIN_DAY, '{}'.format(nowDay))
-        self.setControlLabel(C_MAIN_REAL_DATE, '{}'.format(nowDate))
+        if xbmcgui.getScreenWidth() < 2560: 
+            self.setControlLabel(C_MAIN_DAY, '{}'.format(nowDay[:3]))
+        else:
+            self.setControlLabel(C_MAIN_DAY, '{}'.format(nowDay))
+
+        self.setControlLabel(C_MAIN_REAL_DATE, '{}'.format(xbmc.getInfoLabel('System.Date').strip()))
 
     def calctimeLeft(self, program):
         #Calc time EPG
