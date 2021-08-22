@@ -516,12 +516,12 @@ class PlaylistUpdater(baseServiceUpdater):
                                     title += ' ' + langReplaceMap['lang']
 
                             for regexRemove in regexRemoveList:
-                                if( regexRemove.search(title) ):
+                                if( regexRemove.findall(title) ):
                                     title = ''      
 
                             if ADDON.getSetting('show_group_channels') == 'true':
                                 for regexAdd in regexAddList:
-                                    if not ( regexAdd.search(title) ):
+                                    if not ( regexAdd.findall(title) ):
                                         title = ''                  
 
                             title = title.replace('  ', ' ').strip()

@@ -1,5 +1,6 @@
-﻿wersja 9.4.8 - 2021-08-17
+﻿wersja 9.4.8 - 2021-08-22
 - poprawka wideoOSD
+- usunięte błędy
 
 wersja 9.4.7 - 2021-08-16
 - poprawka migotania paska czasu
