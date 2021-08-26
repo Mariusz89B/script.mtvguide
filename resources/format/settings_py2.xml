@@ -77,6 +77,18 @@
 		<setting id="playerpl_logged" visible="false"/>
 		
 		<setting type="sep"/>
+		<setting label="80008" type="lsep"/>
+		<setting id="polsatgo_enabled" type="bool" label="59904" default="false"/>
+		<setting id="polsatgo_username" type="text" label="55002" default="" visible="eq(-1,true)"/>
+		<setting id="polsatgo_password" type="text" option="hidden" label="55003" default="" visible="eq(-2,true)"/>
+		<setting id="priority_polsatgo" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-3,true)"/>
+		
+		<setting type="sep"/>
+		<setting label="80007" type="lsep"/>
+		<setting id="tvp_enabled" type="bool" label="59904" default="false"/>
+		<setting id="priority_tvp" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-1,true)"/>
+		
+		<setting type="sep"/>
 		<setting label="30904" type="lsep"/>
 		<setting id="teliaplay_enabled" type="bool" label="59904" default="false"/>
 		<setting id="teliaplay_locale" type="select" label="30368" default="0" lvalues="57056|57057" visible="eq(-1,true)"/>
@@ -92,11 +104,6 @@
 		<setting id="teliaplay_usern" visible="false"/>
 		
 		<setting type="sep"/>
-		<setting label="80007" type="lsep"/>
-		<setting id="tvp_enabled" type="bool" label="59904" default="false"/>
-		<setting id="priority_tvp" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-1,true)"/>
-		
-		<setting type="sep"/>
 		<setting label="80005" type="lsep"/>
 		<setting id="videostar_enabled" type="bool" label="59904" default="false"/>
 		<setting id="videostar_username" type="text" label="55002" default="" visible="eq(-1,true)"/>
@@ -105,8 +112,8 @@
 		<setting id="videostar_netviapisessval" type="text" label="69067" default="" visible="eq(-4,true)"/>
 		<setting id="videostar_remote_cookies" type="text" label="69068" default="" visible="eq(-5,true)"/>
 		<setting id="priority_videostar" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-6,true)"/>
-
 	</category>
+	
 	<category label="59905">
 		<setting id="nr_of_playlists" label="59916" type="labelenum" default="0" values="0|1|2|3|4|5"/>
 		

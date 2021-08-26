@@ -10,6 +10,7 @@ Cyfrowy Polsat GO - Cyfrowy Polsat S.A.
 Ipla - Cyfrowy Polsat S.A.
 nc+ GO - ITI Neovision S.A.
 PlayerPL - TVN S.A.
+Polsat GO - Telewizja Polsat Sp. Z.o.o.
 Telia Play - Telia Company AB
 Telewizja Polska - Telewizja Polska S.A.
 WP Pilot - Wirtualna Polska Media S.A.
@@ -33,6 +34,7 @@ Cyfrowy Polsat GO - https://www.cyfrowypolsat.pl/do-pobrania/regulaminy-i-cennik
 Ipla - https://www.ipla.tv/regulamins/
 nc+ GO - https://ncplusgo.pl/Cms/Page?codename=regulamin/
 PlayerPL - https://player.pl/regulamin.pdf
+Polsat GO - https://redirector.redefine.pl/versions/regulamin_polsat_go.pdf
 Telia Play - https://www.telia.se/privat/om/villkor/villkor-mitt-telia/
 Telewizja Polska - https://vod.tvp.pl/page/regulamin,1653650/
 WP Pilot - https://pilot.wp.pl/pomoc/
@@ -44,6 +46,7 @@ Cyfrowy Polsat GO - https://icok.cyfrowypolsat.pl/rejestracja.cp
 Ipla - https://www.ipla.tv/register/
 nc+ GO - https://ncplusgo.pl/konto/rejestracja/
 PlayerPL - https://player.pl/
+Polsat GO - https://polsatgo.pl/zarejestruj/
 Telia Play - https://www.telia.se/privat/mitt-telia/logga-in/
 Telewizja Polska - https://www.tvp.pl/sess/user-2.0/register.php?ref=aHR0cHM6Ly9jZW50cnVtaW5mb3JtYWNqaS50dnAucGwv
 WP Pilot - https://pilot.wp.pl/register/

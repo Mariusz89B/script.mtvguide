@@ -86,6 +86,7 @@ import cmorecids
 import teliaplaycids
 import tvpcids
 import playerplcids
+import polsatgocids
 
 sess = cloudscraper.create_scraper()
 scraper = cloudscraper.CloudScraper()
@@ -104,7 +105,8 @@ SERVICES = {
     cmorecids.serviceName           : cmorecids.CmoreUpdater(),
     teliaplaycids.serviceName       : teliaplaycids.TeliaPlayUpdater(),
     tvpcids.serviceName             : tvpcids.TvpUpdater(),
-    playerplcids.serviceName        : playerplcids.PlayerPLUpdater()
+    playerplcids.serviceName        : playerplcids.PlayerPLUpdater(),
+    polsatgocids.serviceName        : polsatgocids.PolsatGoUpdater()
 }
 
 for serviceName in list(SERVICES.keys()):
@@ -751,6 +753,57 @@ class PlayService(xbmc.Player, BasePlayService):
                         deb('Exception while trying to play video: {}'.format(getExceptionString()))
                         self.unlockCurrentlyPlayedService()
                         xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
+
+                if service == 'Polsat GO':
+                    if self.archiveService == '' or self.archivePlaylist == '':
+                        try:
+                            self.playbackStopped = False
+
+                            licenseUrl = channelInfo.lic
+                            strmUrl = channelInfo.strm
+
+                            try:
+                                from urllib.parse import urlencode, quote_plus, quote, unquote
+                            except ImportError:
+                                from urllib import urlencode, quote_plus, quote, unquote
+
+                            licServ = 'https://b2c-www.redefine.pl/rpc/drm/'
+
+                            UA = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.9 Safari/537.36'
+
+                            PROTOCOL = 'mpd'
+                            DRM = 'com.widevine.alpha'
+
+                            if licenseUrl:
+                                import inputstreamhelper
+                                is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
+                                if is_helper.check_inputstream():
+                                    ListItem = xbmcgui.ListItem(path=strmUrl)
+                                    ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
+                                    ListItem.setContentLookup(False)
+                                    if sys.version_info[0] > 2:
+                                        ListItem.setProperty('inputstream', is_helper.inputstream_addon)
+                                    else:
+                                        ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
+                                    ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
+                                    ListItem.setMimeType('application/xml+dash')
+                                    ListItem.setProperty('inputstream.adaptive.stream_headers', 'Referer: https://polsatgo.pl')
+                                    ListItem.setProperty('inputstream.adaptive.license_type', DRM)
+                                    ListItem.setProperty('inputstream.adaptive.manifest_update_parameter', 'full')
+                                    ListItem.setProperty('inputstream.adaptive.license_key', licServ+'|Content-Type=application%2Fjson&Referer=https://polsatgo.pl/&User-Agent='+quote(UA)+'|'+licenseUrl+'|JBlicense')                      
+                                    ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
+                                    ListItem.setProperty('IsPlayable', 'true')
+
+                                    ListItem.setProperty('inputstream.adaptive.play_timeshift_buffer', 'true')
+                            
+                            self.strmUrl = strmUrl
+                            xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
+                            res = True
+
+                        except Exception as ex:
+                            deb('Exception while trying to play video: {}'.format(getExceptionString()))
+                            self.unlockCurrentlyPlayedService()
+                            xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
 
                 if service == 'Telia Play':
                     try:

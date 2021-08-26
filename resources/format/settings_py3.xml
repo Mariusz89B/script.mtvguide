@@ -222,6 +222,8 @@
 					<control format="string" type="spinner"/>
 				</setting>
 			</group>
+			<group id="6"/>
+			<group id="7"/>
 			<!--<group id="7" label="59922">
 				<setting help="95007" id="francetv_enabled" label="59904" type="boolean">
 					<level>0</level>
@@ -256,6 +258,10 @@
 				</setting>
 			</group>-->
 			<group id="8"/>
+			<group id="9"/>
+			
+			<group id="12"/>
+			<group id="13"/>
 			<group id="14"/>
 			<group id="15" label="80006">
 				<setting help="95007" id="ipla_enabled" label="59904" type="boolean">
@@ -732,7 +738,104 @@
 					</control>
 				</setting>
 			</group>
-			<group id="18" label="30904">
+			<group id="18" label="80008">
+				<setting help="95007" id="polsatgo_enabled" label="59904" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="95010" id="polsatgo_username" label="55002" type="string">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="polsatgo_enabled">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>55002</heading>
+					</control>
+				</setting>
+				<setting help="95011" id="polsatgo_password" label="55003" type="string">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="polsatgo_enabled">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>55003</heading>
+						<hidden>true</hidden>
+					</control>
+				</setting>
+				<setting help="95012" id="priority_polsatgo" label="55009" type="integer">
+					<level>0</level>
+					<default>6</default>
+					<constraints>
+						<options>
+							<option label="55010">0</option>
+							<option label="55011">1</option>
+							<option label="55017">2</option>
+							<option label="55012">3</option>
+							<option label="55018">4</option>
+							<option label="55013">5</option>
+							<option label="55019">6</option>
+							<option label="55014">7</option>
+							<option label="55020">8</option>
+							<option label="55021">9</option>
+							<option label="55022">10</option>
+							<option label="55023">11</option>
+						</options>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="polsatgo_enabled">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="spinner"/>
+				</setting>
+			</group>
+			<group id="19" label="80007">
+				<setting help="95007" id="tvp_enabled" label="59904" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="95012" id="priority_tvp" label="55009" type="integer">
+					<level>0</level>
+					<default>6</default>
+					<constraints>
+						<options>
+							<option label="55010">0</option>
+							<option label="55011">1</option>
+							<option label="55017">2</option>
+							<option label="55012">3</option>
+							<option label="55018">4</option>
+							<option label="55013">5</option>
+							<option label="55019">6</option>
+							<option label="55014">7</option>
+							<option label="55020">8</option>
+							<option label="55021">9</option>
+							<option label="55022">10</option>
+							<option label="55023">11</option>
+						</options>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="tvp_enabled">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="spinner"/>
+				</setting>
+			</group>
+			<group id="20" label="30904">
 				<setting help="95007" id="teliaplay_enabled" label="59904" type="boolean">
 					<level>0</level>
 					<default>false</default>
@@ -893,40 +996,7 @@
 					</control>
 				</setting>
 			</group>
-			<group id="7" label="80007">
-				<setting help="95007" id="tvp_enabled" label="59904" type="boolean">
-					<level>0</level>
-					<default>false</default>
-					<control type="toggle"/>
-				</setting>
-				<setting help="95012" id="priority_tvp" label="55009" type="integer">
-					<level>0</level>
-					<default>6</default>
-					<constraints>
-						<options>
-							<option label="55010">0</option>
-							<option label="55011">1</option>
-							<option label="55017">2</option>
-							<option label="55012">3</option>
-							<option label="55018">4</option>
-							<option label="55013">5</option>
-							<option label="55019">6</option>
-							<option label="55014">7</option>
-							<option label="55020">8</option>
-							<option label="55021">9</option>
-							<option label="55022">10</option>
-							<option label="55023">11</option>
-						</options>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="is" setting="tvp_enabled">true</condition>
-						</dependency>
-					</dependencies>
-					<control format="string" type="spinner"/>
-				</setting>
-			</group>
-			<group id="19" label="80005">
+			<group id="21" label="80005">
 				<setting help="95007" id="videostar_enabled" label="59904" type="boolean">
 					<level>0</level>
 					<default>false</default>
