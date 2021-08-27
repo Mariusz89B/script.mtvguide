@@ -48,7 +48,6 @@ import sys
 import os, copy, re
 import xbmc, xbmcvfs
 import requests
-import re
 
 try:
     from urllib.parse import urlencode, quote_plus, quote
@@ -72,8 +71,8 @@ class PolsatGoUpdater(baseServiceUpdater):
         self.localMapFile       = 'basemap.xml'
         baseServiceUpdater.__init__(self)
         self.serviceEnabled     = ADDON.getSetting('polsatgo_enabled')
-        self.login              = ADDON.getSetting('polsatgo_username').strip() #'tmlt696@gmail.com'
-        self.password           = ADDON.getSetting('polsatgo_password').strip() # 'kurwa98'
+        self.login              = ADDON.getSetting('polsatgo_username').strip()
+        self.password           = ADDON.getSetting('polsatgo_password').strip()
         self.servicePriority    = int(ADDON.getSetting('priority_polsatgo'))
         self.clid               = ADDON.getSetting('polsatgo_clientId')
         self.devid              = ADDON.getSetting('polsatgo_devid')
