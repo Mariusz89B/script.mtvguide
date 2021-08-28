@@ -92,7 +92,7 @@ else:
         profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
 
 sess = requests.Session()
-timeouts = (15, 30)
+timeouts = (5, 10)
 
 class Threading(object):
     def __init__(self):
@@ -238,7 +238,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 'Accept-Language': 'en-US,en;q=0.9',
             }
 
-            response = self.sendRequest(url, post=True, headers=headers, data=json.dumps(data), verify=False, timeout=timeouts)
+            response = self.sendRequest(url, post=True, headers=headers, data=json.dumps(data), verify=False, timeout=300)
             if not response:
                 return False
 
@@ -266,7 +266,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 "deviceType": "WEB",
             }
             
-            response = self.sendRequest(url, post=True, json=True, headers=headers, data=json.dumps(data), verify=False, timeout=timeouts)
+            response = self.sendRequest(url, post=True, json=True, headers=headers, data=json.dumps(data), verify=False, timeout=300)
             if not response:
                 return False
 
@@ -319,7 +319,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 "platformVersion": "NT 6.1"
             }
 
-            response = self.sendRequest(url, post=True, json=False, headers=headers, data=json.dumps(data), verify=False, timeout=timeouts)
+            response = self.sendRequest(url, post=True, json=False, headers=headers, data=json.dumps(data), verify=False, timeout=300)
 
             try:
                 response = response.json()
@@ -351,7 +351,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                     'tv-client-boot-id': self.tv_client_boot_id,
                 }
 
-            response = self.sendRequest(url, json=True, headers=headers, cookies=sess.cookies, allow_redirects=False, timeout=timeouts)
+            response = self.sendRequest(url, json=True, headers=headers, cookies=sess.cookies, allow_redirects=False, timeout=300)
 
             self.usern = response['channels']['engagement']
             ADDON.setSetting('teliaplay_usern', str(self.usern))
@@ -374,7 +374,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                     from bs4 import BeautifulSoup
 
                 try:
-                    html = sess.get('https://www.telia.se/privat/support/info/registrerade-enheter-telia-play', verify=False, timeout=timeouts).text
+                    html = sess.get('https://www.telia.se/privat/support/info/registrerade-enheter-telia-play', verify=False, timeout=300).text
 
                     soup = BeautifulSoup(html, "html.parser")
 
