@@ -2591,8 +2591,6 @@ def customParseXMLTV(xml, progress_callback):
     def decodeString(s):
         if sys.version_info[0] < 3:
             s = s if isinstance(s, unicode) else s.decode('utf-8')
-        else:
-            s = s
         
         return s
 
@@ -2743,7 +2741,8 @@ def customParseXMLTV(xml, progress_callback):
             episode  = decodeString(programEpisode.search(program).group(1))
 
             try:
-                episode = re.search('([*S|E]((S)?(\d{1,3})?s*((E)?\d{1,5}(\/\d{1,5})?)))', episode).group(1)
+                p = re.compile('([*S|E]((S)?(\d{1,3})?s*((E)?\d{1,5}(\/\d{1,5})?)))')
+                episode = p.search(episode).group(1)
             except:
                 pass
 
@@ -2784,9 +2783,6 @@ def customParseXMLTV(xml, progress_callback):
 
     del programs[:]
 
-    tnow = datetime.datetime.now()
-    deb("[EPG] Parsing EPG by custom parser is done [{} sek.]".format(str((tnow-startTime).seconds)))
-
     categoriesList = list()
     for c in sorted(category_count):
         s = "{}={}\n".format(c, category_count[c])
@@ -2802,6 +2798,9 @@ def customParseXMLTV(xml, progress_callback):
     
     with open(file_name, 'wb+') as f:
         f.write(bytearray(''.join(categoriesList), 'utf-8'))
+
+    tnow = datetime.datetime.now()
+    deb("[EPG] Parsing EPG by custom parser is done [{} sek.]".format(str((tnow-startTime).seconds)))
 
 
 def parseXMLTV(context, f, size, logoFolder, progress_callback):
@@ -2863,8 +2862,8 @@ def parseXMLTV(context, f, size, logoFolder, progress_callback):
                     catb = ""
 
                 try:
-                    episode = re.search('([*S|E]((S)?(\d{1,3})?s*((E)?\d{1,5}(\/\d{1,5})?)))', episode).group(1)
-
+                    p = re.compile('([*S|E]((S)?(\d{1,3})?s*((E)?\d{1,5}(\/\d{1,5})?)))')
+                    episode = p.search(episode).group(1)
                 except:
                     pass
     
@@ -2953,9 +2952,6 @@ def parseXMLTV(context, f, size, logoFolder, progress_callback):
 
     del context
 
-    tnow = datetime.datetime.now()
-    deb("[EPG] Parsing EPG is done [{} sek.]".format(str((tnow-start).seconds)))
-
     categoriesList = list()
     for c in sorted(category_count):
         s = "{}={}\n".format(c, category_count[c])
@@ -2971,6 +2967,9 @@ def parseXMLTV(context, f, size, logoFolder, progress_callback):
     
     with open(file_name, 'wb+') as f:
         f.write(bytearray(''.join(categoriesList), 'utf-8'))
+
+    tnow = datetime.datetime.now()
+    deb("[EPG] Parsing EPG is done [{} sek.]".format(str((tnow-start).seconds)))
 
 class FileWrapper(object):
     def __init__(self, filename):

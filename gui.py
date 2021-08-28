@@ -7411,7 +7411,7 @@ class Pla(xbmcgui.WindowXMLDialog):
     def onAction(self, action):
         debug('Pla onAction keyId {}, buttonCode {}'.format(action.getId(), action.getButtonCode()))
 
-        if action.getId() == ACTION_STOP or (action.getButtonCode() == KEY_STOP and KEY_STOP != 0) or (action.getId() == KEY_STOP and KEY_STOP != 0):
+        if action.getId() == ACTION_PREVIOUS_MENU or action.getId() == ACTION_STOP or (action.getButtonCode() == KEY_STOP and KEY_STOP != 0) or (action.getId() == KEY_STOP and KEY_STOP != 0):
             self.epg.playService.stopPlayback()
             self.closeOSD()
 

@@ -61,6 +61,8 @@ import cloudscraper
 
 from contextlib import contextmanager
 
+import mmap
+
 sess = cloudscraper.create_scraper()
 scraper = cloudscraper.CloudScraper()
 
@@ -264,8 +266,8 @@ class PlaylistUpdater(baseServiceUpdater):
                         else:
                             lf = open(path, 'r')
 
-                    tmpcontent = lf.read()
-                    lf.close()
+                    tmpcontent = mmap.mmap(lf, 0, access=mmap.ACCESS_READ)
+
                     if tmpcontent is None or tmpcontent == "":
                         raise Exception
                 except:
