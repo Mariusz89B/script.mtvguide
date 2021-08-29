@@ -205,15 +205,16 @@ class PlaylistUpdater(baseServiceUpdater):
 
         else:
             size = int(536870912) # 512 MB
-            
+
             with open(filepath, 'rb') as tmpcontent:
                 if sys.maxsize < 2 ** 32 and int(self.systemMemory()) < size:
                     deb('Reading type: Default')
                     content = tmpcontent.read()
-                    content.close()
+                    tmpcontent.close()
                 else:
                     deb('Reading type: MMAP')
-                    content = mmap.mmap(tmpcontent.fileno(), 0, access=mmap.ACCESS_READ).read().decode('utf-8')
+                    with mmap.mmap(tmpcontent.fileno(), length=0, access=mmap.ACCESS_READ) as mmap_obj:
+                        content = mmap_obj.read().decode('utf-8')
 
         return content
 
@@ -266,34 +267,31 @@ class PlaylistUpdater(baseServiceUpdater):
                     raise Exception
             else:
                 try:
-                    p = re.compile('http[s]?:\/\/')
+                    size = int(536870912) # 512 MB
                     
-                    if p.match(path):
-                        size = int(536870912) # 512 MB
-                        
-                        with open(path, 'rb') as tmpcontent:
-                            if sys.maxsize < 2 ** 32 and int(self.systemMemory()) < size:
-                                deb('Reading type: Default')
-                                content = tmpcontent.read()
-                                content.close()
-                            else:
-                                deb('Reading type: MMAP')
-                                content = mmap.mmap(tmpcontent.fileno(), 0, access=mmap.ACCESS_READ).read().decode('utf-8')
-                    else:
-                        tmpcontent = None
+                    with open(path, 'rb') as tmpcontent:
+                        if sys.maxsize < 2 ** 32 and int(self.systemMemory()) < size:
+                            deb('Reading type: Default')
+                            content = tmpcontent.read()
+                            tmpcontent.close()
+                        else:
+                            deb('Reading type: MMAP')
+                            with mmap.mmap(tmpcontent.fileno(), length=0, access=mmap.ACCESS_READ) as mmap_obj:
+                                content = mmap_obj.read().decode('utf-8')
 
-                    if tmpcontent is None or tmpcontent == "":
+
+                    if content is None or content == "":
                         raise Exception
+
                 except:
                     self.log('getPlaylistContent opening normally Error %s, type: %s, url: %s' % (getExceptionString(), urltype, path) )
                     self.log('getPlaylistContent trying to open file using xbmcvfs')
                     lf = xbmcvfs.File(path)
-                    tmpcontent = lf.read()
+                    content = lf.read()
                     lf.close()
-                    if tmpcontent is None or tmpcontent == "":
+                    if content is None or content == "":
                         raise Exception
-
-            content = tmpcontent
+                
         except:
             self.log('getPlaylistContent opening Error {}, type: {}, url: {}'.format(getExceptionString(), urltype, path) )
             if sys.version_info[0] > 2:
