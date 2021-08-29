@@ -92,7 +92,7 @@ else:
         profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
 
 sess = requests.Session()
-timeouts = (5, 10)
+timeouts = (5, 15)
 
 class Threading(object):
     def __init__(self):
@@ -104,7 +104,7 @@ class Threading(object):
         while not xbmc.Monitor().abortRequested():
             ab = TeliaPlayUpdater().checkRefresh()
             if not ab:
-                result = TeliaPlayUpdater().checkLogin()
+                result = TeliaPlayUpdater().loginData(reconnect=True)
                 if result is not None:
                     validTo, beartoken, refrtoken, cookies = result
                     
@@ -149,9 +149,9 @@ class TeliaPlayUpdater(baseServiceUpdater):
     def sendRequest(self, url, post=False, json=False, headers=None, data=None, params=None, cookies=None, verify=False, allow_redirects=False, timeout=None):
         try:
             if post:
-                response = sess.post(url, headers=headers, data=data, params=params, cookies=cookies, verify=verify, allow_redirects=allow_redirects, timeout=timeout)
+                response = sess.post(url, headers=headers, data=data, params=params, cookies=cookies, verify=True, allow_redirects=allow_redirects, timeout=timeout)
             else:
-                response = sess.get(url, headers=headers, data=data, params=params, cookies=cookies, verify=verify, allow_redirects=allow_redirects, timeout=timeout)
+                response = sess.get(url, headers=headers, data=data, params=params, cookies=cookies, verify=True, allow_redirects=allow_redirects, timeout=timeout)
 
         except HTTPError as e:
             deb('HTTPError: {}'.format(str(e)))
@@ -194,7 +194,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
         ADDON.setSetting('teliaplay_timestamp', str(self.timestamp))
 
 
-    def loginData(self):
+    def loginData(self, reconnect):
         try:
             url = 'https://log.tvoip.telia.com:6003/logstash'
                 
@@ -238,9 +238,12 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 'Accept-Language': 'en-US,en;q=0.9',
             }
 
-            response = self.sendRequest(url, post=True, headers=headers, data=json.dumps(data), verify=False, timeout=300)
+            response = self.sendRequest(url, post=True, headers=headers, data=json.dumps(data), verify=False, timeout=timeouts)
             if not response:
-                return False
+                if reconnect:
+                    self.loginData(reconnect=True)
+                else:
+                    return False
 
             url = 'https://ottapi.prod.telia.net/web/{cc}/logingateway/rest/v1/login'.format(cc=cc[self.country])
 
@@ -266,9 +269,12 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 "deviceType": "WEB",
             }
             
-            response = self.sendRequest(url, post=True, json=True, headers=headers, data=json.dumps(data), verify=False, timeout=300)
+            response = self.sendRequest(url, post=True, json=True, headers=headers, data=json.dumps(data), verify=False, timeout=timeouts)
             if not response:
-                return False
+                if reconnect:
+                    self.loginData(reconnect=True)
+                else:
+                    return False
 
             try:
                 if 'Username/password was incorrect' in response['errorMessage']:
@@ -319,7 +325,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 "platformVersion": "NT 6.1"
             }
 
-            response = self.sendRequest(url, post=True, json=False, headers=headers, data=json.dumps(data), verify=False, timeout=300)
+            response = self.sendRequest(url, post=True, json=False, headers=headers, data=json.dumps(data), verify=False, timeout=timeouts)
 
             try:
                 response = response.json()
@@ -327,12 +333,18 @@ class TeliaPlayUpdater(baseServiceUpdater):
                     self.maxDeviceIdMessage()
                     ADDON.setSetting('teliaplay_sess_id', '')
                     ADDON.setSetting('teliaplay_devush', '')
-                    return False
+                    if reconnect:
+                        self.loginData(reconnect=True)
+                    else:
+                        return False
                 elif response['errorCode'] == 9030:
                     self.connErrorMessage() 
                     ADDON.setSetting('teliaplay_sess_id', '')
                     ADDON.setSetting('teliaplay_devush', '')
-                    return False
+                    if reconnect:
+                        self.loginData(reconnect=True)
+                    else:
+                        return False
             except:
                 pass
 
@@ -351,7 +363,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                     'tv-client-boot-id': self.tv_client_boot_id,
                 }
 
-            response = self.sendRequest(url, json=True, headers=headers, cookies=sess.cookies, allow_redirects=False, timeout=300)
+            response = self.sendRequest(url, json=True, headers=headers, cookies=sess.cookies, allow_redirects=False, timeout=timeouts)
 
             self.usern = response['channels']['engagement']
             ADDON.setSetting('teliaplay_usern', str(self.usern))
@@ -374,7 +386,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                     from bs4 import BeautifulSoup
 
                 try:
-                    html = sess.get('https://www.telia.se/privat/support/info/registrerade-enheter-telia-play', verify=False, timeout=300).text
+                    html = sess.get('https://www.telia.se/privat/support/info/registrerade-enheter-telia-play', verify=False, timeout=timeouts).text
 
                     soup = BeautifulSoup(html, "html.parser")
 
@@ -391,7 +403,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
             
                 self.createData()
 
-            login = self.loginData()
+            login = self.loginData(reconnect=False)
 
             if login:
                 run = Threading()
@@ -413,7 +425,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
             self.validTo = datetime.datetime.now() - timedelta(days=1)
 
         if not self.beartoken or refreshTimeDelta < timedelta(minutes=1):
-            login = self.loginData()
+            login = self.loginData(reconnect=True)
 
             result = self.validTo, self.beartoken, self.refrtoken, self.cookies
 
