@@ -4713,7 +4713,19 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def realtimeDate(self, program):
         #Realtime date & weekday
-        self.setControlLabel(C_MAIN_DAY, '{}'.format(xbmc.getInfoLabel('System.Date').strip()))
+        startDate = str(program.startDate)
+        try:
+            now = datetime.proxydt.strptime(startDate, '%Y-%m-%d %H:%M:%S')
+        except:
+            now = datetime.proxydt.strptime(str(datetime.datetime.now()), '%Y-%m-%d %H:%M:%S.%f')
+
+        nowDay = now.strftime("%a").replace('Mon', xbmc.getLocalizedString(11)).replace('Tue', xbmc.getLocalizedString(12)).replace('Wed', xbmc.getLocalizedString(13)).replace('Thu', xbmc.getLocalizedString(14)).replace('Fri', xbmc.getLocalizedString(15)).replace('Sat', xbmc.getLocalizedString(16)).replace('Sun', xbmc.getLocalizedString(17))
+        
+        nowDate = now.strftime("%d %B %Y").replace('January', xbmc.getLocalizedString(21)).replace('Februari', xbmc.getLocalizedString(22)).replace('Mars', xbmc.getLocalizedString(23)).replace('April', xbmc.getLocalizedString(24)).replace('May', xbmc.getLocalizedString(25)).replace('June', xbmc.getLocalizedString(26)).replace('July', xbmc.getLocalizedString(27)).replace('August', xbmc.getLocalizedString(28)).replace('September', xbmc.getLocalizedString(29)).replace('October', xbmc.getLocalizedString(30)).replace('November', xbmc.getLocalizedString(31)).replace('December', xbmc.getLocalizedString(32))
+
+        
+        self.setControlLabel(C_MAIN_DAY, '{}'.format(nowDay))
+        self.setControlLabel(C_MAIN_REAL_DATE, '{}'.format(nowDate))
 
     def calctimeLeft(self, program):
         #Calc time EPG
@@ -6986,7 +6998,7 @@ class InfoDialog(xbmcgui.WindowXMLDialog):
         except:
             now = datetime.proxydt.strptime(str(datetime.datetime.now()), '%Y-%m-%d %H:%M:%S.%f')
 
-        nowDay = now.strftime("%a").replace('Mon', strings(70109)).replace('Tue', strings(70110)).replace('Wed', strings(70111)).replace('Thu', strings(70112)).replace('Fri', strings(70113)).replace('Sat', strings(70114)).replace('Sun', strings(70115))
+        nowDay = now.strftime("%a").replace('Mon', xbmc.getLocalizedString(11)).replace('Tue', xbmc.getLocalizedString(12)).replace('Wed', xbmc.getLocalizedString(13)).replace('Thu', xbmc.getLocalizedString(14)).replace('Fri', xbmc.getLocalizedString(15)).replace('Sat', xbmc.getLocalizedString(16)).replace('Sun', xbmc.getLocalizedString(17))
         nowDate = now.strftime("%d.%m.%Y")
 
         self.setControlLabel(C_MAIN_DAY, '{}'.format(nowDate))
