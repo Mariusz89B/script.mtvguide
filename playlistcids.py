@@ -269,29 +269,31 @@ class PlaylistUpdater(baseServiceUpdater):
                 try:
                     size = int(536870912) # 512 MB
                     
-                    with open(path, 'rb') as tmpcontent:
+                    with open(path, 'rb') as f:
                         if sys.maxsize < 2 ** 32 and int(self.systemMemory()) < size:
                             deb('Reading type: Default')
-                            content = tmpcontent.read()
-                            tmpcontent.close()
+                            tmpcontent = f.read()
+                            f.close()
                         else:
                             deb('Reading type: MMAP')
-                            with mmap.mmap(tmpcontent.fileno(), length=0, access=mmap.ACCESS_READ) as mmap_obj:
-                                content = mmap_obj.read().decode('utf-8')
+                            with mmap.mmap(f.fileno(), length=0, access=mmap.ACCESS_READ) as mmap_obj:
+                                tmpcontent = mmap_obj.read().decode('utf-8')
 
-
-                    if content is None or content == "":
+                
+                    if tmpcontent is None or tmpcontent == "":
                         raise Exception
-
+                        
                 except:
                     self.log('getPlaylistContent opening normally Error %s, type: %s, url: %s' % (getExceptionString(), urltype, path) )
                     self.log('getPlaylistContent trying to open file using xbmcvfs')
                     lf = xbmcvfs.File(path)
-                    content = lf.read()
+                    tmpcontent = lf.read()
                     lf.close()
-                    if content is None or content == "":
+                    if tmpcontent is None or tmpcontent == "":
                         raise Exception
                 
+            content = tmpcontent
+
         except:
             self.log('getPlaylistContent opening Error {}, type: {}, url: {}'.format(getExceptionString(), urltype, path) )
             if sys.version_info[0] > 2:
