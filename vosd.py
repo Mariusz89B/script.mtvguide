@@ -242,8 +242,8 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
     def onInit(self):
         if not self.controlledByMouse:
             closeWindowControl = self.getControl(C_CLOSE_WINDOW)
-            closeWindowControl.setVisible(True)
-            closeWindowControl.setEnabled(True)
+            closeWindowControl.setVisible(False)
+            closeWindowControl.setEnabled(False)
             threading.Timer(1, self.waitForKeyboard).start()
         else:
             threading.Timer(1, self.waitForMouse).start()
@@ -811,11 +811,7 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
                 result = (end_date - start_date)
                 dt_obj = datetime.datetime.utcfromtimestamp(result)
                 rt_obj = dt_obj.strftime('%H:%M')
-                rt_obj = re.sub(r'^0', '', rt_obj)
-                rt_obj = re.sub('0:0', '', rt_obj)
-                rt_obj = re.sub('0:', '', rt_obj)
-                rt_obj = re.sub(':', 'h ', rt_obj)
-                rt_obj = re.sub(r'$', r' min', rt_obj)
+                rt_obj = self.formatMinutes(rt_obj)
                 self.ctrlCalcProgramTimeLeft.setLabel('%s' % (rt_obj))
             else:
                 now_date = time.mktime(datetime.datetime.now().timetuple())
@@ -823,11 +819,7 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
                 result = (end_date - now_date + float(60))
                 dt_obj = datetime.datetime.utcfromtimestamp(result)
                 rt_obj = dt_obj.strftime('%H:%M')
-                rt_obj = re.sub(r'^0', '', rt_obj)
-                rt_obj = re.sub('0:0', '', rt_obj)
-                rt_obj = re.sub('0:', '', rt_obj)
-                rt_obj = re.sub(':', 'h ', rt_obj)
-                rt_obj = re.sub(r'$', r' min', rt_obj)
+                rt_obj = self.formatMinutes(rt_obj)
                 self.ctrlCalcProgramTimeLeft.setLabel('%s' % (rt_obj))
 
         if self.ctrlCalcProgramTimeNext is not None:
@@ -845,11 +837,7 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
                     result = (end_date - start_date)
                     dt_obj = datetime.datetime.utcfromtimestamp(result)
                     rt_obj = dt_obj.strftime('%H:%M')
-                    rt_obj = re.sub(r'^0', '', rt_obj)
-                    rt_obj = re.sub('0:0', '', rt_obj)
-                    rt_obj = re.sub('0:', '', rt_obj)
-                    rt_obj = re.sub(':', 'h ', rt_obj)
-                    rt_obj = re.sub(r'$', r' min', rt_obj)
+                    rt_obj = self.formatMinutes(rt_obj)
 
                 self.ctrlCalcProgramTimeNext.setLabel('%s' % (rt_obj))
             except:
@@ -976,6 +964,15 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
         if timebar_adjust == '':
             timebar_adjust = 0
         return timebar_adjust
+
+    def formatMinutes(self, rt_obj):
+        rt_obj = re.sub(r'^0', '', rt_obj)
+        rt_obj = re.sub('0:0', '', rt_obj)
+        rt_obj = re.sub('0:', '', rt_obj)
+        rt_obj = re.sub(':', 'h ', rt_obj)
+        rt_obj = re.sub(r'$', r' min', rt_obj)
+
+        return rt_obj
 
     def formatTime(self, timestamp):
         format = xbmc.getRegion('time').replace(':%S', '').replace('%H%H', '%H')

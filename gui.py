@@ -69,6 +69,7 @@ import playService
 import requests
 import json
 import urllib
+import gc
 from vosd import VideoOSD
 from recordService import RecordService
 from settingsImportExport import SettingsImp
@@ -2207,6 +2208,8 @@ class mTVGuide(xbmcgui.WindowXML):
         epgDbSize = ADDON.getSetting('epg_dbsize')
         if epgSize != epgDbSize:
             self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
+
+        mem = gc.collect()
 
     def getStreamsCid(self, channels):
         streams = self.database.getAllCatchupUrlList(channels)
@@ -4710,23 +4713,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def realtimeDate(self, program):
         #Realtime date & weekday
-        startDate = str(program.startDate)
-        try:
-            now = datetime.proxydt.strptime(startDate, '%Y-%m-%d %H:%M:%S')
-        except:
-            now = datetime.proxydt.strptime(str(datetime.datetime.now()), '%Y-%m-%d %H:%M:%S.%f')
-
-        try:
-            nowDay = now.strftime("%a").replace('Mon', strings(70109)).replace('Tue', strings(70110)).replace('Wed', strings(70111)).replace('Thu', strings(70112)).replace('Fri', strings(70113)).replace('Sat', strings(70114)).replace('Sun', strings(70115))
-        except:
-            nowDay = now.strftime("%a").replace('Mon', strings(70109).encode('UTF-8')).replace('Tue', strings(70110).encode('UTF-8')).replace('Wed', strings(70111).encode('UTF-8')).replace('Thu', strings(70112).encode('UTF-8')).replace('Fri', strings(70113).encode('UTF-8')).replace('Sat', strings(70114).encode('UTF-8')).replace('Sun', strings(70115).encode('UTF-8'))
-
-        if xbmcgui.getScreenWidth() < 2560: 
-            self.setControlLabel(C_MAIN_DAY, '{}'.format(nowDay[:3]))
-        else:
-            self.setControlLabel(C_MAIN_DAY, '{}'.format(nowDay))
-
-        self.setControlLabel(C_MAIN_REAL_DATE, '{}'.format(xbmc.getInfoLabel('System.Date').strip()))
+        self.setControlLabel(C_MAIN_DAY, '{}'.format(xbmc.getInfoLabel('System.Date').strip()))
 
     def calctimeLeft(self, program):
         #Calc time EPG
@@ -5912,7 +5899,7 @@ class mTVGuide(xbmcgui.WindowXML):
         self.redrawingEPG = False
         self._hideControl(self.C_MAIN_LOADING)
         if not strings2.M_TVGUIDE_CLOSING:
-            xbmcgui.Dialog().ok(strings(LOAD_ERROR_TITLE), strings(LOAD_ERROR_LINE1) + '\n' + ADDON.getSetting('m-TVGuide').strip() + strings(LOAD_ERROR_LINE2))
+            xbmcgui.Dialog().ok(strings(LOAD_ERROR_TITLE), strings(LOAD_ERROR_LINE1) + '\n' + ADDON.getSetting('m-TVGuide').strip() + '\n' + strings(LOAD_ERROR_LINE2))
         self.close()
 
     def onSourceNotConfigured(self):
@@ -7000,10 +6987,10 @@ class InfoDialog(xbmcgui.WindowXMLDialog):
             now = datetime.proxydt.strptime(str(datetime.datetime.now()), '%Y-%m-%d %H:%M:%S.%f')
 
         nowDay = now.strftime("%a").replace('Mon', strings(70109)).replace('Tue', strings(70110)).replace('Wed', strings(70111)).replace('Thu', strings(70112)).replace('Fri', strings(70113)).replace('Sat', strings(70114)).replace('Sun', strings(70115))
-        nowDate = now.strftime("%d-%m-%Y")
+        nowDate = now.strftime("%d.%m.%Y")
 
-        self.setControlLabel(C_MAIN_DAY, '{}'.format(nowDay))
-        self.setControlLabel(C_MAIN_REAL_DATE, '{}'.format(nowDate))
+        self.setControlLabel(C_MAIN_DAY, '{}'.format(nowDate))
+        self.setControlLabel(C_MAIN_REAL_DATE, '{}'.format(nowDay))
 
     def calctimeLeft(self, program):
         startDelta = program.startDate
