@@ -197,16 +197,14 @@ class ProgramDescriptionParser(object):
     
     def extractEpisode(self):
         try:
-            episode = re.search('([*S|E]((S)?(\d{1,3})?s*((E)?\d{1,5}(\/\d{1,5})?)))', self.description).group(1)
-            if 'S' in episode or 'E' in episode:
-                episode = ProgramDescriptionParser.DECORATE_REGEX.sub("", episode)
-            else:
-                episode = re.search(".*((Odcinek:|Avsnitt:|Episode:|Episode:|.?pisode:|Folge:|Odjeljak:|Epizoda:|Aflevering:|Sezione:)\s*(\[B\])?(.*?\/B\]|.*?[^\.]*)(\.)?).*", self.description).group(1)
-                episode = ProgramDescriptionParser.DECORATE_REGEX.sub("", episode)
-
+            episode = re.search(".*((Odcinek:|Avsnitt:|Episode:|Episode:|.?pisode:|Folge:|Odjeljak:|Epizoda:|Aflevering:|Sezione:)\s*(\[B\])?(.*?\/B\]|.*?[^\.]*)(\.)?).*", self.description).group(1)
+            episode = ProgramDescriptionParser.DECORATE_REGEX.sub("", episode)
             episode = re.sub("Odcinek:|Avsnitt:|Episode:|.?pisode:|Folge:|Odjeljak:|Epizoda:|Aflevering:|Sezione:", "", episode).strip()
 
-            self.description = re.sub("(({Episode}|Odcinek:|Avsnitt:|Episode:|.?pisode:|Folge:|Odjeljak:|Epizoda:|Aflevering:|Sezione:)\s*(\[B\])?(.*?\/B\]|.*?[^\.]*)(\.)?)".format(Episode=episode), "", self.description).strip()
+            self.description = re.sub("(Odcinek:|Avsnitt:|Episode:|.?pisode:|Folge:|Odjeljak:|Epizoda:|Aflevering:|Sezione:)\s*(\[B\])?(.*?\/B\]|.*?[^\.]*)(\.)?", "", self.description).strip()
+
+            p = re.compile('([*S|E]((S)?(\d{1,3})?\s*((E)?\d{1,5}(\/\d{1,5})?)))')
+            episode = p.search(self.description).group(1)
 
         except:
             episode = ''
@@ -2741,7 +2739,7 @@ def customParseXMLTV(xml, progress_callback):
             episode  = decodeString(programEpisode.search(program).group(1))
 
             try:
-                p = re.compile('([*S|E]((S)?(\d{1,3})?s*((E)?\d{1,5}(\/\d{1,5})?)))')
+                p = re.compile('([*S|E]((S)?(\d{1,3})?\s*((E)?\d{1,5}(\/\d{1,5})?)))')
                 episode = p.search(episode).group(1)
             except:
                 pass
@@ -2862,7 +2860,7 @@ def parseXMLTV(context, f, size, logoFolder, progress_callback):
                     catb = ""
 
                 try:
-                    p = re.compile('([*S|E]((S)?(\d{1,3})?s*((E)?\d{1,5}(\/\d{1,5})?)))')
+                    p = re.compile('([*S|E]((S)?(\d{1,3})?\s*((E)?\d{1,5}(\/\d{1,5})?)))')
                     episode = p.search(episode).group(1)
                 except:
                     pass
