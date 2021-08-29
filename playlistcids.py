@@ -116,6 +116,13 @@ class PlaylistUpdater(baseServiceUpdater):
         else:
             self.stopPlaybackOnStart = False
 
+    def systemMemory(self):
+        import psutil
+        stats = psutil.virtual_memory()  # returns a named tuple
+        available = getattr(stats, 'available')
+
+        return available
+
     def requestUrl(self, path):
         content = None
         try:
@@ -197,10 +204,16 @@ class PlaylistUpdater(baseServiceUpdater):
                     f2.write(url_setting.encode('utf-8'))
 
         else:
-            if sys.version_info[0] > 2:
-                content = open(filepath, 'r', encoding='utf-8').read()
-            else:
-                content = open(filepath, 'r').read()
+            size = int(536870912) # 512 MB
+            
+            with open(filepath, 'rb') as tmpcontent:
+                if sys.maxsize < 2 ** 32 and int(self.systemMemory()) < size:
+                    deb('Reading type: Default')
+                    content = tmpcontent.read()
+                    content.close()
+                else:
+                    deb('Reading type: MMAP')
+                    content = mmap.mmap(tmpcontent.fileno(), 0, access=mmap.ACCESS_READ).read().decode('utf-8')
 
         return content
 
@@ -256,17 +269,18 @@ class PlaylistUpdater(baseServiceUpdater):
                     p = re.compile('http[s]?:\/\/')
                     
                     if p.match(path):
-                        if sys.version_info[0] > 2:
-                        	lf = open(path, 'r', encoding='utf-8')
-                        else:
-                            lf = open(path, 'r')
+                        size = int(536870912) # 512 MB
+                        
+                        with open(path, 'rb') as tmpcontent:
+                            if sys.maxsize < 2 ** 32 and int(self.systemMemory()) < size:
+                                deb('Reading type: Default')
+                                content = tmpcontent.read()
+                                content.close()
+                            else:
+                                deb('Reading type: MMAP')
+                                content = mmap.mmap(tmpcontent.fileno(), 0, access=mmap.ACCESS_READ).read().decode('utf-8')
                     else:
-                        if sys.version_info[0] > 2:
-                            lf = open(path, 'r', encoding='utf-8')
-                        else:
-                            lf = open(path, 'r')
-
-                    tmpcontent = mmap.mmap(lf, 0, access=mmap.ACCESS_READ)
+                        tmpcontent = None
 
                     if tmpcontent is None or tmpcontent == "":
                         raise Exception
