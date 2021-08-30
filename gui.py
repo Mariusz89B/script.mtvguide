@@ -58,7 +58,7 @@ else:
     import ConfigParser
 
 import re, os, datetime, time, platform, threading, zipfile, shutil, glob
-import xbmc, xbmcaddon, xbmcgui, xbmcplugin, xbmcvfs
+import xbmc, xbmcgui, xbmcplugin, xbmcvfs, xbmcaddon
 import source as src
 from unidecode import unidecode
 from notification import Notification
@@ -77,6 +77,8 @@ from skins import Skin
 from source import Program, Channel
 
 from contextlib import contextmanager
+
+ADDON = xbmcaddon.Addon('script.mtvguide')
 
 MODE_EPG = 'EPG'
 MODE_TV = 'TV'

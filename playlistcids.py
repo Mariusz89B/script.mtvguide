@@ -54,7 +54,7 @@ else:
     from urllib2 import HTTPError, URLError
 
 import copy, re
-import xbmc, xbmcgui, xbmcvfs
+import xbmc, xbmcgui, xbmcvfs, xbmcaddon
 from strings import *
 from serviceLib import *
 import cloudscraper 
@@ -69,6 +69,8 @@ scraper = cloudscraper.CloudScraper()
 serviceName   = 'playlist'
 
 playlists = ['playlist_1', 'playlist_2', 'playlist_3', 'playlist_4', 'playlist_5']
+
+ADDON = xbmcaddon.Addon('script.mtvguide')
 
 class PlaylistUpdater(baseServiceUpdater):
     def __init__(self, instance_number):
@@ -208,22 +210,21 @@ class PlaylistUpdater(baseServiceUpdater):
 
         else:
             size = int(536870912) # 512 MB
-
-            if sys.maxsize < 2 ** 32 and int(self.systemMemory()) < size:
+                           
+            if sys.maxsize > 2 ** 32 and int(self.systemMemory()) > size and sys.version_info[0] > 2:
+                with open(filepath, 'rb') as f:
+                    deb('Reading type: MMAP´cachePlaylist')
+                    with mmap.mmap(f.fileno(), length=0, access=mmap.ACCESS_READ) as mmap_obj:
+                        content = mmap_obj.read().decode('utf-8')
+            else:
                 if sys.version_info[0] > 2:
                     with open(filepath, 'r', encoding='utf-8') as f:
-                        deb('Reading type: Default')
+                        deb('Reading type: Default cachePlaylist')
                         content = f.read()
                 else:
                     with open(filepath, 'r') as f:
-                        deb('Reading type: Default')
+                        deb('Reading type: Default cachePlaylist')
                         content = f.read()
-
-            else:
-                with open(filepath, 'rb') as f:
-                    deb('Reading type: MMAP')
-                    with mmap.mmap(f.fileno(), length=0, access=mmap.ACCESS_READ) as mmap_obj:
-                        content = mmap_obj.read().decode('utf-8')
 
         return content
 
@@ -278,21 +279,20 @@ class PlaylistUpdater(baseServiceUpdater):
                 try:
                     size = int(536870912) # 512 MB
                                    
-                    if sys.maxsize < 2 ** 32 and int(self.systemMemory()) < size:
+                    if sys.maxsize > 2 ** 32 and int(self.systemMemory()) > size and sys.version_info[0] > 2:
+                        with open(path, 'rb') as f:
+                            deb('Reading type: MMAP getPlaylistContent')
+                            with mmap.mmap(f.fileno(), length=0, access=mmap.ACCESS_READ) as mmap_obj:
+                                tmpcontent = mmap_obj.read().decode('utf-8')
+                    else:
                         if sys.version_info[0] > 2:
                             with open(path, 'r', encoding='utf-8') as f:
-                                deb('Reading type: Default')
+                                deb('Reading type: Default getPlaylistContent')
                                 tmpcontent = f.read()
                         else:
                             with open(path, 'r') as f:
-                                deb('Reading type: Default')
+                                deb('Reading type: Default getPlaylistContent')
                                 tmpcontent = f.read()
-
-                    else:
-                        with open(path, 'rb') as f:
-                            deb('Reading type: MMAP')
-                            with mmap.mmap(f.fileno(), length=0, access=mmap.ACCESS_READ) as mmap_obj:
-                                tmpcontent = mmap_obj.read().decode('utf-8')
 
                     if tmpcontent is None or tmpcontent == "":
                         raise Exception
@@ -335,12 +335,12 @@ class PlaylistUpdater(baseServiceUpdater):
             regexReplaceList.append( re.compile('(\s|^)(FULL|SD|LQ|HQ|RAW|LOW|HIGH|QUALITY)(?=\s|$)',  re.IGNORECASE) )
 
             langReplaceList = list()
-            regexRemoveList = list()
-            regexAddList = list()
             prefixList = list()
+            regexRemoveList = list()
+            regexAddList = list() 
 
             regexRemoveList.append( re.compile('(\s|^)(L\s*)?(24/7:?:?|19\d\d|20\d\d|S\s*\d{1,3}\s*E\s*\d{1,4})(?=\s|$)', re.IGNORECASE) )
-
+         
             if ADDON.getSetting('country_code_be') == 'true':
                 langReplaceList.append({ 'regex' : re.compile('(\s|^)(BE:?|NL:?|BEL:?|NED:?|HEVC:?|BELGIQUE:?|BELGIUM:?)(?=\s|$)|^(BE:|NL:|BEL:|NED:|HEVC:|BELGIQUE:|BELGIUM:)', re.IGNORECASE), 'lang' : 'BE'})
                 prefixList.append('BE:?|NL:?|BEL:?|NED:?|HEVC:?|BELGIQUE:?|BELGIUM:?')
@@ -372,11 +372,11 @@ class PlaylistUpdater(baseServiceUpdater):
             if ADDON.getSetting('country_code_it') == 'true':
                 langReplaceList.append({ 'regex' : re.compile('(\s|^)(IT:?|ITA:?|ITALIA:?|ITALY:?)(?=\s|$)|^(IT:|ITA:|ITALIA:|ITALY:)', re.IGNORECASE), 'lang' : 'IT'})
                 prefixList.append('IT:?|ITA:?|ITALIA:?|ITALY:?')
-
+            
             if ADDON.getSetting('country_code_pl') == 'true':
                 langReplaceList.append({ 'regex' : re.compile('(\s|^)(PL:?|POL:?|POLSKA:?|POLAND:?|PL/EN:?)(?=\s|$)|^(PL:|POL:|POLSKA:|POLAND:|PL/EN:)', re.IGNORECASE), 'lang' : 'PL'})
                 prefixList.append('PL:?|POL:?|POLSKA:?|POLAND:?|PL/EN:?')
-
+            
             if ADDON.getSetting('country_code_no') == 'true':
                 langReplaceList.append({ 'regex' : re.compile('(\s|^)(NO:?|NOR:?|NORGE:?|NORWAY:?)(?=\s|$)|^(NO:|NOR:|NORGE:|NORWAY:)', re.IGNORECASE), 'lang' : 'NO'})
                 prefixList.append('NO:?|NOR:?|NORGE:?|NORWAY:?')
@@ -396,6 +396,9 @@ class PlaylistUpdater(baseServiceUpdater):
             if ADDON.getSetting('country_code_radio') == 'true':
                 langReplaceList.append({ 'regex' : re.compile('(\s|^)(RADIO:?)(?=\s|$)|^(RADIO:)', re.IGNORECASE), 'lang' : 'Radio'})
                 prefixList.append('RADIO:?')
+
+            if not prefixList:
+                prefixList.append(' ')
 
             prefix = '|'.join(map(str, prefixList))
             regexAddList.append( re.compile('(\s|^)(L\s*)?({prefix})(?=\s|$)'.format(prefix=prefix), re.IGNORECASE) )
@@ -547,7 +550,7 @@ class PlaylistUpdater(baseServiceUpdater):
 
                             for regexRemove in regexRemoveList:
                                 if( regexRemove.findall(title) ):
-                                    title = ''      
+                                    title = ''   
 
                             if ADDON.getSetting('show_group_channels') == 'true':
                                 for regexAdd in regexAddList:

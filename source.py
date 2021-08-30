@@ -65,7 +65,7 @@ except ImportError:
 import threading
 import requests
 import os, re, time, datetime, io, zipfile
-import xbmc, xbmcgui, xbmcvfs
+import xbmc, xbmcgui, xbmcvfs, xbmcaddon
 import shutil
 import playService
 import serviceLib
@@ -76,6 +76,8 @@ import strings as strings2
 from itertools import chain
 from skins import Skin
 from random import uniform
+
+ADDON = xbmcaddon.Addon('script.mtvguide')
 
 NUMBER_OF_SERVICE_PRIORITIES = 12
 SETTINGS_TO_CHECK = ['source', 'xmltv_file', 'xmltv_logo_folder',
@@ -842,7 +844,11 @@ class Database(object):
                             if result is not None:
                                 c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [result, x.strm])
                         else:
-                            c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid, x.strm])
+                            try:
+                                c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid, x.strm])
+                            except:
+                                c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid.decode('utf-8'), x.strm])
+
                         nrOfChannelsUpdated += 1
                     except Exception as ex:
                         deb('[UPD] Error updating stream: {}'.format(getExceptionString()))
