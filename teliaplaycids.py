@@ -92,7 +92,7 @@ else:
         profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
 
 sess = requests.Session()
-timeouts = (5, 15)
+timeouts = (5, 5)
 
 class Threading(object):
     def __init__(self):
@@ -157,22 +157,18 @@ class TeliaPlayUpdater(baseServiceUpdater):
 
         except HTTPError as e:
             deb('HTTPError: {}'.format(str(e)))
-            self.connErrorMessage()
             response = False
 
         except ConnectionError as e:
             deb('ConnectionError: {}'.format(str(e)))
-            self.connErrorMessage()
             response = False
 
         except Timeout as e:
             deb('Timeout: {}'.format(str(e))) 
-            self.connErrorMessage()
             response = False
 
         except RequestException as e:
             deb('RequestException: {}'.format(str(e))) 
-            self.connErrorMessage()
             response = False
 
         except:
@@ -328,6 +324,11 @@ class TeliaPlayUpdater(baseServiceUpdater):
             }
 
             response = self.sendRequest(url, post=True, json=False, headers=headers, data=json.dumps(data), verify=False, timeout=timeouts)
+            if not response:
+                if reconnect:
+                    self.loginData(reconnect=True)
+                else:
+                    return False
 
             try:
                 response = response.json()
@@ -340,7 +341,8 @@ class TeliaPlayUpdater(baseServiceUpdater):
                     else:
                         return False
                 elif response['errorCode'] == 9030:
-                    self.connErrorMessage() 
+                    if not reconnect:
+                        self.connErrorMessage() 
                     ADDON.setSetting('teliaplay_sess_id', '')
                     ADDON.setSetting('teliaplay_devush', '')
                     if reconnect:
@@ -366,6 +368,11 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 }
 
             response = self.sendRequest(url, json=True, headers=headers, cookies=sess.cookies, allow_redirects=False, timeout=timeouts)
+            if not response:
+                if reconnect:
+                    self.loginData(reconnect=True)
+                else:
+                    return False
 
             self.usern = response['channels']['engagement']
             ADDON.setSetting('teliaplay_usern', str(self.usern))
