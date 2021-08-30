@@ -994,25 +994,30 @@ class Database(object):
 
         now = datetime.datetime.now()
 
-        try:
-            c.execute("SELECT idx, start_date, end_date, played_date FROM lastplayed")
-            row = c.fetchone()
-            idx = row[str('idx')]
-            start = row[str('start_date')]
-            end = row[str('end_date')]
-            played = row[str('played_date')]
-            c.close()
-        except:
-            pass
+        c.execute("SELECT idx, start_date, end_date, played_date FROM lastplayed")
+        row = c.fetchone()
 
-        if idx == '':
+        try:
+            idx = row[str('idx')]
+        except:
             idx = 0
-        if start == '':
+
+        try:
+            start = row[str('start_date')]
+        except:
             start = str(datetime.datetime.timestamp(now))
-        if end == '':
+
+        try:
+            end = row[str('end_date')]
+        except:
             end = str(datetime.datetime.timestamp(now))
-        if played == '': 
+
+        try:
+            played = row[str('played_date')]
+        except:
             played = str(datetime.datetime.timestamp(now))
+
+        c.close()
 
         return idx, start, end, played
 
