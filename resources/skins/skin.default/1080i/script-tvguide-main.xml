@@ -535,8 +535,8 @@
 					<aligny>center</aligny>
 					<font>font12</font>
 					<textcolor>button_focus</textcolor>
-					<label>$INFO[Control.GetLabel(4960)]</label>
-					<visible>!String.IsEmpty(Control.GetLabel(4960))</visible>
+					<label>$INFO[Control.GetLabel(4960)], $INFO[Control.GetLabel(4961)]</label>
+					<visible>!String.IsEmpty(Control.GetLabel(4960)) | !String.IsEmpty(Control.GetLabel(4961))</visible>
 					<!--<animation type="WindowOpen">
 						<effect type="fade" start="0" end="100" time="300" tween="sine" easing="out"/>
 						<effect type="slide" start="320" end="0" time="400" tween="cubic" easing="out" />

@@ -990,12 +990,9 @@ class Database(object):
         return self._invokeAndBlockForResult(self._getLastChannel)
 
     def _getLastChannel(self):
-        idx = ''
-        start = ''
-        end = ''
-        played = ''
-
         c = self.conn.cursor()
+
+        now = datetime.datetime.now()
 
         try:
             c.execute("SELECT idx, start_date, end_date, played_date FROM lastplayed")
@@ -1007,6 +1004,15 @@ class Database(object):
             c.close()
         except:
             pass
+
+        if idx == '':
+            idx = 0
+        if start == '':
+            start = str(datetime.datetime.timestamp(now))
+        if end == '':
+            end = str(datetime.datetime.timestamp(now))
+        if played == '': 
+            played = str(datetime.datetime.timestamp(now))
 
         return idx, start, end, played
 

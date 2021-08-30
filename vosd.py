@@ -462,7 +462,7 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
 
         channel = Channel(id='', title='', logo='', titles='', streamUrl='', visible='', weight='')
         program = Program(channel=channelList[self.channelIdx], title='', startDate='', endDate='', description='', imageLarge='', imageSmall='', categoryA='',categoryB='')
-        self.gu.playChannel(program.channel)
+        self.gu.playChannel(program.channel, program)
         self.isClosing = True
 
     def onAction(self, action):
@@ -750,10 +750,11 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
                 self.refreshControls()
 
     def refreshControls(self):
-        programs = self.gu.database.getNextProgram(self.program)
-
         if not self.initialized:
             return
+
+        if self.program.title is None or self.program.title == '':
+            self.program = self.gu.database.getCurrentProgram(self.program.channel)
 
         if self.ctrlServiceName is not None and ADDON.getSetting('show_service_name') == 'true':
             self.ctrlServiceName.setLabel('%s' % self.playService.getCurrentServiceString())
@@ -824,6 +825,7 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
 
         if self.ctrlCalcProgramTimeNext is not None:
             try:
+                programs = self.gu.database.getNextProgram(self.program)
                 for program in [programs]:
                     if program is None:
                         startDate = self.program.startDate
@@ -844,6 +846,7 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
                 self.ctrlCalcProgramTimeNext.setLabel('%s' % ('N/A'))
 
         if self.ctrlNextProgram is not None:
+            programs = self.gu.database.getNextProgram(self.program)
             for program in [programs]:
                 if program is None:
                     title = self.program.title

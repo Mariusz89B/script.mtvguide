@@ -558,7 +558,6 @@ class mTVGuide(xbmcgui.WindowXML):
         self.notification = None
         self.infoDialog = None
         self.currentChannel = None
-        self.lastChannel = None
         self.program = None
         self.onFocusTimer = None
         self.updateTimebarTimer = None
@@ -2710,8 +2709,8 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action.getId() == KEY_CONTEXT_MENU or action.getButtonCode() == KEY_CONTEXT or action.getId() == ACTION_MOUSE_RIGHT_CLICK:
 
             if self.currentChannel is None:
-                chann, prog, idx = self.getLastPlayingChannel()
-                self.currentChannel = chann
+                prog, idx = self.getLastPlayingChannel()
+                self.currentChannel = prog.channel
 
             if xbmc.Player().isPlaying():
                 if ADDON.getSetting('start_video_minimalized') == 'false' or self.playingRecordedProgram or self.currentChannel is None:
@@ -2850,7 +2849,7 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.playShortcut()
 
         elif action.getButtonCode() == KEY_SWITCH_TO_LAST:
-            channel = self.getLastChannel()
+            channel = self.database.getLastChannel()
             if channel:
                 program = self.database.getCurrentProgram(channel)
                 if program:
@@ -4746,9 +4745,9 @@ class mTVGuide(xbmcgui.WindowXML):
         except:
             chann = channelList[0]
 
-        prog = self.database.getProgramStartingAt(chann, start)
+        program = self.database.getProgramStartingAt(chann, start)
 
-        return chann, prog, idx
+        return program, idx
 
     def delayedOnFocus(self, controlId):
         debug('onFocus controlId: {}'.format(controlId))
@@ -4768,29 +4767,25 @@ class mTVGuide(xbmcgui.WindowXML):
 
         if xbmc.Player().isPlaying():
             if ADDON.getSetting('info_osd') == "false" or self.program is None:
-                try:
-                    latest_playing = True
-                    last_channel, last_program, idx = self.getLastPlayingChannel()
-                except:
-                    latest_playing = False
-                    idx, start, end, played = self.database.getLastChannel()
+                program = self.database.getCurrentProgram(self.currentChannel)
+                idx = self.database.getCurrentChannelIdx(self.currentChannel)
 
                 try:
-                    self.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format(program.id))
+                    if self.program.endDate < datetime.datetime.now():
+                        program, idx = self.epg.getLastPlayingChannel()
+                except:
+                    pass
+
+                try:
+                    self.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format(program.channel.title))
                     self.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(program.title))
-                    self.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format(self.formatTime(prog.startDate), self.formatTime(prog.endDate)))
+                    self.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format(self.formatTime(program.startDate), self.formatTime(program.endDate)))
                     self.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format((str(int(idx) + 1))))
                 except:
-                    if latest_playing:
-                        self.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format(last_channel.id))
-                        self.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(last_program.title))
-                        self.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format(self.formatTime(prog.startDate), self.formatTime(prog.endDate)))
-                        self.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format((str(int(idx) + 1))))
-                    else:
-                        self.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format("N/A"))
-                        self.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(strings(55016)))
-                        self.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format("N/A", "N/A"))
-                        self.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format("-"))
+                    self.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format("N/A"))
+                    self.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(strings(55016)))
+                    self.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format("N/A", "N/A"))
+                    self.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format("-"))
 
         if program.description:
             description = program.description
@@ -5041,26 +5036,22 @@ class mTVGuide(xbmcgui.WindowXML):
     def updateCurrentChannel(self, program, channel):
         deb('updateCurrentChannel')
         self.currentChannel = channel
-        self.lastChannel = self.currentChannel
 
-        idx = self.currentChannel.weight
+        idx = self.database.getCurrentChannelIdx(self.currentChannel)
         
         try:
             start = program.startDate
         except:
-            start = datetime.datetime.now()
+            start = self.program.startDate
         
         try:
             end = program.endDate
         except:
-            end = datetime.datetime.now()
+            end = self.program.endDate
 
         played = datetime.datetime.now()
 
         self.database.lastChannel(idx, start, end, played)
-
-    def getLastChannel(self):
-        return self.lastChannel
 
     def elapsed_interval(self, start, end):
         elapsed = end - start
@@ -5506,16 +5497,9 @@ class mTVGuide(xbmcgui.WindowXML):
     def _showEPG(self):
         deb('_showEpg')
         ### current time! ###
-        try:
-            idx, start, end, played = self.database.getLastChannel()
-        except:
-            end = 0.0
-            played = 0.0
+        idx, start, end, played = self.database.getLastChannel()
 
-        endedAt = datetime.datetime.fromtimestamp(int(float(end)) )
-        playedAt = datetime.datetime.fromtimestamp(int(float(played)) )
-
-        if endedAt < playedAt:
+        if float(end) < float(played):
             try:
                 self.viewStartDate = self.program.startDate + datetime.timedelta(minutes=int(timebarAdjust()))
             except:
@@ -7254,13 +7238,27 @@ class Pla(xbmcgui.WindowXMLDialog):
             return
         if not self.ctrlService:
             self.ctrlService = self.getControl(C_VOSD_SERVICE)
-
+   
         if ADDON.getSetting('info_osd') == "true":
-            self.epg.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format(self.program.channel.title))
-            self.epg.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(self.program.title))
-            self.epg.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format(self.epg.formatTime(self.program.startDate), self.epg.formatTime(self.program.endDate)))
-            self.epg.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format(self.database.getCurrentChannelIdx(self.program.channel) + 1))
+            program = self.database.getCurrentProgram(self.epg.currentChannel)
+            idx = self.database.getCurrentChannelIdx(self.epg.currentChannel)
 
+            try:
+                if self.program.endDate < datetime.datetime.now():
+                    program, idx = self.epg.getLastPlayingChannel()
+            except:
+                pass
+
+            try:
+                self.epg.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format(program.channel.title))
+                self.epg.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(program.title))
+                self.epg.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format(self.epg.formatTime(program.startDate), self.epg.formatTime(program.endDate)))
+                self.epg.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format((str(int(idx) + 1))))
+            except:
+                self.epg.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format("N/A"))
+                self.epg.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(strings(55016)))
+                self.epg.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format("N/A", "N/A"))
+                self.epg.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format("-"))
 
         if ADDON.getSetting('show_time') == "true":
             nowtime = '$INFO[System.Time]'
@@ -7405,7 +7403,7 @@ class Pla(xbmcgui.WindowXMLDialog):
 
         program = Program(channel=index, title='', startDate='', endDate='', description='', productionDate='', director='', actor='', episode='', imageLarge='', imageSmall='', categoryA='', categoryB='')
         
-        self.playChannel(program.channel)
+        self.playChannel(program.channel, program)
 
     def onAction(self, action):
         debug('Pla onAction keyId {}, buttonCode {}'.format(action.getId(), action.getButtonCode()))
@@ -7551,7 +7549,7 @@ class Pla(xbmcgui.WindowXMLDialog):
 
         elif action.getButtonCode() == KEY_SWITCH_TO_LAST:
             deb('Pla play last channel')
-            channel = self.epg.getLastChannel()
+            channel = self.database.getLastChannel()
             if channel:
                 self.playChannel(channel)
 
@@ -7722,7 +7720,7 @@ class Pla(xbmcgui.WindowXMLDialog):
                 self.program = program
                 self.epg.program = self.program
 
-            self.epg.updateCurrentChannel(self.epg.program, channel)
+            self.epg.updateCurrentChannel(program, channel)
             urlList = self.database.getStreamUrlList(channel)
             if len(urlList) > 0:
                 self.epg.playService.playUrlList(urlList, self.archiveService, self.archivePlaylist, resetReconnectCounter=True)
