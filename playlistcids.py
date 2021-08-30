@@ -209,14 +209,20 @@ class PlaylistUpdater(baseServiceUpdater):
         else:
             size = int(536870912) # 512 MB
 
-            with open(filepath, 'rb') as tmpcontent:
-                if sys.maxsize < 2 ** 32 and int(self.systemMemory()) > size:
-                    deb('Reading type: Default')
-                    content = tmpcontent.read()
-                    tmpcontent.close()
+            if sys.maxsize < 2 ** 32 and int(self.systemMemory()) < size:
+                if sys.version_info[0] > 2:
+                    with open(path, 'r', encoding='utf-8') as f:
+                        deb('Reading type: Default')
+                        content = f.read()
                 else:
+                    with open(path, 'r') as f:
+                        deb('Reading type: Default')
+                        content = f.read()
+
+            else:
+                with open(path, 'rb') as f:
                     deb('Reading type: MMAP')
-                    with mmap.mmap(tmpcontent.fileno(), length=0, access=mmap.ACCESS_READ) as mmap_obj:
+                    with mmap.mmap(f.fileno(), length=0, access=mmap.ACCESS_READ) as mmap_obj:
                         content = mmap_obj.read().decode('utf-8')
 
         return content
@@ -271,18 +277,23 @@ class PlaylistUpdater(baseServiceUpdater):
             else:
                 try:
                     size = int(536870912) # 512 MB
-                    
-                    with open(path, 'rb') as f:
-                        if sys.maxsize < 2 ** 32 and int(self.systemMemory()) > size:
-                            deb('Reading type: Default')
-                            tmpcontent = f.read()
-                            f.close()
+                                   
+                    if sys.maxsize < 2 ** 32 and int(self.systemMemory()) < size:
+                        if sys.version_info[0] > 2:
+                            with open(path, 'r', encoding='utf-8') as f:
+                                deb('Reading type: Default')
+                                tmpcontent = f.read()
                         else:
+                            with open(path, 'r') as f:
+                                deb('Reading type: Default')
+                                tmpcontent = f.read()
+
+                    else:
+                        with open(path, 'rb') as f:
                             deb('Reading type: MMAP')
                             with mmap.mmap(f.fileno(), length=0, access=mmap.ACCESS_READ) as mmap_obj:
                                 tmpcontent = mmap_obj.read().decode('utf-8')
 
-                
                     if tmpcontent is None or tmpcontent == "":
                         raise Exception
                         
