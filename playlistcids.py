@@ -117,9 +117,12 @@ class PlaylistUpdater(baseServiceUpdater):
             self.stopPlaybackOnStart = False
 
     def systemMemory(self):
-        import psutil
-        stats = psutil.virtual_memory()  # returns a named tuple
-        available = getattr(stats, 'available')
+        try:
+            import psutil
+            stats = psutil.virtual_memory()  # returns a named tuple
+            available = getattr(stats, 'available')
+        except:
+            available = 0
 
         return available
 
@@ -207,7 +210,7 @@ class PlaylistUpdater(baseServiceUpdater):
             size = int(536870912) # 512 MB
 
             with open(filepath, 'rb') as tmpcontent:
-                if sys.maxsize < 2 ** 32 and int(self.systemMemory()) < size:
+                if sys.maxsize < 2 ** 32 and int(self.systemMemory()) > size:
                     deb('Reading type: Default')
                     content = tmpcontent.read()
                     tmpcontent.close()
@@ -270,7 +273,7 @@ class PlaylistUpdater(baseServiceUpdater):
                     size = int(536870912) # 512 MB
                     
                     with open(path, 'rb') as f:
-                        if sys.maxsize < 2 ** 32 and int(self.systemMemory()) < size:
+                        if sys.maxsize < 2 ** 32 and int(self.systemMemory()) > size:
                             deb('Reading type: Default')
                             tmpcontent = f.read()
                             f.close()
