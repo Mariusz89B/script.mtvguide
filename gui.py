@@ -1776,18 +1776,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.close()
         return None
 
-    def deleteFiles(self):
-        """
-        try:
-            if sys.version_info[0] > 2:
-                f = os.path.join(self.profilePath, 'streams.temp')
-            else:
-                f = os.path.join(self.profilePath, 'streams.temp').decode('utf-8')
-            os.remove(f)
-        except:
-            None
-        """
-
+    def reloadSkin(self):
         try:
             if ADDON.getSetting('skin_fontpack') == 'true':
                 xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Settings.SetSettingValue","id":1,"params":{"setting":"lookandfeel.font","value":"Default"}}')
@@ -1847,7 +1836,7 @@ class mTVGuide(xbmcgui.WindowXML):
             if self.rssFeed:
                 self.rssFeed.close()
             if self.database:
-                self.deleteFiles()
+                self.reloadSkin()
                 self.database.close(super(mTVGuide, self).close)
             else:
                 super(mTVGuide, self).close()
