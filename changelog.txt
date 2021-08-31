@@ -1,5 +1,6 @@
-﻿wersja 9.4.9 - 2021-08-26
+﻿wersja 9.4.9 - 2021-09-01
 - dodany serwis Polsat GO
+- poprawiono wydajność działania
 
 wersja 9.4.8 - 2021-08-22
 - poprawka wideoOSD

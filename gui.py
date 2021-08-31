@@ -669,7 +669,12 @@ class mTVGuide(xbmcgui.WindowXML):
 
         if res == 0:
             ADDON.setSetting('source', '1')
-            kb = xbmc.Keyboard('http://','')
+
+            txt = ADDON.getSetting('m-TVGuide')
+            if txt == 'http://' or txt == 'https://' or txt == '':
+                txt = 'http://'
+
+            kb = xbmc.Keyboard(txt,'')
             kb.setHeading(strings(59941))
             kb.setHiddenInput(False)
             kb.doModal()
@@ -705,11 +710,13 @@ class mTVGuide(xbmcgui.WindowXML):
         progExec = False
         resExtra = False
 
-        ccList = (strings(59925), strings(59926), strings(59927), strings(59928), strings(59929), strings(59930),
-                 strings(59931), strings(59932), strings(59933), strings(59934), strings(59935), strings(59936), strings(59937), 'Radio')
+        langList = [strings(59925), strings(59926), strings(59927), strings(59928), strings(59929), strings(59930),
+                 strings(59931), strings(59932), strings(59933), strings(59934), strings(59935), strings(59936), strings(59937), 'Radio']
+
+        ccList = ['be', 'cz', 'de', 'dk', 'fr', 'hr', 'it', 'no', 'pl', 'se', 'srb', 'uk', 'us', 'radio']
 
         res = xbmcgui.Dialog().multiselect(strings(59943),
-                    ccList)
+                    langList)
 
         if not res:
             resBack = xbmcgui.Dialog().yesno(strings(59924), strings(59938), yeslabel=strings(59939), nolabel=strings(30308))
@@ -724,385 +731,35 @@ class mTVGuide(xbmcgui.WindowXML):
         if len(res) > 1:
             resExtra = xbmcgui.Dialog().yesno(strings(59924), strings(59962))
 
-        if 0 in res:
-            label = strings(59963)
-            ADDON.setSetting('country_code_be', 'true')
-            if resExtra:
-                response = xbmcgui.Dialog().yesno(strings(59924), strings(59944).format(label))
-                if response:
-                    ADDON.setSetting('source', 'm-TVGuide')
-                    kb = xbmc.Keyboard('','')
-                    kb.setHeading(strings(59945).format(label))
-                    kb.setHiddenInput(False)
-                    kb.doModal()
-                    c = kb.getText() if kb.isConfirmed() else None
-                    if c == '': c = None
-                    
-                    ADDON.setSetting('epg_be', c)
-                    if c is not None:
-                        progExec = True
+        for i in range(len(langList)):
+            ADDON.setSetting('country_code_{cc}'.format(cc=ccList[i]), 'false')
+            if i in res:
+                label = strings(59963)
+                ADDON.setSetting('country_code_{cc}'.format(cc=ccList[i]), 'true')
+                if resExtra:
+                    response = xbmcgui.Dialog().yesno(strings(59924), strings(59944).format(label))
+                    if response:
+                        ADDON.setSetting('source', 'm-TVGuide')
+                        kb = xbmc.Keyboard('','')
+                        kb.setHeading(strings(59945).format(label))
+                        kb.setHiddenInput(False)
+                        kb.doModal()
+                        c = kb.getText() if kb.isConfirmed() else None
+                        if c == '': c = None
+                        
+                        ADDON.setSetting('epg_{cc}'.format(cc=ccList[i]), c)
+                        if c is not None:
+                            progExec = True
+
+                        else:
+                            ADDON.setSetting('country_code_{cc}'.format(cc=ccList[i]), 'false')
+                            self.tutorialGetCountry()
 
                     else:
-                        ADDON.setSetting('country_code_be', 'false')
-                        self.tutorialGetCountry()
+                        progExec = True
 
                 else:
                     progExec = True
-
-            else:
-                progExec = True
-
-        if 1 in res:
-            label = strings(59964)
-            ADDON.setSetting('country_code_cz', 'true')
-            if resExtra:
-                response = xbmcgui.Dialog().yesno(strings(59924), strings(59944).format(label))
-                if response:
-                    ADDON.setSetting('source', 'm-TVGuide')
-                    kb = xbmc.Keyboard('','')
-                    kb.setHeading(strings(59945).format(label))
-                    kb.setHiddenInput(False)
-                    kb.doModal()
-                    c = kb.getText() if kb.isConfirmed() else None
-                    if c == '': c = None
-                    
-                    ADDON.setSetting('epg_cz', c)
-                    if c is not None:
-                        progExec = True
-
-                    else:
-                        ADDON.setSetting('country_code_cz', 'false')
-                        self.tutorialGetCountry()
-                else:
-                    progExec = True
-
-            else:
-                progExec = True
-
-        if 2 in res:
-            label = strings(59965)
-            ADDON.setSetting('country_code_de', 'true')
-            if resExtra:
-                response = xbmcgui.Dialog().yesno(strings(59924), strings(59944).format(label))
-                if response:
-                    ADDON.setSetting('source', 'm-TVGuide')
-                    kb = xbmc.Keyboard('','')
-                    kb.setHeading(strings(59945).format(label))
-                    kb.setHiddenInput(False)
-                    kb.doModal()
-                    c = kb.getText() if kb.isConfirmed() else None
-                    if c == '': c = None
-                    
-                    ADDON.setSetting('epg_de', c)
-                    if c is not None:
-                        progExec = True
-
-                    else:
-                        ADDON.setSetting('country_code_de', 'false')
-                        self.tutorialGetCountry()
-                else:
-                    progExec = True
-
-            else:
-                progExec = True
-
-        if 3 in res:
-            label = strings(59966)
-            ADDON.setSetting('country_code_dk', 'true')
-            if resExtra:
-                response = xbmcgui.Dialog().yesno(strings(59924), strings(59944).format(label))
-                if response:
-                    ADDON.setSetting('source', 'm-TVGuide')
-                    kb = xbmc.Keyboard('','')
-                    kb.setHeading(strings(59945).format(label))
-                    kb.setHiddenInput(False)
-                    kb.doModal()
-                    c = kb.getText() if kb.isConfirmed() else None
-                    if c == '': c = None
-                    
-                    ADDON.setSetting('epg_dk', c)
-                    if c is not None:
-                        progExec = True
-
-                    else:
-                        ADDON.setSetting('country_code_dk', 'false')
-                        self.tutorialGetCountry()
-                else:
-                    progExec = True
-
-            else:
-                progExec = True
-
-        if 4 in res:
-            label = strings(59967)
-            ADDON.setSetting('country_code_fr', 'true')
-            if resExtra:
-                response = xbmcgui.Dialog().yesno(strings(59924), strings(59944).format(label))
-                if response:
-                    ADDON.setSetting('source', 'm-TVGuide')
-                    kb = xbmc.Keyboard('','')
-                    kb.setHeading(strings(59945).format(label))
-                    kb.setHiddenInput(False)
-                    kb.doModal()
-                    c = kb.getText() if kb.isConfirmed() else None
-                    if c == '': c = None
-                    
-                    ADDON.setSetting('epg_fr', c)
-                    if c is not None:
-                        progExec = True
-
-                    else:
-                        ADDON.setSetting('country_code_fr', 'false')
-                        self.tutorialGetCountry()
-                else:
-                    progExec = True
-
-            else:
-                progExec = True
-
-        if 5 in res:
-            label = strings(59968)
-            ADDON.setSetting('country_code_hr', 'true')
-            if resExtra:
-                response = xbmcgui.Dialog().yesno(strings(59924), strings(59944).format(label))
-                if response:
-                    ADDON.setSetting('source', 'm-TVGuide')
-                    kb = xbmc.Keyboard('','')
-                    kb.setHeading(strings(59945).format(label))
-                    kb.setHiddenInput(False)
-                    kb.doModal()
-                    c = kb.getText() if kb.isConfirmed() else None
-                    if c == '': c = None
-                    
-                    ADDON.setSetting('epg_hr', c)
-                    if c is not None:
-                        progExec = True
-
-                    else:
-                        ADDON.setSetting('country_code_hr', 'false')
-                        self.tutorialGetCountry()
-                else:
-                    progExec = True
-
-            else:
-                progExec = True
-
-        if 6 in res:
-            label = strings(59969)
-            ADDON.setSetting('country_code_it', 'true')
-            if resExtra:
-                response = xbmcgui.Dialog().yesno(strings(59924), strings(59944).format(label))
-                if response:
-                    ADDON.setSetting('source', 'm-TVGuide')
-                    kb = xbmc.Keyboard('','')
-                    kb.setHeading(strings(59945).format(label))
-                    kb.setHiddenInput(False)
-                    kb.doModal()
-                    c = kb.getText() if kb.isConfirmed() else None
-                    if c == '': c = None
-                    
-                    ADDON.setSetting('epg_it', c)
-                    if c is not None:
-                        progExec = True
-
-                    else:
-                        ADDON.setSetting('country_code_it', 'false')
-                        self.tutorialGetCountry()
-                else:
-                    progExec = True
-
-            else:
-                progExec = True
-
-        if 7 in res:
-            label = strings(59970)
-            ADDON.setSetting('country_code_no', 'true')
-            if resExtra:
-                response = xbmcgui.Dialog().yesno(strings(59924), strings(59944).format(label))
-                if response:
-                    ADDON.setSetting('source', 'm-TVGuide')
-                    kb = xbmc.Keyboard('','')
-                    kb.setHeading(strings(59945).format(label))
-                    kb.setHiddenInput(False)
-                    kb.doModal()
-                    c = kb.getText() if kb.isConfirmed() else None
-                    if c == '': c = None
-                    
-                    ADDON.setSetting('epg_no', c)
-                    if c is not None:
-                        progExec = True
-
-                    else:
-                        ADDON.setSetting('country_code_no', 'false')
-                        self.tutorialGetCountry()
-                else:
-                    progExec = True
-
-            else:
-                progExec = True
-
-        if 8 in res:
-            label = strings(59971)
-            ADDON.setSetting('country_code_pl', 'true')
-            if resExtra:
-                response = xbmcgui.Dialog().yesno(strings(59924), strings(59944).format(label))
-                if response:
-                    ADDON.setSetting('source', 'm-TVGuide')
-                    kb = xbmc.Keyboard('','')
-                    kb.setHeading(strings(59945).format(label))
-                    kb.setHiddenInput(False)
-                    kb.doModal()
-                    c = kb.getText() if kb.isConfirmed() else None
-                    if c == '': c = None
-                    
-                    ADDON.setSetting('m-TVGuide', c)
-                    if c is not None:
-                        progExec = True
-
-                    else:
-                        ADDON.setSetting('country_code_pl', 'false')
-                        self.tutorialGetCountry()
-                else:
-                    progExec = True
-
-            else:
-                progExec = True
-
-        if 9 in res:
-            label = strings(59972)
-            ADDON.setSetting('country_code_se', 'true')
-            if resExtra:
-                response = xbmcgui.Dialog().yesno(strings(59924), strings(59944).format(label))
-                if response:
-                    ADDON.setSetting('source', 'm-TVGuide')
-                    kb = xbmc.Keyboard('','')
-                    kb.setHeading(strings(59945).format(label))
-                    kb.setHiddenInput(False)
-                    kb.doModal()
-                    c = kb.getText() if kb.isConfirmed() else None
-                    if c == '': c = None
-                    
-                    ADDON.setSetting('epg_se', c)
-                    if c is not None:
-                        progExec = True
-
-                    else:
-                        ADDON.setSetting('country_code_se', 'false')
-                        self.tutorialGetCountry()
-                else:
-                    progExec = True
-
-            else:
-                progExec = True
-
-        if 10 in res:
-            label = strings(59973)
-            ADDON.setSetting('country_code_srb', 'true')
-            if resExtra:
-                response = xbmcgui.Dialog().yesno(strings(59924), strings(59944).format(label))
-                if response:
-                    ADDON.setSetting('source', 'm-TVGuide')
-                    kb = xbmc.Keyboard('','')
-                    kb.setHeading(strings(59945).format(label))
-                    kb.setHiddenInput(False)
-                    kb.doModal()
-                    c = kb.getText() if kb.isConfirmed() else None
-                    if c == '': c = None
-                    
-                    ADDON.setSetting('epg_srb', c)
-                    if c is not None:
-                        progExec = True
-
-                    else:
-                        ADDON.setSetting('country_code_srb', 'false')
-                        self.tutorialGetCountry()
-                else:
-                    progExec = True
-
-            else:
-                progExec = True
-
-        if 11 in res:
-            label = strings(59974)
-            ADDON.setSetting('country_code_uk', 'true')
-            if resExtra:
-                response = xbmcgui.Dialog().yesno(strings(59924), strings(59944).format(label))
-                if response:
-                    ADDON.setSetting('source', 'm-TVGuide')
-                    kb = xbmc.Keyboard('','')
-                    kb.setHeading(strings(59945).format(label))
-                    kb.setHiddenInput(False)
-                    kb.doModal()
-                    c = kb.getText() if kb.isConfirmed() else None
-                    if c == '': c = None
-                    
-                    ADDON.setSetting('epg_uk', c)
-                    if c is not None:
-                        progExec = True
-
-                    else:
-                        ADDON.setSetting('country_code_uk', 'false')
-                        self.tutorialGetCountry()
-                else:
-                    progExec = True
-
-            else:
-                progExec = True
-
-        if 12 in res:
-            label = strings(59975)
-            ADDON.setSetting('country_code_us', 'true')
-            if resExtra:
-                response = xbmcgui.Dialog().yesno(strings(59924), strings(59944).format(label))
-                if response:
-                    ADDON.setSetting('source', 'm-TVGuide')
-                    kb = xbmc.Keyboard('','')
-                    kb.setHeading(strings(59945).format(label))
-                    kb.setHiddenInput(False)
-                    kb.doModal()
-                    c = kb.getText() if kb.isConfirmed() else None
-                    if c == '': c = None
-                    
-                    ADDON.setSetting('epg_us', c)
-                    if c is not None:
-                        progExec = True
-
-                    else:
-                        ADDON.setSetting('country_code_us', 'false')
-                        self.tutorialGetCountry()
-                else:
-                    progExec = True
-
-            else:
-                progExec = True
-
-
-        if 13 in res:
-            label = 'Radio'
-            ADDON.setSetting('country_code_radio', 'true')
-            if resExtra:
-                response = xbmcgui.Dialog().yesno(strings(59924), strings(59944).format(label))
-                if response:
-                    ADDON.setSetting('source', 'm-TVGuide')
-                    kb = xbmc.Keyboard('','')
-                    kb.setHeading(strings(59945).format(label))
-                    kb.setHiddenInput(False)
-                    kb.doModal()
-                    c = kb.getText() if kb.isConfirmed() else None
-                    if c == '': c = None
-                    
-                    ADDON.setSetting('epg_radio', c)
-                    if c is not None:
-                        progExec = True
-
-                    else:
-                        ADDON.setSetting('country_code_radio', 'false')
-                        self.tutorialGetCountry()
-                else:
-                    progExec = True
-
-            else:
-                progExec = True
 
         if progExec is True:
             self.tutorialGetService()
@@ -1124,7 +781,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
         if res == 0:
             res = xbmcgui.Dialog().multiselect(strings(59949), 
-                    [strings(59920), strings(59921), strings(59922), strings(80006), strings(59923), strings(30903), strings(30904), strings(80005)])
+                    [strings(59920), strings(59921), strings(59922), strings(80006), strings(59923), strings(30903), strings(80008), strings(80007), strings(30904), strings(80005)])
 
 
             if not res:
@@ -1277,11 +934,48 @@ class mTVGuide(xbmcgui.WindowXML):
                     self.tutorialGetService()
 
             if 5 in res:
+                label = 'Polsat GO'
+                xbmcgui.Dialog().ok(label, strings(59950).format(label))
+                ADDON.setSetting('polsatgo_enabled', 'true')
+                kb = xbmc.Keyboard('','')
+                kb.setHeading(strings(59952) + ' ({})'.format(label))
+                kb.setHiddenInput(False)
+                kb.doModal()
+                login = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
+                if login == '': login = self.tutorialGetService()
+
+                if login != '':
+                    ADDON.setSetting('polsatgo_username', login)
+                    kb = xbmc.Keyboard('','')
+                    kb.setHeading(strings(59953) + ' ({})'.format(label))
+                    kb.setHiddenInput(True)
+                    kb.doModal()
+                    pswd = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
+                    if pswd == '': pswd = self.tutorialGetService()
+
+                    ADDON.setSetting('polsatgo_password', pswd)
+                    if pswd != '':
+                        progExec = True
+
+                    else:
+                        ADDON.setSetting('polsatgo_enabled', 'false')
+                        self.tutorialGetService()
+
+                else:
+                    ADDON.setSetting('polsatgo_enabled', 'false')
+                    self.tutorialGetService()
+
+            if 6 in res:
                 label = 'PlayerPL'
                 xbmcgui.Dialog().ok(label, strings(59950).format(label))
                 ADDON.setSetting('playerpl_enabled', 'true')
 
-            if 6 in res:
+            if 7 in res:
+                label = 'Telewizja Polska'
+                xbmcgui.Dialog().ok(label, strings(59950).format(label))
+                ADDON.setSetting('tvp_enabled', 'true')
+
+            if 8 in res:
                 label = 'Telia Play'
                 xbmcgui.Dialog().ok(label, strings(59950).format(label))
                 ADDON.setSetting('teliaplay_enabled', 'true')
@@ -1367,7 +1061,10 @@ class mTVGuide(xbmcgui.WindowXML):
 
             elif res == 0:
                 ADDON.setSetting('playlist_1_source', '0')
-                kb = xbmc.Keyboard('','')
+                txt = ADDON.getSetting('playlist_1_url')
+                if txt == 'http://' or txt == 'https://' or txt == '':
+                    txt = 'http://'
+                kb = xbmc.Keyboard(txt,'')
                 kb.setHeading(strings(59955))
                 kb.setHiddenInput(False)
                 kb.doModal()
