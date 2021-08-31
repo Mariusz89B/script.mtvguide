@@ -5555,29 +5555,34 @@ class mTVGuide(xbmcgui.WindowXML):
 
         self.categories = self.database.getAllCategories()
 
-        listControl = self.getControl(self.C_MAIN_CATEGORY)
-        listControl.reset()
-
-        items = list()
-
-        ccList = ['be', 'cz', 'de', 'dk', 'fr', 'hr', 'it', 'no', 'pl', 'se', 'srb', 'uk', 'us', 'radio']
+        try:
+            listControl = self.getControl(self.C_MAIN_CATEGORY)
+            listControl.reset()
         
-        categories = PREDEFINED_CATEGORIES + list(self.categories)
-        for item in ccList:
-            if ADDON.getSetting('country_code_{cc}'.format(cc=item)) == "false":
-                categories.remove('Group: {cc}'.format(cc=item.upper()))
+            items = list()
 
-        categories = [label.replace('Group', strings(30995)) for label in categories]
+            ccList = ['be', 'cz', 'de', 'dk', 'fr', 'hr', 'it', 'no', 'pl', 'se', 'srb', 'uk', 'us', 'radio']
+            
+            categories = PREDEFINED_CATEGORIES + list(self.categories)
+            for item in ccList:
+                if ADDON.getSetting('country_code_{cc}'.format(cc=item)) == "false":
+                    categories.remove('Group: {cc}'.format(cc=item.upper()))
 
-        for label in categories:
-            item = xbmcgui.ListItem(label)
-            items.append(item)
+            categories = [label.replace('Group', strings(30995)) for label in categories]
 
-        listControl.addItems(items)
-        if self.category and self.category in categories:
-            index = categories.index(self.category)
-            if index >= 0:
-                listControl.selectItem(index)
+            for label in categories:
+                item = xbmcgui.ListItem(label)
+                items.append(item)
+
+            listControl.addItems(items)
+            if self.category and self.category in categories:
+                index = categories.index(self.category)
+                if index >= 0:
+                    listControl.selectItem(index)
+
+        except:
+            deb('Categories not supported by current skin')
+            self.category = None
 
         self.getListLenght = self.getChannelListLenght()
         
@@ -6219,31 +6224,37 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
             self.close()
 
         elif controlId == self.C_POPUP_GROUP:
-            dialog = xbmcgui.Dialog()
-            cat = dialog.input(strings(30984), type=xbmcgui.INPUT_ALPHANUM)
-            if cat:
-                categories = set(self.categories)
-                if sys.version_info[0] > 2:
-                    categories.add(cat)
-                else:
-                    categories.add(cat.decode('utf-8'))
-                self.categories = list(set(categories))
-                items = list()
-                categories = PREDEFINED_CATEGORIES + list(self.categories)
-                for label in categories:
-                    item = xbmcgui.ListItem(label)
-                    items.append(item)
-                listControl = self.getControl(self.C_POPUP_CATEGORY)
-                listControl.reset()
-                listControl.addItems(items)
-                if sys.version_info[0] > 2:
-                    listControl.selectItem(categories.index(cat))
-                else:
-                    listControl.selectItem(categories.index(cat.decode('utf-8')))
+            try:
+                dialog = xbmcgui.Dialog()
+                cat = dialog.input(strings(30984), type=xbmcgui.INPUT_ALPHANUM)
+                if cat:
+                    categories = set(self.categories)
+                    if sys.version_info[0] > 2:
+                        categories.add(cat)
+                    else:
+                        categories.add(cat.decode('utf-8'))
+                    self.categories = list(set(categories))
+                    items = list()
+                    categories = PREDEFINED_CATEGORIES + list(self.categories)
+                    for label in categories:
+                        item = xbmcgui.ListItem(label)
+                        items.append(item)
+                
+                    listControl = self.getControl(self.C_POPUP_CATEGORY)
+                    listControl.reset()
+                
+                    listControl.addItems(items)
+                    if sys.version_info[0] > 2:
+                        listControl.selectItem(categories.index(cat))
+                    else:
+                        listControl.selectItem(categories.index(cat.decode('utf-8')))
 
-                self.setFocusId(self.C_POPUP_CATEGORY)
-                xbmc.sleep(300)
-                xbmc.executebuiltin('Action(ContextMenu)')
+                    self.setFocusId(self.C_POPUP_CATEGORY)
+                    xbmc.sleep(300)
+                    xbmc.executebuiltin('Action(ContextMenu)')
+            except:
+                deb('Categories not supported by current skin')
+                self.category = None
 
         else:
             self.buttonClicked = controlId

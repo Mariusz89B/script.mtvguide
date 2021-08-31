@@ -1,4 +1,7 @@
-﻿wersja 9.4.9 - 2021-09-01
+﻿wersja 9.5.0 - 2021-09-02
+- naprawiono błąd kategorii skórek
+
+wersja 9.4.9 - 2021-09-01
 - dodany serwis Polsat GO
 - poprawiono wydajność działania
 

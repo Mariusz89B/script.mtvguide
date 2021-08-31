@@ -116,7 +116,6 @@ class Threading(object):
                 time.sleep(30)
 
             if xbmc.Monitor().waitForAbort(1):
-                self.thread.cancel()
                 break
 
 
