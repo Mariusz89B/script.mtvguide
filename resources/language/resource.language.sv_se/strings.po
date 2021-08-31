@@ -200,6 +200,10 @@ msgctxt "#30164"
 msgid "No available information"
 msgstr "Ingen tillgänglig information"
 
+msgctxt "#30165"
+msgid "Electronic program guide (EPG) channel names do not match channel ids, enabling detection of alternative channel names in addon settings might improve channel recognition.[CR][CR]Do you want to exit m-TVGuide?"
+msgstr "Elektronisk programguide (EPG) kanalnamn matchar inte kanal id, aktivering utav alternativa kanalnamn i tilläggets inställningar kan förbättra kanaligenkänning.[CR][CR]Vill du avsluta m-TVGuide?"
+
 msgctxt "#30200"
 msgid "on [B]{}[/B] in 5 minutes..."
 msgstr "På [B]{}[/B] om 5 minuter..."

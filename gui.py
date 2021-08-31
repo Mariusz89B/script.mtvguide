@@ -5522,6 +5522,11 @@ class mTVGuide(xbmcgui.WindowXML):
             self.onRedrawEPG(channelStart, self.viewStartDate, focusFunction)
         debug('onRedrawEPG done')
 
+        if not self.controlAndProgramList:
+            res = xbmcgui.Dialog().yesno('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30165))
+            if res:
+                super(mTVGuide, self).close()
+
     def _clearEpg(self):
         deb('_clearEpg')    
         if self.timebar:

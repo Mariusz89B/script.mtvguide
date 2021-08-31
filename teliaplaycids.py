@@ -116,6 +116,7 @@ class Threading(object):
             time.sleep(15)
 
             if xbmc.Monitor().waitForAbort(1):
+                self.thread.cancel()
                 break
 
 
@@ -241,6 +242,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 if reconnect:
                     self.loginData(reconnect=True)
                 else:
+                    self.connErrorMessage()
                     return False
 
             url = 'https://ottapi.prod.telia.net/web/{cc}/logingateway/rest/v1/login'.format(cc=cc[self.country])
@@ -272,6 +274,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 if reconnect:
                     self.loginData(reconnect=True)
                 else:
+                    self.connErrorMessage()
                     return False
 
             try:
@@ -328,6 +331,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 if reconnect:
                     self.loginData(reconnect=True)
                 else:
+                    self.connErrorMessage()
                     return False
 
             try:
@@ -348,6 +352,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                     if reconnect:
                         self.loginData(reconnect=True)
                     else:
+                        self.connErrorMessage()
                         return False
             except:
                 pass

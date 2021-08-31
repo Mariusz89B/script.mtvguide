@@ -67,6 +67,7 @@ class Start:
             w.doModal()
             w.close()
             del w
+
             deb('')
             deb('###################################################################################')
             deb('')
@@ -74,6 +75,7 @@ class Start:
             deb('')
             deb('###################################################################################')
             deb('')
+
         except Exception as ex:
             deb('addon.py exception: {}'.format(getExceptionString()))
 
