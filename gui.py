@@ -1884,7 +1884,7 @@ class mTVGuide(xbmcgui.WindowXML):
             return
 
         self.database.initialize(self.onSourceInitialized, self.isSourceInitializationCancelled)
-        self.updateTimebar()
+
         self.interval = 300
         self.updateEpgTimer = epgTimer(self.interval, self.updateEpg)
 
@@ -5184,6 +5184,9 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def _showEPG(self):
         deb('_showEpg')
+        self.onTimebarEPG()
+        self.updateTimebar()
+        
         ### current time! ###
         idx, start, end, played = self.database.getLastChannel()
 
@@ -5545,17 +5548,17 @@ class mTVGuide(xbmcgui.WindowXML):
 
         del self.controlAndProgramList[:]
 
-        self.category = self.database.category
-
         try:
-            if sys.version_info[0] < 3:
-                self.category = self.category.decode('utf-8')
-        except:
-            self.category = ''
+            self.category = self.database.category
 
-        self.categories = self.database.getAllCategories()
+            try:
+                if sys.version_info[0] < 3:
+                    self.category = self.category.decode('utf-8')
+            except:
+                self.category = ''
 
-        try:
+            self.categories = self.database.getAllCategories()
+        
             listControl = self.getControl(self.C_MAIN_CATEGORY)
             listControl.reset()
         
