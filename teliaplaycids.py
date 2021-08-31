@@ -113,7 +113,7 @@ class Threading(object):
                     ADDON.setSetting('teliaplay_refrtoken', str(refrtoken))
                     ADDON.setSetting('teliaplay_cookies', str(cookies))
 
-            time.sleep(15)
+                time.sleep(30)
 
             if xbmc.Monitor().waitForAbort(1):
                 self.thread.cancel()
@@ -238,12 +238,6 @@ class TeliaPlayUpdater(baseServiceUpdater):
             }
 
             response = self.sendRequest(url, post=True, headers=headers, data=json.dumps(data), verify=False, timeout=timeouts)
-            if not response:
-                if reconnect:
-                    self.loginData(reconnect=True)
-                else:
-                    self.connErrorMessage()
-                    return False
 
             url = 'https://ottapi.prod.telia.net/web/{cc}/logingateway/rest/v1/login'.format(cc=cc[self.country])
 
