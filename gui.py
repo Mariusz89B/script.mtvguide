@@ -2625,7 +2625,16 @@ class mTVGuide(xbmcgui.WindowXML):
         elif controlId == self.C_MAIN_MOUSEPANEL_CURSOR_LEFT:
             return
         elif controlId == self.C_MAIN_MOUSEPANEL_SETTINGS:
-            xbmcaddon.Addon(id=ADDON_ID).openSettings()
+            #xbmcaddon.Addon(id=ADDON_ID).openSettings()
+            self.viewStartDate = datetime.datetime.today() + datetime.timedelta(
+                minutes=int(timebarAdjust()))
+            self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
+            self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+
+            controlInFocus = self.getFocus()
+            program = self._getProgramFromControl(controlInFocus)
+            if program is not None:
+                self._showContextMenu(program)
             return
         elif controlId >= 9010 and controlId <= 9021:
             o = controlId - 9010
