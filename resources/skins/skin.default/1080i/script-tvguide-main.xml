@@ -1889,100 +1889,166 @@
 					<animation effect="slide" start="0,90" time="300" tween="sine" easing="inout">Visible</animation>
 					<animation start="100" end="100" delay="100" time="0" effect="fade">Hidden</animation>
 					<visible>!Control.IsVisible(4300)+ Control.IsVisible(4200)</visible>
-
-					<control type="image">
-						<description>Background</description>
-						<posx>0</posx>
-						<posy>1032</posy>
-						<width>1920</width>
-						<height>48</height>
-						<texture>osd/black.png</texture>
-					</control>
 					
 					<control type="button">
 						<description>EPG</description>
 						<visible>hidden</visible>
 					</control>
 					
-					<control type="button" id="4302">
+					<control type="radiobutton" id="4301">
+						<description>EPG</description>
+						<posx>634</posx>
+						<top>990</top>
+						<width>76</width>
+						<height>76</height>
+						<textureradioonfocus colordiffuse="FFF0F0F0">buttons/epgFO.png</textureradioonfocus>
+						<textureradioonnofocus>buttons/epgFO.png</textureradioonnofocus>
+						<textureradioofffocus colordiffuse="FFF0F0F0">buttons/epgFO.png</textureradioofffocus>
+						<textureradiooffnofocus>buttons/epgFO.png</textureradiooffnofocus>
+						<texturefocus colordiffuse="button_focus">buttons/buttonFO.png</texturefocus>
+						<font></font>
+						<texturenofocus></texturenofocus>
+						<radioposx>1</radioposx>
+						<radioposy>0</radioposy>
+						<radiowidth>74</radiowidth>
+						<radioheight>74</radioheight>
+						<textureradiooffdisabled colordiffuse="button_focus">buttons/epgFO.png</textureradiooffdisabled>
+						<animation center="634,990" effect="zoom" end="100" reversible="false" start="95" time="480" tween="back">Focus</animation>
+						<animation effect="fade" end="100" time="100" delay="0">WindowOpen</animation>
+					</control>
+					
+					<control type="radiobutton" id="4302">
 						<description>Navigate left</description>
-						<posx>765</posx>
-						<posy>1032</posy>
-						<width>48</width>
-						<height>48</height>
-						<texturefocus flipx="true" colordiffuse="button_focus">buttons/nav_le.png</texturefocus>
-						<texturenofocus flipx="true" colordiffuse="">buttons/nav_le.png</texturenofocus>
-						<animation effect="fade" start="0" end="100" time="500" >WindowOpen</animation>
-						<animation effect="fade" start="100" end="0" time="100" >WindowClose</animation>
-						<animation effect="fade" start="0" end="100" time="500" >Visible</animation>
-						<animation effect="fade" start="100" end="0" time="100" >Hidden</animation>
-						
+						<posx>730</posx>
+						<top>990</top>
+						<width>76</width>
+						<height>76</height>
+						<textureradioonfocus colordiffuse="FFF0F0F0">buttons/leftFO.png</textureradioonfocus>
+						<textureradioonnofocus>buttons/leftFO.png</textureradioonnofocus>
+						<textureradioofffocus colordiffuse="FFF0F0F0">buttons/leftFO.png</textureradioofffocus>
+						<textureradiooffnofocus>buttons/leftFO.png</textureradiooffnofocus>
+						<texturefocus colordiffuse="button_focus">buttons/buttonFO.png</texturefocus>
+						<font></font>
+						<texturenofocus></texturenofocus>
+						<radioposx>1</radioposx>
+						<radioposy>0</radioposy>
+						<radiowidth>74</radiowidth>
+						<radioheight>74</radioheight>
+						<textureradiooffdisabled colordiffuse="button_focus">buttons/leftFO.png</textureradiooffdisabled>
+						<animation center="730,990" effect="zoom" end="100" reversible="false" start="95" time="480" tween="back">Focus</animation>
+						<animation effect="fade" end="100" time="100" delay="0">WindowOpen</animation>
 					</control>
-					<control type="button" id="4303">
+					
+					<control type="radiobutton" id="4303">
 						<description>Navigate up</description>
-						<posx>889</posx>
-						<posy>1032</posy>
-						<width>48</width>
-						<height>48</height>
-						<texturefocus flipy="true" colordiffuse="button_focus">buttons/nav_do.png</texturefocus>
-						<texturenofocus flipy="true" colordiffuse="">buttons/nav_do.png</texturenofocus>
-						<animation effect="fade" start="0" end="100" time="500" >WindowOpen</animation>
-						<animation effect="fade" start="100" end="0" time="100" >WindowClose</animation>
-						<animation effect="fade" start="0" end="100" time="500" >Visible</animation>
-						<animation effect="fade" start="100" end="0" time="100" >Hidden</animation>
+						<posx>826</posx>
+						<top>990</top>
+						<width>76</width>
+						<height>76</height>
+						<textureradioonfocus flipy="false" colordiffuse="FFF0F0F0">buttons/channelFO.png</textureradioonfocus>
+						<textureradioonnofocus flipy="false">buttons/channelFO.png</textureradioonnofocus>
+						<textureradioofffocus flipy="false" colordiffuse="FFF0F0F0">buttons/channelFO.png</textureradioofffocus>
+						<textureradiooffnofocus flipy="false">buttons/channelFO.png</textureradiooffnofocus>
+						<texturefocus colordiffuse="button_focus">buttons/buttonFO.png</texturefocus>
+						<font></font>
+						<texturenofocus></texturenofocus>
+						<radioposx>1</radioposx>
+						<radioposy>0</radioposy>
+						<radiowidth>74</radiowidth>
+						<radioheight>74</radioheight>
+						<textureradiooffdisabled flipy="false" colordiffuse="button_focus">buttons/channelFO.png</textureradiooffdisabled>
+						<animation center="826,990" effect="zoom" end="100" reversible="false" start="95" time="480" tween="back">Focus</animation>
+						<animation effect="fade" end="100" time="100" delay="0">WindowOpen</animation>
 					</control>
-					<control type="button" id="4304">
+					
+					<control type="radiobutton" id="4304">
 						<description>Navigate down</description>
-						<posx>1022</posx>
-						<posy>1032</posy>
-						<width>48</width>
-						<height>48</height>
-						<texturefocus flipy="false" colordiffuse="button_focus">buttons/nav_do.png</texturefocus>
-						<texturenofocus flipy="false" colordiffuse="">buttons/nav_do.png</texturenofocus>
-						<animation effect="fade" start="0" end="100" time="500" >WindowOpen</animation>
-						<animation effect="fade" start="100" end="0" time="100" >WindowClose</animation>
-						<animation effect="fade" start="0" end="100" time="500" >Visible</animation>
-						<animation effect="fade" start="100" end="0" time="100" >Hidden</animation>
+						<posx>922</posx>
+						<top>990</top>
+						<width>76</width>
+						<height>76</height>
+						<textureradioonfocus flipy="true" colordiffuse="FFF0F0F0">buttons/channelFO.png</textureradioonfocus>
+						<textureradioonnofocus flipy="true">buttons/channelFO.png</textureradioonnofocus>
+						<textureradioofffocus flipy="true" colordiffuse="FFF0F0F0">buttons/channelFO.png</textureradioofffocus>
+						<textureradiooffnofocus flipy="true">buttons/channelFO.png</textureradiooffnofocus>
+						<texturefocus colordiffuse="button_focus">buttons/buttonFO.png</texturefocus>
+						<font></font>
+						<texturenofocus></texturenofocus>
+						<radioposx>1</radioposx>
+						<radioposy>0</radioposy>
+						<radiowidth>74</radiowidth>
+						<radioheight>74</radioheight>
+						<textureradiooffdisabled flipy="true" colordiffuse="button_focus">buttons/channelFO.png</textureradiooffdisabled>
+						<animation center="922,990" effect="zoom" end="100" reversible="false" start="95" time="480" tween="back">Focus</animation>
+						<animation effect="fade" end="100" time="100" delay="0">WindowOpen</animation>
 					</control>
-					<control type="button" id="4305">
+					
+					<control type="radiobutton" id="4305">
 						<description>Navigate right</description>
-						<posx>1146</posx>
-						<posy>1032</posy>
-						<width>48</width>
-						<height>48</height>
-						<texturefocus flipx="false" colordiffuse="button_focus">buttons/nav_le.png</texturefocus>
-						<texturenofocus flipx="false" colordiffuse="">buttons/nav_le.png</texturenofocus>
-						<animation effect="fade" start="0" end="100" time="500" >WindowOpen</animation>
-						<animation effect="fade" start="100" end="0" time="100" >WindowClose</animation>
-						<animation effect="fade" start="0" end="100" time="500" >Visible</animation>
-						<animation effect="fade" start="100" end="0" time="100" >Hidden</animation>
+						<posx>1018</posx>
+						<top>990</top>
+						<width>76</width>
+						<height>76</height>
+						<textureradioonfocus colordiffuse="FFF0F0F0">buttons/rightFO.png</textureradioonfocus>
+						<textureradioonnofocus>buttons/rightFO.png</textureradioonnofocus>
+						<textureradioofffocus colordiffuse="FFF0F0F0">buttons/rightFO.png</textureradioofffocus>
+						<textureradiooffnofocus>buttons/rightFO.png</textureradiooffnofocus>
+						<texturefocus colordiffuse="button_focus">buttons/buttonFO.png</texturefocus>
+						<font></font>
+						<texturenofocus></texturenofocus>
+						<radioposx>1</radioposx>
+						<radioposy>0</radioposy>
+						<radiowidth>74</radiowidth>
+						<radioheight>74</radioheight>
+						<textureradiooffdisabled colordiffuse="button_focus">buttons/rightFO.png</textureradiooffdisabled>
+						<animation center="1018,990" effect="zoom" end="100" reversible="false" start="95" time="480" tween="back">Focus</animation>
+						<animation effect="fade" end="100" time="100" delay="0">WindowOpen</animation>
 					</control>
-					<control type="button" id="4311">
+					
+					<control type="radiobutton" id="4311">
 						<description>Settings</description>
-						<posx>641</posx>
-						<posy>1032</posy>
-						<width>48</width>
-						<height>48</height>
-						<texturefocus flipx="false" colordiffuse="button_focus">buttons/nav_set.png</texturefocus>
-						<texturenofocus flipx="false" colordiffuse="">buttons/nav_set.png</texturenofocus>
-						<animation effect="fade" start="0" end="100" time="500" >WindowOpen</animation>
-						<animation effect="fade" start="100" end="0" time="100" >WindowClose</animation>
-						<animation effect="fade" start="0" end="100" time="500" >Visible</animation>
-						<animation effect="fade" start="100" end="0" time="100" >Hidden</animation>
+						<posx>1114</posx>
+						<top>990</top>
+						<width>76</width>
+						<height>76</height>
+						<textureradioonfocus colordiffuse="FFF0F0F0">buttons/setupFO.png</textureradioonfocus>
+						<textureradioonnofocus>buttons/setupFO.png</textureradioonnofocus>
+						<textureradioofffocus colordiffuse="FFF0F0F0">buttons/setupFO.png</textureradioofffocus>
+						<textureradiooffnofocus>buttons/setupFO.png</textureradiooffnofocus>
+						<texturefocus colordiffuse="button_focus">buttons/buttonFO.png</texturefocus>
+						<font></font>
+						<texturenofocus></texturenofocus>
+						<radioposx>1</radioposx>
+						<radioposy>0</radioposy>
+						<radiowidth>74</radiowidth>
+						<radioheight>74</radioheight>
+						<textureradiooffdisabled colordiffuse="button_focus">buttons/setupFO.png</textureradiooffdisabled>
+						<animation center="1114,990" effect="zoom" end="100" reversible="false" start="95" time="480" tween="back">Focus</animation>
+						<animation effect="fade" end="100" time="100" delay="0">WindowOpen</animation>
 					</control>
-					<control type="button" id="4306">
+					
+					<control type="radiobutton" id="4306">
 						<description>Exit</description>
-						<posx>1270</posx>
-						<posy>1032</posy>
-						<width>48</width>
-						<height>48</height>
-						<texturefocus flipx="false" colordiffuse="button_focus">buttons/nav_ex.png</texturefocus>
-						<texturenofocus flipx="false" colordiffuse="">buttons/nav_ex.png</texturenofocus>
-						<animation effect="fade" start="0" end="100" time="500" >WindowOpen</animation>
-						<animation effect="fade" start="100" end="0" time="100" >WindowClose</animation>
-						<animation effect="fade" start="0" end="100" time="500" >Visible</animation>
-						<animation effect="fade" start="100" end="0" time="100" >Hidden</animation>
+						<posx>1210</posx>
+						<top>990</top>
+						<width>76</width>
+						<height>76</height>
+						<textureradioonfocus colordiffuse="FFF0F0F0">buttons/homeFO.png</textureradioonfocus>
+						<textureradioonnofocus>buttons/homeFO.png</textureradioonnofocus>
+						<textureradioofffocus colordiffuse="FFF0F0F0">buttons/homeFO.png</textureradioofffocus>
+						<textureradiooffnofocus>buttons/homeFO.png</textureradiooffnofocus>
+						<texturefocus colordiffuse="button_focus">buttons/buttonFO.png</texturefocus>
+						<font></font>
+						<texturenofocus></texturenofocus>
+						<radioposx>1</radioposx>
+						<radioposy>0</radioposy>
+						<radiowidth>74</radiowidth>
+						<radioheight>74</radioheight>
+						<textureradiooffdisabled colordiffuse="button_focus">buttons/homeFO.png</textureradiooffdisabled>
+						<animation center="1210,990" effect="zoom" end="100" reversible="false" start="95" time="480" tween="back">Focus</animation>
+						<animation effect="fade" end="100" time="100" delay="0">WindowOpen</animation>
 					</control>
+					
 				</control>
 
 				<control type="label" id="6000">
