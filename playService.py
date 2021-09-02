@@ -516,8 +516,8 @@ class PlayService(xbmc.Player, BasePlayService):
                     watch_mode = p.search(str(item['media']['playback']['play'])).group(1)
                 except:
                     watch_mode = 'LIVE'
-                    
-                deb('DEBUG: {}'.format(watch_mode))
+
+                #deb('DEBUG: {}'.format(watch_mode))
 
         if watch_mode == 'ONDEMAND' and media_id != '':
             streamType = 'MEDIA'
