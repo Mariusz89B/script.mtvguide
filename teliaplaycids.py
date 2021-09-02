@@ -418,7 +418,6 @@ class TeliaPlayUpdater(baseServiceUpdater):
             login = self.loginData(reconnect=False)
 
             if login:
-                self.getProgramList()
                 run = Threading()
 
             return login
@@ -492,51 +491,6 @@ class TeliaPlayUpdater(baseServiceUpdater):
             refr = False
 
         return refr
-
-
-    def getProgramList(self):
-        n = datetime.datetime.now()
-
-        if sys.version_info[0] > 2:
-            now = int(datetime.datetime.timestamp(n)) * 1000
-        else:
-            now = int(time.mktime(n.timetuple())) * 1000
-
-        tday = str(((int(time.time() // 86400)) * 86400 ) * 1000)
-        yday = str(((int(time.time() // 86400)) * 86400 - 86400 ) * 1000)
-
-        headers = {
-            'authority': 'graphql-telia.t6a.net',
-            'tv-client-name': 'web',
-            'tv-client-boot-id': self.tv_client_boot_id,
-            'dnt': '1',
-            'sec-ch-ua-mobile': '?0',
-            'authorization': 'Bearer '+ self.beartoken,
-            'content-type': 'application/json',
-            'x-country': cc[self.country].upper(),
-            'user-agent': UA,
-            'tv-client-version': '1.2.0',
-            'sec-ch-ua': '"Chromium";v="92", " Not A;Brand";v="99", "Microsoft Edge";v="92"',
-            'accept': '*/*',
-            'origin':  base[self.country],
-            'sec-fetch-site': 'cross-site',
-            'sec-fetch-mode': 'cors',
-            'sec-fetch-dest': 'empty',
-            'referer': base[self.country]+'/',
-            'accept-language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
-        }
-
-        params = (
-            ('operationName', 'getTvChannels'),
-            ('variables', '{"timestamp":'+str(tday)+',"limit":1000,"programLimit":1000,"offset":0}'),
-            ('extensions', '{"persistedQuery":{"version":1,"sha256Hash":"17b9c1e6d8679b523121bdb035a3cc55fbd2e0bd237cc723edf747177d6120f0"}}'),
-        )
-
-        response = requests.get('https://graphql-telia.t6a.net/graphql', headers=headers, params=params, cookies=sess.cookies, verify=False).json()
-
-        file_name = os.path.join(profilePath, 'teliaplay_programs.list')
-        with open(file_name, "w") as f: 
-            json.dump(response, f, indent = 6)
 
     def getChannelList(self, silent):
         result = list()
@@ -698,9 +652,9 @@ class TeliaPlayUpdater(baseServiceUpdater):
 
             hea = ''
 
-            LICENSE_URL = response.get('streams', None)[0].get("drm", None).get("licenseUrl", None)
-            stream_url = response.get('streams', None)[0].get("url", None)
-            headr = response.get('streams', None)[0].get("drm", None).get("headers", None)
+            LICENSE_URL = response.get('streams', '')[0].get('drm', '').get('licenseUrl', '')
+            stream_url = response.get('streams', '')[0].get('url', '')
+            headr = response.get('streams', '')[0].get('drm', '').get('headers', '')
 
             if 'X-AxDRM-Message' in headr:
                 hea = 'Content-Type=&X-AxDRM-Message=' + self.dashjs

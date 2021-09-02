@@ -597,6 +597,31 @@ class PlayService(xbmc.Player, BasePlayService):
 
         license_url = LICENSE_URL + '|' + hea + '|R{SSM}|'
 
+        deleteUrl = 'https://streaminggateway-telia.clientapi-prod.live.tv.telia.net/streaminggateway/rest/secure/v2/streamingticket/{type}/{cid}?country={cc}'.format(type=streamType, cid=(str(media_id)), cc=cc[country].upper())
+
+        headers = {
+            'Connection': 'keep-alive',
+            'sec-ch-ua': '"Chromium";v="92", " Not A;Brand";v="99", "Microsoft Edge";v="92"',
+            'tv-client-boot-id': tv_client_boot_id,
+            'DNT': '1',
+            'sec-ch-ua-mobile': '?0',
+            'Authorization': 'Bearer '+ beartoken,
+            'Content-Type': 'application/json',
+            'X-Country': cc[country],
+            'User-Agent': UA,
+            'Accept': '*/*',
+            'Origin': base[country],
+            'Sec-Fetch-Site': 'cross-site',
+            'Sec-Fetch-Mode': 'cors',
+            'Sec-Fetch-Dest': 'empty',
+            'Referer': base[country]+'/',
+            'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
+        }
+
+        thread = threading.Thread(name='deleteSession', target=self.deleteSession, args=[deleteUrl, headers])
+        thread = threading.Timer(3.0, self.deleteSession, args=[deleteUrl, headers])
+        thread.start()
+
         return stream_url, license_url
 
 

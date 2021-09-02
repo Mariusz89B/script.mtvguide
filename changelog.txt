@@ -1,5 +1,7 @@
 ﻿wersja 9.5.1 - 2021-09-03
 - naprawiono znikający pasek czasu
+- poprawka dla serwisu WP Pilot
+- aktualizacja serwisu Telia Play
 
 wersja 9.5.0 - 2021-09-02
 - naprawiono błąd kategorii skórek
