@@ -576,9 +576,9 @@ class PlayService(xbmc.Player, BasePlayService):
 
         hea = ''
 
-        LICENSE_URL = response.get('streams', None)[0].get("drm", None).get("licenseUrl", None)
-        stream_url = response.get('streams', None)[0].get("url", None)
-        headr = response.get('streams', None)[0].get("drm", None).get("headers", None)
+        LICENSE_URL = response.get('streams', '')[0].get('drm', '').get('licenseUrl', '')
+        stream_url = response.get('streams', '')[0].get('url', '')
+        headr = response.get('streams', '')[0].get('drm', '').get('headers', '')
 
         if 'X-AxDRM-Message' in headr:
             hea = 'Content-Type=&X-AxDRM-Message=' + dashjs
