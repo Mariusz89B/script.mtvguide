@@ -510,9 +510,29 @@ class PlayService(xbmc.Player, BasePlayService):
             if int(utc) >= int(start_time) and int(utc) <= int(end_time):
                 media_id = item['media']['id']
                 title = item['media']['title']
+                
+                p = re.compile('\WwatchMode\W:\s*\W(.*?)\W,', re.M)
+                try:
+                    watch_mode = p.search(str(item['media']['playback']['play'])).group(1)
+                except:
+                    watch_mode = 'LIVE'
+                    
+                deb('DEBUG: {}'.format(watch_mode))
 
-        if media_id != '':
+        if watch_mode == 'ONDEMAND' and media_id != '':
             streamType = 'MEDIA'
+
+        elif watch_mode == 'STARTOVER' and media_id != '':
+            if int(end_time) > int(now):
+                streamType = 'MEDIA'
+            else:
+                res = xbmcgui.Dialog().yesno(strings(30998), strings(59980))
+                if res:
+                    media_id = self.channCid(channelInfo.cid)
+                    streamType = 'CHANNEL'
+                else:
+                    return None, None
+
         else:
             res = xbmcgui.Dialog().yesno(strings(30998), strings(59980))
             if res:
