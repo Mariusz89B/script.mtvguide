@@ -229,8 +229,11 @@ class WpPilotUpdater(baseServiceUpdater):
                 headers=headers,
             ).json()
 
-            if response['_meta']['error']['name'] == 'user_not_verified_eu':
-                self.geoBlockErrorMessage()
+            try:
+                if response['_meta']['error']['name'] == 'user_not_verified_eu':
+                    self.geoBlockErrorMessage()
+            except:
+                pass
 
             meta = response.get('_meta', None)
             if meta is not None:
