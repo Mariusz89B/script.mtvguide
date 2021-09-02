@@ -138,6 +138,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
         except:
             pass
         self.dashjs             = ADDON.getSetting('teliaplay_devush')
+        self.sessionid          = ADDON.getSetting('teliaplay_sess_id')
         self.tv_client_boot_id  = ADDON.getSetting('teliaplay_tv_client_boot_id')
         self.timestamp          = ADDON.getSetting('teliaplay_timestamp')
         self.validTo            = ADDON.getSetting('teliaplay_validTo')
@@ -148,12 +149,12 @@ class TeliaPlayUpdater(baseServiceUpdater):
         self.subtoken           = ADDON.getSetting('teliaplay_subtoken')
 
 
-    def sendRequest(self, url, post=False, json=False, headers=None, data=None, params=None, cookies=None, verify=False, allow_redirects=False, timeout=None):
+    def sendRequest(self, url, post=False, json=None, headers=None, data=None, params=None, cookies=None, verify=False, allow_redirects=False, timeout=None):
         try:
             if post:
-                response = sess.post(url, headers=headers, data=data, params=params, cookies=cookies, verify=True, allow_redirects=allow_redirects, timeout=timeout)
+                response = sess.post(url, headers=headers, json=json, data=data, params=params, cookies=cookies, verify=verify, allow_redirects=allow_redirects, timeout=timeout)
             else:
-                response = sess.get(url, headers=headers, data=data, params=params, cookies=cookies, verify=True, allow_redirects=allow_redirects, timeout=timeout)
+                response = sess.get(url, headers=headers, json=json, data=data, params=params, cookies=cookies, verify=verify, allow_redirects=allow_redirects, timeout=timeout)
 
         except HTTPError as e:
             deb('HTTPError: {}'.format(str(e)))
@@ -175,10 +176,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
             self.connErrorMessage()
             response = False
 
-        if json:
-            return response.json()
-        else:
-            return response
+        return response
 
 
     def createData(self):
@@ -190,6 +188,9 @@ class TeliaPlayUpdater(baseServiceUpdater):
 
         self.timestamp = int(time.time())*1000
         ADDON.setSetting('teliaplay_timestamp', str(self.timestamp))
+
+        self.sessionid = ''
+        ADDON.setSetting('teliaplay_sess_id', str(self.sessionid))
 
 
     def loginData(self, reconnect):
@@ -262,13 +263,15 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 "deviceType": "WEB",
             }
             
-            response = self.sendRequest(url, post=True, json=True, headers=headers, data=json.dumps(data), verify=False, timeout=timeouts)
+            response = self.sendRequest(url, post=True, headers=headers, data=json.dumps(data), verify=False, timeout=timeouts)
             if not response:
                 if reconnect:
                     self.loginData(reconnect=True)
                 else:
                     self.connErrorMessage()
                     return False
+
+            response = response.json()
 
             try:
                 if 'Username/password was incorrect' in response['errorMessage']:
@@ -365,12 +368,14 @@ class TeliaPlayUpdater(baseServiceUpdater):
                     'tv-client-boot-id': self.tv_client_boot_id,
                 }
 
-            response = self.sendRequest(url, json=True, headers=headers, cookies=sess.cookies, allow_redirects=False, timeout=timeouts)
+            response = self.sendRequest(url, headers=headers, cookies=sess.cookies, allow_redirects=False, timeout=timeouts)
             if not response:
                 if reconnect:
                     self.loginData(reconnect=True)
                 else:
                     return False
+
+            response = response.json()
 
             self.usern = response['channels']['engagement']
             ADDON.setSetting('teliaplay_usern', str(self.usern))
@@ -413,6 +418,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
             login = self.loginData(reconnect=False)
 
             if login:
+                self.getProgramList()
                 run = Threading()
 
             return login
@@ -488,6 +494,50 @@ class TeliaPlayUpdater(baseServiceUpdater):
         return refr
 
 
+    def getProgramList(self):
+        n = datetime.datetime.now()
+
+        if sys.version_info[0] > 2:
+            now = int(datetime.datetime.timestamp(n)) * 1000
+        else:
+            now = int(time.mktime(n.timetuple())) * 1000
+
+        tday = str(((int(time.time() // 86400)) * 86400 ) * 1000)
+        yday = str(((int(time.time() // 86400)) * 86400 - 86400 ) * 1000)
+
+        headers = {
+            'authority': 'graphql-telia.t6a.net',
+            'tv-client-name': 'web',
+            'tv-client-boot-id': self.tv_client_boot_id,
+            'dnt': '1',
+            'sec-ch-ua-mobile': '?0',
+            'authorization': 'Bearer '+ self.beartoken,
+            'content-type': 'application/json',
+            'x-country': cc[self.country].upper(),
+            'user-agent': UA,
+            'tv-client-version': '1.2.0',
+            'sec-ch-ua': '"Chromium";v="92", " Not A;Brand";v="99", "Microsoft Edge";v="92"',
+            'accept': '*/*',
+            'origin':  base[self.country],
+            'sec-fetch-site': 'cross-site',
+            'sec-fetch-mode': 'cors',
+            'sec-fetch-dest': 'empty',
+            'referer': base[self.country]+'/',
+            'accept-language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
+        }
+
+        params = (
+            ('operationName', 'getTvChannels'),
+            ('variables', '{"timestamp":'+str(tday)+',"limit":1000,"programLimit":1000,"offset":0}'),
+            ('extensions', '{"persistedQuery":{"version":1,"sha256Hash":"17b9c1e6d8679b523121bdb035a3cc55fbd2e0bd237cc723edf747177d6120f0"}}'),
+        )
+
+        response = requests.get('https://graphql-telia.t6a.net/graphql', headers=headers, params=params, cookies=sess.cookies, verify=False).json()
+
+        file_name = os.path.join(profilePath, 'teliaplay_programs.list')
+        with open(file_name, "w") as f: 
+            json.dump(response, f, indent = 6)
+
     def getChannelList(self, silent):
         result = list()
 
@@ -511,9 +561,11 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 "Authorization": "Bearer " + self.beartoken,
             }
             
-            engagementjson = self.sendRequest(url, json=True, headers=headers, verify=False)
+            engagementjson = self.sendRequest(url, headers=headers, verify=False)
             if not engagementjson:
                 return result
+
+            engagementjson = engagementjson.json()
 
             try:
                 self.engagementLiveChannels = engagementjson['channelIds']
@@ -540,9 +592,11 @@ class TeliaPlayUpdater(baseServiceUpdater):
 
             }
 
-            channels = self.sendRequest(url, json=True, headers=headers, verify=False) 
+            channels = self.sendRequest(url, headers=headers, verify=False) 
             if not channels:
                 return result
+
+            channels = channels.json()
 
             for channel in channels:
                 if channel['id'] in self.engagementLiveChannels:
@@ -583,108 +637,90 @@ class TeliaPlayUpdater(baseServiceUpdater):
 
             cid = self.channCid(chann.cid)
 
+            self.sessionid = six.text_type(uuid.uuid4())
+            ADDON.setSetting('teliaplay_sess_id', str(self.sessionid))
+
             streamType = 'CHANNEL'
 
-            url = 'https://ottapi.prod.telia.net/web/{cc}/streaminggateway/rest/secure/v1/streamingticket/{type}/{cid}/DASH'.format(cc=cc[self.country], cid=(str(cid)), type=streamType)
+            url = 'https://streaminggateway-telia.clientapi-prod.live.tv.telia.net/streaminggateway/rest/secure/v2/streamingticket/{type}/{cid}?country={cc}'.format(type=streamType, cid=(str(cid)), cc=cc[self.country].upper())
 
             headers = {
-                'Accept': '*/*',
-                'Accept-Encoding': 'gzip, deflate, br',
-                'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
-                'Authorization': 'Bearer '+ self.beartoken,
-                'Cache-Control': 'no-cache',
                 'Connection': 'keep-alive',
-                'Content-Type': 'text/plain;charset=UTF-8',
+                'sec-ch-ua': '"Chromium";v="92", " Not A;Brand";v="99", "Microsoft Edge";v="92"',
+                'tv-client-boot-id': 'eac9b61f-906e-467a-896e-adeac15f68fb',
                 'DNT': '1',
-                'Host': 'ottapi.prod.telia.net',
+                'sec-ch-ua-mobile': '?0',
+                'Authorization': 'Bearer '+ self.beartoken,
+                'content-type': 'application/json',
+                'X-Country': cc[self.country],
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36 Edg/92.0.902.84',
+                'Accept': '*/*',
                 'Origin': base[self.country],
-                'Pragma': 'no-cache',
-                'Referer': base[self.country]+'/',
-                'Sec-Fetch-Dest': 'empty',
-                'Sec-Fetch-Mode': 'cors',
                 'Sec-Fetch-Site': 'cross-site',
-                'User-Agent': UA,
-                'tv-client-boot-id': self.tv_client_boot_id,
+                'Sec-Fetch-Mode': 'cors',
+                'Sec-Fetch-Dest': 'empty',
+                'Referer': base[self.country]+'/',
+                'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
             }
-            
+
             params = (
-                ('playerProfile', 'DEFAULT'),
-                ('sessionId', six.text_type(uuid.uuid4())),
+                ('country', cc[self.country].upper()),
             )
 
-            response = self.sendRequest(url, post=True, json=True, headers=headers, params=params, cookies=sess.cookies, verify=False, timeout=timeouts)
+            data = {
+                "sessionId": self.sessionid,
+                "whiteLabelBrand":"TELIA",
+                "watchMode":"LIVE",
+                "accessControl":"SUBSCRIPTION",
+                "device": {
+                    "deviceId": self.tv_client_boot_id,
+                    "category":"unknown",
+                    "packagings":["DASH_MP4_CTR"],
+                    "drmType":"WIDEVINE",
+                    "capabilities":[],
+                    "screen": {
+                        "height":1080,
+                        "width":1920
+                        },
+                    "model":"windows_desktop"
+                    },
+                    "preferences": {
+                        "audioLanguage":["undefined"],
+                        "accessibility":[]}
+                        }
+
+            response = self.sendRequest(url, post=True, headers=headers, json=data, params=params, cookies=sess.cookies, verify=False, timeout=timeouts)
             if not response:
                 data = None
                 return data 
 
-            streamingUrl = response["streamingUrl"]
-            token = response["token"]
-            currentTime = response["currentTime"]
-            expires = response["expires"]
+            response = response.json()
 
-            mpdurl = '{base}?ssl=true&time={time}&token={token}&expires={expires}&c={user_id}&d={dev_id}'.format(base=streamingUrl, time=currentTime, token=token, expires=expires, user_id=self.usern, dev_id=self.dashjs)
+            hea = ''
 
-            try:
-                if 'Content not authorized' in response['errorMessage']:
-                    self.noPremiumMessage()
-                    return
-            except:
-                deb('Content available')
-            
-            headers = {
-                'Accept': '*/*',
-                'Accept-Encoding': 'gzip, deflate, br',
-                'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
-                'Cache-Control': 'no-cache',
-                'Connection': 'keep-alive',
-                'DNT': '1',
-                'Host': 'wvls.webtv.telia.com:8063',
-                'Origin': base[self.country],
-                'Pragma': 'no-cache',
-                'Referer': base[self.country]+'/',
-                'Sec-Fetch-Dest': 'empty',
-                'Sec-Fetch-Mode': 'cors',
-                'Sec-Fetch-Site': 'cross-site',
-                'User-Agent': UA,
-                'x-axdrm-message': self.dashjs,
-            }
+            LICENSE_URL = response.get('streams', None)[0].get("drm", None).get("licenseUrl", None)
+            stream_url = response.get('streams', None)[0].get("url", None)
+            headr = response.get('streams', None)[0].get("drm", None).get("headers", None)
 
-            xheaders = {
-                'Accept': '*/*',
-                'Accept-Encoding': 'gzip, deflate, br',
-                'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
-                'Cache-Control': 'no-cache',
-                'Connection': 'keep-alive',
-                'DNT': '1',
-                'Origin': base[self.country],
-                'Pragma': 'no-cache',
-                'Referer': base[self.country]+'/',
-                'Sec-Fetch-Dest': 'empty',
-                'Sec-Fetch-Mode': 'cors',
-                'Sec-Fetch-Site': 'cross-site',
-                'User-Agent': UA,
-            }
+            if 'X-AxDRM-Message' in headr:
+                hea = 'Content-Type=&X-AxDRM-Message=' + self.dashjs
 
-            mpdurl_re = self.sendRequest(mpdurl, json=True, headers=xheaders, verify=False)
-            if not mpdurl_re:
-                data = None
-                return data 
-
-            mpdurl = mpdurl_re["location"]
-            
-            if sys.version_info[0] > 2:
-                headok = urllib.parse.urlencode(headers)
             else:
-                headok = urllib.urlencode(headers)
+                if sys.version_info[0] > 2:
+                    hea = urllib.parse.urlencode(headr)
+                else:
+                    hea = urllib.urlencode(headr)
 
-            licurl = 'https://wvls.webtv.telia.com:8063/'
-            licenseUrl = licurl+'|'+headok+'|R{SSM}|'
+                if 'Content-Type=&' not in hea:
+                    hea = 'Content-Type=&' + hea
 
-            data = mpdurl
+            license_url = LICENSE_URL + '|' + hea + '|R{SSM}|'
+
+            data = stream_url
 
             if data is not None and data != "":
                 chann.strm = data
-                chann.lic = licenseUrl
+                chann.lic = license_url
                 try:
                     self.log('getChannelStream found matching channel: cid: {}, name: {}, rtmp:{}'.format(chann.cid, chann.name, chann.strm))
                 except:
