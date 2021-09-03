@@ -336,6 +336,9 @@ class ControlAndProgram(object):
         self.control = control
         self.program = program
 
+class ControlObjects(object):
+    def __init__(self, control):
+        self.control = control
 
 
 class Event:
@@ -585,6 +588,7 @@ class mTVGuide(xbmcgui.WindowXML):
         self.channel_number = ADDON.getSetting('channel.arg')
         self.current_channel_id = None
         self.controlAndProgramList = list()
+        self.controlList = list()
         self.ignoreMissingControlIds = list()
         self.recordedFilesPlaylistPositions = {}
         self.streamingService = streaming.StreamsService()
@@ -5297,12 +5301,25 @@ class mTVGuide(xbmcgui.WindowXML):
             colorTimebar = ''
 
         tmp_background = self.getControl(self.C_MAIN_TIMEBAR_BACK)
-        if self.timebarBack:
-            self.removeControl(self.timebarBack)
-
         tmp_control = self.getControl(self.C_MAIN_TIMEBAR)
-        if self.timebar:
-            self.removeControl(self.timebar)
+        
+        try:
+            self.removeControls(controls)
+        except:
+            debug('_clearEpg failed to delete all controls, deleting one by one')
+            for elem in self.controlList:
+                try:
+                    #deb('Debug removeControl: {}'.format(str(elem.control.getId())))
+                    self.removeControl(elem.control)
+
+                except RuntimeError as ex:
+                    debug('_clearEpg RuntimeError: {}'.format(getExceptionString()))
+                    pass  # happens if we try to remove a control that doesn't exist
+
+                except Exception as ex:
+                    deb('_clearEpg unhandled exception: {}'.format(getExceptionString()))
+
+        del self.controlList[:]
 
         if self.getControl(self.C_DYNAMIC_COLORS):
             self.timebarBack = xbmcgui.ControlImage(tmp_background.getX(), tmp_background.getY(), tmp_background.getWidth(), tmp_background.getHeight(), os.path.join(Skin.getSkinPath(), 'media', 'osd', 'back.png'), colorDiffuse=colorTimebarBack)
@@ -5315,6 +5332,9 @@ class mTVGuide(xbmcgui.WindowXML):
             self.timebar = xbmcgui.ControlImage(tmp_control.getX(), tmp_control.getY(), tmp_control.getWidth(), tmp_control.getHeight(), os.path.join(Skin.getSkinPath(), 'media', 'tvguide-timebar.png'), colorDiffuse=skin_timebar_colour)
 
         timebars = [self.timebar, self.timebarBack]
+        for control in timebars:
+            self.controlList.append(ControlObjects(control))
+
         self.addControls(timebars)
 
     def onRedrawEPG(self, channelStart, startTime, focusFunction=None):
@@ -5533,14 +5553,6 @@ class mTVGuide(xbmcgui.WindowXML):
         controls = [elem.control for elem in self.controlAndProgramList]
 
         try:
-            if self.timebar:
-                self.removeControl(self.timebar)
-                self.timebar = None
-
-            if self.timebarBack:
-                self.removeControl(self.timebarBack)
-                self.timebarBack = None
-                
             self.removeControls(controls)
         except:
             debug('_clearEpg failed to delete all controls, deleting one by one')
@@ -5557,6 +5569,26 @@ class mTVGuide(xbmcgui.WindowXML):
                     deb('_clearEpg unhandled exception: {}'.format(getExceptionString()))
 
         del self.controlAndProgramList[:]
+
+        controls = [elem.control for elem in self.controlList]
+
+        try:
+            self.removeControls(controls)
+        except:
+            debug('_clearEpg failed to delete all controls, deleting one by one')
+            for elem in self.controlList:
+                try:
+                    #deb('Debug removeControl: {}'.format(str(elem.control.getId())))
+                    self.removeControl(elem.control)
+
+                except RuntimeError as ex:
+                    debug('_clearEpg RuntimeError: {}'.format(getExceptionString()))
+                    pass  # happens if we try to remove a control that doesn't exist
+
+                except Exception as ex:
+                    deb('_clearEpg unhandled exception: {}'.format(getExceptionString()))
+
+        del self.controlList[:]
 
         try:
             self.category = self.database.category
@@ -6903,6 +6935,7 @@ class Pla(xbmcgui.WindowXMLDialog):
         self.epg = epg
         self.database = database
         self.controlAndProgramList = list()
+        self.controlList = list()
         self.ChannelChanged = 0
         self.mouseCount = 0
         self.isClosing = False
