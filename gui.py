@@ -336,10 +336,6 @@ class ControlAndProgram(object):
         self.control = control
         self.program = program
 
-class ControlObjects(object):
-    def __init__(self, control):
-        self.control = control
-
 
 class Event:
     def __init__(self):
@@ -588,7 +584,6 @@ class mTVGuide(xbmcgui.WindowXML):
         self.channel_number = ADDON.getSetting('channel.arg')
         self.current_channel_id = None
         self.controlAndProgramList = list()
-        self.controlList = list()
         self.ignoreMissingControlIds = list()
         self.recordedFilesPlaylistPositions = {}
         self.streamingService = streaming.StreamsService()
@@ -5330,9 +5325,6 @@ class mTVGuide(xbmcgui.WindowXML):
 
         timebars = [self.timebar, self.timebarBack]
 
-        for control in timebars:
-            self.controlList.append(ControlObjects(control))
-
         self.addControls(timebars)
 
     def onRedrawEPG(self, channelStart, startTime, focusFunction=None):
@@ -5553,6 +5545,20 @@ class mTVGuide(xbmcgui.WindowXML):
         controls = [elem.control for elem in self.controlAndProgramList]
 
         try:
+            if self.timebar:
+                self.removeControl(self.timebar)
+                self.timebar = None
+        except:
+            self.timebar = None
+
+        try:
+            if self.timebarBack:
+                self.removeControl(self.timebarBack)
+                self.timebarBack = None
+        except:
+            self.timebarBack = None
+
+        try:
             self.removeControls(controls)
         except:
             debug('_clearEpg failed to delete all controls, deleting one by one')
@@ -5569,48 +5575,6 @@ class mTVGuide(xbmcgui.WindowXML):
                     deb('_clearEpg unhandled exception: {}'.format(getExceptionString()))
 
         del self.controlAndProgramList[:]
-
-        try:
-            if self.timebar:
-                self.removeControl(self.timebar)
-                self.timebar = None
-        except:
-            debug('_clearEpg (self.timebar) failed to delete all controls, deleting one by one')
-            for elem in self.controlList:
-                if elem == self.timebar:
-                    try:
-                        deb('Debug removeControl: {}'.format(str(elem.control.getId())))
-                        self.removeControl(elem.control)
-                        self.timebar = None
-
-                    except RuntimeError as ex:
-                        debug('_clearEpg (self.timebar) RuntimeError: {}'.format(getExceptionString()))
-                        pass  # happens if we try to remove a control that doesn't exist
-
-                    except Exception as ex:
-                        deb('_clearEpg (self.timebar) unhandled exception: {}'.format(getExceptionString()))
-
-        try:
-            if self.timebarBack:
-                self.removeControl(self.timebarBack)
-                self.timebarBack = None
-        except:
-            debug('_clearEpg (self.timebarBack) failed to delete all controls, deleting one by one')
-            for elem in self.controlList:
-                if elem == self.timebarBack:
-                    try:
-                        deb('Debug removeControl: {}'.format(str(elem.control.getId())))
-                        self.removeControl(elem.control)
-                        self.timebarBack = None
-
-                    except RuntimeError as ex:
-                        debug('_clearEpg (self.timebarBack) RuntimeError: {}'.format(getExceptionString()))
-                        pass  # happens if we try to remove a control that doesn't exist
-
-                    except Exception as ex:
-                        deb('_clearEpg (self.timebarBack) unhandled exception: {}'.format(getExceptionString()))
-
-        del self.controlList[:]
 
         try:
             self.category = self.database.category
@@ -6957,7 +6921,6 @@ class Pla(xbmcgui.WindowXMLDialog):
         self.epg = epg
         self.database = database
         self.controlAndProgramList = list()
-        self.controlList = list()
         self.ChannelChanged = 0
         self.mouseCount = 0
         self.isClosing = False
