@@ -466,11 +466,12 @@ class PlayService(xbmc.Player, BasePlayService):
 
         if sys.version_info[0] > 2:
             now = int(datetime.datetime.timestamp(n)) * 1000
+            tday = str(((int(now // 86400)) * 86400 ) * 1000)
+            yday = str(((int(time.time() // 86400)) * 86400 - 86400 ) * 1000)
         else:
             now = int(time.mktime(n.timetuple())) * 1000
-
-        tday = str(((int(time.time() // 86400)) * 86400 ) * 1000)
-        yday = str(((int(time.time() // 86400)) * 86400 - 86400 ) * 1000)
+            tday = str(((int(time.mktime(n.timetuple()) // 86400)) * 86400 - 86400 ) * 1000)
+            yday = str(((int(time.mktime(n.timetuple()) // 86400)) * 86400 - 86400 ) * 1000)
 
         headers = {
             'Authority': 'graphql-telia.t6a.net',
@@ -500,20 +501,22 @@ class PlayService(xbmc.Player, BasePlayService):
         )
 
         response = requests.get('https://graphql-telia.t6a.net/graphql', headers=headers, params=params, cookies=sess.cookies, verify=False).json()
+        deb('DEBUG: {}'.format(response))
 
         media_id = ''
+        watch_mode = ''
 
         programItems = response['data']['channel']['programs']['programItems']
         for item in programItems:
-            start_time = item['startTime']['timestamp']
-            end_time = item['endTime']['timestamp']
+            start_time = int(item['startTime']['timestamp'])
+            end_time = int(item['endTime']['timestamp'])
             if int(utc) >= int(start_time) and int(utc) <= int(end_time):
                 media_id = item['media']['id']
                 title = item['media']['title']
-                
+
                 p = re.compile('\WwatchMode\W:\s*\W(.*?)\W,', re.M)
                 try:
-                    watch_mode = p.search(str(item['media']['playback']['play'])).group(1)
+                    watch_mode = p.findall(str(item['media']['playback']['play']))[0]
                 except:
                     watch_mode = 'LIVE'
 
@@ -958,8 +961,6 @@ class PlayService(xbmc.Player, BasePlayService):
                             ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
                             ListItem.setProperty('IsPlayable', 'true')
 
-                            ListItem.setProperty('inputstream.adaptive.play_timeshift_buffer', 'true')
-
                         self.strmUrl = strmUrl
                         xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
                         res = True
@@ -1007,8 +1008,6 @@ class PlayService(xbmc.Player, BasePlayService):
                                 ListItem.setProperty('inputstream.adaptive.license_key', licServ+'|Content-Type=application%2Fjson&Referer=https://polsatgo.pl/&User-Agent='+quote(UA)+'|'+licenseUrl+'|JBlicense')                      
                                 ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
                                 ListItem.setProperty('IsPlayable', 'true')
-
-                                ListItem.setProperty('inputstream.adaptive.play_timeshift_buffer', 'true')
                             
                             self.strmUrl = strmUrl
                             xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
@@ -1121,8 +1120,6 @@ class PlayService(xbmc.Player, BasePlayService):
                                 #ListItem.setProperty('inputstream.adaptive.license_key','')
                                 #ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
                                 ListItem.setProperty('IsPlayable', 'true')
-
-                                ListItem.setProperty('inputstream.adaptive.play_timeshift_buffer', 'true')
                             
                             self.strmUrl = strmUrl
                             xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
@@ -1171,8 +1168,6 @@ class PlayService(xbmc.Player, BasePlayService):
                                 ListItem.setMimeType(mimeType)
                                 ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
                                 ListItem.setProperty('IsPlayable', 'true')
-
-                                ListItem.setProperty('inputstream.adaptive.play_timeshift_buffer', 'true')
                             
                             self.strmUrl = strmUrl
                             xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
@@ -1202,6 +1197,8 @@ class PlayService(xbmc.Player, BasePlayService):
                                 if str(self.playlistArchive()) != '':
                                     archivePlaylist = str(self.playlistArchive())
                                     catchupList = archivePlaylist.split(', ')
+
+                                    catchup = False
 
                                     if not p.match(url):
                                         return res
@@ -1288,8 +1285,10 @@ class PlayService(xbmc.Player, BasePlayService):
                                                             fsListType = 'video'
 
                                                             m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/' + str(fsListType) + '-' + str(utc) + '-' + str(offset) + str(fsStreamType) + str(fsUrlAppend)
+                                                            catchup = True
                                                         else:
                                                             m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/' + 'mono-timeshift_rel-' + str(offset) + '.m3u8' + str(fsUrlAppend)
+                                                            catchup = True
                                                     
 
                                                     elif 'hls-custom' in fsListType:
@@ -1312,9 +1311,10 @@ class PlayService(xbmc.Player, BasePlayService):
                                                         fsListType = 'video'
 
                                                         m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/' + str(fsListType) + '-' + str(utc) + '-' + str(offset) + str(fsStreamType) + str(fsUrlAppend)
-
+                                                        catchup = True
                                                     else:
                                                         m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/' + str(fsListType.replace('mono', 'video')) + '-timeshift_rel-' + str(offset) + '.m3u8' + str(fsUrlAppend)
+                                                        catchup = True
 
                                                 strmUrl = m_catchupSource
 
@@ -1349,9 +1349,11 @@ class PlayService(xbmc.Player, BasePlayService):
                                             if mutc:
                                                 m_catchupSource = strmUrl + catchup
                                                 strmUrl = m_catchupSource + '-' + str(int(duration)*60)
+                                                catchup = True
                                             elif mutv:
                                                 m_catchupSource = strmUrl + catchup
                                                 strmUrl = m_catchupSource + '?duration={duration}'.format(duration=str(int(duration)*60))
+                                                catchup = True
                                             else:
                                                 if p.match(url):
                                                     deb('archive_type(1) wrong type')
@@ -1382,6 +1384,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                                     m_catchupSource = xcHost + "/timeshift/" + xcUsername + "/" + xcPassword + "/"+timeshift+"/" + xcChannelId + '.m3u8'
 
                                                 strmUrl = m_catchupSource
+                                                catchup = True
 
                                             else:
                                                 if p.match(url):
@@ -1394,9 +1397,11 @@ class PlayService(xbmc.Player, BasePlayService):
                                             if '?' in strmUrl:
                                                 m_catchupSource = strmUrl + '&utc={utc}&lutc={lutc}-{duration}'.format(utc=utc, lutc=lutc, duration=duration)
                                                 strmUrl = m_catchupSource
+                                                catchup = True
                                             else:
                                                 m_catchupSource = strmUrl + '?utc={utc}&lutc={lutc}-{duration}'.format(utc=utc, lutc=lutc, duration=duration)
                                                 strmUrl = m_catchupSource
+                                                catchup = True
 
                             ListItem = xbmcgui.ListItem(path=strmUrl)
 
@@ -1462,9 +1467,10 @@ class PlayService(xbmc.Player, BasePlayService):
                                             if duration != '':
                                                 ListItem.setProperty('inputstream.ffmpegarchive.default_programme_duration', duration)
 
-                                        ListItem.setProperty("IsPlayable", "true")
+                                        if catchup:
+                                            ListItem.setProperty('inputstream.adaptive.play_timeshift_buffer', 'true')
 
-                            ListItem.setProperty('inputstream.adaptive.play_timeshift_buffer', 'true')
+                                        ListItem.setProperty("IsPlayable", "true")
 
                             ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
 
