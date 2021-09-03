@@ -5590,23 +5590,41 @@ class mTVGuide(xbmcgui.WindowXML):
 
         del self.controlAndProgramList[:]
 
-        controls = [elem.control for elem in self.controlList]
-
         try:
-            self.removeControls(controls)
+            if self.timebar:
+                self.removeControl(self.timebar)
         except:
             debug('_clearEpg failed to delete all controls, deleting one by one')
             for elem in self.controlList:
-                try:
-                    #deb('Debug removeControl: {}'.format(str(elem.control.getId())))
-                    self.removeControl(elem.control)
+                if elem == self.timebar:
+                    try:
+                        #deb('Debug removeControl: {}'.format(str(elem.control.getId())))
+                        self.removeControl(elem.control)
 
-                except RuntimeError as ex:
-                    debug('_clearEpg RuntimeError: {}'.format(getExceptionString()))
-                    pass  # happens if we try to remove a control that doesn't exist
+                    except RuntimeError as ex:
+                        debug('_clearEpg RuntimeError: {}'.format(getExceptionString()))
+                        pass  # happens if we try to remove a control that doesn't exist
 
-                except Exception as ex:
-                    deb('_clearEpg unhandled exception: {}'.format(getExceptionString()))
+                    except Exception as ex:
+                        deb('_clearEpg unhandled exception: {}'.format(getExceptionString()))
+
+        try:
+            if self.timebarBack:
+                self.removeControl(self.timebarBack)
+        except:
+            debug('_clearEpg failed to delete all controls, deleting one by one')
+            for elem in self.controlList:
+                if elem == self.timebarBack:
+                    try:
+                        #deb('Debug removeControl: {}'.format(str(elem.control.getId())))
+                        self.removeControl(elem.control)
+
+                    except RuntimeError as ex:
+                        debug('_clearEpg RuntimeError: {}'.format(getExceptionString()))
+                        pass  # happens if we try to remove a control that doesn't exist
+
+                    except Exception as ex:
+                        deb('_clearEpg unhandled exception: {}'.format(getExceptionString()))
 
         del self.controlList[:]
 
