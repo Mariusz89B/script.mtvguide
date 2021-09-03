@@ -5307,38 +5307,16 @@ class mTVGuide(xbmcgui.WindowXML):
         try:
             if self.timebar:
                 self.removeControl(self.timebar)
+                self.timebar = None
         except:
-            debug('_clearEpg failed to delete all controls, deleting one by one')
-            for elem in self.controlList:
-                if elem == self.timebar:
-                    try:
-                        #deb('Debug removeControl: {}'.format(str(elem.control.getId())))
-                        self.removeControl(elem.control)
-
-                    except RuntimeError as ex:
-                        debug('_clearEpg RuntimeError: {}'.format(getExceptionString()))
-                        pass  # happens if we try to remove a control that doesn't exist
-
-                    except Exception as ex:
-                        deb('_clearEpg unhandled exception: {}'.format(getExceptionString()))
+            self.timebar = None
 
         try:
             if self.timebarBack:
                 self.removeControl(self.timebarBack)
+                self.timebarBack = None
         except:
-            debug('_clearEpg failed to delete all controls, deleting one by one')
-            for elem in self.controlList:
-                if elem == self.timebarBack:
-                    try:
-                        #deb('Debug removeControl: {}'.format(str(elem.control.getId())))
-                        self.removeControl(elem.control)
-
-                    except RuntimeError as ex:
-                        debug('_clearEpg RuntimeError: {}'.format(getExceptionString()))
-                        pass  # happens if we try to remove a control that doesn't exist
-
-                    except Exception as ex:
-                        deb('_clearEpg unhandled exception: {}'.format(getExceptionString()))
+            self.timebarBack = None
 
         if self.getControl(self.C_DYNAMIC_COLORS):
             self.timebarBack = xbmcgui.ControlImage(tmp_background.getX(), tmp_background.getY(), tmp_background.getWidth(), tmp_background.getHeight(), os.path.join(Skin.getSkinPath(), 'media', 'osd', 'back.png'), colorDiffuse=colorTimebarBack)
@@ -5373,10 +5351,12 @@ class mTVGuide(xbmcgui.WindowXML):
             self.infoDialog.close()
 
         self._showControl(self.C_MAIN_EPG)
-        self.updateTimebar(scheduleTimer=False)
-
+        
         # remove existing controls
         self._clearEpg()
+
+        self.updateTimebar(scheduleTimer=False)
+
         try:
             self.channelIdx, channels, programs, cacheExpired = self.database.getEPGView(channelStart, startTime, self.onSourceProgressUpdate, clearExistingProgramList=True)
         except src.SourceException:
@@ -5593,38 +5573,42 @@ class mTVGuide(xbmcgui.WindowXML):
         try:
             if self.timebar:
                 self.removeControl(self.timebar)
+                self.timebar = None
         except:
-            debug('_clearEpg failed to delete all controls, deleting one by one')
+            debug('_clearEpg (self.timebar) failed to delete all controls, deleting one by one')
             for elem in self.controlList:
                 if elem == self.timebar:
                     try:
-                        #deb('Debug removeControl: {}'.format(str(elem.control.getId())))
+                        deb('Debug removeControl: {}'.format(str(elem.control.getId())))
                         self.removeControl(elem.control)
+                        self.timebar = None
 
                     except RuntimeError as ex:
-                        debug('_clearEpg RuntimeError: {}'.format(getExceptionString()))
+                        debug('_clearEpg (self.timebar) RuntimeError: {}'.format(getExceptionString()))
                         pass  # happens if we try to remove a control that doesn't exist
 
                     except Exception as ex:
-                        deb('_clearEpg unhandled exception: {}'.format(getExceptionString()))
+                        deb('_clearEpg (self.timebar) unhandled exception: {}'.format(getExceptionString()))
 
         try:
             if self.timebarBack:
                 self.removeControl(self.timebarBack)
+                self.timebarBack = None
         except:
-            debug('_clearEpg failed to delete all controls, deleting one by one')
+            debug('_clearEpg (self.timebarBack) failed to delete all controls, deleting one by one')
             for elem in self.controlList:
                 if elem == self.timebarBack:
                     try:
-                        #deb('Debug removeControl: {}'.format(str(elem.control.getId())))
+                        deb('Debug removeControl: {}'.format(str(elem.control.getId())))
                         self.removeControl(elem.control)
+                        self.timebarBack = None
 
                     except RuntimeError as ex:
-                        debug('_clearEpg RuntimeError: {}'.format(getExceptionString()))
+                        debug('_clearEpg (self.timebarBack) RuntimeError: {}'.format(getExceptionString()))
                         pass  # happens if we try to remove a control that doesn't exist
 
                     except Exception as ex:
-                        deb('_clearEpg unhandled exception: {}'.format(getExceptionString()))
+                        deb('_clearEpg (self.timebarBack) unhandled exception: {}'.format(getExceptionString()))
 
         del self.controlList[:]
 
