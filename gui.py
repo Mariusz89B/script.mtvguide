@@ -5530,12 +5530,18 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def _clearEpg(self):
         deb('_clearEpg')    
-        if self.timebar:
-            self.removeControl(self.timebar)
+        try:
+            if self.timebar:
+                self.removeControl(self.timebar)
+                self.timebar = None
+        except:
             self.timebar = None
 
-        if self.timebarBack:
-            self.removeControl(self.timebarBack)
+        try:
+            if self.timebarBack:
+                self.removeControl(self.timebarBack)
+                self.timebarBack = None
+        except:
             self.timebarBack = None
 
         controls = [elem.control for elem in self.controlAndProgramList]

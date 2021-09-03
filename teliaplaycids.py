@@ -104,7 +104,7 @@ class Threading(object):
         while not xbmc.Monitor().abortRequested():
             ab = TeliaPlayUpdater().checkRefresh()
             if not ab:
-                result = TeliaPlayUpdater().loginData(reconnect=True)
+                result = TeliaPlayUpdater().checkLogin()
                 if result is not None:
                     validTo, beartoken, refrtoken, cookies = result
                     
@@ -189,7 +189,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
         self.timestamp = int(time.time())*1000
         ADDON.setSetting('teliaplay_timestamp', str(self.timestamp))
 
-        self.sessionid = ''
+        self.sessionid = six.text_type(uuid.uuid4())
         ADDON.setSetting('teliaplay_sess_id', str(self.sessionid))
 
 
@@ -323,12 +323,6 @@ class TeliaPlayUpdater(baseServiceUpdater):
             }
 
             response = self.sendRequest(url, post=True, json=False, headers=headers, data=json.dumps(data), verify=False, timeout=timeouts)
-            if not response:
-                if reconnect:
-                    self.loginData(reconnect=True)
-                else:
-                    self.connErrorMessage()
-                    return False
 
             try:
                 response = response.json()
@@ -350,6 +344,11 @@ class TeliaPlayUpdater(baseServiceUpdater):
                     else:
                         self.connErrorMessage()
                         return False
+
+                elif response['errorCode'] == 61002:
+                    self.tv_client_boot_id = str(uuid.uuid4())
+                    ADDON.setSetting('teliaplay_tv_client_boot_id', str(self.tv_client_boot_id))
+
             except:
                 pass
 

@@ -456,6 +456,7 @@ class PlayService(xbmc.Player, BasePlayService):
         beartoken          = ADDON.getSetting('teliaplay_beartoken')
         tv_client_boot_id  = ADDON.getSetting('teliaplay_tv_client_boot_id')
         usern              = ADDON.getSetting('teliaplay_usern')
+        sessionid          = ADDON.getSetting('teliaplay_sess_id')
 
         UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36 Edg/89.0.774.63'
 
@@ -465,8 +466,8 @@ class PlayService(xbmc.Player, BasePlayService):
         n = datetime.datetime.now()
 
         if sys.version_info[0] > 2:
-            now = int(datetime.datetime.timestamp(n)) * 1000
-            tday = str(((int(now // 86400)) * 86400 ) * 1000)
+            now = int(time.mktime(n.timetuple())) * 1000
+            tday = str(((int(time.time() // 86400)) * 86400) * 1000)
             yday = str(((int(time.time() // 86400)) * 86400 - 86400 ) * 1000)
         else:
             now = int(time.mktime(n.timetuple())) * 1000
@@ -501,26 +502,30 @@ class PlayService(xbmc.Player, BasePlayService):
         )
 
         response = requests.get('https://graphql-telia.t6a.net/graphql', headers=headers, params=params, cookies=sess.cookies, verify=False).json()
-        deb('DEBUG: {}'.format(response))
 
         media_id = ''
         watch_mode = ''
 
         programItems = response['data']['channel']['programs']['programItems']
         for item in programItems:
-            start_time = int(item['startTime']['timestamp'])
-            end_time = int(item['endTime']['timestamp'])
+            start_time = item['startTime']['timestamp']
+            end_time = item['endTime']['timestamp']
             if int(utc) >= int(start_time) and int(utc) <= int(end_time):
                 media_id = item['media']['id']
                 title = item['media']['title']
 
                 p = re.compile('\WwatchMode\W:\s*\W(.*?)\W,', re.M)
                 try:
-                    watch_mode = p.findall(str(item['media']['playback']['play']))[0]
+                    watch_modes = p.findall(str(item['media']['playback']['play']))
+                    for item in watch_modes:
+                        if item == 'ONDEMAND':
+                            watch_mode = 'ONDEMAND'
+                        elif item == 'STARTOVER':
+                            watch_mode = 'STARTOVER'
                 except:
                     watch_mode = 'LIVE'
 
-                #deb('DEBUG: {}'.format(watch_mode))
+                deb('DEBUG: {}'.format(watch_mode))
 
         if watch_mode == 'ONDEMAND' and media_id != '':
             streamType = 'MEDIA'
@@ -1183,6 +1188,8 @@ class PlayService(xbmc.Player, BasePlayService):
                 if pl.match(service):
                     playbackServices = ['C More', 'Cyfrowy Polsat GO', 'Ipla', 'nc+ GO', 'PlayerPL', 'Telia Play', 'WP Pilot']
                     if self.currentlyPlayedService['service'] not in playbackServices:
+                        catchup = False
+
                         channelInfo.strm = self.getUrl(channelInfo.strm, channelInfo.cid)
                         strmUrl = channelInfo.strm
                         strmUrl_catchup = channelInfo.catchup
@@ -1197,8 +1204,6 @@ class PlayService(xbmc.Player, BasePlayService):
                                 if str(self.playlistArchive()) != '':
                                     archivePlaylist = str(self.playlistArchive())
                                     catchupList = archivePlaylist.split(', ')
-
-                                    catchup = False
 
                                     if not p.match(url):
                                         return res
