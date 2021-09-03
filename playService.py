@@ -471,7 +471,7 @@ class PlayService(xbmc.Player, BasePlayService):
             yday = str(((int(time.time() // 86400)) * 86400 - 86400 ) * 1000)
         else:
             now = int(time.mktime(n.timetuple())) * 1000
-            tday = str(((int(time.mktime(n.timetuple()) // 86400)) * 86400 - 86400 ) * 1000)
+            tday = str(((int(time.mktime(n.timetuple()) // 86400)) * 86400) * 1000)
             yday = str(((int(time.mktime(n.timetuple()) // 86400)) * 86400 - 86400 ) * 1000)
 
         if int(utc) < int(tday):
@@ -519,40 +519,23 @@ class PlayService(xbmc.Player, BasePlayService):
                 media_id = item['media']['id']
                 title = item['media']['title']
 
-                p = re.compile('\WwatchMode\W:\s*\W(.*?)\W,', re.M)
-                try:
-                    watch_modes = p.findall(str(item['media']['playback']['play']))
-                    for item in watch_modes:
-                        if item == 'ONDEMAND':
-                            watch_mode = 'ONDEMAND'
-                        elif item == 'STARTOVER':
-                            watch_mode = 'STARTOVER'
-                except:
-                    watch_mode = 'LIVE'
-
-                deb('DEBUG: {}'.format(watch_mode))
-
-        if watch_mode == 'ONDEMAND' and media_id != '':
-            streamType = 'MEDIA'
-
-        elif watch_mode == 'STARTOVER' and media_id != '':
-            if int(end_time) > int(now):
-                streamType = 'MEDIA'
-            else:
-                res = xbmcgui.Dialog().yesno(strings(30998), strings(59980))
-                if res:
-                    media_id = self.channCid(channelInfo.cid)
-                    streamType = 'CHANNEL'
+                if sys.version_info[0] > 2:
+                    p = re.compile('\WwatchMode\W:\s*\W(.*?)\W,', re.M)
                 else:
-                    return None, None
+                    p = re.compile('\WwatchMode\W:\s*\W(.*?)\W},', re.M)
 
-        else:
-            res = xbmcgui.Dialog().yesno(strings(30998), strings(59980))
-            if res:
-                media_id = self.channCid(channelInfo.cid)
-                streamType = 'CHANNEL'
-            else:
-                return None, None
+                watch_modes = p.findall(json.dumps(item['media']['playback']['play']))
+
+                if ('ONDEMAND' in watch_modes or 'STARTOVER' in watch_modes) and media_id != '':
+                    streamType = 'MEDIA'
+
+                else:
+                    res = xbmcgui.Dialog().yesno(strings(30998), strings(59980))
+                    if res:
+                        media_id = self.channCid(channelInfo.cid)
+                        streamType = 'CHANNEL'
+                    else:
+                        return None, None
 
         catchupType = 'ONDEMAND'
         if int(end_time) > int(now):
