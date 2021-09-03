@@ -1533,6 +1533,8 @@ class PlayService(xbmc.Player, BasePlayService):
         self.nrOfResumeAttempts = 0
         self.terminating = True
         self.unlockCurrentlyPlayedService()
+        time.sleep(0.2)
+
         try:
             xbmc.Player().stop()
         except:

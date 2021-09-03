@@ -69,7 +69,6 @@ import playService
 import requests
 import json
 import urllib
-import gc
 from vosd import VideoOSD
 from recordService import RecordService
 from settingsImportExport import SettingsImp
@@ -1895,8 +1894,6 @@ class mTVGuide(xbmcgui.WindowXML):
         if epgSize != epgDbSize:
             self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
 
-        mem = gc.collect()
-
     def getStreamsCid(self, channels):
         streams = self.database.getAllCatchupUrlList(channels)
         #deb('getAllCatchupUrlList: {}'.format(streams))
@@ -2325,7 +2322,6 @@ class mTVGuide(xbmcgui.WindowXML):
 
         elif action.getId() == ACTION_STOP or (action.getButtonCode() == KEY_STOP and KEY_STOP != 0):
             self.playService.stopPlayback()
-            self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
 
     def onActionEPGMode(self, action):
         debug('onActionEPGMode keyId {}, buttonCode {}'.format(action.getId(), action.getButtonCode()))
@@ -5296,23 +5292,23 @@ class mTVGuide(xbmcgui.WindowXML):
         except:
             colorTimebar = ''
 
-        tmp_background = self.getControl(self.C_MAIN_TIMEBAR_BACK)
         tmp_control = self.getControl(self.C_MAIN_TIMEBAR)
 
-        try:
-            if self.timebar:
+        if self.timebar:
+            try:
                 self.removeControl(self.timebar)
+            except:
                 self.timebar = None
-        except:
-            self.timebar = None
 
-        try:
-            if self.timebarBack:
+        tmp_background = self.getControl(self.C_MAIN_TIMEBAR_BACK)
+
+        if self.timebarBack:
+            try:
                 self.removeControl(self.timebarBack)
+            except:
                 self.timebarBack = None
-        except:
-            self.timebarBack = None
 
+        
         if self.getControl(self.C_DYNAMIC_COLORS):
             self.timebarBack = xbmcgui.ControlImage(tmp_background.getX(), tmp_background.getY(), tmp_background.getWidth(), tmp_background.getHeight(), os.path.join(Skin.getSkinPath(), 'media', 'osd', 'back.png'), colorDiffuse=colorTimebarBack)
         else:
@@ -5324,7 +5320,6 @@ class mTVGuide(xbmcgui.WindowXML):
             self.timebar = xbmcgui.ControlImage(tmp_control.getX(), tmp_control.getY(), tmp_control.getWidth(), tmp_control.getHeight(), os.path.join(Skin.getSkinPath(), 'media', 'tvguide-timebar.png'), colorDiffuse=skin_timebar_colour)
 
         timebars = [self.timebar, self.timebarBack]
-
         self.addControls(timebars)
 
     def onRedrawEPG(self, channelStart, startTime, focusFunction=None):
@@ -5542,21 +5537,19 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def _clearEpg(self):
         deb('_clearEpg')
-        controls = [elem.control for elem in self.controlAndProgramList]
-
-        try:
-            if self.timebar:
+        if self.timebar:
+            try:
                 self.removeControl(self.timebar)
+            except:
                 self.timebar = None
-        except:
-            self.timebar = None
 
-        try:
-            if self.timebarBack:
+        if self.timebarBack:
+            try:
                 self.removeControl(self.timebarBack)
+            except:
                 self.timebarBack = None
-        except:
-            self.timebarBack = None
+
+        controls = [elem.control for elem in self.controlAndProgramList]
 
         try:
             self.removeControls(controls)
