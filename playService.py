@@ -474,6 +474,11 @@ class PlayService(xbmc.Player, BasePlayService):
             tday = str(((int(time.mktime(n.timetuple()) // 86400)) * 86400 - 86400 ) * 1000)
             yday = str(((int(time.mktime(n.timetuple()) // 86400)) * 86400 - 86400 ) * 1000)
 
+        if int(utc) < int(tday):
+            timestamp = yday
+        else:
+            timestamp = tday
+
         headers = {
             'Authority': 'graphql-telia.t6a.net',
             'tv-client-name': 'web',
@@ -497,7 +502,7 @@ class PlayService(xbmc.Player, BasePlayService):
 
         params = (
             ('operationName', 'getTvChannel'),
-            ('variables', '{"timestamp":'+tday+',"offset":0,"id":"'+str(self.channCid(channelInfo.cid))+'"}'),
+            ('variables', '{"timestamp":'+timestamp+',"offset":0,"id":"'+str(self.channCid(channelInfo.cid))+'"}'),
             ('extensions', '{"persistedQuery":{"version":1,"sha256Hash":"6760f09a1fde5f410dc80906db28789631cc8c8b4887ff0c24ed76ff25eca71a"}}'),
         )
 
