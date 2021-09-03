@@ -5302,24 +5302,27 @@ class mTVGuide(xbmcgui.WindowXML):
 
         tmp_background = self.getControl(self.C_MAIN_TIMEBAR_BACK)
         tmp_control = self.getControl(self.C_MAIN_TIMEBAR)
-        
-        try:
-            self.removeControls(controls)
-        except:
-            debug('_clearEpg failed to delete all controls, deleting one by one')
-            for elem in self.controlList:
-                try:
-                    #deb('Debug removeControl: {}'.format(str(elem.control.getId())))
-                    self.removeControl(elem.control)
 
-                except RuntimeError as ex:
-                    debug('_clearEpg RuntimeError: {}'.format(getExceptionString()))
-                    pass  # happens if we try to remove a control that doesn't exist
+        timebars = [elem.control for elem in self.controlList]
 
-                except Exception as ex:
-                    deb('_clearEpg unhandled exception: {}'.format(getExceptionString()))
+        if self.timebar or self.timebarBack:
+            try:
+                self.removeControls(timebars)
+            except:
+                debug('_clearEpg failed to delete all controls, deleting one by one')
+                for elem in self.controlList:
+                    try:
+                        #deb('Debug removeControl: {}'.format(str(elem.control.getId())))
+                        self.removeControl(elem.control)
 
-        del self.controlList[:]
+                    except RuntimeError as ex:
+                        debug('_clearEpg RuntimeError: {}'.format(getExceptionString()))
+                        pass  # happens if we try to remove a control that doesn't exist
+
+                    except Exception as ex:
+                        deb('_clearEpg unhandled exception: {}'.format(getExceptionString()))
+
+            del self.controlList[:]
 
         if self.getControl(self.C_DYNAMIC_COLORS):
             self.timebarBack = xbmcgui.ControlImage(tmp_background.getX(), tmp_background.getY(), tmp_background.getWidth(), tmp_background.getHeight(), os.path.join(Skin.getSkinPath(), 'media', 'osd', 'back.png'), colorDiffuse=colorTimebarBack)
@@ -5332,6 +5335,7 @@ class mTVGuide(xbmcgui.WindowXML):
             self.timebar = xbmcgui.ControlImage(tmp_control.getX(), tmp_control.getY(), tmp_control.getWidth(), tmp_control.getHeight(), os.path.join(Skin.getSkinPath(), 'media', 'tvguide-timebar.png'), colorDiffuse=skin_timebar_colour)
 
         timebars = [self.timebar, self.timebarBack]
+
         for control in timebars:
             self.controlList.append(ControlObjects(control))
 
