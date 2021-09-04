@@ -1,5 +1,6 @@
 ﻿wersja 9.5.2 - 2021-09-04
 - poprawka paly timeshift buffer
+- usunięte błędy
 
 wersja 9.5.1 - 2021-09-03
 - naprawiono znikający pasek czasu
