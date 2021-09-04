@@ -305,6 +305,7 @@ def timebarAdjust():
         timebar_adjust = 0
     return timebar_adjust
 
+
 class proxydt(datetime.datetime):
     @staticmethod
     def strptime(date_string, format):
@@ -316,6 +317,7 @@ class proxydt(datetime.datetime):
         return res
 
 datetime.proxydt = proxydt
+
 
 class Point(object):
     def __init__(self):
@@ -334,7 +336,6 @@ class ControlAndProgram(object):
     def __init__(self, control, program):
         self.control = control
         self.program = program
-
 
 class Event:
     def __init__(self):
@@ -5293,21 +5294,15 @@ class mTVGuide(xbmcgui.WindowXML):
             colorTimebar = ''
 
         tmp_control = self.getControl(self.C_MAIN_TIMEBAR)
-
-        if self.timebar:
-            try:
-                self.removeControl(self.timebar)
-            except:
-                self.timebar = None
-
         tmp_background = self.getControl(self.C_MAIN_TIMEBAR_BACK)
 
-        if self.timebarBack:
-            try:
-                self.removeControl(self.timebarBack)
-            except:
-                self.timebarBack = None
+        if self.timebar:
+            self.removeControl(self.timebar)
+            self.timebar = None
 
+        if self.timebarBack:
+            self.removeControl(self.timebarBack)
+            self.timebarBack = None
         
         if self.getControl(self.C_DYNAMIC_COLORS):
             self.timebarBack = xbmcgui.ControlImage(tmp_background.getX(), tmp_background.getY(), tmp_background.getWidth(), tmp_background.getHeight(), os.path.join(Skin.getSkinPath(), 'media', 'osd', 'back.png'), colorDiffuse=colorTimebarBack)
@@ -5537,36 +5532,26 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def _clearEpg(self):
         deb('_clearEpg')
+        
         if self.timebar:
-            try:
-                self.removeControl(self.timebar)
-            except:
-                self.timebar = None
+            self.removeControl(self.timebar)
+            self.timebar = None
 
         if self.timebarBack:
-            try:
-                self.removeControl(self.timebarBack)
-            except:
-                self.timebarBack = None
+            self.removeControl(self.timebarBack)
+            self.timebarBack = None
 
         controls = [elem.control for elem in self.controlAndProgramList]
-
         try:
             self.removeControls(controls)
-        except:
-            debug('_clearEpg failed to delete all controls, deleting one by one')
+
+        except RuntimeError:
             for elem in self.controlAndProgramList:
                 try:
-                    #deb('Debug removeControl: {}'.format(str(elem.control.getId())))
                     self.removeControl(elem.control)
-
-                except RuntimeError as ex:
-                    debug('_clearEpg RuntimeError: {}'.format(getExceptionString()))
+                except RuntimeError:
                     pass  # happens if we try to remove a control that doesn't exist
-
-                except Exception as ex:
-                    deb('_clearEpg unhandled exception: {}'.format(getExceptionString()))
-
+                    
         del self.controlAndProgramList[:]
 
         try:
