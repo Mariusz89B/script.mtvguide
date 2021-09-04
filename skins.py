@@ -107,6 +107,9 @@ class Skin:
             elif os.path.isdir(os.path.join(Skin.ADDON_EMBEDDED_SKINS, Skin.CURRENT_SKIN)):
                 Skin.CURRENT_SKIN_DIR = os.path.join(Skin.ADDON_EMBEDDED_SKINS, Skin.CURRENT_SKIN)
                 Skin.CURRENT_SKIN_BASE_DIR = ADDON.getAddonInfo('path')
+            else:
+                ADDON.setSetting('Skin', 'skin.default')
+                Skin.CURRENT_SKIN_DIR = os.path.join(Skin.ADDON_EMBEDDED_SKINS, 'skin.default') 
 
         return Skin.CURRENT_SKIN_DIR
 
