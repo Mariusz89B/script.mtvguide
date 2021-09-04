@@ -19,13 +19,6 @@
 		<setting id="priority_cmore" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-5,true)"/>
 		<setting label="30371" type="action" action="RunScript($CWD/clearcmore.py, clearCMore)" visible="eq(-6,true)"/>
 		
-		<setting type="sep"/>
-		<setting label="59921" type="lsep"/>
-		<setting id="cpgo_enabled" type="bool" label="59904" default="false"/>
-		<setting id="cpgo_username" type="text" label="55002" default="" visible="eq(-1,true)"/>
-		<setting id="cpgo_password" type="text" option="hidden" label="55003" default="" visible="eq(-2,true)"/>
-		<setting id="priority_cpgo" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-3,true)"/>
-		
 		<!--<setting type="sep"/>
 		<setting label="59922" type="lsep"/>
 		<setting id="francetv_enabled" type="bool" label="59904" default="false"/>
@@ -84,9 +77,19 @@
 		<setting id="priority_polsatgo" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-3,true)"/>
 		
 		<setting type="sep"/>
-		<setting label="80007" type="lsep"/>
-		<setting id="tvp_enabled" type="bool" label="59904" default="false"/>
-		<setting id="priority_tvp" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-1,true)"/>
+		<setting label="59921" type="lsep"/>
+		<setting id="pgobox_enabled" type="bool" label="59904" default="false"/>
+		<setting id="pgobox_username" type="text" label="55002" default="" visible="eq(-1,true)"/>
+		<setting id="pgobox_password" type="text" option="hidden" label="55003" default="" visible="eq(-2,true)"/>
+		<setting id="pgobox_client" type="select" label="30368" default="Polsat Box" values="Polsat Box|Cyfrowy Polsat" visible="eq(-3,true)"/>
+		<setting id="priority_ipla" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-4,true)"/>
+		<setting id="pgobox_device_id" visible="false"/>
+		<setting id="pgobox_client_id" visible="false"/>
+		<setting id="pgobox_id_" visible="false"/>
+		<setting id="pgobox_sesstoken" visible="false"/>
+		<setting id="pgobox_sessexpir" visible="false"/>
+		<setting id="pgobox_sesskey" visible="false"/>
+		<setting id="pgobox_myperm" visible="false"/>
 		
 		<setting type="sep"/>
 		<setting label="30904" type="lsep"/>
@@ -102,6 +105,11 @@
 		<setting id="teliaplay_refrtoken" visible="false"/>
 		<setting id="teliaplay_cookies" visible="false"/>
 		<setting id="teliaplay_usern" visible="false"/>
+		
+		<setting type="sep"/>
+		<setting label="80007" type="lsep"/>
+		<setting id="tvp_enabled" type="bool" label="59904" default="false"/>
+		<setting id="priority_tvp" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-1,true)"/>
 		
 		<setting type="sep"/>
 		<setting label="80005" type="lsep"/>

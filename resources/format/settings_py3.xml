@@ -158,70 +158,7 @@
 				</setting>
 			</group>
 			<group id="4"/>
-			<group id="5" label="59921">
-				<setting help="95007" id="cpgo_enabled" label="59904" type="boolean">
-					<level>0</level>
-					<default>false</default>
-					<control type="toggle"/>
-				</setting>
-				<setting help="95010" id="cpgo_username" label="55002" type="string">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="is" setting="cpgo_enabled">true</condition>
-						</dependency>
-					</dependencies>
-					<control format="string" type="edit">
-						<heading>55002</heading>
-					</control>
-				</setting>
-				<setting help="95011" id="cpgo_password" label="55003" type="string">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="is" setting="cpgo_enabled">true</condition>
-						</dependency>
-					</dependencies>
-					<control format="string" type="edit">
-						<heading>55003</heading>
-						<hidden>true</hidden>
-					</control>
-				</setting>
-				<setting help="95012" id="priority_cpgo" label="55009" type="integer">
-					<level>0</level>
-					<default>6</default>
-					<constraints>
-						<options>
-							<option label="55010">0</option>
-							<option label="55011">1</option>
-							<option label="55017">2</option>
-							<option label="55012">3</option>
-							<option label="55018">4</option>
-							<option label="55013">5</option>
-							<option label="55019">6</option>
-							<option label="55014">7</option>
-							<option label="55020">8</option>
-							<option label="55021">9</option>
-							<option label="55022">10</option>
-							<option label="55023">11</option>
-						</options>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="is" setting="cpgo_enabled">true</condition>
-						</dependency>
-					</dependencies>
-					<control format="string" type="spinner"/>
-				</setting>
-			</group>
+			<group id="5"/>
 			<group id="6"/>
 			<group id="7"/>
 			<!--<group id="7" label="59922">
@@ -802,13 +739,62 @@
 					<control format="string" type="spinner"/>
 				</setting>
 			</group>
-			<group id="19" label="80007">
-				<setting help="95007" id="tvp_enabled" label="59904" type="boolean">
+			<group id="19" label="80006">
+				<setting help="95007" id="pgobox_enabled" label="59904" type="boolean">
 					<level>0</level>
 					<default>false</default>
 					<control type="toggle"/>
 				</setting>
-				<setting help="95012" id="priority_tvp" label="55009" type="integer">
+				<setting help="95010" id="pgobox_username" label="55002" type="string">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="pgobox_enabled">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>55002</heading>
+					</control>
+				</setting>
+				<setting help="95011" id="pgobox_password" label="55003" type="string">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="pgobox_enabled">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>55003</heading>
+						<hidden>true</hidden>
+					</control>
+				</setting>
+				<setting help="95014" id="pgobox_client" label="30368" type="string">
+					<level>0</level>
+					<default>Ipla</default>
+					<constraints>
+						<options>
+							<option label="Ipla">Ipla</option>
+							<option label="Cyfrowy Polsat">Cyfrowy Polsat</option>
+						</options>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="pgobox_enabled">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="list">
+						<heading>30368</heading>
+					</control>
+				</setting>
+				<setting help="95012" id="priority_ipla" label="55009" type="integer">
 					<level>0</level>
 					<default>6</default>
 					<constraints>
@@ -829,10 +815,87 @@
 					</constraints>
 					<dependencies>
 						<dependency type="visible">
-							<condition operator="is" setting="tvp_enabled">true</condition>
+							<condition operator="is" setting="pgobox_enabled">true</condition>
 						</dependency>
 					</dependencies>
 					<control format="string" type="spinner"/>
+				</setting>
+				<setting help="" id="pgobox_device_id" type="string">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<visible>false</visible>
+					<control format="string" type="edit">
+						<heading/>
+					</control>
+				</setting>
+				<setting help="" id="pgobox_client_id" type="string">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<visible>false</visible>
+					<control format="string" type="edit">
+						<heading/>
+					</control>
+				</setting>
+				<setting help="" id="pgobox_id_" type="string">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<visible>false</visible>
+					<control format="string" type="edit">
+						<heading/>
+					</control>
+				</setting>
+				<setting help="" id="pgobox_sesstoken" type="string">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<visible>false</visible>
+					<control format="string" type="edit">
+						<heading/>
+					</control>
+				</setting>
+				<setting help="" id="pgobox_sessexpir" type="string">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<visible>false</visible>
+					<control format="string" type="edit">
+						<heading/>
+					</control>
+				</setting>
+				<setting help="" id="pgobox_sesskey" type="string">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<visible>false</visible>
+					<control format="string" type="edit">
+						<heading/>
+					</control>
+				</setting>
+				<setting help="" id="pgobox_myperm" type="string">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<visible>false</visible>
+					<control format="string" type="edit">
+						<heading/>
+					</control>
 				</setting>
 			</group>
 			<group id="20" label="30904">
@@ -996,7 +1059,40 @@
 					</control>
 				</setting>
 			</group>
-			<group id="21" label="80005">
+			<group id="21" label="80007">
+				<setting help="95007" id="tvp_enabled" label="59904" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="95012" id="priority_tvp" label="55009" type="integer">
+					<level>0</level>
+					<default>6</default>
+					<constraints>
+						<options>
+							<option label="55010">0</option>
+							<option label="55011">1</option>
+							<option label="55017">2</option>
+							<option label="55012">3</option>
+							<option label="55018">4</option>
+							<option label="55013">5</option>
+							<option label="55019">6</option>
+							<option label="55014">7</option>
+							<option label="55020">8</option>
+							<option label="55021">9</option>
+							<option label="55022">10</option>
+							<option label="55023">11</option>
+						</options>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="tvp_enabled">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="spinner"/>
+				</setting>
+			</group>
+			<group id="22" label="80005">
 				<setting help="95007" id="videostar_enabled" label="59904" type="boolean">
 					<level>0</level>
 					<default>false</default>

@@ -1,4 +1,7 @@
-﻿wersja 9.5.2 - 2021-09-04
+﻿wersja 9.5.3 - 2021-09-04
+- dodany serwis Polsat GO Box
+
+wersja 9.5.2 - 2021-09-04
 - poprawka paly timeshift buffer
 - usunięte błędy
 

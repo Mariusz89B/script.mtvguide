@@ -7,11 +7,11 @@ koncesjonowanego nadawę telewizji.
 Lista dostępnych nadawców telewizji
 
 C More - C More Entertainment
-Cyfrowy Polsat GO - Cyfrowy Polsat S.A.
 Ipla - Cyfrowy Polsat S.A.
 nc + GO - ITI Neovision S.A.
 PlayerPL - TVN S.A.
 Polsat GO - Telewizja Polsat Sp. Z.o.o.
+Polsat GO Box - Cyfrowy Polsat S.A.
 Telia Play - Telia Company AB
 Telewizja Polska - Telewizja Polska S.A.
 WP Pilot - Wirtualna Polska Media S.A.
@@ -31,11 +31,11 @@ Przepisy prawne
 Szczegółowe przepisy koncesjonowanego dostawcy można znaleźć na stronie operatora.
 	
 C More - https://www.cmore.se/artiklar/anvandarvillkor
-Cyfrowy Polsat GO - https://www.cyfrowypolsat.pl/do-pobrania/regulaminy-i-cenniki.cp/
 Ipla - https://www.ipla.tv/regulamins
 nc + GO - https://ncplusgo.pl/Cms/Page?codename=regulamin&mobile=False
 PlayerPL - https://player.pl/regulamin.pdf
 Polsat GO - https://redirector.redefine.pl/versions/regulamin_polsat_go.pdf
+Polsat GO Box - https://polsatboxgo.pl/panel/regulaminy
 Telia Play - https://www.telia.se/privat/om/villkor/villkor-mitt-telia
 Telewizja Polska - https://vod.tvp.pl/page/regulamin,1653650/
 WP Pilot - https://pilot.wp.pl/pomoc/
@@ -43,11 +43,11 @@ WP Pilot - https://pilot.wp.pl/pomoc/
 Rejestracja konta odbywa się na stronie operatora.
 
 C More - https://www.cmore.se/skapakonto/
-Cyfrowy Polsat GO - https://icok.cyfrowypolsat.pl/rejestracja.cp
 Ipla - https://www.ipla.tv/register/
 nc+ GO - https://ncplusgo.pl/konto/rejestracja/
 PlayerPL - https://player.pl/
 Polsat GO - https://polsatgo.pl/zarejestruj/
+Polsat GO Box - https://polsatboxgo.pl/zarejestruj
 Telia Play - https://www.telia.se/privat/mitt-telia/logga-in/
 Telewizja Polska - https://www.tvp.pl/sess/user-2.0/register.php?ref=aHR0cHM6Ly9jZW50cnVtaW5mb3JtYWNqaS50dnAucGwv
 WP Pilot - https://pilot.wp.pl/register/
