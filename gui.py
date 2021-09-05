@@ -599,6 +599,10 @@ class mTVGuide(xbmcgui.WindowXML):
             minutes=int(timebarAdjust()))
         self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
 
+        self.start = 0
+        self.end = 0
+        self.played = 0
+
         self.lastKeystroke = datetime.datetime.now()
         self.lastCloseKeystroke = datetime.datetime.now()
         # monitorowanie zmiany stanu odtwarzacza
@@ -4739,15 +4743,15 @@ class mTVGuide(xbmcgui.WindowXML):
         idx = self.database.getCurrentChannelIdx(self.currentChannel)
         
         if program is None:
-            start = self.program.startDate
-            end = self.program.endDate  
+            self.start = self.program.startDate
+            self.end = self.program.endDate  
         else:
-            start = program.startDate
-            end = program.endDate            
+            self.start = program.startDate
+            self.end = program.endDate            
 
-        played = datetime.datetime.now()
+        self.played = datetime.datetime.now()
 
-        self.database.lastChannel(idx, start, end, played)
+        self.database.lastChannel(idx, self.start, self.end, self.played)
 
     def elapsed_interval(self, start, end):
         elapsed = end - start
@@ -5194,11 +5198,8 @@ class mTVGuide(xbmcgui.WindowXML):
         deb('_showEpg')
         self.onTimebarEPG()
         self.updateTimebar()
-        
-        ### current time! ###
-        idx, start, end, played = self.database.getLastChannel()
 
-        if float(end) < float(played):
+        if self.end < self.played:
             try:
                 self.viewStartDate = self.program.startDate + datetime.timedelta(minutes=int(timebarAdjust()))
             except:
