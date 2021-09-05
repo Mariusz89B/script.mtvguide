@@ -5580,14 +5580,12 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.removeControl(self.timebar)
             except:
                 pass  # happens if we try to remove a control that doesn't exist
-            self.timebar = None
 
         if self.timebarBack:
             try:
                 self.removeControl(self.timebarBack)
             except:
                 pass  # happens if we try to remove a control that doesn't exist
-            self.timebarBack = None
 
         controls = [elem.control for elem in self.controlAndProgramList]
         try:
