@@ -2365,6 +2365,11 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def onActionEPGMode(self, action):
         debug('onActionEPGMode keyId {}, buttonCode {}'.format(action.getId(), action.getButtonCode()))
+        if not self.controlAndProgramList:
+            res = xbmcgui.Dialog().yesno('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30165))
+            if res:
+                super(mTVGuide, self).close()
+                
         if ADDON.getSetting('background_services') == 'true':
             background = True
             C_MAIN_RETURN_STR = strings(30912)
@@ -5566,11 +5571,6 @@ class mTVGuide(xbmcgui.WindowXML):
             self.redrawagain = False
             self.onRedrawEPG(channelStart, self.viewStartDate, focusFunction)
         debug('onRedrawEPG done')
-
-        if not self.controlAndProgramList:
-            res = xbmcgui.Dialog().yesno('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30165))
-            if res:
-                super(mTVGuide, self).close()
 
     def _clearEpg(self):
         deb('_clearEpg')
