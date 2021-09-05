@@ -478,30 +478,29 @@ class PlaylistUpdater(baseServiceUpdater):
                             if ADDON.getSetting('show_group_channels') == 'false':
                                 replaceCC = False
 
-                                nonList = ['SD', 'HD', 'FHD', 'UHD', '4K', 'VIP']
+                                ccList = ['BE', 'CZ', 'DE', 'DK', 'FR', 'HR', 'IT', 'NO', 'PL', 'SE', 'SRB', 'UK', 'US']
 
                                 p = re.compile(r'.*\s([a-zA-Z]{2,3})$', re.DOTALL)
 
                                 try:
-                                    nonCC = p.search(title).group(1)
+                                    cc = p.search(title).group(1)
                                 except:
-                                    nonCC = ''
+                                    cc = ''
 
-                                if nonCC in nonList:
+                                if cc not in ccList:
                                         replaceCC = True
                                 else:
                                     if p.match(title):
                                         replaceCC = True
 
                                 if replaceCC:
-                                    langAList = ['Belgium', 'Czech', 'Germany', 'Danmark', 'France', 'Croatia', 'Italy', 'Norway', 'Poland', 'Sweden', 'Ex-Yu', 'United Kingdom', 'USA'] 
-                                    langA = '|'.join(langAList)
+                                    langA = '|'.join(ccList)
 
                                     langBList = ['Belgique', 'Cesko', 'Deutschland', 'Danmark', 'France', 'Hrvatska', 'Italia', 'Norge', 'Polska', 'Sverige', 'Serbia', 'Britain', 'America'] 
                                     langB = '|'.join(langBList)
 
-                                    ccList = ['BE', 'CZ', 'DE', 'DK', 'FR', 'HR', 'IT', 'NO', 'PL', 'SE', 'SRB', 'UK', 'US']
-                                    langC = '|'.join(ccList)
+                                    langCList = ['Belgium', 'Czech', 'Germany', 'Danmark', 'France', 'Croatia', 'Italy', 'Norway', 'Poland', 'Sweden', 'Ex-Yu', 'United Kingdom', 'USA'] 
+                                    langC = '|'.join(langCList)
 
                                     langDList = ['BEL', 'CZE', 'GER', 'DEN', 'FRA', 'HRT', 'ITA', 'NOR', 'POL', 'SWE', 'SRB', 'ENG', 'USA']
                                     langD = '|'.join(langDList)
@@ -525,17 +524,17 @@ class PlaylistUpdater(baseServiceUpdater):
                                                         cc = ccList[subsLangA.get(item, item)]
                                                         ccCh = cc
 
-                                                    elif group.upper() == langBList[item].upper():        
+                                                    if group.upper() == langBList[item].upper():        
                                                         subsLangB = {langBList[item]: ccList[item]}
                                                         cc = ccList[subsLangB.get(item, item)]
                                                         ccCh = cc
 
-                                                    elif group.upper() == ccList[item].upper():
+                                                    if group.upper() == ccList[item].upper():
                                                         subsLangC = {ccList[item]: ccList[item]}
                                                         cc = ccList[subsLangC.get(item, item)]
                                                         ccCh = cc
 
-                                                    elif group.upper() == langDList[item].upper():
+                                                    if group.upper() == langDList[item].upper():
                                                         subsLangD = {langDList[item]: ccList[item]}
                                                         cc = ccList[subsLangD.get(item, item)]
                                                         ccCh = cc

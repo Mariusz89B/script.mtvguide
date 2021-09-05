@@ -785,7 +785,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
         if res == 0:
             res = xbmcgui.Dialog().multiselect(strings(59949), 
-                    [strings(59920), strings(59921), strings(59922), strings(80006), strings(59923), strings(30903), strings(80008), strings(80007), strings(30904), strings(80005)])
+                    [strings(59920), strings(59921), strings(59922), strings(80006), strings(59923), strings(30903), strings(80008), strings(59921), strings(80007), strings(30904), strings(80005)])
 
 
             if not res:
@@ -970,16 +970,48 @@ class mTVGuide(xbmcgui.WindowXML):
                     self.tutorialGetService()
 
             if 6 in res:
+                label = 'Polsat GO Box'
+                xbmcgui.Dialog().ok(label, strings(59950).format(label))
+                ADDON.setSetting('pgobox_enabled', 'true')
+                kb = xbmc.Keyboard('','')
+                kb.setHeading(strings(59952) + ' ({})'.format(label))
+                kb.setHiddenInput(False)
+                kb.doModal()
+                login = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
+                if login == '': login = self.tutorialGetService()
+
+                if login != '':
+                    ADDON.setSetting('pgobox_username', login)
+                    kb = xbmc.Keyboard('','')
+                    kb.setHeading(strings(59953) + ' ({})'.format(label))
+                    kb.setHiddenInput(True)
+                    kb.doModal()
+                    pswd = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
+                    if pswd == '': pswd = self.tutorialGetService()
+
+                    ADDON.setSetting('pgobox_password', pswd)
+                    if pswd != '':
+                        progExec = True
+
+                    else:
+                        ADDON.setSetting('pgobox_enabled', 'false')
+                        self.tutorialGetService()
+
+                else:
+                    ADDON.setSetting('pgobox_enabled', 'false')
+                    self.tutorialGetService()
+
+            if 7 in res:
                 label = 'PlayerPL'
                 xbmcgui.Dialog().ok(label, strings(59950).format(label))
                 ADDON.setSetting('playerpl_enabled', 'true')
 
-            if 7 in res:
+            if 8 in res:
                 label = 'Telewizja Polska'
                 xbmcgui.Dialog().ok(label, strings(59950).format(label))
                 ADDON.setSetting('tvp_enabled', 'true')
 
-            if 8 in res:
+            if 9 in res:
                 label = 'Telia Play'
                 xbmcgui.Dialog().ok(label, strings(59950).format(label))
                 ADDON.setSetting('teliaplay_enabled', 'true')
@@ -1011,7 +1043,7 @@ class mTVGuide(xbmcgui.WindowXML):
                     ADDON.setSetting('teliaplay_enabled', 'false')
                     self.tutorialGetService()
 
-            if 7 in res:
+            if 10 in res:
                 label = 'WP Pilot'
                 xbmcgui.Dialog().ok(label, strings(59950).format(label))
                 ADDON.setSetting('videostar_enabled', 'true')
