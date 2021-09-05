@@ -559,6 +559,7 @@ class mTVGuide(xbmcgui.WindowXML):
         self.notification = None
         self.infoDialog = None
         self.currentChannel = None
+        self.lastChannel = None
         self.program = None
         self.onFocusTimer = None
         self.updateTimebarTimer = None
@@ -2534,7 +2535,7 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.playShortcut()
 
         elif action.getButtonCode() == KEY_SWITCH_TO_LAST:
-            channel = self.database.getLastChannel()
+            channel = self.getLastPreviousChannel()
             if channel:
                 program = self.database.getCurrentProgram(channel)
                 if program:
@@ -4443,6 +4444,9 @@ class mTVGuide(xbmcgui.WindowXML):
 
         return program, idx
 
+    def getLastPreviousChannel(self):
+        return self.lastChannel
+
     def delayedOnFocus(self, controlId):
         debug('onFocus controlId: {}'.format(controlId))
         try:
@@ -4727,21 +4731,19 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.playingRecordedProgram = True
                 return True
 
-    def updateCurrentChannel(self, program, channel):
-        deb('updateCurrentChannel')
+    def updateCurrentChannel(self, channel, program=None):
+        deb('updateCurrentChannel: {}'.format(channel))
+        self.lastChannel = self.currentChannel
         self.currentChannel = channel
 
         idx = self.database.getCurrentChannelIdx(self.currentChannel)
         
-        try:
-            start = program.startDate
-        except:
+        if program is None:
             start = self.program.startDate
-        
-        try:
-            end = program.endDate
-        except:
-            end = self.program.endDate
+            end = self.program.endDate  
+        else:
+            start = program.startDate
+            end = program.endDate            
 
         played = datetime.datetime.now()
 
@@ -4944,7 +4946,7 @@ class mTVGuide(xbmcgui.WindowXML):
             self.archiveService = ''
             self.archivePlaylist = ''
 
-        self.updateCurrentChannel(program, program.channel)
+        self.updateCurrentChannel(program.channel, program)
         if self.playRecordedProgram(program):
             return True
 
@@ -5142,7 +5144,7 @@ class mTVGuide(xbmcgui.WindowXML):
             self.archiveService = ''
             self.archivePlaylist = ''
 
-        self.updateCurrentChannel(program, channel)
+        self.updateCurrentChannel(channel, program)
         if program is not None:
             self.program = program
             if self.playRecordedProgram(program):
@@ -6934,7 +6936,7 @@ class Pla(xbmcgui.WindowXMLDialog):
                 urlList = database.getStreamUrlList(program.channel)
             self.program = program
         elif self.epg.currentChannel:
-            self.program = self.getCurrentProgram()
+            self.program = self.getCurrentProgram(self.epg.currentChannel)
         else:
             deb('Pla currentChannel is none! Closing Pla!')
             self.isClosing = True
@@ -7260,11 +7262,15 @@ class Pla(xbmcgui.WindowXMLDialog):
                 osd.doModal()
                 del osd
 
-        elif action.getButtonCode() == KEY_SWITCH_TO_LAST:
+        if action.getButtonCode() == KEY_SWITCH_TO_LAST:
             deb('Pla play last channel')
-            channel = self.database.getLastChannel()
+            channel = self.epg.getLastPreviousChannel()
             if channel:
-                self.playChannel(channel)
+                program = self.database.getCurrentProgram(channel)
+                if program:
+                    self.playChannel(channel, program)
+                else:
+                    self.playChannel(channel)
 
         if (ADDON.getSetting('channel_shortcut') != 'false'):
             digit = None
@@ -7433,7 +7439,7 @@ class Pla(xbmcgui.WindowXMLDialog):
                 self.program = program
                 self.epg.program = self.program
 
-            self.epg.updateCurrentChannel(program, channel)
+            self.epg.updateCurrentChannel(channel, program)
             urlList = self.database.getStreamUrlList(channel)
             if len(urlList) > 0:
                 self.epg.playService.playUrlList(urlList, self.archiveService, self.archivePlaylist, resetReconnectCounter=True)
