@@ -477,80 +477,83 @@ class PlaylistUpdater(baseServiceUpdater):
 
                                 if not p.match(title):
                                     title = title + ' ' + ADDON.getSetting('append_country_code')
-
-                            #if ADDON.getSetting('show_group_channels') == 'false':
-                            replaceCC = False
-
-                            ccList = ['BE', 'CZ', 'DE', 'DK', 'FR', 'HR', 'IT', 'NO', 'PL', 'SE', 'SRB', 'UK', 'US']
-
-                            p = re.compile(r'.*\s([a-zA-Z]{2,3})$', re.DOTALL)
-
-                            try:
-                                cc = p.search(title).group(1)
-                            except:
-                                cc = ''
-
-                            if cc not in ccList:
-                                    replaceCC = True
                             else:
-                                if p.match(title):
+                                replaceCC = False
+
+                                ccList = ['BE', 'CZ', 'DE', 'DK', 'FR', 'HR', 'IT', 'NO', 'PL', 'SE', 'SRB', 'UK', 'US']
+
+                                p = re.compile(r'.*\s([a-zA-Z]{2,3})$', re.DOTALL)
+
+                                try:
+                                    cc = p.search(title).group(1)
+                                except:
+                                    cc = ''
+
+                                if cc not in ccList:
                                     replaceCC = True
+                                else:
+                                    if p.match(title):
+                                        replaceCC = True
 
-                            if replaceCC:
-                                langA = '|'.join(ccList)
+                                if replaceCC:
+                                    langA = '|'.join(ccList)
 
-                                langBList = ['Belgique', 'Cesko', 'Deutschland', 'Danmark', 'France', 'Hrvatska', 'Italia', 'Norge', 'Polska', 'Sverige', 'Serbia', 'Britain', 'America'] 
-                                langB = '|'.join(langBList)
+                                    langBList = ['Belgique', 'Cesko', 'Deutschland', 'Danmark', 'France', 'Hrvatska', 'Italia', 'Norge', 'Polska', 'Sverige', 'Serbia', 'Britain', 'America'] 
+                                    langB = '|'.join(langBList)
 
-                                langCList = ['Belgium', 'Czech', 'Germany', 'Danmark', 'France', 'Croatia', 'Italy', 'Norway', 'Poland', 'Sweden', 'Ex-Yu', 'United Kingdom', 'USA'] 
-                                langC = '|'.join(langCList)
+                                    langCList = ['Belgium', 'Czech', 'Germany', 'Danmark', 'France', 'Croatia', 'Italy', 'Norway', 'Poland', 'Sweden', 'Ex-Yu', 'United Kingdom', 'USA'] 
+                                    langC = '|'.join(langCList)
 
-                                langDList = ['BEL', 'CZE', 'GER', 'DEN', 'FRA', 'HRT', 'ITA', 'NOR', 'POL', 'SWE', 'SRB', 'ENG', 'USA']
-                                langD = '|'.join(langDList)
+                                    langDList = ['BEL', 'CZE', 'GER', 'DEN', 'FRA', 'HRT', 'ITA', 'NOR', 'POL', 'SWE', 'SRB', 'ENG', 'USA']
+                                    langD = '|'.join(langDList)
 
-                                ccListInt = len(ccList)
-                                
-                                if any(ccExt not in title for ccExt in ccList):
+                                    ccListInt = len(ccList)
+                                    
+                                    if any(ccExt not in title for ccExt in ccList):
+                                        p = re.compile('(?:^|[^a-zA-Z\d])({a}|{b}|{c}|{d})(?:[^a-zA-Z\d]|$)'.format(a=langA, b=langB, c=langC, d=langD), re.IGNORECASE)
 
-                                    p = re.compile('(?:^|[^a-zA-Z\d])({a}|{b}|{c}|{d})(?:[^a-zA-Z\d]|$)'.format(a=langA, b=langB, c=langC, d=langD), re.IGNORECASE)
-
-                                    try:
                                         if sys.version_info[0] > 2:
-                                            group = p.search(str(splitedLine[0])).group(1)
+                                            try:
+                                                group = p.search(str(splitedLine[0])).group(1)
+                                            except:
+                                                group = ''
                                         else:
-                                            group = p.search(str(splitedLine[0]).encode('utf-8')).group(1)
+                                            try:
+                                                group = p.search(str(splitedLine[0]).encode('utf-8')).group(1)
+                                            except:
+                                                group = ''
 
                                         if group:
+                                            ccCh = ''
                                             for item in range(ccListInt):
-                                                if group.upper() == langAList[item].upper():
-                                                    subsLangA = {langAList[item]: ccList[item]}
+                                                if group.upper() == ccList[item].upper():
+                                                    subsLangA = {ccList[item]: ccList[item]}
                                                     cc = ccList[subsLangA.get(item, item)]
                                                     ccCh = cc
 
-                                                if group.upper() == langBList[item].upper():        
+                                                elif group.upper() == langBList[item].upper():  
                                                     subsLangB = {langBList[item]: ccList[item]}
                                                     cc = ccList[subsLangB.get(item, item)]
                                                     ccCh = cc
 
-                                                if group.upper() == ccList[item].upper():
-                                                    subsLangC = {ccList[item]: ccList[item]}
+                                                elif group.upper() == langCList[item].upper():
+                                                    subsLangC = {langCList[item]: ccList[item]}
                                                     cc = ccList[subsLangC.get(item, item)]
                                                     ccCh = cc
 
-                                                if group.upper() == langDList[item].upper():
+                                                elif group.upper() == langDList[item].upper():
                                                     subsLangD = {langDList[item]: ccList[item]}
                                                     cc = ccList[subsLangD.get(item, item)]
                                                     ccCh = cc
 
-                                                else:
-                                                    ccCh = ''
+                                            try:
+                                                cc = p.search(title).group(1)
+                                            except:
+                                                cc = ''
 
-                                                if ccCh not in title:
-                                                    string = ' ' + ccCh
-                                                    title = re.sub('$', string, title)
-
-                                    except:
-                                        pass
+                                            if cc not in ccList:
+                                                string = ' ' + ccCh
+                                                title = re.sub('$', string, title)
 
                             for langReplaceMap in langReplaceList:
                                 title, match = langReplaceMap['regex'].subn('', title)
