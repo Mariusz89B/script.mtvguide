@@ -30,8 +30,9 @@
 		<forum>http://mods-kodi.pl/forum/</forum>
 		<website>http://mods-kodi.pl/</website>
 		<email>support@m-tvguide.pl</email>
-	<news>v9.5.3 (2021-09-04)
+	<news>v9.5.3 (2021-09-05)
 - Added service Polsat GO Box.
+- Fixed removing controls, that caused Kodi to crash.
 
 v9.5.2 (2021-09-04)
 - Fixed play timeshift buffer.
