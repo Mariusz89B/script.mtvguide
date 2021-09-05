@@ -5554,8 +5554,6 @@ class mTVGuide(xbmcgui.WindowXML):
                     self.removeControl(elem.control)
                 except RuntimeError:
                     pass  # happens if we try to remove a control that doesn't exist
-                    
-        del self.controlAndProgramList[:]
 
         try:
             self.category = self.database.category
@@ -5597,7 +5595,8 @@ class mTVGuide(xbmcgui.WindowXML):
             self.category = None
 
         self.getListLenght = self.getChannelListLenght()
-        
+
+        del self.controlAndProgramList[:]
         debug('_clearEpg end')
 
     def onEPGLoadError(self):
