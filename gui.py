@@ -1889,6 +1889,8 @@ class mTVGuide(xbmcgui.WindowXML):
 
         self.database.initialize(self.onSourceInitialized, self.isSourceInitializationCancelled)
 
+        self.updateTimebar()
+
         self.interval = 300
         self.updateEpgTimer = epgTimer(self.interval, self.updateEpg)
 
@@ -4469,8 +4471,11 @@ class mTVGuide(xbmcgui.WindowXML):
 
         if xbmc.Player().isPlaying():
             if ADDON.getSetting('info_osd') == "false" or self.program is None:
-                program = self.database.getCurrentProgram(self.currentChannel)
-                idx = self.database.getCurrentChannelIdx(self.currentChannel)
+                try:
+                    program = self.database.getCurrentProgram(self.currentChannel)
+                    idx = self.database.getCurrentChannelIdx(self.currentChannel)
+                except:
+                    pass
 
                 try:
                     if self.program.endDate < datetime.datetime.now():
@@ -5196,9 +5201,6 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def _showEPG(self):
         deb('_showEpg')
-        self.onTimebarEPG()
-        self.updateTimebar()
-
         if self.end < self.played:
             try:
                 self.viewStartDate = self.program.startDate + datetime.timedelta(minutes=int(timebarAdjust()))
@@ -5300,11 +5302,17 @@ class mTVGuide(xbmcgui.WindowXML):
         tmp_background = self.getControl(self.C_MAIN_TIMEBAR_BACK)
 
         if self.timebar:
-            self.removeControl(self.timebar)
+            try:
+                self.removeControl(self.timebar)
+            except RuntimeError:
+                pass  # happens if we try to remove a control that doesn't exist
             self.timebar = None
 
         if self.timebarBack:
-            self.removeControl(self.timebarBack)
+            try:
+                self.removeControl(self.timebarBack)
+            except RuntimeError:
+                pass  # happens if we try to remove a control that doesn't exist
             self.timebarBack = None
         
         if self.getControl(self.C_DYNAMIC_COLORS):
@@ -5336,11 +5344,10 @@ class mTVGuide(xbmcgui.WindowXML):
             self.infoDialog.close()
 
         self._showControl(self.C_MAIN_EPG)
+        self.updateTimebar(scheduleTimer=False)
         
         # remove existing controls
         self._clearEpg()
-
-        self.updateTimebar(scheduleTimer=False)
 
         try:
             self.channelIdx, channels, programs, cacheExpired = self.database.getEPGView(channelStart, startTime, self.onSourceProgressUpdate, clearExistingProgramList=True)
@@ -5537,11 +5544,17 @@ class mTVGuide(xbmcgui.WindowXML):
         deb('_clearEpg')
         
         if self.timebar:
-            self.removeControl(self.timebar)
+            try:
+                self.removeControl(self.timebar)
+            except RuntimeError:
+                pass  # happens if we try to remove a control that doesn't exist
             self.timebar = None
 
         if self.timebarBack:
-            self.removeControl(self.timebarBack)
+            try:
+                self.removeControl(self.timebarBack)
+            except RuntimeError:
+                pass  # happens if we try to remove a control that doesn't exist
             self.timebarBack = None
 
         controls = [elem.control for elem in self.controlAndProgramList]
