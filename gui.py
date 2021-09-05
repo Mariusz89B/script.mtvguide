@@ -7512,8 +7512,15 @@ class Pla(xbmcgui.WindowXMLDialog):
     def getProgramRight(self, program):
         return self.database.getNextProgram(program)
 
-    def getCurrentProgram(self):
-        return self.database.getCurrentProgram(self.epg.currentChannel)
+    def getCurrentProgram(self, channel=None):
+        #deb('getCurrentProgram: {}'.format(channel))
+        if channel is not None:
+            channel = channel
+        else:
+            channel = self.epg.currentChannel
+            
+        return self.database.getCurrentProgram(channel)
+         
 
     def showVidOsd(self, action=None):
         if ADDON.getSetting('archive_support') == 'true' and (self.archiveService != '' or self.archivePlaylist != ''):
