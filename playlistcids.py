@@ -476,9 +476,24 @@ class PlaylistUpdater(baseServiceUpdater):
                                     title = title + ' ' + ADDON.getSetting('append_country_code')
 
                             if ADDON.getSetting('show_group_channels') == 'false':
-                                p = re.compile(r'.*\s[a-zA-Z]{2,3}$', re.DOTALL)
+                                replaceCC = False
 
-                                if not p.match(title):
+                                nonList = ['SD', 'HD', 'FHD', 'UHD', '4K', 'VIP']
+
+                                p = re.compile(r'.*\s([a-zA-Z]{2,3})$', re.DOTALL)
+
+                                try:
+                                    nonCC = p.search(title).group(1)
+                                except:
+                                    nonCC = ''
+
+                                if nonCC in nonList:
+                                        replaceCC = True
+                                else:
+                                    if p.match(title):
+                                        replaceCC = True
+
+                                if replaceCC:
                                     langAList = ['Belgium', 'Czech', 'Germany', 'Danmark', 'France', 'Croatia', 'Italy', 'Norway', 'Poland', 'Sweden', 'Ex-Yu', 'United Kingdom', 'USA'] 
                                     langA = '|'.join(langAList)
 
@@ -490,9 +505,6 @@ class PlaylistUpdater(baseServiceUpdater):
 
                                     langDList = ['BEL', 'CZE', 'GER', 'DEN', 'FRA', 'HRT', 'ITA', 'NOR', 'POL', 'SWE', 'SRB', 'ENG', 'USA']
                                     langD = '|'.join(langDList)
-
-                                    langEList = ['.BE', '.CZ', '.DE', '.DK', '.FR', '.HR', '.IT', '.NO', '.PL', '.SE', '.SRB', '.UK', '.US']
-                                    langE = '|'.join(ccList)
 
                                     ccListInt = len(ccList)
                                     
@@ -526,11 +538,6 @@ class PlaylistUpdater(baseServiceUpdater):
                                                     elif group.upper() == langDList[item].upper():
                                                         subsLangD = {langDList[item]: ccList[item]}
                                                         cc = ccList[subsLangD.get(item, item)]
-                                                        ccCh = cc
-
-                                                    elif group.upper() == langEList[item].upper():
-                                                        subsLangE = {langEList[item]: ccList[item]}
-                                                        cc = ccList[subsLangE.get(item, item)]
                                                         ccCh = cc
 
                                                     else:
