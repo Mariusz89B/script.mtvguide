@@ -356,7 +356,7 @@ class IplaUpdater(baseServiceUpdater):
                 for j in myper:
                     if j in channelperms or i['title']=='Polsat' or i['title']=='TV4':
                         img = i['thumbnails'][-1]['src']
-                        cid = i['id'] + '_TS_3H'
+                        cid = i['id']
                         name = i['title'].upper() + ' PL'
                         name = name.replace(' SD', '')
 

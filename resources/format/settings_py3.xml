@@ -739,7 +739,7 @@
 					<control format="string" type="spinner"/>
 				</setting>
 			</group>
-			<group id="19" label="80006">
+			<group id="19" label="59921">
 				<setting help="95007" id="pgobox_enabled" label="59904" type="boolean">
 					<level>0</level>
 					<default>false</default>
@@ -778,10 +778,10 @@
 				</setting>
 				<setting help="95014" id="pgobox_client" label="30368" type="string">
 					<level>0</level>
-					<default>Ipla</default>
+					<default>Polsat Box</default>
 					<constraints>
 						<options>
-							<option label="Ipla">Ipla</option>
+							<option label="Polsat Box">Polsat Box</option>
 							<option label="Cyfrowy Polsat">Cyfrowy Polsat</option>
 						</options>
 					</constraints>

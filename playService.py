@@ -668,130 +668,106 @@ class PlayService(xbmc.Player, BasePlayService):
                     return res
 
                 if service == 'C More':
-                    try:
-                        self.playbackStopped = False
-
+                    if self.archiveService == '' or self.archivePlaylist == '':
                         try:
-                            from urllib.parse import urlencode, quote_plus, quote, unquote
-                        except ImportError:
-                            from urllib import urlencode, quote_plus, quote, unquote
+                            self.playbackStopped = False
 
-                        licenseUrl = channelInfo.lic
-                        strmUrl = channelInfo.strm
+                            try:
+                                from urllib.parse import urlencode, quote_plus, quote, unquote
+                            except ImportError:
+                                from urllib import urlencode, quote_plus, quote, unquote
 
-                        if lic['type'] == 'hls':
-                            PROTOCOL = 'hls'
-                        else:
-                            PROTOCOL = 'mpd'
+                            licenseUrl = channelInfo.lic
+                            strmUrl = channelInfo.strm
 
-                        DRM = 'com.widevine.alpha'
-
-                        import inputstreamhelper
-                        is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
-                        if is_helper.check_inputstream():
-                            ListItem = xbmcgui.ListItem(path=strmUrl)
-                            ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
-                            ListItem.setContentLookup(False)
-                            if sys.version_info[0] > 2:
-                                ListItem.setProperty('inputstream', is_helper.inputstream_addon)
+                            if lic['type'] == 'hls':
+                                PROTOCOL = 'hls'
                             else:
-                                ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
-                            ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
-                            if DRM:
-                                ListItem.setProperty('inputstream.adaptive.license_type', DRM)
-                                ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl['license']['castlabsServer'] + '|Content-Type=&x-dt-auth-token=%s|R{SSM}|' % licenseUrl['license']['castlabsToken'])
-                                ListItem.setProperty('IsPlayable', 'true')
+                                PROTOCOL = 'mpd'
 
-                                catchup = self.archiveService
+                            DRM = 'com.widevine.alpha'
 
-                                if catchup == '':
-                                    sec = 90.0 
+                            import inputstreamhelper
+                            is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
+                            if is_helper.check_inputstream():
+                                ListItem = xbmcgui.ListItem(path=strmUrl)
+                                ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
+                                ListItem.setContentLookup(False)
+                                if sys.version_info[0] > 2:
+                                    ListItem.setProperty('inputstream', is_helper.inputstream_addon)
                                 else:
-                                    sec = catchup.total_seconds()
+                                    ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
+                                ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
+                                if DRM:
+                                    ListItem.setProperty('inputstream.adaptive.license_type', DRM)
+                                    ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl['license']['castlabsServer'] + '|Content-Type=&x-dt-auth-token=%s|R{SSM}|' % licenseUrl['license']['castlabsToken'])
+                                    ListItem.setProperty('IsPlayable', 'true')
 
-                                # 3H stream
-                                playTime = 11160 - sec 
+                            self.strmUrl = strmUrl
+                            xbmc.Player().play(item=str(self.strmUrl), listitem=ListItem, windowed=startWindowed)
+                            res = True
 
-                                ListItem.setProperty('StartOffset', str(playTime))
-                                ListItem.setProperty('inputstream.adaptive.play_timeshift_buffer', 'true')
-
-                        self.strmUrl = strmUrl
-                        xbmc.Player().play(item=str(self.strmUrl), listitem=ListItem, windowed=startWindowed)
-                        res = True
-
-                    except Exception as ex:
-                        deb('Exception while trying to play video: {}'.format(getExceptionString()))
-                        self.unlockCurrentlyPlayedService()
-                        xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
+                        except Exception as ex:
+                            deb('Exception while trying to play video: {}'.format(getExceptionString()))
+                            self.unlockCurrentlyPlayedService()
+                            xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
 
                 if service == 'Ipla':
-                    try:
-                        self.playbackStopped = False
-
+                    if self.archiveService == '' or self.archivePlaylist == '':
                         try:
-                            from urllib.parse import urlencode, quote_plus, quote, unquote
-                        except ImportError:
-                            from urllib import urlencode, quote_plus, quote, unquote
+                            self.playbackStopped = False
 
-                        licenseUrl, licenseData = channelInfo.lic
-                        strmUrl = channelInfo.strm
+                            try:
+                                from urllib.parse import urlencode, quote_plus, quote, unquote
+                            except ImportError:
+                                from urllib import urlencode, quote_plus, quote, unquote
+
+                            licenseUrl, licenseData = channelInfo.lic
+                            strmUrl = channelInfo.strm
+                                
+                            UA = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:84.0) Gecko/20100101 Firefox/84.0'
                             
-                        UA = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:84.0) Gecko/20100101 Firefox/84.0'
-                        
-                        PROTOCOL = 'mpd'
-                        DRM = 'com.widevine.alpha'
+                            PROTOCOL = 'mpd'
+                            DRM = 'com.widevine.alpha'
 
-                        import inputstreamhelper
-                        import ssl
-                        try:
-                            _create_unverified_https_context = ssl._create_unverified_context
-                        except AttributeError:
-                            pass
-                        else:
-                            ssl._create_default_https_context = _create_unverified_https_context
-                        certificate_data = 'MIIF6TCCBNGgAwIBAgIQCYbp7RbdfLjlakzltFsbRTANBgkqhkiG9w0BAQsFADBcMQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYDVQQLExB3d3cuZGlnaWNlcnQuY29tMRswGQYDVQQDExJUaGF3dGUgUlNBIENBIDIwMTgwHhcNMjAxMTAzMDAwMDAwWhcNMjExMjA0MjM1OTU5WjBWMQswCQYDVQQGEwJQTDERMA8GA1UEBxMIV2Fyc3phd2ExHDAaBgNVBAoTE0N5ZnJvd3kgUG9sc2F0IFMuQS4xFjAUBgNVBAMMDSoucmVkZWZpbmUucGwwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC5dmzwoPSg3vOOSuRUHGVAKTvXQZEMwGCEhL6uojxn5BEKDTs00zdoOEkPdD8WFFEvYEKwZ/071XYPGuEMaiFs5zV0DYp7MsAi/nKZy0vTDn8FwdK2bPay2HwfjOAXhf+qjtJfWUI2o43kMLHa/TB9Nb61MSGbGGR1t3UxvJbLkJNdIFLdbU+oKof68PB7EZ9QDTCqklWhXokfxXbEmFGEicL1V8dQVmq2VzX/s7ICAg3WnFJ5Y/iJJV5em0JYNCRYYdf/Vohvp8C1yY0TP6XsfjgZZysdioFlHrDE5ilDIEu54jiCOCIAvnpTAR7wol66ok8pldoJiXkLn8OSFyPlAgMBAAGjggKrMIICpzAfBgNVHSMEGDAWgBSjyF5lVOUweMEF6gcKalnMuf7eWjAdBgNVHQ4EFgQUYG0/Qi/unb45V9e9z81Nn/opejcwJQYDVR0RBB4wHIINKi5yZWRlZmluZS5wbIILcmVkZWZpbmUucGwwDgYDVR0PAQH/BAQDAgWgMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjA6BgNVHR8EMzAxMC+gLaArhilodHRwOi8vY2RwLnRoYXd0ZS5jb20vVGhhd3RlUlNBQ0EyMDE4LmNybDBMBgNVHSAERTBDMDcGCWCGSAGG/WwBATAqMCgGCCsGAQUFBwIBFhxodHRwczovL3d3dy5kaWdpY2VydC5jb20vQ1BTMAgGBmeBDAECAjBvBggrBgEFBQcBAQRjMGEwJAYIKwYBBQUHMAGGGGh0dHA6Ly9zdGF0dXMudGhhd3RlLmNvbTA5BggrBgEFBQcwAoYtaHR0cDovL2NhY2VydHMudGhhd3RlLmNvbS9UaGF3dGVSU0FDQTIwMTguY3J0MAwGA1UdEwEB/wQCMAAwggEEBgorBgEEAdZ5AgQCBIH1BIHyAPAAdgD2XJQv0XcwIhRUGAgwlFaO400TGTO/3wwvIAvMTvFk4wAAAXWO0xv2AAAEAwBHMEUCIQDN5p0QqITEtjMexdGmGjHR/8PxCN4OFiJDMFy7j74MgwIgXtmZfGnxI/GUKwwd50IVHuS6hmnua+fsLIpeOghE9XoAdgBc3EOS/uarRUSxXprUVuYQN/vV+kfcoXOUsl7m9scOygAAAXWO0xw9AAAEAwBHMEUCIQDNcrHQBd/WbQ3/sUvd0D37D5oZDIRf/mx3V5rAm6PvzwIgRJx+5MiIu/Qa4NN9vk51oBL171+iFRTyglwYR/NT5oQwDQYJKoZIhvcNAQELBQADggEBAHEgY9ToJCJkHtbRghYW7r3wvER8uGKQa/on8flTaIT53yUqCTGZ1VrjbpseHYqgpCwGigqe/aHBqwdJfjtXnEpFa5x1XnK2WgwK3ea7yltQxta3O3v8CJ7mU/jrWrDMYJuv+3Vz79kwOVmQN0kvlK56SnNR5PrHjO0URInGKbQenB2V0I5t/IjLsLCfKKao+VXoWCCzTY+GagcqNAt9DIiG//yXKs00vnj8I2DP74J9Up6eBdPgS7Naqi8uetaoharma9/59a/tb5PugixAmDGUzUf55NPl9otRsvVuCyT3yaCNtI2M09l6Wfdwryga1Pko+KT3UlDPmbrFUtwlPAU='
-                        
-
-                        is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
-                        if is_helper.check_inputstream():
-                            ListItem = xbmcgui.ListItem(path=strmUrl)
-                            ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
-                            ListItem.setContentLookup(False)
-                            if sys.version_info[0] > 2:
-                                ListItem.setProperty('inputstream', is_helper.inputstream_addon)
+                            import inputstreamhelper
+                            import ssl
+                            try:
+                                _create_unverified_https_context = ssl._create_unverified_context
+                            except AttributeError:
+                                pass
                             else:
-                                ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
-                            ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
-                            ListItem.setMimeType('application/xml+dash')
-                            ListItem.setProperty('inputstream.adaptive.stream_headers', 'Referer: https://www.ipla.tv&User-Agent=' + quote(UA))
-                            ListItem.setProperty('inputstream.adaptive.license_type', DRM)
-                            #ListItem.setProperty('inputstream.adaptive.server_certificate', certificate_data)
-                            ListItem.setProperty('inputstream.adaptive.manifest_update_parameter', 'full')
-                            ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl+'|Content-Type=application%2Fjson&Referer=https://www.ipla.tv/&User-Agent='+quote(UA)+'|'+licenseData+'|JBlicense')
-                            ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
-                            ListItem.setProperty("IsPlayable", "true")
+                                ssl._create_default_https_context = _create_unverified_https_context
+                            certificate_data = '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'
+                            
 
-                            catchup = self.archiveService
+                            is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
+                            if is_helper.check_inputstream():
+                                ListItem = xbmcgui.ListItem(path=strmUrl)
+                                ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
+                                ListItem.setContentLookup(False)
+                                if sys.version_info[0] > 2:
+                                    ListItem.setProperty('inputstream', is_helper.inputstream_addon)
+                                else:
+                                    ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
+                                ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
+                                ListItem.setMimeType('application/xml+dash')
+                                ListItem.setProperty('inputstream.adaptive.stream_headers', 'Referer: https://www.ipla.tv&User-Agent=' + quote(UA))
+                                ListItem.setProperty('inputstream.adaptive.license_type', DRM)
+                                #ListItem.setProperty('inputstream.adaptive.server_certificate', certificate_data)
+                                ListItem.setProperty('inputstream.adaptive.manifest_update_parameter', 'full')
+                                ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl+'|Content-Type=application%2Fjson&Referer=https://www.ipla.tv/&User-Agent='+quote(UA)+'|'+licenseData+'|JBlicense')
+                                ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
+                                ListItem.setProperty("IsPlayable", "true")
 
-                            if catchup == '':
-                                sec = 90.0 
-                            else:
-                                sec = catchup.total_seconds()
+                            self.strmUrl = strmUrl
+                            xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
+                            res = True
 
-                            # 3H stream
-                            playTime = 11160 - sec 
-
-                            ListItem.setProperty('StartOffset', str(playTime))
-                            ListItem.setProperty('inputstream.adaptive.play_timeshift_buffer', 'true')
-
-                        self.strmUrl = strmUrl
-                        xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
-                        res = True
-
-                    except Exception as ex:
-                        deb('Exception while trying to play video: {}'.format(getExceptionString()))
-                        self.unlockCurrentlyPlayedService()
-                        xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
+                        except Exception as ex:
+                            deb('Exception while trying to play video: {}'.format(getExceptionString()))
+                            self.unlockCurrentlyPlayedService()
+                            xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
 
                 if service == 'nc+ GO':
                     try:
@@ -952,73 +928,61 @@ class PlayService(xbmc.Player, BasePlayService):
                             xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
 
                 if service == 'Polsat GO Box':
-                    try:
-                        self.playbackStopped = False
-
+                    if self.archiveService == '' or self.archivePlaylist == '':
                         try:
-                            from urllib.parse import urlencode, quote_plus, quote, unquote
-                        except ImportError:
-                            from urllib import urlencode, quote_plus, quote, unquote
+                            self.playbackStopped = False
 
-                        licenseUrl, licenseData = channelInfo.lic
-                        strmUrl = channelInfo.strm
+                            try:
+                                from urllib.parse import urlencode, quote_plus, quote, unquote
+                            except ImportError:
+                                from urllib import urlencode, quote_plus, quote, unquote
+
+                            licenseUrl, licenseData = channelInfo.lic
+                            strmUrl = channelInfo.strm
+                                
+                            UA = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0'
                             
-                        UA = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0'
-                        
-                        PROTOCOL = 'mpd'
-                        DRM = 'com.widevine.alpha'
+                            PROTOCOL = 'mpd'
+                            DRM = 'com.widevine.alpha'
 
-                        import inputstreamhelper
-                        import ssl
-                        try:
-                            _create_unverified_https_context = ssl._create_unverified_context
-                        except AttributeError:
-                            pass
-                        else:
-                            ssl._create_default_https_context = _create_unverified_https_context
-                        certificate_data = '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'                
-
-
-                        is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
-                        if is_helper.check_inputstream():
-                            ListItem = xbmcgui.ListItem(path=strmUrl)
-                            ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
-                            ListItem.setContentLookup(False)
-                            if sys.version_info[0] > 2:
-                                ListItem.setProperty('inputstream', is_helper.inputstream_addon)
+                            import inputstreamhelper
+                            import ssl
+                            try:
+                                _create_unverified_https_context = ssl._create_unverified_context
+                            except AttributeError:
+                                pass
                             else:
-                                ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
-                            ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
-                            ListItem.setMimeType('application/xml+dash')
-                            ListItem.setProperty('inputstream.adaptive.stream_headers', 'Referer: https://polsatboxgo.pl&User-Agent=' + quote(UA))
-                            ListItem.setProperty('inputstream.adaptive.license_type', DRM)
-                            ListItem.setProperty('inputstream.adaptive.server_certificate', certificate_data)
-                            ListItem.setProperty('inputstream.adaptive.manifest_update_parameter', 'full')
-                            ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl+'|Content-Type=application%2Fjson&Referer=https://polsatboxgo.pl/&User-Agent='+quote(UA)+'|'+licenseData+'|JBlicense')
-                            ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
-                            ListItem.setProperty("IsPlayable", "true")
+                                ssl._create_default_https_context = _create_unverified_https_context
+                            certificate_data = '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'                
 
-                            catchup = self.archiveService
 
-                            if catchup == '':
-                                sec = 90.0 
-                            else:
-                                sec = catchup.total_seconds()
+                            is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
+                            if is_helper.check_inputstream():
+                                ListItem = xbmcgui.ListItem(path=strmUrl)
+                                ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
+                                ListItem.setContentLookup(False)
+                                if sys.version_info[0] > 2:
+                                    ListItem.setProperty('inputstream', is_helper.inputstream_addon)
+                                else:
+                                    ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
+                                ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
+                                ListItem.setMimeType('application/xml+dash')
+                                ListItem.setProperty('inputstream.adaptive.stream_headers', 'Referer: https://polsatboxgo.pl&User-Agent=' + quote(UA))
+                                ListItem.setProperty('inputstream.adaptive.license_type', DRM)
+                                ListItem.setProperty('inputstream.adaptive.server_certificate', certificate_data)
+                                ListItem.setProperty('inputstream.adaptive.manifest_update_parameter', 'full')
+                                ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl+'|Content-Type=application%2Fjson&Referer=https://polsatboxgo.pl/&User-Agent='+quote(UA)+'|'+licenseData+'|JBlicense')
+                                ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
+                                ListItem.setProperty("IsPlayable", "true")
 
-                            # 3H stream
-                            playTime = 11160 - sec 
+                            self.strmUrl = strmUrl
+                            xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
+                            res = True
 
-                            ListItem.setProperty('StartOffset', str(playTime))
-                            ListItem.setProperty('inputstream.adaptive.play_timeshift_buffer', 'true')
-
-                        self.strmUrl = strmUrl
-                        xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
-                        res = True
-
-                    except Exception as ex:
-                        deb('Exception while trying to play video: {}'.format(getExceptionString()))
-                        self.unlockCurrentlyPlayedService()
-                        xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
+                        except Exception as ex:
+                            deb('Exception while trying to play video: {}'.format(getExceptionString()))
+                            self.unlockCurrentlyPlayedService()
+                            xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
 
                 if service == 'Telia Play':
                     try:

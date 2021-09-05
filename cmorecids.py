@@ -384,7 +384,7 @@ class CmoreUpdater(baseServiceUpdater):
                 else:
                     continue  # no current live program
 
-                cid = channel['asset']['id'] + '_TS_1' 
+                cid = channel['asset']['id'] 
 
                 if self.locale == 'sv_SE':
                     name = channel['title']+' SE'
