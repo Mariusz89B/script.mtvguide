@@ -5336,14 +5336,14 @@ class mTVGuide(xbmcgui.WindowXML):
         if self.timebar:
             try:
                 self.removeControl(self.timebar)
-            except RuntimeError:
+            except:
                 pass  # happens if we try to remove a control that doesn't exist
             self.timebar = None
 
         if self.timebarBack:
             try:
                 self.removeControl(self.timebarBack)
-            except RuntimeError:
+            except:
                 pass  # happens if we try to remove a control that doesn't exist
             self.timebarBack = None
         
@@ -5578,14 +5578,14 @@ class mTVGuide(xbmcgui.WindowXML):
         if self.timebar:
             try:
                 self.removeControl(self.timebar)
-            except RuntimeError:
+            except:
                 pass  # happens if we try to remove a control that doesn't exist
             self.timebar = None
 
         if self.timebarBack:
             try:
                 self.removeControl(self.timebarBack)
-            except RuntimeError:
+            except:
                 pass  # happens if we try to remove a control that doesn't exist
             self.timebarBack = None
 
