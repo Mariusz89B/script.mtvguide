@@ -795,7 +795,7 @@
 						<heading>30368</heading>
 					</control>
 				</setting>
-				<setting help="95012" id="priority_ipla" label="55009" type="integer">
+				<setting help="95012" id="priority_pgobox" label="55009" type="integer">
 					<level>0</level>
 					<default>6</default>
 					<constraints>
