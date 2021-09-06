@@ -153,75 +153,72 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
         return content
 
     def loginService(self):
-        #try:
-        if self.device_id == '' or self.client_id == '' or self.id_ == '':
-            self.createDatas()
+        try:
+            if self.device_id == '' or self.client_id == '' or self.id_ == '':
+                self.createDatas()
 
-        if self.login and self.password:
-            self.device_id = ADDON.getSetting('pgobox_device_id')
-            self.client_id = ADDON.getSetting('pgobox_client_id')
-            self.client = ADDON.getSetting('pgobox_client')
+            if self.login and self.password:
+                self.device_id = ADDON.getSetting('pgobox_device_id')
+                self.client_id = ADDON.getSetting('pgobox_client_id')
+                self.client = ADDON.getSetting('pgobox_client')
+                
+                if self.client == 'Polsat Box' or self.client == 'Ipla':
+                    post = {"id":1,"jsonrpc":"2.0","method":"login","params":{"ua":"pbg_pc_windows_edge_html/1 (Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36 Edg/93.0.961.38)",     "deviceId":{"type":"other","value":self.device_id},"userAgentData":{"portal":"pbg","deviceType":"pc","application":"edge","player":"html","build":1,"os":"windows","osInfo":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36 Edg/93.0.961.38"},"authData":{"login":self.login,"password":self.password,"deviceId":{"type":"other","value":self.device_id}},"clientId":self.client_id}}
+                else:
+                    post = {"id":1,"jsonrpc":"2.0","method":"login","params":{"ua":UAIPLA,"deviceId":{"type":"other","value":self.device_id},"userAgentData":{"portal":"pbg","deviceType":"pc","application":"firefox","player":"html","build":1,"os":"windows","osInfo":OSINFO},"clientId":self.client_id,"authData":{"login":self.login,"password":self.password,"deviceId":{"type":"other","value":self.device_id}}}}
+
+                data = self.getRequests(self.auth, data=post, headers=self.headers)
+                try:
+                    if data['error']['data']["type"] == "RulesException":
+                        post = {"id":1,"jsonrpc":"2.0","method":"acceptRules","params":{"ua":"pbg_mobile_android_chrome_html/1 (Mozilla/5.0 (Linux; Android 10; Redmi Note 8 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.62 Mobile Safari/537.36)","deviceId":{"type":"other","value":self.device_id},"userAgentData":{"portal":"pbg","deviceType":"mobile","application":"chrome","player":"html","build":1,"os":"android","osInfo":"Mozilla/5.0 (Linux; Android 10; Redmi Note 8 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.62 Mobile Safari/537.36"},"clientId":self.client_id,"rulesIds":[105],"authData":{"authProvider":"icok","login":self.login,"password":self.password,"deviceId":{"type":"other","value":self.device_id}}}}
+                        data = getRequests(self.auth, data=post, headers=self.headers)
+                except:
+                    pass
+
+                if data.get('error', None):
+                    msg = data['error']['data']['userMessage']
+                    ADDON.setSetting('pgobox_sesstoken', '')
+                    ADDON.setSetting('pgobox_sessexpir', '')
+                    ADDON.setSetting('pgobox_sesskey', '')
+                    ADDON.setSetting('pgobox_myperm', '')
+                    ADDON.setSetting('pgobox_device_id', '')
+                    ADDON.setSetting('pgobox_client_id', '')
+
+                    self.loginErrorMessage() 
+                    return False
+
+                else:
+                    myper = []
+                    for i in data["result"]["accessGroups"]:
+                        if 'sc:' in i:
+                            myper.append(str(i))
+                        if 'oth:' in i:
+                            myper.append(str(i))
+                        if 'loc:' in i:
+                            myper.append(str(i))
+                        if 'cp_sub_ext:' in i:
+                            myper.append(str(i.replace('cp_sub_ext','sc')))
+                        if 'cp_sub_base:' in i:
+                            myper.append(str(i.replace('cp_sub_base','sc')))
+
+                    ADDON.setSetting('pgobox_myperm', str(myper))
+
+                    sesja = data['result']['session']
             
-            if self.client == 'Polsat Box':
-                #post = {"id":1,"jsonrpc":"2.0","method":"login","params":{"ua":"pbg_mobile_android_chrome_html/1 (Mozilla/5.0 (Linux; Android 10; Redmi Note 8 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.62 Mobile Safari/537.36)","deviceId":{"type":"other","value":self.device_id},"userAgentData":{"portal":"pbg","deviceType":"mobile","application":"chrome","player":"html","build":1,"os":"android","osInfo":"Mozilla/5.0 (Linux; Android 10; Redmi Note 8 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.62 Mobile Safari/537.36"},"clientId":self.client_id,"authData":{"authProvider":"icok","login":self.login,"password":self.password,"deviceId":{"type":"other","value":self.device_id}}}}
-                post = {"id":1,"jsonrpc":"2.0","method":"login","params":{"ua":"pbg_pc_windows_edge_html/1 (Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36 Edg/93.0.961.38)",     "deviceId":{"type":"other","value":self.device_id},"userAgentData":{"portal":"pbg","deviceType":"pc","application":"edge","player":"html","build":1,"os":"windows","osInfo":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36 Edg/93.0.961.38"},"authData":{"login":self.login,"password":self.password,"deviceId":{"type":"other","value":self.device_id}},"clientId":self.client_id}}
-            else:
-                post = {"id":1,"jsonrpc":"2.0","method":"login","params":{"ua":UAIPLA,"deviceId":{"type":"other","value":self.device_id},"userAgentData":{"portal":"pbg","deviceType":"pc","application":"firefox","player":"html","build":1,"os":"windows","osInfo":OSINFO},"clientId":self.client_id,"authData":{"login":self.login,"password":self.password,"deviceId":{"type":"other","value":self.device_id}}}}
-
-            data = self.getRequests(self.auth, data=post, headers=self.headers)
-            deb('TEST: {}'.format(data))
-
-            try:
-                if data['error']['data']["type"] == "RulesException":
-                    post = {"id":1,"jsonrpc":"2.0","method":"acceptRules","params":{"ua":"pbg_mobile_android_chrome_html/1 (Mozilla/5.0 (Linux; Android 10; Redmi Note 8 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.62 Mobile Safari/537.36)","deviceId":{"type":"other","value":self.device_id},"userAgentData":{"portal":"pbg","deviceType":"mobile","application":"chrome","player":"html","build":1,"os":"android","osInfo":"Mozilla/5.0 (Linux; Android 10; Redmi Note 8 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.62 Mobile Safari/537.36"},"clientId":self.client_id,"rulesIds":[105],"authData":{"authProvider":"icok","login":self.login,"password":self.password,"deviceId":{"type":"other","value":self.device_id}}}}
-                    data = getRequests(self.auth, data=post, headers=self.headers)
-            except:
-                pass
-
-            if data.get('error', None):
-                msg = data['error']['data']['userMessage']
-                ADDON.setSetting('pgobox_sesstoken', '')
-                ADDON.setSetting('pgobox_sessexpir', '')
-                ADDON.setSetting('pgobox_sesskey', '')
-                ADDON.setSetting('pgobox_myperm', '')
-                ADDON.setSetting('pgobox_device_id', '')
-                ADDON.setSetting('pgobox_client_id', '')
-
-                self.loginErrorMessage() 
-                return False
-
-            else:
-                myper = []
-                for i in data["result"]["accessGroups"]:
-                    if 'sc:' in i:
-                        myper.append(str(i))
-                    if 'oth:' in i:
-                        myper.append(str(i))
-                    if 'loc:' in i:
-                        myper.append(str(i))
-                    if 'cp_sub_ext:' in i:
-                        myper.append(str(i.replace('cp_sub_ext','sc')))
-                    if 'cp_sub_base:' in i:
-                        myper.append(str(i.replace('cp_sub_base','sc')))
-
-                ADDON.setSetting('pgobox_myperm', str(myper))
-
-                sesja = data['result']['session']
-        
-                self.sesstoken = sesja['id']
-                self.sessexpir = str(sesja['keyExpirationTime'])
-                self.sesskey = sesja['key']
+                    self.sesstoken = sesja['id']
+                    self.sessexpir = str(sesja['keyExpirationTime'])
+                    self.sesskey = sesja['key']
+                    
+                    ADDON.setSetting('pgobox_sesstoken', self.sesstoken)
+                    ADDON.setSetting('pgobox_sessexpir', str(self.sessexpir))
+                    ADDON.setSetting('pgobox_sesskey', self.sesskey)
+                    
+                return True
                 
-                ADDON.setSetting('pgobox_sesstoken', self.sesstoken)
-                ADDON.setSetting('pgobox_sessexpir', str(self.sessexpir))
-                ADDON.setSetting('pgobox_sesskey', self.sesskey)
-                
-            return True
-                
-        #except:
-            #self.log('getChannelList exception: {}'.format(getExceptionString()))
-            #self.connErrorMessage()  
-        #return False
+        except:
+            self.log('getChannelList exception: {}'.format(getExceptionString()))
+            self.connErrorMessage()  
+        return False
 
     def createDatas(self):
         import random
@@ -335,7 +332,7 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
 
             self.sesstoken = ADDON.getSetting('pgobox_sesstoken')
             self.sessexpir = ADDON.getSetting('pgobox_sessexpir')
-
+            
             self.dane = self.sesstoken+'|'+self.sessexpir+'|{0}|{1}'
 
             dane = (self.dane).format('navigation','getTvChannels')
@@ -348,25 +345,38 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
 
             data = self.getRequests(self.navigate, data=postData, headers=self.headers)
 
+            if self.client == 'Polsat Box':
+                url = 'https://polsatboxgo.pl/_next/data/k8U0j5yZZ8y9WAUPn7ktX/channels.json'
+
+                headers = {
+                    'sec-ch-ua': '"Microsoft Edge";v="93", " Not;A Brand";v="99", "Chromium";v="93"',
+                    'Referer': 'https://polsatboxgo.pl/kanaly-tv',
+                    'DNT': '1',
+                    'sec-ch-ua-mobile': '?0',
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36 Edg/93.0.961.38',
+                    'sec-ch-ua-platform': '"Windows"',
+                }
+
+                data = requests.get(url, headers=headers, cookies=sess.cookies).json()
+
             myper=[]
 
             self.myperms = ADDON.getSetting('pgobox_myperm')
             for i in eval(self.myperms):
                 if 'sc:' in i:
-
                     myper.append(str(i))
                 if 'oth:' in i:
                     myper.append(str(i))
-              
-            for i in data['result']['results']:
+
+            for i in data['pageProps']['lists']['results']:
                 item = {}
                 channelperms = i['grantExpression'].split('*')
                 channelperms = [w.replace('+plat:all', '') for w in channelperms]
                 for j in myper:
                     if j in channelperms or i['title']=='Polsat' or i['title']=='TV4':
-                        img = i['thumbnails'][-1]['src']
+                        img = i['thumbnails'][0]['src']
                         cid = i['id']
-                        name = i['title'].upper() + ' PL'
+                        name = i['title'] + ' PL'
                         name = name.replace(' SD', '')
 
                         program = TvCid(cid, name, name, img=img)

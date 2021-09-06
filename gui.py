@@ -2518,10 +2518,10 @@ class mTVGuide(xbmcgui.WindowXML):
             self._moveDown(scrollEvent=True)
         elif action.getId() == ACTION_GESTURE_SWIPE_DOWN and self.getFocusId() != 7900:
             self._moveUp(scrollEvent=True)
-        elif action.getId() == ACTION_GESTURE_SWIPE_RIGHT:
+        elif action.getId() == ACTION_GESTURE_SWIPE_RIGHT and self.getFocusId() != 7900:
             self.viewStartDate -= datetime.timedelta(hours=2)
             self.onRedrawEPG(self.channelIdx, self.viewStartDate)
-        elif action.getId() == ACTION_GESTURE_SWIPE_LEFT:
+        elif action.getId() == ACTION_GESTURE_SWIPE_LEFT and self.getFocusId() != 7900:
             self.viewStartDate += datetime.timedelta(hours=2)
             self.onRedrawEPG(self.channelIdx, self.viewStartDate)
         elif action.getId() == KEY_HOME or (action.getButtonCode() == KEY_HOME2 and KEY_HOME2 != 0) or (action.getId() == KEY_HOME2 and KEY_HOME2 != 0):
