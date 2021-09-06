@@ -5304,7 +5304,7 @@ class mTVGuide(xbmcgui.WindowXML):
             f = xbmcvfs.File(os.path.join(self.profilePath, 'resources', 'skins', addonSkin, x, 'script-tvguide-main.xml'), 'r')
             line = f.read()
 
-            matchAddon = re.findall('<texture colordiffuse="(.*?)">osd/back.png</texture>', str(line))
+            matchAddon = re.findall('<texture colordiffuse="(.*?)">.*osd/back.png</texture>', str(line))
         except:
             pass
 
