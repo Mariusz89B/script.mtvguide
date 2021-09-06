@@ -5331,7 +5331,7 @@ class mTVGuide(xbmcgui.WindowXML):
             f = xbmcvfs.File(os.path.join(self.profilePath, 'resources', 'skins', addonSkin, x, 'script-tvguide-main.xml'), 'r')
             line = f.read()
 
-            matchAddon = re.findall('<texture colordiffuse="(.*?)">tvguide-timebar.png</texture>', str(line))
+            matchAddon = re.findall('<texture colordiffuse="(.*?)">.*tvguide-timebar.png</texture>', str(line))
         except:
             pass
 
@@ -5355,7 +5355,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
         tmp_control = self.getControl(self.C_MAIN_TIMEBAR)
         tmp_background = self.getControl(self.C_MAIN_TIMEBAR_BACK)
-
+        
         if self.timebar:
             try:
                 self.removeControl(self.timebar)
@@ -5369,7 +5369,7 @@ class mTVGuide(xbmcgui.WindowXML):
             except:
                 pass  # happens if we try to remove a control that doesn't exist
             self.timebarBack = None
-        
+            
         if self.getControl(self.C_DYNAMIC_COLORS):
             self.timebarBack = xbmcgui.ControlImage(tmp_background.getX(), tmp_background.getY(), tmp_background.getWidth(), tmp_background.getHeight(), os.path.join(Skin.getSkinPath(), 'media', 'osd', 'back.png'), colorDiffuse=colorTimebarBack)
         else:

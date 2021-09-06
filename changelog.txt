@@ -1,4 +1,4 @@
-﻿wersja 9.5.3 - 2021-09-05
+﻿wersja 9.5.3 - 2021-09-06
 - dodany serwis Polsat GO Box
 - dodano gesty dotykowe
 - naprawiono usuwanie kontrolek, które powodowały awarię Kodi
