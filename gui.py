@@ -2482,18 +2482,17 @@ class mTVGuide(xbmcgui.WindowXML):
                 else:
                     return
 
+        if action.getId() == ACTION_GESTURE_SWIPE_RIGHT:
+            self.viewStartDate -= datetime.timedelta(hours=2)
+            self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+        if action.getId() == ACTION_GESTURE_SWIPE_LEFT:
+            self.viewStartDate += datetime.timedelta(hours=2)
+            self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+
         if action.getId() == ACTION_LEFT and self.getFocusId() != 7900:
             self._left(currentFocus)
         elif action.getId() == ACTION_RIGHT and self.getFocusId() != 7900:
             self._right(currentFocus)
-        elif action.getId() == ACTION_GESTURE_SWIPE_RIGHT and self.getFocusId() != 7900:
-            self.viewStartDate -= datetime.timedelta(hours=2)
-            self.onRedrawEPG(self.channelIdx, self.viewStartDate)
-            return
-        elif action.getId() == ACTION_GESTURE_SWIPE_LEFT and self.getFocusId() != 7900:
-            self.viewStartDate += datetime.timedelta(hours=2)
-            self.onRedrawEPG(self.channelIdx, self.viewStartDate)
-            return
         elif action.getId() == ACTION_UP:
             if self.getFocusId() == 7900:
                 self.focusPoint.y = self.epgView.bottom
@@ -7249,17 +7248,6 @@ class Pla(xbmcgui.WindowXMLDialog):
             debug('Pla ignoring key')
             return
 
-        if (action.getId() == ACTION_SELECT_ITEM or action.getId() == ACTION_TOUCH_TAP or action.getButtonCode() == ACTION_TOUCH_TAP):
-            try:
-                if ADDON.getSetting('VidOSD_on_select') == 'true':
-                    self.showVidOsd()
-                else:
-                    self.program = self.getCurrentProgram()
-                    self.epg.Info(self.program)
-            except:
-                pass
-            return
-
         if action.getId() == KEY_CODEC_INFO:  # przysik O
             xbmc.executebuiltin("Action(CodecInfo)")
 
@@ -7318,6 +7306,17 @@ class Pla(xbmcgui.WindowXMLDialog):
 
         elif (action.getId() == ACTION_DOWN):
             self.showVidOsd(ACTION_DOWN)
+
+        elif (action.getId() == ACTION_SELECT_ITEM or action.getId() == ACTION_TOUCH_TAP or action.getButtonCode() == ACTION_TOUCH_TAP):
+            try:
+                if ADDON.getSetting('VidOSD_on_select') == 'true':
+                    self.showVidOsd()
+                else:
+                    self.program = self.getCurrentProgram()
+                    self.epg.Info(self.program)
+            except:
+                pass
+            return
 
         elif (action.getButtonCode() == KEY_HOME2 and KEY_HOME2 != 0) or (action.getId() == KEY_HOME2 and KEY_HOME2 != 0):
             xbmc.executebuiltin("SendClick(VideoLibrary)")
