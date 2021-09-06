@@ -344,6 +344,7 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
             postData = {"id":1,"jsonrpc":"2.0","method":"getTvChannels","params":{"userAgentData":{"portal":"pbg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":UAIPLA,"authData":{"sessionToken":authdata},"clientId":self.client_id}}
 
             data = self.getRequests(self.navigate, data=postData, headers=self.headers)
+            channels = data['result']['results']
 
             if self.client == 'Polsat Box':
                 url = 'https://polsatboxgo.pl/_next/data/k8U0j5yZZ8y9WAUPn7ktX/channels.json'
@@ -358,6 +359,7 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
                 }
 
                 data = requests.get(url, headers=headers, cookies=sess.cookies).json()
+                channels = data['pageProps']['lists']['results']
 
             myper=[]
 
@@ -366,9 +368,9 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
                 if 'sc:' in i:
                     myper.append(str(i))
                 if 'oth:' in i:
-                    myper.append(str(i))
+                    myper.append(str(i))                
 
-            for i in data['pageProps']['lists']['results']:
+            for i in channels:
                 item = {}
                 channelperms = i['grantExpression'].split('*')
                 channelperms = [w.replace('+plat:all', '') for w in channelperms]
@@ -376,7 +378,7 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
                     if j in channelperms or i['title']=='Polsat' or i['title']=='TV4':
                         img = i['thumbnails'][0]['src']
                         cid = i['id']
-                        name = i['title'] + ' PL'
+                        name = i['title'].upper() + ' PL'
                         name = name.replace(' SD', '')
 
                         program = TvCid(cid, name, name, img=img)
