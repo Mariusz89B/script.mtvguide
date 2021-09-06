@@ -2479,15 +2479,12 @@ class mTVGuide(xbmcgui.WindowXML):
                     pass
                 elif action.getId() == ACTION_GESTURE_SWIPE_DOWN:
                     pass
+                elif action.getId() == ACTION_GESTURE_SWIPE_LEFT:
+                    pass
+                elif action.getId() == ACTION_GESTURE_SWIPE_RIGHT:
+                    pass
                 else:
                     return
-
-        if action.getId() == ACTION_GESTURE_SWIPE_RIGHT:
-            self.viewStartDate -= datetime.timedelta(hours=2)
-            self.onRedrawEPG(self.channelIdx, self.viewStartDate)
-        if action.getId() == ACTION_GESTURE_SWIPE_LEFT:
-            self.viewStartDate += datetime.timedelta(hours=2)
-            self.onRedrawEPG(self.channelIdx, self.viewStartDate)
 
         if action.getId() == ACTION_LEFT and self.getFocusId() != 7900:
             self._left(currentFocus)
@@ -2521,6 +2518,12 @@ class mTVGuide(xbmcgui.WindowXML):
             self._moveDown(scrollEvent=True)
         elif action.getId() == ACTION_GESTURE_SWIPE_DOWN and self.getFocusId() != 7900:
             self._moveUp(scrollEvent=True)
+        elif action.getId() == ACTION_GESTURE_SWIPE_RIGHT:
+            self.viewStartDate -= datetime.timedelta(hours=2)
+            self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+        elif action.getId() == ACTION_GESTURE_SWIPE_LEFT:
+            self.viewStartDate += datetime.timedelta(hours=2)
+            self.onRedrawEPG(self.channelIdx, self.viewStartDate)
         elif action.getId() == KEY_HOME or (action.getButtonCode() == KEY_HOME2 and KEY_HOME2 != 0) or (action.getId() == KEY_HOME2 and KEY_HOME2 != 0):
             self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(timebarAdjust()))
             self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
