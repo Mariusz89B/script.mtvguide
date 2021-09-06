@@ -2510,9 +2510,9 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action.getId() == ACTION_MOUSE_WHEEL_DOWN and self.getFocusId() != 7900:
             self._moveDown(scrollEvent=True)
         elif action.getId() == ACTION_GESTURE_SWIPE_UP and self.getFocusId() != 7900:
-            self._moveUp(scrollEvent=True)
-        elif action.getId() == ACTION_GESTURE_SWIPE_DOWN and self.getFocusId() != 7900:
             self._moveDown(scrollEvent=True)
+        elif action.getId() == ACTION_GESTURE_SWIPE_DOWN and self.getFocusId() != 7900:
+            self._moveUp(scrollEvent=True)
         elif action.getId() == KEY_HOME or (action.getButtonCode() == KEY_HOME2 and KEY_HOME2 != 0) or (action.getId() == KEY_HOME2 and KEY_HOME2 != 0):
             self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(timebarAdjust()))
             self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
@@ -7294,7 +7294,7 @@ class Pla(xbmcgui.WindowXMLDialog):
         elif (action.getId() == ACTION_DOWN):
             self.showVidOsd(ACTION_DOWN)
 
-        elif (action.getId() == ACTION_SELECT_ITEM or action.getId() == ACTION_TOUCH_TAP):
+        elif (action.getId() == ACTION_SELECT_ITEM or action.getId() == ACTION_TOUCH_TAP or action.getButtonCode() == ACTION_TOUCH_TAP):
             try:
                 if ADDON.getSetting('VidOSD_on_select') == 'true':
                     self.showVidOsd()
