@@ -96,6 +96,8 @@ ACTION_STOP = 13
 ACTION_NEXT_ITEM = 14
 ACTION_PREV_ITEM = 15
 
+ACTION_GESTURE_SWIPE_LEFT = 511
+ACTION_GESTURE_SWIPE_RIGHT = 521
 ACTION_GESTURE_SWIPE_UP = 531
 ACTION_GESTURE_SWIPE_DOWN = 541
 ACTION_TOUCH_TAP = 401
@@ -538,7 +540,6 @@ class mTVGuide(xbmcgui.WindowXML):
     C_MAIN_CALC_TIME_EPG = 4232
 
     C_MAIN_SLIDE = 4975
-
     C_MAIN_SLIDE_CLICK = 4976
 
     def __new__(cls):
@@ -2481,9 +2482,9 @@ class mTVGuide(xbmcgui.WindowXML):
                 else:
                     return
 
-        if action.getId() == ACTION_LEFT and self.getFocusId() != 7900:
+        if (action.getId() == ACTION_LEFT or action.getId() == ACTION_GESTURE_SWIPE_RIGHT) and self.getFocusId() != 7900:
             self._left(currentFocus)
-        elif action.getId() == ACTION_RIGHT and self.getFocusId() != 7900:
+        elif (action.getId() == ACTION_RIGHT or action.getId() == ACTION_GESTURE_SWIPE_LEFT) and self.getFocusId() != 7900:
             self._right(currentFocus)
         elif action.getId() == ACTION_UP:
             if self.getFocusId() == 7900:
@@ -6124,6 +6125,7 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
     C_POPUP_FAVOURITES = 4014
     C_POPUP_ADD_CHANNEL = 4015
     C_POPUP_REMOVE_CHANNEL = 4016
+    C_MAIN_SLIDE_CLICK = 4976
 
     def __new__(cls, database, program):
         return super(PopupMenu, cls).__new__(cls, 'script-tvguide-menu.xml', Skin.getSkinBasePath(), Skin.getSkinName(), skin_resolution)
@@ -6199,6 +6201,10 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
                 programTimeRangeControl.setLabel('{} - {}'.format(self.formatTime(self.program.startDate), self.formatTime(self.program.endDate)))
 
     def onAction(self, action):
+        if action.getId() == self.C_MAIN_SLIDE_CLICK:
+            self.close()
+            return
+
         if action.getId() in [ACTION_PARENT_DIR, ACTION_PREVIOUS_MENU, KEY_NAV_BACK]:
             self.close()
             return
@@ -7430,6 +7436,17 @@ class Pla(xbmcgui.WindowXMLDialog):
         elif action == ACTION_PAGE_DOWN:
             self.ChannelChanged = 1
             self._channelDown()
+
+        elif (action.getId() == ACTION_SELECT_ITEM or action.getId() == ACTION_TOUCH_TAP or action.getButtonCode() == ACTION_TOUCH_TAP):
+            try:
+                if ADDON.getSetting('VidOSD_on_select') == 'true':
+                    self.showVidOsd()
+                else:
+                    self.program = self.getCurrentProgram()
+                    self.epg.Info(self.program)
+            except:
+                pass
+            return
 
     def onPlayBackStopped(self):
         debug('Pla onPlayBackStopped')
