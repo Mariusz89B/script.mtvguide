@@ -1,4 +1,4 @@
-﻿wersja 9.5.4 - 2021-09-06
+﻿wersja 9.5.4 - 2021-09-08
 - naprawiono logowanie Polsat GO Box
 - ulepszone gesty dotykowe
 
