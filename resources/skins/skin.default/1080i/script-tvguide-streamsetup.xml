@@ -41,7 +41,7 @@
 			<top>-2000</top>
 			<width>6000</width>
 			<height>6000</height>
-			<texture colordiffuse="C2FFFFFF">osd/black.png</texture>
+			<texture colordiffuse="C2FFFFFF">../../skin.default/media/osd/black.png</texture>
 		</control>
 			
 		<control type="group">
@@ -53,7 +53,7 @@
 				<top>0</top>
 				<right>0</right>
 				<bottom>0</bottom>
-				<texture colordiffuse="dialog_tint">osd/white.png</texture>
+				<texture colordiffuse="dialog_tint">../../skin.default/media/osd/white.png</texture>
 			</control>
 			
 			<control type="image">
@@ -61,7 +61,7 @@
 				<top>0</top>
 				<right>0</right>
 				<height>70</height>
-				<texture colordiffuse="button_focus" border="2">osd/white70.png</texture>
+				<texture colordiffuse="button_focus" border="2">../../skin.default/media/osd/white70.png</texture>
 			</control>
 			
 			<control type="image">
@@ -69,7 +69,7 @@
 				<top>0</top>
 				<right>0</right>
 				<height>70</height>
-				<texture colordiffuse="$VAR[GradientColorVar]" border="2">dialogs/focus-gradient.png</texture>
+				<texture colordiffuse="$VAR[GradientColorVar]" border="2">../../skin.default/media/dialogs/focus-gradient.png</texture>
 				<visible>Skin.HasSetting(EnableGradientColor)</visible>
 			</control>
 			
@@ -95,8 +95,8 @@
 				<height>48</height>
 				<onclick>Dialog.Close(all,true)</onclick>
 				<onclick>FullScreen</onclick>
-				<texturefocus colordiffuse="EEFFFFFF">dialogs/close.png</texturefocus>
-				<texturenofocus colordiffuse="EEFFFFFF">dialogs/mk_logo.png</texturenofocus>
+				<texturefocus colordiffuse="EEFFFFFF">../../skin.default/media/dialogs/close.png</texturefocus>
+				<texturenofocus colordiffuse="EEFFFFFF">../../skin.default/media/dialogs/mk_logo.png</texturenofocus>
 				<animation effect="fade" time="200">VisibleChange</animation>
 				<visible>true</visible>
 			</control>
@@ -119,8 +119,8 @@
 			<onright>1001</onright>
 			<onup></onup>
 			<ondown></ondown>
-			<texturefocus border="40" colordiffuse="button_focus">dialogs/dialogbutton-fo.png</texturefocus>
-			<texturenofocus border="40">dialogs/dialogbutton-nofo.png</texturenofocus>
+			<texturefocus border="40" colordiffuse="button_focus">../../skin.default/media/dialogs/dialogbutton-fo.png</texturefocus>
+			<texturenofocus border="40">../../skin.default/media/dialogs/dialogbutton-nofo.png</texturenofocus>
 			<textcolor>FFF0F0F0</textcolor>
 			<focusedcolor>FFF0F0F0</focusedcolor>
 			<disabledcolor>40FFFFFF</disabledcolor>
@@ -142,8 +142,8 @@
 			<onright>2001</onright>
 			<onup></onup>
 			<ondown></ondown>
-			<texturefocus border="40" colordiffuse="button_focus">dialogs/dialogbutton-fo.png</texturefocus>
-			<texturenofocus border="40">dialogs/dialogbutton-nofo.png</texturenofocus>
+			<texturefocus border="40" colordiffuse="button_focus">../../skin.default/media/dialogs/dialogbutton-fo.png</texturefocus>
+			<texturenofocus border="40">../../skin.default/media/dialogs/dialogbutton-nofo.png</texturenofocus>
 			<textcolor>FFF0F0F0</textcolor>
 			<focusedcolor>FFF0F0F0</focusedcolor>
 			<disabledcolor>40FFFFFF</disabledcolor>
@@ -165,8 +165,8 @@
 			<onright>3002</onright>
 			<onup></onup>
 			<ondown></ondown>
-			<texturefocus border="40" colordiffuse="button_focus">dialogs/dialogbutton-fo.png</texturefocus>
-			<texturenofocus border="40">dialogs/dialogbutton-nofo.png</texturenofocus>
+			<texturefocus border="40" colordiffuse="button_focus">../../skin.default/media/dialogs/dialogbutton-fo.png</texturefocus>
+			<texturenofocus border="40">../../skin.default/media/dialogs/dialogbutton-nofo.png</texturenofocus>
 			<textcolor>FFF0F0F0</textcolor>
 			<focusedcolor>FFF0F0F0</focusedcolor>
 			<disabledcolor>40FFFFFF</disabledcolor>
@@ -177,7 +177,7 @@
 			<top>80</top>
 			<width>1100</width>
 			<height>810</height>
-			<texture border="40">dialogs/dialogbutton-nofo.png</texture>
+			<texture border="40">../../skin.default/media/dialogs/dialogbutton-nofo.png</texture>
 		</control>
 
 		<control type="group" id="1000">
@@ -211,8 +211,8 @@
 				<onclick></onclick>
 				<wrapmultiline>false</wrapmultiline>
 				<align>center</align>
-				<texturefocus border="40" colordiffuse="button_focus">dialogs/dialogbutton-fo.png</texturefocus>
-				<texturenofocus border="40">dialogs/dialogbutton-nofo.png</texturenofocus>
+				<texturefocus border="40" colordiffuse="button_focus">../../skin.default/media/dialogs/dialogbutton-fo.png</texturefocus>
+				<texturenofocus border="40">../../skin.default/media/dialogs/dialogbutton-nofo.png</texturenofocus>
 				<textcolor>FFF0F0F0</textcolor>
 				<focusedcolor>FFF0F0F0</focusedcolor>
 				<disabledcolor>40FFFFFF</disabledcolor>
@@ -232,8 +232,8 @@
 				<onclick></onclick>
 				<wrapmultiline>false</wrapmultiline>
 				<align>center</align>
-				<texturefocus border="40" colordiffuse="button_focus">dialogs/dialogbutton-fo.png</texturefocus>
-				<texturenofocus border="40">dialogs/dialogbutton-nofo.png</texturenofocus>
+				<texturefocus border="40" colordiffuse="button_focus">../../skin.default/media/dialogs/dialogbutton-fo.png</texturefocus>
+				<texturenofocus border="40">../../skin.default/media/dialogs/dialogbutton-nofo.png</texturenofocus>
 				<textcolor>FFF0F0F0</textcolor>
 				<focusedcolor>FFF0F0F0</focusedcolor>
 				<disabledcolor>40FFFFFF</disabledcolor>
@@ -253,8 +253,8 @@
 				<onclick></onclick>
 				<wrapmultiline>false</wrapmultiline>
 				<align>center</align>
-				<texturefocus border="40" colordiffuse="button_focus">dialogs/dialogbutton-fo.png</texturefocus>
-				<texturenofocus border="40">dialogs/dialogbutton-nofo.png</texturenofocus>
+				<texturefocus border="40" colordiffuse="button_focus">../../skin.default/media/dialogs/dialogbutton-fo.png</texturefocus>
+				<texturenofocus border="40">../../skin.default/media/dialogs/dialogbutton-nofo.png</texturenofocus>
 				<textcolor>FFF0F0F0</textcolor>
 				<focusedcolor>FFF0F0F0</focusedcolor>
 				<disabledcolor>40FFFFFF</disabledcolor>
@@ -275,9 +275,9 @@
 				<height>70</height>
 				<align>left</align>
 				<aligny>center</aligny>
-				<texturefocus colordiffuse="button_focus">osd/grey.png</texturefocus>
+				<texturefocus colordiffuse="button_focus">../../skin.default/media/osd/grey.png</texturefocus>
 				<texturenofocus></texturenofocus>
-				<alttexturefocus colordiffuse="button_focus">osd/grey.png</alttexturefocus>
+				<alttexturefocus colordiffuse="button_focus">../../skin.default/media/osd/grey.png</alttexturefocus>
 				<alttexturenofocus></alttexturenofocus>
 				<onup>1002</onup>
 				<onleft>101</onleft>
@@ -313,7 +313,7 @@
 				<top>308</top>
 				<width>52</width>
 				<height>52</height>
-				<texture>buttons/addsourceFO.png</texture>
+				<texture>../../skin.default/media/buttons/addsourceFO.png</texture>
 			</control>
 		</control>
 
@@ -349,7 +349,7 @@
 						<posy>0</posy>
 						<width>1060</width>
 						<height>70</height>
-						<texture colordiffuse="1F000000">osd/grey.png</texture>
+						<texture colordiffuse="1F000000">../../skin.default/media/osd/grey.png</texture>
 					</control>
 					<control type="label">
 						<posx>56</posx>
@@ -369,7 +369,7 @@
 						<posy>0</posy>
 						<width>1060</width>
 						<height>70</height>
-						<texture colordiffuse="button_focus">osd/grey.png</texture>
+						<texture colordiffuse="button_focus">../../skin.default/media/osd/grey.png</texture>
 						<visible>!Control.HasFocus(3002)</visible>
 					</control>
 					<control type="image">
@@ -377,7 +377,7 @@
 						<posy>0</posy>
 						<width>1060</width>
 						<height>70</height>
-						<texture colordiffuse="button_focus">osd/grey.png</texture>
+						<texture colordiffuse="button_focus">../../skin.default/media/osd/grey.png</texture>
 						<visible>Control.HasFocus(3002)</visible>
 					</control>
 					<control type="label">
@@ -416,8 +416,8 @@
 				<onclick></onclick>
 				<wrapmultiline>false</wrapmultiline>
 				<align>center</align>
-				<texturefocus border="40" colordiffuse="button_focus">dialogs/dialogbutton-fo.png</texturefocus>
-				<texturenofocus border="40">dialogs/dialogbutton-nofo.png</texturenofocus>
+				<texturefocus border="40" colordiffuse="button_focus">../../skin.default/media/dialogs/dialogbutton-fo.png</texturefocus>
+				<texturenofocus border="40">../../skin.default/media/dialogs/dialogbutton-nofo.png</texturenofocus>
 				<textcolor>FFF0F0F0</textcolor>
 				<focusedcolor>FFF0F0F0</focusedcolor>
 				<disabledcolor>40FFFFFF</disabledcolor>
@@ -437,8 +437,8 @@
 				<onclick></onclick>
 				<wrapmultiline>false</wrapmultiline>
 				<align>center</align>
-				<texturefocus border="40" colordiffuse="button_focus">dialogs/dialogbutton-fo.png</texturefocus>
-				<texturenofocus border="40">dialogs/dialogbutton-nofo.png</texturenofocus>
+				<texturefocus border="40" colordiffuse="button_focus">../../skin.default/media/dialogs/dialogbutton-fo.png</texturefocus>
+				<texturenofocus border="40">../../skin.default/media/dialogs/dialogbutton-nofo.png</texturenofocus>
 				<textcolor>FFF0F0F0</textcolor>
 				<focusedcolor>FFF0F0F0</focusedcolor>
 				<disabledcolor>40FFFFFF</disabledcolor>
@@ -458,8 +458,8 @@
 				<onclick></onclick>
 				<wrapmultiline>false</wrapmultiline>
 				<align>center</align>
-				<texturefocus border="40" colordiffuse="button_focus">dialogs/dialogbutton-fo.png</texturefocus>
-				<texturenofocus border="40">dialogs/dialogbutton-nofo.png</texturenofocus>
+				<texturefocus border="40" colordiffuse="button_focus">../../skin.default/media/dialogs/dialogbutton-fo.png</texturefocus>
+				<texturenofocus border="40">../../skin.default/media/dialogs/dialogbutton-nofo.png</texturenofocus>
 				<textcolor>FFF0F0F0</textcolor>
 				<focusedcolor>FFF0F0F0</focusedcolor>
 				<disabledcolor>40FFFFFF</disabledcolor>
@@ -507,7 +507,7 @@
 						<posy>0</posy>
 						<width>260</width>
 						<height>260</height>
-						<texture colordiffuse="1F000000">osd/grey.png</texture>
+						<texture colordiffuse="1F000000">../../skin.default/media/osd/grey.png</texture>
 					</control>
 					<control type="image">
 						<posx>0</posx>
@@ -523,7 +523,7 @@
 						<posy>0</posy>
 						<width>260</width>
 						<height>260</height>
-						<texture colordiffuse="00FFFFFF">osd/grey.png</texture>
+						<texture colordiffuse="00FFFFFF">../../skin.default/media/osd/grey.png</texture>
 						<visible>!Control.HasFocus(3001)</visible>
 					</control>
 					<control type="image">
@@ -556,8 +556,8 @@
 				<shadowcolor>22000000</shadowcolor>
 				<focusedcolor>FFF0F0F0</focusedcolor>
 				<label>[CAPITALIZE]plugin.video.xxx[/CAPITALIZE]</label>
-				<texturefocus colordiffuse="" border="40">dialogs/dialogbutton-nofo.png</texturefocus>
-				<texturenofocus colordiffuse="" border="40">dialogs/dialogbutton-nofo.png</texturenofocus>
+				<texturefocus colordiffuse="" border="40">../../skin.default/media/dialogs/dialogbutton-nofo.png</texturefocus>
+				<texturenofocus colordiffuse="" border="40">../../skin.default/media/dialogs/dialogbutton-nofo.png</texturenofocus>
 			</control>
 			
 			<control type="textbox" id="3004">
@@ -592,7 +592,7 @@
 						<posy>0</posy>
 						<width>1060</width>
 						<height>70</height>
-						<texture colordiffuse="1F000000">osd/white.png</texture>
+						<texture colordiffuse="1F000000">../../skin.default/media/osd/white.png</texture>
 					</control>
 					<control type="label">
 						<posx>56</posx>
@@ -612,7 +612,7 @@
 						<posy>0</posy>
 						<width>1060</width>
 						<height>70</height>
-						<texture colordiffuse="button_focus">osd/white.png</texture>
+						<texture colordiffuse="button_focus">../../skin.default/media/osd/white.png</texture>
 						<visible>!Control.HasFocus(3002)</visible>
 					</control>
 					<control type="image">
@@ -620,7 +620,7 @@
 						<posy>0</posy>
 						<width>1060</width>
 						<height>70</height>
-						<texture colordiffuse="button_focus">osd/white.png</texture>
+						<texture colordiffuse="button_focus">../../skin.default/media/osd/white.png</texture>
 						<visible>Control.HasFocus(3002)</visible>
 					</control>
 					<control type="label">
@@ -659,8 +659,8 @@
 				<onclick></onclick>
 				<wrapmultiline>false</wrapmultiline>
 				<align>center</align>
-				<texturefocus border="40" colordiffuse="button_focus">dialogs/dialogbutton-fo.png</texturefocus>
-				<texturenofocus border="40">dialogs/dialogbutton-nofo.png</texturenofocus>
+				<texturefocus border="40" colordiffuse="button_focus">../../skin.default/media/dialogs/dialogbutton-fo.png</texturefocus>
+				<texturenofocus border="40">../../skin.default/media/dialogs/dialogbutton-nofo.png</texturenofocus>
 				<textcolor>FFF0F0F0</textcolor>
 				<focusedcolor>FFF0F0F0</focusedcolor>
 				<disabledcolor>40FFFFFF</disabledcolor>
@@ -680,8 +680,8 @@
 				<onclick></onclick>
 				<wrapmultiline>false</wrapmultiline>
 				<align>center</align>
-				<texturefocus border="40" colordiffuse="button_focus">dialogs/dialogbutton-fo.png</texturefocus>
-				<texturenofocus border="40">dialogs/dialogbutton-nofo.png</texturenofocus>
+				<texturefocus border="40" colordiffuse="button_focus">../../skin.default/media/dialogs/dialogbutton-fo.png</texturefocus>
+				<texturenofocus border="40">../../skin.default/media/dialogs/dialogbutton-nofo.png</texturenofocus>
 				<textcolor>FFF0F0F0</textcolor>
 				<focusedcolor>FFF0F0F0</focusedcolor>
 				<disabledcolor>40FFFFFF</disabledcolor>
@@ -701,8 +701,8 @@
 				<onclick></onclick>
 				<wrapmultiline>false</wrapmultiline>
 				<align>center</align>
-				<texturefocus border="40" colordiffuse="button_focus">dialogs/dialogbutton-fo.png</texturefocus>
-				<texturenofocus border="40">dialogs/dialogbutton-nofo.png</texturenofocus>
+				<texturefocus border="40" colordiffuse="button_focus">../../skin.default/media/dialogs/dialogbutton-fo.png</texturefocus>
+				<texturenofocus border="40">../../skin.default/media/dialogs/dialogbutton-nofo.png</texturenofocus>
 				<textcolor>FFF0F0F0</textcolor>
 				<focusedcolor>FFF0F0F0</focusedcolor>
 				<disabledcolor>40FFFFFF</disabledcolor>

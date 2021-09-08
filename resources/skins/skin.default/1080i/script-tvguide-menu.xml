@@ -24,7 +24,7 @@
 			<posy>0</posy>
 			<width>100%</width>
 			<height>100%</height>
-			<texture colordiffuse="9F000000">osd/white.png</texture>
+			<texture colordiffuse="9F000000">../../skin.default/media/osd/white.png</texture>
 			<animation type="WindowOpen" reversible="false">
 				<effect type="zoom" start="100" end="100" center="960,540" delay="160" tween="back" time="240" />
 				<effect type="fade" delay="160" end="100" time="240" />
@@ -43,10 +43,20 @@
 			<height>48</height>
 			<onclick></onclick>
 			<onclick></onclick>
-			<texturefocus colordiffuse="EEFFFFFF">dialogs/close.png</texturefocus>
-			<texturenofocus colordiffuse="EEFFFFFF">dialogs/mk_logo.png</texturenofocus>
+			<texturefocus colordiffuse="EEFFFFFF">../../skin.default/media/dialogs/close.png</texturefocus>
+			<texturenofocus colordiffuse="EEFFFFFF">../../skin.default/media/dialogs/mk_logo.png</texturenofocus>
 			<animation effect="fade" time="200">VisibleChange</animation>
 			<visible>hidden</visible>
+		</control>
+		
+		<control type="button" id="4976">
+			<description>Background</description>
+			<posx>520</posx>
+			<posy>0</posy>
+			<width>1400</width>
+			<height>100%</height>
+			<texturefocus></texturefocus>
+			<texturenofocus></texturenofocus>
 		</control>
 
 		<control type="button" id="4000">
@@ -124,7 +134,7 @@
 			<posy>0</posy>
 			<width>520</width>
 			<height>100%</height>
-			<texture border="0,0,52,0">dialogs/panel-mediamenu.png</texture>
+			<texture border="0,0,52,0">../../skin.default/media/dialogs/panel-mediamenu.png</texture>
 		</control>
 	
 		<control type="group" id="60520">
@@ -201,7 +211,7 @@
 					<align>center</align>
 					<aligny>center</aligny>
 					<font></font>
-					<texturefocus colordiffuse="button_focus">dialogs/roundbutton-fo.png</texturefocus>
+					<texturefocus colordiffuse="button_focus">../../skin.default/media/dialogs/roundbutton-fo.png</texturefocus>
 					<texturenofocus />
 					<radioposx>26</radioposx>
 					<radioposy>0</radioposy>
@@ -222,7 +232,7 @@
 					<align>center</align>
 					<aligny>center</aligny>
 					<font></font>
-					<texturefocus colordiffuse="button_focus">dialogs/roundbutton-fo.png</texturefocus>
+					<texturefocus colordiffuse="button_focus">../../skin.default/media/dialogs/roundbutton-fo.png</texturefocus>
 					<texturenofocus />
 					<radioposx>26</radioposx>
 					<radioposy>0</radioposy>
@@ -243,17 +253,17 @@
 					<align>center</align>
 					<aligny>center</aligny>
 					<font></font>
-					<texturefocus colordiffuse="button_focus">dialogs/roundbutton-fo.png</texturefocus>
+					<texturefocus colordiffuse="button_focus">../../skin.default/media/dialogs/roundbutton-fo.png</texturefocus>
 					<texturenofocus />
 					<radioposx>26</radioposx>
 					<radioposy>0</radioposy>
 					<radiowidth>40</radiowidth>
 					<radioheight>40</radioheight>
-					<textureradioonfocus>dialogs/info.png</textureradioonfocus>
-					<textureradioonnofocus>dialogs/info.png</textureradioonnofocus>
-					<textureradioofffocus>dialogs/info.png</textureradioofffocus>
-					<textureradiooffnofocus>dialogs/info.png</textureradiooffnofocus>
-					<textureradiooffdisabled colordiffuse="button_focus">dialogs/info.png</textureradiooffdisabled>
+					<textureradioonfocus>../../skin.default/media/dialogs/info.png</textureradioonfocus>
+					<textureradioonnofocus>../../skin.default/media/dialogs/info.png</textureradioonnofocus>
+					<textureradioofffocus>../../skin.default/media/dialogs/info.png</textureradioofffocus>
+					<textureradiooffnofocus>../../skin.default/media/dialogs/info.png</textureradiooffnofocus>
+					<textureradiooffdisabled colordiffuse="button_focus">../../skin.default/media/dialogs/info.png</textureradiooffdisabled>
 					<onclick></onclick>
 					<ondown>4012</ondown>
 				</control>	
@@ -289,7 +299,7 @@
 			<textoffsetx>20</textoffsetx>
 			<label>$ADDON[script.mtvguide 30992]</label>
 			<label2>[B]$ADDON[script.mtvguide 30984][/B]</label2>
-			<texturefocus colordiffuse="button_focus" border="5">osd/grey.png</texturefocus>
+			<texturefocus colordiffuse="button_focus" border="5">../../skin.default/media/osd/grey.png</texturefocus>
 			<texturenofocus></texturenofocus>
 		</control>
 		
@@ -322,7 +332,7 @@
 			<textoffsetx>20</textoffsetx>
 			<label>$ADDON[script.mtvguide 70117]</label>
 			<label2>[B]$ADDON[script.mtvguide 70116][/B]</label2>
-			<texturefocus colordiffuse="button_focus" border="5">osd/grey.png</texturefocus>
+			<texturefocus colordiffuse="button_focus" border="5">../../skin.default/media/osd/grey.png</texturefocus>
 			<texturenofocus></texturenofocus>
 		</control>
 		
@@ -342,7 +352,7 @@
 			<focusedcolor>FFFFFFFF</focusedcolor>
 			<textoffsetx>20</textoffsetx>
 			<label2>[B]$ADDON[script.mtvguide 70125][/B]</label2>
-			<texturefocus colordiffuse="button_focus" border="5">osd/grey.png</texturefocus>
+			<texturefocus colordiffuse="button_focus" border="5">../../skin.default/media/osd/grey.png</texturefocus>
 			<texturenofocus></texturenofocus>
 		</control>
 		
@@ -392,7 +402,7 @@
                     <posy>0</posy>
                     <width>470</width>
                     <height>70</height>
-                    <texture colordiffuse="button_focus" border="5">osd/grey.png</texture>
+                    <texture colordiffuse="button_focus" border="5">../../skin.default/media/osd/grey.png</texture>
                     <visible>Control.HasFocus(7004)</visible>
                 </control>
                 <control type="label">

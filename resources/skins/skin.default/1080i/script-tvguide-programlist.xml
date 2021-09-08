@@ -52,7 +52,7 @@
 			<width>1920</width>
 			<height>1080</height>
 			<aspectratio>scale</aspectratio>
-			<texture colordiffuse="E5181818">osd/white.png</texture>
+			<texture colordiffuse="E5181818">../../skin.default/media/osd/white.png</texture>
 			<aspectratio>scale</aspectratio>
 			<!--<colordiffuse>FF000000</colordiffuse>-->
 			<animation type="Conditional" condition="!Control.IsVisible(5000)">
@@ -66,7 +66,7 @@
 			<posy>0</posy>
 			<width>100%</width>
 			<height>130</height>
-			<texture colordiffuse="">dialogs/infobar.png</texture>
+			<texture colordiffuse="">../../skin.default/media/dialogs/infobar.png</texture>
 			<!--<animation type="WindowClose">
 				<effect type="fade" start="100" end="0" time="300" />
 			</animation>-->	
@@ -78,7 +78,7 @@
 			<posy>965</posy>
 			<width>100%</width>
 			<height>115</height>
-			<texture flipy="true" colordiffuse="">dialogs/infobar.png</texture>
+			<texture flipy="true" colordiffuse="">../../skin.default/media/dialogs/infobar.png</texture>
 			<!--<animation type="WindowClose">
 				<effect type="fade" start="100" end="0" time="300" />
 			</animation>-->
@@ -90,7 +90,7 @@
 			<left>0</left>
 			<width>1920</width>
 			<height>55</height>
-			<texture colordiffuse="E6FFFFFF">dialogs/dialog-bg-nobo.png</texture>
+			<texture colordiffuse="E6FFFFFF">../../skin.default/media/dialogs/dialog-bg-nobo.png</texture>
 			<animation type="WindowOpen" reversible="false">
 				<effect type="zoom" start="80" end="100" center="960,540" delay="160" tween="back" time="240" />
 				<effect type="fade" delay="160" end="100" time="240" />
@@ -107,7 +107,7 @@
 			<left>0</left>
 			<width>1920</width>
 			<height>1080</height>
-			<texture colordiffuse="E6FFFFFF">dialogs/dialog-bg-nobo.png</texture>
+			<texture colordiffuse="E6FFFFFF">../../skin.default/media/dialogs/dialog-bg-nobo.png</texture>
 			<animation type="WindowOpen" reversible="false">
 				<effect type="zoom" start="80" end="100" center="960,540" delay="160" tween="back" time="240" />
 				<effect type="fade" delay="160" end="100" time="240" />
@@ -126,7 +126,7 @@
 			<aspectratio>keep</aspectratio>
 			<width>192</width>
 			<height>36</height>
-			<texture>dialogs/logo-text.png</texture>
+			<texture>../../skin.default/media/dialogs/logo-text.png</texture>
 			<animation effect="slide" end="0,-112" time="300" tween="sine" easing="inout" condition="Window.IsActive(DialogInfo.xml)">conditional</animation>	
 			<visible>!Control.IsVisible(5000)</visible>
 		</control>
@@ -137,7 +137,7 @@
 			<aspectratio>keep</aspectratio>
 			<width>56</width>
 			<height>56</height>
-			<texture colordiffuse="button_focus">dialogs/mk_logo.png</texture>
+			<texture colordiffuse="button_focus">../../skin.default/media/dialogs/mk_logo.png</texture>
 			<animation effect="slide" end="0,-112" time="300" tween="sine" easing="inout" condition="Window.IsActive(DialogInfo.xml)">conditional</animation>	
 			<visible>!Control.IsVisible(5000)</visible>
 		</control>
@@ -260,7 +260,7 @@
                     <width>1920</width>
                     <height>3</height>
                     <colordiffuse>88FFFFFF</colordiffuse>
-                    <texture colordiffuse="AAAAAAAA" border="3">dialogs/separator-grey.png</texture>
+                    <texture colordiffuse="AAAAAAAA" border="3">../../skin.default/media/dialogs/separator-grey.png</texture>
                 </control>
                 <control type="list" id="1000">
                     <viewtype label="19030">list</viewtype>

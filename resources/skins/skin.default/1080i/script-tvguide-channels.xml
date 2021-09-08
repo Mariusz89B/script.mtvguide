@@ -37,7 +37,7 @@
 			<top>-2000</top>
 			<width>6000</width>
 			<height>6000</height>
-			<texture colordiffuse="C2FFFFFF">osd/black.png</texture>
+			<texture colordiffuse="C2FFFFFF">../../skin.default/media/osd/black.png</texture>
 		</control>
 			
 		<control type="group">
@@ -49,7 +49,7 @@
 				<top>0</top>
 				<right>0</right>
 				<bottom>0</bottom>
-				<texture colordiffuse="dialog_tint">osd/white.png</texture>
+				<texture colordiffuse="dialog_tint">../../skin.default/media/osd/white.png</texture>
 			</control>
 			
 			<control type="image">
@@ -57,7 +57,7 @@
 				<top>0</top>
 				<right>0</right>
 				<height>70</height>
-				<texture colordiffuse="button_focus" border="2">osd/white70.png</texture>
+				<texture colordiffuse="button_focus" border="2">../../skin.default/media/osd/white70.png</texture>
 			</control>
 			
 			<control type="image">
@@ -65,7 +65,7 @@
 				<top>0</top>
 				<right>0</right>
 				<height>70</height>
-				<texture colordiffuse="$VAR[GradientColorVar]" border="2">dialogs/focus-gradient.png</texture>
+				<texture colordiffuse="$VAR[GradientColorVar]" border="2">../../skin.default/media/dialogs/focus-gradient.png</texture>
 				<visible>Skin.HasSetting(EnableGradientColor)</visible>
 			</control>
 			
@@ -90,8 +90,8 @@
 				<height>48</height>
 				<onclick>Dialog.Close(all,true)</onclick>
 				<onclick>FullScreen</onclick>
-				<texturefocus colordiffuse="EEFFFFFF">dialogs/close.png</texturefocus>
-				<texturenofocus colordiffuse="EEFFFFFF">dialogs/mk_logo.png</texturenofocus>
+				<texturefocus colordiffuse="EEFFFFFF">../../skin.default/media/dialogs/close.png</texturefocus>
+				<texturenofocus colordiffuse="EEFFFFFF">../../skin.default/media/dialogs/mk_logo.png</texturenofocus>
 				<animation effect="fade" time="200">VisibleChange</animation>
 				<visible>true</visible>
 			</control>
@@ -110,8 +110,8 @@
 				<onclick></onclick>
 				<wrapmultiline>false</wrapmultiline>
 				<align>center</align>
-				<texturefocus border="40" colordiffuse="button_focus">dialogs/dialogbutton-fo.png</texturefocus>
-				<texturenofocus border="40">dialogs/dialogbutton-nofo.png</texturenofocus>
+				<texturefocus border="40" colordiffuse="button_focus">../../skin.default/media/dialogs/dialogbutton-fo.png</texturefocus>
+				<texturenofocus border="40">../../skin.default/media/dialogs/dialogbutton-nofo.png</texturenofocus>
 				<textcolor>FFF0F0F0</textcolor>
 				<focusedcolor>FFF0F0F0</focusedcolor>
 				<disabledcolor>40FFFFFF</disabledcolor>
@@ -133,8 +133,8 @@
 				<onclick></onclick>
 				<wrapmultiline>false</wrapmultiline>
 				<align>center</align>
-				<texturefocus border="40" colordiffuse="button_focus">dialogs/dialogbutton-fo.png</texturefocus>
-				<texturenofocus border="40">dialogs/dialogbutton-nofo.png</texturenofocus>
+				<texturefocus border="40" colordiffuse="button_focus">../../skin.default/media/dialogs/dialogbutton-fo.png</texturefocus>
+				<texturenofocus border="40">../../skin.default/media/dialogs/dialogbutton-nofo.png</texturenofocus>
 				<textcolor>FFF0F0F0</textcolor>
 				<focusedcolor>FFF0F0F0</focusedcolor>
 				<disabledcolor>40FFFFFF</disabledcolor>
@@ -162,8 +162,8 @@
 			<onright>6000</onright>
 			<onup></onup>
 			<ondown></ondown>
-			<texturefocus border="40" colordiffuse="button_focus">dialogs/dialogbutton-fo.png</texturefocus>
-			<texturenofocus border="40">dialogs/dialogbutton-nofo.png</texturenofocus>
+			<texturefocus border="40" colordiffuse="button_focus">../../skin.default/media/dialogs/dialogbutton-fo.png</texturefocus>
+			<texturenofocus border="40">../../skin.default/media/dialogs/dialogbutton-nofo.png</texturenofocus>
 			<textcolor>FFF0F0F0</textcolor>
 			<focusedcolor>FFF0F0F0</focusedcolor>
 			<disabledcolor>40FFFFFF</disabledcolor>
@@ -174,7 +174,7 @@
 			<top>80</top>
 			<width>1100</width>
 			<height>810</height>
-			<texture border="40">dialogs/dialogbutton-nofo.png</texture>
+			<texture border="40">../../skin.default/media/dialogs/dialogbutton-nofo.png</texture>
 		</control>
 		
 		<control type="textbox">
@@ -235,7 +235,7 @@
 					<posy>0</posy>
 					<width>1060</width>
 					<height>70</height>
-					<texture colordiffuse="button_focus">osd/grey.png</texture>
+					<texture colordiffuse="button_focus">../../skin.default/media/osd/grey.png</texture>
 					<visible>Control.IsVisible(6000)</visible>
 				</control>
 				<control type="label">

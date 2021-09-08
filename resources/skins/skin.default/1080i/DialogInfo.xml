@@ -145,7 +145,7 @@
 				<top>0</top>
 				<width>461</width>
 				<height>461</height>
-				<texture>dialogs/mk_defaulttvshows.png</texture>
+				<texture>../../skin.default/media/dialogs/mk_defaulttvshows.png</texture>
 				<aspectratio align="center" aligny="center">keep</aspectratio>
 			</control>
 		</control>
@@ -183,8 +183,8 @@
 					<onclick>SetProperty(TextViewer_Header,$ADDON[script.mtvguide 68000],home)</onclick>
 					<onclick>SetProperty(TextViewer_Text,$ESCINFO[Control.getLabel(4922)],home)</onclick>
 					<onclick>ActivateWindow(1102)</onclick>
-					<texturefocus colordiffuse="button_focus" border="21">dialogs/button-fo.png</texturefocus>
-					<texturenofocus border="21">dialogs/dialog-bg.png</texturenofocus>
+					<texturefocus colordiffuse="button_focus" border="21">../../skin.default/media/dialogs/button-fo.png</texturefocus>
+					<texturenofocus border="21">../../skin.default/media/dialogs/dialog-bg.png</texturenofocus>
 				</control>
 				
 				<control type="label" id="4960">
@@ -228,8 +228,8 @@
 				<height>142</height>
 				<align>center</align>
 				<aligny>top</aligny>
-				<texturefocus border="21" colordiffuse="button_focus">dialogs/button-fo.png</texturefocus>
-				<texturenofocus border="21">dialogs/button-nofo.png</texturenofocus>
+				<texturefocus border="21" colordiffuse="button_focus">../../skin.default/media/dialogs/button-fo.png</texturefocus>
+				<texturenofocus border="21">../../skin.default/media/dialogs/button-nofo.png</texturenofocus>
 				<textoffsetx>35</textoffsetx>
 				<textoffsety>78</textoffsety>
 				<radioposx>108</radioposx>
@@ -256,8 +256,8 @@
 				<height>142</height>
 				<align>center</align>
 				<aligny>top</aligny>
-				<texturefocus border="21" colordiffuse="button_focus">dialogs/button-fo.png</texturefocus>
-				<texturenofocus border="21">dialogs/button-nofo.png</texturenofocus>
+				<texturefocus border="21" colordiffuse="button_focus">../../skin.default/media/dialogs/button-fo.png</texturefocus>
+				<texturenofocus border="21">../../skin.default/media/dialogs/button-nofo.png</texturenofocus>
 				<textoffsetx>35</textoffsetx>
 				<textoffsety>78</textoffsety>
 				<radioposx>108</radioposx>
@@ -285,8 +285,8 @@
 				<height>142</height>
 				<align>center</align>
 				<aligny>top</aligny>
-				<texturefocus border="21" colordiffuse="button_focus">dialogs/button-fo.png</texturefocus>
-				<texturenofocus border="21">dialogs/button-nofo.png</texturenofocus>
+				<texturefocus border="21" colordiffuse="button_focus">../../skin.default/media/dialogs/button-fo.png</texturefocus>
+				<texturenofocus border="21">../../skin.default/media/dialogs/button-nofo.png</texturenofocus>
 				<textoffsetx>35</textoffsetx>
 				<textoffsety>78</textoffsety>
 				<radioposx>108</radioposx>
@@ -313,8 +313,8 @@
 				<height>142</height>
 				<align>center</align>
 				<aligny>top</aligny>
-				<texturefocus border="21" colordiffuse="button_focus">dialogs/button-fo.png</texturefocus>
-				<texturenofocus border="21">dialogs/button-nofo.png</texturenofocus>
+				<texturefocus border="21" colordiffuse="button_focus">../../skin.default/media/dialogs/button-fo.png</texturefocus>
+				<texturenofocus border="21">../../skin.default/media/dialogs/button-nofo.png</texturenofocus>
 				<textoffsetx>35</textoffsetx>
 				<textoffsety>78</textoffsety>
 				<radioposx>108</radioposx>
@@ -341,8 +341,8 @@
 				<height>142</height>
 				<align>center</align>
 				<aligny>top</aligny>
-				<texturefocus border="21" colordiffuse="button_focus">dialogs/button-fo.png</texturefocus>
-				<texturenofocus border="21">dialogs/button-nofo.png</texturenofocus>
+				<texturefocus border="21" colordiffuse="button_focus">../../skin.default/media/dialogs/button-fo.png</texturefocus>
+				<texturenofocus border="21">../../skin.default/media/dialogs/button-nofo.png</texturenofocus>
 				<textoffsetx>35</textoffsetx>
 				<textoffsety>78</textoffsety>
 				<radioposx>108</radioposx>
@@ -369,8 +369,8 @@
 				<height>142</height>
 				<align>center</align>
 				<aligny>top</aligny>
-				<texturefocus border="21" colordiffuse="button_focus">dialogs/button-fo.png</texturefocus>
-				<texturenofocus border="21">dialogs/button-nofo.png</texturenofocus>
+				<texturefocus border="21" colordiffuse="button_focus">../../skin.default/media/dialogs/button-fo.png</texturefocus>
+				<texturenofocus border="21">../../skin.default/media/dialogs/button-nofo.png</texturenofocus>
 				<textoffsetx>35</textoffsetx>
 				<textoffsety>78</textoffsety>
 				<radioposx>108</radioposx>
@@ -398,8 +398,8 @@
 				<height>142</height>
 				<align>center</align>
 				<aligny>top</aligny>
-				<texturefocus border="21" colordiffuse="button_focus">dialogs/button-fo.png</texturefocus>
-				<texturenofocus border="21">dialogs/button-nofo.png</texturenofocus>
+				<texturefocus border="21" colordiffuse="button_focus">../../skin.default/media/dialogs/button-fo.png</texturefocus>
+				<texturenofocus border="21">../../skin.default/media/dialogs/button-nofo.png</texturenofocus>
 				<textoffsetx>35</textoffsetx>
 				<textoffsety>78</textoffsety>
 				<radioposx>108</radioposx>
@@ -498,7 +498,7 @@
 					<width>176</width>
 					<height>50</height>
 					<top>0</top>
-					<texture>dialogs/mk_time.png</texture>
+					<texture>../../skin.default/media/dialogs/mk_time.png</texture>
 				</control>
 				
 				<control type="label" id="4232">

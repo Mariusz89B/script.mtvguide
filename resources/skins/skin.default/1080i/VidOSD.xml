@@ -16,8 +16,8 @@
 			<font></font>
 			<onclick>Dialog.Close(VideoOSD,true)</onclick>
 			<onclick>FullScreen</onclick>
-			<texturefocus colordiffuse="EEFFFFFF">dialogs/close.png</texturefocus>
-			<texturenofocus colordiffuse="EEFFFFFF">dialogs/close.png</texturenofocus>
+			<texturefocus colordiffuse="EEFFFFFF">../../skin.default/media/dialogs/close.png</texturefocus>
+			<texturenofocus colordiffuse="EEFFFFFF">../../skin.default/media/dialogs/close.png</texturenofocus>
 			<onleft>1000</onleft>
 			<onright>1000</onright>
 			<onup>100</onup>
@@ -109,14 +109,14 @@
 			<posy>0</posy>
 			<width>100%</width>
 			<height>170</height>
-			<texture>dialogs/osdfade.png</texture>
+			<texture>../../skin.default/media/dialogs/osdfade.png</texture>
 			</control>
 		<control type="image">
 			<posy>890</posy>
 			<left>-40</left>
 			<width>120%</width>
 			<height>200</height>
-			<texture flipy="true">dialogs/osdfade.png</texture>
+			<texture flipy="true">../../skin.default/media/dialogs/osdfade.png</texture>
 		</control>
 			
 		<!-- !LiveTV -->
@@ -131,7 +131,7 @@
 			<posx>0</posx>
 			<width>1920</width>
 			<height>240</height>
-			<texture>dialogs/dialog-bg-nobo.png</texture>
+			<texture>../../skin.default/media/dialogs/dialog-bg-nobo.png</texture>
 		</control>
 		
 			<!-- Now / Next Button -->
@@ -141,8 +141,8 @@
 			<width>258</width>
 			<height>60</height>
 			<font>font12</font>
-			<texturefocus colordiffuse="button_focus">osd/white.png</texturefocus>
-			<texturenofocus colordiffuse="">dialogs/dialog-bg-nobo.png</texturenofocus>
+			<texturefocus colordiffuse="button_focus">../../skin.default/media/osd/white.png</texturefocus>
+			<texturenofocus colordiffuse="">../../skin.default/media/dialogs/dialog-bg-nobo.png</texturenofocus>
 			<visible>!Control.IsVisible(118) + Control.IsVisible(107) | Control.IsVisible(108)</visible>
 		</control>
 		
@@ -152,8 +152,8 @@
 			<width>258</width>
 			<height>60</height>
 			<font>font12</font>
-			<texturefocus colordiffuse="button_focus">osd/white.png</texturefocus>
-			<texturenofocus colordiffuse="">dialogs/dialog-bg-nobo.png</texturenofocus>
+			<texturefocus colordiffuse="button_focus">../../skin.default/media/osd/white.png</texturefocus>
+			<texturenofocus colordiffuse="">../../skin.default/media/dialogs/dialog-bg-nobo.png</texturenofocus>
 		</control>
 		
 		<control type="button" id="118">
@@ -170,8 +170,8 @@
 			<align>center</align>
 			<aligny>center</aligny>
 			<label>$ADDON[script.mtvguide 68000]</label>
-			<texturefocus colordiffuse="button_focus">osd/white.png</texturefocus>
-			<texturenofocus colordiffuse="">dialogs/dialog-bg-nobo.png</texturenofocus>
+			<texturefocus colordiffuse="button_focus">../../skin.default/media/osd/white.png</texturefocus>
+			<texturenofocus colordiffuse="">../../skin.default/media/dialogs/dialog-bg-nobo.png</texturenofocus>
 			<visible>!Control.IsVisible(107) + !Control.IsVisible(108)</visible>
 		</control>
 		
@@ -506,8 +506,8 @@
 			<posy>968</posy>
 			<width>1920</width>
 			<height>8</height>
-			<texturebg border="3" colordiffuse="60FFFFFF">osd/white.png</texturebg>
-			<midtexture colordiffuse="button_focus">osd/white70.png</midtexture>
+			<texturebg border="3" colordiffuse="60FFFFFF">../../skin.default/media/osd/white.png</texturebg>
+			<midtexture colordiffuse="button_focus">../../skin.default/media/osd/white70.png</midtexture>
 			<lefttexture></lefttexture>
 			<righttexture></righttexture>
 			<overlaytexture></overlaytexture>
@@ -518,7 +518,7 @@
 			<posy>960</posy>
 			<width>1920</width>
 			<height>8</height>
-			<texture border="3" colordiffuse="60FFFFFF">osd/white50.png</texture>
+			<texture border="3" colordiffuse="60FFFFFF">../../skin.default/media/osd/white50.png</texture>
 		</control>
 		
 		<control type="slider" id="4998">
@@ -528,9 +528,9 @@
 			<height>26</height>
 			<controloffsetx>75</controloffsetx>
 			<controloffsety>0</controloffsety>
-			<texturesliderbar colordiffuse="00FFFFFF">osd/nub_bar.png</texturesliderbar>
-			<textureslidernib colordiffuse="button_focus">osd/nub_bar.png</textureslidernib>
-			<textureslidernibfocus colordiffuse="FFFFFFFF">osd/nub_bar.png</textureslidernibfocus>
+			<texturesliderbar colordiffuse="00FFFFFF">../../skin.default/media/osd/nub_bar.png</texturesliderbar>
+			<textureslidernib colordiffuse="button_focus">../../skin.default/media/osd/nub_bar.png</textureslidernib>
+			<textureslidernibfocus colordiffuse="FFFFFFFF">../../skin.default/media/osd/nub_bar.png</textureslidernibfocus>
 			<orientation>horizontal</orientation>
 		</control>
 		
@@ -581,11 +581,11 @@
 			<top>990</top>
 			<width>76</width>
 			<height>76</height>
-			<textureradioonfocus colordiffuse="FFF0F0F0">buttons/stopFO.png</textureradioonfocus>
-			<textureradioonnofocus>buttons/stopFO.png</textureradioonnofocus>
-			<textureradioofffocus colordiffuse="FFF0F0F0">buttons/stopFO.png</textureradioofffocus>
-			<textureradiooffnofocus>buttons/stopFO.png</textureradiooffnofocus>
-			<texturefocus colordiffuse="button_focus">buttons/buttonFO.png</texturefocus>
+			<textureradioonfocus colordiffuse="FFF0F0F0">../../skin.default/media/buttons/stopFO.png</textureradioonfocus>
+			<textureradioonnofocus>../../skin.default/media/buttons/stopFO.png</textureradioonnofocus>
+			<textureradioofffocus colordiffuse="FFF0F0F0">../../skin.default/media/buttons/stopFO.png</textureradioofffocus>
+			<textureradiooffnofocus>../../skin.default/media/buttons/stopFO.png</textureradiooffnofocus>
+			<texturefocus colordiffuse="button_focus">../../skin.default/media/buttons/buttonFO.png</texturefocus>
 			<font></font>
 			<texturenofocus></texturenofocus>
 			<radioposx>1</radioposx>
@@ -602,11 +602,11 @@
 			<top>990</top>
 			<width>76</width>
 			<height>76</height>
-			<textureradioonfocus colordiffuse="FFF0F0F0">buttons/infoFO.png</textureradioonfocus>
-			<textureradioonnofocus>buttons/infoFO.png</textureradioonnofocus>
-			<textureradioofffocus colordiffuse="FFF0F0F0">buttons/infoFO.png</textureradioofffocus>
-			<textureradiooffnofocus>buttons/infoFO.png</textureradiooffnofocus>
-			<texturefocus colordiffuse="button_focus">buttons/buttonFO.png</texturefocus>
+			<textureradioonfocus colordiffuse="FFF0F0F0">../../skin.default/media/buttons/infoFO.png</textureradioonfocus>
+			<textureradioonnofocus>../../skin.default/media/buttons/infoFO.png</textureradioonnofocus>
+			<textureradioofffocus colordiffuse="FFF0F0F0">../../skin.default/media/buttons/infoFO.png</textureradioofffocus>
+			<textureradiooffnofocus>../../skin.default/media/buttons/infoFO.png</textureradiooffnofocus>
+			<texturefocus colordiffuse="button_focus">../../skin.default/media/buttons/buttonFO.png</texturefocus>
 			<font></font>
 			<texturenofocus></texturenofocus>
 			<radioposx>1</radioposx>
@@ -621,11 +621,11 @@
 			<top>990</top>
 			<width>76</width>
 			<height>76</height>
-			<textureradioonfocus colordiffuse="FFF0F0F0">buttons/channelFO.png</textureradioonfocus>
-			<textureradioonnofocus>buttons/channelFO.png</textureradioonnofocus>
-			<textureradioofffocus colordiffuse="FFF0F0F0">buttons/channelFO.png</textureradioofffocus>
-			<textureradiooffnofocus>buttons/channelFO.png</textureradiooffnofocus>
-			<texturefocus colordiffuse="button_focus">buttons/buttonFO.png</texturefocus>
+			<textureradioonfocus colordiffuse="FFF0F0F0">../../skin.default/media/buttons/channelFO.png</textureradioonfocus>
+			<textureradioonnofocus>../../skin.default/media/buttons/channelFO.png</textureradioonnofocus>
+			<textureradioofffocus colordiffuse="FFF0F0F0">../../skin.default/media/buttons/channelFO.png</textureradioofffocus>
+			<textureradiooffnofocus>../../skin.default/media/buttons/channelFO.png</textureradiooffnofocus>
+			<texturefocus colordiffuse="button_focus">../../skin.default/media/buttons/buttonFO.png</texturefocus>
 			<font></font>
 			<texturenofocus></texturenofocus>
 			<radioposx>1</radioposx>
@@ -640,11 +640,11 @@
 			<top>990</top>
 			<width>76</width>
 			<height>76</height>
-			<textureradioonfocus flipy="true" colordiffuse="FFF0F0F0">buttons/channelFO.png</textureradioonfocus>
-			<textureradioonnofocus flipy="true">buttons/channelFO.png</textureradioonnofocus>
-			<textureradioofffocus flipy="true" colordiffuse="FFF0F0F0">buttons/channelFO.png</textureradioofffocus>
-			<textureradiooffnofocus flipy="true">buttons/channelFO.png</textureradiooffnofocus>
-			<texturefocus colordiffuse="button_focus">buttons/buttonFO.png</texturefocus>
+			<textureradioonfocus flipy="true" colordiffuse="FFF0F0F0">../../skin.default/media/buttons/channelFO.png</textureradioonfocus>
+			<textureradioonnofocus flipy="true">../../skin.default/media/buttons/channelFO.png</textureradioonnofocus>
+			<textureradioofffocus flipy="true" colordiffuse="FFF0F0F0">../../skin.default/media/buttons/channelFO.png</textureradioofffocus>
+			<textureradiooffnofocus flipy="true">../../skin.default/media/buttons/channelFO.png</textureradiooffnofocus>
+			<texturefocus colordiffuse="button_focus">../../skin.default/media/buttons/buttonFO.png</texturefocus>
 			<font></font>
 			<texturenofocus></texturenofocus>
 			<radioposx>1</radioposx>
@@ -659,11 +659,11 @@
 			<top>990</top>
 			<width>76</width>
 			<height>76</height>
-			<textureradioonfocus colordiffuse="FFF0F0F0">buttons/nextFO.png</textureradioonfocus>
-			<textureradioonnofocus>buttons/nextFO.png</textureradioonnofocus>
-			<textureradioofffocus colordiffuse="FFF0F0F0">buttons/nextFO.png</textureradioofffocus>
-			<textureradiooffnofocus>buttons/nextFO.png</textureradiooffnofocus>
-			<texturefocus colordiffuse="button_focus">buttons/buttonFO.png</texturefocus>
+			<textureradioonfocus colordiffuse="FFF0F0F0">../../skin.default/media/buttons/nextFO.png</textureradioonfocus>
+			<textureradioonnofocus>../../skin.default/media/buttons/nextFO.png</textureradioonnofocus>
+			<textureradioofffocus colordiffuse="FFF0F0F0">../../skin.default/media/buttons/nextFO.png</textureradioofffocus>
+			<textureradiooffnofocus>../../skin.default/media/buttons/nextFO.png</textureradiooffnofocus>
+			<texturefocus colordiffuse="button_focus">../../skin.default/media/buttons/buttonFO.png</texturefocus>
 			<font></font>
 			<texturenofocus></texturenofocus>
 			<radioposx>1</radioposx>
@@ -678,11 +678,11 @@
 			<top>990</top>
 			<width>76</width>
 			<height>76</height>
-			<textureradioonfocus colordiffuse="FFF0F0F0">buttons/setupFO.png</textureradioonfocus>
-			<textureradioonnofocus>buttons/setupFO.png</textureradioonnofocus>
-			<textureradioofffocus colordiffuse="FFF0F0F0">buttons/setupFO.png</textureradioofffocus>
-			<textureradiooffnofocus>buttons/setupFO.png</textureradiooffnofocus>
-			<texturefocus colordiffuse="button_focus">buttons/buttonFO.png</texturefocus>
+			<textureradioonfocus colordiffuse="FFF0F0F0">../../skin.default/media/buttons/setupFO.png</textureradioonfocus>
+			<textureradioonnofocus>../../skin.default/media/buttons/setupFO.png</textureradioonnofocus>
+			<textureradioofffocus colordiffuse="FFF0F0F0">../../skin.default/media/buttons/setupFO.png</textureradioofffocus>
+			<textureradiooffnofocus>../../skin.default/media/buttons/setupFO.png</textureradiooffnofocus>
+			<texturefocus colordiffuse="button_focus">../../skin.default/media/buttons/buttonFO.png</texturefocus>
 			<font></font>
 			<texturenofocus></texturenofocus>
 			<radioposx>1</radioposx>
@@ -697,11 +697,11 @@
 			<top>990</top>
 			<width>76</width>
 			<height>76</height>
-			<textureradioonfocus colordiffuse="FFF0F0F0">buttons/scheduleFO.png</textureradioonfocus>
-			<textureradioonnofocus>buttons/scheduleFO.png</textureradioonnofocus>
-			<textureradioofffocus colordiffuse="FFF0F0F0">buttons/scheduleFO.png</textureradioofffocus>
-			<textureradiooffnofocus>buttons/scheduleFO.png</textureradiooffnofocus>
-			<texturefocus colordiffuse="button_focus">buttons/buttonFO.png</texturefocus>
+			<textureradioonfocus colordiffuse="FFF0F0F0">../../skin.default/media/buttons/scheduleFO.png</textureradioonfocus>
+			<textureradioonnofocus>../../skin.default/media/buttons/scheduleFO.png</textureradioonnofocus>
+			<textureradioofffocus colordiffuse="FFF0F0F0">../../skin.default/media/buttons/scheduleFO.png</textureradioofffocus>
+			<textureradiooffnofocus>../../skin.default/media/buttons/scheduleFO.png</textureradiooffnofocus>
+			<texturefocus colordiffuse="button_focus">../../skin.default/media/buttons/buttonFO.png</texturefocus>
 			<font></font>
 			<texturenofocus></texturenofocus>
 			<radioposx>1</radioposx>
@@ -716,11 +716,11 @@
 			<top>990</top>
 			<width>76</width>
 			<height>76</height>
-			<textureradioonfocus colordiffuse="FFF0F0F0">buttons/remindFO.png</textureradioonfocus>
-			<textureradioonnofocus>buttons/remindFO.png</textureradioonnofocus>
-			<textureradioofffocus colordiffuse="FFF0F0F0">buttons/remindFO.png</textureradioofffocus>
-			<textureradiooffnofocus>buttons/remindFO.png</textureradiooffnofocus>
-			<texturefocus colordiffuse="button_focus">buttons/buttonFO.png</texturefocus>
+			<textureradioonfocus colordiffuse="FFF0F0F0">../../skin.default/media/buttons/remindFO.png</textureradioonfocus>
+			<textureradioonnofocus>../../skin.default/media/buttons/remindFO.png</textureradioonnofocus>
+			<textureradioofffocus colordiffuse="FFF0F0F0">../../skin.default/media/buttons/remindFO.png</textureradioofffocus>
+			<textureradiooffnofocus>../../skin.default/media/buttons/remindFO.png</textureradiooffnofocus>
+			<texturefocus colordiffuse="button_focus">../../skin.default/media/buttons/buttonFO.png</texturefocus>
 			<font></font>
 			<texturenofocus></texturenofocus>
 			<radioposx>1</radioposx>
@@ -735,11 +735,11 @@
 			<top>990</top>
 			<width>76</width>
 			<height>76</height>
-			<textureradioonfocus colordiffuse="FFF0F0F0">buttons/subsFO.png</textureradioonfocus>
-			<textureradioonnofocus>buttons/subsFO.png</textureradioonnofocus>
-			<textureradioofffocus colordiffuse="FFF0F0F0">buttons/subsFO.png</textureradioofffocus>
-			<textureradiooffnofocus>buttons/subsFO.png</textureradiooffnofocus>
-			<texturefocus colordiffuse="button_focus">buttons/buttonFO.png</texturefocus>
+			<textureradioonfocus colordiffuse="FFF0F0F0">../../skin.default/media/buttons/subsFO.png</textureradioonfocus>
+			<textureradioonnofocus>../../skin.default/media/buttons/subsFO.png</textureradioonnofocus>
+			<textureradioofffocus colordiffuse="FFF0F0F0">../../skin.default/media/buttons/subsFO.png</textureradioofffocus>
+			<textureradiooffnofocus>../../skin.default/media/buttons/subsFO.png</textureradiooffnofocus>
+			<texturefocus colordiffuse="button_focus">../../skin.default/media/buttons/buttonFO.png</texturefocus>
 			<font></font>
 			<texturenofocus></texturenofocus>
 			<radioposx>1</radioposx>
@@ -754,11 +754,11 @@
 			<top>990</top>
 			<width>76</width>
 			<height>76</height>
-			<textureradioonfocus colordiffuse="FFF0F0F0">buttons/langFO.png</textureradioonfocus>
-			<textureradioonnofocus>buttons/langFO.png</textureradioonnofocus>
-			<textureradioofffocus colordiffuse="FFF0F0F0">buttons/langFO.png</textureradioofffocus>
-			<textureradiooffnofocus>buttons/langFO.png</textureradiooffnofocus>
-			<texturefocus colordiffuse="button_focus">buttons/buttonFO.png</texturefocus>
+			<textureradioonfocus colordiffuse="FFF0F0F0">../../skin.default/media/buttons/langFO.png</textureradioonfocus>
+			<textureradioonnofocus>../../skin.default/media/buttons/langFO.png</textureradioonnofocus>
+			<textureradioofffocus colordiffuse="FFF0F0F0">../../skin.default/media/buttons/langFO.png</textureradioofffocus>
+			<textureradiooffnofocus>../../skin.default/media/buttons/langFO.png</textureradiooffnofocus>
+			<texturefocus colordiffuse="button_focus">../../skin.default/media/buttons/buttonFO.png</texturefocus>
 			<font></font>
 			<texturenofocus></texturenofocus>
 			<radioposx>1</radioposx>
@@ -773,11 +773,11 @@
 			<top>990</top>
 			<width>76</width>
 			<height>76</height>
-			<textureradioonfocus colordiffuse="FFF0F0F0">buttons/epgFO.png</textureradioonfocus>
-			<textureradioonnofocus>buttons/epgFO.png</textureradioonnofocus>
-			<textureradioofffocus colordiffuse="FFF0F0F0">buttons/epgFO.png</textureradioofffocus>
-			<textureradiooffnofocus>buttons/epgFO.png</textureradiooffnofocus>
-			<texturefocus colordiffuse="button_focus">buttons/buttonFO.png</texturefocus>
+			<textureradioonfocus colordiffuse="FFF0F0F0">../../skin.default/media/buttons/epgFO.png</textureradioonfocus>
+			<textureradioonnofocus>../../skin.default/media/buttons/epgFO.png</textureradioonnofocus>
+			<textureradioofffocus colordiffuse="FFF0F0F0">../../skin.default/media/buttons/epgFO.png</textureradioofffocus>
+			<textureradiooffnofocus>../../skin.default/media/buttons/epgFO.png</textureradiooffnofocus>
+			<texturefocus colordiffuse="button_focus">../../skin.default/media/buttons/buttonFO.png</texturefocus>
 			<font></font>
 			<texturenofocus></texturenofocus>
 			<radioposx>1</radioposx>
@@ -792,11 +792,11 @@
 			<top>990</top>
 			<width>76</width>
 			<height>76</height>
-			<textureradioonfocus colordiffuse="FFF0F0F0">buttons/playFO.png</textureradioonfocus>
-			<textureradioonnofocus>buttons/playFO.png</textureradioonnofocus>
-			<textureradioofffocus colordiffuse="FFF0F0F0">buttons/pauseFO.png</textureradioofffocus>
-			<textureradiooffnofocus>buttons/pauseFO.png</textureradiooffnofocus>
-			<texturefocus colordiffuse="button_focus">buttons/buttonFO.png</texturefocus>
+			<textureradioonfocus colordiffuse="FFF0F0F0">../../skin.default/media/buttons/playFO.png</textureradioonfocus>
+			<textureradioonnofocus>../../skin.default/media/buttons/playFO.png</textureradioonnofocus>
+			<textureradioofffocus colordiffuse="FFF0F0F0">../../skin.default/media/buttons/pauseFO.png</textureradioofffocus>
+			<textureradiooffnofocus>../../skin.default/media/buttons/pauseFO.png</textureradiooffnofocus>
+			<texturefocus colordiffuse="button_focus">../../skin.default/media/buttons/buttonFO.png</texturefocus>
 			<selected>Player.Paused</selected>
 			<font></font>
 			<texturenofocus></texturenofocus>
@@ -835,8 +835,8 @@
 				<posy>25</posy>
 				<width>220</width>
 				<height>160</height>
-				<texture flipx="false">dialogs/dialog-bg-nobo.png</texture>
-				<bordertexture border="21">dialogs/shadow.png</bordertexture>
+				<texture flipx="false">../../skin.default/media/dialogs/dialog-bg-nobo.png</texture>
+				<bordertexture border="21">../../skin.default/media/dialogs/shadow.png</bordertexture>
 				<bordersize>20</bordersize>
 				<visible>!String.IsEqual(Control.GetLabel(9999),)</visible>
 			</control>
