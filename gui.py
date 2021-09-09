@@ -7193,7 +7193,7 @@ class Pla(xbmcgui.WindowXMLDialog):
     def onAction(self, action):
         debug('Pla onAction keyId {}, buttonCode {}'.format(action.getId(), action.getButtonCode()))
 
-        if action.getId() == ACTION_PREVIOUS_MENU or action.getId() == ACTION_STOP or (action.getButtonCode() == KEY_STOP and KEY_STOP != 0) or (action.getId() == KEY_STOP and KEY_STOP != 0):
+        if action.getId() == ACTION_STOP or (action.getButtonCode() == KEY_STOP and KEY_STOP != 0) or (action.getId() == KEY_STOP and KEY_STOP != 0):
             self.epg.playService.stopPlayback()
             self.closeOSD()
 
@@ -7310,7 +7310,7 @@ class Pla(xbmcgui.WindowXMLDialog):
         elif (action.getId() == ACTION_DOWN):
             self.showVidOsd(ACTION_DOWN)
 
-        elif (action.getId() == ACTION_SELECT_ITEM or action.getId() == ACTION_TOUCH_TAP or action.getButtonCode() == ACTION_TOUCH_TAP):
+        elif (action.getId() == ACTION_SELECT_ITEM):
             try:
                 if ADDON.getSetting('VidOSD_on_select') == 'true':
                     self.showVidOsd()

@@ -996,7 +996,10 @@ class baseServiceUpdater:
                                 y.strm = x.strm
                                 x.src  = self.serviceName
                                 y.src = x.src
-                                self.log('[UPD]     %-30s %-30s %-20s %-35s ' % (x.channelid, y.name, x.src, x.strm))
+                                try:
+                                    self.log('[UPD]     %-30s %-30s %-20s %-35s ' % (x.channelid, y.name, x.src, x.strm))
+                                except:
+                                    self.log('[UPD]     %-30s %-30s %-20s %-35s ' % (x.channelid.decode('utf-8'), y.name.decode('utf-8'), x.src.decode('utf-8'), x.strm.decode('utf-8')))
 
                 except Exception as ex:
                     self.log('{} Error {} {}'.format(x.channelid, x.titleRegex, getExceptionString()))

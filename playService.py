@@ -1147,7 +1147,7 @@ class PlayService(xbmc.Player, BasePlayService):
                             xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
 
                 if pl.match(service):
-                    playbackServices = ['C More', 'Cyfrowy Polsat GO', 'Ipla', 'nc+ GO', 'PlayerPL', 'Telia Play', 'WP Pilot']
+                    playbackServices = ['C More', 'Polsat GO', 'Polsat GO Box', 'Ipla', 'nc+ GO', 'PlayerPL', 'Telia Play', 'Telewizja Polska', 'WP Pilot']
                     if self.currentlyPlayedService['service'] not in playbackServices:
                         catchup = False
 

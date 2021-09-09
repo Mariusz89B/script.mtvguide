@@ -585,6 +585,16 @@ class RecordService(BasePlayService):
             self.epg.playService.stopPlayback()
             xbmc.sleep(500)
 
+        drmList = ['C More', 'Polsat GO', 'Polsat GO Box', 'Ipla', 'nc+ GO', 'PlayerPL', 'Telia Play']
+
+        p = re.compile('service=(.+?)&cid=.*')
+        for item in drmList:
+            service = p.findall(url)[0]
+            if item == service:
+                xbmcgui.Dialog().ok('Digital rights management (DRM)', 'The selected stream from {url} is protected by Digital rights management (DRM) system, the digital content is restricted and cannot be recorded. m-TVGuide will continue on to try and record next available stream.'.format(url=service)) 
+                threadData['nrOfReattempts'] += 1
+                return
+
         cid, service = self.parseUrl(url)
         channelInfo = self.getChannelDownload(cid, service)
         
@@ -1228,6 +1238,16 @@ class RecordService(BasePlayService):
             deb('RecordService - stopping ongoing playback')
             self.epg.playService.stopPlayback()
             xbmc.sleep(500)
+
+        drmList = ['C More', 'Polsat GO', 'Polsat GO Box', 'Ipla', 'nc+ GO', 'PlayerPL', 'Telia Play']
+
+        p = re.compile('service=(.+?)&cid=.*')
+        for item in drmList:
+            service = p.findall(url)[0]
+            if item == service:
+                xbmcgui.Dialog().ok('Digital rights management (DRM)', 'The selected stream from {url} is protected by Digital rights management (DRM) system, the digital content is restricted and cannot be recorded. m-TVGuide will continue on to try and record next available stream.'.format(url=service)) 
+                threadData['nrOfReattempts'] += 1
+                return
 
         cid, service = self.parseUrl(url)
         channelInfo = self.getChannel(cid, service)
