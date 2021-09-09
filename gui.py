@@ -4801,13 +4801,16 @@ class mTVGuide(xbmcgui.WindowXML):
         self.currentChannel = channel
 
         idx = self.database.getCurrentChannelIdx(self.currentChannel)
-        
-        if program is None:
-            self.start = self.program.startDate
-            self.end = self.program.endDate  
-        else:
+
+        self.start = self.program.startDate
+        self.end = self.program.endDate
+
+        if self.start is None or self.start == '':
+            program = self.database.getCurrentProgram(program.channel)
             self.start = program.startDate
-            self.end = program.endDate            
+            self.end = program.endDate
+
+            self.program = program
 
         self.played = datetime.datetime.now()
 
@@ -7499,7 +7502,7 @@ class Pla(xbmcgui.WindowXMLDialog):
         self.playChannel(channel)
 
     def playChannel(self, channel, program=None):
-        debug('Pla playChannel')
+        debug('Pla playChannel: {}'.format(program))
         if channel.id != self.epg.currentChannel.id:
             self.ChannelChanged = 1
             if program is None:
