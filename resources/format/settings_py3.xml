@@ -2849,6 +2849,17 @@
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
+				<setting help="" id="category" type="string">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<visible>false</visible>
+					<control format="string" type="edit">
+						<heading/>
+					</control>
+				</setting>
 				<setting help="95054" id="set_key" label="31002" type="action">
 					<level>1</level>
 					<data>RunScript(special://home/addons/script.mtvguide/setkey.py)</data>

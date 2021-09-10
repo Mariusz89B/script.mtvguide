@@ -2622,7 +2622,7 @@ class mTVGuide(xbmcgui.WindowXML):
                     self.category = self.category.decode('utf-8')
 
             self.database.setCategory(self.category)
-            ADDON.setSetting('categories_remember', self.category)
+            ADDON.setSetting('category', self.category)
             with self.busyDialog():
                 self.onRedrawEPG(self.channelIdx == 1, self.viewStartDate)
 
@@ -4423,7 +4423,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
         elif buttonClicked == PopupMenu.C_POPUP_CATEGORY:
             self.database.setCategory(new_category)
-            ADDON.setSetting('categories_remember', new_category)
+            ADDON.setSetting('category', new_category)
             with self.busyDialog():
                 self.onRedrawEPG(self.channelIdx == 1, self.viewStartDate)
                 self.popupMenu(program)
