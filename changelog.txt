@@ -1,5 +1,5 @@
-﻿wersja 9.5.6 - 2021-09-10
-- poprawka zapamiętywania kategorii
+﻿wersja 9.5.6 - 2021-09-11
+- ulepszone rozpoznawanie kanałów
 
 wersja 9.5.5 - 2021-09-10
 - naprawiono problemy z kodowaniem Python 2.7

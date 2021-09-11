@@ -30,8 +30,8 @@
 		<forum>http://mods-kodi.pl/forum/</forum>
 		<website>http://mods-kodi.pl/</website>
 		<email>support@m-tvguide.pl</email>
-	<news>v9.5.6 (2021-09-10)
-- Fixed category remember.
+	<news>v9.5.6 (2021-09-11)
+- Improved channel recognition.
 
 v9.5.5 (2021-09-10)
 - Fixed encoding issues Python 2.7.
