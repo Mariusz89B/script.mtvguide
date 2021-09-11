@@ -472,15 +472,29 @@ class PlaylistUpdater(baseServiceUpdater):
 
                             title = self.removeDuplicates(title)
 
-                            if ADDON.getSetting('append_country_code') != '':
-                                p = re.compile(r'.*\s[a-zA-Z]{2,3}$', re.DOTALL)
+                            words = title.split()
+                            title = (" ".join(sorted(set(words), key=words.index)))
 
-                                if not p.match(title):
+                            ccList = ['BE', 'CZ', 'DE', 'DK', 'FR', 'HR', 'IT', 'NO', 'PL', 'SE', 'SRB', 'UK', 'US']
+
+                            if ADDON.getSetting('append_country_code') != '':
+                                p = re.compile(r'.*\s([a-zA-Z]{2,3})$', re.DOTALL)
+
+                                try:
+                                    cc = p.search(title).group(1)
+                                except:
+                                    cc = ''
+
+                                if cc not in ccList:
+                                    replaceCC = True
+                                else:
+                                    if p.match(title):
+                                        replaceCC = True
+
+                                if replaceCC:
                                     title = title + ' ' + ADDON.getSetting('append_country_code')
                             else:
                                 replaceCC = False
-
-                                ccList = ['BE', 'CZ', 'DE', 'DK', 'FR', 'HR', 'IT', 'NO', 'PL', 'SE', 'SRB', 'UK', 'US']
 
                                 p = re.compile(r'.*\s([a-zA-Z]{2,3})$', re.DOTALL)
 

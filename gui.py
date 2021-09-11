@@ -5541,9 +5541,6 @@ class mTVGuide(xbmcgui.WindowXML):
 
         self.blockInputDueToRedrawing = False
 
-        self.onTimebarEPG()
-        self.updateTimebar()
-
         if ADDON.getSetting('channel_shortcut') == 'true':
             channel_index_format = "%%0%sd" % 1
             show_channel_numbers = True
@@ -5585,6 +5582,9 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.setControlImage(CHANNEL_IMAGE + idx, ' ')
 
                     self.a[idx] = channel
+
+        self.onTimebarEPG()
+        self.updateTimebar()
 
         self.redrawingEPG = False
         if self.redrawagain:
@@ -7196,7 +7196,7 @@ class Pla(xbmcgui.WindowXMLDialog):
     def onAction(self, action):
         debug('Pla onAction keyId {}, buttonCode {}'.format(action.getId(), action.getButtonCode()))
 
-        if action.getId() == ACTION_STOP or (action.getButtonCode() == KEY_STOP and KEY_STOP != 0) or (action.getId() == KEY_STOP and KEY_STOP != 0):
+        if action.getId() == ACTION_PREVIOUS_MENU or action.getId() == ACTION_STOP or (action.getButtonCode() == KEY_STOP and KEY_STOP != 0) or (action.getId() == KEY_STOP and KEY_STOP != 0):
             self.epg.playService.stopPlayback()
             self.closeOSD()
 
@@ -7227,7 +7227,7 @@ class Pla(xbmcgui.WindowXMLDialog):
                 self.epg.showFullRecordings(program.channel)
             return
 
-        elif action.getId() in [ACTION_PARENT_DIR, KEY_NAV_BACK, ACTION_PREVIOUS_MENU]:
+        elif action.getId() == KEY_NAV_BACK:
             self.closeOSD()
             if ADDON.getSetting('navi_back_stop_play') == 'true':
                 self.epg.playService.stopPlayback()
