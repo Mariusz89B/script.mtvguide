@@ -1,4 +1,7 @@
-﻿wersja 9.5.6 - 2021-09-11
+﻿wersja 9.5.7 - 2021-09-12
+- naprawiono problemy z kodowaniem Python 2.7
+
+wersja 9.5.6 - 2021-09-11
 - ulepszone rozpoznawanie kanałów
 
 wersja 9.5.5 - 2021-09-10

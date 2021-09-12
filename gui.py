@@ -4802,8 +4802,12 @@ class mTVGuide(xbmcgui.WindowXML):
 
         idx = self.database.getCurrentChannelIdx(self.currentChannel)
 
-        self.start = self.program.startDate
-        self.end = self.program.endDate
+        try:
+            self.start = self.program.startDate
+            self.end = self.program.endDate
+        except:
+            self.start = ''
+            self.end == ''
 
         if self.start is None or self.start == '':
             program = self.database.getCurrentProgram(program.channel)

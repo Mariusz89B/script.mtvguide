@@ -281,7 +281,7 @@
         <setting id="channel_shortcut_behaviour" label="30349" visible="eq(-1,true)" type="enum" default="0" lvalues="30350|30352" />
 		<setting type="sep"/>
 		<setting label="30963" type="lsep"/>
-		<setting id="exit" label="30963" type="enum" default="1" lvalues="30982|30983" visible="eq(-31,false)"/>
+		<setting id="exit" label="30963" type="enum" default="1" lvalues="30982|30983" visible="true"/>
 	</category>
 	<category label="69040">
 		<setting id="max_connection_time" label="30958" type="number" default="25"/>
