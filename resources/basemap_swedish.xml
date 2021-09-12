@@ -38,7 +38,7 @@
 	<channel id="CARTOON NETWORK SE" title="(?=CARTOON\s*NETWORK(\s*TV)?(\s*(HD|UHD))?\s*SE$)" strm=""/>
 	<channel id="CBS REALITY SE" title="(?=CBS\s*REALITY(\s*(HD|UHD))?\s*SE$)" strm=""/>
 	<channel id="CNBC SE" title="(?=CNBC(\s*(HD|UHD))?\s*SE$)" strm=""/>
-	<channel id="CNN SE" title="(?=CNN(\s*INT(\.)?(ERNATIONAL)?)(\s*(HD|UHD))?\s*SE$)" strm=""/>
+	<channel id="CNN SE" title="(?=CNN(\s*INT((\.)?|ERNATIONAL))?(\s*(HD|UHD))?\s*SE$)" strm=""/>
 	<channel id="CURIOSITY CHANNEL SE" title="(?=CURIOSITY(\s*CHANNEL)?(\s*STREAM)?(\s*TV)?(\s*(HD|UHD))?\s*SE$)" strm=""/>
 	<channel id="DI TV SE" title="(?=(DI|DAGENS\s*INDUSTRI)(\s*TV)?(\s*(HD|UHD))?\s*SE$)" strm=""/>
 	<channel id="DISCOVERY CHANNEL HD SE" title="(?=(DISCOVERY|DISC)(.)?(\s*CHANNEL)?(\s*(HD|UHD))\s*SE$)" strm=""/>
@@ -80,6 +80,7 @@
 	<channel id="MEZZO LIVE HD SE" title="(?=MEZZO\s*LIVE(\s*(HD|UHD))?\s*SE$)" strm=""/>
 	<channel id="MEZZO SE" title="(?=MEZZO(\s*(HD|UHD))?\s*SE$)" strm=""/>
 	<channel id="MOTORSPORT TV SE" title="(?=MOTOR\s*SPORT(\s*TV)?\s*SE$)" strm=""/>
+	<channel id="MTV 00s SE" title="(?=(VH(\s*|\-)?1|MTV\s*00(s)?)(\s*TV)?(\s*(HD|UHD))?\s*SE$)" strm=""/>
 	<channel id="MTV 80S SE" title="(?=MTV\s*80(S)?(\s*(HD|UHD))?\s*SE$)" strm=""/>
 	<channel id="MTV 90S SE" title="(?=MTV\s*90(S)?(\s*(HD|UHD))?\s*SE$)" strm=""/>
 	<channel id="MTV HD SE" title="(?=MTV(\s*(HD|UHD))\s*SE$)" strm=""/>
@@ -110,8 +111,8 @@
 	<channel id="SJUAN SE" title="(?=SJUAN\s*SE$)" strm=""/>
 	<channel id="SKY NEWS SE" title="(?=SKY\s*NEWS(\s*(HD|UHD))?\s*SE$)" strm=""/>
 	<channel id="SPORTKANALEN SE" title="(?=SPORT\s*KANALEN(\s*(HD|UHD))?\s*SE$)" strm=""/>
-	<channel id="SVT BARN HD SE" title="(?=SVT\s*BARN(KANALE(N|R))?(\s*(HD|UHD))\s*SE$)" strm=""/>
-	<channel id="SVT BARN SE" title="(?=SVT\s*BARN(KANALE(N|R))?\s*SE$)" strm=""/>
+	<channel id="SVT BARN HD SE" title="(?=SVT\s*BARN(KANALE(N|R))?(\s*\/)?(\s*SVT\s*24)?(\s*(HD|UHD))\s*SE$)" strm=""/>
+	<channel id="SVT BARN SE" title="(?=SVT\s*BARN(KANALE(N|R))?(\s*\/)?(\s*SVT\s*24)?\s*SE$)" strm=""/>
 	<channel id="SVT1 HD SE" title="(?=SVT(\s*1)?(\s*(HD|UHD))\s*SE$)" strm=""/>
 	<channel id="SVT1 SE" title="(?=SVT(\s*1)?\s*SE$)" strm=""/>
 	<channel id="SVT2 HD SE" title="(?=SVT\s*2(\s*(HD|UHD))\s*SE$)" strm=""/>
@@ -159,7 +160,6 @@
 	<channel id="V SPORT MOTOR SE" title="(?=(V|VIASAT)(\s*SPORT)?\s*MOTOR(\s*(HD|UHD))?(\s*SPORTS)?\s*SE$)" strm=""/>
 	<channel id="V SPORT PREMIUM SE" title="(?=(V|VIASAT)(\s*SPORT)?\s*PREMIUM(\s*(HD|UHD))?(\s*SPORTS)?\s*SE$)" strm=""/>
 	<channel id="V SPORT ULTRA HD SE" title="(?=(V|VIASAT)(\s*SPORT)?\s*ULTRA(\s*(HD|UHD))?(\s*SPORTS)?\s*SE$)" strm=""/>
-	<channel id="VH1 SE" title="(?=VH(\s*|\-)?1(\s*TV)?(\s*(HD|UHD))?\s*SE$)" strm=""/>
 	<channel id="VIASAT EXPLORE SE" title="(?=(V|VIASAT)\s*EXPLORE(R)?(\s*(HD|UHD))?\s*SE$)" strm=""/>
 	<channel id="VIASAT HISTORY SE" title="(?=(V|VIASAT)\s*HISTORY(\s*(HD|UHD))?\s*SE$)" strm=""/>
 	<channel id="VIASAT NATURE SE" title="(?=(V|VIASAT)\s*NATURE(\s*CRIME)?(\s*NATURE/CRIME/PLAYBOY)?(\s*(HD|UHD))?\s*SE$)" strm=""/>
