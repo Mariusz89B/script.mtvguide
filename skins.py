@@ -313,7 +313,7 @@ class Skin:
     def checkForUpdates():
         deb('_checkForUpdates')
         skins = Skin.getSkinList()
-        regex = re.compile('version\s*=\s*(.*)', re.IGNORECASE)
+        regex = re.compile('version\s*=\s*(\d+\.\d+)', re.IGNORECASE)
         usedSkinUpdated = False
         for skin in skins:
             iniFile = os.path.join(Skin.ADDON_CUSTOM_SKINS, skin.name, 'settings.ini')
