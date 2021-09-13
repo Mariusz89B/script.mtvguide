@@ -8,192 +8,161 @@
 		<setting label="90003" type="action" action="RunScript($CWD/readme.py,readme)" />
 		<setting label="90004" type="action" action="RunScript($CWD/credits.py,credits)" />
 	</category>
-	<category label="55007">	
-		<setting type="sep"/>
-		<setting label="59920" type="lsep"/>
-		<setting id="cmore_enabled" type="bool" label="59904" default="false"/>
-		<setting id="cmore_locale" type="select" label="30368" default="cmore.se" values="cmore.se|cmore.dk|cmore.no" visible="eq(-1,true)"/>
-		<setting id="cmore_tv_provider_login" type="bool" label="30369" default="false" visible="eq(-2,true)"/>
-		<setting id="cmore_username" type="text" label="55002" default="" visible="eq(-3,true) + eq(-1,false)"/>
-		<setting id="cmore_password" type="text" option="hidden" label="55003" default="" visible="eq(-4,true) + eq(-2,false)"/>
-		<setting id="priority_cmore" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-5,true)"/>
-		<setting label="30371" type="action" action="RunScript($CWD/clearcmore.py, clearCMore)" visible="eq(-6,true)"/>
+	<category label="55007">
+		<setting id="country_service" label="60014" type="enum" default="0" lvalues="59933|59934"/>
 		
-		<!--<setting type="sep"/>
-		<setting label="59922" type="lsep"/>
-		<setting id="francetv_enabled" type="bool" label="59904" default="false"/>
-		<setting id="priority_francetv" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-1,true)"/>-->
+		<setting id="ipla_enabled" type="bool" label="80006" default="false" visible="eq(-1,0)"/>
+		<setting id="ipla_username" type="text" label="55002" default="" visible="eq(-1,true) + eq(-2,0)" subsetting="true"/>
+		<setting id="ipla_password" type="text" option="hidden" label="55003" default="" visible="eq(-2,true) + eq(-3,0)" subsetting="true"/>
+		<setting id="ipla_client" type="select" label="30368" default="Ipla" values="Ipla|Cyfrowy Polsat" visible="eq(-3,true) + eq(-4,0)" subsetting="true"/>
+		<setting id="priority_ipla" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-4,true) + eq(-5,0)" subsetting="true"/>
+		<setting id="ipla_device_id" visible="false" subsetting="true"/>
+		<setting id="ipla_client_id" visible="false" subsetting="true"/>
+		<setting id="ipla_id_" visible="false" subsetting="true"/>
+		<setting id="ipla_sesstoken" visible="false" subsetting="true"/>
+		<setting id="ipla_sessexpir" visible="false" subsetting="true"/>
+		<setting id="ipla_sesskey" visible="false" subsetting="true"/>
+		<setting id="ipla_myperm" visible="false" subsetting="true"/>
 		
-		<setting type="sep"/>
-		<setting label="80006" type="lsep"/>
-		<setting id="ipla_enabled" type="bool" label="59904" default="false"/>
-		<setting id="ipla_username" type="text" label="55002" default="" visible="eq(-1,true)"/>
-		<setting id="ipla_password" type="text" option="hidden" label="55003" default="" visible="eq(-2,true)"/>
-		<setting id="ipla_client" type="select" label="30368" default="Ipla" values="Ipla|Cyfrowy Polsat" visible="eq(-3,true)"/>
-		<setting id="priority_ipla" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-4,true)"/>
-		<setting id="ipla_device_id" visible="false"/>
-		<setting id="ipla_client_id" visible="false"/>
-		<setting id="ipla_id_" visible="false"/>
-		<setting id="ipla_sesstoken" visible="false"/>
-		<setting id="ipla_sessexpir" visible="false"/>
-		<setting id="ipla_sesskey" visible="false"/>
-		<setting id="ipla_myperm" visible="false"/>
+		<setting id="ncplusgo_enabled" type="bool" label="59923" default="false" visible="eq(-13,0)"/>
+		<setting id="ncplusgo_username" type="text" label="55002" default="" visible="eq(-1,true) + eq(-14,0)" subsetting="true"/>
+		<setting id="ncplusgo_password" type="text" option="hidden" label="55003" default="" visible="eq(-2,true) + eq(-15,0)" subsetting="true"/>
+		<setting id="priority_ncplusgo" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-3,true) + eq(-16,0)" subsetting="true"/>
+		<setting id="ncplusgo_imei" visible="false" subsetting="true"/>
+		<setting id="ncplusgo_ftimenow" visible="false" subsetting="true"/>
+		<setting id="ncplusgo_dev2repl" visible="false" subsetting="true"/>
+		<setting id="ncplusgo_ncToken" visible="false" subsetting="true"/>
 		
-		<setting type="sep"/>
-		<setting label="59923" type="lsep"/>
-		<setting id="ncplusgo_enabled" type="bool" label="59904" default="false"/>
-		<setting id="ncplusgo_username" type="text" label="55002" default="" visible="eq(-1,true)"/>
-		<setting id="ncplusgo_password" type="text" option="hidden" label="55003" default="" visible="eq(-2,true)"/>
-		<setting id="priority_ncplusgo" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-3,true)"/>
-		<setting id="ncplusgo_imei" visible="false"/>
-		<setting id="ncplusgo_ftimenow" visible="false"/>
-		<setting id="ncplusgo_dev2repl" visible="false"/>
-		<setting id="ncplusgo_ncToken" visible="false"/>
+		<setting id="playerpl_enabled" type="bool" label="30903" default="false" visible="eq(-21,0)"/>
+		<setting id="playerpl_subtitles" type="bool" label="30760" default="true" visible="eq(-1,true) + eq(-22,0)" subsetting="true"/>
+		<setting id="priority_playerpl" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-2,true) + eq(-23,0)" subsetting="true"/>
+		<setting label="30371" type="action" action="RunScript($CWD/clearplayerpl.py, clearPlayerPL)" visible="eq(-3,true) + eq(-24,0)" subsetting="true"/>
+		<setting id="playerpl_access_token" visible="false" subsetting="true"/>
+		<setting id="playerpl_user_pub" visible="false" subsetting="true"/>
+		<setting id="playerpl_user_hash" visible="false" subsetting="true"/>
+		<setting id="playerpl_refresh_token" visible="false" subsetting="true"/>
+		<setting id="playerpl_device_id" visible="false" subsetting="true"/>
+		<setting id="playerpl_token" visible="false" subsetting="true"/>
+		<setting id="playerpl_maker_id" visible="false" subsetting="true"/>
+		<setting id="playerpl_usagent_id" visible="false" subsetting="true"/>
+		<setting id="playerpl_usagentver_id" visible="false" subsetting="true"/>
+		<setting id="playerpl_selected_profile" visible="false" subsetting="true"/>
+		<setting id="playerpl_selected_profile_id" visible="false" subsetting="true"/>
+		<setting id="playerpl_logged" visible="false" subsetting="true"/>
 		
-		<setting type="sep"/>
-		<setting label="30903" type="lsep"/>
-		<setting id="playerpl_enabled" type="bool" label="59904" default="false"/>
-		<setting id="playerpl_subtitles" type="bool" label="30760" default="true" visible="eq(-1,true)"/>
-		<setting id="priority_playerpl" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-2,true)"/>
-		<setting label="30371" type="action" action="RunScript($CWD/clearplayerpl.py, clearPlayerPL)" visible="eq(-3,true)"/>
-		<setting id="playerpl_access_token" visible="false"/>
-		<setting id="playerpl_user_pub" visible="false"/>
-		<setting id="playerpl_user_hash" visible="false"/>
-		<setting id="playerpl_refresh_token" visible="false"/>
-		<setting id="playerpl_device_id" visible="false"/>
-		<setting id="playerpl_token" visible="false"/>
-		<setting id="playerpl_maker_id" visible="false"/>
-		<setting id="playerpl_usagent_id" visible="false"/>
-		<setting id="playerpl_usagentver_id" visible="false"/>
-		<setting id="playerpl_selected_profile" visible="false"/>
-		<setting id="playerpl_selected_profile_id" visible="false"/>
-		<setting id="playerpl_logged" visible="false"/>
+		<setting id="polsatgo_enabled" type="bool" label="80008" default="false" visible="eq(-37,0)"/>
+		<setting id="polsatgo_username" type="text" label="55002" default="" visible="eq(-1,true) + eq(-38,0)" subsetting="true"/>
+		<setting id="polsatgo_password" type="text" option="hidden" label="55003" default="" visible="eq(-2,true) + eq(-39,0)" subsetting="true"/>
+		<setting id="priority_polsatgo" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-3,true) + eq(-40,0)" subsetting="true"/>
+	
+		<setting id="pgobox_enabled" type="bool" label="59921" default="false" visible="eq(-41,0)"/>
+		<setting id="pgobox_username" type="text" label="55002" default="" visible="eq(-1,true) + eq(-42,0)" subsetting="true"/>
+		<setting id="pgobox_password" type="text" option="hidden" label="55003" default="" visible="eq(-2,true) + eq(-43,0)" subsetting="true"/>
+		<setting id="pgobox_client" type="select" label="30368" default="Polsat Box" values="Cyfrowy Polsat|Ipla|Polsat Box" visible="eq(-3,true) + eq(-44,0)" subsetting="true"/>
+		<setting id="priority_pgobox" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-4,true) + eq(-45,0)" subsetting="true"/>
+		<setting id="pgobox_device_id" visible="false" subsetting="true"/>
+		<setting id="pgobox_client_id" visible="false" subsetting="true"/>
+		<setting id="pgobox_id_" visible="false" subsetting="true"/>
+		<setting id="pgobox_sesstoken" visible="false" subsetting="true"/>
+		<setting id="pgobox_sessexpir" visible="false" subsetting="true"/>
+		<setting id="pgobox_sesskey" visible="false" subsetting="true"/>
+		<setting id="pgobox_myperm" visible="false" subsetting="true"/>
 		
-		<setting type="sep"/>
-		<setting label="80008" type="lsep"/>
-		<setting id="polsatgo_enabled" type="bool" label="59904" default="false"/>
-		<setting id="polsatgo_username" type="text" label="55002" default="" visible="eq(-1,true)"/>
-		<setting id="polsatgo_password" type="text" option="hidden" label="55003" default="" visible="eq(-2,true)"/>
-		<setting id="priority_polsatgo" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-3,true)"/>
+		<setting id="tvp_enabled" type="bool" label="80007" default="false" visible="eq(-53,0)"/>
+		<setting id="priority_tvp" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-1,true) + eq(-54,0)" subsetting="true"/>
 		
-		<setting type="sep"/>
-		<setting label="59921" type="lsep"/>
-		<setting id="pgobox_enabled" type="bool" label="59904" default="false"/>
-		<setting id="pgobox_username" type="text" label="55002" default="" visible="eq(-1,true)"/>
-		<setting id="pgobox_password" type="text" option="hidden" label="55003" default="" visible="eq(-2,true)"/>
-		<setting id="pgobox_client" type="select" label="30368" default="Polsat Box" values="Cyfrowy Polsat|Ipla|Polsat Box" visible="eq(-3,true)"/>
-		<setting id="priority_pgobox" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-4,true)"/>
-		<setting id="pgobox_device_id" visible="false"/>
-		<setting id="pgobox_client_id" visible="false"/>
-		<setting id="pgobox_id_" visible="false"/>
-		<setting id="pgobox_sesstoken" visible="false"/>
-		<setting id="pgobox_sessexpir" visible="false"/>
-		<setting id="pgobox_sesskey" visible="false"/>
-		<setting id="pgobox_myperm" visible="false"/>
+		<setting id="videostar_enabled" type="bool" label="80005" default="false" visible="eq(-55,0)"/>
+		<setting id="videostar_username" type="text" label="55002" default="" visible="eq(-1,true) + eq(-56,0)" subsetting="true"/>
+		<setting id="videostar_password" type="text" option="hidden" label="55003" default="" visible="eq(-2,true) + eq(-57,0)" subsetting="true"/>
+		<setting id="videostar_netviapisessid" type="text" label="69066" default="" visible="eq(-3,true) + eq(-58,0)" subsetting="true"/>
+		<setting id="videostar_netviapisessval" type="text" label="69067" default="" visible="eq(-4,true) + eq(-59,0)" subsetting="true"/>
+		<setting id="videostar_remote_cookies" type="text" label="69068" default="" visible="eq(-5,true) + eq(-60,0)" subsetting="true"/>
+		<setting id="priority_videostar" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-6,true) + eq(-61,0)" subsetting="true"/>
 		
-		<setting type="sep"/>
-		<setting label="30904" type="lsep"/>
-		<setting id="teliaplay_enabled" type="bool" label="59904" default="false"/>
-		<setting id="teliaplay_locale" type="select" label="30368" default="0" lvalues="57056|57057" visible="eq(-1,true)"/>
-		<setting id="teliaplay_username" type="text" label="55002" default="" visible="eq(-2,true)"/>
-		<setting id="teliaplay_password" type="text" option="hidden" label="55003" default="" visible="eq(-3,true)"/>
-		<setting id="priority_teliaplay" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-4,true)"/>
-		<setting label="30371" type="action" action="RunScript($CWD/clearteliaplay.py, clearTeliaPlay)" visible="eq(-5,true)"/>
-		<setting id="teliaplay_sess_id" visible="false"/>
-		<setting id="teliaplay_devush" visible="false"/>
-		<setting id="teliaplay_beartoken" visible="false"/>
-		<setting id="teliaplay_refrtoken" visible="false"/>
-		<setting id="teliaplay_cookies" visible="false"/>
-		<setting id="teliaplay_usern" visible="false"/>
+		<setting id="cmore_enabled" type="bool" label="59920" default="false" visible="eq(-62,1)"/>
+		<setting id="cmore_locale" type="select" label="30368" default="cmore.se" values="cmore.se|cmore.dk|cmore.no" visible="eq(-1,true) + eq(-63,1)" subsetting="true"/>
+		<setting id="cmore_tv_provider_login" type="bool" label="30369" default="false" visible="eq(-2,true) + eq(-64,1)" subsetting="true"/>
+		<setting id="cmore_username" type="text" label="55002" default="" visible="eq(-3,true) + eq(-65,1) + eq(-1,false)" subsetting="true"/>
+		<setting id="cmore_password" type="text" option="hidden" label="55003" default="" visible="eq(-4,true) + eq(-66,1) + eq(-2,false)" subsetting="true"/>
+		<setting id="priority_cmore" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-5,true) + eq(-67,1)" subsetting="true"/>
+		<setting label="30371" type="action" action="RunScript($CWD/clearcmore.py, clearCMore)" visible="eq(-6,true) + eq(-68,1)" subsetting="true"/>
 		
-		<setting type="sep"/>
-		<setting label="80007" type="lsep"/>
-		<setting id="tvp_enabled" type="bool" label="59904" default="false"/>
-		<setting id="priority_tvp" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-1,true)"/>
-		
-		<setting type="sep"/>
-		<setting label="80005" type="lsep"/>
-		<setting id="videostar_enabled" type="bool" label="59904" default="false"/>
-		<setting id="videostar_username" type="text" label="55002" default="" visible="eq(-1,true)"/>
-		<setting id="videostar_password" type="text" option="hidden" label="55003" default="" visible="eq(-2,true)"/>
-		<setting id="videostar_netviapisessid" type="text" label="69066" default="" visible="eq(-3,true)"/>
-		<setting id="videostar_netviapisessval" type="text" label="69067" default="" visible="eq(-4,true)"/>
-		<setting id="videostar_remote_cookies" type="text" label="69068" default="" visible="eq(-5,true)"/>
-		<setting id="priority_videostar" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-6,true)"/>
+		<setting id="teliaplay_enabled" type="bool" label="30904" default="false" visible="eq(-69,1)"/>
+		<setting id="teliaplay_locale" type="select" label="30368" default="0" lvalues="57056|57057" visible="eq(-1,true) + eq(-70,1)" subsetting="true"/>
+		<setting id="teliaplay_username" type="text" label="55002" default="" visible="eq(-2,true) + eq(-71,1)" subsetting="true"/>
+		<setting id="teliaplay_password" type="text" option="hidden" label="55003" default="" visible="eq(-3,true) + eq(-72,1)" subsetting="true"/>
+		<setting id="priority_teliaplay" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-4,true) + eq(-73,1)" subsetting="true"/>
+		<setting label="30371" type="action" action="RunScript($CWD/clearteliaplay.py, clearTeliaPlay)" visible="eq(-5,true) + eq(-74,1)" subsetting="true"/>
+		<setting id="teliaplay_sess_id" visible="false" subsetting="true"/>
+		<setting id="teliaplay_devush" visible="false" subsetting="true"/>
+		<setting id="teliaplay_beartoken" visible="false" subsetting="true"/>
+		<setting id="teliaplay_refrtoken" visible="false" subsetting="true"/>
+		<setting id="teliaplay_cookies" visible="false" subsetting="true"/>
+		<setting id="teliaplay_usern" visible="false" subsetting="true"/>
 	</category>
 	
 	<category label="59905">
 		<setting id="nr_of_playlists" label="59916" type="labelenum" default="0" values="0|1|2|3|4|5"/>
 		
-		<setting type="sep" visible="gt(-1,0)"/>
-		<setting label="59911" type="lsep" visible="gt(-2,0)"/>
-		<setting id="playlist_1_enabled" type="bool" label="59904" default="false" visible="gt(-3,0)"/>
-		<setting id="playlist_1_display_name" label="59914" type="text" default="Playlist_1" visible="eq(-1,true) + gt(-4,0)"/>
-		<setting id="playlist_1_refr" type="bool" label="60008" default="false" visible="eq(2,0) + eq(-2,true) + gt(-5,0)"/>
-		<setting id="playlist_1_refr_days" label="60009" type="slider" default="7" range="0,30" option="int" visible="eq(1,0) + eq(-1,true) + eq(-3,true) + gt(-6,0)"/>
-		<setting id="playlist_1_source" label="59907" type="enum" default="0" lvalues="59919|59908" visible="eq(-4,true) + gt(-7,0)"/>
-		<setting id="playlist_1_url" label="59906" type="text" visible="eq(-1,0) + eq(-5,true) + gt(-8,0)" default=""/>
-		<setting id="playlist_1_file" label="59908" type="file" visible="eq(-2,1) + eq(-6,true) + gt(-9,0)" default=""/>
-		<setting id="playlist_1_user_agent" label="55001" type="text" visible="eq(-7,true) + gt(-10,0)" default=""/>
-		<setting id="playlist_1_stop_when_starting" type="bool" label="30974" default="false" visible="eq(-8,true) + gt(-11,0)"/>
-		<setting id="playlist_1_high_prio_hd" type="bool" label="30975" default="true" visible="eq(-9,true) + gt(-12,0)"/>
-		<setting id="playlist_1_priority" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-10,true) + gt(-13,0)"/>
+		<setting id="playlist_1_enabled" type="bool" label="59911" default="false" visible="gt(-1,0)"/>
+		<setting id="playlist_1_display_name" label="59914" type="text" default="Playlist_1" visible="eq(-1,true) + gt(-2,0)" subsetting="true"/>
+		<setting id="playlist_1_refr" type="bool" label="60008" default="false" visible="eq(2,0) + eq(-2,true) + gt(-3,0)" subsetting="true"/>
+		<setting id="playlist_1_refr_days" label="60009" type="slider" default="7" range="0,30" option="int" visible="eq(1,0) + eq(-1,true) + eq(-3,true) + gt(-4,0)" subsetting="true"/>
+		<setting id="playlist_1_source" label="59907" type="enum" default="0" lvalues="59919|59908" visible="eq(-4,true) + gt(-5,0)" subsetting="true"/>
+		<setting id="playlist_1_url" label="59906" type="text" visible="eq(-1,0) + eq(-5,true) + gt(-6,0)" default="" subsetting="true"/>
+		<setting id="playlist_1_file" label="59908" type="file" visible="eq(-2,1) + eq(-6,true) + gt(-7,0)" default="" subsetting="true"/>
+		<setting id="playlist_1_user_agent" label="55001" type="text" visible="eq(-7,true) + gt(-8,0)" default="" subsetting="true"/>
+		<setting id="playlist_1_stop_when_starting" type="bool" label="30974" default="false" visible="eq(-8,true) + gt(-9,0)" subsetting="true"/>
+		<setting id="playlist_1_high_prio_hd" type="bool" label="30975" default="true" visible="eq(-9,true) + gt(-10,0)" subsetting="true"/>
+		<setting id="playlist_1_priority" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-10,true) + gt(-11,0)" subsetting="true"/>
     
-		<setting type="sep" visible="gt(-14,1)"/>
-		<setting label="59912" type="lsep" visible="gt(-15,1)"/>
-		<setting id="playlist_2_enabled" type="bool" label="59904" default="false" visible="gt(-16,0)"/>
-		<setting id="playlist_2_display_name" label="59914" type="text" default="Playlist_2" visible="eq(-1,true) + gt(-17,0)"/>
-		<setting id="playlist_2_refr" type="bool" label="60008" default="false" visible="eq(2,0) + eq(-2,true) + gt(-18,0)"/>
-		<setting id="playlist_2_refr_days" label="60009" type="slider" default="7" range="0,30" option="int" visible="eq(1,0) + eq(-1,true) + eq(-3,true) + gt(-19,0)"/>
-		<setting id="playlist_2_source" label="59907" type="enum" default="0" lvalues="59919|59908" visible="eq(-4,true) + gt(-20,0)"/>
-		<setting id="playlist_2_url" label="59906" type="text" visible="eq(-1,0) + eq(-5,true) + gt(-21,0)" default=""/>
-		<setting id="playlist_2_file" label="59908" type="file" visible="eq(-2,1) + eq(-6,true) + gt(-22,0)" default=""/>
-		<setting id="playlist_2_user_agent" label="55001" type="text" visible="eq(-7,true) + gt(-23,0)" default=""/>
-		<setting id="playlist_2_stop_when_starting" type="bool" label="30974" default="false" visible="eq(-8,true) + gt(-24,0)"/>
-		<setting id="playlist_2_high_prio_hd" type="bool" label="30975" default="true" visible="eq(-9,true) + gt(-25,0)"/>
-		<setting id="playlist_2_priority" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-10,true) + gt(-26,0)"/>
+		<setting id="playlist_2_enabled" type="bool" label="59912" default="false" visible="gt(-12,1)"/>
+		<setting id="playlist_2_display_name" label="59914" type="text" default="Playlist_2" visible="eq(-1,true) + gt(-13,1)" subsetting="true"/>
+		<setting id="playlist_2_refr" type="bool" label="60008" default="false" visible="eq(2,0) + eq(-2,true) + gt(-14,1)" subsetting="true"/>
+		<setting id="playlist_2_refr_days" label="60009" type="slider" default="7" range="0,30" option="int" visible="eq(1,0) + eq(-1,true) + eq(-3,true) + gt(-15,1)" subsetting="true"/>
+		<setting id="playlist_2_source" label="59907" type="enum" default="0" lvalues="59919|59908" visible="eq(-4,true) + gt(-16,1)" subsetting="true"/>
+		<setting id="playlist_2_url" label="59906" type="text" visible="eq(-1,0) + eq(-5,true) + gt(-17,1)" default="" subsetting="true"/>
+		<setting id="playlist_2_file" label="59908" type="file" visible="eq(-2,1) + eq(-6,true) + gt(-18,1)" default="" subsetting="true"/>
+		<setting id="playlist_2_user_agent" label="55001" type="text" visible="eq(-7,true) + gt(-19,1)" default="" subsetting="true"/>
+		<setting id="playlist_2_stop_when_starting" type="bool" label="30974" default="false" visible="eq(-8,true) + gt(-20,1)" subsetting="true"/>
+		<setting id="playlist_2_high_prio_hd" type="bool" label="30975" default="true" visible="eq(-9,true) + gt(-21,1)" subsetting="true"/>
+		<setting id="playlist_2_priority" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-10,true) + gt(-22,1)" subsetting="true"/>
 
-		<setting type="sep" visible="gt(-27,2)"/>
-		<setting label="59913" type="lsep" visible="gt(-28,2)"/>
-		<setting id="playlist_3_enabled" type="bool" label="59904" default="false" visible="gt(-29,0)"/>
-		<setting id="playlist_3_display_name" label="59914" type="text" default="Playlist_3" visible="eq(-1,true) + gt(-30,0)"/>
-		<setting id="playlist_3_refr" type="bool" label="60008" default="false" visible="eq(2,0) + eq(-2,true) + gt(-31,0)"/>
-		<setting id="playlist_3_refr_days" label="60009" type="slider" default="7" range="0,30" option="int" visible="eq(1,0) + eq(-1,true) + eq(-3,true) + gt(-32,0)"/>
-		<setting id="playlist_3_source" label="59907" type="enum" default="0" lvalues="59919|59908" visible="eq(-4,true) + gt(-33,0)"/>
-		<setting id="playlist_3_url" label="59906" type="text" visible="eq(-1,0) + eq(-5,true) + gt(-34,0)" default=""/>
-		<setting id="playlist_3_file" label="59908" type="file" visible="eq(-2,1) + eq(-6,true) + gt(-35,0)" default=""/>
-		<setting id="playlist_3_user_agent" label="55001" type="text" visible="eq(-7,true) + gt(-36,0)" default=""/>
-		<setting id="playlist_3_stop_when_starting" type="bool" label="30974" default="false" visible="eq(-8,true) + gt(-37,0)"/>
-		<setting id="playlist_3_high_prio_hd" type="bool" label="30975" default="true" visible="eq(-9,true) + gt(-38,0)"/>
-		<setting id="playlist_3_priority" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-10,true) + gt(-39,0)"/>
+		<setting id="playlist_3_enabled" type="bool" label="59913" default="false" visible="gt(-23,2)"/>
+		<setting id="playlist_3_display_name" label="59914" type="text" default="Playlist_3" visible="eq(-1,true) + gt(-24,2)" subsetting="true"/>
+		<setting id="playlist_3_refr" type="bool" label="60008" default="false" visible="eq(2,0) + eq(-2,true) + gt(-25,2)" subsetting="true"/>
+		<setting id="playlist_3_refr_days" label="60009" type="slider" default="7" range="0,30" option="int" visible="eq(1,0) + eq(-1,true) + eq(-3,true) + gt(-26,2)" subsetting="true"/>
+		<setting id="playlist_3_source" label="59907" type="enum" default="0" lvalues="59919|59908" visible="eq(-4,true) + gt(-27,2)" subsetting="true"/>
+		<setting id="playlist_3_url" label="59906" type="text" visible="eq(-1,0) + eq(-5,true) + gt(-28,2)" default="" subsetting="true"/>
+		<setting id="playlist_3_file" label="59908" type="file" visible="eq(-2,1) + eq(-6,true) + gt(-29,2)" default="" subsetting="true"/>
+		<setting id="playlist_3_user_agent" label="55001" type="text" visible="eq(-7,true) + gt(-30,2)" default="" subsetting="true"/>
+		<setting id="playlist_3_stop_when_starting" type="bool" label="30974" default="false" visible="eq(-8,true) + gt(-31,2)" subsetting="true"/>
+		<setting id="playlist_3_high_prio_hd" type="bool" label="30975" default="true" visible="eq(-9,true) + gt(-32,2)" subsetting="true"/>
+		<setting id="playlist_3_priority" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-10,true) + gt(-33,2)" subsetting="true"/>
 		
-		<setting type="sep" visible="gt(-40,3)"/>
-		<setting label="59917" type="lsep" visible="gt(-41,3)"/>
-		<setting id="playlist_4_enabled" type="bool" label="59904" default="false" visible="gt(-42,0)"/>
-		<setting id="playlist_4_display_name" label="59914" type="text" default="Playlist_4" visible="eq(-1,true) + gt(-43,0)"/>
-		<setting id="playlist_4_refr" type="bool" label="60008" default="false" visible="eq(2,0) + eq(-2,true) + gt(-44,0)"/>
-		<setting id="playlist_4_refr_days" label="60009" type="slider" default="7" range="0,30" option="int" visible="eq(1,0) + eq(-1,true) + eq(-3,true) + gt(-45,0)"/>
-		<setting id="playlist_4_source" label="59907" type="enum" default="0" lvalues="59919|59908" visible="eq(-4,true) + gt(-46,0)"/>
-		<setting id="playlist_4_url" label="59906" type="text" visible="eq(-1,0) + eq(-5,true) + gt(-47,0)" default=""/>
-		<setting id="playlist_4_file" label="59908" type="file" visible="eq(-2,1) + eq(-6,true) + gt(-48,0)" default=""/>
-		<setting id="playlist_4_user_agent" label="55001" type="text" visible="eq(-7,true) + gt(-49,0)" default=""/>
-		<setting id="playlist_4_stop_when_starting" type="bool" label="30974" default="false" visible="eq(-8,true) + gt(-50,0)"/>
-		<setting id="playlist_4_high_prio_hd" type="bool" label="30975" default="true" visible="eq(-9,true) + gt(-51,0)"/>
-		<setting id="playlist_4_priority" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-10,true) + gt(-52,0)"/>
+		<setting id="playlist_4_enabled" type="bool" label="59917" default="false" visible="gt(-34,3)"/>
+		<setting id="playlist_4_display_name" label="59914" type="text" default="Playlist_4" visible="eq(-1,true) + gt(-35,3)" subsetting="true"/>
+		<setting id="playlist_4_refr" type="bool" label="60008" default="false" visible="eq(2,0) + eq(-2,true) + gt(-36,3)" subsetting="true"/>
+		<setting id="playlist_4_refr_days" label="60009" type="slider" default="7" range="0,30" option="int" visible="eq(1,0) + eq(-1,true) + eq(-3,true) + gt(-37,3)" subsetting="true"/>
+		<setting id="playlist_4_source" label="59907" type="enum" default="0" lvalues="59919|59908" visible="eq(-4,true) + gt(-38,3)" subsetting="true"/>
+		<setting id="playlist_4_url" label="59906" type="text" visible="eq(-1,0) + eq(-5,true) + gt(-39,3)" default="" subsetting="true"/>
+		<setting id="playlist_4_file" label="59908" type="file" visible="eq(-2,1) + eq(-6,true) + gt(-40,3)" default="" subsetting="true"/>
+		<setting id="playlist_4_user_agent" label="55001" type="text" visible="eq(-7,true) + gt(-41,3)" default="" subsetting="true"/>
+		<setting id="playlist_4_stop_when_starting" type="bool" label="30974" default="false" visible="eq(-8,true) + gt(-42,3)" subsetting="true"/>
+		<setting id="playlist_4_high_prio_hd" type="bool" label="30975" default="true" visible="eq(-9,true) + gt(-43,3)" subsetting="true"/>
+		<setting id="playlist_4_priority" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-10,true) + gt(-44,3)" subsetting="true"/>
 		
-		<setting type="sep" visible="gt(-53,4)"/>
-		<setting label="59918" type="lsep" visible="gt(-54,4)"/>
-		<setting id="playlist_5_enabled" type="bool" label="59904" default="false" visible="gt(-55,0)"/>
-		<setting id="playlist_5_display_name" label="59914" type="text" default="Playlist_5" visible="eq(-1,true) + gt(-56,0)"/>
-		<setting id="playlist_5_refr" type="bool" label="60008" default="false" visible="eq(2,0) + eq(-2,true) + gt(-57,0)"/>
-		<setting id="playlist_5_refr_days" label="60009" type="slider" default="7" range="0,30" option="int" visible="eq(1,0) + eq(-1,true) + eq(-3,true) + gt(-58,0)"/>
-		<setting id="playlist_5_source" label="59907" type="enum" default="0" lvalues="59919|59908" visible="eq(-4,true) + gt(-59,0)"/>
-		<setting id="playlist_5_url" label="59906" type="text" visible="eq(-1,0) + eq(-5,true) + gt(-60,0)" default=""/>
-		<setting id="playlist_5_file" label="59908" type="file" visible="eq(-2,1) + eq(-6,true) + gt(-61,0)" default=""/>
-		<setting id="playlist_5_user_agent" label="55001" type="text" visible="eq(-7,true) + gt(-62,0)" default=""/>
-		<setting id="playlist_5_stop_when_starting" type="bool" label="30974" default="false" visible="eq(-8,true) + gt(-63,0)"/>
-		<setting id="playlist_5_high_prio_hd" type="bool" label="30975" default="true" visible="eq(-9,true) + gt(-64,0)"/>
-		<setting id="playlist_5_priority" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-10,true) + gt(-65,0)"/>
+		<setting id="playlist_5_enabled" type="bool" label="59918" default="false" visible="gt(-45,4)"/>
+		<setting id="playlist_5_display_name" label="59914" type="text" default="Playlist_5" visible="eq(-1,true) + gt(-46,4)" subsetting="true"/>
+		<setting id="playlist_5_refr" type="bool" label="60008" default="false" visible="eq(2,0) + eq(-2,true) + gt(-47,4)" subsetting="true"/>
+		<setting id="playlist_5_refr_days" label="60009" type="slider" default="7" range="0,30" option="int" visible="eq(1,0) + eq(-1,true) + eq(-3,true) + gt(-48,4)" subsetting="true"/>
+		<setting id="playlist_5_source" label="59907" type="enum" default="0" lvalues="59919|59908" visible="eq(-4,true) + gt(-49,4)" subsetting="true"/>
+		<setting id="playlist_5_url" label="59906" type="text" visible="eq(-1,0) + eq(-5,true) + gt(-50,4)" default="" subsetting="true"/>
+		<setting id="playlist_5_file" label="59908" type="file" visible="eq(-2,1) + eq(-6,true) + gt(-51,4)" default="" subsetting="true"/>
+		<setting id="playlist_5_user_agent" label="55001" type="text" visible="eq(-7,true) + gt(-52,4)" default="" subsetting="true"/>
+		<setting id="playlist_5_stop_when_starting" type="bool" label="30974" default="false" visible="eq(-8,true) + gt(-53,4)" subsetting="true"/>
+		<setting id="playlist_5_high_prio_hd" type="bool" label="30975" default="true" visible="eq(-9,true) + gt(-54,4)" subsetting="true"/>
+		<setting id="playlist_5_priority" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-10,true) + gt(-55,4)" subsetting="true"/>
 	</category>
 
 	<category label="30101">

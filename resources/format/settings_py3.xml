@@ -43,170 +43,29 @@
 			</group>
 		</category>
 		<category help="95006" id="services" label="55007">
-			<group id="1"/>
-			<group id="2"/>
-			<group id="3" label="59920">
-				<setting help="95007" id="cmore_enabled" label="59904" type="boolean">
+			<group id="1">
+				<setting help="95016" id="country_service" label="60014" type="string">
 					<level>0</level>
-					<default>false</default>
-					<control type="toggle"/>
-				</setting>
-				<setting help="95008" id="cmore_locale" label="30368" type="string">
-					<level>0</level>
-					<default>cmore.se</default>
+					<default>0</default>
 					<constraints>
 						<options>
-							<option label="cmore.se">cmore.se</option>
-							<option label="cmore.dk">cmore.dk</option>
-							<option label="cmore.no">cmore.no</option>
+							<option label="59933">0</option>
+							<option label="59934">1</option>
 						</options>
 					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="is" setting="cmore_enabled">true</condition>
-						</dependency>
-					</dependencies>
-					<control format="string" type="list">
-						<heading>30368</heading>
-					</control>
-				</setting>
-				<setting help="95009" id="cmore_tv_provider_login" label="30369" type="boolean">
-					<level>0</level>
-					<default>false</default>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="is" setting="cmore_enabled">true</condition>
-						</dependency>
-					</dependencies>
-					<control type="toggle"/>
-				</setting>
-				<setting help="95010" id="cmore_username" label="55002" type="string">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<and>
-								<condition operator="is" setting="cmore_enabled">true</condition>
-								<condition operator="is" setting="cmore_tv_provider_login">false</condition>
-							</and>
-						</dependency>
-					</dependencies>
-					<control format="string" type="edit">
-						<heading>55002</heading>
-					</control>
-				</setting>
-				<setting help="95011" id="cmore_password" label="55003" type="string">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<and>
-								<condition operator="is" setting="cmore_enabled">true</condition>
-								<condition operator="is" setting="cmore_tv_provider_login">false</condition>
-							</and>
-						</dependency>
-					</dependencies>
-					<control format="string" type="edit">
-						<heading>55003</heading>
-						<hidden>true</hidden>
-					</control>
-				</setting>
-				<setting help="95012" id="priority_cmore" label="55009" type="integer">
-					<level>0</level>
-					<default>6</default>
-					<constraints>
-						<options>
-							<option label="55010">0</option>
-							<option label="55011">1</option>
-							<option label="55017">2</option>
-							<option label="55012">3</option>
-							<option label="55018">4</option>
-							<option label="55013">5</option>
-							<option label="55019">6</option>
-							<option label="55014">7</option>
-							<option label="55020">8</option>
-							<option label="55021">9</option>
-							<option label="55022">10</option>
-							<option label="55023">11</option>
-						</options>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="is" setting="cmore_enabled">true</condition>
-						</dependency>
-					</dependencies>
 					<control format="string" type="spinner"/>
 				</setting>
-				<setting help="95013" id="clear_cmore" label="30371" type="action">
-					<level>0</level>
-					<data>RunScript(special://home/addons/script.mtvguide/clearcmore.py,clearCMore)</data>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="is" setting="cmore_enabled">true</condition>
-						</dependency>
-					</dependencies>
-					<control format="action" type="button"/>
-				</setting>
-			</group>
-			<group id="4"/>
-			<group id="5"/>
-			<group id="6"/>
-			<group id="7"/>
-			<!--<group id="7" label="59922">
-				<setting help="95007" id="francetv_enabled" label="59904" type="boolean">
+				<setting help="95007" id="ipla_enabled" label="80006" type="boolean">
 					<level>0</level>
 					<default>false</default>
-					<control type="toggle"/>
-				</setting>
-				<setting help="95012" id="priority_francetv" label="55009" type="integer">
-					<level>0</level>
-					<default>6</default>
-					<constraints>
-						<options>
-							<option label="55010">0</option>
-							<option label="55011">1</option>
-							<option label="55017">2</option>
-							<option label="55012">3</option>
-							<option label="55018">4</option>
-							<option label="55013">5</option>
-							<option label="55019">6</option>
-							<option label="55014">7</option>
-							<option label="55020">8</option>
-							<option label="55021">9</option>
-							<option label="55022">10</option>
-							<option label="55023">11</option>
-						</options>
-					</constraints>
 					<dependencies>
 						<dependency type="visible">
-							<condition operator="is" setting="francetv_enabled">true</condition>
+							<condition operator="is" setting="country_service">0</condition>
 						</dependency>
 					</dependencies>
-					<control format="string" type="spinner"/>
-				</setting>
-			</group>-->
-			<group id="8"/>
-			<group id="9"/>
-			
-			<group id="12"/>
-			<group id="13"/>
-			<group id="14"/>
-			<group id="15" label="80006">
-				<setting help="95007" id="ipla_enabled" label="59904" type="boolean">
-					<level>0</level>
-					<default>false</default>
 					<control type="toggle"/>
 				</setting>
-				<setting help="95010" id="ipla_username" label="55002" type="string">
+				<setting help="95010" id="ipla_username" label="55002" type="string" parent="ipla_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -215,13 +74,14 @@
 					<dependencies>
 						<dependency type="visible">
 							<condition operator="is" setting="ipla_enabled">true</condition>
+							<condition operator="is" setting="country_service">0</condition>
 						</dependency>
 					</dependencies>
 					<control format="string" type="edit">
 						<heading>55002</heading>
 					</control>
 				</setting>
-				<setting help="95011" id="ipla_password" label="55003" type="string">
+				<setting help="95011" id="ipla_password" label="55003" type="string" parent="ipla_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -230,6 +90,7 @@
 					<dependencies>
 						<dependency type="visible">
 							<condition operator="is" setting="ipla_enabled">true</condition>
+							<condition operator="is" setting="country_service">0</condition>
 						</dependency>
 					</dependencies>
 					<control format="string" type="edit">
@@ -237,7 +98,7 @@
 						<hidden>true</hidden>
 					</control>
 				</setting>
-				<setting help="95014" id="ipla_client" label="30368" type="string">
+				<setting help="95014" id="ipla_client" label="30368" type="string" parent="ipla_enabled">
 					<level>0</level>
 					<default>Ipla</default>
 					<constraints>
@@ -249,13 +110,14 @@
 					<dependencies>
 						<dependency type="visible">
 							<condition operator="is" setting="ipla_enabled">true</condition>
+							<condition operator="is" setting="country_service">0</condition>
 						</dependency>
 					</dependencies>
 					<control format="string" type="list">
 						<heading>30368</heading>
 					</control>
 				</setting>
-				<setting help="95012" id="priority_ipla" label="55009" type="integer">
+				<setting help="95012" id="priority_ipla" label="55009" type="integer" parent="ipla_enabled">
 					<level>0</level>
 					<default>6</default>
 					<constraints>
@@ -277,11 +139,12 @@
 					<dependencies>
 						<dependency type="visible">
 							<condition operator="is" setting="ipla_enabled">true</condition>
+							<condition operator="is" setting="country_service">0</condition>
 						</dependency>
 					</dependencies>
 					<control format="string" type="spinner"/>
 				</setting>
-				<setting help="" id="ipla_device_id" type="string">
+				<setting help="" id="ipla_device_id" type="string" parent="ipla_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -292,7 +155,7 @@
 						<heading/>
 					</control>
 				</setting>
-				<setting help="" id="ipla_client_id" type="string">
+				<setting help="" id="ipla_client_id" type="string" parent="ipla_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -303,7 +166,7 @@
 						<heading/>
 					</control>
 				</setting>
-				<setting help="" id="ipla_id_" type="string">
+				<setting help="" id="ipla_id_" type="string" parent="ipla_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -314,7 +177,7 @@
 						<heading/>
 					</control>
 				</setting>
-				<setting help="" id="ipla_sesstoken" type="string">
+				<setting help="" id="ipla_sesstoken" type="string" parent="ipla_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -325,7 +188,7 @@
 						<heading/>
 					</control>
 				</setting>
-				<setting help="" id="ipla_sessexpir" type="string">
+				<setting help="" id="ipla_sessexpir" type="string" parent="ipla_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -336,7 +199,7 @@
 						<heading/>
 					</control>
 				</setting>
-				<setting help="" id="ipla_sesskey" type="string">
+				<setting help="" id="ipla_sesskey" type="string" parent="ipla_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -347,7 +210,7 @@
 						<heading/>
 					</control>
 				</setting>
-				<setting help="" id="ipla_myperm" type="string">
+				<setting help="" id="ipla_myperm" type="string" parent="ipla_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -358,14 +221,17 @@
 						<heading/>
 					</control>
 				</setting>
-			</group>
-			<group id="16" label="59923">
-				<setting help="95007" id="ncplusgo_enabled" label="59904" type="boolean">
+				<setting help="95007" id="ncplusgo_enabled" label="59923" type="boolean">
 					<level>0</level>
 					<default>false</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="country_service">0</condition>
+						</dependency>
+					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<setting help="95010" id="ncplusgo_username" label="55002" type="string">
+				<setting help="95010" id="ncplusgo_username" label="55002" type="string" parent="ncplusgo_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -374,13 +240,14 @@
 					<dependencies>
 						<dependency type="visible">
 							<condition operator="is" setting="ncplusgo_enabled">true</condition>
+							<condition operator="is" setting="country_service">0</condition>
 						</dependency>
 					</dependencies>
 					<control format="string" type="edit">
 						<heading>55002</heading>
 					</control>
 				</setting>
-				<setting help="95011" id="ncplusgo_password" label="55003" type="string">
+				<setting help="95011" id="ncplusgo_password" label="55003" type="string" parent="ncplusgo_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -389,6 +256,7 @@
 					<dependencies>
 						<dependency type="visible">
 							<condition operator="is" setting="ncplusgo_enabled">true</condition>
+							<condition operator="is" setting="country_service">0</condition>
 						</dependency>
 					</dependencies>
 					<control format="string" type="edit">
@@ -396,7 +264,7 @@
 						<hidden>true</hidden>
 					</control>
 				</setting>
-				<setting help="95012" id="priority_ncplusgo" label="55009" type="integer">
+				<setting help="95012" id="priority_ncplusgo" label="55009" type="integer" parent="ncplusgo_enabled">
 					<level>0</level>
 					<default>6</default>
 					<constraints>
@@ -418,82 +286,66 @@
 					<dependencies>
 						<dependency type="visible">
 							<condition operator="is" setting="ncplusgo_enabled">true</condition>
+							<condition operator="is" setting="country_service">0</condition>
 						</dependency>
 					</dependencies>
 					<control format="string" type="spinner"/>
 				</setting>
-				<setting help="" id="ncplusgo_imei" type="string">
+				<setting help="" id="ncplusgo_imei" type="string" parent="ncplusgo_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
 						<allowempty>true</allowempty>
 					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition name="InfoBool" on="property">false</condition>
-						</dependency>
-					</dependencies>
 					<visible>false</visible>
 					<control format="string" type="edit">
 						<heading/>
 					</control>
 				</setting>
-				<setting help="" id="ncplusgo_ftimenow" type="string">
+				<setting help="" id="ncplusgo_ftimenow" type="string" parent="ncplusgo_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
 						<allowempty>true</allowempty>
 					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition name="InfoBool" on="property">false</condition>
-						</dependency>
-					</dependencies>
 					<visible>false</visible>
 					<control format="string" type="edit">
 						<heading/>
 					</control>
 				</setting>
-				<setting help="" id="ncplusgo_dev2repl" type="string">
+				<setting help="" id="ncplusgo_dev2repl" type="string" parent="ncplusgo_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
 						<allowempty>true</allowempty>
 					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition name="InfoBool" on="property">false</condition>
-						</dependency>
-					</dependencies>
 					<visible>false</visible>
 					<control format="string" type="edit">
 						<heading/>
 					</control>
 				</setting>
-				<setting help="" id="ncplusgo_ncToken" type="string">
+				<setting help="" id="ncplusgo_ncToken" type="string" parent="ncplusgo_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
 						<allowempty>true</allowempty>
 					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition name="InfoBool" on="property">false</condition>
-						</dependency>
-					</dependencies>
 					<visible>false</visible>
 					<control format="string" type="edit">
 						<heading/>
 					</control>
 				</setting>
-			</group>
-			<group id="17" label="30903">
-				<setting help="95007" id="playerpl_enabled" label="59904" type="boolean">
+				<setting help="95007" id="playerpl_enabled" label="30903" type="boolean">
 					<level>0</level>
 					<default>false</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="country_service">0</condition>
+						</dependency>
+					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<setting help="95012" id="priority_playerpl" label="55009" type="integer">
+				<setting help="95012" id="priority_playerpl" label="55009" type="integer" parent="playerpl_enabled">
 					<level>0</level>
 					<default>6</default>
 					<constraints>
@@ -515,21 +367,23 @@
 					<dependencies>
 						<dependency type="visible">
 							<condition operator="is" setting="playerpl_enabled">true</condition>
+							<condition operator="is" setting="country_service">0</condition>
 						</dependency>
 					</dependencies>
 					<control format="string" type="spinner"/>
 				</setting>
-				<setting help="95007" id="playerpl_subtitles" label="30760" type="boolean">
+				<setting help="" id="playerpl_subtitles" label="30760" type="boolean" parent="playerpl_enabled">
 					<level>0</level>
 					<default>true</default>
 					<dependencies>
 						<dependency type="visible">
 							<condition operator="is" setting="playerpl_enabled">true</condition>
+							<condition operator="is" setting="country_service">0</condition>
 						</dependency>
 					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<setting help="95013" id="clear_playerpl" label="30371" type="action">
+				<setting help="95013" id="clear_playerpl" label="30371" type="action" parent="playerpl_enabled">
 					<level>0</level>
 					<data>RunScript(special://home/addons/script.mtvguide/clearplayerpl.py,clearPlayerPL)</data>
 					<constraints>
@@ -538,11 +392,12 @@
 					<dependencies>
 						<dependency type="visible">
 							<condition operator="is" setting="playerpl_enabled">true</condition>
+							<condition operator="is" setting="country_service">0</condition>
 						</dependency>
 					</dependencies>
 					<control format="action" type="button"/>
 				</setting>
-				<setting help="" id="playerpl_access_token" type="string">
+				<setting help="" id="playerpl_access_token" type="string" parent="playerpl_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -553,7 +408,7 @@
 						<heading/>
 					</control>
 				</setting>
-				<setting help="" id="playerpl_user_pub" type="string">
+				<setting help="" id="playerpl_user_pub" type="string" parent="playerpl_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -564,7 +419,7 @@
 						<heading/>
 					</control>
 				</setting>
-				<setting help="" id="playerpl_user_hash" type="string">
+				<setting help="" id="playerpl_user_hash" type="string" parent="playerpl_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -575,7 +430,7 @@
 						<heading/>
 					</control>
 				</setting>
-				<setting help="" id="playerpl_refresh_token" type="string">
+				<setting help="" id="playerpl_refresh_token" type="string" parent="playerpl_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -586,7 +441,7 @@
 						<heading/>
 					</control>
 				</setting>
-				<setting help="" id="playerpl_device_id" type="string">
+				<setting help="" id="playerpl_device_id" type="string" parent="playerpl_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -597,7 +452,7 @@
 						<heading/>
 					</control>
 				</setting>
-				<setting help="" id="playerpl_token" type="string">
+				<setting help="" id="playerpl_token" type="string" parent="playerpl_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -608,7 +463,7 @@
 						<heading/>
 					</control>
 				</setting>
-				<setting help="" id="playerpl_maker_id" type="string">
+				<setting help="" id="playerpl_maker_id" type="string" parent="playerpl_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -619,7 +474,7 @@
 						<heading/>
 					</control>
 				</setting>
-				<setting help="" id="playerpl_usagent_id" type="string">
+				<setting help="" id="playerpl_usagent_id" type="string" parent="playerpl_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -630,7 +485,7 @@
 						<heading/>
 					</control>
 				</setting>
-				<setting help="" id="playerpl_usagentver_id" type="string">
+				<setting help="" id="playerpl_usagentver_id" type="string" parent="playerpl_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -641,7 +496,7 @@
 						<heading/>
 					</control>
 				</setting>
-				<setting help="" id="playerpl_selected_profile" type="string">
+				<setting help="" id="playerpl_selected_profile" type="string" parent="playerpl_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -652,7 +507,7 @@
 						<heading/>
 					</control>
 				</setting>
-				<setting help="" id="playerpl_selected_profile_id" type="string">
+				<setting help="" id="playerpl_selected_profile_id" type="string" parent="playerpl_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -663,7 +518,7 @@
 						<heading/>
 					</control>
 				</setting>
-				<setting help="" id="playerpl_logged" type="string">
+				<setting help="" id="playerpl_logged" type="string" parent="playerpl_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -674,14 +529,17 @@
 						<heading/>
 					</control>
 				</setting>
-			</group>
-			<group id="18" label="80008">
-				<setting help="95007" id="polsatgo_enabled" label="59904" type="boolean">
+				<setting help="95007" id="polsatgo_enabled" label="80008" type="boolean">
 					<level>0</level>
 					<default>false</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="country_service">0</condition>
+						</dependency>
+					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<setting help="95010" id="polsatgo_username" label="55002" type="string">
+				<setting help="95010" id="polsatgo_username" label="55002" type="string" parent="polsatgo_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -690,13 +548,14 @@
 					<dependencies>
 						<dependency type="visible">
 							<condition operator="is" setting="polsatgo_enabled">true</condition>
+							<condition operator="is" setting="country_service">0</condition>
 						</dependency>
 					</dependencies>
 					<control format="string" type="edit">
 						<heading>55002</heading>
 					</control>
 				</setting>
-				<setting help="95011" id="polsatgo_password" label="55003" type="string">
+				<setting help="95011" id="polsatgo_password" label="55003" type="string" parent="polsatgo_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -705,6 +564,7 @@
 					<dependencies>
 						<dependency type="visible">
 							<condition operator="is" setting="polsatgo_enabled">true</condition>
+							<condition operator="is" setting="country_service">0</condition>
 						</dependency>
 					</dependencies>
 					<control format="string" type="edit">
@@ -712,7 +572,7 @@
 						<hidden>true</hidden>
 					</control>
 				</setting>
-				<setting help="95012" id="priority_polsatgo" label="55009" type="integer">
+				<setting help="95012" id="priority_polsatgo" label="55009" type="integer" parent="polsatgo_enabled">
 					<level>0</level>
 					<default>6</default>
 					<constraints>
@@ -734,18 +594,22 @@
 					<dependencies>
 						<dependency type="visible">
 							<condition operator="is" setting="polsatgo_enabled">true</condition>
+							<condition operator="is" setting="country_service">0</condition>
 						</dependency>
 					</dependencies>
 					<control format="string" type="spinner"/>
 				</setting>
-			</group>
-			<group id="19" label="59921">
-				<setting help="95007" id="pgobox_enabled" label="59904" type="boolean">
+				<setting help="95007" id="pgobox_enabled" label="59921" type="boolean">
 					<level>0</level>
 					<default>false</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="country_service">0</condition>
+						</dependency>
+					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<setting help="95010" id="pgobox_username" label="55002" type="string">
+				<setting help="95010" id="pgobox_username" label="55002" type="string" parent="pgobox_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -754,13 +618,14 @@
 					<dependencies>
 						<dependency type="visible">
 							<condition operator="is" setting="pgobox_enabled">true</condition>
+							<condition operator="is" setting="country_service">0</condition>
 						</dependency>
 					</dependencies>
 					<control format="string" type="edit">
 						<heading>55002</heading>
 					</control>
 				</setting>
-				<setting help="95011" id="pgobox_password" label="55003" type="string">
+				<setting help="95011" id="pgobox_password" label="55003" type="string" parent="pgobox_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -769,6 +634,7 @@
 					<dependencies>
 						<dependency type="visible">
 							<condition operator="is" setting="pgobox_enabled">true</condition>
+							<condition operator="is" setting="country_service">0</condition>
 						</dependency>
 					</dependencies>
 					<control format="string" type="edit">
@@ -776,7 +642,7 @@
 						<hidden>true</hidden>
 					</control>
 				</setting>
-				<setting help="95014" id="pgobox_client" label="30368" type="string">
+				<setting help="95014" id="pgobox_client" label="30368" type="string" parent="pgobox_enabled">
 					<level>0</level>
 					<default>Polsat Box</default>
 					<constraints>
@@ -789,13 +655,14 @@
 					<dependencies>
 						<dependency type="visible">
 							<condition operator="is" setting="pgobox_enabled">true</condition>
+							<condition operator="is" setting="country_service">0</condition>
 						</dependency>
 					</dependencies>
 					<control format="string" type="list">
 						<heading>30368</heading>
 					</control>
 				</setting>
-				<setting help="95012" id="priority_pgobox" label="55009" type="integer">
+				<setting help="95012" id="priority_pgobox" label="55009" type="integer" parent="pgobox_enabled">
 					<level>0</level>
 					<default>6</default>
 					<constraints>
@@ -817,11 +684,12 @@
 					<dependencies>
 						<dependency type="visible">
 							<condition operator="is" setting="pgobox_enabled">true</condition>
+							<condition operator="is" setting="country_service">0</condition>
 						</dependency>
 					</dependencies>
 					<control format="string" type="spinner"/>
 				</setting>
-				<setting help="" id="pgobox_device_id" type="string">
+				<setting help="" id="pgobox_device_id" type="string" parent="pgobox_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -832,7 +700,7 @@
 						<heading/>
 					</control>
 				</setting>
-				<setting help="" id="pgobox_client_id" type="string">
+				<setting help="" id="pgobox_client_id" type="string" parent="pgobox_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -843,7 +711,7 @@
 						<heading/>
 					</control>
 				</setting>
-				<setting help="" id="pgobox_id_" type="string">
+				<setting help="" id="pgobox_id_" type="string" parent="pgobox_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -854,7 +722,7 @@
 						<heading/>
 					</control>
 				</setting>
-				<setting help="" id="pgobox_sesstoken" type="string">
+				<setting help="" id="pgobox_sesstoken" type="string" parent="pgobox_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -865,7 +733,7 @@
 						<heading/>
 					</control>
 				</setting>
-				<setting help="" id="pgobox_sessexpir" type="string">
+				<setting help="" id="pgobox_sessexpir" type="string" parent="pgobox_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -876,7 +744,7 @@
 						<heading/>
 					</control>
 				</setting>
-				<setting help="" id="pgobox_sesskey" type="string">
+				<setting help="" id="pgobox_sesskey" type="string" parent="pgobox_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -887,7 +755,7 @@
 						<heading/>
 					</control>
 				</setting>
-				<setting help="" id="pgobox_myperm" type="string">
+				<setting help="" id="pgobox_myperm" type="string" parent="pgobox_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -898,175 +766,17 @@
 						<heading/>
 					</control>
 				</setting>
-			</group>
-			<group id="20" label="30904">
-				<setting help="95007" id="teliaplay_enabled" label="59904" type="boolean">
+				<setting help="95007" id="tvp_enabled" label="80007" type="boolean">
 					<level>0</level>
 					<default>false</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="country_service">0</condition>
+						</dependency>
+					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<setting help="95008" id="teliaplay_locale" label="30368" type="integer">
-					<level>0</level>
-					<default>0</default>
-					<constraints>
-						<options>
-							<option label="57056">0</option>
-							<option label="57057">1</option>
-						</options>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="is" setting="teliaplay_enabled">true</condition>
-						</dependency>
-					</dependencies>
-					<control format="string" type="list">
-						<heading>30368</heading>
-					</control>
-				</setting>
-				<setting help="95010" id="teliaplay_username" label="55002" type="string">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="is" setting="teliaplay_enabled">true</condition>
-						</dependency>
-					</dependencies>
-					<control format="string" type="edit">
-						<heading>55002</heading>
-					</control>
-				</setting>
-				<setting help="95011" id="teliaplay_password" label="55003" type="string">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="is" setting="teliaplay_enabled">true</condition>
-						</dependency>
-					</dependencies>
-					<control format="string" type="edit">
-						<heading>55003</heading>
-						<hidden>true</hidden>
-					</control>
-				</setting>
-				<setting help="95012" id="priority_teliaplay" label="55009" type="integer">
-					<level>0</level>
-					<default>6</default>
-					<constraints>
-						<options>
-							<option label="55010">0</option>
-							<option label="55011">1</option>
-							<option label="55017">2</option>
-							<option label="55012">3</option>
-							<option label="55018">4</option>
-							<option label="55013">5</option>
-							<option label="55019">6</option>
-							<option label="55014">7</option>
-							<option label="55020">8</option>
-							<option label="55021">9</option>
-							<option label="55022">10</option>
-							<option label="55023">11</option>
-						</options>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="is" setting="teliaplay_enabled">true</condition>
-						</dependency>
-					</dependencies>
-					<control format="string" type="spinner"/>
-				</setting>
-				<setting help="95013" id="clear_teliaplay" label="30371" type="action">
-					<level>0</level>
-					<data>RunScript(special://home/addons/script.mtvguide/clearteliaplay.py,clearTeliaPlay)</data>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="is" setting="teliaplay_enabled">true</condition>
-						</dependency>
-					</dependencies>
-					<control format="action" type="button"/>
-				</setting>
-				<setting help="" id="teliaplay_sess_id" type="string">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<visible>false</visible>
-					<control format="string" type="edit">
-						<heading/>
-					</control>
-				</setting>
-				<setting help="" id="teliaplay_devush" type="string">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<visible>false</visible>
-					<control format="string" type="edit">
-						<heading/>
-					</control>
-				</setting>
-				<setting help="" id="teliaplay_beartoken" type="string">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<visible>false</visible>
-					<control format="string" type="edit">
-						<heading/>
-					</control>
-				</setting>
-				<setting help="" id="teliaplay_refrtoken" type="string">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<visible>false</visible>
-					<control format="string" type="edit">
-						<heading/>
-					</control>
-				</setting>
-				<setting help="" id="teliaplay_cookies" type="string">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<visible>false</visible>
-					<control format="string" type="edit">
-						<heading/>
-					</control>
-				</setting>
-				<setting help="" id="teliaplay_usern" type="string">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<visible>false</visible>
-					<control format="string" type="edit">
-						<heading/>
-					</control>
-				</setting>
-			</group>
-			<group id="21" label="80007">
-				<setting help="95007" id="tvp_enabled" label="59904" type="boolean">
-					<level>0</level>
-					<default>false</default>
-					<control type="toggle"/>
-				</setting>
-				<setting help="95012" id="priority_tvp" label="55009" type="integer">
+				<setting help="95012" id="priority_tvp" label="55009" type="integer" parent="tvp_enabled">
 					<level>0</level>
 					<default>6</default>
 					<constraints>
@@ -1088,18 +798,22 @@
 					<dependencies>
 						<dependency type="visible">
 							<condition operator="is" setting="tvp_enabled">true</condition>
+							<condition operator="is" setting="country_service">0</condition>
 						</dependency>
 					</dependencies>
 					<control format="string" type="spinner"/>
 				</setting>
-			</group>
-			<group id="22" label="80005">
-				<setting help="95007" id="videostar_enabled" label="59904" type="boolean">
+				<setting help="95007" id="videostar_enabled" label="80005" type="boolean">
 					<level>0</level>
 					<default>false</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="country_service">0</condition>
+						</dependency>
+					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<setting help="95010" id="videostar_username" label="55002" type="string">
+				<setting help="95010" id="videostar_username" label="55002" type="string" parent="videostar_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -1108,13 +822,14 @@
 					<dependencies>
 						<dependency type="visible">
 							<condition operator="is" setting="videostar_enabled">true</condition>
+							<condition operator="is" setting="country_service">0</condition>
 						</dependency>
 					</dependencies>
 					<control format="string" type="edit">
 						<heading>55002</heading>
 					</control>
 				</setting>
-				<setting help="95011" id="videostar_password" label="55003" type="string">
+				<setting help="95011" id="videostar_password" label="55003" type="string" parent="videostar_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -1123,6 +838,7 @@
 					<dependencies>
 						<dependency type="visible">
 							<condition operator="is" setting="videostar_enabled">true</condition>
+							<condition operator="is" setting="country_service">0</condition>
 						</dependency>
 					</dependencies>
 					<control format="string" type="edit">
@@ -1130,7 +846,7 @@
 						<hidden>true</hidden>
 					</control>
 				</setting>
-				<setting help="" id="videostar_netviapisessid" label="69066" type="string">
+				<setting help="" id="videostar_netviapisessid" label="69066" type="string" parent="videostar_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -1139,13 +855,14 @@
 					<dependencies>
 						<dependency type="visible">
 							<condition operator="is" setting="videostar_enabled">true</condition>
+							<condition operator="is" setting="country_service">0</condition>
 						</dependency>
 					</dependencies>
 					<control format="string" type="edit">
 						<heading>69066</heading>
 					</control>
 				</setting>
-				<setting help="" id="videostar_netviapisessval" label="69067" type="string">
+				<setting help="" id="videostar_netviapisessval" label="69067" type="string" parent="videostar_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -1154,13 +871,14 @@
 					<dependencies>
 						<dependency type="visible">
 							<condition operator="is" setting="videostar_enabled">true</condition>
+							<condition operator="is" setting="country_service">0</condition>
 						</dependency>
 					</dependencies>
 					<control format="string" type="edit">
 						<heading>69067</heading>
 					</control>
 				</setting>
-				<setting help="" id="videostar_remote_cookies" label="69068" type="string">
+				<setting help="" id="videostar_remote_cookies" label="69068" type="string" parent="videostar_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -1169,13 +887,14 @@
 					<dependencies>
 						<dependency type="visible">
 							<condition operator="is" setting="videostar_enabled">true</condition>
+							<condition operator="is" setting="country_service">0</condition>
 						</dependency>
 					</dependencies>
 					<control format="string" type="edit">
 						<heading>69068</heading>
 					</control>
 				</setting>
-				<setting help="95012" id="priority_videostar" label="55009" type="integer">
+				<setting help="95012" id="priority_videostar" label="55009" type="integer" parent="videostar_enabled">
 					<level>0</level>
 					<default>6</default>
 					<constraints>
@@ -1197,9 +916,300 @@
 					<dependencies>
 						<dependency type="visible">
 							<condition operator="is" setting="videostar_enabled">true</condition>
+							<condition operator="is" setting="country_service">0</condition>
 						</dependency>
 					</dependencies>
 					<control format="string" type="spinner"/>
+				</setting>
+				<setting help="95007" id="cmore_enabled" label="59920" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="country_service">1</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting help="95008" id="cmore_locale" label="30368" type="string" parent="cmore_enabled">
+					<level>0</level>
+					<default>cmore.se</default>
+					<constraints>
+						<options>
+							<option label="cmore.se">cmore.se</option>
+							<option label="cmore.dk">cmore.dk</option>
+							<option label="cmore.no">cmore.no</option>
+						</options>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="cmore_enabled">true</condition>
+							<condition operator="is" setting="country_service">1</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="list">
+						<heading>30368</heading>
+					</control>
+				</setting>
+				<setting help="95009" id="cmore_tv_provider_login" label="30369" type="boolean" parent="cmore_enabled">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="cmore_enabled">true</condition>
+							<condition operator="is" setting="country_service">1</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting help="95010" id="cmore_username" label="55002" type="string" parent="cmore_enabled">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<and>
+								<condition operator="is" setting="cmore_enabled">true</condition>
+								<condition operator="is" setting="cmore_tv_provider_login">false</condition>
+								<condition operator="is" setting="country_service">1</condition>
+							</and>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>55002</heading>
+					</control>
+				</setting>
+				<setting help="95011" id="cmore_password" label="55003" type="string" parent="cmore_enabled">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<and>
+								<condition operator="is" setting="cmore_enabled">true</condition>
+								<condition operator="is" setting="cmore_tv_provider_login">false</condition>
+								<condition operator="is" setting="country_service">1</condition>
+							</and>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>55003</heading>
+						<hidden>true</hidden>
+					</control>
+				</setting>
+				<setting help="95012" id="priority_cmore" label="55009" type="integer" parent="cmore_enabled">
+					<level>0</level>
+					<default>6</default>
+					<constraints>
+						<options>
+							<option label="55010">0</option>
+							<option label="55011">1</option>
+							<option label="55017">2</option>
+							<option label="55012">3</option>
+							<option label="55018">4</option>
+							<option label="55013">5</option>
+							<option label="55019">6</option>
+							<option label="55014">7</option>
+							<option label="55020">8</option>
+							<option label="55021">9</option>
+							<option label="55022">10</option>
+							<option label="55023">11</option>
+						</options>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="cmore_enabled">true</condition>
+							<condition operator="is" setting="country_service">1</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="spinner"/>
+				</setting>
+				<setting help="95013" id="clear_cmore" label="30371" type="action" parent="cmore_enabled">
+					<level>0</level>
+					<data>RunScript(special://home/addons/script.mtvguide/clearcmore.py,clearCMore)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="cmore_enabled">true</condition>
+							<condition operator="is" setting="country_service">1</condition>
+						</dependency>
+					</dependencies>
+					<control format="action" type="button"/>
+				</setting>
+				<setting help="95007" id="teliaplay_enabled" label="30904" type="boolean">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="country_service">1</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting help="95008" id="teliaplay_locale" label="30368" type="integer" parent="teliaplay_enabled">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="57056">0</option>
+							<option label="57057">1</option>
+						</options>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="teliaplay_enabled">true</condition>
+							<condition operator="is" setting="country_service">1</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="list">
+						<heading>30368</heading>
+					</control>
+				</setting>
+				<setting help="95010" id="teliaplay_username" label="55002" type="string" parent="teliaplay_enabled">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="teliaplay_enabled">true</condition>
+							<condition operator="is" setting="country_service">1</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>55002</heading>
+					</control>
+				</setting>
+				<setting help="95011" id="teliaplay_password" label="55003" type="string" parent="teliaplay_enabled">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="teliaplay_enabled">true</condition>
+							<condition operator="is" setting="country_service">1</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>55003</heading>
+						<hidden>true</hidden>
+					</control>
+				</setting>
+				<setting help="95012" id="priority_teliaplay" label="55009" type="integer" parent="teliaplay_enabled">
+					<level>0</level>
+					<default>6</default>
+					<constraints>
+						<options>
+							<option label="55010">0</option>
+							<option label="55011">1</option>
+							<option label="55017">2</option>
+							<option label="55012">3</option>
+							<option label="55018">4</option>
+							<option label="55013">5</option>
+							<option label="55019">6</option>
+							<option label="55014">7</option>
+							<option label="55020">8</option>
+							<option label="55021">9</option>
+							<option label="55022">10</option>
+							<option label="55023">11</option>
+						</options>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="teliaplay_enabled">true</condition>
+							<condition operator="is" setting="country_service">1</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="spinner"/>
+				</setting>
+				<setting help="95013" id="clear_teliaplay" label="30371" type="action" parent="teliaplay_enabled">
+					<level>0</level>
+					<data>RunScript(special://home/addons/script.mtvguide/clearteliaplay.py,clearTeliaPlay)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="teliaplay_enabled">true</condition>
+							<condition operator="is" setting="country_service">1</condition>
+						</dependency>
+					</dependencies>
+					<control format="action" type="button"/>
+				</setting>
+				<setting help="" id="teliaplay_sess_id" type="string" parent="teliaplay_enabled">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<visible>false</visible>
+					<control format="string" type="edit">
+						<heading/>
+					</control>
+				</setting>
+				<setting help="" id="teliaplay_devush" type="string" parent="teliaplay_enabled">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<visible>false</visible>
+					<control format="string" type="edit">
+						<heading/>
+					</control>
+				</setting>
+				<setting help="" id="teliaplay_beartoken" type="string" parent="teliaplay_enabled">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<visible>false</visible>
+					<control format="string" type="edit">
+						<heading/>
+					</control>
+				</setting>
+				<setting help="" id="teliaplay_refrtoken" type="string" parent="teliaplay_enabled">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<visible>false</visible>
+					<control format="string" type="edit">
+						<heading/>
+					</control>
+				</setting>
+				<setting help="" id="teliaplay_cookies" type="string" parent="teliaplay_enabled">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<visible>false</visible>
+					<control format="string" type="edit">
+						<heading/>
+					</control>
+				</setting>
+				<setting help="" id="teliaplay_usern" type="string" parent="teliaplay_enabled">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<visible>false</visible>
+					<control format="string" type="edit">
+						<heading/>
+					</control>
 				</setting>
 			</group>
 		</category>
@@ -1220,10 +1230,7 @@
 					</constraints>
 					<control format="string" type="spinner"/>
 				</setting>
-			</group>
-			<group id="2"/>
-			<group id="3" label="59911">
-				<setting help="95017" id="playlist_1_enabled" label="59904" type="boolean">
+				<setting help="95017" id="playlist_1_enabled" label="59911" type="boolean">
 					<level>0</level>
 					<default>false</default>
 					<dependencies>
@@ -1233,7 +1240,7 @@
 					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<setting help="95018" id="playlist_1_display_name" label="59914" type="string">
+				<setting help="95018" id="playlist_1_display_name" label="59914" type="string" parent="playlist_1_enabled">
 					<level>0</level>
 					<default>Playlist_1</default>
 					<dependencies>
@@ -1248,7 +1255,7 @@
 						<heading>59914</heading>
 					</control>
 				</setting>
-				<setting help="95131" id="playlist_1_refr" label="60008" type="boolean">
+				<setting help="95131" id="playlist_1_refr" label="60008" type="boolean" parent="playlist_1_enabled">
 					<level>3</level>
 					<default>false</default>
 					<dependencies>
@@ -1260,7 +1267,7 @@
 					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<setting help="95132" id="playlist_1_refr_days" label="60009" type="integer">
+				<setting help="95132" id="playlist_1_refr_days" label="60009" type="integer" parent="playlist_1_enabled">
 					<level>3</level>
 					<default>7</default>
 					<constraints>
@@ -1279,7 +1286,7 @@
 						<popup>false</popup>
 					</control>
 				</setting>
-				<setting help="95019" id="playlist_1_source" label="59907" type="integer">
+				<setting help="95019" id="playlist_1_source" label="59907" type="integer" parent="playlist_1_enabled">
 					<level>0</level>
 					<default>0</default>
 					<constraints>
@@ -1298,7 +1305,7 @@
 					</dependencies>
 					<control format="string" type="spinner"/>
 				</setting>
-				<setting help="95020" id="playlist_1_url" label="59906" type="string">
+				<setting help="95020" id="playlist_1_url" label="59906" type="string" parent="playlist_1_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -1317,7 +1324,7 @@
 						<heading>59906</heading>
 					</control>
 				</setting>
-				<setting help="95021" id="playlist_1_file" label="59908" type="path">
+				<setting help="95021" id="playlist_1_file" label="59908" type="path" parent="playlist_1_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -1337,7 +1344,7 @@
 						<heading>59908</heading>
 					</control>
 				</setting>
-				<setting help="95129" id="playlist_1_user_agent" label="55001" type="string">
+				<setting help="95129" id="playlist_1_user_agent" label="55001" type="string" parent="playlist_1_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -1355,7 +1362,7 @@
 						<heading>55001</heading>
 					</control>
 				</setting>
-				<setting help="95022" id="playlist_1_stop_when_starting" label="30974" type="boolean">
+				<setting help="95022" id="playlist_1_stop_when_starting" label="30974" type="boolean" parent="playlist_1_enabled">
 					<level>2</level>
 					<default>false</default>
 					<dependencies>
@@ -1368,7 +1375,7 @@
 					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<setting help="95023" id="playlist_1_high_prio_hd" label="30975" type="boolean">
+				<setting help="95023" id="playlist_1_high_prio_hd" label="30975" type="boolean" parent="playlist_1_enabled">
 					<level>2</level>
 					<default>true</default>
 					<dependencies>
@@ -1381,7 +1388,7 @@
 					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<setting help="95012" id="playlist_1_priority" label="55009" type="integer">
+				<setting help="95012" id="playlist_1_priority" label="55009" type="integer" parent="playlist_1_enabled">
 					<level>1</level>
 					<default>6</default>
 					<constraints>
@@ -1410,10 +1417,7 @@
 					</dependencies>
 					<control format="string" type="spinner"/>
 				</setting>
-			</group>
-			<group id="4"/>
-			<group id="5" label="59912">
-				<setting help="95017" id="playlist_2_enabled" label="59904" type="boolean">
+				<setting help="95017" id="playlist_2_enabled" label="59912" type="boolean">
 					<level>0</level>
 					<default>false</default>
 					<dependencies>
@@ -1423,7 +1427,7 @@
 					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<setting help="95018" id="playlist_2_display_name" label="59914" type="string">
+				<setting help="95018" id="playlist_2_display_name" label="59914" type="string" parent="playlist_2_enabled">
 					<level>0</level>
 					<default>Playlist_2</default>
 					<dependencies>
@@ -1438,7 +1442,7 @@
 						<heading>59914</heading>
 					</control>
 				</setting>
-				<setting help="95131" id="playlist_2_refr" label="60008" type="boolean">
+				<setting help="95131" id="playlist_2_refr" label="60008" type="boolean" parent="playlist_2_enabled">
 					<level>3</level>
 					<default>false</default>
 					<dependencies>
@@ -1450,7 +1454,7 @@
 					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<setting help="95132" id="playlist_2_refr_days" label="60009" type="integer">
+				<setting help="95132" id="playlist_2_refr_days" label="60009" type="integer" parent="playlist_2_enabled">
 					<level>3</level>
 					<default>7</default>
 					<constraints>
@@ -1469,7 +1473,7 @@
 						<popup>false</popup>
 					</control>
 				</setting>
-				<setting help="95019" id="playlist_2_source" label="59907" type="integer">
+				<setting help="95019" id="playlist_2_source" label="59907" type="integer" parent="playlist_2_enabled">
 					<level>0</level>
 					<default>0</default>
 					<constraints>
@@ -1488,7 +1492,7 @@
 					</dependencies>
 					<control format="string" type="spinner"/>
 				</setting>
-				<setting help="95020" id="playlist_2_url" label="59906" type="string">
+				<setting help="95020" id="playlist_2_url" label="59906" type="string" parent="playlist_2_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -1507,7 +1511,7 @@
 						<heading>59906</heading>
 					</control>
 				</setting>
-				<setting help="95021" id="playlist_2_file" label="59908" type="path">
+				<setting help="95021" id="playlist_2_file" label="59908" type="path" parent="playlist_2_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -1527,7 +1531,7 @@
 						<heading>59908</heading>
 					</control>
 				</setting>
-				<setting help="95129" id="playlist_2_user_agent" label="55001" type="string">
+				<setting help="95129" id="playlist_2_user_agent" label="55001" type="string" parent="playlist_2_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -1545,7 +1549,7 @@
 						<heading>55001</heading>
 					</control>
 				</setting>
-				<setting help="95022" id="playlist_2_stop_when_starting" label="30974" type="boolean">
+				<setting help="95022" id="playlist_2_stop_when_starting" label="30974" type="boolean" parent="playlist_2_enabled">
 					<level>2</level>
 					<default>false</default>
 					<dependencies>
@@ -1558,7 +1562,7 @@
 					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<setting help="95023" id="playlist_2_high_prio_hd" label="30975" type="boolean">
+				<setting help="95023" id="playlist_2_high_prio_hd" label="30975" type="boolean" parent="playlist_2_enabled">
 					<level>2</level>
 					<default>true</default>
 					<dependencies>
@@ -1571,7 +1575,7 @@
 					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<setting help="95012" id="playlist_2_priority" label="55009" type="integer">
+				<setting help="95012" id="playlist_2_priority" label="55009" type="integer" parent="playlist_2_enabled">
 					<level>1</level>
 					<default>6</default>
 					<constraints>
@@ -1600,10 +1604,7 @@
 					</dependencies>
 					<control format="string" type="spinner"/>
 				</setting>
-			</group>
-			<group id="6"/>
-			<group id="7" label="59913">
-				<setting help="95017" id="playlist_3_enabled" label="59904" type="boolean">
+				<setting help="95017" id="playlist_3_enabled" label="59913" type="boolean">
 					<level>0</level>
 					<default>false</default>
 					<dependencies>
@@ -1613,7 +1614,7 @@
 					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<setting help="95018" id="playlist_3_display_name" label="59914" type="string">
+				<setting help="95018" id="playlist_3_display_name" label="59914" type="string" parent="playlist_3_enabled">
 					<level>0</level>
 					<default>Playlist_3</default>
 					<dependencies>
@@ -1628,7 +1629,7 @@
 						<heading>59914</heading>
 					</control>
 				</setting>
-				<setting help="95131" id="playlist_3_refr" label="60008" type="boolean">
+				<setting help="95131" id="playlist_3_refr" label="60008" type="boolean" parent="playlist_3_enabled">
 					<level>3</level>
 					<default>false</default>
 					<dependencies>
@@ -1640,7 +1641,7 @@
 					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<setting help="95132" id="playlist_3_refr_days" label="60009" type="integer">
+				<setting help="95132" id="playlist_3_refr_days" label="60009" type="integer" parent="playlist_3_enabled">
 					<level>3</level>
 					<default>7</default>
 					<constraints>
@@ -1659,7 +1660,7 @@
 						<popup>false</popup>
 					</control>
 				</setting>
-				<setting help="95019" id="playlist_3_source" label="59907" type="integer">
+				<setting help="95019" id="playlist_3_source" label="59907" type="integer" parent="playlist_3_enabled">
 					<level>0</level>
 					<default>0</default>
 					<constraints>
@@ -1678,7 +1679,7 @@
 					</dependencies>
 					<control format="string" type="spinner"/>
 				</setting>
-				<setting help="95020" id="playlist_3_url" label="59906" type="string">
+				<setting help="95020" id="playlist_3_url" label="59906" type="string" parent="playlist_3_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -1697,7 +1698,7 @@
 						<heading>59906</heading>
 					</control>
 				</setting>
-				<setting help="95021" id="playlist_3_file" label="59908" type="path">
+				<setting help="95021" id="playlist_3_file" label="59908" type="path" parent="playlist_3_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -1717,7 +1718,7 @@
 						<heading>59908</heading>
 					</control>
 				</setting>
-				<setting help="95129" id="playlist_3_user_agent" label="55001" type="string">
+				<setting help="95129" id="playlist_3_user_agent" label="55001" type="string" parent="playlist_3_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -1735,7 +1736,7 @@
 						<heading>55001</heading>
 					</control>
 				</setting>
-				<setting help="95022" id="playlist_3_stop_when_starting" label="30974" type="boolean">
+				<setting help="95022" id="playlist_3_stop_when_starting" label="30974" type="boolean" parent="playlist_3_enabled">
 					<level>2</level>
 					<default>false</default>
 					<dependencies>
@@ -1748,7 +1749,7 @@
 					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<setting help="95023" id="playlist_3_high_prio_hd" label="30975" type="boolean">
+				<setting help="95023" id="playlist_3_high_prio_hd" label="30975" type="boolean" parent="playlist_3_enabled">
 					<level>2</level>
 					<default>true</default>
 					<dependencies>
@@ -1761,7 +1762,7 @@
 					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<setting help="95012" id="playlist_3_priority" label="55009" type="integer">
+				<setting help="95012" id="playlist_3_priority" label="55009" type="integer" parent="playlist_3_enabled">
 					<level>1</level>
 					<default>6</default>
 					<constraints>
@@ -1790,10 +1791,7 @@
 					</dependencies>
 					<control format="string" type="spinner"/>
 				</setting>
-			</group>
-			<group id="8"/>
-			<group id="9" label="59917">
-				<setting help="95017" id="playlist_4_enabled" label="59904" type="boolean">
+				<setting help="95017" id="playlist_4_enabled" label="59917" type="boolean" >
 					<level>0</level>
 					<default>false</default>
 					<dependencies>
@@ -1803,7 +1801,7 @@
 					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<setting help="95018" id="playlist_4_display_name" label="59914" type="string">
+				<setting help="95018" id="playlist_4_display_name" label="59914" type="string" parent="playlist_4_enabled">
 					<level>0</level>
 					<default>Playlist_4</default>
 					<dependencies>
@@ -1818,7 +1816,7 @@
 						<heading>59914</heading>
 					</control>
 				</setting>
-				<setting help="95131" id="playlist_4_refr" label="60008" type="boolean">
+				<setting help="95131" id="playlist_4_refr" label="60008" type="boolean" parent="playlist_4_enabled">
 					<level>3</level>
 					<default>false</default>
 					<dependencies>
@@ -1830,7 +1828,7 @@
 					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<setting help="95132" id="playlist_4_refr_days" label="60009" type="integer">
+				<setting help="95132" id="playlist_4_refr_days" label="60009" type="integer" parent="playlist_4_enabled">
 					<level>3</level>
 					<default>7</default>
 					<constraints>
@@ -1849,7 +1847,7 @@
 						<popup>false</popup>
 					</control>
 				</setting>
-				<setting help="95019" id="playlist_4_source" label="59907" type="integer">
+				<setting help="95019" id="playlist_4_source" label="59907" type="integer" parent="playlist_4_enabled">
 					<level>0</level>
 					<default>0</default>
 					<constraints>
@@ -1868,7 +1866,7 @@
 					</dependencies>
 					<control format="string" type="spinner"/>
 				</setting>
-				<setting help="95020" id="playlist_4_url" label="59906" type="string">
+				<setting help="95020" id="playlist_4_url" label="59906" type="string" parent="playlist_4_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -1887,7 +1885,7 @@
 						<heading>59906</heading>
 					</control>
 				</setting>
-				<setting help="95021" id="playlist_4_file" label="59908" type="path">
+				<setting help="95021" id="playlist_4_file" label="59908" type="path" parent="playlist_4_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -1907,7 +1905,7 @@
 						<heading>59908</heading>
 					</control>
 				</setting>
-				<setting help="95129" id="playlist_4_user_agent" label="55001" type="string">
+				<setting help="95129" id="playlist_4_user_agent" label="55001" type="string" parent="playlist_4_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -1925,7 +1923,7 @@
 						<heading>55001</heading>
 					</control>
 				</setting>
-				<setting help="95022" id="playlist_4_stop_when_starting" label="30974" type="boolean">
+				<setting help="95022" id="playlist_4_stop_when_starting" label="30974" type="boolean" parent="playlist_4_enabled">
 					<level>2</level>
 					<default>false</default>
 					<dependencies>
@@ -1938,7 +1936,7 @@
 					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<setting help="95023" id="playlist_4_high_prio_hd" label="30975" type="boolean">
+				<setting help="95023" id="playlist_4_high_prio_hd" label="30975" type="boolean" parent="playlist_4_enabled">
 					<level>2</level>
 					<default>true</default>
 					<dependencies>
@@ -1951,7 +1949,7 @@
 					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<setting help="95012" id="playlist_4_priority" label="55009" type="integer">
+				<setting help="95012" id="playlist_4_priority" label="55009" type="integer" parent="playlist_4_enabled">
 					<level>1</level>
 					<default>6</default>
 					<constraints>
@@ -1980,10 +1978,7 @@
 					</dependencies>
 					<control format="string" type="spinner"/>
 				</setting>
-			</group>
-			<group id="10"/>
-			<group id="11" label="59918">
-				<setting help="95017" id="playlist_5_enabled" label="59904" type="boolean">
+				<setting help="95017" id="playlist_5_enabled" label="59918" type="boolean">
 					<level>0</level>
 					<default>false</default>
 					<dependencies>
@@ -1993,7 +1988,7 @@
 					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<setting help="95018" id="playlist_5_display_name" label="59914" type="string">
+				<setting help="95018" id="playlist_5_display_name" label="59914" type="string" parent="playlist_5_enabled">
 					<level>0</level>
 					<default>Playlist_5</default>
 					<dependencies>
@@ -2008,7 +2003,7 @@
 						<heading>59914</heading>
 					</control>
 				</setting>
-				<setting help="95131" id="playlist_5_refr" label="60008" type="boolean">
+				<setting help="95131" id="playlist_5_refr" label="60008" type="boolean" parent="playlist_5_enabled">
 					<level>3</level>
 					<default>false</default>
 					<dependencies>
@@ -2020,7 +2015,7 @@
 					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<setting help="95132" id="playlist_5_refr_days" label="60009" type="integer">
+				<setting help="95132" id="playlist_5_refr_days" label="60009" type="integer" parent="playlist_5_enabled">
 					<level>3</level>
 					<default>7</default>
 					<constraints>
@@ -2039,7 +2034,7 @@
 						<popup>false</popup>
 					</control>
 				</setting>
-				<setting help="95019" id="playlist_5_source" label="59907" type="integer">
+				<setting help="95019" id="playlist_5_source" label="59907" type="integer" parent="playlist_5_enabled">
 					<level>0</level>
 					<default>0</default>
 					<constraints>
@@ -2058,7 +2053,7 @@
 					</dependencies>
 					<control format="string" type="spinner"/>
 				</setting>
-				<setting help="95020" id="playlist_5_url" label="59906" type="string">
+				<setting help="95020" id="playlist_5_url" label="59906" type="string" parent="playlist_5_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -2077,7 +2072,7 @@
 						<heading>59906</heading>
 					</control>
 				</setting>
-				<setting help="95021" id="playlist_5_file" label="59908" type="path">
+				<setting help="95021" id="playlist_5_file" label="59908" type="path" parent="playlist_5_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -2097,7 +2092,7 @@
 						<heading>59908</heading>
 					</control>
 				</setting>
-				<setting help="95129" id="playlist_5_user_agent" label="55001" type="string">
+				<setting help="95129" id="playlist_5_user_agent" label="55001" type="string" parent="playlist_5_enabled">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -2115,7 +2110,7 @@
 						<heading>55001</heading>
 					</control>
 				</setting>
-				<setting help="95022" id="playlist_5_stop_when_starting" label="30974" type="boolean">
+				<setting help="95022" id="playlist_5_stop_when_starting" label="30974" type="boolean" parent="playlist_5_enabled">
 					<level>2</level>
 					<default>false</default>
 					<dependencies>
@@ -2128,7 +2123,7 @@
 					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<setting help="95023" id="playlist_5_high_prio_hd" label="30975" type="boolean">
+				<setting help="95023" id="playlist_5_high_prio_hd" label="30975" type="boolean" parent="playlist_5_enabled">
 					<level>2</level>
 					<default>true</default>
 					<dependencies>
@@ -2141,7 +2136,7 @@
 					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<setting help="95012" id="playlist_5_priority" label="55009" type="integer">
+				<setting help="95012" id="playlist_5_priority" label="55009" type="integer" parent="playlist_5_enabled">
 					<level>1</level>
 					<default>6</default>
 					<constraints>

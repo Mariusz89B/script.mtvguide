@@ -1029,7 +1029,7 @@ msgid "[COLOR]Playlist 3[/COLOR]"
 msgstr "[COLOR]Liste de lecture 3[/COLOR]"
 
 msgctxt "#59914"
-msgid 'display name'
+msgid "Display name"
 msgstr "Afficher le nom"
 
 msgctxt "#59915"
@@ -1427,6 +1427,10 @@ msgstr "S'il est activé, les canaux du fond de carte sont mis en correspondance
 msgctxt "#60013"
 msgid "Would you like to enable catchup?"
 msgstr "Voulez vous activer la fonction catchup?"
+
+msgctxt "#60014"
+msgid "Select country"
+msgstr "Sélectionner le pays"
 
 msgctxt "#30913"
 msgid "Settings"

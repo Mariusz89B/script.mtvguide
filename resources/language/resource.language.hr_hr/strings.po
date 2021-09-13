@@ -1029,7 +1029,7 @@ msgid "[COLOR]Playlist 3[/COLOR]"
 msgstr "[COLOR]Popis za reprodukciju 3[/COLOR]"
 
 msgctxt "#59914"
-msgid 'display name'
+msgid "Display name"
 msgstr "Naziv za prikaz"
 
 msgctxt "#59915"
@@ -1427,6 +1427,10 @@ msgstr "Ako je ova opcija omogućena, osnovni kanali se podudaraju s oznakama 'c
 msgctxt "#60013"
 msgid "Would you like to enable catchup?"
 msgstr "Želite li omogućiti catchup funkciju?"
+
+msgctxt "#60014"
+msgid "Select country"
+msgstr "Odaberi državu"
 
 msgctxt "#30913"
 msgid "Settings"

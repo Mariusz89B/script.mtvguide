@@ -1029,7 +1029,7 @@ msgid "[COLOR]Playlist 3[/COLOR]"
 msgstr "[COLOR]Playlist 3[/COLOR]"
 
 msgctxt "#59914"
-msgid 'display name'
+msgid "Display name"
 msgstr "Vis navn"
 
 msgctxt "#59915"
@@ -1427,6 +1427,10 @@ msgstr "Hvis det er aktiveret, matches kanaler fra basemap med både 'channel id
 msgctxt "#60013"
 msgid "Would you like to enable catchup?"
 msgstr "Vil du aktivere catchup funktion?"
+
+msgctxt "#60014"
+msgid "Select country"
+msgstr "Vælg land"
 
 msgctxt "#30913"
 msgid "Settings"

@@ -1029,7 +1029,7 @@ msgid "[COLOR]Playlist 3[/COLOR]"
 msgstr "[COLOR]Afspeellijst 3[/COLOR]"
 
 msgctxt "#59914"
-msgid 'display name'
+msgid "Display name"
 msgstr "Weergavenaam"
 
 msgctxt "#59915"
@@ -1427,6 +1427,10 @@ msgstr "Indien ingeschakeld, worden kanalen van de basiskaart gekoppeld aan zowe
 msgctxt "#60013"
 msgid "Would you like to enable catchup?"
 msgstr "Wilt u de catchup functie inschakelen?"
+
+msgctxt "#60014"
+msgid "Select country"
+msgstr "Selecteer land"
 
 msgctxt "#30913"
 msgid "Settings"

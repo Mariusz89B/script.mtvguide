@@ -1029,7 +1029,7 @@ msgid "[COLOR]Playlist 3[/COLOR]"
 msgstr "[COLOR]Playlista 3[/COLOR]"
 
 msgctxt "#59914"
-msgid 'display name'
+msgid "Display name"
 msgstr "Wyświetlana nazwa"
 
 msgctxt "#59915"
@@ -1427,6 +1427,10 @@ msgstr "Jeśli ta opcja jest włączona, kanały z mapy bazowej są dopasowywane
 msgctxt "#60013"
 msgid "Would you like to enable catchup?"
 msgstr "Czy chcesz włączyć funkcję archiwum?"
+
+msgctxt "#60014"
+msgid "Select country"
+msgstr "Wybierz kraj"
 
 msgctxt "#30913"
 msgid "Settings"

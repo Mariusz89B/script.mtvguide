@@ -1029,7 +1029,7 @@ msgid "[COLOR]Playlist 3[/COLOR]"
 msgstr "[COLOR]Playliste 3[/COLOR]"
 
 msgctxt "#59914"
-msgid 'display name'
+msgid "Display name"
 msgstr "Anzeigename"
 
 msgctxt "#59915"
@@ -1427,6 +1427,10 @@ msgstr "Wenn aktiviert, werden Kanäle aus der Grundkarte im EPG sowohl mit der 
 msgctxt "#60013"
 msgid "Would you like to enable catchup?"
 msgstr "Möchten Sie die catchup funktion aktivieren?"
+
+msgctxt "#60014"
+msgid "Select country"
+msgstr "Land auswählen"
 
 msgctxt "#30913"
 msgid "Settings"

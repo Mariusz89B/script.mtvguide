@@ -969,11 +969,11 @@ msgid "Update now"
 msgstr ""
 
 msgctxt "#30903"
-msgid "[COLOR]PlayerPL[/COLOR]"
+msgid "[COLOR blue]PlayerPL[/COLOR]"
 msgstr ""
 
 msgctxt "#30904"
-msgid "[COLOR]Telia Play[/COLOR]"
+msgid "[COLOR blue]Telia Play[/COLOR]"
 msgstr ""
 
 msgctxt "#30905"
@@ -1017,19 +1017,19 @@ msgid "Use free account"
 msgstr ""
 
 msgctxt "#59911"
-msgid "[COLOR]Playlist 1[/COLOR]"
+msgid "[COLOR blue]Playlist 1[/COLOR]"
 msgstr ""
 
 msgctxt "#59912"
-msgid "[COLOR]Playlist 2[/COLOR]"
+msgid "[COLOR blue]Playlist 2[/COLOR]"
 msgstr ""
 
 msgctxt "#59913"
-msgid "[COLOR]Playlist 3[/COLOR]"
+msgid "[COLOR blue]Playlist 3[/COLOR]"
 msgstr ""
 
 msgctxt "#59914"
-msgid 'display name'
+msgid "Display name"
 msgstr ""
 
 msgctxt "#59915"
@@ -1041,11 +1041,11 @@ msgid "Number of playlists"
 msgstr ""
 
 msgctxt "#59917"
-msgid "[COLOR]Playlist 4[/COLOR]"
+msgid "[COLOR blue]Playlist 4[/COLOR]"
 msgstr ""
 
 msgctxt "#59918"
-msgid "[COLOR]Playlist 5[/COLOR]"
+msgid "[COLOR blue]Playlist 5[/COLOR]"
 msgstr ""
 
 msgctxt "#59919"
@@ -1053,19 +1053,19 @@ msgid "Url"
 msgstr ""
 
 msgctxt "#59920"
-msgid "[COLOR]C More[/COLOR]"
+msgid "[COLOR blue]C More[/COLOR]"
 msgstr ""
 
 msgctxt "#59921"
-msgid "[COLOR]Polsat GO Box[/COLOR]"
+msgid "[COLOR blue]Polsat GO Box[/COLOR]"
 msgstr ""
 
 msgctxt "#59922"
-msgid "[COLOR]FranceTV[/COLOR]"
+msgid "[COLOR blue]FranceTV[/COLOR]"
 msgstr ""
 
 msgctxt "#59923"
-msgid "[COLOR]nc+ GO[/COLOR]"
+msgid "[COLOR blue]nc+ GO[/COLOR]"
 msgstr ""
 
 msgctxt "#59924"
@@ -1426,6 +1426,10 @@ msgstr ""
 
 msgctxt "#60013"
 msgid "Would you like to enable catchup?"
+msgstr ""
+
+msgctxt "#60014"
+msgid "Select country"
 msgstr ""
 
 msgctxt "#30912"
@@ -2733,19 +2737,19 @@ msgid "Remove added channels"
 msgstr ""
 
 msgctxt "#80005"
-msgid "[COLOR]WP Pilot[/COLOR]"
+msgid "[COLOR blue]WP Pilot[/COLOR]"
 msgstr ""
 
 msgctxt "#80006"
-msgid "[COLOR]Ipla[/COLOR]"
+msgid "[COLOR blue]Ipla[/COLOR]"
 msgstr ""
 
 msgctxt "#80007"
-msgid "[COLOR]Telewizja Polska[/COLOR]"
+msgid "[COLOR blue]Telewizja Polska[/COLOR]"
 msgstr ""
 
 msgctxt "#80008"
-msgid "[COLOR]Polsat GO[/COLOR]"
+msgid "[COLOR blue]Polsat GO[/COLOR]"
 msgstr ""
 
 msgctxt "#90000"
