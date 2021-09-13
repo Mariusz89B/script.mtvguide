@@ -32,6 +32,7 @@
 		<email>support@m-tvguide.pl</email>
 	<news>v9.5.8 (2021-09-13)
 - Changes to the tv service and playlist menus.
+- Fixed skin update loop error.
 
 v9.5.7 (2021-09-12)
 - Fixed encoding issues Python 2.7.

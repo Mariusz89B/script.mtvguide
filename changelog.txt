@@ -1,5 +1,6 @@
 ﻿wersja 9.5.8 - 2021-09-13
 - zmiany w opcjach serwisach tv oraz playlist
+- naprawiono błąd utkniecia w pętli przy aktualizacji skórek
 
 wersja 9.5.7 - 2021-09-12
 - naprawiono problemy z kodowaniem Python 2.7
