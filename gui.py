@@ -5693,6 +5693,10 @@ class mTVGuide(xbmcgui.WindowXML):
     def onSourceInitialized(self, success):
         deb('onSourceInitialized')
 
+        result = Skin.checkForUpdates()
+        if result:
+            super(mTVGuide, self).close()
+
         if success:
             self.notification = Notification(self.database, ADDON.getAddonInfo('path'), self)
             if ADDON.getSetting('notifications_enabled') == 'true':

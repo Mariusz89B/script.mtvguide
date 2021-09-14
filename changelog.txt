@@ -1,4 +1,7 @@
-﻿wersja 9.5.8 - 2021-09-13
+﻿wersja 9.5.9 - 2021-09-14
+- naprawiono błąd utkniecia w pętli przy aktualizacji skórek
+
+wersja 9.5.8 - 2021-09-13
 - zmiany w opcjach serwisach tv oraz playlist
 - naprawiono błąd utkniecia w pętli przy aktualizacji skórek
 

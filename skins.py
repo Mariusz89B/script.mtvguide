@@ -58,6 +58,8 @@ try:
 except:
     skin_resolution = '720p'
 
+ADDON = xbmcaddon.Addon('script.mtvguide')
+
 class SkinObject:
     def __init__(self, name, url="", version="", minGuideVersion="", icon = "", fanart="", description = ""):
         self.name = name
@@ -88,8 +90,7 @@ class Skin:
     ADDON_CUSTOM_SKINS_RES  = os.path.join(PROFILE_PATH, 'resources')
     ADDON_CUSTOM_SKINS      = os.path.join(ADDON_CUSTOM_SKINS_RES, 'skins')
 
-    if KODI_VERSION >= 17:
-        NEW_SKINS_BASE_URL      = M_TVGUIDE_SUPPORT + 'skins_v9/'
+    NEW_SKINS_BASE_URL      = M_TVGUIDE_SUPPORT + 'skins_v9/'
 
     NEW_SKINS_URL           = NEW_SKINS_BASE_URL + 'skinlist.xml'
 
@@ -107,9 +108,6 @@ class Skin:
             elif os.path.isdir(os.path.join(Skin.ADDON_EMBEDDED_SKINS, Skin.CURRENT_SKIN)):
                 Skin.CURRENT_SKIN_DIR = os.path.join(Skin.ADDON_EMBEDDED_SKINS, Skin.CURRENT_SKIN)
                 Skin.CURRENT_SKIN_BASE_DIR = ADDON.getAddonInfo('path')
-            else:
-                ADDON.setSetting('Skin', 'skin.default')
-                Skin.CURRENT_SKIN_DIR = os.path.join(Skin.ADDON_EMBEDDED_SKINS, 'skin.default') 
 
         return Skin.CURRENT_SKIN_DIR
 
@@ -127,41 +125,7 @@ class Skin:
         return Skin.CURRENT_SKIN_BASE_DIR
 
     @staticmethod
-    def removeSkinsIfKodiVersionChanged():
-        if ADDON.getSetting('kodi_version') != str(KODI_VERSION):
-            deb('Detected new Kodi version, removing all skins')
-            Skin.deleteCustomSkins(False)
-            ADDON.setSetting(id="kodi_version", value=str(KODI_VERSION))
-
-    @staticmethod
-    def removeSkinsIfAddonVersionChanged():
-        if ADDON.getSetting('mtvguide_version') != str(90100):
-            deb('Detected new Kodi version, removing all skins')
-            Skin.deleteCustomSkins(False)
-            ADDON.setSetting(id="mtvguide_version", value=str(90100))
-
-            if sys.version_info[0] > 2:
-                try:
-                    profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
-                except:
-                    profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
-            else:
-                try:
-                    profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile'))
-                except:
-                    profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
-            
-            try:
-                file = xbmcvfs.File(os.path.join(profilePath, 'fonts.list'), 'w+')
-                file.write('')
-                file.close()
-            except:
-                deb('Error: fonts.list is missing')
-
-    @staticmethod
     def fixSkinIfNeeded():
-        Skin.removeSkinsIfKodiVersionChanged()
-        Skin.removeSkinsIfAddonVersionChanged()
         Skin.createCustomDirIfNeeded()
         if Skin.getSkinPath() is None:
             deb('Skins fixing skin!')
@@ -182,6 +146,7 @@ class Skin:
 
     @staticmethod
     def createCustomDirIfNeeded():
+        skins = Skin.getSkinList()
         if os.path.isdir(Skin.ADDON_CUSTOM_SKINS) == False:
             deb('Skins creating custom skin dir!')
             if os.path.isdir(Skin.ADDON_CUSTOM_SKINS_RES) == False:
@@ -190,7 +155,10 @@ class Skin:
                 os.makedirs(Skin.ADDON_CUSTOM_SKINS_RES)
             os.makedirs(Skin.ADDON_CUSTOM_SKINS)
             try:
-                shutil.copytree(os.path.join(Skin.ADDON_EMBEDDED_SKINS, 'skin.default'), os.path.join(Skin.ADDON_CUSTOM_SKINS, 'skin.default'))
+                for skin in skins:
+                    xpath = os.path.join(Skin.ADDON_CUSTOM_SKINS, 'skin.default')
+                    if os.path.exists(xpath) == False:
+                        shutil.copytree(os.path.join(Skin.ADDON_EMBEDDED_SKINS, 'skin.default'), os.path.join(Skin.ADDON_CUSTOM_SKINS, 'skin.default'))
             except Exception as ex:
                 deb('Skins exception: %s' % getExceptionString())
 
@@ -243,7 +211,7 @@ class Skin:
                 skin_zip = StringIO.StringIO(skin_zip)
             skin_zip = zipfile.ZipFile(skin_zip)
             for name in skin_zip.namelist():
-                deb('Skins extracting file: %s' % name)
+                #deb('Skins extracting file: %s' % name)
                 try:
                     skin_zip.extract(name, Skin.ADDON_CUSTOM_SKINS)
                 except:
@@ -313,17 +281,20 @@ class Skin:
     def checkForUpdates():
         deb('_checkForUpdates')
         skins = Skin.getSkinList()
-        regex = re.compile('version\s*=\s*(\d+\.\d+)', re.IGNORECASE)
+        regex = re.compile('version\s*=\s*(.*)', re.IGNORECASE)
         usedSkinUpdated = False
         for skin in skins:
             iniFile = os.path.join(Skin.ADDON_CUSTOM_SKINS, skin.name, 'settings.ini')
+            deb('iniFile: {}'.format(iniFile))
             if os.path.isfile(iniFile):
                 try:
                     fileContent = open(iniFile, 'r').read()
+                    deb('Content: {}'.format(fileContent))
                 except:
                     continue
                 localVersion = float(regex.search(fileContent).group(1))
-                if skin.version > localVersion:
+                deb('Skin: {}, local version: {}'.format(skin.name, localVersion))
+                if float(skin.version) > float(localVersion):
                     deb('Skin: %s, local version: %s, online version: %s - downloading new version' % (skin.name, localVersion, skin.version))
                     success = Skin.downloadSkin(skin)
                     if success:
@@ -333,8 +304,6 @@ class Skin:
         if usedSkinUpdated:
             if not xbmc.getCondVisibility('Window.IsVisible(yesnodialog)'):
                 xbmcgui.Dialog().ok(strings(30709), strings(30979))
-        else:
-            usedSkinUpdated = False
         deb('Skin finished update')
         return usedSkinUpdated
 
@@ -360,8 +329,30 @@ class Skin:
         if show_dialog:
             xbmcgui.Dialog().ok(strings(31004), strings(30969))
 
+        try:
+            file = os.path.join(PROFILE_PATH, 'fonts.list')
+            if sys.version_info[0] > 2:
+                with open(file, 'wb+') as f:
+                    f.write(bytearray(''), 'utf-8')
+            else:
+                with open(file, 'w+') as f:
+                    f.write(str(''))
+        except:
+            deb('Error: fonts.list is missing')
+
 
 class SkinPicker():
+    if sys.version_info[0] > 2:
+        try:
+            PROFILE_PATH  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
+        except:
+            PROFILE_PATH  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
+    else:
+        try:
+            PROFILE_PATH  = xbmc.translatePath(ADDON.getAddonInfo('profile'))
+        except:
+            PROFILE_PATH  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
+
     def __init__(self):
         self.picker = self.picker()
         self.download_skin_list = self.getDownloadSkinList()
@@ -398,18 +389,8 @@ class SkinPicker():
                         xbmcgui.Dialog().notification(strings(30710), strings(30709) + ": " + currentlySelectedSkin.name, time=7000, sound=False)
                 if success:
                     Skin.setAddonSkin(currentlySelectedSkin.name)
-                    if sys.version_info[0] > 2:
-                        try:
-                            profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
-                        except:
-                            profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
-                    else:
-                        try:
-                            profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile'))
-                        except:
-                            profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
                     try:
-                        file = os.path.join(profilePath, 'fonts.list')
+                        file = os.path.join(PROFILE_PATH, 'fonts.list')
                         os.remove(file)
                     except:
                         deb('Error: fonts.list is missing')
@@ -457,21 +438,21 @@ if len(sys.argv) > 1 and sys.argv[1] == 'SelectSkin':
 
     if sys.version_info[0] > 2:
         try:
-            profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
+            PROFILE_PATH  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
         except:
-            profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
+            PROFILE_PATH  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
     else:
         try:
-            profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile'))
+            PROFILE_PATH  = xbmc.translatePath(ADDON.getAddonInfo('profile'))
         except:
-            profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
-
+            PROFILE_PATH  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
+            
     currentSkin = xbmc.getSkinDir()
     try:
-        with open(os.path.join(profilePath, 'skin_fonts.ini'), "r") as f:
+        with open(os.path.join(PROFILE_PATH, 'skin_fonts.ini'), "r") as f:
             lines = f.readlines()
             lines.remove(currentSkin+'\n')
-            with open(os.path.join(profilePath, 'skin_fonts.ini'), "w") as new_f:
+            with open(os.path.join(PROFILE_PATH, 'skin_fonts.ini'), "w") as new_f:
                 for line in lines:        
                     new_f.write(line)
     except:

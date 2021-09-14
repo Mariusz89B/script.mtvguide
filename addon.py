@@ -60,9 +60,6 @@ class Start:
     def Run(self):
         try:
             Settings.formatter()
-            result = Skin.checkForUpdates()
-            if result:
-                gui.mTVGuide().close()
             w = gui.mTVGuide()
             w.doModal()
             w.close()
