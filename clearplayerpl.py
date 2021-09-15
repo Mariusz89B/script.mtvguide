@@ -73,6 +73,7 @@ class clearPlayerPL:
         self.set_setting('playerpl_selected_profile', '')
         self.set_setting('playerpl_selected_profile_id', '')
         self.set_setting('playerpl_subtitles', '')
+        self.set_setting('playerpl_logged', '')
         xbmcgui.Dialog().ok(strings(30371), strings(30372))
 
 clearplayerpl = clearPlayerPL()

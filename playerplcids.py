@@ -210,7 +210,7 @@ class PlayerPLUpdater(baseServiceUpdater):
             if not self.DEVICE_ID or not self.MAKER or not self.USAGENT or not self.USAGENTVER:
                 self.createDatas()
             
-            if not self.REFRESH_TOKEN and not self.LOGGED == 'true':
+            if not self.REFRESH_TOKEN and self.LOGGED != 'true':
                 POST_DATA = 'scope=/pub-api/user/me&client_id=Player_TV_Android_28d3dcc063672068'
                 data = self.getRequests(self.GETTOKEN, data = POST_DATA, headers=self.HEADERS3)
                 kod = data.get('code')
@@ -301,16 +301,22 @@ class PlayerPLUpdater(baseServiceUpdater):
         try:
             regexReplaceList = list()
 
-            regexReplaceList.append( re.compile('(\s|^)(FAKTY|INTERNATIONAL)(?=\s|$)',  re.IGNORECASE) )
+            regexReplaceList.append( re.compile('(\s|^)(FAKTY)(?=\s|$)',  re.IGNORECASE) )
 
             urlk = 'https://player.pl/playerapi/product/live/list?4K=true&platform=ANDROID_TV'
             
             out = []
             
             data = self.getRequests(urlk, headers=self.HEADERS2, params={})
+
             self.mylist = self.getRequests('https://player.pl/playerapi/subscriber/product/available/list?4K=true&platform=ANDROID_TV', headers=self.HEADERS2, params={})
 
-            for channel in data:
+            if sys.version_info[0] > 2:
+                jdata = data
+            else:
+                jdata = json.loads(json.dumps(data))
+
+            for channel in jdata:
                 if channel['id'] in self.mylist:
                     id_ = channel['id']
                     name = channel['title'] + ' PL'
@@ -325,9 +331,8 @@ class PlayerPLUpdater(baseServiceUpdater):
                     program = TvCid(cid, name, name, img=img)
                     result.append(program)
 
-            if len(result) <= 0:
-                self.log('Error while parsing service {}, returned data is: {}'.format(self.serviceName, str(data)))
-                ADDON.setSetting('playerpl_refresh_token', '')
+                if len(result) <= 0:
+                    self.log('Error while parsing service {}, returned data is: {}'.format(self.serviceName, str(data)))
 
         except:
             self.log('getChannelList exception: {}'.format(getExceptionString()))
