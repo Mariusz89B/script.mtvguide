@@ -97,6 +97,7 @@ class NcPlusGoUpdater(baseServiceUpdater):
         self.login              = ADDON.getSetting('ncplusgo_username').strip()
         self.password           = ADDON.getSetting('ncplusgo_password').strip()
         self.servicePriority    = int(ADDON.getSetting('priority_ncplusgo'))
+        self.devicekey          = ADDON.getSetting('ncplusgo_imei')
         self.url                = ncplusgoUrl
         self.addDuplicatesToList = True
         if sys.version_info[0] > 2:
@@ -178,27 +179,26 @@ class NcPlusGoUpdater(baseServiceUpdater):
 
     def loginService(self, wymiana = False, dodawanie = False, resp = False):
         try:
-            devicekey = self.IMEI()
+            self.devicekey = self.IMEI()
             email = self.login
             pwd = self.password 
 
             if email and pwd:
                 if wymiana:
-                    devicekey = ADDON.getSetting('ncplusgo_imei')
+                    self.devicekey = ADDON.getSetting('ncplusgo_imei')
                     dev2repl = ADDON.getSetting('ncplusgo_dev2repl')
-                    data = {"DeviceTypeId":14454, "AddDevice":True, "Email":email,"Password":pwd,"DeviceName":"GT-I8200", "Token":"", "DeviceKey":devicekey, "PlatformCodename":"android", "DeviceToReplaceKey":dev2repl, "IsHomeNetwork":False,"ServiceType":"1"}
+                    data = {"DeviceTypeId":14454, "AddDevice":True, "Email":email,"Password":pwd,"DeviceName":"GT-I8200", "Token":"", "DeviceKey":self.devicekey, "PlatformCodename":"android", "DeviceToReplaceKey":dev2repl, "IsHomeNetwork":False,"ServiceType":"1"}
                     ADDON.setSetting('ncplusgo_dev2repl','')
                 elif dodawanie:
-                    #data = {"DeviceTypeId":14454, "AddDevice":True, "Email":email,"Password":pwd,"DeviceName":"GT-I8200", "Token":"", "DeviceKey":devicekey, "PlatformCodename":"android", "IsHomeNetwork":False, "ServiceType":"1"}
-                    devkey = self.Search(resp)
+                    #data = {"DeviceTypeId":14454, "AddDevice":True, "Email":email,"Password":pwd,"DeviceName":"GT-I8200", "Token":"", "DeviceKey":self.devicekey, "PlatformCodename":"android", "IsHomeNetwork":False, "ServiceType":"1"}
+                    self.devicekey = self.Search(resp)
                     #ADDON.setSetting('dev2repl','')
-                    ADDON.setSetting('ncplusgo_imei', devkey)
-                    devicekey = ADDON.getSetting('ncplusgo_imei')
-                    data = {"DeviceTypeId":14454, "AddDevice":False,"Email":email, "Password":pwd, "DeviceName":"GT-I8200", "Token":"", "DeviceKey":devicekey, "PlatformCodename":"android", "IsHomeNetwork":False, "ServiceType":"1"}
+                    ADDON.setSetting('ncplusgo_imei', self.devicekey)
+                    data = {"DeviceTypeId":14454, "AddDevice":False,"Email":email, "Password":pwd, "DeviceName":"GT-I8200", "Token":"", "DeviceKey":self.devicekey, "PlatformCodename":"android", "IsHomeNetwork":False, "ServiceType":"1"}
 
                 else:
                     devicekey = imei
-                    data = {"DeviceTypeId":14454, "AddDevice":False, "Email":email, "Password":pwd, "DeviceName":"GT-I8200", "Token":"", "DeviceKey":devicekey, "PlatformCodename":"android", "IsHomeNetwork":False, "ServiceType":"1"}
+                    data = {"DeviceTypeId":14454, "AddDevice":False, "Email":email, "Password":pwd, "DeviceName":"GT-I8200", "Token":"", "DeviceKey":self.devicekey, "PlatformCodename":"android", "IsHomeNetwork":False, "ServiceType":"1"}
                 response = sess.post(ncplusgoUrl+'NcAccount/Login', headers = headers, json = data, timeout=timeouts).json()
 
                 if response['Result']['Success']:
@@ -252,11 +252,11 @@ class NcPlusGoUpdater(baseServiceUpdater):
     def getJson(self, url,params):
         email = self.login
         pwd = self.password 
-        devicekey = ADDON.getSetting('ncplusgo_imei')
+        self.devicekey = ADDON.getSetting('ncplusgo_imei')
         response = sess.get(ncplusgoUrl+url, headers = headers, params = params, timeout=timeouts).json()
         try:
             if response['Result']['MessageCodename']=='token_is_not_valid':
-                data = {"DeviceTypeId":14454, "AddDevice":False, "Email":email, "Password":pwd, "DeviceName":"GT-I8200","Token":"", "DeviceKey":devicekey, "PlatformCodename":"android", "IsHomeNetwork":False, "ServiceType":"1"}
+                data = {"DeviceTypeId":14454, "AddDevice":False, "Email":email, "Password":pwd, "DeviceName":"GT-I8200","Token":"", "DeviceKey":self.devicekey, "PlatformCodename":"android", "IsHomeNetwork":False, "ServiceType":"1"}
                 response = sess.post(ncplusgoUrl+'NcAccount/Login', headers=headers, json=data, timeout=timeouts).json()
                 token = response['Token']
                 tokenexpir = response['TokenExpirationTime']
@@ -264,7 +264,7 @@ class NcPlusGoUpdater(baseServiceUpdater):
                 ADDON.setSetting('ncplusgo_ncToken', token)
                 response = sess.get(ncplusgoUrl+url, headers = headers, params = params, timeout=timeouts).json()
             elif response['Result']['MessageCodename']=="wsi_error_10":
-                data = {"DeviceTypeId":14454, "AddDevice":False, "Email":email, "Password":pwd, "DeviceName":"GT-I8200","Token":"", "DeviceKey":devicekey, "PlatformCodename":"android", "IsHomeNetwork":False, "ServiceType":"1"}
+                data = {"DeviceTypeId":14454, "AddDevice":False, "Email":email, "Password":pwd, "DeviceName":"GT-I8200","Token":"", "DeviceKey":self.devicekey, "PlatformCodename":"android", "IsHomeNetwork":False, "ServiceType":"1"}
                 response = requests.post(ncplusgoUrl+'NcAccount/Login', headers = headers, json = data, timeout=timeouts).json()
                 token = response['Token']
                 tokenexpir = response['TokenExpirationTime']
@@ -333,76 +333,76 @@ class NcPlusGoUpdater(baseServiceUpdater):
         url = ncplusgoUrl
         codename = self.channCid(chann.cid)
 
-        try:
-            nctoken = ADDON.getSetting('ncplusgo_ncToken')
-            devicekey = ADDON.getSetting('ncplusgo_imei')
-            params = (
-                ('PlatformCodename', 'android'),
-                ('token', nctoken),
-                ('deviceKey', devicekey),
-                ('codename', codename),
-            )
+        #try:
+        nctoken = ADDON.getSetting('ncplusgo_ncToken')
+        self.devicekey = ADDON.getSetting('ncplusgo_imei')
+        params = (
+            ('PlatformCodename', 'android'),
+            ('token', nctoken),
+            ('deviceKey', self.devicekey),
+            ('codename', codename),
+        )
 
-            url = 'NcContent/AcquireContent2'
-            response = self.getJson(url,params)
-            licserv = ''
-            licenseUrl = ''
-            str_url = ''
+        url = 'NcContent/AcquireContent2'
+        response = self.getJson(url,params)
+        licserv = ''
+        licenseUrl = ''
+        str_url = ''
 
-            if not "DrmInfo" in response:
-                data={"DeviceTypeId":14454, "AddDevice":False, "Email":self.login, "Password":self.password, "DeviceName":"GT-I8200", "Token":nctoken, "DeviceKey":devicekey, "PlatformCodename":"android", "IsHomeNetwork":False, "ServiceType":"1"}
-                response = sess.post(ncplusgoUrl + 'NcAccount/Login', headers=headers, json=data, verify=False, timeout=timeouts).json()
-                if response['Result']['Success']:
-                    token = response['Token']
-                    tokenexpir = response['TokenExpirationTime']
-                    ADDON.setSetting('ncplusgo_tokenexpir', str(tokenexpir/1000))
-                    ADDON.setSetting('ncplusgo_ncToken', token)
-                    nctoken2 = ADDON.getSetting('ncplusgo_ncToken')
-                    params = (
-                        ('PlatformCodename', 'android'),
-                        ('token', nctoken2),
-                        ('deviceKey', devicekey),
-                        ('codename', codename),
-                    )
-                
-                    url = 'NcContent/AcquireContent2'
-                    response = self.getJson(url, params)
-                
+        if not "DrmInfo" in response:
+            data={"DeviceTypeId":14454, "AddDevice":False, "Email":self.login, "Password":self.password, "DeviceName":"GT-I8200", "Token":nctoken, "DeviceKey":self.devicekey, "PlatformCodename":"android", "IsHomeNetwork":False, "ServiceType":"1"}
+            response = sess.post(ncplusgoUrl + 'NcAccount/Login', headers=headers, json=data, verify=False, timeout=timeouts).json()
+            if response['Result']['Success']:
+                token = response['Token']
+                tokenexpir = response['TokenExpirationTime']
+                ADDON.setSetting('ncplusgo_tokenexpir', str(tokenexpir/1000))
+                ADDON.setSetting('ncplusgo_ncToken', token)
+                nctoken2 = ADDON.getSetting('ncplusgo_ncToken')
+                params = (
+                    ('PlatformCodename', 'android'),
+                    ('token', nctoken2),
+                    ('deviceKey', self.devicekey),
+                    ('codename', codename),
+                )
             
-            items = response["DrmInfo"]
-            for item in items:  
-                if item["DrmSystem"]=='Widevine':
-                    licserv = item["LicenseServerUrl"]
-                    licenseUrl = item["DrmChallengeCustomData"]
-                    break
-
-            items = response["MediaFiles"][0]['Formats']       
-            for item in items:
-                if item['Protection']==4:
-                    str_url = item['Url']
-                    str_url = requests.get(str_url, allow_redirects = False)
-                    str_url = str_url.headers['Location']
-                    try:
-                        if 'opl-' not in str_url:
-                            xx = re.findall('(\.cdn\-ncplus.pl\/.+?)$', str_url)
-                            if xx:
-                                str_url = 'https://opl-n02'+xx[0]
-                        else:
-                            str_url = str_url
-                    except:
-                        pass
-                
-            data = str_url + '|auth=SSL/TLS&verifypeer=false'
+                url = 'NcContent/AcquireContent2'
+                response = self.getJson(url, params)
+            
         
-            if data is not None and data != "":
-                chann.strm = data
-                chann.lic = licenseUrl
-                self.log('getChannelStream found matching channel: cid: {}, name: {}, rtmp:{}'.format(chann.cid, chann.name, chann.strm))
-                return chann
-            else:
-                self.log('getChannelStream error getting channel stream2, result: {}'.format(str(data)))
-                return None
+        items = response["DrmInfo"]
+        for item in items:  
+            if item["DrmSystem"]=='Widevine':
+                licserv = item["LicenseServerUrl"]
+                licenseUrl = item["DrmChallengeCustomData"]
+                break
 
-        except Exception as e:
-            self.log('getChannelStream exception while looping: {}\n Data: {}'.format(getExceptionString(), str(data)))
+        items = response["MediaFiles"][0]['Formats']       
+        for item in items:
+            if item['Protection']==4:
+                str_url = item['Url']
+                str_url = requests.get(str_url, allow_redirects = False)
+                str_url = str_url.headers['Location']
+                try:
+                    if 'opl-' not in str_url:
+                        xx = re.findall('(\.cdn\-ncplus.pl\/.+?)$', str_url)
+                        if xx:
+                            str_url = 'https://opl-n02'+xx[0]
+                    else:
+                        str_url = str_url
+                except:
+                    pass
+            
+        data = str_url + '|auth=SSL/TLS&verifypeer=false'
+    
+        if data is not None and data != "":
+            chann.strm = data
+            chann.lic = licenseUrl
+            self.log('getChannelStream found matching channel: cid: {}, name: {}, rtmp:{}'.format(chann.cid, chann.name, chann.strm))
+            return chann
+        else:
+            self.log('getChannelStream error getting channel stream2, result: {}'.format(str(data)))
+            return None
+
+        #except Exception as e:
+            #self.log('getChannelStream exception while looping: {}\n Data: {}'.format(getExceptionString(), str(data)))
         return None

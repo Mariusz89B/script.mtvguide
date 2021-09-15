@@ -1,5 +1,6 @@
 ﻿wersja 9.6.0 - 2021-09-15
 - poprawka dla serwisu PlayerPL
+- poprawka odtwarzania w serwisie Nc+ GO
 
 wersja 9.5.9 - 2021-09-15
 - naprawiono błąd utkniecia w pętli przy aktualizacji skórek
