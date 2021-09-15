@@ -144,6 +144,20 @@
 					</dependencies>
 					<control format="string" type="spinner"/>
 				</setting>
+				<setting help="95013" id="clear_ipla" label="30371" type="action" parent="ipla_enabled">
+					<level>0</level>
+					<data>RunScript(special://home/addons/script.mtvguide/clearipla.py,clearIpla)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="ipla_enabled">true</condition>
+							<condition operator="is" setting="country_service">0</condition>
+						</dependency>
+					</dependencies>
+					<control format="action" type="button"/>
+				</setting>
 				<setting help="" id="ipla_device_id" type="string" parent="ipla_enabled">
 					<level>0</level>
 					<default/>
@@ -290,6 +304,20 @@
 						</dependency>
 					</dependencies>
 					<control format="string" type="spinner"/>
+				</setting>
+				<setting help="95013" id="clear_ncplusgo" label="30371" type="action" parent="ncplusgo_enabled">
+					<level>0</level>
+					<data>RunScript(special://home/addons/script.mtvguide/clearncplusgo.py,clearNcPlusGO)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="ncplusgo_enabled">true</condition>
+							<condition operator="is" setting="country_service">0</condition>
+						</dependency>
+					</dependencies>
+					<control format="action" type="button"/>
 				</setting>
 				<setting help="" id="ncplusgo_imei" type="string" parent="ncplusgo_enabled">
 					<level>0</level>
@@ -599,6 +627,20 @@
 					</dependencies>
 					<control format="string" type="spinner"/>
 				</setting>
+				<setting help="95013" id="clear_polsatgo" label="30371" type="action" parent="polsatgo_enabled">
+					<level>0</level>
+					<data>RunScript(special://home/addons/script.mtvguide/clearpolsatgo.py,clearPolsatGO)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="polsatgo_enabled">true</condition>
+							<condition operator="is" setting="country_service">0</condition>
+						</dependency>
+					</dependencies>
+					<control format="action" type="button"/>
+				</setting>
 				<setting help="95007" id="pgobox_enabled" label="59921" type="boolean">
 					<level>0</level>
 					<default>false</default>
@@ -688,6 +730,20 @@
 						</dependency>
 					</dependencies>
 					<control format="string" type="spinner"/>
+				</setting>
+				<setting help="95013" id="clear_polsatgobox" label="30371" type="action" parent="pgobox_enabled">
+					<level>0</level>
+					<data>RunScript(special://home/addons/script.mtvguide/clearpolsatgobox.py,clearPolsatGOBox)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="pgobox_enabled">true</condition>
+							<condition operator="is" setting="country_service">0</condition>
+						</dependency>
+					</dependencies>
+					<control format="action" type="button"/>
 				</setting>
 				<setting help="" id="pgobox_device_id" type="string" parent="pgobox_enabled">
 					<level>0</level>

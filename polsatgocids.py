@@ -170,10 +170,10 @@ class PolsatGoUpdater(baseServiceUpdater):
 
         if not self.clid and not self.devid:
             self.clid = ipla_system_id()
-            ADDON.setSetting('clientId', self.clid)
+            ADDON.setSetting('polsatgo_clientId', self.clid)
 
             self.devid = ipla_system_id()
-            ADDON.setSetting('devid', self.devid)
+            ADDON.setSetting('polsatgo_devid', self.devid)
             
             return self.loginService()
         else:
