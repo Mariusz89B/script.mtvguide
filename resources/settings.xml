@@ -25,7 +25,6 @@
 		<setting id="ipla_sesskey" visible="false" subsetting="true"/>
 		<setting id="ipla_myperm" visible="false" subsetting="true"/>
 		
-		
 		<setting id="ncplusgo_enabled" type="bool" label="59923" default="false" visible="eq(-14,0)"/>
 		<setting id="ncplusgo_username" type="text" label="55002" default="" visible="eq(-1,true) + eq(-15,0)" subsetting="true"/>
 		<setting id="ncplusgo_password" type="text" option="hidden" label="55003" default="" visible="eq(-2,true) + eq(-16,0)" subsetting="true"/>

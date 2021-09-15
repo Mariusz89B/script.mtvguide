@@ -1,6 +1,7 @@
 ﻿wersja 9.5.9 - 2021-09-15
 - naprawiono błąd utkniecia w pętli przy aktualizacji skórek
 - poprawka logowania do serwisu Polsat GO
+- poprawka prośby o odnowienie logowania do PlayerPL
 
 wersja 9.5.8 - 2021-09-13
 - zmiany w opcjach serwisach tv oraz playlist

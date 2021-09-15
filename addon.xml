@@ -33,6 +33,7 @@
 	<news>v9.5.9 (2021-09-15)
 - Fixed skin update loop error.
 - Fixed Polsat GO login error.
+- Fixed PlayerPL login renewal request.
 
 v9.5.8 (2021-09-13)
 - Changes to the tv service and playlist menus.
