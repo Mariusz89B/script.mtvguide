@@ -986,8 +986,9 @@ class Database(object):
             if sys.version_info[0] > 2:
                 start = datetime.datetime.timestamp(now)
             else:
-                from time import time
-                start = str(time()).split('.')[0]
+                from time import mktime
+                now = datetime.datetime.now()
+                start = str(int(time.mktime(now.timetuple())))
             c.execute("INSERT INTO lastplayed(idx, start_date, end_date, played_date) VALUES(?, ?, ?, ?)", [idx, start, end, played])
         self.conn.commit()
         c.close()
@@ -996,6 +997,7 @@ class Database(object):
         return self._invokeAndBlockForResult(self._getLastChannel)
 
     def _getLastChannel(self):
+        from time import mktime
         c = self.conn.cursor()
 
         now = datetime.datetime.now()
@@ -1011,18 +1013,24 @@ class Database(object):
         try:
             start = row[str('start_date')]
         except:
-            start = str(datetime.datetime.timestamp(now))
-
+            if sys.version_info[0] > 2:
+                start = str(datetime.datetime.timestamp(now))
+            else:
+                start = str(int(time.mktime(now.timetuple())))
         try:
             end = row[str('end_date')]
         except:
-            end = str(datetime.datetime.timestamp(now))
-
+            if sys.version_info[0] > 2:
+                end = str(datetime.datetime.timestamp(now))
+            else:
+                 end = str(int(time.mktime(now.timetuple())))
         try:
             played = row[str('played_date')]
         except:
-            played = str(datetime.datetime.timestamp(now))
-
+            if sys.version_info[0] > 2:
+                played = str(datetime.datetime.timestamp(now))
+            else:
+                played = str(int(time.mktime(now.timetuple())))
         c.close()
 
         return idx, start, end, played
