@@ -33,6 +33,7 @@
 	<news>v9.6.0 (2021-09-15)
 - Fixed service PlayerPL.
 - Fixed playback error in service Nc+ GO.
+- Fixed encoding issues Python 2.7.
 
 v9.5.9 (2021-09-15)
 - Fixed skin update loop error.
