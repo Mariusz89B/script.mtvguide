@@ -129,6 +129,7 @@
 	<channel id="HOME 4K PL" title="(?=HOME(\s*(4K|UHD))?\s*PL$)" strm=""/>
 	<channel id="HOME TV PL" title="(?=(HOME|TVR)(\s*TV)?(\s*HD)?\s*PL$)" strm=""/>
 	<channel id="ID PL" title="(?=(DISCOVERY\s*)?(INVESTIGATION|ID)(\s*DISCOVERY)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
+	<channel id="ITVN PL" title="(?=ITVN(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="ITVN EXTRA INTERNATIONAL PL" title="(?=ITVN\s*EXTRA(\s*INT|\s*INTERNATIONAL)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="ITVS PL" title="(?=ITVS(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="JAZZ HD PL" title="(?=JAZZ(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
@@ -260,7 +261,7 @@
 	<channel id="TVC PL" title="(?=(TELEWIZJA\s*|NTL\s*)?(TVC|NTL|RADOMSKO)(\s*POLSKA)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="TVE PL" title="(?=TVE(\s*POLSKA)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="TVN 24 BIS PL" title="(?=TVN\s*24\s*(BIS|BIZNES\s*I\s*.*WIAT)(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
-	<channel id="TVN 24 PL" title="(?=(TVN\s*24|24\s*TVN)(\+|PLUS)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
+	<channel id="TVN 24 PL" title="(?=(TVN\s*24|24\s*TVN)(\+|PLUS)?(\s*TV)?(\s*(HD|UHD|4K))?(\s*INTERNATIONAL)?\s*PL$)" strm=""/>
 	<channel id="TVN 7 PL" title="(?=TVN\s*(7|SIEDEM)(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="TVN FABUŁA PL" title="(?=TVN\s*FABU.*A(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="TVN PL" title="(?=TVN(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
