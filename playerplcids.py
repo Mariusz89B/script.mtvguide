@@ -210,7 +210,7 @@ class PlayerPLUpdater(baseServiceUpdater):
             if not self.DEVICE_ID or not self.MAKER or not self.USAGENT or not self.USAGENTVER:
                 self.createDatas()
             
-            if not self.REFRESH_TOKEN and self.LOGGED == 'true':
+            if not self.REFRESH_TOKEN and not self.LOGGED == 'true':
                 POST_DATA = 'scope=/pub-api/user/me&client_id=Player_TV_Android_28d3dcc063672068'
                 data = self.getRequests(self.GETTOKEN, data = POST_DATA, headers=self.HEADERS3)
                 kod = data.get('code')
@@ -299,8 +299,14 @@ class PlayerPLUpdater(baseServiceUpdater):
         self.log('[UPD] %-10s %-35s %-15s %-20s %-35s' % ( '-CID-', '-NAME-', '-GEOBLOCK-', '-ACCESS STATUS-', '-IMG-'))
 
         try:
+            regexReplaceList = list()
+
+            regexReplaceList.append( re.compile('(\s|^)(FAKTY|INTERNATIONAL)(?=\s|$)',  re.IGNORECASE) )
+
             urlk = 'https://player.pl/playerapi/product/live/list?4K=true&platform=ANDROID_TV'
+            
             out = []
+            
             data = self.getRequests(urlk, headers=self.HEADERS2, params={})
             self.mylist = self.getRequests('https://player.pl/playerapi/subscriber/product/available/list?4K=true&platform=ANDROID_TV', headers=self.HEADERS2, params={})
 
@@ -309,6 +315,11 @@ class PlayerPLUpdater(baseServiceUpdater):
                     id_ = channel['id']
                     name = channel['title'] + ' PL'
                     img = channel['images']['pc'][0]['mainUrl']
+
+                    for regexReplace in regexReplaceList:
+                        name = regexReplace.sub('', name)
+
+                    name = re.sub(r'^\s*', '', str(name))
 
                     cid = '%s:%s' % (id_,'kanal')
                     program = TvCid(cid, name, name, img=img)
