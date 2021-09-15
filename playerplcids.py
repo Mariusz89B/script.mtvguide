@@ -210,7 +210,7 @@ class PlayerPLUpdater(baseServiceUpdater):
             if not self.DEVICE_ID or not self.MAKER or not self.USAGENT or not self.USAGENTVER:
                 self.createDatas()
             
-            if not self.REFRESH_TOKEN and (self.LOGGED == 'true' or self.LOGGED == ''):
+            if not self.REFRESH_TOKEN and self.LOGGED == 'true':
                 POST_DATA = 'scope=/pub-api/user/me&client_id=Player_TV_Android_28d3dcc063672068'
                 data = self.getRequests(self.GETTOKEN, data = POST_DATA, headers=self.HEADERS3)
                 kod = data.get('code')
