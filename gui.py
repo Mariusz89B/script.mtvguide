@@ -722,6 +722,9 @@ class mTVGuide(xbmcgui.WindowXML):
         langList = [strings(59925), strings(59926), strings(59927), strings(59928), strings(59929), strings(59930),
                  strings(59931), strings(59932), strings(59933), strings(59934), strings(59935), strings(59936), strings(59937), 'Radio']
 
+        langResList = [strings(59963), strings(59964), strings(59965), strings(59966), strings(59967), strings(59968),
+                 strings(59969), strings(59970), strings(59971), strings(59972), strings(59973), strings(59974), strings(59975), 'Radio']
+
         ccList = ['be', 'cz', 'de', 'dk', 'fr', 'hr', 'it', 'no', 'pl', 'se', 'srb', 'uk', 'us', 'radio']
 
         res = xbmcgui.Dialog().multiselect(strings(59943),
@@ -743,7 +746,7 @@ class mTVGuide(xbmcgui.WindowXML):
         for i in range(len(langList)):
             ADDON.setSetting('country_code_{cc}'.format(cc=ccList[i]), 'false')
             if i in res:
-                label = strings(59963)
+                label = langResList[i].lower()
                 ADDON.setSetting('country_code_{cc}'.format(cc=ccList[i]), 'true')
                 if resExtra:
                     response = xbmcgui.Dialog().yesno(strings(59924), strings(59944).format(label))
@@ -790,8 +793,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
         if res == 0:
             res = xbmcgui.Dialog().multiselect(strings(59949), 
-                    [strings(59920), strings(80006), strings(59923), strings(30903), strings(80008), strings(59921), strings(80007), strings(30904), strings(80005)])
-
+                    ['C More', 'Ipla', 'nc+ GO', 'PlayerPL', 'Polsat GO', 'Polsat GO Box', 'Telewizja Polska', 'Telia Play', 'WP Pilot'])
 
             if not res:
                 resBack = xbmcgui.Dialog().yesno(strings(59924), strings(59938), yeslabel=strings(59939), nolabel=strings(30308))
@@ -801,18 +803,50 @@ class mTVGuide(xbmcgui.WindowXML):
                 else:
                     ADDON.setSetting('tutorial', 'true')
                     exit()
+            for s in res:
+                if s == 0:
+                    label = 'C More'
+                    xbmcgui.Dialog().ok(label, strings(59950).format(label))
+                    ADDON.setSetting('cmore_enabled', 'true')
+                    response = xbmcgui.Dialog().yesno(label, strings(59951))
 
-            if 0 in res:
-                label = 'C More'
-                xbmcgui.Dialog().ok(label, strings(59950).format(label))
-                ADDON.setSetting('cmore_enabled', 'true')
-                response = xbmcgui.Dialog().yesno(label, strings(59951))
+                    if response:
+                        ADDON.setSetting('cmore_tv_provider_login', 'true')
+                        progExec = True
 
-                if response:
-                    ADDON.setSetting('cmore_tv_provider_login', 'true')
-                    progExec = True
+                    else:
+                        kb = xbmc.Keyboard('','')
+                        kb.setHeading(strings(59952) + ' ({})'.format(label))
+                        kb.setHiddenInput(False)
+                        kb.doModal()
+                        login = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
+                        if login == '': login = self.tutorialGetService()
 
-                else:
+                        if login != '':
+                            ADDON.setSetting('cmore_username', login)
+                            kb = xbmc.Keyboard('','')
+                            kb.setHeading(strings(59953) + ' ({})'.format(label))
+                            kb.setHiddenInput(True)
+                            kb.doModal()
+                            pswd = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
+                            if pswd == '': pswd = self.tutorialGetService()
+
+                            ADDON.setSetting('cmore_password', pswd)
+                            if pswd != '':
+                                progExec = True
+
+                            else:
+                                ADDON.setSetting('cmore_enabled', 'false')
+                                self.tutorialGetService()
+
+                        else:
+                            ADDON.setSetting('cmore_enabled', 'false')
+                            self.tutorialGetService()
+
+                if s == 1:
+                    label = 'Ipla'
+                    xbmcgui.Dialog().ok(label, strings(59950).format(label))
+                    ADDON.setSetting('ipla_enabled', 'true')
                     kb = xbmc.Keyboard('','')
                     kb.setHeading(strings(59952) + ' ({})'.format(label))
                     kb.setHiddenInput(False)
@@ -821,7 +855,7 @@ class mTVGuide(xbmcgui.WindowXML):
                     if login == '': login = self.tutorialGetService()
 
                     if login != '':
-                        ADDON.setSetting('cmore_username', login)
+                        ADDON.setSetting('ipla_username', login)
                         kb = xbmc.Keyboard('','')
                         kb.setHeading(strings(59953) + ' ({})'.format(label))
                         kb.setHiddenInput(True)
@@ -829,246 +863,214 @@ class mTVGuide(xbmcgui.WindowXML):
                         pswd = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
                         if pswd == '': pswd = self.tutorialGetService()
 
-                        ADDON.setSetting('cmore_password', pswd)
+                        ADDON.setSetting('ipla_password', pswd)
                         if pswd != '':
                             progExec = True
 
+                            res = xbmcgui.Dialog().select(strings(95014), ['Ipla', 'Cyfrowy Polsat'])
+
+                            if res < 0:
+                                ADDON.setSetting('ipla_enabled', 'false')
+                                self.tutorialGetService()
+
+                            if res == 0:
+                                ADDON.setSetting('ipla_client', 'Ipla')
+
+                            elif res == 1:
+                                ADDON.setSetting('ipla_client', 'Cyfrowy Polsat')
+
                         else:
-                            ADDON.setSetting('cmore_enabled', 'false')
-                            self.tutorialGetService()
-
-                    else:
-                        ADDON.setSetting('cmore_enabled', 'false')
-                        self.tutorialGetService()
-
-            if 1 in res:
-                label = 'Ipla'
-                xbmcgui.Dialog().ok(label, strings(59950).format(label))
-                ADDON.setSetting('ipla_enabled', 'true')
-                kb = xbmc.Keyboard('','')
-                kb.setHeading(strings(59952) + ' ({})'.format(label))
-                kb.setHiddenInput(False)
-                kb.doModal()
-                login = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
-                if login == '': login = self.tutorialGetService()
-
-                if login != '':
-                    ADDON.setSetting('ipla_username', login)
-                    kb = xbmc.Keyboard('','')
-                    kb.setHeading(strings(59953) + ' ({})'.format(label))
-                    kb.setHiddenInput(True)
-                    kb.doModal()
-                    pswd = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
-                    if pswd == '': pswd = self.tutorialGetService()
-
-                    ADDON.setSetting('ipla_password', pswd)
-                    if pswd != '':
-                        progExec = True
-
-                        res = xbmcgui.Dialog().select(strings(95014), ['Ipla', 'Cyfrowy Polsat'])
-
-                        if res < 0:
                             ADDON.setSetting('ipla_enabled', 'false')
                             self.tutorialGetService()
-
-                        if res == 0:
-                            ADDON.setSetting('ipla_client', 'Ipla')
-
-                        elif res == 1:
-                            ADDON.setSetting('ipla_client', 'Cyfrowy Polsat')
 
                     else:
                         ADDON.setSetting('ipla_enabled', 'false')
                         self.tutorialGetService()
 
-                else:
-                    ADDON.setSetting('ipla_enabled', 'false')
-                    self.tutorialGetService()
-
-            if 2 in res:
-                label = 'nc+ GO'
-                xbmcgui.Dialog().ok(label, strings(59950).format(label))
-                ADDON.setSetting('ncplusgo_enabled', 'true')
-                kb = xbmc.Keyboard('','')
-                kb.setHeading(strings(59952) + ' ({})'.format(label))
-                kb.setHiddenInput(False)
-                kb.doModal()
-                login = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
-                if login == '': login = self.tutorialGetService()
-
-                if login != '':
-                    ADDON.setSetting('ncplusgo_username', login)
+                if s == 2:
+                    label = 'nc+ GO'
+                    xbmcgui.Dialog().ok(label, strings(59950).format(label))
+                    ADDON.setSetting('ncplusgo_enabled', 'true')
                     kb = xbmc.Keyboard('','')
-                    kb.setHeading(strings(59953) + ' ({})'.format(label))
-                    kb.setHiddenInput(True)
+                    kb.setHeading(strings(59952) + ' ({})'.format(label))
+                    kb.setHiddenInput(False)
                     kb.doModal()
-                    pswd = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
-                    if pswd == '': pswd = self.tutorialGetService()
+                    login = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
+                    if login == '': login = self.tutorialGetService()
 
-                    ADDON.setSetting('ncplusgo_password', pswd)
-                    if pswd != '':
-                        progExec = True
+                    if login != '':
+                        ADDON.setSetting('ncplusgo_username', login)
+                        kb = xbmc.Keyboard('','')
+                        kb.setHeading(strings(59953) + ' ({})'.format(label))
+                        kb.setHiddenInput(True)
+                        kb.doModal()
+                        pswd = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
+                        if pswd == '': pswd = self.tutorialGetService()
+
+                        ADDON.setSetting('ncplusgo_password', pswd)
+                        if pswd != '':
+                            progExec = True
+
+                        else:
+                            ADDON.setSetting('ncplusgo_enabled', 'false')
+                            self.tutorialGetService()
 
                     else:
                         ADDON.setSetting('ncplusgo_enabled', 'false')
                         self.tutorialGetService()
 
-                else:
-                    ADDON.setSetting('ncplusgo_enabled', 'false')
-                    self.tutorialGetService()
+                if s == 3:
+                    label = 'PlayerPL'
+                    xbmcgui.Dialog().ok(label, label + ' ' + strings(30721).lower() + '.')
+                    ADDON.setSetting('playerpl_enabled', 'true')
 
-            if 3 in res:
-                label = 'PlayerPL'
-                xbmcgui.Dialog().ok(label, strings(59950).format(label))
-                ADDON.setSetting('playerpl_enabled', 'true')
-
-            if 4 in res:
-                label = 'Polsat GO'
-                xbmcgui.Dialog().ok(label, strings(59950).format(label))
-                ADDON.setSetting('polsatgo_enabled', 'true')
-                kb = xbmc.Keyboard('','')
-                kb.setHeading(strings(59952) + ' ({})'.format(label))
-                kb.setHiddenInput(False)
-                kb.doModal()
-                login = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
-                if login == '': login = self.tutorialGetService()
-
-                if login != '':
-                    ADDON.setSetting('polsatgo_username', login)
+                if s == 4:
+                    label = 'Polsat GO'
+                    xbmcgui.Dialog().ok(label, strings(59950).format(label))
+                    ADDON.setSetting('polsatgo_enabled', 'true')
                     kb = xbmc.Keyboard('','')
-                    kb.setHeading(strings(59953) + ' ({})'.format(label))
-                    kb.setHiddenInput(True)
+                    kb.setHeading(strings(59952) + ' ({})'.format(label))
+                    kb.setHiddenInput(False)
                     kb.doModal()
-                    pswd = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
-                    if pswd == '': pswd = self.tutorialGetService()
+                    login = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
+                    if login == '': login = self.tutorialGetService()
 
-                    ADDON.setSetting('polsatgo_password', pswd)
-                    if pswd != '':
-                        progExec = True
+                    if login != '':
+                        ADDON.setSetting('polsatgo_username', login)
+                        kb = xbmc.Keyboard('','')
+                        kb.setHeading(strings(59953) + ' ({})'.format(label))
+                        kb.setHiddenInput(True)
+                        kb.doModal()
+                        pswd = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
+                        if pswd == '': pswd = self.tutorialGetService()
+
+                        ADDON.setSetting('polsatgo_password', pswd)
+                        if pswd != '':
+                            progExec = True
+
+                        else:
+                            ADDON.setSetting('polsatgo_enabled', 'false')
+                            self.tutorialGetService()
 
                     else:
                         ADDON.setSetting('polsatgo_enabled', 'false')
                         self.tutorialGetService()
 
-                else:
-                    ADDON.setSetting('polsatgo_enabled', 'false')
-                    self.tutorialGetService()
-
-            if 5 in res:
-                label = 'Polsat GO Box'
-                xbmcgui.Dialog().ok(label, strings(59950).format(label))
-                ADDON.setSetting('pgobox_enabled', 'true')
-                kb = xbmc.Keyboard('','')
-                kb.setHeading(strings(59952) + ' ({})'.format(label))
-                kb.setHiddenInput(False)
-                kb.doModal()
-                login = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
-                if login == '': login = self.tutorialGetService()
-
-                if login != '':
-                    ADDON.setSetting('pgobox_username', login)
+                if s == 5:
+                    label = 'Polsat GO Box'
+                    xbmcgui.Dialog().ok(label, strings(59950).format(label))
+                    ADDON.setSetting('pgobox_enabled', 'true')
                     kb = xbmc.Keyboard('','')
-                    kb.setHeading(strings(59953) + ' ({})'.format(label))
-                    kb.setHiddenInput(True)
+                    kb.setHeading(strings(59952) + ' ({})'.format(label))
+                    kb.setHiddenInput(False)
                     kb.doModal()
-                    pswd = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
-                    if pswd == '': pswd = self.tutorialGetService()
+                    login = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
+                    if login == '': login = self.tutorialGetService()
 
-                    ADDON.setSetting('pgobox_password', pswd)
-                    if pswd != '':
-                        progExec = True
+                    if login != '':
+                        ADDON.setSetting('pgobox_username', login)
+                        kb = xbmc.Keyboard('','')
+                        kb.setHeading(strings(59953) + ' ({})'.format(label))
+                        kb.setHiddenInput(True)
+                        kb.doModal()
+                        pswd = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
+                        if pswd == '': pswd = self.tutorialGetService()
 
-                        res = xbmcgui.Dialog().select(strings(95014), ['Cyfrowy Polsat', 'Ipla', 'Polsat Box'])
+                        ADDON.setSetting('pgobox_password', pswd)
+                        if pswd != '':
+                            progExec = True
 
-                        if res < 0:
+                            res = xbmcgui.Dialog().select(strings(95014), ['Cyfrowy Polsat', 'Ipla', 'Polsat Box'])
+
+                            if res < 0:
+                                ADDON.setSetting('pgobox_enabled', 'false')
+                                self.tutorialGetService()
+
+                            if res == 0:
+                                ADDON.setSetting('pgobox_device_id', 'Cyfrowy Polsat')
+
+                            elif res == 1:
+                                ADDON.setSetting('pgobox_device_id', 'Ipla')
+                                
+                            elif res == 2:
+                                ADDON.setSetting('pgobox_device_id', 'Polsat Box')
+
+                        else:
                             ADDON.setSetting('pgobox_enabled', 'false')
                             self.tutorialGetService()
-
-                        if res == 0:
-                            ADDON.setSetting('pgobox_device_id', 'Cyfrowy Polsat')
-
-                        elif res == 1:
-                            ADDON.setSetting('pgobox_device_id', 'Ipla')
-                            
-                        elif res == 2:
-                            ADDON.setSetting('pgobox_device_id', 'Polsat Box')
 
                     else:
                         ADDON.setSetting('pgobox_enabled', 'false')
                         self.tutorialGetService()
 
-                else:
-                    ADDON.setSetting('pgobox_enabled', 'false')
-                    self.tutorialGetService()
+                if s == 6:
+                    label = 'Telewizja Polska'
+                    xbmcgui.Dialog().ok(label, label + ' ' + strings(30721).lower() + '.')
+                    ADDON.setSetting('tvp_enabled', 'true')
 
-            if 6 in res:
-                label = 'Telewizja Polska'
-                xbmcgui.Dialog().ok(label, strings(59950).format(label))
-                ADDON.setSetting('tvp_enabled', 'true')
-
-            if 7 in res:
-                label = 'Telia Play'
-                xbmcgui.Dialog().ok(label, strings(59950).format(label))
-                ADDON.setSetting('teliaplay_enabled', 'true')
-                kb = xbmc.Keyboard('','')
-                kb.setHeading(strings(59952) + ' ({})'.format(label))
-                kb.setHiddenInput(False)
-                kb.doModal()
-                login = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
-                if login == '': login = self.tutorialGetService()
-
-                if login != '':
-                    ADDON.setSetting('teliaplay_username', login)
+                if s == 7:
+                    label = 'Telia Play'
+                    xbmcgui.Dialog().ok(label, strings(59950).format(label))
+                    ADDON.setSetting('teliaplay_enabled', 'true')
                     kb = xbmc.Keyboard('','')
-                    kb.setHeading(strings(59953) + ' ({})'.format(label))
-                    kb.setHiddenInput(True)
+                    kb.setHeading(strings(59952) + ' ({})'.format(label))
+                    kb.setHiddenInput(False)
                     kb.doModal()
-                    pswd = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
-                    if pswd == '': pswd = self.tutorialGetService()
+                    login = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
+                    if login == '': login = self.tutorialGetService()
 
-                    ADDON.setSetting('teliaplay_password', pswd)
-                    if pswd != '':
-                        progExec = True
+                    if login != '':
+                        ADDON.setSetting('teliaplay_username', login)
+                        kb = xbmc.Keyboard('','')
+                        kb.setHeading(strings(59953) + ' ({})'.format(label))
+                        kb.setHiddenInput(True)
+                        kb.doModal()
+                        pswd = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
+                        if pswd == '': pswd = self.tutorialGetService()
+
+                        ADDON.setSetting('teliaplay_password', pswd)
+                        if pswd != '':
+                            progExec = True
+
+                        else:
+                            ADDON.setSetting('teliaplay_enabled', 'false')
+                            self.tutorialGetService()
 
                     else:
                         ADDON.setSetting('teliaplay_enabled', 'false')
                         self.tutorialGetService()
 
-                else:
-                    ADDON.setSetting('teliaplay_enabled', 'false')
-                    self.tutorialGetService()
-
-            if 8 in res:
-                label = 'WP Pilot'
-                xbmcgui.Dialog().ok(label, strings(59950).format(label))
-                ADDON.setSetting('videostar_enabled', 'true')
-                kb = xbmc.Keyboard('','')
-                kb.setHeading(strings(59952) + ' ({})'.format(label))
-                kb.setHiddenInput(False)
-                kb.doModal()
-                login = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
-                if login == '': login = self.tutorialGetService()
-
-                if login != '':
-                    ADDON.setSetting('videostar_username', login)
+                if s == 8:
+                    label = 'WP Pilot'
+                    xbmcgui.Dialog().ok(label, strings(59950).format(label))
+                    ADDON.setSetting('videostar_enabled', 'true')
                     kb = xbmc.Keyboard('','')
-                    kb.setHeading(strings(59953) + ' ({})'.format(label))
-                    kb.setHiddenInput(True)
+                    kb.setHeading(strings(59952) + ' ({})'.format(label))
+                    kb.setHiddenInput(False)
                     kb.doModal()
-                    pswd = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
-                    if pswd == '': pswd = self.tutorialGetService()
+                    login = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
+                    if login == '': login = self.tutorialGetService()
 
-                    ADDON.setSetting('videostar_password', pswd)
-                    if pswd != '':
-                        progExec = True
+                    if login != '':
+                        ADDON.setSetting('videostar_username', login)
+                        kb = xbmc.Keyboard('','')
+                        kb.setHeading(strings(59953) + ' ({})'.format(label))
+                        kb.setHiddenInput(True)
+                        kb.doModal()
+                        pswd = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
+                        if pswd == '': pswd = self.tutorialGetService()
+
+                        ADDON.setSetting('videostar_password', pswd)
+                        if pswd != '':
+                            progExec = True
+
+                        else:
+                            ADDON.setSetting('videostar_enabled', 'false')
+                            self.tutorialGetService()
 
                     else:
                         ADDON.setSetting('videostar_enabled', 'false')
                         self.tutorialGetService()
-
-                else:
-                    ADDON.setSetting('videostar_enabled', 'false')
-                    self.tutorialGetService()
 
             if progExec is True:
                 self.tutorialCatchup(False)
