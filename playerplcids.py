@@ -259,6 +259,7 @@ class PlayerPLUpdater(baseServiceUpdater):
                 return True
             else:
                 self.loginErrorMessage()
+                ADDON.setSetting('playerpl_logged', 'false')
                 return False
 
         except:
