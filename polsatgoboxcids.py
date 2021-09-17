@@ -67,8 +67,6 @@ from serviceLib import *
 
 serviceName         = 'Polsat GO Box'
 
-kukz = ''
-
 UAIPLA = "pg_pc_windows_firefox_html/1 (Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0)"
 OSINFO = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0"
 
@@ -216,7 +214,7 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
                 return True
                 
         except:
-            self.log('getChannelList exception: {}'.format(getExceptionString()))
+            self.log('getLogin exception: {}'.format(getExceptionString()))
             self.connErrorMessage()  
         return False
 

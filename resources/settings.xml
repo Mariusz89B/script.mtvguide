@@ -55,20 +55,21 @@
 		<setting id="polsatgo_enabled" type="bool" label="80008" default="false" visible="eq(-39,0)"/>
 		<setting id="polsatgo_username" type="text" label="55002" default="" visible="eq(-1,true) + eq(-40,0)" subsetting="true"/>
 		<setting id="polsatgo_password" type="text" option="hidden" label="55003" default="" visible="eq(-2,true) + eq(-41,0)" subsetting="true"/>
-		<setting id="priority_polsatgo" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-3,true) + eq(-42,0)" subsetting="true"/>
-		<setting label="30371" type="action" action="RunScript($CWD/clearpolsatgo.py, clearPolsatGO)" visible="eq(-4,true) + eq(-43,0)" subsetting="true"/>
+		<setting id="polsatgo_client" type="select" label="30368" default="Polsat Go" values="Ipla|Polsat Go" visible="eq(-3,true) + eq(-42,0)" subsetting="true"/>
+		<setting id="priority_polsatgo" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-4,true) + eq(-43,0)" subsetting="true"/>
+		<setting label="30371" type="action" action="RunScript($CWD/clearpolsatgo.py, clearPolsatGO)" visible="eq(-5,true) + eq(-44,0)" subsetting="true"/>
 		<setting id="polsatgo_clientId" visible="false" subsetting="true"/>
 		<setting id="polsatgo_devid" visible="false" subsetting="true"/>
 		<setting id="polsatgo_sesstoken" visible="false" subsetting="true"/>
 		<setting id="polsatgo_sessexpir" visible="false" subsetting="true"/>
 		<setting id="polsatgo_sesskey" visible="false" subsetting="true"/>
 	
-		<setting id="pgobox_enabled" type="bool" label="59921" default="false" visible="eq(-49,0)"/>
-		<setting id="pgobox_username" type="text" label="55002" default="" visible="eq(-1,true) + eq(-50,0)" subsetting="true"/>
-		<setting id="pgobox_password" type="text" option="hidden" label="55003" default="" visible="eq(-2,true) + eq(-51,0)" subsetting="true"/>
-		<setting id="pgobox_client" type="select" label="30368" default="Polsat Box" values="Cyfrowy Polsat|Ipla|Polsat Box" visible="eq(-3,true) + eq(-52,0)" subsetting="true"/>
-		<setting id="priority_pgobox" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-4,true) + eq(-53,0)" subsetting="true"/>
-		<setting label="30371" type="action" action="RunScript($CWD/clearpolsatgobox.py, clearPolsatGOBox)" visible="eq(-5,true) + eq(-54,0)" subsetting="true"/>
+		<setting id="pgobox_enabled" type="bool" label="59921" default="false" visible="eq(-50,0)"/>
+		<setting id="pgobox_username" type="text" label="55002" default="" visible="eq(-1,true) + eq(-51,0)" subsetting="true"/>
+		<setting id="pgobox_password" type="text" option="hidden" label="55003" default="" visible="eq(-2,true) + eq(-52,0)" subsetting="true"/>
+		<setting id="pgobox_client" type="select" label="30368" default="Polsat Box" values="Cyfrowy Polsat|Ipla|Polsat Box" visible="eq(-3,true) + eq(-53,0)" subsetting="true"/>
+		<setting id="priority_pgobox" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-4,true) + eq(-54,0)" subsetting="true"/>
+		<setting label="30371" type="action" action="RunScript($CWD/clearpolsatgobox.py, clearPolsatGOBox)" visible="eq(-5,true) + eq(-55,0)" subsetting="true"/>
 		<setting id="pgobox_device_id" visible="false" subsetting="true"/>
 		<setting id="pgobox_client_id" visible="false" subsetting="true"/>
 		<setting id="pgobox_id_" visible="false" subsetting="true"/>
@@ -77,31 +78,31 @@
 		<setting id="pgobox_sesskey" visible="false" subsetting="true"/>
 		<setting id="pgobox_myperm" visible="false" subsetting="true"/>
 		
-		<setting id="tvp_enabled" type="bool" label="80007" default="false" visible="eq(-62,0)"/>
-		<setting id="priority_tvp" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-1,true) + eq(-63,0)" subsetting="true"/>
+		<setting id="tvp_enabled" type="bool" label="80007" default="false" visible="eq(-63,0)"/>
+		<setting id="priority_tvp" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-1,true) + eq(-64,0)" subsetting="true"/>
 		
-		<setting id="videostar_enabled" type="bool" label="80005" default="false" visible="eq(-64,0)"/>
-		<setting id="videostar_username" type="text" label="55002" default="" visible="eq(-1,true) + eq(-65,0)" subsetting="true"/>
-		<setting id="videostar_password" type="text" option="hidden" label="55003" default="" visible="eq(-2,true) + eq(-66,0)" subsetting="true"/>
-		<setting id="videostar_netviapisessid" type="text" label="69066" default="" visible="eq(-3,true) + eq(-67,0)" subsetting="true"/>
-		<setting id="videostar_netviapisessval" type="text" label="69067" default="" visible="eq(-4,true) + eq(-68,0)" subsetting="true"/>
-		<setting id="videostar_remote_cookies" type="text" label="69068" default="" visible="eq(-5,true) + eq(-69,0)" subsetting="true"/>
-		<setting id="priority_videostar" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-6,true) + eq(-70,0)" subsetting="true"/>
+		<setting id="videostar_enabled" type="bool" label="80005" default="false" visible="eq(-65,0)"/>
+		<setting id="videostar_username" type="text" label="55002" default="" visible="eq(-1,true) + eq(-66,0)" subsetting="true"/>
+		<setting id="videostar_password" type="text" option="hidden" label="55003" default="" visible="eq(-2,true) + eq(-67,0)" subsetting="true"/>
+		<setting id="videostar_netviapisessid" type="text" label="69066" default="" visible="eq(-3,true) + eq(-68,0)" subsetting="true"/>
+		<setting id="videostar_netviapisessval" type="text" label="69067" default="" visible="eq(-4,true) + eq(-69,0)" subsetting="true"/>
+		<setting id="videostar_remote_cookies" type="text" label="69068" default="" visible="eq(-5,true) + eq(-70,0)" subsetting="true"/>
+		<setting id="priority_videostar" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-6,true) + eq(-71,0)" subsetting="true"/>
 		
-		<setting id="cmore_enabled" type="bool" label="59920" default="false" visible="eq(-71,1)"/>
-		<setting id="cmore_locale" type="select" label="30368" default="cmore.se" values="cmore.se|cmore.dk|cmore.no" visible="eq(-1,true) + eq(-72,1)" subsetting="true"/>
-		<setting id="cmore_tv_provider_login" type="bool" label="30369" default="false" visible="eq(-2,true) + eq(-73,1)" subsetting="true"/>
-		<setting id="cmore_username" type="text" label="55002" default="" visible="eq(-3,true) + eq(-74,1) + eq(-1,false)" subsetting="true"/>
-		<setting id="cmore_password" type="text" option="hidden" label="55003" default="" visible="eq(-4,true) + eq(-75,1) + eq(-2,false)" subsetting="true"/>
-		<setting id="priority_cmore" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-5,true) + eq(-76,1)" subsetting="true"/>
-		<setting label="30371" type="action" action="RunScript($CWD/clearcmore.py, clearCMore)" visible="eq(-6,true) + eq(-77,1)" subsetting="true"/>
+		<setting id="cmore_enabled" type="bool" label="59920" default="false" visible="eq(-72,1)"/>
+		<setting id="cmore_locale" type="select" label="30368" default="cmore.se" values="cmore.se|cmore.dk|cmore.no" visible="eq(-1,true) + eq(-73,1)" subsetting="true"/>
+		<setting id="cmore_tv_provider_login" type="bool" label="30369" default="false" visible="eq(-2,true) + eq(-74,1)" subsetting="true"/>
+		<setting id="cmore_username" type="text" label="55002" default="" visible="eq(-3,true) + eq(-75,1) + eq(-1,false)" subsetting="true"/>
+		<setting id="cmore_password" type="text" option="hidden" label="55003" default="" visible="eq(-4,true) + eq(-76,1) + eq(-2,false)" subsetting="true"/>
+		<setting id="priority_cmore" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-5,true) + eq(-77,1)" subsetting="true"/>
+		<setting label="30371" type="action" action="RunScript($CWD/clearcmore.py, clearCMore)" visible="eq(-6,true) + eq(-78,1)" subsetting="true"/>
 		
-		<setting id="teliaplay_enabled" type="bool" label="30904" default="false" visible="eq(-78,1)"/>
-		<setting id="teliaplay_locale" type="select" label="30368" default="0" lvalues="57056|57057" visible="eq(-1,true) + eq(-79,1)" subsetting="true"/>
-		<setting id="teliaplay_username" type="text" label="55002" default="" visible="eq(-2,true) + eq(-80,1)" subsetting="true"/>
-		<setting id="teliaplay_password" type="text" option="hidden" label="55003" default="" visible="eq(-3,true) + eq(-81,1)" subsetting="true"/>
-		<setting id="priority_teliaplay" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-4,true) + eq(-82,1)" subsetting="true"/>
-		<setting label="30371" type="action" action="RunScript($CWD/clearteliaplay.py, clearTeliaPlay)" visible="eq(-5,true) + eq(-83,1)" subsetting="true"/>
+		<setting id="teliaplay_enabled" type="bool" label="30904" default="false" visible="eq(-79,1)"/>
+		<setting id="teliaplay_locale" type="select" label="30368" default="0" lvalues="57056|57057" visible="eq(-1,true) + eq(-80,1)" subsetting="true"/>
+		<setting id="teliaplay_username" type="text" label="55002" default="" visible="eq(-2,true) + eq(-81,1)" subsetting="true"/>
+		<setting id="teliaplay_password" type="text" option="hidden" label="55003" default="" visible="eq(-3,true) + eq(-82,1)" subsetting="true"/>
+		<setting id="priority_teliaplay" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-4,true) + eq(-83,1)" subsetting="true"/>
+		<setting label="30371" type="action" action="RunScript($CWD/clearteliaplay.py, clearTeliaPlay)" visible="eq(-5,true) + eq(-84,1)" subsetting="true"/>
 		<setting id="teliaplay_sess_id" visible="false" subsetting="true"/>
 		<setting id="teliaplay_devush" visible="false" subsetting="true"/>
 		<setting id="teliaplay_beartoken" visible="false" subsetting="true"/>

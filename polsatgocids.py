@@ -59,11 +59,32 @@ import random
 from strings import *
 from serviceLib import *
 
+ADDON = xbmcaddon.Addon('script.mtvguide')
+
 serviceName         = 'Polsat GO'
 
 UA = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0'
 UAPG = "pg_pc_windows_firefox_html/1 (Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0)"
 UAPGwidevine = "pg_pc_windows_firefox_html/1 (Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0) (Windows 7; widevine=true)"
+
+try:
+    if sys.version_info[0] > 2:
+        COOKIEFILE = os.path.join(xbmcvfs.translatePath(ADDON.getAddonInfo('profile')), 'pgo.cookie')
+    else:
+        COOKIEFILE = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('profile')), 'pgo.cookie')
+except:
+    if sys.version_info[0] > 2:
+        COOKIEFILE = os.path.join(xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8'), 'pgo.cookie')
+    else:
+        COOKIEFILE = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8'), 'pgo.cookie')
+
+sess = requests.Session()
+if sys.version_info[0] > 2:
+    sess.cookies = http.cookiejar.LWPCookieJar(COOKIEFILE)
+else:
+    sess.cookies = cookielib.LWPCookieJar(COOKIEFILE)
+
+timeouts = (15, 30)
 
 class PolsatGoUpdater(baseServiceUpdater):
     def __init__(self):
@@ -83,6 +104,7 @@ class PolsatGoUpdater(baseServiceUpdater):
         self.host               = 'b2c-www.redefine.pl'
         self.origin             = 'https://polsatgo.pl'
         self.navigate           = 'https://b2c-www.redefine.pl/rpc/navigation/'
+        self.client = ADDON.getSetting('polsatgo_client')
 
     def getHmac(self, data):
         skey = ADDON.getSetting('polsatgo_sesskey')
@@ -119,290 +141,297 @@ class PolsatGoUpdater(baseServiceUpdater):
         bb = ss+'|'+aa.replace('+','-').replace('/','_')
         return bb
 
-    def loginService(self):
-        headers = {
-            'Host': self.host,
-            'User-Agent': UA,
-            'Accept': 'application/json',
-            'Accept-Language': 'pl,en-US;q=0.7,en;q=0.3',
-            'Content-Type': 'application/json;charset=utf-8',
-            'Origin': self.origin,
-            'Referer': self.origin,
-            'Sec-Fetch-Dest': 'empty',
-            'Sec-Fetch-Mode': 'cors',
-            'Sec-Fetch-Site': 'cross-site',
-        }
-
-        data = {
-            "id":1,
-            "jsonrpc":"2.0",
-            "method":"login",
-            "params": {
-                "ua": UAPG,
-                "deviceId": {
-                    "type":"other",
-                    "value": self.devid
-                },
-                "userAgentData":{ 
-                    "portal":"pg",
-                    "deviceType":"pc",
-                    "application":"firefox",
-                    "player":"html",
-                    "build":1,
-                    "os":"windows",
-                    "osInfo": UA
-                },
-                "clientId":"",
-                "authData": {
-                    "login": self.login,
-                    "password": self.password,
-                    "deviceId": {
-                        "type":"other",
-                        "value": self.devid}
-            }}}
-
-        def gen_hex_code(myrange=6):
-            return ''.join([random.choice('0123456789ABCDEF') for x in range(myrange)])
-        
-        def ipla_system_id():
-            myrand = gen_hex_code(10) + '-' + gen_hex_code(4) + '-' + gen_hex_code(4) + '-' + gen_hex_code(4) + '-' + gen_hex_code(12)
-            return myrand
-
-        if not self.clid and not self.devid:
-            self.clid = ipla_system_id()
-            ADDON.setSetting('polsatgo_clientId', self.clid)
-
-            self.devid = ipla_system_id()
-            ADDON.setSetting('polsatgo_devid', self.devid)
-            
-            return self.loginService()
+    def getRequests(self, url, data={}, headers={}, params ={}):
+        if data:
+            content = sess.post(url, headers=headers, json=data, params=params, verify=False, timeout=timeouts).json()
         else:
-            self.login = ADDON.getSetting('polsatgo_username')
-            self.password = ADDON.getSetting('polsatgo_password')   
+            content = sess.get(url, headers=headers, params=params, verify=False, timeout=timeouts).json()
+        return content
 
-            if self.login and self.password:
-                data = {
-                    "id": 1,
-                    "jsonrpc": "2.0",
-                    "method": "login",
-                    "params": {
-                        "ua": UAPG,
-                        "deviceId": {
-                            "type": "other",
-                            "value": self.devid
-                        },
-                        "userAgentData": {
-                            "portal": "pg",
-                            "deviceType": "pc",
-                            "application": "firefox",
-                            "player": "html",
-                            "build": 1,
-                            "os": "windows",
-                            "osInfo": UA
-                        },
-                        "clientId": "",
-                        "authData": {
-                            "login": self.login,
-                            "password": self.password,
+    def loginService(self):
+        try:
+            headers = {
+                'Host': self.host,
+                'User-Agent': UA,
+                'Accept': 'application/json',
+                'Accept-Language': 'pl,en-US;q=0.7,en;q=0.3',
+                'Content-Type': 'application/json;charset=utf-8',
+                'Origin': self.origin,
+                'Referer': self.origin,
+                'Sec-Fetch-Dest': 'empty',
+                'Sec-Fetch-Mode': 'cors',
+                'Sec-Fetch-Site': 'cross-site',
+            }
+
+            def gen_hex_code(myrange=6):
+                return ''.join([random.choice('0123456789ABCDEF') for x in range(myrange)])
+            
+            def ipla_system_id():
+                myrand = gen_hex_code(10) + '-' + gen_hex_code(4) + '-' + gen_hex_code(4) + '-' + gen_hex_code(4) + '-' + gen_hex_code(12)
+                return myrand
+
+            if not self.clid and not self.devid:
+                self.clid = ipla_system_id()
+                ADDON.setSetting('polsatgo_clientId', self.clid)
+
+                self.devid = ipla_system_id()
+                ADDON.setSetting('polsatgo_devid', self.devid)
+                
+                return self.loginService()
+            else:
+                self.login = ADDON.getSetting('polsatgo_username')
+                self.password = ADDON.getSetting('polsatgo_password')   
+
+                if self.login and self.password:
+                    data = {
+                        "id": 1,
+                        "jsonrpc": "2.0",
+                        "method": "login",
+                        "params": {
+                            "ua": UAPG,
                             "deviceId": {
                                 "type": "other",
-                                "value": self.devid}}}
-                }
+                                "value": self.devid
+                            },
+                            "userAgentData": {
+                                "portal": "pg",
+                                "deviceType": "pc",
+                                "application": "firefox",
+                                "player": "html",
+                                "build": 1,
+                                "os": "windows",
+                                "osInfo": UA
+                            },
+                            "clientId": "",
+                            "authData": {
+                                "login": self.login,
+                                "password": self.password,
+                                "deviceId": {
+                                    "type": "other",
+                                    "value": self.devid}}}
+                    }
 
-                response = requests.post(self.auth, headers=headers, json=data, timeout=15, verify=False).json()
-                try:
-                    error = response['error']
-                    if error:
-                        message = error['message']
-                        self.loginErrorMessage()
-                    return False
-                except:
-                    loc = response['result']['accessGroups']
-                    if not 'loc:pl' in loc:
-                        self.geoBlockErrorMessage()
+                    jdata = self.getRequests(self.auth, data=data, headers=headers)
+
+                    if sys.version_info[0] > 2:
+                        response = jdata
+                    else:
+                        response = json.loads(json.dumps(jdata))
+
+                    try:
+                        error = response['error']
+                        if error:
+                            message = error['message']
+                            self.loginErrorMessage()
                         return False
+                    except:
+                        pass
 
-                    session = response['result']['session']
-                    sesstoken = session['id']
-                    sessexpir = str(session['keyExpirationTime'])
-                    sesskey = session['key']
+                        session = response['result']['session']
+                        sesstoken = session['id']
+                        sessexpir = str(session['keyExpirationTime'])
+                        sesskey = session['key']
 
-                    ADDON.setSetting('polsatgo_sesstoken', sesstoken)
-                    ADDON.setSetting('polsatgo_sessexpir', str(sessexpir))
-                    ADDON.setSetting('polsatgo_sesskey', sesskey)
+                        ADDON.setSetting('polsatgo_sesstoken', sesstoken)
+                        ADDON.setSetting('polsatgo_sessexpir', str(sessexpir))
+                        ADDON.setSetting('polsatgo_sesskey', sesskey)
 
-                    dane = sesstoken+'|'+sessexpir+'|auth|getSession'
-                    authdata = self.getHmac(dane)
+                        dane = sesstoken+'|'+sessexpir+'|auth|getSession'
+                        authdata = self.getHmac(dane)
 
-                    data = {
-                        "id": 1,
-                        "jsonrpc": "2.0",
-                        "method": "getSession",
-                        "params": {
-                            "ua": UAPG,
-                            "deviceId": {
-                                "type": "other",
-                                "value": self.devid
-                            },
-                            "userAgentData": {
-                                "portal": "pg",
-                                "deviceType": "pc",
-                                "application": "firefox",
-                                "player": "html",
-                                "build": 1,
-                                "os": "windows",
-                                "osInfo": UA
-                            },
-                            "authData": {
-                                "sessionToken": authdata
-                            },
-                            "clientId": ""}
-                    }
+                        data = {
+                            "id": 1,
+                            "jsonrpc": "2.0",
+                            "method": "getSession",
+                            "params": {
+                                "ua": UAPG,
+                                "deviceId": {
+                                    "type": "other",
+                                    "value": self.devid
+                                },
+                                "userAgentData": {
+                                    "portal": "pg",
+                                    "deviceType": "pc",
+                                    "application": "firefox",
+                                    "player": "html",
+                                    "build": 1,
+                                    "os": "windows",
+                                    "osInfo": UA
+                                },
+                                "authData": {
+                                    "sessionToken": authdata
+                                },
+                                "clientId": ""}
+                        }
 
-                    response = requests.post(self.auth, headers=headers, json=data, timeout=15, verify=False).json()
-                    session = response['result']['session']
+                        jdata = self.getRequests(self.auth, data=data, headers=headers)
+                        if sys.version_info[0] > 2:
+                            response = jdata
+                        else:
+                            response = json.loads(json.dumps(jdata))
 
-                    sesstoken = session['id']
-                    sessexpir = str(session['keyExpirationTime'])
-                    sesskey = session['key']
+                        session = response['result']['session']
 
-                    ADDON.setSetting('polsatgo_sesstoken', sesstoken)
-                    ADDON.setSetting('polsatgo_sessexpir', str(sessexpir))
-                    ADDON.setSetting('polsatgo_sesskey', sesskey)
+                        sesstoken = session['id']
+                        sessexpir = str(session['keyExpirationTime'])
+                        sesskey = session['key']
 
-                    accesgroup = response['result']['accessGroups']
-                    ADDON.setSetting('polsatgo_accgroups', str(accesgroup))
+                        ADDON.setSetting('polsatgo_sesstoken', sesstoken)
+                        ADDON.setSetting('polsatgo_sessexpir', str(sessexpir))
+                        ADDON.setSetting('polsatgo_sesskey', sesskey)
 
-                    dane = sesstoken+'|'+sessexpir+'|auth|getProfiles'
-                    authdata = self.getHmac(dane)
+                        accesgroup = response['result']['accessGroups']
+                        ADDON.setSetting('polsatgo_accgroups', str(accesgroup))
 
-                    data = {
-                        "id": 1,
-                        "jsonrpc": "2.0",
-                        "method": "getProfiles",
-                        "params": {
-                            "ua": UAPG,
-                            "deviceId": {
-                                "type": "other",
-                                "value": self.devid
-                            },
-                            "userAgentData": {
-                                "portal": "pg",
-                                "deviceType": "pc",
-                                "application": "firefox",
-                                "player": "html",
-                                "build": 1,
-                                "os": "windows",
-                                "osInfo": UA
-                            },
-                            "authData": {
-                                "sessionToken": authdata
-                            },
-                            "clientId": ""}
-                    }
+                        dane = sesstoken+'|'+sessexpir+'|auth|getProfiles'
+                        authdata = self.getHmac(dane)
 
-                    response = requests.post(self.auth, headers=headers, json=data, timeout=15, verify=False).json()
+                        data = {
+                            "id": 1,
+                            "jsonrpc": "2.0",
+                            "method": "getProfiles",
+                            "params": {
+                                "ua": UAPG,
+                                "deviceId": {
+                                    "type": "other",
+                                    "value": self.devid
+                                },
+                                "userAgentData": {
+                                    "portal": "pg",
+                                    "deviceType": "pc",
+                                    "application": "firefox",
+                                    "player": "html",
+                                    "build": 1,
+                                    "os": "windows",
+                                    "osInfo": UA
+                                },
+                                "authData": {
+                                    "sessionToken": authdata
+                                },
+                                "clientId": ""}
+                        }
 
-                    nids = []
-                    for result in response['result']:
-                        nids.append({'id':result['id'],'nazwa':result["name"],'img':result["avatarId"]})    
-                    if len(nids) > 1:
-                        profile = [x.get('nazwa') for x in nids]
-                        sel = xbmcgui.Dialog().select('Wybierz profil', profile)    
-                        if sel > -1:
-                            id = nids[sel].get('id')
-                            nazwa = nids[sel].get('nazwa')
-                            avt = nids[sel].get('img')
-                            profil = nazwa+'|'+id
+                        jdata = self.getRequests(self.auth, data=data, headers=headers)
+                        if sys.version_info[0] > 2:
+                            response = jdata
+                        else:
+                            response = json.loads(json.dumps(jdata))
+
+                        nids = []
+                        for result in response['result']:
+                            nids.append({'id':result['id'],'nazwa':result["name"],'img':result["avatarId"]})    
+                        if len(nids) > 1:
+                            profile = [x.get('nazwa') for x in nids]
+                            sel = xbmcgui.Dialog().select('Wybierz profil', profile)    
+                            if sel > -1:
+                                id = nids[sel].get('id')
+                                nazwa = nids[sel].get('nazwa')
+                                avt = nids[sel].get('img')
+                                profil = nazwa+'|'+id
+                            else:
+                                id = str(nids[0].get('id'))
+                                nazwa = nids[0].get('nazwa')
+                                avt = nids[sel].get('img')
+                                profil = nazwa+'|'+id
+
                         else:
                             id = str(nids[0].get('id'))
                             nazwa = nids[0].get('nazwa')
-                            avt = nids[sel].get('img')
+                            avt = nids[0].get('img')
                             profil = nazwa+'|'+id
 
-                    else:
-                        id = str(nids[0].get('id'))
-                        nazwa = nids[0].get('nazwa')
-                        avt = nids[0].get('img')
-                        profil = nazwa+'|'+id
+                        dane = sesstoken+'|'+sessexpir+'|auth|setSessionProfile'
+                        authdata = self.getHmac(dane)
 
-                    dane = sesstoken+'|'+sessexpir+'|auth|setSessionProfile'
-                    authdata = self.getHmac(dane)
+                        data = {
+                            "id": 1,
+                            "jsonrpc": "2.0",
+                            "method": "setSessionProfile",
+                            "params": {
+                                "ua": UAPG,
+                                "deviceId": {
+                                    "type": "other",
+                                    "value": self.devid
+                                },
+                                "userAgentData": {
+                                    "portal": "pg",
+                                    "deviceType": "pc",
+                                    "application": "firefox",
+                                    "player": "html",
+                                    "build": 1,
+                                    "os": "windows",
+                                    "osInfo": UA
+                                },
+                                "authData": {
+                                    "sessionToken": authdata
+                                },
+                                "clientId": "",
+                                "profileId": id}
+                        }
 
-                    data = {
-                        "id": 1,
-                        "jsonrpc": "2.0",
-                        "method": "setSessionProfile",
-                        "params": {
-                            "ua": UAPG,
-                            "deviceId": {
-                                "type": "other",
-                                "value": self.devid
-                            },
-                            "userAgentData": {
-                                "portal": "pg",
-                                "deviceType": "pc",
-                                "application": "firefox",
-                                "player": "html",
-                                "build": 1,
-                                "os": "windows",
-                                "osInfo": UA
-                            },
-                            "authData": {
-                                "sessionToken": authdata
-                            },
-                            "clientId": "",
-                            "profileId": id}
-                    }
+                        jdata = self.getRequests(self.auth, data=data, headers=headers)
+                        if sys.version_info[0] > 2:
+                            response = jdata
+                        else:
+                            response = json.loads(json.dumps(jdata))
 
-                    response = requests.post(self.auth, headers=headers, json=data, timeout=15, verify=False).json()
-                    dane = sesstoken+'|'+sessexpir+'|auth|getSession'
-                    authdata = self.getHmac(dane)
+                        dane = sesstoken+'|'+sessexpir+'|auth|getSession'
+                        authdata = self.getHmac(dane)
 
-                    data = {
-                        "id": 1,
-                        "jsonrpc": "2.0",
-                        "method": "getSession",
-                        "params": {
-                            "ua": UAPG,
-                            "deviceId": {
-                                "type": "other",
-                                "value": self.devid
-                            },
-                            "userAgentData": {
-                                "portal": "pg",
-                                "deviceType": "pc",
-                                "application": "firefox",
-                                "player": "html",
-                                "build": 1,
-                                "os": "windows",
-                                "osInfo": UA
-                            },
-                            "authData": {
-                                "sessionToken": authdata
-                            },
-                            "clientId": ""}
-                    }
+                        data = {
+                            "id": 1,
+                            "jsonrpc": "2.0",
+                            "method": "getSession",
+                            "params": {
+                                "ua": UAPG,
+                                "deviceId": {
+                                    "type": "other",
+                                    "value": self.devid
+                                },
+                                "userAgentData": {
+                                    "portal": "pg",
+                                    "deviceType": "pc",
+                                    "application": "firefox",
+                                    "player": "html",
+                                    "build": 1,
+                                    "os": "windows",
+                                    "osInfo": UA
+                                },
+                                "authData": {
+                                    "sessionToken": authdata
+                                },
+                                "clientId": ""}
+                        }
 
-                    response = requests.post(self.auth, headers=headers, json=data, timeout=15, verify=False).json()
-                    session = response['result']['session']
+                        jdata = self.getRequests(self.auth, data=data, headers=headers)
+                        if sys.version_info[0] > 2:
+                            response = jdata
+                        else:
+                            response = json.loads(json.dumps(jdata))
 
-                    sesstoken = session['id']
-                    sessexpir = str(session['keyExpirationTime'])
-                    sesskey = session['key']
+                        session = response['result']['session']
 
-                    ADDON.setSetting('polsatgo_sesstoken', sesstoken)
-                    ADDON.setSetting('polsatgo_sessexpir', str(sessexpir))
-                    ADDON.setSetting('polsatgo_sesskey', sesskey)
+                        sesstoken = session['id']
+                        sessexpir = str(session['keyExpirationTime'])
+                        sesskey = session['key']
 
-                    accesgroup = response['result']['accessGroups']
-                    ADDON.setSetting('polsatgo_accgroups', str(accesgroup))
+                        ADDON.setSetting('polsatgo_sesstoken', sesstoken)
+                        ADDON.setSetting('polsatgo_sessexpir', str(sessexpir))
+                        ADDON.setSetting('polsatgo_sesskey', sesskey)
 
-                    return True
+                        accesgroup = response['result']['accessGroups']
+                        ADDON.setSetting('polsatgo_accgroups', str(accesgroup))
 
-            else:
-                self.loginErrorMessage()
-                return False
+                        return True
+
+                else:
+                    self.loginErrorMessage()
+                    return False
+
+        except:
+            self.log('getLogin exception: {}'.format(getExceptionString()))
+            self.connErrorMessage()
+        return False
 
     def getChannelList(self, silent):
         result = list()
@@ -469,8 +498,39 @@ class PolsatGoUpdater(baseServiceUpdater):
                     },
                     "clientId":self.clid}}
 
-            response = requests.post(self.navigate, headers=headers, json=data, timeout=15, verify=False).json()
+            jdata = self.getRequests(self.navigate, data=data, headers=headers)
+            if sys.version_info[0] > 2:
+                response = jdata
+            else:
+                response = json.loads(json.dumps(jdata))
+
             aa = response['result']['results']
+
+            if self.client == 'Polsat Go':
+                url = 'https://polsatgo.pl/_next/data/oMb3Fkfg11gkdrZSgif2z/channels.json'
+
+                headers = {
+                    'Connection': 'keep-alive',
+                    'sec-ch-ua': '"Google Chrome";v="93", " Not;A Brand";v="99", "Chromium";v="93"',
+                    'sec-ch-ua-mobile': '?0',
+                    'User-Agent': UA,
+                    'sec-ch-ua-platform': '"Windows"',
+                    'Accept': '*/*',
+                    'Sec-Fetch-Site': 'same-origin',
+                    'Sec-Fetch-Mode': 'cors',
+                    'Sec-Fetch-Dest': 'empty',
+                    'Referer': 'https://polsatgo.pl/start',
+                    'Accept-Language': 'sv-SE,sv;q=0.9,en-US;q=0.8,en;q=0.7',
+                }
+
+                response = requests.get(url, headers=headers, cookies=sess.cookies).json()
+                jdata = response['pageProps']['lists']['results']
+
+                if sys.version_info[0] > 2:
+                    aa = jdata
+                else:
+                    aa = json.loads(json.dumps(jdata))
+
             for i in aa:
                 item = {}
                 

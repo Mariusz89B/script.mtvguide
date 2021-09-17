@@ -600,6 +600,25 @@
 						<hidden>true</hidden>
 					</control>
 				</setting>
+				<setting help="95014" id="polsatgo_client" label="30368" type="string" parent="polsatgo_enabled">
+					<level>0</level>
+					<default>Polsat Box</default>
+					<constraints>
+						<options>
+							<option label="Ipla">Ipla</option>
+							<option label="Polsat Box">Polsat Go</option>
+						</options>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="polsatgo_enabled">true</condition>
+							<condition operator="is" setting="country_service">0</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="list">
+						<heading>30368</heading>
+					</control>
+				</setting>
 				<setting help="95012" id="priority_polsatgo" label="55009" type="integer" parent="polsatgo_enabled">
 					<level>0</level>
 					<default>6</default>

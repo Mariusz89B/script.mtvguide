@@ -899,23 +899,29 @@ class PlayService(xbmc.Player, BasePlayService):
                             PROTOCOL = 'mpd'
                             DRM = 'com.widevine.alpha'
 
-                            import inputstreamhelper
-                            is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
-                            if is_helper.check_inputstream():
+                            if licenseUrl is not None:
+                                import inputstreamhelper
+                                is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
+                                if is_helper.check_inputstream():
+                                    ListItem = xbmcgui.ListItem(path=strmUrl)
+                                    ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
+                                    ListItem.setContentLookup(False)
+                                    if sys.version_info[0] > 2:
+                                        ListItem.setProperty('inputstream', is_helper.inputstream_addon)
+                                    else:
+                                        ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
+                                    ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
+                                    ListItem.setMimeType('application/xml+dash')
+                                    ListItem.setProperty('inputstream.adaptive.stream_headers', 'Referer: https://polsatgo.pl')
+                                    ListItem.setProperty('inputstream.adaptive.license_type', DRM)
+                                    ListItem.setProperty('inputstream.adaptive.manifest_update_parameter', 'full')
+                                    ListItem.setProperty('inputstream.adaptive.license_key', licServ+'|Content-Type=application%2Fjson&Referer=https://polsatgo.pl/&User-Agent='+quote(UA)+'|'+licenseUrl+'|JBlicense')                      
+                                    ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
+                                    ListItem.setProperty('IsPlayable', 'true')
+                            else:
                                 ListItem = xbmcgui.ListItem(path=strmUrl)
                                 ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
                                 ListItem.setContentLookup(False)
-                                if sys.version_info[0] > 2:
-                                    ListItem.setProperty('inputstream', is_helper.inputstream_addon)
-                                else:
-                                    ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
-                                ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
-                                ListItem.setMimeType('application/xml+dash')
-                                ListItem.setProperty('inputstream.adaptive.stream_headers', 'Referer: https://polsatgo.pl')
-                                ListItem.setProperty('inputstream.adaptive.license_type', DRM)
-                                ListItem.setProperty('inputstream.adaptive.manifest_update_parameter', 'full')
-                                ListItem.setProperty('inputstream.adaptive.license_key', licServ+'|Content-Type=application%2Fjson&Referer=https://polsatgo.pl/&User-Agent='+quote(UA)+'|'+licenseUrl+'|JBlicense')                      
-                                ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
                                 ListItem.setProperty('IsPlayable', 'true')
                             
                             self.strmUrl = strmUrl
