@@ -1,5 +1,6 @@
-﻿wersja 9.6.1 - 2021-09-16
+﻿wersja 9.6.1 - 2021-09-17
 - poprawka przewodnika konfiguracji
+- poprawka logowania do Polsat GO na Kodi v18.9
 
 wersja 9.6.0 - 2021-09-15
 - poprawka dla serwisu PlayerPL
