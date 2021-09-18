@@ -285,11 +285,11 @@ class Skin:
         usedSkinUpdated = False
         for skin in skins:
             iniFile = os.path.join(Skin.ADDON_CUSTOM_SKINS, skin.name, 'settings.ini')
-            deb('iniFile: {}'.format(iniFile))
+            #deb('iniFile: {}'.format(iniFile))
             if os.path.isfile(iniFile):
                 try:
                     fileContent = open(iniFile, 'r').read()
-                    deb('Content: {}'.format(fileContent))
+                    #deb('Content: {}'.format(fileContent))
                 except:
                     continue
                 localVersion = float(regex.search(fileContent).group(1))

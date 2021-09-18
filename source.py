@@ -853,6 +853,21 @@ class Database(object):
                     except Exception as ex:
                         deb('[UPD] Error updating stream: {}'.format(getExceptionString()))
 
+            serviceList = list()
+
+            for serviceName in playService.SERVICES:
+                serviceHandler = playService.SERVICES[serviceName]
+                serviceList.append(serviceHandler)
+
+                channels = serviceHandler.getBaseChannelList(False)
+                for q in channels:
+                    for k, v in channelList.items():
+                        if k == q.name:
+                            for service in serviceList:
+                                service.waitUntilDone()
+                                cid = service.serviceRegex.replace('%', q.cid)
+                                c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [k, cid])
+
             self.conn.commit()
             c.close()
             deb('[UPD] Finished updating database, stored: {} streams from service: {}'.format(nrOfChannelsUpdated, streamSource))
