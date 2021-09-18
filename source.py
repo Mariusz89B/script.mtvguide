@@ -855,18 +855,39 @@ class Database(object):
 
             serviceList = list()
 
+            cid = None
+
             for serviceName in playService.SERVICES:
                 serviceHandler = playService.SERVICES[serviceName]
                 serviceList.append(serviceHandler)
 
                 channels = serviceHandler.getBaseChannelList(False)
                 for q in channels:
-                    for k, v in channelList.items():
-                        if k == q.name:
-                            for service in serviceList:
-                                service.waitUntilDone()
-                                cid = service.serviceRegex.replace('%', q.cid)
-                                c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [k, cid])
+                    if sys.version_info[0] > 2:
+                        for k, v in channelList.items():
+                            if k == q.name:
+                                for service in serviceList:
+                                    service.waitUntilDone()
+                                    cid = service.serviceRegex.replace('%', q.cid)
+
+                                    if cid is not None:         
+                                        try:
+                                            c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [k, cid])
+                                        except:
+                                            c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [k.decode('utf-8'), cid])
+
+                    else:
+                        for k, v in channelList.iteritems():
+                            if k == q.name:
+                                for service in serviceList:
+                                    service.waitUntilDone()
+                                    cid = service.serviceRegex.replace('%', q.cid)
+                    
+                                    if cid is not None:         
+                                        try:
+                                            c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [k, cid])
+                                        except:
+                                            c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [k.decode('utf-8'), cid])
 
             self.conn.commit()
             c.close()
