@@ -1,4 +1,8 @@
-﻿wersja 9.6.1 - 2021-09-17
+﻿wersja 9.6.2 - 2021-09-18
+- poprawka serwisu Telewizja Polska
+- usunięte błędy
+
+wersja 9.6.1 - 2021-09-17
 - poprawka przewodnika konfiguracji
 - poprawka logowania do Polsat GO na Kodi v18.9
 

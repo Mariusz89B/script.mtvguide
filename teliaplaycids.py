@@ -406,9 +406,9 @@ class TeliaPlayUpdater(baseServiceUpdater):
 
                     msg = msg[75:]
                     if sys.version_info[0] > 2:
-                        xbmcgui.Dialog().ok(strings(30904), str(msg))
+                        xbmcgui.Dialog().ok('Telia Play', str(msg))
                     else:
-                        xbmcgui.Dialog().ok(strings(30904), str(msg.encode('utf-8')))
+                        xbmcgui.Dialog().ok('Telia Play', str(msg.encode('utf-8')))
                 except:
                     pass
             

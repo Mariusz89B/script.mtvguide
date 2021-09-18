@@ -144,32 +144,32 @@ class TvpUpdater(baseServiceUpdater):
 
         try:
             response = self.sendRequest(url, headers=headers)
-
-            channels  = re.findall('data-channel-id="(\d+)".*data-video-id="(\d+)".*data-stationname="(.*?)"', response.text)
-            for item in channels:
-                if item[2] != '':
-                    cid = item[1]
-                    img = item[1]
-                    name = item[2]     
-                    
-                else:
-                    if item[0] == '52451253':
-                        name = 'TVP Historia 2 PL'
+            if response:
+                channels  = re.findall('data-channel-id="(\d+)".*data-video-id="(\d+)".*data-stationname="(.*?)"', response.text)
+                for item in channels:
+                    if item[2] != '':
                         cid = item[1]
-                        img = item[1]   
+                        img = item[1]
+                        name = item[2] + ' PL'
+                        
+                    else:
+                        if item[0] == '52451253':
+                            name = 'TVP Historia 2 PL'
+                            cid = item[1]
+                            img = item[1]   
 
-                    elif item[0] == '51121199':
-                        name = 'TVP Kultura 2 PL'
-                        cid = item[1]
-                        img = item[1]  
+                        elif item[0] == '51121199':
+                            name = 'TVP Kultura 2 PL'
+                            cid = item[1]
+                            img = item[1]  
 
-                    elif item[0] == '51656487':
-                        name = 'Poland In PL'
-                        cid = item[1]
-                        img = item[1] 
+                        elif item[0] == '51656487':
+                            name = 'Poland In PL'
+                            cid = item[1]
+                            img = item[1]
 
-                program = TvCid(cid, name, name, img=img)
-                result.append(program)
+                    program = TvCid(cid, name, name, img=img)
+                    result.append(program)
 
             if len(result) <= 0:
                 self.log('Error while parsing service {}, returned data is: {}'.format(self.serviceName, str(response)))
@@ -185,21 +185,21 @@ class TvpUpdater(baseServiceUpdater):
 
         callback = random.randint(1000, 9999)
         response = self.sendRequest('https://tvpstream.vod.tvp.pl/sess/TVPlayer2/api.php?id={cid}&@method=getTvpConfig&@callback=__tp2JSONP{callback}T{time}'.format(cid=chann.cid, callback=callback, time=timestamp), headers=headers)
+        if response:
+            response_json = response.text
 
-        response_json = response.text
+            txt = re.sub('\"use strict\";', '', response_json)
+            txt = re.sub('_.*\({', '{', txt)
+            txt = re.sub('}\);', '}', txt)
 
-        txt = re.sub('\"use strict\";', '', response_json)
-        txt = re.sub('_.*\({', '{', txt)
-        txt = re.sub('}\);', '}', txt)
+            jstring = json.loads(txt)
 
-        jstring = json.loads(txt)
+            l = jstring['content']['files']
 
-        l = jstring['content']['files']
-
-        for i in range(len(l)):
-            stream = jstring['content']['files'][i]['url']
-            if '.m3u8' in stream: 
-                data = stream
+            for i in range(len(l)):
+                stream = jstring['content']['files'][i]['url']
+                if '.m3u8' in stream: 
+                    data = stream
 
         if data is None or data == '' or 'material_niedostepny' in data:
             xbmcgui.Dialog().notification(serviceName, xbmc.getLocalizedString(15012), xbmcgui.NOTIFICATION_WARNING)
@@ -211,7 +211,7 @@ class TvpUpdater(baseServiceUpdater):
                 try:
                     self.log('getChannelStream found matching channel: cid: {}, name: {}, rtmp:{}'.format(chann.cid, chann.name, chann.strm))
                 except:
-                    self.log('getChannelStream found matching channel: cid: {}, name: {}, rtmp:{}'.format(str(chann.cid), str(chann.name), str(chann.strm)))
+                    self.log('getChannelStream found matching channel: cid: {}, name: {}, rtmp:{}'.format(str(chann.cid), str(chann.name.encode('utf-8')), str(chann.strm)))
                 return chann
             else:
                 self.log('getChannelStream error getting channel stream2, result: {}'.format(str(chann.strm)))

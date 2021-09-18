@@ -949,6 +949,18 @@ class mTVGuide(xbmcgui.WindowXML):
                             if pswd != '':
                                 progExec = True
 
+                                res = xbmcgui.Dialog().select(strings(95014), ['Ipla', 'Polsat Box'])
+
+                                if res < 0:
+                                    ADDON.setSetting('polsatgo_enabled', 'false')
+                                    self.tutorialGetService()
+
+                                elif res == 0:
+                                    ADDON.setSetting('polsatgo_client', 'Ipla')
+                                    
+                                elif res == 1:
+                                    ADDON.setSetting('polsatgo_client', 'Polsat Box')
+
                             else:
                                 ADDON.setSetting('polsatgo_enabled', 'false')
                                 self.tutorialGetService()
@@ -988,13 +1000,13 @@ class mTVGuide(xbmcgui.WindowXML):
                                     self.tutorialGetService()
 
                                 if res == 0:
-                                    ADDON.setSetting('pgobox_device_id', 'Cyfrowy Polsat')
+                                    ADDON.setSetting('pgobox_client', 'Cyfrowy Polsat')
 
                                 elif res == 1:
-                                    ADDON.setSetting('pgobox_device_id', 'Ipla')
+                                    ADDON.setSetting('pgobox_client', 'Ipla')
                                     
                                 elif res == 2:
-                                    ADDON.setSetting('pgobox_device_id', 'Polsat Box')
+                                    ADDON.setSetting('pgobox_client', 'Polsat Box')
 
                             else:
                                 ADDON.setSetting('pgobox_enabled', 'false')
@@ -1032,6 +1044,18 @@ class mTVGuide(xbmcgui.WindowXML):
                             ADDON.setSetting('teliaplay_password', pswd)
                             if pswd != '':
                                 progExec = True
+
+                                res = xbmcgui.Dialog().select(strings(95014), ['teliatv.dk', 'teliaplay.se'])
+
+                                if res < 0:
+                                    ADDON.setSetting('teliaplay_enabled', 'false')
+                                    self.tutorialGetService()
+
+                                if res == 0:
+                                    ADDON.setSetting('teliaplay_locale', 'teliatv.dk')
+
+                                elif res == 1:
+                                    ADDON.setSetting('teliaplay_locale', 'teliaplay.se')
 
                             else:
                                 ADDON.setSetting('teliaplay_enabled', 'false')

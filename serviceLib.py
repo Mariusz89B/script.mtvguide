@@ -971,13 +971,13 @@ class baseServiceUpdater:
                 try:
                     p = re.compile(x.titleRegex, re.IGNORECASE)
                     for y in self.channels:
-                        try:
-                            if sys.version_info[0] > 2:
-                                b = p.match(unidecode(y.title))
-                            else:
+                        if sys.version_info[0] > 2:
+                            b = p.match(unidecode(y.title))
+                        else:
+                            try:
                                 b = p.match(unidecode(y.title.decode('utf-8')))
-                        except:
-                            pass
+                            except:
+                                b = p.match(unidecode(y.title.encode('utf-8').decode('utf-8')))
 
                         if (b):
                             if x.strm != '' and self.addDuplicatesToList == True:
@@ -999,7 +999,7 @@ class baseServiceUpdater:
                                 try:
                                     self.log('[UPD]     %-30s %-30s %-20s %-35s ' % (x.channelid, y.name, x.src, x.strm))
                                 except:
-                                    self.log('[UPD]     %-30s %-30s %-20s %-35s ' % (x.channelid.decode('utf-8'), y.name.decode('utf-8'), x.src.decode('utf-8'), x.strm.decode('utf-8')))
+                                    self.log('[UPD]     %-30s %-30s %-20s %-35s ' % (x.channelid.decode('utf-8'), y.name, x.src.decode('utf-8'), x.strm.decode('utf-8')))
 
                 except Exception as ex:
                     self.log('{} Error {} {}'.format(x.channelid, x.titleRegex, getExceptionString()))
@@ -1027,8 +1027,18 @@ class baseServiceUpdater:
             for y in self.channels:
                 if y.src == '' or y.src != self.serviceName:
                     if y.name != '':
-                        channelList.append(y.name)
-                        self.log('[UPD] CID=%-12s NAME=%-40s TITLE=%-40s STRM=%-45s' % (y.cid, y.name, y.title, str(y.strm)))
+                        if sys.version_info[0] > 2:
+                            channelList.append(unidecode(y.name))
+                        else:
+                            try:
+                                channelList.append(unidecode(y.name.decode('utf-8')))
+                            except:
+                                channelList.append(unidecode(y.name.encode('utf-8').decode('utf-8')))
+
+                        try:
+                            self.log('[UPD] CID=%-12s NAME=%-40s TITLE=%-40s STRM=%-45s' % (y.cid, y.name, y.title, y.strm))
+                        except:
+                            self.log('[UPD] CID=%-12s NAME=%-40s TITLE=%-40s STRM=%-45s' % (y.cid, y.name, y.title, y.strm.decode('utf-8')))
 
             if sys.version_info[0] > 2:
                 with open(file_name, 'wb+') as f:
