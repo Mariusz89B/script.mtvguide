@@ -828,18 +828,18 @@ class Database(object):
                 serviceHandler = playService.SERVICES[serviceName]
                 serviceList.append(serviceHandler)
 
-                channels = serviceHandler.getBaseChannelList(False)
-                for q in channels:
-                    channelList.update({q.name.upper(): q.cid})
+            channels = serviceHandler.getBaseChannelList(True)
+            for q in channels:
+                channelList.update({q.name.upper(): q.cid})
 
             for x in streams.automap:
                 if x.strm is not None and x.strm != '':
                     #deb('[UDP] Updating: CH=%-35s STRM=%-30s SRC={}'.format(x.channelid, x.strm, x.src))
                     try: 
+                        cList = None
+
                         result = None
                         cid = None
-
-                        cList = dict()
 
                         if sys.version_info[0] > 2:
                             cList = sorted(channelList.items())
@@ -853,9 +853,9 @@ class Database(object):
                                         result = item.upper()
                                         if result:
                                             try:
-                                                c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid, x.strm])
+                                                c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [result, x.strm])
                                             except:
-                                                c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid.decode('utf-8'), x.strm])
+                                                c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [result.decode('utf-8'), x.strm])
                                     if v != '':
                                         result = item.upper()
                                         for service in serviceList:
@@ -872,9 +872,9 @@ class Database(object):
                                     result = k.upper()
                                     if result:
                                         try:
-                                            c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid, x.strm])
+                                            c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [result, x.strm])
                                         except:
-                                            c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid.decode('utf-8'), x.strm])
+                                            c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [result.decode('utf-8'), x.strm])
 
                                 if v != '':
                                     result = k.upper()
