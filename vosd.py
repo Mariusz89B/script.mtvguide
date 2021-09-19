@@ -461,7 +461,11 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
             self.getControl(9999).setLabel(self.channel_number)
 
         channel = Channel(id='', title='', logo='', titles='', streamUrl='', visible='', weight='')
-        program = Program(channel=channelList[self.channelIdx], title='', startDate='', endDate='', description='', imageLarge='', imageSmall='', categoryA='',categoryB='')
+        try:
+            index = channelList[self.channelIdx]
+        except:
+            index = channelList[0]
+        program = Program(channel=index, title='', startDate='', endDate='', description='', imageLarge='', imageSmall='', categoryA='',categoryB='')
         self.gu.playChannel(program.channel, program)
         self.isClosing = True
 

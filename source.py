@@ -860,32 +860,22 @@ class Database(object):
                             channels = serviceHandler.getBaseChannelList(False)
                             for q in channels:
                                 if sys.version_info[0] > 2:
-                                    for k, v in channelList.items():
-                                        for item in v.split(','):
-                                            if item.upper() == q.name.upper():
-                                                for service in serviceList:
-                                                    service.waitUntilDone()
-                                                    cid = service.serviceRegex.replace('%', q.cid)
-
-                                                    if cid is not None:
-                                                        try:
-                                                            c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [k.upper(), cid])
-                                                        except:
-                                                            c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [k.upper().decode('utf-8'), cid])
-
+                                    channelList = channelList.items()
                                 else:
-                                    for k, v in channelList.iteritems():
-                                        for item in v.split(','):
-                                            if item.upper() == q.name.upper():
-                                                for service in serviceList:
-                                                    service.waitUntilDone()
-                                                    cid = service.serviceRegex.replace('%', q.cid)
-                                    
-                                                    if cid is not None:
-                                                        try:
-                                                            c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [k.upper(), cid])
-                                                        except:
-                                                            c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [k.upper().decode('utf-8'), cid])
+                                    channelList = channelList.iteritems()
+
+                                for k, v in channelList:
+                                    for item in v.split(','):
+                                        if item.upper() == q.name.upper():
+                                            for service in serviceList:
+                                                service.waitUntilDone()
+                                                cid = service.serviceRegex.replace('%', q.cid)
+
+                                                if cid is not None:
+                                                    try:
+                                                        c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [k.upper(), cid])
+                                                    except:
+                                                        c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [k.upper().decode('utf-8'), cid])
 
                         nrOfChannelsUpdated += 1
                     except Exception as ex:
