@@ -858,8 +858,12 @@ class Database(object):
                     result = None
                     for k, v in y_channels:
                         for item in k.split(','):
-                            if chann.upper() == item.upper():
-                                result = item.upper()
+                            if sys.version_info[0] > 2:
+                                if chann.upper() == item.upper():
+                                    result = item.upper()
+                            else:
+                                if chann.upper() == item.upper().encode('utf-8'):
+                                    result = item.upper()
 
                     if result is not None:
                         try:
