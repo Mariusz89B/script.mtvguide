@@ -860,11 +860,11 @@ class Database(object):
                             channels = serviceHandler.getBaseChannelList(False)
                             for q in channels:
                                 if sys.version_info[0] > 2:
-                                    channelList = channelList.items()
+                                    channelListx = channelList.items()
                                 else:
-                                    channelList = channelList.iteritems()
+                                    channelListx = channelList.iteritems()
 
-                                for k, v in channelList:
+                                for k, v in channelListx:
                                     for item in v.split(','):
                                         if item.upper() == q.name.upper():
                                             for service in serviceList:
