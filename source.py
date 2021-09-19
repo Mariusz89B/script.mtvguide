@@ -849,37 +849,37 @@ class Database(object):
                             except:
                                 c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid.decode('utf-8'), x.strm])
 
-                        serviceList = list()
-
-                        cid = None
-
-                        for serviceName in playService.SERVICES:
-                            serviceHandler = playService.SERVICES[serviceName]
-                            serviceList.append(serviceHandler)
-
-                            channels = serviceHandler.getBaseChannelList(False)
-                            for q in channels:
-                                if sys.version_info[0] > 2:
-                                    channelListx = channelList.items()
-                                else:
-                                    channelListx = channelList.iteritems()
-
-                                for k, v in channelListx:
-                                    for item in v.split(','):
-                                        if item.upper() == q.name.upper():
-                                            for service in serviceList:
-                                                service.waitUntilDone()
-                                                cid = service.serviceRegex.replace('%', q.cid)
-
-                                                if cid is not None:
-                                                    try:
-                                                        c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [k.upper(), cid])
-                                                    except:
-                                                        c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [k.upper().decode('utf-8'), cid])
-
                         nrOfChannelsUpdated += 1
                     except Exception as ex:
                         deb('[UPD] Error updating stream: {}'.format(getExceptionString()))
+
+            serviceList = list()
+
+            cid = None
+
+            for serviceName in playService.SERVICES:
+                serviceHandler = playService.SERVICES[serviceName]
+                serviceList.append(serviceHandler)
+
+                channels = serviceHandler.getBaseChannelList(False)
+                for q in channels:
+                    if sys.version_info[0] > 2:
+                        channelListx = channelList.items()
+                    else:
+                        channelListx = channelList.iteritems()
+
+                    for k, v in channelListx:
+                        for item in v.split(','):
+                            if item.upper() == q.name.upper():
+                                for service in serviceList:
+                                    service.waitUntilDone()
+                                    cid = service.serviceRegex.replace('%', q.cid)
+
+                                    if cid is not None:
+                                        try:
+                                            c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [k.upper(), cid])
+                                        except:
+                                            c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [k.upper().decode('utf-8'), cid])
 
             self.conn.commit()
             c.close()
