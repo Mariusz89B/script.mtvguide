@@ -354,14 +354,14 @@ class SkinPicker():
             PROFILE_PATH  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
 
     def __init__(self):
-        self.picker = self.picker()
         self.download_skin_list = self.getDownloadSkinList()
         self.skin_list = self.getAllSkinList()
+        self.picker = self.picker()
 
     def picker(self):
         listitems = list()
 
-        skins = Skin.getSkinList()
+        skins = self.skin_list
         for skin in skins:
             listitem = xbmcgui.ListItem(skin.name)
             listitem.setArt({'thumb': self.setFanartImage(skin)})

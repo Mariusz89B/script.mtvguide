@@ -812,39 +812,43 @@ class Database(object):
 
             serviceList = list()
 
-            channelList = dict()
             baseList = dict()
+            channelList = dict()
 
             c.execute('SELECT id, titles FROM channels')
             for row in c:
                 id = row[str('id')]
-                if ADDON.getSetting('epg_display_name') == 'true':
-                    titles = row[str('titles')]
+                titles = row[str('titles')]
 
-                try:
-                    channelList.update({titles.upper(): ''})
-                except:
-                    channelList.update({id.upper(): ''})
+                if ADDON.getSetting('epg_display_name') == 'true':
+                    try:
+                        channelList.update({id.upper(): titles.upper()})
+                    except:
+                        channelList.update({id.upper(): id.upper()})
+                else:
+                    channelList.update({id.upper(): id.upper()})
 
             for x in streams.automap:
                 if x.strm is not None and x.strm != '':
-                    baseList.update({x.channelid: x.strm})
+                    baseList.update({x.channelid.upper(): x.strm})
             
             for serviceName in playService.SERVICES:
                 serviceHandler = playService.SERVICES[serviceName]
-                serviceList.append(serviceHandler)
+                if serviceHandler.serviceEnabled == 'true':
+                    serviceList.append(serviceHandler)
 
-                channels = serviceHandler.getBaseChannelList()
-                for x in channels:
-                    if x.cid is not None and x.cid != '':
+            channels = serviceHandler.getBaseChannelList()
+            for x in channels:
+                if x.cid is not None and x.cid != '':
+                    for priority in reversed(list(range(self.number_of_service_priorites))):
                         for service in serviceList:
                             strm = service.serviceRegex.replace('%', x.cid)
-                        baseList.update({x.name: strm})
+                            baseList.update({x.name.upper(): strm})
 
             if sys.version_info[0] > 2:
-                x_channels = baseList.items()
+                x_channels = sorted(baseList.items())
             else:
-                x_channels = baseList.iteritems()
+                x_channels = sorted(baseList.iteritems())
 
             if sys.version_info[0] > 2:
                 y_channels = sorted(channelList.items())
@@ -853,23 +857,22 @@ class Database(object):
 
             strm = ''
 
-            for chann, strm in x_channels:
+            for k, v in y_channels:
                 try: 
                     result = None
-                    for k, v in y_channels:
-                        for item in k.split(','):
+                    for item in v.split(','):
+                        for chann, strm in x_channels:
                             if sys.version_info[0] > 2:
-                                if chann.upper() == item.upper():
-                                    result = item.upper()
+                                encoded_item = item.upper()
                             else:
-                                if chann.upper() == item.upper().encode('utf-8'):
-                                    result = item.upper()
-
-                    if result is not None:
-                        try:
-                            c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [result, strm])
-                        except:
-                            c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [result.decode('utf-8'), strm])
+                                encoded_item = item.encode('utf-8').upper()
+                                
+                            if chann.upper() == encoded_item:    
+                                result = k.upper()
+                                try:
+                                    c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [result, strm])
+                                except:
+                                    c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [result.decode('utf-8'), strm])
 
                     nrOfChannelsUpdated += 1
                 except Exception as ex:
