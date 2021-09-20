@@ -830,7 +830,10 @@ class Database(object):
 
             for x in streams.automap:
                 if x.strm is not None and x.strm != '':
-                    baseList.update({x.channelid.upper(): x.strm})
+                    if sys.version_info[0] > 2:
+                        baseList.update({x.channelid.upper(): x.strm})
+                    else:
+                        baseList.update({x.channelid.upper().decode('utf-8'): x.strm})
             
             for serviceName in playService.SERVICES:
                 serviceHandler = playService.SERVICES[serviceName]
@@ -862,12 +865,7 @@ class Database(object):
                     result = None
                     for item in v.split(','):
                         for chann, strm in x_channels:
-                            if sys.version_info[0] > 2:
-                                encoded_item = item.upper()
-                            else:
-                                encoded_item = item.encode('utf-8').upper()
-                                
-                            if chann.upper() == encoded_item:    
+                            if chann.upper() == item.upper():    
                                 result = k.upper()
                                 try:
                                     c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [result, strm])
