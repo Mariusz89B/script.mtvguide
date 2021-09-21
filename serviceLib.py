@@ -485,7 +485,7 @@ class MapString:
         if sys.version_info[0] > 2:
             xmlstr = xmlstr.decode('utf-8')
         else:
-            xmlstr = xmlstr if isinstance(xmlstr, unicode) else xmlstr.decode('utf-8').encode('utf-8')
+            xmlstr = xmlstr if isinstance(xmlstr, unicode) else xmlstr.decode('utf-8')
 
         if logCall:
             logCall('[UPD] %-35s %-50s %s' % ('ID' , 'TITLE_REGEX', 'STRM'))
@@ -975,11 +975,18 @@ class baseServiceUpdater:
                             b = p.match(unidecode(y.title))
                         else:
                             try:
-                                b = p.match(unidecode(y.title.decode('utf-8')))
+                                b = p.match(unidecode(y.title))
                             except:
-                                b = p.match(unidecode(y.title.encode('utf-8').decode('utf-8')))
+                                b = p.match(unidecode(y.title.decode('utf-8')))
 
                         if (b):
+                            if sys.version_info[0] > 2:
+                                y.name = unidecode(y.name)
+                            else:
+                                try:
+                                    y.name = unidecode(y.name)
+                                except:
+                                    y.name = unidecode(y.name.decode('utf-8'))
                             if x.strm != '' and self.addDuplicatesToList == True:
                                 newMapElement = copy.deepcopy(x)
                                 newMapElement.strm = self.rstrm % y.cid
@@ -996,10 +1003,8 @@ class baseServiceUpdater:
                                 y.strm = x.strm
                                 x.src  = self.serviceName
                                 y.src = x.src
-                                try:
-                                    self.log('[UPD]     %-30s %-30s %-20s %-35s ' % (x.channelid, y.name, x.src, x.strm))
-                                except:
-                                    self.log('[UPD]     %-30s %-30s %-20s %-35s ' % (x.channelid.decode('utf-8'), y.name, x.src.decode('utf-8'), x.strm.decode('utf-8')))
+                                self.log('[UPD]     %-30s %-30s %-20s %-35s ' % (x.channelid, y.name, x.src, x.strm))
+
 
                 except Exception as ex:
                     self.log('{} Error {} {}'.format(x.channelid, x.titleRegex, getExceptionString()))
@@ -1031,14 +1036,11 @@ class baseServiceUpdater:
                             channelList.append(unidecode(y.name))
                         else:
                             try:
-                                channelList.append(unidecode(y.name.decode('utf-8')))
+                                channelList.append(unidecode(y.name))
                             except:
-                                channelList.append(unidecode(y.name.encode('utf-8').decode('utf-8')))
+                                channelList.append(unidecode(y.name.decode('utf-8')))
 
-                        try:
-                            self.log('[UPD] CID=%-12s NAME=%-40s TITLE=%-40s STRM=%-45s' % (y.cid, y.name, y.title, y.strm))
-                        except:
-                            self.log('[UPD] CID=%-12s NAME=%-40s TITLE=%-40s STRM=%-45s' % (y.cid, y.name, y.title, y.strm.decode('utf-8')))
+                        self.log('[UPD] CID=%-12s NAME=%-40s TITLE=%-40s STRM=%-45s' % (y.cid, y.name, y.title, y.strm))
 
             if sys.version_info[0] > 2:
                 with open(file_name, 'wb+') as f:

@@ -803,6 +803,7 @@ class Database(object):
             deb('[UPD] Error deleting streams: {}'.format(getExceptionString()))
 
     def storeCustomStreams(self, streams, streamSource, serviceStreamRegex):
+        from unidecode import unidecode
         try:
             #if len(streams.automap) > 0 and len(streams.channels) > 0:
             self.deleteCustomStreams(streamSource, serviceStreamRegex)
@@ -830,7 +831,8 @@ class Database(object):
 
             for x in streams.automap:
                 if x.strm is not None and x.strm != '':
-                    baseList.update({x.channelid.upper(): x.strm})
+                    title = x.channelid
+                    baseList.update({title: x.strm})
             
             for serviceName in playService.SERVICES:
                 serviceHandler = playService.SERVICES[serviceName]
@@ -843,7 +845,11 @@ class Database(object):
                     for priority in reversed(list(range(self.number_of_service_priorites))):
                         for service in serviceList:
                             strm = service.serviceRegex.replace('%', x.cid)
-                            baseList.update({x.name.upper(): strm})
+                            if sys.version_info[0] > 2:
+                                title = x.name
+                            else:
+                                title = x.name if isinstance(x.name, unicode) else x.name.decode('utf-8')
+                            baseList.update({title: strm})
 
             if sys.version_info[0] > 2:
                 x_channels = sorted(baseList.items())
@@ -851,17 +857,12 @@ class Database(object):
                 try:
                     x_channels = sorted(baseList.iteritems())
                 except:
-                    baseList = [x.decode('utf-8') for x in baseList]
                     x_channels = sorted(baseList.iteritems())
 
             if sys.version_info[0] > 2:
                 y_channels = sorted(channelList.items())
             else:
-                try:
-                    y_channels = sorted(channelList.iteritems())
-                except:
-                    channelList = [x.decode('utf-8') for x in channelList]
-                    y_channels = sorted(channelList.iteritems())
+                y_channels = sorted(channelList.iteritems())
 
             strm = ''
 
@@ -870,7 +871,7 @@ class Database(object):
                     result = None
                     for item in v.split(','):
                         for chann, strm in x_channels:
-                            if chann.upper() == item.upper():    
+                            if chann.upper() == item.upper():
                                 result = k.upper()
                                 try:
                                     c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [result, strm])
