@@ -971,22 +971,17 @@ class baseServiceUpdater:
                 try:
                     p = re.compile(x.titleRegex, re.IGNORECASE)
                     for y in self.channels:
-                        if sys.version_info[0] > 2:
+                        try:
                             b = p.match(unidecode(y.title))
-                        else:
-                            try:
-                                b = p.match(unidecode(y.title))
-                            except:
-                                b = p.match(unidecode(y.title.decode('utf-8')))
+                        except:
+                            b = p.match(unidecode(y.title.decode('utf-8')))
 
                         if (b):
-                            if sys.version_info[0] > 2:
+                            try:
                                 y.name = unidecode(y.name)
-                            else:
-                                try:
-                                    y.name = unidecode(y.name)
-                                except:
-                                    y.name = unidecode(y.name.decode('utf-8'))
+                            except:
+                                y.name = unidecode(y.name.decode('utf-8'))
+
                             if x.strm != '' and self.addDuplicatesToList == True:
                                 newMapElement = copy.deepcopy(x)
                                 newMapElement.strm = self.rstrm % y.cid
@@ -1032,13 +1027,20 @@ class baseServiceUpdater:
             for y in self.channels:
                 if y.src == '' or y.src != self.serviceName:
                     if y.name != '':
-                        if sys.version_info[0] > 2:
+                        try:
                             channelList.append(unidecode(y.name))
-                        else:
-                            try:
-                                channelList.append(unidecode(y.name))
-                            except:
-                                channelList.append(unidecode(y.name.decode('utf-8')))
+                        except:
+                            channelList.append(unidecode(y.name.decode('utf-8')))
+
+                        try:
+                            y.title = unidecode(y.title)
+                        except:
+                            y.title = unidecode(y.title.decode('utf-8'))
+
+                        try:
+                            y.strm = unidecode(y.strm)
+                        except:
+                            y.strm = unidecode(y.strm.decode('utf-8'))
 
                         self.log('[UPD] CID=%-12s NAME=%-40s TITLE=%-40s STRM=%-45s' % (y.cid, y.name, y.title, y.strm))
 
