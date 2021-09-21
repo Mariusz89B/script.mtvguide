@@ -972,15 +972,21 @@ class baseServiceUpdater:
                     p = re.compile(x.titleRegex, re.IGNORECASE)
                     for y in self.channels:
                         try:
-                            b = p.match(unidecode(y.title))
+                            try:
+                                b = p.match(unidecode(y.title))
+                            except:
+                                b = p.match(unidecode(y.title.decode('utf-8')))
                         except:
-                            b = p.match(unidecode(y.title.decode('utf-8')))
+                            pass
 
                         if (b):
                             try:
-                                y.name = unidecode(y.name)
+                                try:
+                                    y.name = unidecode(y.name)
+                                except:
+                                    y.name = unidecode(y.name.decode('utf-8'))
                             except:
-                                y.name = unidecode(y.name.decode('utf-8'))
+                                pass
 
                             if x.strm != '' and self.addDuplicatesToList == True:
                                 newMapElement = copy.deepcopy(x)
@@ -1028,19 +1034,22 @@ class baseServiceUpdater:
                 if y.src == '' or y.src != self.serviceName:
                     if y.name != '':
                         try:
-                            channelList.append(unidecode(y.name))
-                        except:
-                            channelList.append(unidecode(y.name.decode('utf-8')))
+                            try:
+                                channelList.append(unidecode(y.name))
+                            except:
+                                channelList.append(unidecode(y.name.decode('utf-8')))
 
-                        try:
-                            y.title = unidecode(y.title)
-                        except:
-                            y.title = unidecode(y.title.decode('utf-8'))
+                            try:
+                                y.title = unidecode(y.title)
+                            except:
+                                y.title = unidecode(y.title.decode('utf-8'))
 
-                        try:
-                            y.strm = unidecode(y.strm)
+                            try:
+                                y.strm = unidecode(y.strm)
+                            except:
+                                y.strm = unidecode(y.strm.decode('utf-8'))
                         except:
-                            y.strm = unidecode(y.strm.decode('utf-8'))
+                            pass
 
                         self.log('[UPD] CID=%-12s NAME=%-40s TITLE=%-40s STRM=%-45s' % (y.cid, y.name, y.title, y.strm))
 
