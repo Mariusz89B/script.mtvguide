@@ -839,9 +839,8 @@ class Database(object):
                 if serviceHandler.serviceEnabled == 'true':
                     serviceList.append(serviceHandler)
 
-            channels = serviceHandler.getBaseChannelList()
-            for x in channels:
-                for service in serviceList:
+                channels = serviceHandler.getBaseChannelList()
+                for x in channels:
                     if x.cid is not None and x.cid != '':
                         for priority in reversed(list(range(self.number_of_service_priorites))):
                             for service in serviceList:
@@ -853,7 +852,8 @@ class Database(object):
                                         title = x.name if isinstance(x.name, unicode) else x.name.decode('utf-8')
                                     except:
                                         pass
-                                baseList.update({title: strm})
+                                if title not in baseList.keys():
+                                    baseList.update({title: strm})
 
             if sys.version_info[0] > 2:
                 x_channels = sorted(baseList.items())
