@@ -2743,3 +2743,7 @@ msgstr "Aussage"
 msgctxt "#90004"
 msgid "Credits"
 msgstr "Verdienst"
+
+msgctxt "#90005"
+msgid "Quickstart"
+msgstr "Anfang"

@@ -16,6 +16,14 @@
 					</constraints>
 					<control format="action" type="button"/>
 				</setting>
+				<setting help="95137" id="context" label="90005" type="action">
+					<level>0</level>
+					<data>RunScript(special://home/addons/script.mtvguide/context.py,context)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control format="action" type="button"/>
+				</setting>
 				<setting help="95003" id="internal" label="30913" type="action">
 					<level>0</level>
 					<data>RunScript(special://home/addons/script.mtvguide/internal.py,internal)</data>

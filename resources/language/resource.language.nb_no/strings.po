@@ -2743,3 +2743,7 @@ msgstr "Uttalelse"
 msgctxt "#90004"
 msgid "Credits"
 msgstr "Credits"
+
+msgctxt "#90005"
+msgid "Quickstart"
+msgstr "Kjappstart"

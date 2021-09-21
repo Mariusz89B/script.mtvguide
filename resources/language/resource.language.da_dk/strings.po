@@ -2743,3 +2743,7 @@ msgstr "Udmelding"
 msgctxt "#90004"
 msgid "Credits"
 msgstr "Anerkendelse"
+
+msgctxt "#90005"
+msgid "Quickstart"
+msgstr "Starten"

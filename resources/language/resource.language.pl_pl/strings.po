@@ -2743,3 +2743,7 @@ msgstr "Orzeczenie"
 msgctxt "#90004"
 msgid "Credits"
 msgstr "Uznanie"
+
+msgctxt "#90005"
+msgid "Quickstart"
+msgstr "Rozpoczęcie"
