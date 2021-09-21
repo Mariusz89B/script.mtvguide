@@ -48,8 +48,8 @@ import os
 from strings import *
 which = sys.argv[1]
 
-if which == "help":
-    path = os.path.join(ADDON.getAddonInfo('path'), 'help.xml')
+if which == "startup":
+    path = os.path.join(ADDON.getAddonInfo('path'), 'startup.xml')
 f = xbmcvfs.File(path,"rb")
 data = f.read()
 dialog = xbmcgui.Dialog()

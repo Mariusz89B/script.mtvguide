@@ -48,8 +48,8 @@ import os
 from strings import *
 which = sys.argv[1]
 
-if which == "internal":
-    path = os.path.join(ADDON.getAddonInfo('path'), 'internal.xml')
+if which == "wiki":
+    path = os.path.join(ADDON.getAddonInfo('path'), 'wiki.xml')
 f = xbmcvfs.File(path,"rb")
 data = f.read()
 dialog = xbmcgui.Dialog()

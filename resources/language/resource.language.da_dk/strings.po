@@ -2747,3 +2747,7 @@ msgstr "Anerkendelse"
 msgctxt "#90005"
 msgid "Quickstart"
 msgstr "Starten"
+
+msgctxt "#90006"
+msgid "Commmands"
+msgstr "Styring"

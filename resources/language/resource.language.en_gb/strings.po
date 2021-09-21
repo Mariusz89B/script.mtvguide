@@ -2776,6 +2776,10 @@ msgctxt "#90005"
 msgid "Quickstart"
 msgstr ""
 
+msgctxt "#90006"
+msgid "Commmands"
+msgstr ""
+
 msgctxt "#95000"
 msgid "General information about the add-on."
 msgstr ""
@@ -3326,6 +3330,14 @@ msgstr ""
 
 msgctxt "#95137"
 msgid "Information about add-on function tasks."
+msgstr ""
+
+msgctxt "#95138"
+msgid "Default keyboard and remote commands."
+msgstr ""
+
+msgctxt "#99994"
+msgid ""
 msgstr ""
 
 msgctxt "#99995" 

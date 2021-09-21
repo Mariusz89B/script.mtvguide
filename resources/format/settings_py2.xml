@@ -3,9 +3,10 @@
 	<level>0</level>
 	<category label="90001">
 		<setting id="tutorial" type="bool" label="59924" default="false"/>
-		<setting label="90002" type="action" action="RunScript($CWD/help.py,help)" />
-		<setting label="90005" type="action" action="RunScript($CWD/context.py,context)" />
-		<setting label="30913" type="action" action="RunScript($CWD/internal.py,internal)" />
+		<setting label="90002" type="action" action="RunScript($CWD/startup.py,startup)" />
+		<setting label="90005" type="action" action="RunScript($CWD/quickstart.py,quickstart)" />
+		<setting label="90006" type="action" action="RunScript($CWD/commands.py,commands)" />
+		<setting label="30913" type="action" action="RunScript($CWD/wiki.py,wiki)" />
 		<setting label="90003" type="action" action="RunScript($CWD/readme.py,readme)" />
 		<setting label="90004" type="action" action="RunScript($CWD/credits.py,credits)" />
 	</category>

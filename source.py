@@ -830,10 +830,7 @@ class Database(object):
 
             for x in streams.automap:
                 if x.strm is not None and x.strm != '':
-                    if sys.version_info[0] > 2:
-                        baseList.update({x.channelid.upper(): x.strm})
-                    else:
-                        baseList.update({x.channelid.upper().decode('utf-8'): x.strm})
+                    baseList.update({x.channelid.upper(): x.strm})
             
             for serviceName in playService.SERVICES:
                 serviceHandler = playService.SERVICES[serviceName]
@@ -851,12 +848,20 @@ class Database(object):
             if sys.version_info[0] > 2:
                 x_channels = sorted(baseList.items())
             else:
-                x_channels = sorted(baseList.iteritems())
+                try:
+                    x_channels = sorted(baseList.iteritems())
+                except:
+                    baseList = [x.decode('utf-8') for x in baseList]
+                    x_channels = sorted(baseList.iteritems())
 
             if sys.version_info[0] > 2:
                 y_channels = sorted(channelList.items())
             else:
-                y_channels = sorted(channelList.iteritems())
+                try:
+                    y_channels = sorted(channelList.iteritems())
+                except:
+                    channelList = [x.decode('utf-8') for x in channelList]
+                    y_channels = sorted(channelList.iteritems())
 
             strm = ''
 

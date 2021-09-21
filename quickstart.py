@@ -48,9 +48,9 @@ import os
 from strings import *
 which = sys.argv[1]
 
-if which == "context":
-    path = os.path.join(ADDON.getAddonInfo('path'), 'context.xml')
+if which == "quickstart":
+    path = os.path.join(ADDON.getAddonInfo('path'), 'quickstart.xml')
 f = xbmcvfs.File(path,"rb")
 data = f.read()
 dialog = xbmcgui.Dialog()
-dialog.textviewer(strings(90002), data)
+dialog.textviewer(strings(90005), data)

@@ -8,25 +8,33 @@
 					<default>false</default>
 					<control type="toggle"/>
 				</setting>
-				<setting help="95002" id="help" label="90002" type="action">
+				<setting help="95002" id="startup" label="90002" type="action">
 					<level>0</level>
-					<data>RunScript(special://home/addons/script.mtvguide/help.py,help)</data>
+					<data>RunScript(special://home/addons/script.mtvguide/startup.py,startup)</data>
 					<constraints>
 						<allowempty>true</allowempty>
 					</constraints>
 					<control format="action" type="button"/>
 				</setting>
-				<setting help="95137" id="context" label="90005" type="action">
+				<setting help="95137" id="quickstart" label="90005" type="action">
 					<level>0</level>
-					<data>RunScript(special://home/addons/script.mtvguide/context.py,context)</data>
+					<data>RunScript(special://home/addons/script.mtvguide/quickstart.py,quickstart)</data>
 					<constraints>
 						<allowempty>true</allowempty>
 					</constraints>
 					<control format="action" type="button"/>
 				</setting>
-				<setting help="95003" id="internal" label="30913" type="action">
+				<setting help="95138" id="commands" label="90006" type="action">
 					<level>0</level>
-					<data>RunScript(special://home/addons/script.mtvguide/internal.py,internal)</data>
+					<data>RunScript(special://home/addons/script.mtvguide/commands.py,commands)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control format="action" type="button"/>
+				</setting>
+				<setting help="95003" id="wiki" label="30913" type="action">
+					<level>0</level>
+					<data>RunScript(special://home/addons/script.mtvguide/wiki.py,wiki)</data>
 					<constraints>
 						<allowempty>true</allowempty>
 					</constraints>
