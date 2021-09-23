@@ -584,12 +584,10 @@ class Database(object):
             serviceList = list()
 
             self.deleteAllCustomStreams()
-            epgChannels = self.epgChannels()
 
             for serviceName in playService.SERVICES:
                 serviceHandler = playService.SERVICES[serviceName]
                 if serviceHandler.serviceEnabled == 'true':
-                    serviceHandler.startLoadingChannelList(epgChannels)
                     serviceList.append(serviceHandler)
 
         cacheExpired = self._isCacheExpired(date)
@@ -761,6 +759,8 @@ class Database(object):
         if self.updateFailed or updateServices == False:
             return cacheExpired #to wychodzimy - nie robimy aktualizacji
 
+        epgChannels = self.epgChannels()
+
         #Waiting for all services
         deb('[UPD] Czekam na zaladowanie STRM')
         for priority in reversed(list(range(self.number_of_service_priorites))):
@@ -770,8 +770,10 @@ class Database(object):
                     break
 
                 if priority == service.servicePriority:
+                    service.startLoadingChannelList(epgChannels)
                     progress_callback(100, "{}: {}".format(strings(59915), service.getDisplayName()) )
                     service.waitUntilDone()
+                    
                     self.storeCustomStreams(service, service.serviceName, service.serviceRegex)
 
         serviceList = list()
@@ -826,9 +828,9 @@ class Database(object):
         c.close()
 
         if sys.version_info[0] > 2:
-            return sorted(result.items())
+            return result.items()
         else:
-            return sorted(result.iteritems())
+            return result.iteritems()
 
     def storeCustomStreams(self, streams, streamSource, serviceStreamRegex):
         try:

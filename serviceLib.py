@@ -962,10 +962,7 @@ class baseServiceUpdater:
 
             result = list()
 
-            epg_channels_sorted = []
-            sort = [epg_channels_sorted.append(x) for x in epg_channels if x not in epg_channels_sorted]
-
-            for title, names in epg_channels_sorted:
+            for title, names in epg_channels:
                 for name in names.split(','):
                     result.append(MapString(channelid=title, titleRegex='', strm='', src='', displayName=name))
 
