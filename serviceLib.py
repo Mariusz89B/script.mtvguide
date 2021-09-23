@@ -997,7 +997,7 @@ class baseServiceUpdater:
 
                         if x.displayName != '':
                             if sys.version_info[0] > 2:
-                                if unidecode(x.displayName.decode('utf-8')).upper() == unidecode(y.title.decode('utf-8')).upper():
+                                if unidecode(x.displayName).upper() == unidecode(y.title).upper():
                                     b = True
                             else:
                                 if unidecode(x.displayName).upper() == unidecode(y.title.decode('utf-8')).upper():
