@@ -469,11 +469,12 @@ class TvCid:
         self.ffmpegdumpLink = None
 
 class MapString:
-    def __init__(self, channelid, titleRegex, strm, src):
+    def __init__(self, channelid, titleRegex, strm, src, displayName):
         self.channelid = channelid
         self.titleRegex = titleRegex
         self.strm = strm
         self.src = src
+        self.displayName = displayName
 
     @staticmethod
     def FastParse(xmlstr, logCall=deb):
@@ -506,7 +507,7 @@ class MapString:
 
             if logCall:
                 logCall('[UPD] %-35s %-50s %s' % (aid, atitle, astrm))
-            result.append(MapString(aid, atitle, astrm, ''))
+            result.append(MapString(channelid=aid, titleRegex=atitle, strm=astrm, src='', displayName=''))
             rstrm = astrm
 
         categoriesRe    = re.compile('(<category name=".*?".*tags=".*?"/>)')
@@ -549,7 +550,7 @@ class MapString:
                     astrm  = elem.get("strm")
                     if logCall:
                         logCall('[UPD] %-35s %-50s %s' % (aid, atitle, astrm))
-                    result.append(MapString(aid, atitle, astrm, ''))
+                    result.append(MapString(channelid=aid, titleRegex=atitle, strm=astrm, src='', displayName=''))
                 if elem.tag == "map":
                     rstrm = elem.get("strm")
                 if elem.tag == "category":
@@ -724,12 +725,12 @@ class baseServiceUpdater:
         self.log('max amount of devices added: {}'.format(self.serviceName))
         xbmcgui.Dialog().notification(self.serviceName, strings(SERVICE_MAX_DEVICE_ID), sound=False)
 
-    def startLoadingChannelList(self):
+    def startLoadingChannelList(self, automap=None):
         if self.thread is None or not self.thread.is_alive():
             self.traceList.append('\n')
             self.traceList.append('##############################################################################################################')
             self.traceList.append('\n')
-            self.thread = threading.Thread(name='loadChannelList thread', target = self.loadChannelList)
+            self.thread = threading.Thread(name='loadChannelList thread', target = self.loadChannelList, args=(automap,))
             self.thread.start()
             self.printLogTimer = threading.Timer(15, self.printLogTimeout)
             self.printLogTimer.start()
@@ -901,6 +902,8 @@ class baseServiceUpdater:
 
                 self.mapsLoaded = True
 
+
+
         except Exception as ex:
             self.log('loadMapFile: Error %s' % getExceptionString())
 
@@ -934,7 +937,7 @@ class baseServiceUpdater:
 
         return result
 
-    def loadChannelList(self):
+    def loadChannelList(self, epg_channels=None):
         try:
             startTime = datetime.datetime.now()
             self.channels = self.getBaseChannelList()
@@ -957,8 +960,18 @@ class baseServiceUpdater:
             self.log('-------------------------------------------------------------------------------------')
             self.log('[UPD]     %-30s %-30s %-20s %-35s' % ('-ID mTvGuide-', '-    Orig Name    -', '-    SRC   -', '-    STRM   -'))
 
-            for x in self.automap[:]:
+            result = list()
 
+            epg_channels_sorted = []
+            sort = [epg_channels_sorted.append(x) for x in epg_channels if x not in epg_channels_sorted]
+
+            for title, names in epg_channels_sorted:
+                for name in names.split(','):
+                    result.append(MapString(channelid=title, titleRegex='', strm='', src='', displayName=name))
+
+            self.automap.extend(result)
+
+            for x in self.automap[:]:
                 if strings2.M_TVGUIDE_CLOSING:
                     self.log('loadChannelList loop service %s requested abort!' % self.serviceName)
                     self.close()
@@ -969,15 +982,22 @@ class baseServiceUpdater:
                     self.log('[UPD]     %-30s %-15s %-35s' % (x.channelid, x.src, x.strm))
                     continue
                 try:
-                    p = re.compile(x.titleRegex, re.IGNORECASE)
                     for y in self.channels:
-                        try:
+                        b = False
+
+                        if x.titleRegex != '':
                             try:
-                                b = p.match(unidecode(y.title))
+                                p = re.compile(x.titleRegex, re.IGNORECASE)
+                                try:
+                                    b = p.match(unidecode(y.title))
+                                except:
+                                    b = p.match(unidecode(y.title.decode('utf-8')))
                             except:
-                                b = p.match(unidecode(y.title.decode('utf-8')))
-                        except:
-                            pass
+                                pass
+
+                        if x.displayName != '':
+                            if unidecode(x.displayName).upper() == unidecode(y.title).upper():
+                                b = True
 
                         if (b):
                             try:
@@ -1005,7 +1025,6 @@ class baseServiceUpdater:
                                 x.src  = self.serviceName
                                 y.src = x.src
                                 self.log('[UPD]     %-30s %-30s %-20s %-35s ' % (x.channelid, y.name, x.src, x.strm))
-
 
                 except Exception as ex:
                     self.log('{} Error {} {}'.format(x.channelid, x.titleRegex, getExceptionString()))
@@ -1044,10 +1063,6 @@ class baseServiceUpdater:
                             except:
                                 y.title = unidecode(y.title.decode('utf-8'))
 
-                            try:
-                                y.strm = unidecode(y.strm)
-                            except:
-                                y.strm = unidecode(y.strm.decode('utf-8'))
                         except:
                             pass
 

@@ -582,12 +582,14 @@ class Database(object):
         if updateServices == True:
             deb('[UPD] Rozpoczynam aktualizacje STRM')
             serviceList = list()
+
             self.deleteAllCustomStreams()
+            epgChannels = self.epgChannels()
 
             for serviceName in playService.SERVICES:
                 serviceHandler = playService.SERVICES[serviceName]
                 if serviceHandler.serviceEnabled == 'true':
-                    serviceHandler.startLoadingChannelList()
+                    serviceHandler.startLoadingChannelList(epgChannels)
                     serviceList.append(serviceHandler)
 
         cacheExpired = self._isCacheExpired(date)
@@ -802,8 +804,33 @@ class Database(object):
         except Exception as ex:
             deb('[UPD] Error deleting streams: {}'.format(getExceptionString()))
 
+
+    def epgChannels(self):
+        result = dict()
+
+        c = self.conn.cursor()
+
+        c.execute('SELECT id, titles FROM channels')
+        for row in c:
+            id = row[str('id')]
+            titles = row[str('titles')]
+
+            if ADDON.getSetting('epg_display_name') == 'true':
+                try:
+                    result.update({id.upper(): titles.upper()})
+                except:
+                    result.update({id.upper(): id.upper()})
+            else:
+                result.update({id.upper(): id.upper()})
+
+        c.close()
+
+        if sys.version_info[0] > 2:
+            return sorted(result.items())
+        else:
+            return sorted(result.iteritems())
+
     def storeCustomStreams(self, streams, streamSource, serviceStreamRegex):
-        from unidecode import unidecode
         try:
             #if len(streams.automap) > 0 and len(streams.channels) > 0:
             self.deleteCustomStreams(streamSource, serviceStreamRegex)
@@ -811,81 +838,29 @@ class Database(object):
             nrOfChannelsUpdated = 0
             c = self.conn.cursor()
 
-            serviceList = list()
-
-            baseList = dict()
-            channelList = dict()
-
-            c.execute('SELECT id, titles FROM channels')
-            for row in c:
-                id = row[str('id')]
-                titles = row[str('titles')]
-
-                if ADDON.getSetting('epg_display_name') == 'true':
-                    try:
-                        channelList.update({id.upper(): titles.upper()})
-                    except:
-                        channelList.update({id.upper(): id.upper()})
-                else:
-                    channelList.update({id.upper(): id.upper()})
-
             for x in streams.automap:
                 if x.strm is not None and x.strm != '':
-                    title = x.channelid
-                    baseList.update({title: x.strm})
-            
-            for serviceName in playService.SERVICES:
-                serviceHandler = playService.SERVICES[serviceName]
-                if serviceHandler.serviceEnabled == 'true':
-                    serviceList.append(serviceHandler)
+                    #deb('[UPD] Updating: CH=%-35s STRM=%-30s SRC={}'.format(x.channelid, x.strm, x.src))
+                    try:
+                        try:
+                            c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid, x.strm])
+                        except:
+                            c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid.decode('utf-8'), x.strm])
+                        nrOfChannelsUpdated += 1
+                    except Exception as ex:
+                        deb('[UPD] Error updating stream: {}'.format(getExceptionString()))
 
-                channels = serviceHandler.getBaseChannelList()
-                for x in channels:
-                    if x.cid is not None and x.cid != '':
-                        for priority in reversed(list(range(self.number_of_service_priorites))):
-                            for service in serviceList:
-                                strm = service.serviceRegex.replace('%', x.cid)
-                                if sys.version_info[0] > 2:
-                                    title = x.name
-                                else:
-                                    try:
-                                        title = x.name if isinstance(x.name, unicode) else x.name.decode('utf-8')
-                                    except:
-                                        pass
-                                if title not in baseList.keys():
-                                    baseList.update({title: strm})
-
-            if sys.version_info[0] > 2:
-                x_channels = sorted(baseList.items())
-            else:
-                x_channels = sorted(baseList.iteritems())
-
-            if sys.version_info[0] > 2:
-                y_channels = sorted(channelList.items())
-            else:
-                y_channels = sorted(channelList.iteritems())
-
-            strm = ''
-
-            for k, v in y_channels:
-                try: 
-                    result = None
-                    for item in v.split(','):
-                        for chann, strm in x_channels:
-                            if chann.upper() == item.upper():
-                                result = k.upper()
-                                try:
-                                    c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [result, strm])
-                                except:
-                                    c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [result.decode('utf-8'), strm])
-
-                    nrOfChannelsUpdated += 1
-                except Exception as ex:
-                    deb('[UPD] Error updating stream: {}'.format(getExceptionString()))
+            self.conn.commit()
+            c.close()
+            deb('[UPD] Finished updating databse, stored: {} streams from service: {}'.format(nrOfChannelsUpdated, streamSource))
+        
+        except Exception as ex:
+            deb('[UPD] Error updating streams: {}'.format(getExceptionString()))
 
             self.conn.commit()
             c.close()
             deb('[UPD] Finished updating database, stored: {} streams from service: {}'.format(nrOfChannelsUpdated, streamSource))
+        
         except Exception as ex:
             deb('[UPD] Error updating streams: {}'.format(getExceptionString()))
 
@@ -919,12 +894,14 @@ class Database(object):
     def _reloadServices(self):
         serviceList = list()
 
+        epgChannels = self.epgChannels()
+
         serviceLib.baseServiceUpdater.baseMapContent = None
         for serviceName in playService.SERVICES:
             serviceHandler = playService.SERVICES[serviceName]
             if serviceHandler.serviceEnabled == 'true':
                 serviceHandler.resetService()
-                serviceHandler.startLoadingChannelList()
+                serviceHandler.startLoadingChannelList(epgChannels)
                 serviceList.append(serviceHandler)
 
         deb('[UPD] Rozpoczynam aktualizacje STRM')
@@ -2746,13 +2723,22 @@ def customParseXMLTV(xml, progress_callback):
     totalElement = len(programs)
 
     for program in programs:
-        channel = (decodeString(programChannelRe.search(program).group(1))).upper()
+        try:
+            channel = (decodeString(programChannelRe.search(program).group(1))).upper()
+        except:
+            channel = ''
         try:
             title = decodeString(programTitleRe.search(program).group(1))
         except AttributeError:
             title = ''
-        start = TimeZone(customParseXMLTVDate( programStartRe.search(program).group(1)))
-        stop  = TimeZone(customParseXMLTVDate( programStopRe.search(program).group(1)))
+        try:
+            start = TimeZone(customParseXMLTVDate( programStartRe.search(program).group(1)))
+        except:
+            start = ''
+        try:
+            stop = TimeZone(customParseXMLTVDate( programStopRe.search(program).group(1)))
+        except:
+            stop = ''
         category = programCategory.findall(decodeString(program))
         category_list = []
         for c in category:
@@ -2874,7 +2860,10 @@ def parseXMLTV(context, f, size, logoFolder, progress_callback):
         if event == "end":
             result = None
             if elem.tag == "programme":
-                channel = elem.get("channel").upper()
+                try:
+                    channel = elem.get("channel").upper()
+                except:
+                    channel = ''
                 description = elem.findtext("desc")
                 date = elem.findtext("date")
                 director = elem.findtext("director")
