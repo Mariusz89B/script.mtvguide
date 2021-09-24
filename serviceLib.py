@@ -1063,9 +1063,9 @@ class baseServiceUpdater:
                     if y.name != '':
                         try:
                             try:
-                                channelList.append(y.name)
+                                channelList.append(unidecode(y.name))
                             except:
-                                channelList.append(y.name.decode('utf-8'))
+                                channelList.append(unidecode(y.name.decode('utf-8')))
                         except:
                             pass
 

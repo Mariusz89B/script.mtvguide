@@ -223,9 +223,14 @@ class PlaylistUpdater(baseServiceUpdater):
                         deb('Reading type: Default cachePlaylist')
                         content = f.read()
                 else:
-                    with open(filepath, 'r') as f:
-                        deb('Reading type: Default cachePlaylist')
-                        content = f.read()
+                    try:
+                        with open(filepath, 'r') as f:
+                            deb('Reading type: Default getPlaylistContent')
+                            content = f.read()
+                    except:
+                        with open(filepath.decode('utf-8'), 'r') as f:
+                            deb('Reading type: Default getPlaylistContent')
+                            content = f.read()
 
         return content
 
@@ -291,9 +296,14 @@ class PlaylistUpdater(baseServiceUpdater):
                                 deb('Reading type: Default getPlaylistContent')
                                 tmpcontent = f.read()
                         else:
-                            with open(path, 'r') as f:
-                                deb('Reading type: Default getPlaylistContent')
-                                tmpcontent = f.read()
+                            try:
+                                with open(path, 'r') as f:
+                                    deb('Reading type: Default getPlaylistContent')
+                                    tmpcontent = f.read()
+                            except:
+                                with open(path.decode('utf-8'), 'r') as f:
+                                    deb('Reading type: Default getPlaylistContent')
+                                    tmpcontent = f.read()
 
                     if tmpcontent is None or tmpcontent == "":
                         raise Exception
