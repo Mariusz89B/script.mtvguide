@@ -572,6 +572,18 @@ class Database(object):
 
     def _updateChannelAndProgramListCaches(self, date, progress_callback, clearExistingProgramList):
         deb('_updateChannelAndProgramListCache')
+        import sys
+
+        if sys.version_info[0] > 2:
+            try:
+                profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
+            except:
+                profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
+        else:
+            try:
+                profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile'))
+            except:
+                profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
 
         # todo workaround service.py 'forgets' the adapter and convert set in _initialize.. wtf?!
         sqlite3.register_adapter(datetime.datetime, self.adapt_datetime)
@@ -609,18 +621,6 @@ class Database(object):
 
                 imported = 0
                 nrOfFailures = 0
-
-                import sys
-                if sys.version_info[0] > 2:
-                    try:
-                        profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
-                    except:
-                        profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
-                else:
-                    try:
-                        profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile'))
-                    except:
-                        profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
 
                 xbmcvfs.delete(os.path.join(profilePath, 'category_count.list'))
 
@@ -759,6 +759,8 @@ class Database(object):
         if self.updateFailed or updateServices == False:
             return cacheExpired #to wychodzimy - nie robimy aktualizacji
 
+        xbmcvfs.delete(os.path.join(profilePath, 'custom_channels.list'))
+
         epgChannels = self.epgChannels()
 
         #Waiting for all services
@@ -827,10 +829,7 @@ class Database(object):
 
         c.close()
 
-        if sys.version_info[0] > 2:
-            return result.items()
-        else:
-            return result.iteritems()
+        return result.items()
 
     def storeCustomStreams(self, streams, streamSource, serviceStreamRegex):
         try:
@@ -844,7 +843,10 @@ class Database(object):
                 if x.strm is not None and x.strm != '':
                     #deb('[UPD] Updating: CH=%-35s STRM=%-30s SRC={}'.format(x.channelid, x.strm, x.src))
                     try:
-                        c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid, x.strm])
+                        try:
+                            c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid, x.strm])
+                        except:
+                            c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid.decode('utf-8'), x.strm])
                         nrOfChannelsUpdated += 1
                     except Exception as ex:
                         deb('[UPD] Error updating stream: {}'.format(getExceptionString()))

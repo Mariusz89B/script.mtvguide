@@ -990,15 +990,22 @@ class baseServiceUpdater:
 
                         if x.displayName != '':
                             try:
-                                if unidecode(x.displayName).upper() == unidecode(y.title).upper():
-                                    b = True
+                                try:
+                                    if unidecode(x.displayName).upper() == unidecode(y.title).upper():
+                                        b = True
+                                except:
+                                    if unidecode(x.displayName).upper() == unidecode(y.title.decode('utf-8')).upper():
+                                        b = True
                             except:
                                 pass
 
                         if x.titleRegex != '':
                             try:
                                 p = re.compile(x.titleRegex, re.IGNORECASE)
-                                b = p.match(unidecode(y.title))
+                                try:
+                                    b = p.match(unidecode(y.title))
+                                except:
+                                    b = p.match(unidecode(y.title.decode('utf-8')))
                             except:
                                 pass
 
@@ -1009,7 +1016,10 @@ class baseServiceUpdater:
 
                                 y.src = newMapElement.src
                                 y.strm = newMapElement.strm
-                                self.log('[UPD] [B] %-30s %-30s %-20s %-35s ' % (unidecode(newMapElement.channelid), unidecode(y.name), newMapElement.src, newMapElement.strm))
+                                try:
+                                    self.log('[UPD] [B] %-30s %-30s %-20s %-35s ' % (unidecode(newMapElement.channelid), unidecode(y.name), newMapElement.src, newMapElement.strm))
+                                except:
+                                    self.log('[UPD] [B] %-30s %-30s %-20s %-35s ' % (unidecode(newMapElement.channelid), unidecode(y.name.decode('utf-8')), newMapElement.src, newMapElement.strm))
                                 if self.addDuplicatesAtBeginningOfList == False:
                                     self.automap.append(newMapElement)
                                 else:
@@ -1019,10 +1029,10 @@ class baseServiceUpdater:
                                 y.strm = x.strm
                                 x.src  = self.serviceName
                                 y.src = x.src
-                                self.log('[UPD]     %-30s %-30s %-20s %-35s ' % (unidecode(x.channelid), unidecode(y.name), x.src, x.strm))
-
-                        #else:
-                            #self.log('[ERROR UPD]     %-30s %-30s %-20s %-35s ' % (unidecode(x.channelid), unidecode(y.name), x.src, x.strm))
+                                try:
+                                    self.log('[UPD]     %-30s %-30s %-20s %-35s ' % (unidecode(x.channelid), unidecode(y.name), x.src, x.strm))
+                                except:
+                                    self.log('[UPD]     %-30s %-30s %-20s %-35s ' % (unidecode(x.channelid), unidecode(y.name.decode('utf-8')), x.src, x.strm))
 
                 except Exception as ex:
                     self.log('{} Error {} {}'.format(unidecode(x.channelid), x.titleRegex, getExceptionString()))
@@ -1052,14 +1062,24 @@ class baseServiceUpdater:
                 if y.src == '' or y.src != self.serviceName:
                     if y.name != '':
                         try:
-                            channelList.append(y.name)
+                            try:
+                                channelList.append(y.name)
+                            except:
+                                channelList.append(y.name.decode('utf-8'))
                         except:
                             pass
 
-                        self.log('[UPD] CID=%-12s NAME=%-40s TITLE=%-40s STRM=%-45s' % (y.cid, unidecode(y.name), unidecode(y.title), y.strm))
+                        try:
+                            self.log('[UPD] CID=%-12s NAME=%-40s TITLE=%-40s STRM=%-45s' % (y.cid, unidecode(y.name), unidecode(y.title), y.strm))
+                        except:
+                            self.log('[UPD] CID=%-12s NAME=%-40s TITLE=%-40s STRM=%-45s' % (y.cid, unidecode(y.name.decode('utf-8')), unidecode(y.title.decode('utf-8')), y.strm))
 
-            with open(file_name, 'ab+') as f:
-                f.write(bytearray('\n'.join(channelList), 'utf-8'))
+            if sys.version_info[0] > 2:
+                with open(file_name, 'ab+') as f:
+                    f.write(bytearray('\n'.join(channelList), 'utf-8'))
+            else:
+                with open(file_name, 'a+') as f:
+                    f.write(str('\n'.join(channelList)))
 
             self.log("[UPD] Zakonczono analize...")
             self.log('Loading everything took: %s seconds' % (datetime.datetime.now() - startTime).seconds)
