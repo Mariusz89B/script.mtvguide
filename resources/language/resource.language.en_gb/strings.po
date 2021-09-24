@@ -849,7 +849,7 @@ msgid "EPG - Norwegian"
 msgstr ""
 
 msgctxt "#30739"
-msgid "Show all regions"
+msgid "Do not use pre-defined region groups"
 msgstr ""
 
 msgctxt "#30740"

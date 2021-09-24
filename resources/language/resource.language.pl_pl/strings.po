@@ -849,8 +849,8 @@ msgid "EPG - Norwegian"
 msgstr "EPG - Norweskie"
 
 msgctxt "#30739"
-msgid "Show all regions"
-msgstr "Pokaż wszystkie regiony"
+msgid "Do not use pre-defined region groups"
+msgstr "Nie używaj predefiniowanych grup regionów"
 
 msgctxt "#30740"
 msgid "[COLOR]Select EPG[/COLOR]"

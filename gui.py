@@ -719,13 +719,13 @@ class mTVGuide(xbmcgui.WindowXML):
         progExec = False
         resExtra = False
 
-        langList = [strings(59925), strings(59926), strings(59927), strings(59928), strings(59929), strings(59930),
+        langList = [strings(30739), strings(59925), strings(59926), strings(59927), strings(59928), strings(59929), strings(59930),
                  strings(59931), strings(59932), strings(59933), strings(59934), strings(59935), strings(59936), strings(59937), 'Radio']
 
-        langResList = [strings(59963), strings(59964), strings(59965), strings(59966), strings(59967), strings(59968),
+        langResList = [strings(30739), strings(59963), strings(59964), strings(59965), strings(59966), strings(59967), strings(59968),
                  strings(59969), strings(59970), strings(59971), strings(59972), strings(59973), strings(59974), strings(59975), 'Radio']
 
-        ccList = ['be', 'cz', 'de', 'dk', 'fr', 'hr', 'it', 'no', 'pl', 'se', 'srb', 'uk', 'us', 'radio']
+        ccList = ['all', 'be', 'cz', 'de', 'dk', 'fr', 'hr', 'it', 'no', 'pl', 'se', 'srb', 'uk', 'us', 'radio']
 
         res = xbmcgui.Dialog().multiselect(strings(59943),
                     langList)
@@ -740,38 +740,44 @@ class mTVGuide(xbmcgui.WindowXML):
                 ADDON.setSetting('tutorial', 'true')
                 exit()
 
-        if len(res) > 1:
-            resExtra = xbmcgui.Dialog().yesno(strings(59924), strings(59962))
+        if res == 0:
+            for i in range(1, len(langList)):
+                ADDON.setSetting('country_code_{cc}'.format(cc=ccList[i]), 'false')
+            progExec = True
 
-        for i in range(len(langList)):
-            ADDON.setSetting('country_code_{cc}'.format(cc=ccList[i]), 'false')
-            if i in res:
-                label = langResList[i].lower()
-                ADDON.setSetting('country_code_{cc}'.format(cc=ccList[i]), 'true')
-                if resExtra:
-                    response = xbmcgui.Dialog().yesno(strings(59924), strings(59944).format(label))
-                    if response:
-                        ADDON.setSetting('source', 'm-TVGuide')
-                        kb = xbmc.Keyboard('','')
-                        kb.setHeading(strings(59945).format(label))
-                        kb.setHiddenInput(False)
-                        kb.doModal()
-                        c = kb.getText() if kb.isConfirmed() else None
-                        if c == '': c = None
-                        
-                        ADDON.setSetting('epg_{cc}'.format(cc=ccList[i]), c)
-                        if c is not None:
-                            progExec = True
+        else:
+            if len(res) > 1:
+                resExtra = xbmcgui.Dialog().yesno(strings(59924), strings(59962))
+
+            for i in range(1, len(langList)):
+                ADDON.setSetting('country_code_{cc}'.format(cc=ccList[i]), 'false')
+                if i in res:
+                    label = langResList[i].lower()
+                    ADDON.setSetting('country_code_{cc}'.format(cc=ccList[i]), 'true')
+                    if resExtra:
+                        response = xbmcgui.Dialog().yesno(strings(59924), strings(59944).format(label))
+                        if response:
+                            ADDON.setSetting('source', 'm-TVGuide')
+                            kb = xbmc.Keyboard('','')
+                            kb.setHeading(strings(59945).format(label))
+                            kb.setHiddenInput(False)
+                            kb.doModal()
+                            c = kb.getText() if kb.isConfirmed() else None
+                            if c == '': c = None
+                            
+                            ADDON.setSetting('epg_{cc}'.format(cc=ccList[i]), c)
+                            if c is not None:
+                                progExec = True
+
+                            else:
+                                ADDON.setSetting('country_code_{cc}'.format(cc=ccList[i]), 'false')
+                                self.tutorialGetCountry()
 
                         else:
-                            ADDON.setSetting('country_code_{cc}'.format(cc=ccList[i]), 'false')
-                            self.tutorialGetCountry()
+                            progExec = True
 
                     else:
                         progExec = True
-
-                else:
-                    progExec = True
 
         if progExec is True:
             self.tutorialGetService()
