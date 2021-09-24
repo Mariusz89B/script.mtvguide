@@ -40,6 +40,8 @@
 #   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #   SOFTWARE.
 
+from __future__ import unicode_literals
+
 import sys
 
 if sys.version_info[0] > 2: 
@@ -980,46 +982,34 @@ class baseServiceUpdater:
 
                 if x.strm != '':
                     x.src = 'CONST'
-                    self.log('[UPD]     %-30s %-15s %-35s' % (x.channelid, x.src, x.strm))
+                    self.log('[UPD]     %-30s %-15s %-35s' % (unidecode(x.channelid), x.src, x.strm))
                     continue
                 try:
                     for y in self.channels:
                         b = False
 
+                        if x.displayName != '':
+                            try:
+                                if unidecode(x.displayName).upper() == unidecode(y.title).upper():
+                                    b = True
+                            except:
+                                pass
+
                         if x.titleRegex != '':
                             try:
                                 p = re.compile(x.titleRegex, re.IGNORECASE)
-                                try:
-                                    b = p.match(unidecode(y.title))
-                                except:
-                                    b = p.match(unidecode(y.title.decode('utf-8')))
+                                b = p.match(unidecode(y.title))
                             except:
                                 pass
-
-                        if x.displayName != '':
-                            if sys.version_info[0] > 2:
-                                if unidecode(x.displayName).upper() == unidecode(y.title).upper():
-                                    b = True
-                            else:
-                                if unidecode(x.displayName).upper() == unidecode(y.title.decode('utf-8')).upper():
-                                    b = True
 
                         if (b):
-                            try:
-                                try:
-                                    y.name = unidecode(y.name)
-                                except:
-                                    y.name = unidecode(y.name.decode('utf-8'))
-                            except:
-                                pass
-
                             if x.strm != '' and self.addDuplicatesToList == True:
                                 newMapElement = copy.deepcopy(x)
                                 newMapElement.strm = self.rstrm % y.cid
 
                                 y.src = newMapElement.src
                                 y.strm = newMapElement.strm
-                                self.log('[UPD] [B] %-30s %-30s %-20s %-35s ' % (newMapElement.channelid, y.name, newMapElement.src, newMapElement.strm))
+                                self.log('[UPD] [B] %-30s %-30s %-20s %-35s ' % (unidecode(newMapElement.channelid), unidecode(y.name), newMapElement.src, newMapElement.strm))
                                 if self.addDuplicatesAtBeginningOfList == False:
                                     self.automap.append(newMapElement)
                                 else:
@@ -1029,10 +1019,14 @@ class baseServiceUpdater:
                                 y.strm = x.strm
                                 x.src  = self.serviceName
                                 y.src = x.src
-                                self.log('[UPD]     %-30s %-30s %-20s %-35s ' % (x.channelid, y.name, x.src, x.strm))
+                                self.log('[UPD]     %-30s %-30s %-20s %-35s ' % (unidecode(x.channelid), unidecode(y.name), x.src, x.strm))
+
+                        #else:
+                            #self.log('[ERROR UPD]     %-30s %-30s %-20s %-35s ' % (unidecode(x.channelid), unidecode(y.name), x.src, x.strm))
 
                 except Exception as ex:
-                    self.log('{} Error {} {}'.format(x.channelid, x.titleRegex, getExceptionString()))
+                    self.log('{} Error {} {}'.format(unidecode(x.channelid), x.titleRegex, getExceptionString()))
+
 
             self.log('\n')
             self.log('[UPD] Nie wykorzystano STRM nadawanych przez %s programow:' % self.serviceName)
@@ -1058,28 +1052,14 @@ class baseServiceUpdater:
                 if y.src == '' or y.src != self.serviceName:
                     if y.name != '':
                         try:
-                            try:
-                                channelList.append(unidecode(y.name))
-                            except:
-                                channelList.append(unidecode(y.name.decode('utf-8')))
-
-                            try:
-                                y.title = unidecode(y.title)
-                            except:
-                                y.title = unidecode(y.title.decode('utf-8'))
-
+                            channelList.append(y.name)
                         except:
                             pass
 
-                        self.log('[UPD] CID=%-12s NAME=%-40s TITLE=%-40s STRM=%-45s' % (y.cid, y.name, y.title, y.strm))
+                        self.log('[UPD] CID=%-12s NAME=%-40s TITLE=%-40s STRM=%-45s' % (y.cid, unidecode(y.name), unidecode(y.title), y.strm))
 
-            if sys.version_info[0] > 2:
-                with open(file_name, 'wb+') as f:
-                    f.write(bytearray('\n'.join(channelList), 'utf-8'))
-            else:
-                with open(file_name, 'w+') as f:
-                    f.write(str('\n'.join(channelList)))
-
+            with open(file_name, 'wb+') as f:
+                f.write(bytearray('\n'.join(channelList), 'utf-8'))
 
             self.log("[UPD] Zakonczono analize...")
             self.log('Loading everything took: %s seconds' % (datetime.datetime.now() - startTime).seconds)

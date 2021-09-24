@@ -844,10 +844,7 @@ class Database(object):
                 if x.strm is not None and x.strm != '':
                     #deb('[UPD] Updating: CH=%-35s STRM=%-30s SRC={}'.format(x.channelid, x.strm, x.src))
                     try:
-                        try:
-                            c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid, x.strm])
-                        except:
-                            c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid.decode('utf-8'), x.strm])
+                        c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid, x.strm])
                         nrOfChannelsUpdated += 1
                     except Exception as ex:
                         deb('[UPD] Error updating stream: {}'.format(getExceptionString()))
@@ -867,6 +864,7 @@ class Database(object):
             deb('[UPD] Error updating streams: {}'.format(getExceptionString()))
 
     def printStreamsWithoutChannelEPG(self):
+        from unidecode import unidecode
         try:
             c = self.conn.cursor()
             c.execute("SELECT custom.channel, custom.stream_url FROM custom_stream_url as custom LEFT JOIN channels as chann ON (UPPER(custom.channel)) = (UPPER(chann.id)) WHERE chann.id IS NULL")
@@ -878,7 +876,7 @@ class Database(object):
                 deb('%-35s %-35s' % ('-    NAME    -', '-    STREAM    -'))
                 #cur = self.conn.cursor()
                 for row in c:
-                    deb('%-35s %-35s' % (row[str('channel')], row[str('stream_url')]))
+                    deb('%-35s %-35s' % (unidecode(row[str('channel')]), row[str('stream_url')]))
                     #cur.execute('INSERT OR IGNORE INTO channels(id, title, logo, stream_url, visible, weight, source) VALUES(?, ?, ?, ?, ?, (CASE ? WHEN -1 THEN (SELECT COALESCE(MAX(weight)+1, 0) FROM channels WHERE source=?) ELSE ? END), ?)', [row['channel'], row['channel'], '', '', 1, -1, 'm-TVGuide', -1, 'm-TVGuide'])
                 #self.conn.commit()
                 deb('End of streams without EPG!')

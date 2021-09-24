@@ -40,6 +40,8 @@
 #   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #   SOFTWARE.
 
+from __future__ import unicode_literals
+
 import sys
 
 import requests
@@ -137,11 +139,11 @@ class PlaylistUpdater(baseServiceUpdater):
             headers['ContentType'] = 'application/x-www-form-urlencoded'
             headers['Accept-Encoding'] = 'gzip'
 
-            content = scraper.get(path, headers=headers, allow_redirects=False, verify=False, timeout=60).content.decode('utf-8')
+            content = scraper.get(path, headers=headers, allow_redirects=False, verify=False, timeout=60).content
 
         except:
             try:
-                content = self.sl.getJsonFromExtendedAPI(path).decode('utf-8')
+                content = self.sl.getJsonFromExtendedAPI(path)
             except:
                 pass
 
@@ -175,10 +177,8 @@ class PlaylistUpdater(baseServiceUpdater):
         
         urlpath = os.path.join(self.profilePath, 'playlists', '{playlist}.url'.format(playlist=self.serviceName))
         if os.path.exists(urlpath):
-            if sys.version_info[0] > 2:
-                url = open(urlpath, 'r', encoding='utf-8').read()
-            else:
-                url = open(urlpath, 'r').read()
+            url = open(urlpath, 'rb').read()
+
         else:
             url = url_setting
 
@@ -194,19 +194,11 @@ class PlaylistUpdater(baseServiceUpdater):
                 if self.serviceName in filename:
                     os.remove(os.path.join(path, f))
 
-            if sys.version_info[0] > 2:
-                with open(filepath, 'w', encoding='utf-8') as f:
-                    f.write(content)
+            with open(filepath, 'wb') as f:
+                f.write(content)
 
-                with open(urlpath, 'w', encoding='utf-8') as f2:
-                    f2.write(url_setting)
-                    
-            else:
-                with open(filepath, 'w') as f:
-                    f.write(content.encode('utf-8'))
-
-                with open(urlpath, 'w') as f2:
-                    f2.write(url_setting.encode('utf-8'))
+            with open(urlpath, 'wb') as f2:
+                f2.write(url_setting)
 
         else:
             size = int(536870912) # 512 MB
@@ -217,14 +209,9 @@ class PlaylistUpdater(baseServiceUpdater):
                     with mmap.mmap(f.fileno(), length=0, access=mmap.ACCESS_READ) as mmap_obj:
                         content = mmap_obj.read().decode('utf-8')
             else:
-                if sys.version_info[0] > 2:
-                    with open(filepath, 'r', encoding='utf-8') as f:
-                        deb('Reading type: Default cachePlaylist')
-                        content = f.read()
-                else:
-                    with open(filepath, 'r') as f:
-                        deb('Reading type: Default cachePlaylist')
-                        content = f.read()
+                with open(filepath, 'rb') as f:
+                    deb('Reading type: Default cachePlaylist')
+                    content = f.read().decode('utf-8')
 
         return content
 
@@ -285,14 +272,9 @@ class PlaylistUpdater(baseServiceUpdater):
                             with mmap.mmap(f.fileno(), length=0, access=mmap.ACCESS_READ) as mmap_obj:
                                 tmpcontent = mmap_obj.read().decode('utf-8')
                     else:
-                        if sys.version_info[0] > 2:
-                            with open(path, 'r', encoding='utf-8') as f:
-                                deb('Reading type: Default getPlaylistContent')
-                                tmpcontent = f.read()
-                        else:
-                            with open(path, 'r') as f:
-                                deb('Reading type: Default getPlaylistContent')
-                                tmpcontent = f.read()
+                        with open(path, 'rb') as f:
+                            deb('Reading type: Default getPlaylistContent')
+                            tmpcontent = f.read().decode('utf-8')
 
                     if tmpcontent is None or tmpcontent == "":
                         raise Exception
@@ -310,10 +292,7 @@ class PlaylistUpdater(baseServiceUpdater):
 
         except:
             self.log('getPlaylistContent opening Error {}, type: {}, url: {}'.format(getExceptionString(), urltype, path) )
-            if sys.version_info[0] > 2:
-                xbmcgui.Dialog().notification(strings(59905), strings(57049) + ' ' + self.serviceName + ' (' + self.getDisplayName() + ') ' + strings(57050), time=10000, sound=False)
-            else:
-                xbmcgui.Dialog().notification(strings(59905).encode('utf-8'), strings(57049).encode('utf-8') + ' ' + self.serviceName + ' (' + self.getDisplayName() + ') ' + strings(57050).encode('utf-8'), time=10000, sound=False)
+            xbmcgui.Dialog().notification(strings(59905), strings(57049) + ' ' + self.serviceName + ' (' + self.getDisplayName() + ') ' + strings(57050), time=10000, sound=False)
         return content
 
     def getChannelList(self, silent):
@@ -424,9 +403,6 @@ class PlaylistUpdater(baseServiceUpdater):
             self.log('[UPD] -------------------------------------------------------------------------------------')
             self.log('[UPD] %-10s %-35s %-35s' % ( '-CID-', '-NAME-', '-STREAM-'))
 
-            #if ADDON.getSetting('epg_display_name') == 'true':
-                #ADDON.setSetting('show_group_channels') == 'false'
-
             channelsArray = self.getPlaylistContent(self.url.strip(), self.source).strip()
 
             if channelsArray is not None and channelsArray != "" and len(channelsArray) > 0:
@@ -526,16 +502,10 @@ class PlaylistUpdater(baseServiceUpdater):
                                     if any(ccExt not in title for ccExt in ccList):
                                         p = re.compile('(?:^|[^a-zA-Z\d])({a}|{b}|{c}|{d})(?:[^a-zA-Z\d]|$)'.format(a=langA, b=langB, c=langC, d=langD), re.IGNORECASE)
 
-                                        if sys.version_info[0] > 2:
-                                            try:
-                                                group = p.search(str(splitedLine[0])).group(1)
-                                            except:
-                                                group = ''
-                                        else:
-                                            try:
-                                                group = p.search(str(splitedLine[0]).encode('utf-8')).group(1)
-                                            except:
-                                                group = ''
+                                        try:
+                                            group = p.search(str(splitedLine[0])).group(1)
+                                        except:
+                                            group = ''
 
                                         if group:
                                             ccCh = ''
