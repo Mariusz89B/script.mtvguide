@@ -60,6 +60,7 @@ from serviceLib import *
 import cloudscraper 
 
 from contextlib import contextmanager
+from unidecode import unidecode
 
 import mmap
 
@@ -458,7 +459,10 @@ class PlaylistUpdater(baseServiceUpdater):
                             catchupLine = catchup.search(stripLine).group(1)
 
                         if len(splitedLine) > 1:
-                            tmpTitle = splitedLine[len(splitedLine) - 1].strip()
+                            try:
+                                tmpTitle = unidecode(splitedLine[len(splitedLine) - 1].strip())
+                            except:
+                                tmpTitle = unidecode(splitedLine[len(splitedLine) - 1].strip().decode('utf-8'))
 
                         if tmpTitle == '':
                             match = regex_chann_name.findall(stripLine)
