@@ -168,6 +168,8 @@ class TvpUpdater(baseServiceUpdater):
                             cid = item[1]
                             img = item[1]
 
+                    name = name.replace('TVP3', 'TVP 3')
+
                     program = TvCid(cid, name, name, img=img)
                     result.append(program)
 
