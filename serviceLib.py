@@ -1058,7 +1058,7 @@ class baseServiceUpdater:
 
                         self.log('[UPD] CID=%-12s NAME=%-40s TITLE=%-40s STRM=%-45s' % (y.cid, unidecode(y.name), unidecode(y.title), y.strm))
 
-            with open(file_name, 'wb+') as f:
+            with open(file_name, 'ab+') as f:
                 f.write(bytearray('\n'.join(channelList), 'utf-8'))
 
             self.log("[UPD] Zakonczono analize...")
