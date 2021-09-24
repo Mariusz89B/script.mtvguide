@@ -724,7 +724,6 @@
 					<default>Polsat Box</default>
 					<constraints>
 						<options>
-							<option label="Cyfrowy Polsat">Cyfrowy Polsat</option>
 							<option label="Ipla">Ipla</option>
 							<option label="Polsat Box">Polsat Box</option>
 						</options>

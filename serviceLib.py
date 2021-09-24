@@ -701,13 +701,21 @@ class baseServiceUpdater:
         del self.traceList[:]
         self.traceList = list()
 
+    def wrongService(self):
+        self.log('wrong service selected: {}'.format(self.serviceName))
+        xbmcgui.Dialog().notification(self.serviceName, strings(SERVICE_WRONG), xbmcgui.NOTIFICATION_WARNING, time=15000, sound=True)
+
     def connErrorMessage(self):
         self.log('connection error for service: {}'.format(self.serviceName))
         xbmcgui.Dialog().notification(self.serviceName, strings(SERVICE_ERROR), xbmcgui.NOTIFICATION_WARNING, time=15000, sound=True)
 
     def loginErrorMessage(self):
         self.log('login error for service: {}'.format(self.serviceName))
-        xbmcgui.Dialog().notification(self.serviceName, strings(SERVICE_LOGIN_INCORRECT), xbmcgui.NOTIFICATION_ERROR, time=15000, sound=True)
+        xbmcgui.Dialog().notification(self.serviceName, strings(SERVICE_LOGIN_INCORRECT), xbmcgui.NOTIFICATION_WARNING, time=15000, sound=True)
+
+    def maxDeviceIdMessage(self):
+        self.log('max amount of devices added: {}'.format(self.serviceName))
+        xbmcgui.Dialog().notification(self.serviceName, strings(SERVICE_MAX_DEVICE_ID), xbmcgui.NOTIFICATION_WARNING, time=15000, sound=True)
 
     def proxyErrorMessage(self):
         self.log('proxy error for service: {}'.format(self.serviceName))
@@ -720,10 +728,6 @@ class baseServiceUpdater:
     def noPremiumMessage(self):
         self.log('no premium for service: {}'.format(self.serviceName))
         xbmcgui.Dialog().notification(self.serviceName, strings(SERVICE_NO_PREMIUM), sound=False)
-
-    def maxDeviceIdMessage(self):
-        self.log('max amount of devices added: {}'.format(self.serviceName))
-        xbmcgui.Dialog().notification(self.serviceName, strings(SERVICE_MAX_DEVICE_ID), sound=False)
 
     def startLoadingChannelList(self, automap=None):
         if self.thread is None or not self.thread.is_alive():

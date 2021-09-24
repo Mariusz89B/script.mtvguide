@@ -2100,6 +2100,10 @@ msgctxt "#57039"
 msgid "Content is not included in your service"
 msgstr "Inhoud is niet inbegrepen in uw service"
 
+msgctxt "#57041"
+msgid "Site error, select proper site that matches your account"
+msgstr "Sitefout, selecteer de juiste site die overeenkomt met uw account"
+
 msgctxt "#57042"
 msgid "Error connecting to service"
 msgstr "Fout bij verbinding maken met service"

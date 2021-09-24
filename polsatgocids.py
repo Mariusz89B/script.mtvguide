@@ -553,6 +553,7 @@ class PolsatGoUpdater(baseServiceUpdater):
 
         except:
             self.log('getChannelList exception: {}'.format(getExceptionString()))
+            self.wrongService()
         return result
 
     def getChannelStream(self, chann):

@@ -68,6 +68,7 @@ from serviceLib import *
 serviceName         = 'Polsat GO Box'
 
 UAIPLA = "pg_pc_windows_firefox_html/1 (Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0)"
+UAPG = "pbg_pc_windows_edge_html/1 (Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36 Edg/93.0.961.38)"
 OSINFO = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0"
 
 try:
@@ -161,7 +162,7 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
                 self.client = ADDON.getSetting('pgobox_client')
                 
                 if self.client == 'Polsat Box' or self.client == 'Ipla':
-                    post = {"id":1,"jsonrpc":"2.0","method":"login","params":{"ua":"pbg_pc_windows_edge_html/1 (Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36 Edg/93.0.961.38)",     "deviceId":{"type":"other","value":self.device_id},"userAgentData":{"portal":"pbg","deviceType":"pc","application":"edge","player":"html","build":1,"os":"windows","osInfo":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36 Edg/93.0.961.38"},"authData":{"login":self.login,"password":self.password,"deviceId":{"type":"other","value":self.device_id}},"clientId":self.client_id}}
+                    post = {"id":1,"jsonrpc":"2.0","method":"login","params":{"ua":UAPG,  "deviceId":{"type":"other","value":self.device_id},"userAgentData":{"portal":"pbg","deviceType":"pc","application":"edge","player":"html","build":1,"os":"windows","osInfo":OSINFO},"authData":{"login":self.login,"password":self.password,"deviceId":{"type":"other","value":self.device_id}},"clientId":self.client_id}}
                 else:
                     post = {"id":1,"jsonrpc":"2.0","method":"login","params":{"ua":UAIPLA,"deviceId":{"type":"other","value":self.device_id},"userAgentData":{"portal":"pbg","deviceType":"pc","application":"firefox","player":"html","build":1,"os":"windows","osInfo":OSINFO},"clientId":self.client_id,"authData":{"login":self.login,"password":self.password,"deviceId":{"type":"other","value":self.device_id}}}}
 
@@ -358,6 +359,7 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
 
                 data = requests.get(url, headers=headers, cookies=sess.cookies).json()
                 channels = data['pageProps']['lists']['results']
+                    
 
             myper=[]
 
@@ -387,6 +389,7 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
 
         except Exception as e:
             self.log('getChannelList exception: %s' % getExceptionString())
+            self.wrongService()
         return result
 
     def channCid(self, cid):

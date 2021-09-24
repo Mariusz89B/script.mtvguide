@@ -69,7 +69,7 @@
 		<setting id="pgobox_enabled" type="bool" label="59921" default="false" visible="eq(-50,0)"/>
 		<setting id="pgobox_username" type="text" label="55002" default="" visible="eq(-1,true) + eq(-51,0)" subsetting="true"/>
 		<setting id="pgobox_password" type="text" option="hidden" label="55003" default="" visible="eq(-2,true) + eq(-52,0)" subsetting="true"/>
-		<setting id="pgobox_client" type="select" label="30368" default="Polsat Box" values="Cyfrowy Polsat|Ipla|Polsat Box" visible="eq(-3,true) + eq(-53,0)" subsetting="true"/>
+		<setting id="pgobox_client" type="select" label="30368" default="Polsat Box" values="Ipla|Polsat Box" visible="eq(-3,true) + eq(-53,0)" subsetting="true"/>
 		<setting id="priority_pgobox" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-4,true) + eq(-54,0)" subsetting="true"/>
 		<setting label="30371" type="action" action="RunScript($CWD/clearpolsatgobox.py, clearPolsatGOBox)" visible="eq(-5,true) + eq(-55,0)" subsetting="true"/>
 		<setting id="pgobox_device_id" visible="false" subsetting="true"/>
