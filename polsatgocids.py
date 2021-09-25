@@ -444,111 +444,34 @@ class PolsatGoUpdater(baseServiceUpdater):
         self.log('[UPD] -------------------------------------------------------------------------------------')
         self.log('[UPD] %-15s %-35s %-30s' % ('-CID-', '-NAME-', '-TITLE-'))
         
-        try:       
+        try:    
             headers = {
-                'Host': self.host,
-                'User-Agent': UA,
-                'Accept': 'application/json',
-                'Accept-Language': 'pl,en-US;q=0.7,en;q=0.3',
-                'Content-Type': 'application/json;charset=utf-8',
-                'Origin': self.origin,
-                'Referer': self.origin,
-                'Sec-Fetch-Dest': 'empty',
-                'Sec-Fetch-Mode': 'cors',
-                'Sec-Fetch-Site': 'cross-site',
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36 Edg/93.0.961.52',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+                'Referer': 'https://polsatgo.pl/kanaly-tv',
+                'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
             }
 
-            stoken = ADDON.getSetting('polsatgo_sesstoken')
-            sexpir = ADDON.getSetting('polsatgo_sessexpir')
+            url = 'https://polsatgo.pl/kanaly-tv'
 
-            items = []
-            myperms = []
-            ff = ADDON.getSetting('polsatgo_accgroups')
-            flist = eval(ff)
+            res = requests.get(url, headers)
 
-            for l in flist:
-                if 'sc:' in l or 'loc:' in l:
-                    myperms.append(l)
+            text = re.findall('type=\"application\/json\">(.+?)<\/script>', res.text)[0]
+            json_data = json.loads(text)
 
-            dane = stoken+'|'+sexpir+'|navigation|getTvChannels'
-            authdata = self.getHmac(dane)
+            jdata = json_data['props']['pageProps']['lists']['results']
 
-            data = {
-                "id":1,
-                "jsonrpc":"2.0",
-                "method":"getTvChannels",
-                "params": {
-                    "filters":[],
-                    "ua":UAPG,
-                    "deviceId": {
-                        "type":"other",
-                        "value":self.devid
-                    },
-                    "userAgentData": {
-                        "portal":"pg",
-                        "deviceType":"pc",
-                        "application":"firefox",
-                        "player":"html",
-                        "build":1,
-                        "os":"windows",
-                        "osInfo":UA
-                    },
-                    "authData": {
-                        "sessionToken":authdata
-                    },
-                    "clientId":self.clid}}
+            for item in jdata:
+                cid = item['id']
+                name = item['title']
+                title = item['title'] + ' PL'
+                img = item['thumbnails'][-1]['src']
 
-            jdata = self.getRequests(self.navigate, data=data, headers=headers)
-            if sys.version_info[0] > 2:
-                response = jdata
-            else:
-                response = json.loads(json.dumps(jdata))
+                name = name.replace('TV4', 'TV 4')
+                title = title.replace('TV4', 'TV 4')
 
-            aa = response['result']['results']
-
-            if self.client == 'Polsat Go':
-                url = 'https://polsatgo.pl/_next/data/oMb3Fkfg11gkdrZSgif2z/channels.json'
-
-                headers = {
-                    'Connection': 'keep-alive',
-                    'sec-ch-ua': '"Google Chrome";v="93", " Not;A Brand";v="99", "Chromium";v="93"',
-                    'sec-ch-ua-mobile': '?0',
-                    'User-Agent': UA,
-                    'sec-ch-ua-platform': '"Windows"',
-                    'Accept': '*/*',
-                    'Sec-Fetch-Site': 'same-origin',
-                    'Sec-Fetch-Mode': 'cors',
-                    'Sec-Fetch-Dest': 'empty',
-                    'Referer': 'https://polsatgo.pl/start',
-                    'Accept-Language': 'sv-SE,sv;q=0.9,en-US;q=0.8,en;q=0.7',
-                }
-
-                response = requests.get(url, headers=headers, cookies=sess.cookies).json()
-                jdata = response['pageProps']['lists']['results']
-
-                if sys.version_info[0] > 2:
-                    aa = jdata
-                else:
-                    aa = json.loads(json.dumps(jdata))
-
-            for i in aa:
-                item = {}
-                
-                channelperms = i['grantExpression'].split('+')
-                channelperms = [w.replace('+plat:all', '') for w in channelperms]   
-
-                for j in myperms:
-                    if j in channelperms or i['title'] == 'Polsat' or i['title'] == 'TV4':
-                        img = i['thumbnails'][-1]['src']
-                        cid = i['id']
-                        name = i['title'].upper()
-                        title = i['title'].upper() + ' PL'
-
-                        name = re.sub(' SD', '', name)
-                        title = re.sub(' SD', '', title)
-
-                        program = TvCid(cid=cid, name=name, title=title, img=img) 
-                        result.append(program)
+                program = TvCid(cid=cid, name=name, title=title, img=img) 
+                result.append(program)
 
             if len(result) <= 0:
                 self.log('Error while parsing service {}, returned data is: {}'.format(self.serviceName, str(response)))
