@@ -483,7 +483,7 @@ class MapString:
         rstrm = ''
         categories = {}
         if logCall:
-            logCall('[UPD] Parsowanie pliku mapy')
+            logCall('[UPD] Parsing basemap file')
         
         if sys.version_info[0] > 2:
             xmlstr = xmlstr.decode('utf-8')
@@ -533,7 +533,7 @@ class MapString:
         rstrm = ''
         categories={}
         if logCall:
-            logCall('[UPD] Parsowanie pliku mapy')
+            logCall('[UPD] Parsing basemap file')
         if sys.version_info[0] > 2:
             iob = io.BytesIO(xmlstr)
         else:
@@ -574,7 +574,7 @@ class MapString:
     @staticmethod
     def loadFile(path, logCall=deb):
         try:
-            logCall('[UPD] Wczytywanie mapy => mtvguide: %s' % path)
+            logCall('[UPD] Loading basemap => mtvguide: %s' % path)
             logCall('\n')
             if sys.version_info[0] > 2: 
                 with open(path, 'rb') as content_file:
@@ -962,7 +962,7 @@ class baseServiceUpdater:
             self.log('Loading channels and map took: %s seconds' % (datetime.datetime.now() - startTime).seconds)
 
             self.log('\n')
-            self.log('[UPD] Wyszykiwanie STRM')
+            self.log('[UPD] Matching STRM')
             self.log('-------------------------------------------------------------------------------------')
             self.log('[UPD]     %-30s %-30s %-20s %-35s' % ('-ID mTvGuide-', '-    Orig Name    -', '-    SRC   -', '-    STRM   -'))
 
@@ -1039,23 +1039,23 @@ class baseServiceUpdater:
 
 
             self.log('\n')
-            self.log('[UPD] Nie wykorzystano STRM nadawanych przez %s programow:' % self.serviceName)
+            self.log('[UPD] STRM does not match for %s channels:' % self.serviceName)
             self.log('-------------------------------------------------------------------------------------')
 
             if sys.version_info[0] > 2:
                 try:
-                    self.profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
+                    profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
                 except:
-                    self.profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
+                    profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
             else:
                 try:
-                    self.profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile'))
+                    profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile'))
                 except:
-                    self.profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
+                    profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
 
-            file_name = os.path.join(self.profilePath, 'custom_channels.list')
-            if not os.path.exists(self.profilePath):
-                os.makedirs(self.profilePath)
+            file_name = os.path.join(profilePath, 'custom_channels.list')
+            if not os.path.exists(profilePath):
+                os.makedirs(profilePath)
 
             channelList = list()
             for y in self.channels:
@@ -1081,7 +1081,7 @@ class baseServiceUpdater:
                 with open(file_name, 'a+') as f:
                     f.write(str('\n'.join(channelList)))
 
-            self.log("[UPD] Zakonczono analize...")
+            self.log("[UPD] The analysis has been completed...")
             self.log('Loading everything took: %s seconds' % (datetime.datetime.now() - startTime).seconds)
             self.log('\n')
 

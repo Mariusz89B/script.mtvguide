@@ -42,8 +42,6 @@
 #   Disclaimer
 #   This add-on is unoffical and is not endorsed or supported by Telewizja Polska S.A. in any way. Any trademarks used belong to their owning companies and organisations.
 
-from __future__ import unicode_literals
-
 import sys
 
 import os

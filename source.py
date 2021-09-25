@@ -592,7 +592,7 @@ class Database(object):
         # Start service threads
         updateServices = self.services_updated == False and ADDON.getSetting('AutoUpdateCid') == 'true'
         if updateServices == True:
-            deb('[UPD] Rozpoczynam aktualizacje STRM')
+            deb('[UPD] Starting updating STRM')
             serviceList = list()
 
             self.deleteAllCustomStreams()
@@ -764,7 +764,7 @@ class Database(object):
         epgChannels = self.epgChannels()
 
         #Waiting for all services
-        deb('[UPD] Czekam na zaladowanie STRM')
+        deb('[UPD] Waiting for loading STRM')
         for priority in reversed(list(range(self.number_of_service_priorites))):
             for service in serviceList:
 
@@ -835,7 +835,7 @@ class Database(object):
         try:
             #if len(streams.automap) > 0 and len(streams.channels) > 0:
             self.deleteCustomStreams(streamSource, serviceStreamRegex)
-            deb('[UPD] Updating databse')
+            deb('[UPD] Updating database')
             nrOfChannelsUpdated = 0
             c = self.conn.cursor()
 
@@ -853,7 +853,7 @@ class Database(object):
 
             self.conn.commit()
             c.close()
-            deb('[UPD] Finished updating databse, stored: {} streams from service: {}'.format(nrOfChannelsUpdated, streamSource))
+            deb('[UPD] Finished updating database, stored: {} streams from service: {}'.format(nrOfChannelsUpdated, streamSource))
         
         except Exception as ex:
             deb('[UPD] Error updating streams: {}'.format(getExceptionString()))
@@ -906,7 +906,7 @@ class Database(object):
                 serviceHandler.startLoadingChannelList(epgChannels)
                 serviceList.append(serviceHandler)
 
-        deb('[UPD] Rozpoczynam aktualizacje STRM')
+        deb('[UPD] Starting updating STRM')
         for priority in reversed(list(range(self.number_of_service_priorites))):
             for service in serviceList:
                 if priority == service.servicePriority:
