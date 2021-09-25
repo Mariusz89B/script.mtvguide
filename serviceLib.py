@@ -944,6 +944,7 @@ class baseServiceUpdater:
         return result
 
     def loadChannelList(self, epg_channels=None):
+        from re import match
         try:
             startTime = datetime.datetime.now()
             self.channels = self.getBaseChannelList()
@@ -985,31 +986,19 @@ class baseServiceUpdater:
                     self.log('[UPD]     %-30s %-15s %-35s' % (unidecode(x.channelid), x.src, x.strm))
                     continue
                 try:
-                    for y in self.channels:
-                        b = False
+                    channels = list()
 
-                        if x.displayName != '':
-                            try:
-                                try:
-                                    if unidecode(x.displayName).upper() == unidecode(y.title).upper():
-                                        b = True
-                                except:
-                                    if unidecode(x.displayName).upper() == unidecode(y.title.decode('utf-8')).upper():
-                                        b = True
-                            except:
-                                pass
+                    if x.titleRegex != '':
+                        channels = list(filter(lambda v: match(x.titleRegex, v.name, re.IGNORECASE), self.channels))
+                        
+                    if x.displayName != '':
+                        try:
+                            channels = list(filter(lambda v: (unidecode(x.displayName.upper()) == unidecode(v.name.upper())), self.channels))
+                        except:
+                            channels = list(filter(lambda v: (unidecode(x.displayName.upper()) == unidecode(v.name.decode('utf-8').upper())), self.channels))
 
-                        if x.titleRegex != '':
-                            try:
-                                p = re.compile(x.titleRegex, re.IGNORECASE)
-                                try:
-                                    b = p.match(unidecode(y.title))
-                                except:
-                                    b = p.match(unidecode(y.title.decode('utf-8')))
-                            except:
-                                pass
-
-                        if (b):
+                    for y in channels:
+                        if (y):
                             if x.strm != '' and self.addDuplicatesToList == True:
                                 newMapElement = copy.deepcopy(x)
                                 newMapElement.strm = self.rstrm % y.cid
