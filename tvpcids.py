@@ -148,29 +148,34 @@ class TvpUpdater(baseServiceUpdater):
                 channels  = re.findall('data-channel-id="(\d+)".*data-video-id="(\d+)".*data-stationname="(.*?)"', response.text)
                 for item in channels:
                     if item[2] != '':
-                        cid = item[1]
+                        cid = item[1]                        
+                        name = item[2]
+                        title = item[2] + ' PL'
                         img = item[1]
-                        name = item[2] + ' PL'
                         
                     else:
                         if item[0] == '52451253':
-                            name = 'TVP Historia 2 PL'
                             cid = item[1]
+                            name = 'TVP Historia 2'
+                            title = 'TVP Historia 2 PL'                            
                             img = item[1]   
 
                         elif item[0] == '51121199':
-                            name = 'TVP Kultura 2 PL'
                             cid = item[1]
+                            name = 'TVP Kultura 2'
+                            title = 'TVP Kultura 2 PL'                            
                             img = item[1]  
 
                         elif item[0] == '51656487':
-                            name = 'Poland In PL'
                             cid = item[1]
+                            name = 'PolandIn'
+                            title = 'PolandIn PL'
                             img = item[1]
 
                     name = name.replace('TVP3', 'TVP 3')
+                    title = title.replace('TVP3', 'TVP 3')
 
-                    program = TvCid(cid=cid, name=name, title=name, img=img)
+                    program = TvCid(cid=cid, name=name, title=title, img=img)
                     result.append(program)
 
             if len(result) <= 0:

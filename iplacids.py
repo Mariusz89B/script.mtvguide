@@ -357,10 +357,13 @@ class IplaUpdater(baseServiceUpdater):
                     if j in channelperms or i['title']=='Polsat' or i['title']=='TV4':
                         img = i['thumbnails'][-1]['src']
                         cid = i['id']
-                        name = i['title'].upper() + ' PL'
-                        name = name.replace(' SD', '')
+                        name = i['title'].upper() 
+                        title = i['title'].upper() + ' PL'
 
-                        program = TvCid(cid=cid, name=name, title=name, img=img)
+                        name = name.replace(' SD', '')
+                        title = title.replace(' SD', '')
+
+                        program = TvCid(cid=cid, name=name, title=title, img=img)
                         result.append(program)
 
             if len(result) <= 0:

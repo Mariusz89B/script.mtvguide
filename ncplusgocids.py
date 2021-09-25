@@ -306,11 +306,12 @@ class NcPlusGoUpdater(baseServiceUpdater):
             
             for item in items:  
                 if item['IsActive']:
-                    name = item['Channel']['Title'] + ' PL'
+                    name = item['Channel']['Title']
+                    title = item['Channel']['Title'] + ' PL'
                     cid = item['Channel']['Codename'] + '_TS_3H'
                     img = item['IconUrl']
 
-                    program = TvCid(cid=cid, name=name, title=name, img=img)
+                    program = TvCid(cid=cid, name=name, title=title, img=img)
                     result.append(program)
 
             if len(result) <= 0:

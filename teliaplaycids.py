@@ -554,10 +554,11 @@ class TeliaPlayUpdater(baseServiceUpdater):
             for channel in channels:
                 if channel['id'] in self.engagementLiveChannels:
                     cid = channel["id"] + '_TS_1'
-                    name = channel ["name"] + ' ' + ca[self.country]
+                    name = channel ["name"]
+                    title = channel ["name"] + ' ' + ca[self.country]
                     img = channel["id"]
                 
-                    program = TvCid(cid=cid, name=name, title=name, img=img) 
+                    program = TvCid(cid=cid, name=name, title=title, img=img) 
                     result.append(program)
 
             if len(result) <= 0:

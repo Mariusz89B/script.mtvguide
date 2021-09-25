@@ -320,7 +320,8 @@ class PlayerPLUpdater(baseServiceUpdater):
             for channel in jdata:
                 if channel['id'] in self.mylist:
                     id_ = channel['id']
-                    name = channel['title'] + ' PL'
+                    name = channel['title']
+                    title = channel['title'] + ' PL'
                     img = channel['images']['pc'][0]['mainUrl']
 
                     for regexReplace in regexReplaceList:
@@ -329,7 +330,7 @@ class PlayerPLUpdater(baseServiceUpdater):
                     name = re.sub(r'^\s*', '', str(name))
 
                     cid = '%s:%s' % (id_,'kanal')
-                    program = TvCid(cid=cid, name=name, title=name, img=img)
+                    program = TvCid(cid=cid, name=name, title=title, img=img)
                     result.append(program)
 
                 if len(result) <= 0:

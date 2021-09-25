@@ -1434,6 +1434,22 @@
 						<heading>59908</heading>
 					</control>
 				</setting>
+				<setting help="95136" id="playlist_1_append_country_code" label="30763" type="string" parent="playlist_1_enabled">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="playlist_1_enabled">true</condition>
+							<condition operator="gt" setting="nr_of_playlists">0</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>30763</heading>
+					</control>
+				</setting>
 				<setting help="95129" id="playlist_1_user_agent" label="55001" type="string" parent="playlist_1_enabled">
 					<level>0</level>
 					<default/>
@@ -1619,6 +1635,22 @@
 					</dependencies>
 					<control format="file" type="button">
 						<heading>59908</heading>
+					</control>
+				</setting>
+				<setting help="95136" id="playlist_2_append_country_code" label="30763" type="string" parent="playlist_2_enabled">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="playlist_2_enabled">true</condition>
+							<condition operator="gt" setting="nr_of_playlists">1</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>30763</heading>
 					</control>
 				</setting>
 				<setting help="95129" id="playlist_2_user_agent" label="55001" type="string" parent="playlist_2_enabled">
@@ -1808,6 +1840,22 @@
 						<heading>59908</heading>
 					</control>
 				</setting>
+				<setting help="95136" id="playlist_3_append_country_code" label="30763" type="string" parent="playlist_3_enabled">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="playlist_3_enabled">true</condition>
+							<condition operator="gt" setting="nr_of_playlists">2</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>30763</heading>
+					</control>
+				</setting>
 				<setting help="95129" id="playlist_3_user_agent" label="55001" type="string" parent="playlist_3_enabled">
 					<level>0</level>
 					<default/>
@@ -1993,6 +2041,22 @@
 					</dependencies>
 					<control format="file" type="button">
 						<heading>59908</heading>
+					</control>
+				</setting>
+				<setting help="95136" id="playlist_4_append_country_code" label="30763" type="string" parent="playlist_4_enabled">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="playlist_4_enabled">true</condition>
+							<condition operator="gt" setting="nr_of_playlists">3</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>30763</heading>
 					</control>
 				</setting>
 				<setting help="95129" id="playlist_4_user_agent" label="55001" type="string" parent="playlist_4_enabled">
@@ -2182,6 +2246,22 @@
 						<heading>59908</heading>
 					</control>
 				</setting>
+				<setting help="95136" id="playlist_5_append_country_code" label="30763" type="string" parent="playlist_5_enabled">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="playlist_5_enabled">true</condition>
+							<condition operator="gt" setting="nr_of_playlists">4</condition>
+						</dependency>
+					</dependencies>
+					<control format="string" type="edit">
+						<heading>30763</heading>
+					</control>
+				</setting>
 				<setting help="95129" id="playlist_5_user_agent" label="55001" type="string" parent="playlist_5_enabled">
 					<level>0</level>
 					<default/>
@@ -2355,21 +2435,6 @@
 						</dependency>
 					</dependencies>
 					<control type="toggle"/>
-				</setting>
-				<setting help="95136" id="append_country_code" label="30763" type="string">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="is" setting="epg_display_name">true</condition>
-						</dependency>
-					</dependencies>
-					<control format="string" type="edit">
-						<heading>30763</heading>
-					</control>
 				</setting>
 				<setting help="95135" id="show_group_channels" label="30762" type="boolean">
 					<level>1</level>

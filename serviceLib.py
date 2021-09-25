@@ -471,7 +471,7 @@ class TvCid:
         self.ffmpegdumpLink = None
 
 class MapString:
-    def __init__(self, channelid, titleRegex, strm, src, displayName):
+    def __init__(self, channelid, titleRegex, strm, src, displayName=None):
         self.channelid = channelid
         self.titleRegex = titleRegex
         self.strm = strm
@@ -991,41 +991,39 @@ class baseServiceUpdater:
                 try:
                     m_channels = list()
 
-                    if x.titleRegex != '' and x.displayName == '':
+                    if x.titleRegex != '':
                         m_channels = list(filter(lambda v: match(x.titleRegex, v.title, re.IGNORECASE), self.channels))
                         
-                    if x.displayName != '':
+                    else:
                         try:
-                            m_channels = list(filter(lambda v: (unidecode(x.displayName.upper()) == unidecode(v.title.upper())), self.channels))
+                            m_channels = list(filter(lambda v: (unidecode(x.displayName.upper()) == (unidecode(v.title.upper()) or unidecode(v.name.upper())) ), self.channels))
                         except:
-                            m_channels = list(filter(lambda v: (unidecode(x.displayName.upper()) == unidecode(v.title.decode('utf-8').upper())), self.channels))
+                            m_channels = list(filter(lambda v: (unidecode(x.displayName.upper()) == (unidecode(v.title.decode('utf-8').upper()) or unidecode(v.name.decode('utf-8').upper())) ), self.channels))
 
                     for y in m_channels:
-                        if (y):
-                            if x.strm != '' and self.addDuplicatesToList == True:
-                                newMapElement = copy.deepcopy(x)
-                                newMapElement.strm = self.rstrm % y.cid
-                                newMapElement.channelid = x.channelid
+                        if x.strm != '' and self.addDuplicatesToList == True:
+                            newMapElement = copy.deepcopy(x)
+                            newMapElement.strm = self.rstrm % y.cid
 
-                                y.src = newMapElement.src
-                                y.strm = newMapElement.strm
-                                try:
-                                    self.log('[UPD] [B] %-30s %-30s %-20s %-35s ' % (unidecode(newMapElement.channelid), unidecode(y.name), newMapElement.src, newMapElement.strm))
-                                except:
-                                    self.log('[UPD] [B] %-30s %-30s %-20s %-35s ' % (unidecode(newMapElement.channelid), unidecode(y.name.decode('utf-8')), newMapElement.src, newMapElement.strm))
-                                if self.addDuplicatesAtBeginningOfList == False:
-                                    self.automap.append(newMapElement)
-                                else:
-                                    self.automap.insert(0, newMapElement)
+                            y.src = newMapElement.src
+                            y.strm = newMapElement.strm
+                            try:
+                                self.log('[UPD] [B] %-30s %-30s %-20s %-35s ' % (unidecode(newMapElement.channelid), unidecode(y.name), newMapElement.src, newMapElement.strm))
+                            except:
+                                self.log('[UPD] [B] %-30s %-30s %-20s %-35s ' % (unidecode(newMapElement.channelid), unidecode(y.name.decode('utf-8')), newMapElement.src, newMapElement.strm))
+                            if self.addDuplicatesAtBeginningOfList == False:
+                                self.automap.append(newMapElement)
                             else:
-                                x.strm = self.rstrm % y.cid
-                                y.strm = x.strm
-                                x.src  = self.serviceName
-                                y.src = x.src
-                                try:
-                                    self.log('[UPD]     %-30s %-30s %-20s %-35s ' % (unidecode(x.channelid), unidecode(y.name), x.src, x.strm))
-                                except:
-                                    self.log('[UPD]     %-30s %-30s %-20s %-35s ' % (unidecode(x.channelid), unidecode(y.name.decode('utf-8')), x.src, x.strm))
+                                self.automap.insert(0, newMapElement)
+                        else:
+                            x.strm = self.rstrm % y.cid
+                            y.strm = x.strm
+                            x.src  = self.serviceName
+                            y.src = x.src
+                            try:
+                                self.log('[UPD]     %-30s %-30s %-20s %-35s ' % (unidecode(x.channelid), unidecode(y.name), x.src, x.strm))
+                            except:
+                                self.log('[UPD]     %-30s %-30s %-20s %-35s ' % (unidecode(x.channelid), unidecode(y.name.decode('utf-8')), x.src, x.strm))
 
                 except Exception as ex:
                     self.log('{} Error {} {}'.format(unidecode(x.channelid), x.titleRegex, getExceptionString()))

@@ -385,19 +385,20 @@ class CmoreUpdater(baseServiceUpdater):
                     continue  # no current live program
 
                 cid = channel['asset']['id'] 
+                name = channel['title']
 
                 if self.locale == 'sv_SE':
-                    name = channel['title']+' SE'
+                    title = channel['title']+' SE'
                 elif self.locale == 'da_DK':
-                    name = channel['title']+' DK'
+                    title = channel['title']+' DK'
                 elif self.locale == 'nb_NO':
-                    name = channel['title']+' NO'
+                    title = channel['title']+' NO'
                 else:
-                    name = ''
+                    title = ''
 
                 img = current_program['imageId']
 
-                program = TvCid(cid=cid, name=name, title=name, img=img)
+                program = TvCid(cid=cid, name=name, title=title, img=img)
                 result.append(program)
 
             if len(result) <= 0:

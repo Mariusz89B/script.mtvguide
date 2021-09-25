@@ -449,6 +449,7 @@ class PlaylistUpdater(baseServiceUpdater):
 
                     if '#EXTINF:' in stripLine:
                         tmpTitle = ''
+                        name = ''
                         title = ''
                         splitedLine = stripLine.split(',')
 
@@ -471,6 +472,7 @@ class PlaylistUpdater(baseServiceUpdater):
 
                         if tmpTitle is not None and tmpTitle != '':
                             title = tmpTitle
+
                             HDStream = False
                             UHDStream = False
 
@@ -490,9 +492,11 @@ class PlaylistUpdater(baseServiceUpdater):
                             words = title.split()
                             title = (" ".join(sorted(set(words), key=words.index)))
 
+                            name = title
+
                             ccList = ['BE', 'CZ', 'DE', 'DK', 'FR', 'HR', 'IT', 'NO', 'PL', 'SE', 'SRB', 'UK', 'US']
 
-                            if ADDON.getSetting('append_country_code') != '':
+                            if ADDON.getSetting('{}_append_country_code'.format(self.serviceName)) != '':
                                 p = re.compile(r'.*\s([a-zA-Z]{2,3})$', re.DOTALL)
 
                                 try:
@@ -507,7 +511,7 @@ class PlaylistUpdater(baseServiceUpdater):
                                         replaceCC = True
 
                                 if replaceCC:
-                                    title = title + ' ' + ADDON.getSetting('append_country_code')
+                                    title = title + ' ' + ADDON.getSetting('{}_append_country_code'.format(self.serviceName))
                             else:
                                 replaceCC = False
 
@@ -628,12 +632,12 @@ class PlaylistUpdater(baseServiceUpdater):
 
                             if UHDStream:
                                 channelCid = channelCid + '_UHD'
-                                uhdList.append(TvCid(cid=channelCid, name=title, title=title, strm=stripLine, catchup=catchupLine))
+                                uhdList.append(TvCid(cid=channelCid, name=name, title=title, strm=stripLine, catchup=catchupLine))
                             elif HDStream:
                                 channelCid = channelCid + '_HD'
-                                hdList.append(TvCid(cid=channelCid, name=title, title=title, strm=stripLine, catchup=catchupLine))
+                                hdList.append(TvCid(cid=channelCid, name=name, title=title, strm=stripLine, catchup=catchupLine))
                             else:
-                                sdList.append(TvCid(cid=channelCid, name=title, title=title, strm=stripLine, catchup=catchupLine))
+                                sdList.append(TvCid(cid=channelCid, name=name, title=title, strm=stripLine, catchup=catchupLine))
 
                             
                             self.log('[UPD] %-10s %-35s %-35s' % (channelCid, title, stripLine))

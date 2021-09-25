@@ -123,58 +123,63 @@
 		<setting id="playlist_1_source" label="59907" type="enum" default="0" lvalues="59919|59908" visible="eq(-4,true) + gt(-5,0)" subsetting="true"/>
 		<setting id="playlist_1_url" label="59906" type="text" visible="eq(-1,0) + eq(-5,true) + gt(-6,0)" default="" subsetting="true"/>
 		<setting id="playlist_1_file" label="59908" type="file" visible="eq(-2,1) + eq(-6,true) + gt(-7,0)" default="" subsetting="true"/>
-		<setting id="playlist_1_user_agent" label="55001" type="text" visible="eq(-7,true) + gt(-8,0)" default="" subsetting="true"/>
-		<setting id="playlist_1_stop_when_starting" type="bool" label="30974" default="false" visible="eq(-8,true) + gt(-9,0)" subsetting="true"/>
-		<setting id="playlist_1_high_prio_hd" type="bool" label="30975" default="true" visible="eq(-9,true) + gt(-10,0)" subsetting="true"/>
-		<setting id="playlist_1_priority" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-10,true) + gt(-11,0)" subsetting="true"/>
+		<setting id="playlist_1_append_country_code" label="30763" type="text" default="" visible="eq(-7,true) + gt(-8,0)" subsetting="true"/>
+		<setting id="playlist_1_user_agent" label="55001" type="text" visible="eq(-8,true) + gt(-9,0)" default="" subsetting="true"/>
+		<setting id="playlist_1_stop_when_starting" type="bool" label="30974" default="false" visible="eq(-9,true) + gt(-10,0)" subsetting="true"/>
+		<setting id="playlist_1_high_prio_hd" type="bool" label="30975" default="true" visible="eq(-10,true) + gt(-11,0)" subsetting="true"/>
+		<setting id="playlist_1_priority" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-11,true) + gt(-12,0)" subsetting="true"/>
     
-		<setting id="playlist_2_enabled" type="bool" label="59912" default="false" visible="gt(-12,1)"/>
-		<setting id="playlist_2_display_name" label="59914" type="text" default="Playlist_2" visible="eq(-1,true) + gt(-13,1)" subsetting="true"/>
-		<setting id="playlist_2_refr" type="bool" label="60008" default="false" visible="eq(2,0) + eq(-2,true) + gt(-14,1)" subsetting="true"/>
-		<setting id="playlist_2_refr_days" label="60009" type="slider" default="7" range="0,30" option="int" visible="eq(1,0) + eq(-1,true) + eq(-3,true) + gt(-15,1)" subsetting="true"/>
-		<setting id="playlist_2_source" label="59907" type="enum" default="0" lvalues="59919|59908" visible="eq(-4,true) + gt(-16,1)" subsetting="true"/>
-		<setting id="playlist_2_url" label="59906" type="text" visible="eq(-1,0) + eq(-5,true) + gt(-17,1)" default="" subsetting="true"/>
-		<setting id="playlist_2_file" label="59908" type="file" visible="eq(-2,1) + eq(-6,true) + gt(-18,1)" default="" subsetting="true"/>
-		<setting id="playlist_2_user_agent" label="55001" type="text" visible="eq(-7,true) + gt(-19,1)" default="" subsetting="true"/>
-		<setting id="playlist_2_stop_when_starting" type="bool" label="30974" default="false" visible="eq(-8,true) + gt(-20,1)" subsetting="true"/>
-		<setting id="playlist_2_high_prio_hd" type="bool" label="30975" default="true" visible="eq(-9,true) + gt(-21,1)" subsetting="true"/>
-		<setting id="playlist_2_priority" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-10,true) + gt(-22,1)" subsetting="true"/>
+		<setting id="playlist_2_enabled" type="bool" label="59912" default="false" visible="gt(-13,1)"/>
+		<setting id="playlist_2_display_name" label="59914" type="text" default="Playlist_2" visible="eq(-1,true) + gt(-14,1)" subsetting="true"/>
+		<setting id="playlist_2_refr" type="bool" label="60008" default="false" visible="eq(2,0) + eq(-2,true) + gt(-15,1)" subsetting="true"/>
+		<setting id="playlist_2_refr_days" label="60009" type="slider" default="7" range="0,30" option="int" visible="eq(1,0) + eq(-1,true) + eq(-3,true) + gt(-16,1)" subsetting="true"/>
+		<setting id="playlist_2_source" label="59907" type="enum" default="0" lvalues="59919|59908" visible="eq(-4,true) + gt(-17,1)" subsetting="true"/>
+		<setting id="playlist_2_url" label="59906" type="text" visible="eq(-1,0) + eq(-5,true) + gt(-18,1)" default="" subsetting="true"/>
+		<setting id="playlist_2_file" label="59908" type="file" visible="eq(-2,1) + eq(-6,true) + gt(-19,1)" default="" subsetting="true"/>
+		<setting id="playlist_2_append_country_code" label="30763" type="text" default="" visible="eq(-7,true) + gt(-20,1)" subsetting="true"/>
+		<setting id="playlist_2_user_agent" label="55001" type="text" visible="eq(-8,true) + gt(-21,1)" default="" subsetting="true"/>
+		<setting id="playlist_2_stop_when_starting" type="bool" label="30974" default="false" visible="eq(-9,true) + gt(-22,1)" subsetting="true"/>
+		<setting id="playlist_2_high_prio_hd" type="bool" label="30975" default="true" visible="eq(-10,true) + gt(-23,1)" subsetting="true"/>
+		<setting id="playlist_2_priority" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-11,true) + gt(-24,1)" subsetting="true"/>
 
-		<setting id="playlist_3_enabled" type="bool" label="59913" default="false" visible="gt(-23,2)"/>
-		<setting id="playlist_3_display_name" label="59914" type="text" default="Playlist_3" visible="eq(-1,true) + gt(-24,2)" subsetting="true"/>
-		<setting id="playlist_3_refr" type="bool" label="60008" default="false" visible="eq(2,0) + eq(-2,true) + gt(-25,2)" subsetting="true"/>
-		<setting id="playlist_3_refr_days" label="60009" type="slider" default="7" range="0,30" option="int" visible="eq(1,0) + eq(-1,true) + eq(-3,true) + gt(-26,2)" subsetting="true"/>
-		<setting id="playlist_3_source" label="59907" type="enum" default="0" lvalues="59919|59908" visible="eq(-4,true) + gt(-27,2)" subsetting="true"/>
-		<setting id="playlist_3_url" label="59906" type="text" visible="eq(-1,0) + eq(-5,true) + gt(-28,2)" default="" subsetting="true"/>
-		<setting id="playlist_3_file" label="59908" type="file" visible="eq(-2,1) + eq(-6,true) + gt(-29,2)" default="" subsetting="true"/>
-		<setting id="playlist_3_user_agent" label="55001" type="text" visible="eq(-7,true) + gt(-30,2)" default="" subsetting="true"/>
-		<setting id="playlist_3_stop_when_starting" type="bool" label="30974" default="false" visible="eq(-8,true) + gt(-31,2)" subsetting="true"/>
-		<setting id="playlist_3_high_prio_hd" type="bool" label="30975" default="true" visible="eq(-9,true) + gt(-32,2)" subsetting="true"/>
-		<setting id="playlist_3_priority" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-10,true) + gt(-33,2)" subsetting="true"/>
+		<setting id="playlist_3_enabled" type="bool" label="59913" default="false" visible="gt(-25,2)"/>
+		<setting id="playlist_3_display_name" label="59914" type="text" default="Playlist_3" visible="eq(-1,true) + gt(-26,2)" subsetting="true"/>
+		<setting id="playlist_3_refr" type="bool" label="60008" default="false" visible="eq(2,0) + eq(-2,true) + gt(-27,2)" subsetting="true"/>
+		<setting id="playlist_3_refr_days" label="60009" type="slider" default="7" range="0,30" option="int" visible="eq(1,0) + eq(-1,true) + eq(-3,true) + gt(-28,2)" subsetting="true"/>
+		<setting id="playlist_3_source" label="59907" type="enum" default="0" lvalues="59919|59908" visible="eq(-4,true) + gt(-29,2)" subsetting="true"/>
+		<setting id="playlist_3_url" label="59906" type="text" visible="eq(-1,0) + eq(-5,true) + gt(-30,2)" default="" subsetting="true"/>
+		<setting id="playlist_3_file" label="59908" type="file" visible="eq(-2,1) + eq(-6,true) + gt(-31,2)" default="" subsetting="true"/>
+		<setting id="playlist_3_append_country_code" label="30763" type="text" default="" visible="eq(-7,true) + gt(-32,3)" subsetting="true"/>
+		<setting id="playlist_3_user_agent" label="55001" type="text" visible="eq(-8,true) + gt(-33,2)" default="" subsetting="true"/>
+		<setting id="playlist_3_stop_when_starting" type="bool" label="30974" default="false" visible="eq(-9,true) + gt(-34,2)" subsetting="true"/>
+		<setting id="playlist_3_high_prio_hd" type="bool" label="30975" default="true" visible="eq(-10,true) + gt(-35,2)" subsetting="true"/>
+		<setting id="playlist_3_priority" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-11,true) + gt(-36,2)" subsetting="true"/>
 		
-		<setting id="playlist_4_enabled" type="bool" label="59917" default="false" visible="gt(-34,3)"/>
-		<setting id="playlist_4_display_name" label="59914" type="text" default="Playlist_4" visible="eq(-1,true) + gt(-35,3)" subsetting="true"/>
-		<setting id="playlist_4_refr" type="bool" label="60008" default="false" visible="eq(2,0) + eq(-2,true) + gt(-36,3)" subsetting="true"/>
-		<setting id="playlist_4_refr_days" label="60009" type="slider" default="7" range="0,30" option="int" visible="eq(1,0) + eq(-1,true) + eq(-3,true) + gt(-37,3)" subsetting="true"/>
-		<setting id="playlist_4_source" label="59907" type="enum" default="0" lvalues="59919|59908" visible="eq(-4,true) + gt(-38,3)" subsetting="true"/>
-		<setting id="playlist_4_url" label="59906" type="text" visible="eq(-1,0) + eq(-5,true) + gt(-39,3)" default="" subsetting="true"/>
-		<setting id="playlist_4_file" label="59908" type="file" visible="eq(-2,1) + eq(-6,true) + gt(-40,3)" default="" subsetting="true"/>
-		<setting id="playlist_4_user_agent" label="55001" type="text" visible="eq(-7,true) + gt(-41,3)" default="" subsetting="true"/>
-		<setting id="playlist_4_stop_when_starting" type="bool" label="30974" default="false" visible="eq(-8,true) + gt(-42,3)" subsetting="true"/>
-		<setting id="playlist_4_high_prio_hd" type="bool" label="30975" default="true" visible="eq(-9,true) + gt(-43,3)" subsetting="true"/>
-		<setting id="playlist_4_priority" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-10,true) + gt(-44,3)" subsetting="true"/>
+		<setting id="playlist_4_enabled" type="bool" label="59917" default="false" visible="gt(-37,3)"/>
+		<setting id="playlist_4_display_name" label="59914" type="text" default="Playlist_4" visible="eq(-1,true) + gt(-38,3)" subsetting="true"/>
+		<setting id="playlist_4_refr" type="bool" label="60008" default="false" visible="eq(2,0) + eq(-2,true) + gt(-39,3)" subsetting="true"/>
+		<setting id="playlist_4_refr_days" label="60009" type="slider" default="7" range="0,30" option="int" visible="eq(1,0) + eq(-1,true) + eq(-3,true) + gt(-40,3)" subsetting="true"/>
+		<setting id="playlist_4_source" label="59907" type="enum" default="0" lvalues="59919|59908" visible="eq(-4,true) + gt(-41,3)" subsetting="true"/>
+		<setting id="playlist_4_url" label="59906" type="text" visible="eq(-1,0) + eq(-5,true) + gt(-42,3)" default="" subsetting="true"/>
+		<setting id="playlist_4_file" label="59908" type="file" visible="eq(-2,1) + eq(-6,true) + gt(-43,3)" default="" subsetting="true"/>
+		<setting id="playlist_4_append_country_code" label="30763" type="text" default="" visible="eq(-7,true) + gt(-44,3)" subsetting="true"/>
+		<setting id="playlist_4_user_agent" label="55001" type="text" visible="eq(-8,true) + gt(-45,3)" default="" subsetting="true"/>
+		<setting id="playlist_4_stop_when_starting" type="bool" label="30974" default="false" visible="eq(-9,true) + gt(-46,3)" subsetting="true"/>
+		<setting id="playlist_4_high_prio_hd" type="bool" label="30975" default="true" visible="eq(-10,true) + gt(-47,3)" subsetting="true"/>
+		<setting id="playlist_4_priority" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-11,true) + gt(-48,3)" subsetting="true"/>
 		
-		<setting id="playlist_5_enabled" type="bool" label="59918" default="false" visible="gt(-45,4)"/>
-		<setting id="playlist_5_display_name" label="59914" type="text" default="Playlist_5" visible="eq(-1,true) + gt(-46,4)" subsetting="true"/>
-		<setting id="playlist_5_refr" type="bool" label="60008" default="false" visible="eq(2,0) + eq(-2,true) + gt(-47,4)" subsetting="true"/>
-		<setting id="playlist_5_refr_days" label="60009" type="slider" default="7" range="0,30" option="int" visible="eq(1,0) + eq(-1,true) + eq(-3,true) + gt(-48,4)" subsetting="true"/>
-		<setting id="playlist_5_source" label="59907" type="enum" default="0" lvalues="59919|59908" visible="eq(-4,true) + gt(-49,4)" subsetting="true"/>
-		<setting id="playlist_5_url" label="59906" type="text" visible="eq(-1,0) + eq(-5,true) + gt(-50,4)" default="" subsetting="true"/>
-		<setting id="playlist_5_file" label="59908" type="file" visible="eq(-2,1) + eq(-6,true) + gt(-51,4)" default="" subsetting="true"/>
-		<setting id="playlist_5_user_agent" label="55001" type="text" visible="eq(-7,true) + gt(-52,4)" default="" subsetting="true"/>
-		<setting id="playlist_5_stop_when_starting" type="bool" label="30974" default="false" visible="eq(-8,true) + gt(-53,4)" subsetting="true"/>
-		<setting id="playlist_5_high_prio_hd" type="bool" label="30975" default="true" visible="eq(-9,true) + gt(-54,4)" subsetting="true"/>
-		<setting id="playlist_5_priority" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-10,true) + gt(-55,4)" subsetting="true"/>
+		<setting id="playlist_5_enabled" type="bool" label="59918" default="false" visible="gt(-49,4)"/>
+		<setting id="playlist_5_display_name" label="59914" type="text" default="Playlist_5" visible="eq(-1,true) + gt(-50,4)" subsetting="true"/>
+		<setting id="playlist_5_refr" type="bool" label="60008" default="false" visible="eq(2,0) + eq(-2,true) + gt(-51,4)" subsetting="true"/>
+		<setting id="playlist_5_refr_days" label="60009" type="slider" default="7" range="0,30" option="int" visible="eq(1,0) + eq(-1,true) + eq(-3,true) + gt(-52,4)" subsetting="true"/>
+		<setting id="playlist_5_source" label="59907" type="enum" default="0" lvalues="59919|59908" visible="eq(-4,true) + gt(-53,4)" subsetting="true"/>
+		<setting id="playlist_5_url" label="59906" type="text" visible="eq(-1,0) + eq(-5,true) + gt(-54,4)" default="" subsetting="true"/>
+		<setting id="playlist_5_file" label="59908" type="file" visible="eq(-2,1) + eq(-6,true) + gt(-55,4)" default="" subsetting="true"/>
+		<setting id="playlist_5_append_country_code" label="30763" type="text" default="" visible="eq(-7,true) + gt(-56,3)" subsetting="true"/>
+		<setting id="playlist_5_user_agent" label="55001" type="text" visible="eq(-8,true) + gt(-57,4)" default="" subsetting="true"/>
+		<setting id="playlist_5_stop_when_starting" type="bool" label="30974" default="false" visible="eq(-9,true) + gt(-58,4)" subsetting="true"/>
+		<setting id="playlist_5_high_prio_hd" type="bool" label="30975" default="true" visible="eq(-10,true) + gt(-59,4)" subsetting="true"/>
+		<setting id="playlist_5_priority" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-11,true) + gt(-60,4)" subsetting="true"/>
 	</category>
 
 	<category label="30101">
@@ -187,31 +192,30 @@
 		<setting id="OnlyChannelsWithStream" label="30705" type="bool" default="true" visible="eq(-5,0) | eq(-5,1)"/>
 		<setting id="UpdateEPGOnModifiedDate" label="30706" type="bool" default="true" visible="eq(-6,0) | eq(-6,1)"/>
 		<setting id="epg_display_name" label="30761" type="bool" default="false" visible="eq(-7,0) | eq(-7,1)"/>
-		<setting id="append_country_code" label="30763" type="text" default="" visible="eq(-1,true)"/>
-		<setting id="show_group_channels" label="30762" type="bool" default="false" visible="eq(-9,0) | eq(-9,1)"/>
-		<setting id="useCustomParser" label="30708" type="bool" default="true" visible="eq(-10,1)"/>
-		<setting id="refresh_streams" label="30976" type="bool" default="true" visible="eq(-11,0) | eq(-11,1)"/>
-		<setting id="show_logo" label="30355" type="bool" default="true" visible="eq(-12,0) | eq(-12,1)"/>
-		<setting id="show_program_logo" label="30364" type="bool" default="true" visible="eq(-13,0) | eq(-13,1)"/>
-		<setting type="sep" visible="eq(-14,0) | eq(-14,1)"/>
-		<setting label="30101" type="lsep" visible="eq(-15,0) | eq(-15,1)"/>
-		<setting type="sep" visible="eq(-16,0) | eq(-16,1)"/>
-		<setting label="30111" type="lsep" visible="eq(-17,0) | eq(-17,1)"/>
-		<setting id="xmltv_file" label="30103" type="file" visible="eq(-18,0)"/>
-		<setting id="xmltv_logo_folder" label="30116" type="folder" visible="eq(-19,0)"/>
-		<setting id="m-TVGuide" label="30118" type="text" visible="eq(-20,1)" default=""/>
-		<setting id="m-TVGuide2" label="30119" type="text" visible="eq(-21,1)" default=""/>
-		<setting id="m-TVGuide3" label="30120" type="text" visible="eq(-22,1)" default=""/>
-		<setting type="sep" visible="eq(-23,0) | eq(-23,1) + eq(-1,false)"/>
-		<setting label="30741" type="lsep" visible="lt(-24,2)"/>
-		<setting id="showAdultChannels" label="30715" action="RunScript($CWD/settingsImportExport.py, Adult)" option="close" type="action" default="" visible="lt(-25,2)"/>
-		<setting label="30746" type="lsep" visible="lt(-26,2)"/>
-		<setting id="showVodChannels" label="30745" action="RunScript($CWD/settingsImportExport.py, Vod)" option="close" type="action" default="" visible="lt(-27,2)"/>
-		<setting type="sep" visible="lt(-28,2)"/>
-		<setting label="30742" type="lsep" visible="lt(-29,2)"/>
-		<setting type="sep" visible="lt(-30,2)"/>
-		<setting label="30365" type="lsep" visible="lt(-31,2)"/>
-		<setting id="time_zone" label="30911" type="labelenum" default="+01:00" values="-12:00|-11:00|-10:00|-09:30|-09:00|-08:00|-07:00|-06:00|-05:00|-04:30|-04:00|-03:30|-03:00|-02:00|-01:00|00:00|+01:00|+02:00|+03:00|+03:30|+04:00|+04:30|+05:00|+05:30|+05:45|+06:00|+06:30|+07:00|+08:00|+09:00|+09:30|+10:00|+10:30|+11:00|+11:30|+12:00|+12:45|+13:00|+14:00|" visible="lt(-32,2)"/>
+		<setting id="show_group_channels" label="30762" type="bool" default="false" visible="eq(-8,0) | eq(-8,1)"/>
+		<setting id="useCustomParser" label="30708" type="bool" default="true" visible="eq(-9,1)"/>
+		<setting id="refresh_streams" label="30976" type="bool" default="true" visible="eq(-10,0) | eq(-11,1)"/>
+		<setting id="show_logo" label="30355" type="bool" default="true" visible="eq(-11,0) | eq(-11,1)"/>
+		<setting id="show_program_logo" label="30364" type="bool" default="true" visible="eq(-12,0) | eq(-12,1)"/>
+		<setting type="sep" visible="eq(-13,0) | eq(-13,1)"/>
+		<setting label="30101" type="lsep" visible="eq(-14,0) | eq(-14,1)"/>
+		<setting type="sep" visible="eq(-15,0) | eq(-15,1)"/>
+		<setting label="30111" type="lsep" visible="eq(-16,0) | eq(-16,1)"/>
+		<setting id="xmltv_file" label="30103" type="file" visible="eq(-17,0)"/>
+		<setting id="xmltv_logo_folder" label="30116" type="folder" visible="eq(-18,0)"/>
+		<setting id="m-TVGuide" label="30118" type="text" visible="eq(-19,1)" default=""/>
+		<setting id="m-TVGuide2" label="30119" type="text" visible="eq(-20,1)" default=""/>
+		<setting id="m-TVGuide3" label="30120" type="text" visible="eq(-21,1)" default=""/>
+		<setting type="sep" visible="eq(-22,0) | eq(-22,1) + eq(-1,false)"/>
+		<setting label="30741" type="lsep" visible="lt(-23,2)"/>
+		<setting id="showAdultChannels" label="30715" action="RunScript($CWD/settingsImportExport.py, Adult)" option="close" type="action" default="" visible="lt(-24,2)"/>
+		<setting label="30746" type="lsep" visible="lt(-25,2)"/>
+		<setting id="showVodChannels" label="30745" action="RunScript($CWD/settingsImportExport.py, Vod)" option="close" type="action" default="" visible="lt(-26,2)"/>
+		<setting type="sep" visible="lt(-27,2)"/>
+		<setting label="30742" type="lsep" visible="lt(-28,2)"/>
+		<setting type="sep" visible="lt(-29,2)"/>
+		<setting label="30365" type="lsep" visible="lt(-30,2)"/>
+		<setting id="time_zone" label="30911" type="labelenum" default="+01:00" values="-12:00|-11:00|-10:00|-09:30|-09:00|-08:00|-07:00|-06:00|-05:00|-04:30|-04:00|-03:30|-03:00|-02:00|-01:00|00:00|+01:00|+02:00|+03:00|+03:30|+04:00|+04:30|+05:00|+05:30|+05:45|+06:00|+06:30|+07:00|+08:00|+09:00|+09:30|+10:00|+10:30|+11:00|+11:30|+12:00|+12:45|+13:00|+14:00|" visible="lt(-31,2)"/>
 		<setting id="country_code_be" default="false" visible="false"/>
 		<setting id="country_code_cz" default="false" visible="false"/>
 		<setting id="country_code_de" default="false" visible="false"/>

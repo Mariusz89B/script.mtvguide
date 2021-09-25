@@ -199,8 +199,9 @@ class WpPilotUpdater(baseServiceUpdater):
 
             for channel in data:
                 if channel.get('access_status', '') != 'unsubscribed':
-                    name = channel['name'] + ' PL'
                     cid  = channel['id']
+                    name = channel['name']
+                    title = channel['name'] + ' PL'                    
                     img  = channel['thumbnail_mobile']
                     geoblocked = channel['geoblocked']
                     access = channel['access_status']
