@@ -200,7 +200,7 @@ class WpPilotUpdater(baseServiceUpdater):
                     access = channel['access_status']
                     self.log('[UPD] %-10s %-35s %-15s %-20s %-35s' % (cid, name, geoblocked, access, img))
                     if geoblocked != True and access != 'unsubscribed':
-                        program = TvCid(cid, access, name, img=img)
+                        program = TvCid(cid=cid, name=name, title=name, img=img, lic=access)
                         result.append(program)
 
             if len(result) <= 0:
