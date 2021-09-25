@@ -134,45 +134,51 @@ class WpPilotUpdater(baseServiceUpdater):
             return ''
 
     def loginService(self):
-        if self.netviapisessval == '' and self.netviapisessid == '':
-            if len(self.password) > 0 and len(self.login) > 0:
-                data = {'device': 'android_tv',
-                        'login': self.login,
-                        'password': self.password}
+        try:
+            if self.netviapisessval == '' and self.netviapisessid == '':
+                if len(self.password) > 0 and len(self.login) > 0:
+                    data = {'device': 'android_tv',
+                            'login': self.login,
+                            'password': self.password}
 
-                response = requests.post(
-                    login_url,
-                    json=data,
-                    verify=False,
-                    headers=headers
-                )
+                    response = requests.post(
+                        login_url,
+                        json=data,
+                        verify=False,
+                        headers=headers
+                    )
 
-                meta = response.json().get('_meta', None)
-                if meta is not None:
-                    if meta.get('error', {}).get('name', None) is not None:
-                        self.loginErrorMessage()
-                        return False
+                    meta = response.json().get('_meta', None)
+                    if meta is not None:
+                        if meta.get('error', {}).get('name', None) is not None:
+                            self.loginErrorMessage()
+                            return False
 
-                self.saveToDB('wppilot_cache', self.cookiesToString(response.cookies))
-                return True
+                    self.saveToDB('wppilot_cache', self.cookiesToString(response.cookies))
+                    return True
 
+                else:
+                    self.loginErrorMessage()
+                    return False
             else:
-                self.loginErrorMessage()
-                return False
-        else:
-            if len(self.netviapisessval) > 0 and len(self.netviapisessid) > 0:
-                cookies = {'netviapisessid': self.netviapisessid, 'netviapisessval': self.netviapisessval}
-                self.saveToDB('wppilot_cache', self.cookiesToString(cookies))
-                return True
+                if len(self.netviapisessval) > 0 and len(self.netviapisessid) > 0:
+                    cookies = {'netviapisessid': self.netviapisessid, 'netviapisessval': self.netviapisessval}
+                    self.saveToDB('wppilot_cache', self.cookiesToString(cookies))
+                    return True
 
-            elif len(self.remote_cookies) > 0:
-                cookies_from_url = requests.get(self.remote_cookies, verify=False, timeout=10).text
-                cookies = json.loads(cookies_from_url)
-                self.saveToDB('wppilot_cache', self.cookiesToString(cookies))
-                return True
-            else:
-                self.loginErrorMessage()
-                return False
+                elif len(self.remote_cookies) > 0:
+                    cookies_from_url = requests.get(self.remote_cookies, verify=False, timeout=10).text
+                    cookies = json.loads(cookies_from_url)
+                    self.saveToDB('wppilot_cache', self.cookiesToString(cookies))
+                    return True
+                else:
+                    self.loginErrorMessage()
+                    return False
+
+        except:
+            self.connErrorMessage()
+            self.log('getLogin exception: {}'.format(getExceptionString()))
+        return False
 
     def getChannelList(self, silent):
         result = list()
@@ -207,6 +213,7 @@ class WpPilotUpdater(baseServiceUpdater):
                 self.log('Error while parsing service {}, returned data is: {}'.format(self.serviceName, str(response)))
 
         except:
+            self.connErrorMessage()
             self.log('getChannelList exception: {}'.format(getExceptionString()))
         return result
 

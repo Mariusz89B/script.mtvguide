@@ -329,7 +329,7 @@ class PlayerPLUpdater(baseServiceUpdater):
                     name = re.sub(r'^\s*', '', str(name))
 
                     cid = '%s:%s' % (id_,'kanal')
-                    program = TvCid(cid, name, name, img=img)
+                    program = TvCid(cid=cid, name=name, title=name, img=img)
                     result.append(program)
 
                 if len(result) <= 0:

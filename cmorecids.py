@@ -397,7 +397,7 @@ class CmoreUpdater(baseServiceUpdater):
 
                 img = current_program['imageId']
 
-                program = TvCid(cid, name, name, img=img)
+                program = TvCid(cid=cid, name=name, title=name, img=img)
                 result.append(program)
 
             if len(result) <= 0:

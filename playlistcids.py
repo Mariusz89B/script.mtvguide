@@ -628,12 +628,12 @@ class PlaylistUpdater(baseServiceUpdater):
 
                             if UHDStream:
                                 channelCid = channelCid + '_UHD'
-                                uhdList.append(TvCid(channelCid, title, title, stripLine, catchup=catchupLine))
+                                uhdList.append(TvCid(cid=channelCid, name=title, title=title, strm=stripLine, catchup=catchupLine))
                             elif HDStream:
                                 channelCid = channelCid + '_HD'
-                                hdList.append(TvCid(channelCid, title, title, stripLine, catchup=catchupLine))
+                                hdList.append(TvCid(cid=channelCid, name=title, title=title, strm=stripLine, catchup=catchupLine))
                             else:
-                                sdList.append(TvCid(channelCid, title, title, stripLine, catchup=catchupLine))
+                                sdList.append(TvCid(cid=channelCid, name=title, title=title, strm=stripLine, catchup=catchupLine))
 
                             
                             self.log('[UPD] %-10s %-35s %-35s' % (channelCid, title, stripLine))

@@ -360,7 +360,7 @@ class IplaUpdater(baseServiceUpdater):
                         name = i['title'].upper() + ' PL'
                         name = name.replace(' SD', '')
 
-                        program = TvCid(cid, name, name, img=img)
+                        program = TvCid(cid=cid, name=name, title=name, img=img)
                         result.append(program)
 
             if len(result) <= 0:

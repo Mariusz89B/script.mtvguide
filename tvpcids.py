@@ -170,7 +170,7 @@ class TvpUpdater(baseServiceUpdater):
 
                     name = name.replace('TVP3', 'TVP 3')
 
-                    program = TvCid(cid, name, name, img=img)
+                    program = TvCid(cid=cid, name=name, title=name, img=img)
                     result.append(program)
 
             if len(result) <= 0:

@@ -557,7 +557,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                     name = channel ["name"] + ' ' + ca[self.country]
                     img = channel["id"]
                 
-                    program = TvCid(cid, name, name, img=img) 
+                    program = TvCid(cid=cid, name=name, title=name, img=img) 
                     result.append(program)
 
             if len(result) <= 0:

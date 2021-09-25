@@ -310,7 +310,7 @@ class NcPlusGoUpdater(baseServiceUpdater):
                     cid = item['Channel']['Codename'] + '_TS_3H'
                     img = item['IconUrl']
 
-                    program = TvCid(cid, name, name, img=img)
+                    program = TvCid(cid=cid, name=name, title=name, img=img)
                     result.append(program)
 
             if len(result) <= 0:

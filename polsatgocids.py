@@ -545,7 +545,7 @@ class PolsatGoUpdater(baseServiceUpdater):
 
                         name = re.sub(' SD', '', name)
 
-                        program = TvCid(cid, name, name, img=img) 
+                        program = TvCid(cid=cid, name=name, title=name, img=img) 
                         result.append(program)
 
             if len(result) <= 0:
