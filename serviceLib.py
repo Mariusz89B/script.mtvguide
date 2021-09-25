@@ -968,9 +968,12 @@ class baseServiceUpdater:
             self.log('[UPD]     %-30s %-30s %-20s %-35s' % ('-ID mTvGuide-', '-    Orig Name    -', '-    SRC   -', '-    STRM   -'))
 
             result = list()
+            names = list()
 
             for title, names in epg_channels:
-                for name in names.split(','):
+                names = names.split(',')
+                names.append(title)
+                for name in names:
                     result.append(MapString(channelid=title, titleRegex='', strm='', src='', displayName=name))
 
             self.automap.extend(result)
@@ -986,22 +989,23 @@ class baseServiceUpdater:
                     self.log('[UPD]     %-30s %-15s %-35s' % (unidecode(x.channelid), x.src, x.strm))
                     continue
                 try:
-                    channels = list()
+                    m_channels = list()
 
-                    if x.titleRegex != '':
-                        channels = list(filter(lambda v: match(x.titleRegex, v.name, re.IGNORECASE), self.channels))
+                    if x.titleRegex != '' and x.displayName == '':
+                        m_channels = list(filter(lambda v: match(x.titleRegex, v.title, re.IGNORECASE), self.channels))
                         
                     if x.displayName != '':
                         try:
-                            channels = list(filter(lambda v: (unidecode(x.displayName.upper()) == unidecode(v.name.upper())), self.channels))
+                            m_channels = list(filter(lambda v: (unidecode(x.displayName.upper()) == unidecode(v.title.upper())), self.channels))
                         except:
-                            channels = list(filter(lambda v: (unidecode(x.displayName.upper()) == unidecode(v.name.decode('utf-8').upper())), self.channels))
+                            m_channels = list(filter(lambda v: (unidecode(x.displayName.upper()) == unidecode(v.title.decode('utf-8').upper())), self.channels))
 
-                    for y in channels:
+                    for y in m_channels:
                         if (y):
                             if x.strm != '' and self.addDuplicatesToList == True:
                                 newMapElement = copy.deepcopy(x)
                                 newMapElement.strm = self.rstrm % y.cid
+                                newMapElement.channelid = x.channelid
 
                                 y.src = newMapElement.src
                                 y.strm = newMapElement.strm
