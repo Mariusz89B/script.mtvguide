@@ -467,9 +467,6 @@ class PolsatGoUpdater(baseServiceUpdater):
                 title = item['title'] + ' PL'
                 img = item['thumbnails'][-1]['src']
 
-                name = name.replace('TV4', 'TV 4')
-                title = title.replace('TV4', 'TV 4')
-
                 program = TvCid(cid=cid, name=name, title=title, img=img) 
                 result.append(program)
 

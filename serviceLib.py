@@ -971,9 +971,7 @@ class baseServiceUpdater:
             names = list()
 
             for title, names in epg_channels:
-                names = names.split(',')
-                names.append(title)
-                for name in names:
+                for name in names.split(','):
                     result.append(MapString(channelid=title, titleRegex='', strm='', src='', displayName=name))
 
             self.automap.extend(result)
@@ -994,11 +992,16 @@ class baseServiceUpdater:
                     if x.titleRegex != '':
                         m_channels = list(filter(lambda v: match(x.titleRegex, v.title, re.IGNORECASE), self.channels))
                         
+                    if x.displayName != '':
+                        try:
+                            m_channels = list(filter(lambda v: (unidecode(x.displayName.upper()) == unidecode(v.name.upper())), self.channels))
+                        except:
+                            m_channels = list(filter(lambda v: (unidecode(x.displayName.upper()) == unidecode(v.name.decode('utf-8').upper())), self.channels))
                     else:
                         try:
-                            m_channels = list(filter(lambda v: (unidecode(x.displayName.upper()) == (unidecode(v.title.upper()) or unidecode(v.name.upper())) ), self.channels))
+                            m_channels = list(filter(lambda v: (unidecode(x.channelid.upper()) == unidecode(v.title.upper())), self.channels))
                         except:
-                            m_channels = list(filter(lambda v: (unidecode(x.displayName.upper()) == (unidecode(v.title.decode('utf-8').upper()) or unidecode(v.name.decode('utf-8').upper())) ), self.channels))
+                            m_channels = list(filter(lambda v: (unidecode(x.channelid.upper()) == unidecode(v.title.decode('utf-8').upper())), self.channels))
 
                     for y in m_channels:
                         if x.strm != '' and self.addDuplicatesToList == True:
