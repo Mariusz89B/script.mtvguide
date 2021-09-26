@@ -4522,7 +4522,10 @@ class mTVGuide(xbmcgui.WindowXML):
             idx = int(idx)
             chann = channelList[idx]
         except:
-            chann = channelList[0]
+            try:
+                chann = channelList[0]
+            except:
+                pass
 
         program = self.database.getProgramStartingAt(chann, start)
 
@@ -5676,10 +5679,16 @@ class mTVGuide(xbmcgui.WindowXML):
                 items.append(item)
 
             listControl.addItems(items)
-            if self.category and self.category in categories:
-                index = categories.index(self.category)
-                if index >= 0:
-                    listControl.selectItem(index)
+            if not self.controlAndProgramList:
+                self.database.setCategory(strings(30325))
+                ADDON.setSetting('category', strings(30325))
+                with self.busyDialog():
+                    self.onRedrawEPG(self.channelIdx == 1, self.viewStartDate)
+            else:
+                if self.category and self.category in categories:
+                    index = categories.index(self.category)
+                    if index >= 0:
+                        listControl.selectItem(index)
 
         except:
             deb('Categories not supported by current skin')

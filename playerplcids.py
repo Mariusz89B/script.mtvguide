@@ -206,6 +206,9 @@ class PlayerPLUpdater(baseServiceUpdater):
         return content
 
     def loginService(self):
+        self.REFRESH_TOKEN = ADDON.getSetting('playerpl_refresh_token')
+        self.LOGGED = ADDON.getSetting('playerpl_logged')
+
         try:
             if not self.DEVICE_ID or not self.MAKER or not self.USAGENT or not self.USAGENTVER:
                 self.createDatas()
@@ -259,7 +262,6 @@ class PlayerPLUpdater(baseServiceUpdater):
                 return True
             else:
                 self.loginErrorMessage()
-                ADDON.setSetting('playerpl_logged', 'false')
                 return False
 
         except:
@@ -282,10 +284,14 @@ class PlayerPLUpdater(baseServiceUpdater):
             
             ADDON.setSetting('playerpl_selected_profile_id', self.SELECTED_PROFILE_ID)
             ADDON.setSetting('playerpl_selected_profile', self.SELECTED_PROFILE)
-            return True
+            check = True
+            deb('PlayerPL checkLogin: {}'.format(str(check)))
+            return check
 
         if self.LOGGED != 'true':
-            return False
+            check = False
+            deb('PlayerPL checkLogin: {}'.format(str(check)))
+            return check
 
     def getChannelList(self, silent):
         self.refreshTokenTVN()
