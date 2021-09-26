@@ -992,16 +992,17 @@ class baseServiceUpdater:
                     if x.titleRegex != '':
                         m_channels = list(filter(lambda v: match(x.titleRegex, v.title, re.IGNORECASE), self.channels))
                         
-                    elif x.displayName != '':
+                    if x.displayName != '':
                         try:
                             m_channels = list(filter(lambda v: (unidecode(x.displayName.upper()) == unidecode(v.name.upper())), self.channels))
                         except:
                             m_channels = list(filter(lambda v: (unidecode(x.displayName.upper()) == unidecode(v.name.decode('utf-8').upper())), self.channels))
-                    else:
+
+                    if x.displayName != '' and x.titleRegex != '':
                         try:
-                            m_channels = list(filter(lambda v: (unidecode(x.channelid.upper()) == unidecode(v.title.upper())), self.channels))
+                            m_channels = list(filter(lambda v: (unidecode(x.displayName.upper()) == unidecode(v.title.upper())), self.channels))
                         except:
-                            m_channels = list(filter(lambda v: (unidecode(x.channelid.upper()) == unidecode(v.title.decode('utf-8').upper())), self.channels))
+                            m_channels = list(filter(lambda v: (unidecode(x.displayName.upper()) == unidecode(v.title.decode('utf-8').upper())), self.channels))
 
                     for y in m_channels:
                         if x.strm != '' and self.addDuplicatesToList == True:
@@ -1072,13 +1073,13 @@ class baseServiceUpdater:
                 with open(file_name, 'ab+') as f:
                     data = f.read()
                     if len(data) > 0:
-                        f.write('\n')
+                        f.write(bytearray('\n', 'utf-8'))
                     f.write(bytearray('\n'.join(channelList), 'utf-8'))
             else:
                 with open(file_name, 'a+') as f:
                     data = f.read()
                     if len(data) > 0:
-                        f.write('\n')
+                        f.write(str('\n'))
                     f.write(str('\n'.join(channelList)))
 
             self.log("[UPD] The analysis has been completed...")
