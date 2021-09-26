@@ -1960,7 +1960,10 @@ class mTVGuide(xbmcgui.WindowXML):
         epgSize = ADDON.getSetting('epg_size')
         epgDbSize = ADDON.getSetting('epg_dbsize')
         if epgSize != epgDbSize:
-            self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
+            if xbmc.Player().isPlaying():
+                self.database.getEPGView(self.channelIdx, self.viewStartDate, self.onSourceProgressUpdate, clearExistingProgramList=True)
+            else:
+                self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
 
     def getStreamsCid(self, channels):
         streams = self.database.getAllCatchupUrlList(channels)

@@ -1169,6 +1169,8 @@ class Database(object):
                     newChannelList.append(channel)
                     channelList.remove(channel)
                     #deb('Adding channel: {}'.format(channel.title))
+                else:
+                    channelList.remove(channel)
 
         else:
             channelsInCategory = self.getChannelsInCategory(category)

@@ -261,6 +261,8 @@ class PlayerPLUpdater(baseServiceUpdater):
                 ADDON.setSetting('playerpl_logged', 'true')
                 return True
             else:
+                ADDON.setSetting('playerpl_logged', 'false')
+                ADDON.setSetting('playerpl_refresh_token', '')
                 self.loginErrorMessage()
                 return False
 
@@ -270,28 +272,33 @@ class PlayerPLUpdater(baseServiceUpdater):
         return False
 
     def checkLogin(self):
-        if self.REFRESH_TOKEN:
-            PARAMS = {'4K': 'true','platform': 'ANDROID_TV'}
-            self.HEADERS2['Content-Type'] =  'application/json; charset=UTF-8'
+        try:
+            if self.REFRESH_TOKEN:
+                PARAMS = {'4K': 'true','platform': 'ANDROID_TV'}
+                self.HEADERS2['Content-Type'] =  'application/json; charset=UTF-8'
 
-            POST_DATA = {"agent":self.USAGENT,"agentVersion":self.USAGENTVER,"appVersion":"1.0.38(62)","maker":self.MAKER,"os":"Android","osVersion":"9","token":self.ACCESS_TOKEN,"uid":self.DEVICE_ID}
-            data = self.getRequests(self.SUBSCRIBER, data=POST_DATA, headers=self.HEADERS2, params=PARAMS)
-        
-            self.SELECTED_PROFILE = data.get('profile',{}).get('name', None)
-            self.SELECTED_PROFILE_ID = data.get('profile',{}).get('externalUid', None)
-        
-            self.HEADERS2['API-ProfileUid'] =  self.SELECTED_PROFILE_ID
+                POST_DATA = {"agent":self.USAGENT,"agentVersion":self.USAGENTVER,"appVersion":"1.0.38(62)","maker":self.MAKER,"os":"Android","osVersion":"9","token":self.ACCESS_TOKEN,"uid":self.DEVICE_ID}
+                data = self.getRequests(self.SUBSCRIBER, data=POST_DATA, headers=self.HEADERS2, params=PARAMS)
             
-            ADDON.setSetting('playerpl_selected_profile_id', self.SELECTED_PROFILE_ID)
-            ADDON.setSetting('playerpl_selected_profile', self.SELECTED_PROFILE)
-            check = True
-            deb('PlayerPL checkLogin: {}'.format(str(check)))
-            return check
+                self.SELECTED_PROFILE = data.get('profile',{}).get('name', None)
+                self.SELECTED_PROFILE_ID = data.get('profile',{}).get('externalUid', None)
+            
+                self.HEADERS2['API-ProfileUid'] =  self.SELECTED_PROFILE_ID
+                
+                ADDON.setSetting('playerpl_selected_profile_id', self.SELECTED_PROFILE_ID)
+                ADDON.setSetting('playerpl_selected_profile', self.SELECTED_PROFILE)
+                check = True
+                deb('PlayerPL checkLogin: {}'.format(str(check)))
+                return check
 
-        if self.LOGGED != 'true':
-            check = False
-            deb('PlayerPL checkLogin: {}'.format(str(check)))
-            return check
+            if self.LOGGED != 'true':
+                check = False
+                deb('PlayerPL checkLogin: {}'.format(str(check)))
+                return check
+        except:
+            self.log('Exception while trying to log in: {}'.format(getExceptionString()))
+            self.connErrorMessage()
+        return False
 
     def getChannelList(self, silent):
         self.refreshTokenTVN()

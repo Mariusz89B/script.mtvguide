@@ -1077,10 +1077,19 @@ class baseServiceUpdater:
                         f.write(bytearray('\n', 'utf-8'))
                     f.write(bytearray('\n'.join(channelList), 'utf-8'))
             else:
-                with open(file_name, 'a+') as f:
+                newline = False
+
+                try:
+                    with open(file_name, 'r') as f:
+                        data = f.read()
+                        if len(data) > 0:
+                            newline = True
+                except:
+                    pass
+
+                with open(file_name, 'a') as f:
                     f.seek(0)
-                    data = f.read()
-                    if len(data) > 0:
+                    if newline:
                         f.write(str('\n'))
                     f.write(str('\n'.join(channelList)))
 
