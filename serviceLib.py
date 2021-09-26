@@ -992,7 +992,7 @@ class baseServiceUpdater:
                     if x.titleRegex != '':
                         m_channels = list(filter(lambda v: match(x.titleRegex, v.title, re.IGNORECASE), self.channels))
                         
-                    if x.displayName != '':
+                    elif x.displayName != '':
                         try:
                             m_channels = list(filter(lambda v: (unidecode(x.displayName.upper()) == unidecode(v.name.upper())), self.channels))
                         except:
