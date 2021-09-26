@@ -1070,9 +1070,15 @@ class baseServiceUpdater:
 
             if sys.version_info[0] > 2:
                 with open(file_name, 'ab+') as f:
+                    data = f.read()
+                    if len(data) > 0:
+                        f.write('\n')
                     f.write(bytearray('\n'.join(channelList), 'utf-8'))
             else:
                 with open(file_name, 'a+') as f:
+                    data = f.read()
+                    if len(data) > 0:
+                        f.write('\n')
                     f.write(str('\n'.join(channelList)))
 
             self.log("[UPD] The analysis has been completed...")
