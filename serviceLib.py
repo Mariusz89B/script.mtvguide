@@ -987,24 +987,28 @@ class baseServiceUpdater:
                     self.log('[UPD]     %-30s %-15s %-35s' % (unidecode(x.channelid), x.src, x.strm))
                     continue
                 try:
-                    m_channels = list()
+                    name_channels = list()
+                    title_channels = list()
+                    regex_channels = list()
 
-                    if x.titleRegex != '':
-                        m_channels = list(filter(lambda v: match(x.titleRegex, v.title, re.IGNORECASE), self.channels))
+                    if x.titleRegex:
+                        regex_channels = list(filter(lambda v: match(x.titleRegex, v.title, re.IGNORECASE), self.channels))
                         
-                    if x.displayName != '':
+                    elif x.displayName:
                         try:
-                            m_channels = list(filter(lambda v: (unidecode(x.displayName.upper()) == unidecode(v.name.upper())), self.channels))
+                            name_channels = list(filter(lambda v: (unidecode(x.displayName.upper()) == unidecode(v.name.upper())), self.channels))
                         except:
-                            m_channels = list(filter(lambda v: (unidecode(x.displayName.upper()) == unidecode(v.name.decode('utf-8').upper())), self.channels))
+                            name_channels = list(filter(lambda v: (unidecode(x.displayName.upper()) == unidecode(v.name.decode('utf-8').upper())), self.channels))
 
-                    if x.displayName != '' and x.titleRegex != '':
+                    elif x.displayName == '':
                         try:
-                            m_channels = list(filter(lambda v: (unidecode(x.displayName.upper()) == unidecode(v.title.upper())), self.channels))
+                            title_channels = list(filter(lambda v: (unidecode(x.channelid.upper()) == unidecode(v.title.upper())), self.channels))
                         except:
-                            m_channels = list(filter(lambda v: (unidecode(x.displayName.upper()) == unidecode(v.title.decode('utf-8').upper())), self.channels))
+                            title_channels = list(filter(lambda v: (unidecode(x.channelid.upper()) == unidecode(v.title.decode('utf-8').upper())), self.channels))
 
-                    for y in m_channels:
+                    filtered_channels = regex_channels + name_channels + title_channels     
+
+                    for y in filtered_channels:
                         if x.strm != '' and self.addDuplicatesToList == True:
                             newMapElement = copy.deepcopy(x)
                             newMapElement.strm = self.rstrm % y.cid

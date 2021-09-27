@@ -129,8 +129,9 @@
 	<channel id="HOME 4K PL" title="(?=HOME(\s*(4K|UHD))?\s*PL$)" strm=""/>
 	<channel id="HOME TV PL" title="(?=(HOME|TVR)(\s*TV)?(\s*HD)?\s*PL$)" strm=""/>
 	<channel id="ID PL" title="(?=(DISCOVERY\s*)?(INVESTIGATION|ID)(\s*DISCOVERY)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
-	<channel id="ITVN PL" title="(?=ITVN(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
+	<channel id="INSIGHT TV PL" title="(?=INSIGHT(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="ITVN EXTRA INTERNATIONAL PL" title="(?=ITVN\s*EXTRA(\s*INT|\s*INTERNATIONAL)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
+	<channel id="ITVN PL" title="(?=ITVN(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="ITVS PL" title="(?=ITVS(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="JAZZ HD PL" title="(?=JAZZ(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="KINO POLSKA MUZYKA PL" title="(?=KINO(\s*POLSKA)?\s*MUZYKA(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
@@ -147,8 +148,9 @@
 	<channel id="MINIMINI+ PL" title="(?=MINI\s*MINI\s*(\+|PLUS)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="MIXTAPE PL" title="(?=MIXTAPE(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="MOTOWIZJA PL" title="(?=(MOTOWIZJA|MOTORWIZJA)(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
-	<channel id="MTV 80S PL" title="(?=MTV.*(80\s*(s)?)(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
-	<channel id="MTV 90S PL" title="(?=MTV.*((90\s*(s)?)|ROCKS)(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
+	<channel id="MTV 80S PL" title="(?=MTV.*(80(\W)?\s*(s)?)(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
+	<channel id="MTV 90S PL" title="(?=MTV.*((90(\W)?\s*(s)?)|ROCKS)(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
+	<channel id="MTV 00S PL" title="(?=MTV.*(00(\W)?\s*(s)?)(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="MTV HITS PL" title="(?=MTV\s*HITS(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="MTV LIVE HD PL" title="(?=MTV\s*LIVE(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="MTV POLSKA PL" title="(?=MTV(\s*MUSIC)?(\s*POLSKA)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
@@ -257,7 +259,6 @@
 	<channel id="TV REPUBLIKA PL" title="(?=(TV\s*)?Republika(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="TV TORUŃ PL" title="(?=(TV\s*)?TORUN(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="TV TRWAM PL" title="(?=(TV\s*)?TRWAM(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
-	<channel id="TVP VOD PL" title="(?=TV(P)?\s*VOD(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="TVC PL" title="(?=(TELEWIZJA\s*|NTL\s*)?(TVC|NTL|RADOMSKO)(\s*POLSKA)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="TVE PL" title="(?=TVE(\s*POLSKA)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="TVN 24 BIS PL" title="(?=TVN\s*24\s*(BIS|BIZNES\s*I\s*.*WIAT)(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
@@ -297,12 +298,13 @@
 	<channel id="TVP KULTURA 2 PL" title="(?=TVP\s*KULTURA\s*2(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="TVP KULTURA PL" title="(?=(TVP\s*KULTURA|KULTURA\s*TVP)(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="TVP PARLAMENT PL" title="(?=TVP\*PARLAMENT(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
-	<channel id="TVP POLANDIN PL" title="(?=TVP\s*POLANDIN(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
+	<channel id="TVP POLANDIN PL" title="(?=(TVP\s*)?POLAND\s*IN(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="TVP POLONIA PL" title="(?=(TVP\s*POLONIA|POLONIA\s*TVP)(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="TVP REGIONALNA PL" title="(?=(TVP\s*REGIONALNA|REGIONALNA\s*TVP)(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="TVP ROZRYWKA PL" title="(?=(TVP\s*ROZRYWKA|ROZRYWKA\s*TVP)(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="TVP SERIALE PL" title="(?=(TVP\s*SERIALE|SERIALE\s*TVP)(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="TVP SPORT PL" title="(?=(TVP\s*SPORT|SPORT\s*TVP)(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
+	<channel id="TVP VOD PL" title="(?=TV(P)?\s*VOD(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="TVP WILNO PL" title="(?=(TVP\s*WILNO|WILNO\s*TVP)(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="TVS PL" title="(?=TVS(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="TVT PL" title="(?=TVT(\s*ZGORZELEC)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>

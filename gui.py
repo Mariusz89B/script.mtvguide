@@ -5682,16 +5682,10 @@ class mTVGuide(xbmcgui.WindowXML):
                 items.append(item)
 
             listControl.addItems(items)
-            if not self.controlAndProgramList:
-                self.database.setCategory(strings(30325))
-                ADDON.setSetting('category', strings(30325))
-                with self.busyDialog():
-                    self.onRedrawEPG(self.channelIdx == 1, self.viewStartDate)
-            else:
-                if self.category and self.category in categories:
-                    index = categories.index(self.category)
-                    if index >= 0:
-                        listControl.selectItem(index)
+            if self.category and self.category in categories:
+                index = categories.index(self.category)
+                if index >= 0:
+                    listControl.selectItem(index)
 
         except:
             deb('Categories not supported by current skin')
@@ -5759,12 +5753,15 @@ class mTVGuide(xbmcgui.WindowXML):
                 if ADDON.getSetting('categories_remember') == 'true' or ADDON.getSetting('category') != '':
                     self.database.setCategory(ADDON.getSetting('category'))
 
-                self.onRedrawEPG(0, self.viewStartDate)
-                if xbmc.getCondVisibility('!Window.IsVisible(okdialog)'):
-                    if not self.controlAndProgramList:
-                        res = xbmcgui.Dialog().yesno('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30165))
-                        if res:
-                            super(mTVGuide, self).close()
+                if not self.controlAndProgramList:
+                    self.database.setCategory(strings(30325))
+                    ADDON.setSetting('category', strings(30325))
+                    self.onRedrawEPG(0, self.viewStartDate)
+                    if xbmc.getCondVisibility('!Window.IsVisible(okdialog)'):
+                        if not self.controlAndProgramList:
+                            res = xbmcgui.Dialog().yesno('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30165))
+                            if res:
+                                super(mTVGuide, self).close()
                 
                 if ADDON.getSetting('touch_panel') == 'true':
                     self._showControl(self.C_MAIN_MOUSEPANEL_CONTROLS)

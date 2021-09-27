@@ -255,24 +255,7 @@ class PlayerPLUpdater(baseServiceUpdater):
                     ADDON.setSetting('playerpl_user_pub', self.USER_PUB)
                     ADDON.setSetting('playerpl_user_hash', self.USER_HASH)
                     ADDON.setSetting('playerpl_refresh_token', self.REFRESH_TOKEN)
-                    
-            ab = self.checkLogin()
-            if ab:
-                ADDON.setSetting('playerpl_logged', 'true')
-                return True
-            else:
-                ADDON.setSetting('playerpl_logged', 'false')
-                ADDON.setSetting('playerpl_refresh_token', '')
-                self.loginErrorMessage()
-                return False
 
-        except:
-            self.log('Exception while trying to log in: {}'.format(getExceptionString()))
-            self.connErrorMessage()
-        return False
-
-    def checkLogin(self):
-        try:
             if self.REFRESH_TOKEN:
                 PARAMS = {'4K': 'true','platform': 'ANDROID_TV'}
                 self.HEADERS2['Content-Type'] =  'application/json; charset=UTF-8'
@@ -287,14 +270,15 @@ class PlayerPLUpdater(baseServiceUpdater):
                 
                 ADDON.setSetting('playerpl_selected_profile_id', self.SELECTED_PROFILE_ID)
                 ADDON.setSetting('playerpl_selected_profile', self.SELECTED_PROFILE)
-                check = True
-                deb('PlayerPL checkLogin: {}'.format(str(check)))
-                return check
+                return True
 
             if self.LOGGED != 'true':
-                check = False
-                deb('PlayerPL checkLogin: {}'.format(str(check)))
-                return check
+                ADDON.setSetting('playerpl_logged', 'false')
+                return False
+
+            if self.LOGGED == 'true':
+                return True
+
         except:
             self.log('Exception while trying to log in: {}'.format(getExceptionString()))
             self.connErrorMessage()
@@ -315,7 +299,7 @@ class PlayerPLUpdater(baseServiceUpdater):
         try:
             regexReplaceList = list()
 
-            regexReplaceList.append( re.compile('(\s|^)(FAKTY)(?=\s|$)',  re.IGNORECASE) )
+            regexReplaceList.append( re.compile('(\s|^)(International|FAKTY)(?=\s|$)',  re.IGNORECASE) )
 
             urlk = 'https://player.pl/playerapi/product/live/list?4K=true&platform=ANDROID_TV'
             
@@ -339,14 +323,17 @@ class PlayerPLUpdater(baseServiceUpdater):
 
                     for regexReplace in regexReplaceList:
                         name = regexReplace.sub('', name)
+                        title = regexReplace.sub('', title)
 
                     name = re.sub(r'^\s*', '', str(name))
+                    title = re.sub(r'^\s*', '', str(title))
 
                     cid = '%s:%s' % (id_,'kanal')
                     program = TvCid(cid=cid, name=name, title=title, img=img)
                     result.append(program)
 
                 if len(result) <= 0:
+                    self.loginErrorMessage()
                     self.log('Error while parsing service {}, returned data is: {}'.format(self.serviceName, str(data)))
 
         except:
