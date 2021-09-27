@@ -618,11 +618,11 @@
 				</setting>
 				<setting help="95014" id="polsatgo_client" label="30368" type="string" parent="polsatgo_enabled">
 					<level>0</level>
-					<default>Polsat Box</default>
+					<default>Polsat Go</default>
 					<constraints>
 						<options>
 							<option label="Ipla">Ipla</option>
-							<option label="Polsat Box">Polsat Go</option>
+							<option label="Polsat Go">Polsat Go</option>
 						</options>
 					</constraints>
 					<dependencies>
