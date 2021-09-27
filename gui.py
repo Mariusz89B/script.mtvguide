@@ -6117,7 +6117,7 @@ class mTVGuide(xbmcgui.WindowXML):
     def refreshStreamsLoop(self):
         if self.autoUpdateCid == 'true':
             refreshTime = REFRESH_STREAMS_TIME
-            if not strings2.M_TVGUIDE_CLOSING and not self.isClosing and self.database and self.recordService and self.playService and not self.recordService.isRecordOngoing() and not xbmc.Player().isPlaying() and not self.playService.isWorking() and self.checkUrl():
+            if not strings2.M_TVGUIDE_CLOSING and not self.isClosing and self.database and self.recordService and self.playService and not self.playService.isWorking() and self.checkUrl():
                 if datetime.datetime.now().hour < 8:
                     refreshTime = 3600
                 else:
@@ -6126,7 +6126,8 @@ class mTVGuide(xbmcgui.WindowXML):
                     if diffSeconds > 60:
                         deb('refreshStreamsLoop refreshing all services')
                         self.database.reloadServices()
-                        self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
+                        if not self.recordService.isRecordOngoing() and not xbmc.Player().isPlaying():
+                            self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
                     else:
                         deb(
                             'refreshStreamsLoop services will be refreshed if no activity for 60s, currently no activity for {} seconds'.format(

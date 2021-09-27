@@ -163,7 +163,7 @@
 	<channel id="NATIONAL GEOGRAPHIC CHANNEL PL" title="(?=(NAT|NATIONAL)\s*(GEO|GEOGRAPHIC)(\s*CHANNEL)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="NATIONAL GEOGRAPHIC WILD PL" title="(?=(NAT|NATIONAL)\s*(GEO|GEOGRAPHIC)\s*WILD(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="NAUTICAL CHANNEL PL" title="(?=NAUTICAL(\s*CHANNEL)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
-	<channel id="NICK JR. PL" title="(?=NICK(ELODEON)?\s*(JR|JUNIOR)(\.)?(POLSKA)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
+	<channel id="NICK JR. PL" title="(?=NICK(ELODEON)?\s*(\-)?(JR|JUNIOR)(\.)?(POLSKA)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="NICKELODEON PL" title="(?=(NICKELODEON)(\s*POLSKA)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="NICKMUSIC PL" title="(?=(MTV\s*MUSIC\s*24|NICK\s*MUSIC)(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="NICKTOONS PL" title="(?=NICKTOONS(\s*POLSKA)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
@@ -224,7 +224,7 @@
 	<channel id="STINGRAY JUICEBOX HD PL" title="(?=STINGRAY\s*JUICE\s*BOX(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="STINGRAY LOUD HD PL" title="(?=STINGRAY\s*LOUD(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="STINGRAY RETRO PL" title="(?=STINGRAY\s*RETRO(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
-	<channel id="STOPKLATKA TV PL" title="(?=STOPKLATKA(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
+	<channel id="STOPKLATKA TV PL" title="(?=STOPKLATKA(\.)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="STUDIOMED TV PL" title="(?=STUDIO\s*MED(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="SUNDANCE TV PL" title="(?=SUNDANCE(\s*CHANNEL)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="SUPER POLSAT PL" title="(?=(SUPER\s*POLSAT|POLSAT\s*SUPER)(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>

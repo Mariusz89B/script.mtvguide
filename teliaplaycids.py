@@ -389,6 +389,8 @@ class TeliaPlayUpdater(baseServiceUpdater):
         return False
 
     def loginService(self):
+        self.dashjs = ADDON.getSetting('teliaplay_devush')
+        
         try:
             if self.dashjs == '':
                 try: 

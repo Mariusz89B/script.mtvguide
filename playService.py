@@ -53,6 +53,11 @@ else:
     import urllib2 as Request
     from urllib2 import HTTPError, URLError 
 
+try:
+    from urllib.parse import urlencode, quote_plus, quote, unquote
+except ImportError:
+    from urllib import urlencode, quote_plus, quote, unquote
+
 if sys.version_info[0] > 2:
     from requests.exceptions import HTTPError, ConnectionError, Timeout, RequestException
 else:
@@ -258,14 +263,19 @@ class PlayService(xbmc.Player, BasePlayService):
         self.userStoppedPlayback = False
 
         for url in self.urlList[:]:
+
             if self.userStoppedPlayback or self.terminating or strings2.M_TVGUIDE_CLOSING:
                 deb('_playUrlList aborting loop, self.userStoppedPlayback: {}, self.terminating: {}'.format(self.userStoppedPlayback, self.terminating))
                 return
 
             playStarted, customPlugin = self.playUrl(url)
 
+            if playStarted is None:
+                return
+
             if not playStarted:
                 deb('_playUrlList playback not started - checking next stream')
+
             else:
                 time.sleep(1)
                 
@@ -312,7 +322,6 @@ class PlayService(xbmc.Player, BasePlayService):
         
         self.userStoppedPlayback = True
         xbmc.Player().stop()
-
 
     def playUrl(self, url):
         self.playbackStopped = False
@@ -374,56 +383,46 @@ class PlayService(xbmc.Player, BasePlayService):
 
         response = sess.delete(url, headers=headers)
 
-    @contextmanager
-    def busyDialog(self):
-        xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
-        try:
-            yield
-        finally:
-            xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
-
-
     def getUrl(self, strmUrl, cid):
         mimeType = ''
 
-        with self.busyDialog():
-            UA = ADDON.getSetting('{}_user_agent'.format(self.currentlyPlayedService['service']))
+        UA = ADDON.getSetting('{}_user_agent'.format(self.currentlyPlayedService['service']))
 
-            headers = {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0',
-                'Accept': 'application/json, text/javascript, */*; q=0.01',
-                'Accept-Language': 'pl,en-US;q=0.7,en;q=0.3',
-                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-            }
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0',
+            'Accept': 'application/json, text/javascript, */*; q=0.01',
+            'Accept-Language': 'pl,en-US;q=0.7,en;q=0.3',
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        }
 
-            if UA:
-                headers.update({'User-Agent': UA})
+        if UA:
+            headers.update({'User-Agent': UA})
+        
+            conn_timeout = int(ADDON.getSetting('max_wait_for_playback'))
+            read_timeout = int(ADDON.getSetting('max_wait_for_playback'))
+            timeouts = (conn_timeout, read_timeout)
             
-                conn_timeout = int(ADDON.getSetting('max_wait_for_playback'))
-                read_timeout = int(ADDON.getSetting('max_wait_for_playback'))
-                timeouts = (conn_timeout, read_timeout)
-                
-                try:
-                    response = scraper.get(strmUrl, headers=headers, allow_redirects=False, stream=True, timeout=timeouts)
-                    if 'Location' in response.headers and '_TS' not in cid:
-                        strmUrl = response.headers.get('Location', None) 
+            try:
+                response = scraper.get(strmUrl, headers=headers, allow_redirects=False, stream=True, timeout=timeouts)
+                if 'Location' in response.headers and '_TS' not in cid:
+                    strmUrl = response.headers.get('Location', None) 
 
-                    else:
-                        strmUrl = response.url
+                else:
+                    strmUrl = response.url
 
-                except HTTPError as e:
-                    deb('HTTPError: {}'.format(str(e)))
+            except HTTPError as e:
+                deb('HTTPError: {}'.format(str(e)))
 
-                except ConnectionError as e:
-                    deb('ConnectionError: {}'.format(str(e)))
+            except ConnectionError as e:
+                deb('ConnectionError: {}'.format(str(e)))
 
-                except Timeout as e:
-                    deb('Timeout: {}'.format(str(e))) 
+            except Timeout as e:
+                deb('Timeout: {}'.format(str(e))) 
 
-                except RequestException as e:
-                    deb('RequestException: {}'.format(str(e))) 
+            except RequestException as e:
+                deb('RequestException: {}'.format(str(e))) 
 
-            return strmUrl
+        return strmUrl
 
 
     def channCid(self, cid):
@@ -437,11 +436,6 @@ class PlayService(xbmc.Player, BasePlayService):
 
 
     def catchupTeliaPlay(self, channelInfo, utc, lutc):
-        try:
-            from urllib.parse import urlencode, quote_plus, quote, unquote
-        except ImportError:
-            from urllib import urlencode, quote_plus, quote, unquote
-
         base = ['https://teliatv.dk', 'https://www.teliaplay.se']
         classic = ['https://teliatv.dk', 'https://classic.teliaplay.se']
 
@@ -641,23 +635,33 @@ class PlayService(xbmc.Player, BasePlayService):
         return stream_url, license_url
 
 
+    @contextmanager
+    def busyDialog(self):
+        xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
+        try:
+            yield
+        finally:
+            xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
+
+
     def LoadVideoLink(self, channel, service, url):
-        with self.busyDialog():
-            deb('LoadVideoLink {} service'.format(service))
-            res = False
-            startWindowed = False
+        deb('LoadVideoLink {} service'.format(service))
+        res = False
+        startWindowed = False
 
-            inputstream = self.CheckInputstreamInstalledAndEnabled()
-            ffmpegdirect = self.CheckFFmpegDirectInstalledAndEnabled()
+        inputstream = self.CheckInputstreamInstalledAndEnabled()
+        ffmpegdirect = self.CheckFFmpegDirectInstalledAndEnabled()
 
-            pl = re.compile('playlist_\d')
+        pl = re.compile('playlist_\d')
 
-            if ADDON.getSetting('start_video_minimalized') == 'true':
-                startWindowed = True
+        if ADDON.getSetting('start_video_minimalized') == 'true':
+            startWindowed = True
 
-            channelInfo = self.getChannel(channel, service, self.currentlyPlayedService)
+        channelInfo = self.getChannel(channel, service, self.currentlyPlayedService)
 
-            if channelInfo is not None:
+        if channelInfo is not None:
+            with self.busyDialog():
+
                 if self.currentlyPlayedService['service'] != service:
                     self.unlockCurrentlyPlayedService()
                 self.currentlyPlayedService['service'] = service
@@ -1016,8 +1020,8 @@ class PlayService(xbmc.Player, BasePlayService):
                                 lutc = catchupList[3]
 
                                 strmUrl, licenseUrl = self.catchupTeliaPlay(channelInfo, utc, lutc)
-                                if strmUrl is None:
-                                    return
+                                if not strmUrl:
+                                    return None
 
                         UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36 Edg/89.0.774.63'
 
@@ -1420,9 +1424,9 @@ class PlayService(xbmc.Player, BasePlayService):
                             deb('Exception while trying to play video: {}'.format(getExceptionString()))
                             self.unlockCurrentlyPlayedService()
                             xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
-            else:
-                deb('LoadVideoLink ERROR channelInfo is None! service: {}'.format(service))
-            return res
+        else:
+            deb('LoadVideoLink ERROR channelInfo is None! service: {}'.format(service))
+        return res
 
     def onPlayBackError(self):
         self.playbackStopped = True
@@ -1482,6 +1486,9 @@ class PlayService(xbmc.Player, BasePlayService):
             xbmc.Player().stop()
         except:
             xbmc.executebuiltin('PlayerControl(Stop)')
+
+        if not self.userStoppedPlayback:
+            self.checkConnection(self.strmUrl)
 
     def unlockCurrentlyPlayedService(self):
         if self.currentlyPlayedService['service'] is not None:
