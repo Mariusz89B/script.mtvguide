@@ -823,9 +823,9 @@ class Database(object):
                 try:
                     result.update({id.upper(): titles.upper()})
                 except:
-                    result.update({id.upper(): id.upper()})
+                    result.update({id.upper(): ''})
             else:
-                result.update({id.upper(): id.upper()})
+                result.update({id.upper(): ''})
 
         c.close()
 

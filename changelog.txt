@@ -1,6 +1,7 @@
-﻿wersja 9.6.2 - 2021-09-23
+﻿wersja 9.6.2 - 2021-09-27
 - dodano rozpoznawanie strumienia z kanałów EPG
 - poprawka serwisu Telewizja Polska
+- poprawka logowania do serwisu PlayerPL
 - usunięte błędy
 
 wersja 9.6.1 - 2021-09-17
