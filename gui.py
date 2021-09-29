@@ -2644,7 +2644,11 @@ class mTVGuide(xbmcgui.WindowXML):
             item = cList.getSelectedItem()
             if item:
                 self.category = item.getLabel()
-                if sys.version_info[0] < 3:
+
+            if sys.version_info[0] < 3:
+                try:
+                    self.category = self.category
+                except:
                     self.category = self.category.decode('utf-8')
 
             self.database.setCategory(self.category)
@@ -5657,7 +5661,10 @@ class mTVGuide(xbmcgui.WindowXML):
 
             try:
                 if sys.version_info[0] < 3:
-                    self.category = self.category.decode('utf-8')
+                    try:
+                        self.category = self.category
+                    except:
+                        self.category = self.category.decode('utf-8')
             except:
                 self.category = ''
 
@@ -6199,7 +6206,10 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
         self.buttonClicked = None
         self.category = self.database.category
         if sys.version_info[0] < 3:
-            self.category = self.category.decode('utf-8')
+            try:
+                self.category = self.category
+            except:
+                self.category = self.category.decode('utf-8')
         self.categories = self.database.getAllCategories()
 
     def onInit(self):
@@ -6279,7 +6289,11 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
             item = cList.getSelectedItem()
             if item:
                 self.category = item.getLabel()
-                if sys.version_info[0] < 3:
+
+            if sys.version_info[0] < 3:
+                try:
+                    self.category = self.category
+                except:
                     self.category = self.category.decode('utf-8')
 
             dialog = xbmcgui.Dialog()
@@ -6297,7 +6311,10 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
 
             if ret == 0:
                 channelList = sorted([channel.title for channel in self.database.getChannelList(onlyVisible=True, customCategory=self.category, excludeCurrentCategory=True)])
-                string = strings(30989).format(self.category)
+                try:
+                    string = strings(30989).format(self.category)
+                except:
+                    string = strings(30989).format(self.category.decode('utf-8'))
                 ret = dialog.multiselect(string, channelList)
                 if ret is None:
                     return
@@ -6313,7 +6330,10 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
 
             elif ret == 1:
                 channelList = sorted([channel.title for channel in self.database.getChannelList(onlyVisible=True, customCategory=self.category)])
-                string = strings(30990).format(self.category)
+                try:
+                    string = strings(30990).format(self.category)
+                except:
+                    string = strings(30989).format(self.category.decode('utf-8'))
                 ret = dialog.multiselect(string, channelList)
                 if ret is None:
                     return
@@ -6344,8 +6364,12 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
                 item = cList.getSelectedItem()
                 if item:
                     self.category = item.getLabel()
-                    if sys.version_info[0] < 3:
-                        self.category = self.category.decode('utf-8')
+
+            if sys.version_info[0] < 3:
+                try:
+                    self.category = self.category
+                except:
+                    self.category = self.category.decode('utf-8')
             self.buttonClicked = controlId
             self.close()
 

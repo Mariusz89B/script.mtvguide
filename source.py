@@ -921,7 +921,10 @@ class Database(object):
             deb('setCategory - setting category to: {}'.format(category.decode('utf-8', 'replace')))
 
         if self.category != category:
-            self.category = category
+            try:
+                self.category = category
+            except:
+                self.category = category.decode('utf-8')
             
         self.channelList = None
 
@@ -1222,7 +1225,10 @@ class Database(object):
                 f = xbmcvfs.File('special://profile/addon_data/script.mtvguide/categories.ini','wb')
                 for cat in categories:
                     for channel in categories[cat]:
-                        f.write(bytearray("{}={}\n".format(channel, cat), 'utf-8'))
+                        try:
+                            f.write(bytearray("{}={}\n".format(channel, cat), 'utf-8'))
+                        except:
+                            f.write(bytearray("{}={}\n".format(channel, cat.decode('utf-8')), 'utf-8'))
                 f.close()
             except:
                 deb('saveCategoryMap Error: {}'.format(getExceptionString()))
