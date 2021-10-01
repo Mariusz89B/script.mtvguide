@@ -58,8 +58,6 @@ try:
 except:
     skin_resolution = '720p'
 
-ADDON = xbmcaddon.Addon('script.mtvguide')
-
 class SkinObject:
     def __init__(self, name, url="", version="", minGuideVersion="", icon = "", fanart="", description = ""):
         self.name = name

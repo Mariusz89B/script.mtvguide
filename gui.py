@@ -77,8 +77,6 @@ from source import Program, Channel
 
 from contextlib import contextmanager
 
-ADDON = xbmcaddon.Addon('script.mtvguide')
-
 MODE_EPG = 'EPG'
 MODE_TV = 'TV'
 
@@ -743,9 +741,12 @@ class mTVGuide(xbmcgui.WindowXML):
         if res == 0:
             for i in range(1, len(langList)):
                 ADDON.setSetting('country_code_{cc}'.format(cc=ccList[i]), 'false')
+                ADDON.setSetting('show_group_channels', 'false')
             progExec = True
 
         else:
+            ADDON.setSetting('show_group_channels', 'true')
+
             if len(res) > 1:
                 resExtra = xbmcgui.Dialog().yesno(strings(59924), strings(59962))
 
@@ -1951,20 +1952,30 @@ class mTVGuide(xbmcgui.WindowXML):
 
         self.updateTimebar()
 
-        self.interval = 300
+        ADDON.setSetting('epg_size', '0')
+
+        self.interval = 3600
         self.updateEpgTimer = epgTimer(self.interval, self.updateEpg)
 
         self.getListLenght = self.getChannelListLenght()
 
     def updateEpg(self):
         epgSize = ADDON.getSetting('epg_size')
-        epgDbSize = ADDON.getSetting('epg_dbsize')
-        if epgSize != epgDbSize:
+        epgDbSize = self.database.source.getEpgSize()
+
+        #deb('getEpgSize: {}'.format(epgSize))
+        #deb('getEpgDbSize: {}'.format(epgDbSize))
+
+        if ADDON.getSetting('epg_size') == '0':
+            ADDON.setSetting('epg_size', str(epgDbSize))
+
+        if int(epgSize) != int(epgDbSize):
             if xbmc.Player().isPlaying():
-                self.database.getEPGView(self.channelIdx, self.viewStartDate, self.onSourceProgressUpdate, clearExistingProgramList=True)
+                self.onRedrawEPGPlaying(self.channelIdx, self.viewStartDate)
             else:
                 self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
-
+            ADDON.setSetting('epg_size', str(epgDbSize))
+        
     def getStreamsCid(self, channels):
         streams = self.database.getAllCatchupUrlList(channels)
         #deb('getAllCatchupUrlList: {}'.format(streams))
@@ -4835,6 +4846,8 @@ class mTVGuide(xbmcgui.WindowXML):
 
         idx = self.database.getCurrentChannelIdx(self.currentChannel)
 
+        self.played = datetime.datetime.now()
+
         try:
             self.start = self.program.startDate
             self.end = self.program.endDate
@@ -4843,13 +4856,15 @@ class mTVGuide(xbmcgui.WindowXML):
             self.end == ''
 
         if self.start is None or self.start == '':
-            program = self.database.getCurrentProgram(program.channel)
-            self.start = program.startDate
-            self.end = program.endDate
+            try:
+                program = self.database.getCurrentProgram(program.channel)
+                self.start = program.startDate
+                self.end = program.endDate
 
-            self.program = program
-
-        self.played = datetime.datetime.now()
+                self.program = program
+            except:
+                self.start = self.played
+                self.end = self.played        
 
         self.database.lastChannel(idx, self.start, self.end, self.played)
 
@@ -5422,6 +5437,32 @@ class mTVGuide(xbmcgui.WindowXML):
 
         timebars = [self.timebar, self.timebarBack]
         self.addControls(timebars)
+
+    def onRedrawEPGPlaying(self, channelStart, startTime):
+        deb('onRedrawEPGVideo')
+        if self.redrawingEPG or (self.database is not None and self.database.updateInProgress) or self.isClosing or strings2.M_TVGUIDE_CLOSING:
+            deb('onRedrawEPGPlaying - already redrawing')
+            return  # ignore redraw request while redrawing
+        self.blockInputDueToRedrawing = True
+        self.mode = MODE_TV
+
+        try:
+            self.channelIdx, channels, programs, cacheExpired = self.database.getEPGView(channelStart, startTime, self.onSourceProgressUpdate, clearExistingProgramList=True)
+        except src.SourceException:
+            self.blockInputDueToRedrawing = False
+            debug('onRedrawEPGPlaying onEPGLoadError')
+            self.onEPGLoadError()
+            return
+
+        if cacheExpired == True and ADDON.getSetting('notifications_enabled') == 'true':
+            # make sure notifications are scheduled for newly downloaded programs
+            self.notification.scheduleNotifications()
+        
+        self._showControl(self.C_MAIN_LOADING_BACKGROUND)    
+        self._hideControl(self.C_MAIN_LOADING)
+
+        debug('onRedrawEPGPlaying done')
+        return
 
     def onRedrawEPG(self, channelStart, startTime, focusFunction=None):
         deb('onRedrawEPG')

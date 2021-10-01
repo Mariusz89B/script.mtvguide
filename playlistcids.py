@@ -71,8 +71,6 @@ serviceName   = 'playlist'
 
 playlists = ['playlist_1', 'playlist_2', 'playlist_3', 'playlist_4', 'playlist_5']
 
-ADDON = xbmcaddon.Addon('script.mtvguide')
-
 class PlaylistUpdater(baseServiceUpdater):
     def __init__(self, instance_number):
         self.serviceName        = serviceName + "_{}".format(instance_number)

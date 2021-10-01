@@ -77,8 +77,6 @@ from itertools import chain
 from skins import Skin
 from random import uniform
 
-ADDON = xbmcaddon.Addon('script.mtvguide')
-
 NUMBER_OF_SERVICE_PRIORITIES = 12
 SETTINGS_TO_CHECK = ['source', 'xmltv_file', 'xmltv_logo_folder',
                      'm-TVGuide', 'm-TVGuide2', 'm-TVGuide3',
@@ -561,7 +559,6 @@ class Database(object):
         if row:
             epgSize = row[str('epg_size')]
             ADDON.setSetting('epg_size', str(epgSize))
-            ADDON.setSetting('epg_dbsize', str(epgSize))
         c.close()
 
         return self.source.isUpdated(channelsLastUpdated, programsLastUpdated, epgSize)
@@ -2499,7 +2496,7 @@ class MTVGUIDESource(Source):
         if channelsLastUpdated is None or programLastUpdate is None or epgSizeInDB == 0:
             return True
         epgSize = self.getEpgSize(epgSizeInDB)
-        if epgSize != epgSizeInDB:
+        if int(epgSize) != int(epgSizeInDB):
             debug('isUpdated detected new EPG! size in DB is: {}, on server: {}'.format(epgSizeInDB, epgSize))
             return True
         return False
@@ -2509,53 +2506,28 @@ class MTVGUIDESource(Source):
             return 0
         if self.EPGSize is not None and forceCheck == False:
             return self.EPGSize
-        epgRecheckTimeout = 900
+        epgRecheckTimeout = 1800
         failedCounter = 0
         while failedCounter < 3:
             try:
-                new_size = None
-
-                headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:19.0) Gecko/20121213 Firefox/19.0',
+                headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36 Edg/94.0.992.31',
                             'Keep-Alive': 'timeout=20',
                             'ContentType': 'application/x-www-form-urlencoded',
                             'Connection': 'Keep-Alive',
                             }
 
-                response = requests.get(self.MTVGUIDEUrl, headers=headers, verify=False, timeout=2)
+                response = requests.get(self.MTVGUIDEUrl, headers=headers, verify=False, timeout=10)
 
                 try:
                     new_size = int(response.headers['Content-Length'].strip())
+                    deb('getEpgSize Content-Length: {}'.format(new_size))
                 except:
-                    new_size = None
+                    new_size = 0
 
-                if new_size is None:
-                    if sys.version_info[0] > 2:
-                        try:
-                            profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
-                        except:
-                            profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
-                    else:
-                        try:
-                            profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile'))
-                        except:
-                            profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
-
-                    response = requests.get(self.MTVGUIDEUrl, headers=headers, verify=False, timeout=2)
-
-                    file_name = os.path.join(profilePath, 'epg.temp')
-
-                    with open(file_name, 'wb') as f:
-                        if sys.version_info[0] > 2:
-                            f.write(response.content)
-                        else:
-                            f.write(str(response.content))
-
-                    st = os.stat(str(file_name))
-                    new_size = int(st.st_size)
-                    os.remove(file_name)
-
-                    if new_size < 0:
-                        new_size = None
+                if new_size <= 0:
+                    data = response.content
+                    new_size = len(data)
+                    deb('getEpgSize Content: {}'.format(new_size))
 
                 #if new_size < 10000:
                     #raise Exception('getEpgSize too smal EPG size received: {}'.format(new_size))
@@ -2567,9 +2539,9 @@ class MTVGUIDESource(Source):
                 failedCounter = failedCounter + 1
                 time.sleep(0.1)
 
-        if self.EPGSize is None:
+        if self.EPGSize == 0:
             self.EPGSize = defaultSize
-            epgRecheckTimeout = 300 #recheck in 5 min
+            epgRecheckTimeout = 900 #recheck in 15 min
         #This will force checking for updates every 1h
         self.timer = threading.Timer(epgRecheckTimeout, self.resetEpgSize)
         self.timer.start()
@@ -2578,7 +2550,6 @@ class MTVGUIDESource(Source):
     def resetEpgSize(self):
         debug('resetEpgSize')
         self.EPGSize = self.getEpgSize(self.EPGSize, forceCheck=True)
-        ADDON.setSetting('epg_size', str(self.EPGSize))
 
     def close(self):
         if self.timer and self.timer.is_alive():
