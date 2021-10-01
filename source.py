@@ -1184,7 +1184,7 @@ class Database(object):
     def getCategoryMap(self):
         categoryMap = list()
         try:
-            f = xbmcvfs.File('special://profile/addon_data/script.mtvguide/categories.ini','r')
+            f = xbmcvfs.File('special://profile/addon_data/script.mtvguide/categories.ini','rb')
             lines = f.read().splitlines()
             f.close()
 
@@ -1205,10 +1205,7 @@ class Database(object):
             try:
                 newList = list()
                 for channel, cat in categories:
-                    if sys.version_info[0] > 2:
-                        name, category = line.split('=')
-                    else:
-                        name, category = line.decode('utf-8').split('=')
+                    line = "{}={}".format(channel, cat)
                     newList.append(line)
 
                 f = xbmcvfs.File('special://profile/addon_data/script.mtvguide/categories.ini','wb')
@@ -1237,10 +1234,11 @@ class Database(object):
         return channelList
 
     def getAllCategories(self):
+        from collections import OrderedDict
         categoryList = list()
         for _, cat in self.getCategoryMap():
             categoryList.append(cat)
-        categoryList = list(dict.fromkeys(categoryList))
+        categoryList = OrderedDict((k, None) for k in categoryList)
         return categoryList
 
     def programSearch(self, search):

@@ -2380,11 +2380,9 @@ class mTVGuide(xbmcgui.WindowXML):
 
                 current_categories.pop(res)
 
-            sortedvalues = dict(sorted(values.items(), key=lambda x: categories.index(x[1])))
+            sortedvalues = sorted(values.items(), key=lambda x: categories.index(x[1]))
 
-            dictlist = [(k, v) for k, v in sortedvalues.items()]
-
-            self.database.saveCategoryMap(dictlist, True)
+            self.database.saveCategoryMap(sortedvalues, True)
             self.onRedrawEPG(self.channelIdx, self.viewStartDate)
 
     def onActionTVMode(self, action):
@@ -5720,7 +5718,11 @@ class mTVGuide(xbmcgui.WindowXML):
                 items.append(item)
 
             listControl.addItems(items)
-            if self.category.encode('utf-8') and self.category.encode('utf-8') in categories:
+
+            if sys.version_info[0] < 3:
+                self.category = self.category.decode('utf-8')
+
+            if self.category and self.category in categories:
                 index = categories.index(self.category)
                 if index >= 0:
                     listControl.selectItem(index)
@@ -6265,6 +6267,10 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
                 items.append(item)
 
             listControl.addItems(items)
+
+            if sys.version_info[0] < 3:
+                self.category = self.category.decode('utf-8')
+
             if self.category and self.category in categories:
                 index = categories.index(self.category)
                 if index >= 0:
