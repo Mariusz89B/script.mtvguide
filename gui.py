@@ -2656,12 +2656,6 @@ class mTVGuide(xbmcgui.WindowXML):
             if item:
                 self.category = item.getLabel()
 
-            if sys.version_info[0] < 3:
-                try:
-                    self.category = self.category
-                except:
-                    self.category = self.category.decode('utf-8')
-
             self.database.setCategory(self.category)
             ADDON.setSetting('category', self.category)
             with self.busyDialog():
@@ -5701,11 +5695,7 @@ class mTVGuide(xbmcgui.WindowXML):
             self.category = self.database.category
 
             try:
-                if sys.version_info[0] < 3:
-                    try:
-                        self.category = self.category
-                    except:
-                        self.category = self.category.decode('utf-8')
+                self.category = self.category
             except:
                 self.category = ''
 
@@ -5730,7 +5720,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 items.append(item)
 
             listControl.addItems(items)
-            if self.category and self.category in categories:
+            if self.category.encode('utf-8') and self.category.encode('utf-8') in categories:
                 index = categories.index(self.category)
                 if index >= 0:
                     listControl.selectItem(index)
@@ -6246,11 +6236,6 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
         self.program = program
         self.buttonClicked = None
         self.category = self.database.category
-        if sys.version_info[0] < 3:
-            try:
-                self.category = self.category
-            except:
-                self.category = self.category.decode('utf-8')
         self.categories = self.database.getAllCategories()
 
     def onInit(self):
@@ -6331,12 +6316,6 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
             if item:
                 self.category = item.getLabel()
 
-            if sys.version_info[0] < 3:
-                try:
-                    self.category = self.category
-                except:
-                    self.category = self.category.decode('utf-8')
-
             dialog = xbmcgui.Dialog()
             ret = dialog.select(self.category, (strings(30985), strings(30986), strings(30987)))
 
@@ -6374,7 +6353,7 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
                 try:
                     string = strings(30990).format(self.category)
                 except:
-                    string = strings(30989).format(self.category.decode('utf-8'))
+                    string = strings(30990).format(self.category.decode('utf-8'))
                 ret = dialog.multiselect(string, channelList)
                 if ret is None:
                     return
@@ -6406,11 +6385,6 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
                 if item:
                     self.category = item.getLabel()
 
-            if sys.version_info[0] < 3:
-                try:
-                    self.category = self.category
-                except:
-                    self.category = self.category.decode('utf-8')
             self.buttonClicked = controlId
             self.close()
 
@@ -6420,10 +6394,7 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
                 cat = dialog.input(strings(30984), type=xbmcgui.INPUT_ALPHANUM)
                 if cat:
                     categories = set(self.categories)
-                    if sys.version_info[0] > 2:
-                        categories.add(cat)
-                    else:
-                        categories.add(cat.decode('utf-8'))
+                    categories.add(cat)
                     self.categories = list(set(categories))
                     items = list()
                     categories = PREDEFINED_CATEGORIES + list(self.categories)
@@ -6435,10 +6406,7 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
                     listControl.reset()
                 
                     listControl.addItems(items)
-                    if sys.version_info[0] > 2:
-                        listControl.selectItem(categories.index(cat))
-                    else:
-                        listControl.selectItem(categories.index(cat.decode('utf-8')))
+                    listControl.selectItem(categories.index(cat))
 
                     self.setFocusId(self.C_POPUP_CATEGORY)
                     xbmc.sleep(300)

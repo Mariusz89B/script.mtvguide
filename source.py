@@ -913,15 +913,11 @@ class Database(object):
     def setCategory(self, category):
         try:
             deb('setCategory - setting category to: {}'.format(category))
-            
         except:
-            deb('setCategory - setting category to: {}'.format(category.decode('utf-8', 'replace')))
+            deb('setCategory - setting category to: {}'.format(category.decode('utf-8')))
 
         if self.category != category:
-            try:
-                self.category = category
-            except:
-                self.category = category.decode('utf-8')
+            self.category = category
             
         self.channelList = None
 
@@ -1188,14 +1184,14 @@ class Database(object):
     def getCategoryMap(self):
         categoryMap = list()
         try:
-            f = xbmcvfs.File('special://profile/addon_data/script.mtvguide/categories.ini','rb')
+            f = xbmcvfs.File('special://profile/addon_data/script.mtvguide/categories.ini','r')
             lines = f.read().splitlines()
             f.close()
 
             for line in lines:
-                if sys.version_info[0] > 2:
+                try:
                     name, category = line.split('=')
-                else:
+                except:
                     name, category = line.decode('utf-8').split('=')
                 categoryMap.append((name, category))
         except:
@@ -1209,7 +1205,10 @@ class Database(object):
             try:
                 newList = list()
                 for channel, cat in categories:
-                    line = "{}={}".format(channel, cat)
+                    if sys.version_info[0] > 2:
+                        name, category = line.split('=')
+                    else:
+                        name, category = line.decode('utf-8').split('=')
                     newList.append(line)
 
                 f = xbmcvfs.File('special://profile/addon_data/script.mtvguide/categories.ini','wb')
@@ -1222,10 +1221,10 @@ class Database(object):
                 f = xbmcvfs.File('special://profile/addon_data/script.mtvguide/categories.ini','wb')
                 for cat in categories:
                     for channel in categories[cat]:
-                        try:
+                        if sys.version_info[0] > 2:
                             f.write(bytearray("{}={}\n".format(channel, cat), 'utf-8'))
-                        except:
-                            f.write(bytearray("{}={}\n".format(channel, cat.decode('utf-8')), 'utf-8'))
+                        else:
+                            f.write(bytearray("{}={}\n".format(channel.decode('utf-8'), cat.decode('utf-8')), 'utf-8'))
                 f.close()
             except:
                 deb('saveCategoryMap Error: {}'.format(getExceptionString()))
