@@ -1218,10 +1218,10 @@ class Database(object):
                 f = xbmcvfs.File('special://profile/addon_data/script.mtvguide/categories.ini','wb')
                 for cat in categories:
                     for channel in categories[cat]:
-                        if sys.version_info[0] > 2:
+                        try:
                             f.write(bytearray("{}={}\n".format(channel, cat), 'utf-8'))
-                        else:
-                            f.write(bytearray("{}={}\n".format(channel.decode('utf-8'), cat.decode('utf-8')), 'utf-8'))
+                        except:
+                            f.write(bytearray("{}={}\n".format(channel, cat.decode('utf-8')), 'utf-8'))
                 f.close()
             except:
                 deb('saveCategoryMap Error: {}'.format(getExceptionString()))
