@@ -2276,7 +2276,7 @@ class Source(object):
                         'Connection': 'Keep-Alive',
                     }
 
-                    u = requests.get(url, headers=headers, timeout=15)
+                    u = requests.get(url, headers=headers, verify=True, timeout=15)
                     filename = u.url
                     content = u.content
                     break
@@ -2513,7 +2513,7 @@ class MTVGUIDESource(Source):
                             'Connection': 'Keep-Alive',
                             }
 
-                response = requests.get(self.MTVGUIDEUrl, headers=headers, verify=False, timeout=10)
+                response = requests.get(self.MTVGUIDEUrl, headers=headers, verify=True, timeout=10)
 
                 try:
                     new_size = int(response.headers['Content-Length'].strip())

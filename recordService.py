@@ -685,7 +685,7 @@ class RecordService(BasePlayService):
 
                                     #if int(utc) > timestamp:
                                     new_url = strmUrl + '?utc={utc}&lutc={lutc}'.format(utc=utc, lutc=lutc)
-                                    response = requests.get(new_url, allow_redirects=False, verify=False, timeout=2)
+                                    response = requests.get(new_url, allow_redirects=False, verify=True, timeout=2)
                                     strmUrlNew = response.headers.get('Location', None) if 'Location' in response.headers else strmUrl
 
                                     if strmUrlNew:

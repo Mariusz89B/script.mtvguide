@@ -151,9 +151,9 @@ class IplaUpdater(baseServiceUpdater):
 
     def getRequests(self, url, data={}, headers={}, params ={}):
         if data:
-            content = sess.post(url, headers=headers, json=data, params=params, verify=False, timeout=timeouts).json()
+            content = sess.post(url, headers=headers, json=data, params=params, verify=True, timeout=timeouts).json()
         else:
-            content = sess.get(url, headers=headers, params=params, verify=False, timeout=timeouts).json()
+            content = sess.get(url, headers=headers, params=params, verify=True, timeout=timeouts).json()
         return content
 
     def loginService(self):

@@ -500,7 +500,7 @@ class PlayService(xbmc.Player, BasePlayService):
             ('extensions', '{"persistedQuery":{"version":1,"sha256Hash":"6760f09a1fde5f410dc80906db28789631cc8c8b4887ff0c24ed76ff25eca71a"}}'),
         )
 
-        response = requests.get('https://graphql-telia.t6a.net/graphql', headers=headers, params=params, cookies=sess.cookies, verify=False).json()
+        response = requests.get('https://graphql-telia.t6a.net/graphql', headers=headers, params=params, cookies=sess.cookies, verify=True).json()
 
         media_id = ''
         watch_mode = ''
@@ -582,7 +582,7 @@ class PlayService(xbmc.Player, BasePlayService):
                     "accessibility":[]}
                     }
 
-        response = requests.post(url, headers=headers, json=data, params=params, cookies=sess.cookies, verify=False).json()
+        response = requests.post(url, headers=headers, json=data, params=params, cookies=sess.cookies, verify=True).json()
 
         hea = ''
 

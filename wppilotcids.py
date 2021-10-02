@@ -144,7 +144,7 @@ class WpPilotUpdater(baseServiceUpdater):
                     response = requests.post(
                         login_url,
                         json=data,
-                        verify=False,
+                        verify=True,
                         headers=headers
                     )
 
@@ -167,7 +167,7 @@ class WpPilotUpdater(baseServiceUpdater):
                     return True
 
                 elif len(self.remote_cookies) > 0:
-                    cookies_from_url = requests.get(self.remote_cookies, verify=False, timeout=10).text
+                    cookies_from_url = requests.get(self.remote_cookies, verify=True, timeout=10).text
                     cookies = json.loads(cookies_from_url)
                     self.saveToDB('wppilot_cache', self.cookiesToString(cookies))
                     return True
@@ -193,7 +193,7 @@ class WpPilotUpdater(baseServiceUpdater):
         try:
             cookies = self.readFromDB()
             headers.update({'Cookie': cookies})
-            response = requests.get(main_url, verify=False, headers=headers).json()
+            response = requests.get(main_url, verify=True, headers=headers).json()
 
             data = response.get('data', [])
 
@@ -201,13 +201,13 @@ class WpPilotUpdater(baseServiceUpdater):
                 if channel.get('access_status', '') != 'unsubscribed':
                     cid  = channel['id']
                     name = channel['name']
-                    title = channel['name'] + ' PL'                    
+                    title = channel['name'] + ' PL'
                     img  = channel['thumbnail_mobile']
                     geoblocked = channel['geoblocked']
                     access = channel['access_status']
                     self.log('[UPD] %-10s %-35s %-15s %-20s %-35s' % (cid, name, geoblocked, access, img))
                     if geoblocked != True and access != 'unsubscribed':
-                        program = TvCid(cid=cid, name=name, title=name, img=img, lic=access)
+                        program = TvCid(cid=cid, name=name, title=title, img=img, lic=access)
                         result.append(program)
 
             if len(result) <= 0:
@@ -233,7 +233,7 @@ class WpPilotUpdater(baseServiceUpdater):
             response = requests.get(
                 url,
                 params=data,
-                verify=False,
+                verify=True,
                 headers=headers,
             ).json()
 
@@ -251,7 +251,7 @@ class WpPilotUpdater(baseServiceUpdater):
                     response = requests.post(
                         close_stream_url,
                         json=json,
-                        verify=False,
+                        verify=True,
                         headers=headers
                     ).json()
                     if response.get('data', {}).get('status', '') == 'ok' and not retry:

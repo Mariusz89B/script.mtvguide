@@ -141,9 +141,9 @@ class PolsatGoUpdater(baseServiceUpdater):
 
     def getRequests(self, url, data={}, headers={}, params ={}):
         if data:
-            content = sess.post(url, headers=headers, json=data, params=params, verify=False, timeout=timeouts).json()
+            content = sess.post(url, headers=headers, json=data, params=params, verify=True, timeout=timeouts).json()
         else:
-            content = sess.get(url, headers=headers, params=params, verify=False, timeout=timeouts).json()
+            content = sess.get(url, headers=headers, params=params, verify=True, timeout=timeouts).json()
         return content
 
     def loginService(self):
@@ -525,7 +525,7 @@ class PolsatGoUpdater(baseServiceUpdater):
                     },
                     "clientId": ""}}
 
-            response = requests.post(self.auth, headers=headers, json=data, timeout=15, verify=False).json()
+            response = requests.post(self.auth, headers=headers, json=data, timeout=15, verify=True).json()
             session = response['result']['session']
 
             sesstoken = session['id']
@@ -544,7 +544,7 @@ class PolsatGoUpdater(baseServiceUpdater):
 
             data = {"jsonrpc":"2.0","id":1,"method":"prePlayData","params":{"ua":UAPGwidevine,"userAgentData":{"deviceType":"pc","application":"firefox","os":"windows","build":2150100,"portal":"pg","player":"html","widevine":True},"cpid":cpid,"mediaId":id,"authData":{"sessionToken":authdata},"clientId":self.clid}}
 
-            response = requests.post(self.navigate, headers=headers, json=data, timeout=15, verify=False).json()
+            response = requests.post(self.navigate, headers=headers, json=data, timeout=15, verify=True).json()
             playback = response['result']['mediaItem']['playback']
             mediaid = playback['mediaId']['id']
             mediaSources = playback['mediaSources'][0]
@@ -573,7 +573,7 @@ class PolsatGoUpdater(baseServiceUpdater):
                         "authData": {
                             "sessionToken":authdata}}}
 
-                response = requests.post('https://b2c-www.redefine.pl/rpc/drm/', headers=headers, json=data, timeout=15, verify=False).json()
+                response = requests.post('https://b2c-www.redefine.pl/rpc/drm/', headers=headers, json=data, timeout=15, verify=True).json()
 
                 licenseUrl = None
                 data = response['result']['url']

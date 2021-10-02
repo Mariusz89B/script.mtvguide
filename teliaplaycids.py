@@ -149,7 +149,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
         self.subtoken           = ADDON.getSetting('teliaplay_subtoken')
 
 
-    def sendRequest(self, url, post=False, json=None, headers=None, data=None, params=None, cookies=None, verify=False, allow_redirects=False, timeout=None):
+    def sendRequest(self, url, post=False, json=None, headers=None, data=None, params=None, cookies=None, verify=True, allow_redirects=False, timeout=None):
         try:
             if post:
                 response = sess.post(url, headers=headers, json=json, data=data, params=params, cookies=cookies, verify=verify, allow_redirects=allow_redirects, timeout=timeout)
@@ -237,7 +237,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 'Accept-Language': 'en-US,en;q=0.9',
             }
 
-            response = self.sendRequest(url, post=True, headers=headers, data=json.dumps(data), verify=False, timeout=timeouts)
+            response = self.sendRequest(url, post=True, headers=headers, data=json.dumps(data), verify=True, timeout=timeouts)
 
             url = 'https://ottapi.prod.telia.net/web/{cc}/logingateway/rest/v1/login'.format(cc=cc[self.country])
 
@@ -263,7 +263,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 "deviceType": "WEB",
             }
             
-            response = self.sendRequest(url, post=True, headers=headers, data=json.dumps(data), verify=False, timeout=timeouts)
+            response = self.sendRequest(url, post=True, headers=headers, data=json.dumps(data), verify=True, timeout=timeouts)
             if not response:
                 if reconnect:
                     self.loginData(reconnect=True)
@@ -322,7 +322,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 "platformVersion": "NT 6.1"
             }
 
-            response = self.sendRequest(url, post=True, json=False, headers=headers, data=json.dumps(data), verify=False, timeout=timeouts)
+            response = self.sendRequest(url, post=True, json=False, headers=headers, data=json.dumps(data), verify=True, timeout=timeouts)
 
             try:
                 response = response.json()
@@ -399,7 +399,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                     from bs4 import BeautifulSoup
 
                 try:
-                    html = sess.get('https://www.telia.se/privat/support/info/registrerade-enheter-telia-play', verify=False, timeout=timeouts).text
+                    html = sess.get('https://www.telia.se/privat/support/info/registrerade-enheter-telia-play', verify=True, timeout=timeouts).text
 
                     soup = BeautifulSoup(html, "html.parser")
 
@@ -516,7 +516,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 "Authorization": "Bearer " + self.beartoken,
             }
             
-            engagementjson = self.sendRequest(url, headers=headers, verify=False)
+            engagementjson = self.sendRequest(url, headers=headers, verify=True)
             if not engagementjson:
                 return result
 
@@ -547,7 +547,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
 
             }
 
-            channels = self.sendRequest(url, headers=headers, verify=False) 
+            channels = self.sendRequest(url, headers=headers, verify=True) 
             if not channels:
                 return result
 
@@ -645,7 +645,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                         "accessibility":[]}
                         }
 
-            response = self.sendRequest(url, post=True, headers=headers, json=data, params=params, cookies=sess.cookies, verify=False, timeout=timeouts)
+            response = self.sendRequest(url, post=True, headers=headers, json=data, params=params, cookies=sess.cookies, verify=True, timeout=timeouts)
             if not response:
                 data = None
                 return data 
