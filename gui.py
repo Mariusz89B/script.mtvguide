@@ -1960,21 +1960,22 @@ class mTVGuide(xbmcgui.WindowXML):
         self.getListLenght = self.getChannelListLenght()
 
     def updateEpg(self):
-        epgSize = ADDON.getSetting('epg_size')
-        epgDbSize = self.database.source.getEpgSize()
+        if ADDON.getSetting('epg_interval') == '0':
+            epgSize = ADDON.getSetting('epg_size')
+            epgDbSize = self.database.source.getEpgSize()
 
-        #deb('getEpgSize: {}'.format(epgSize))
-        #deb('getEpgDbSize: {}'.format(epgDbSize))
+            #deb('getEpgSize: {}'.format(epgSize))
+            #deb('getEpgDbSize: {}'.format(epgDbSize))
 
-        if ADDON.getSetting('epg_size') == '0':
-            ADDON.setSetting('epg_size', str(epgDbSize))
+            if ADDON.getSetting('epg_size') == '0':
+                ADDON.setSetting('epg_size', str(epgDbSize))
 
-        if int(epgSize) != int(epgDbSize):
-            if xbmc.Player().isPlaying():
-                self.onRedrawEPGPlaying(self.channelIdx, self.viewStartDate)
-            else:
-                self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
-            ADDON.setSetting('epg_size', str(epgDbSize))
+            if int(epgSize) != int(epgDbSize):
+                if xbmc.Player().isPlaying():
+                    self.onRedrawEPGPlaying(self.channelIdx, self.viewStartDate)
+                else:
+                    self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
+                ADDON.setSetting('epg_size', str(epgDbSize))
         
     def getStreamsCid(self, channels):
         streams = self.database.getAllCatchupUrlList(channels)
