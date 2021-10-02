@@ -2429,11 +2429,12 @@
 					<constraints>
 						<options>
 							<option label="60000">0</option>
-							<option label="30764">1</option>
-							<option label="30765">2</option>
-							<option label="30766">3</option>
-							<option label="30767">4</option>
-							<option label="30768">5</option>
+							<option label="30769">1</option>
+							<option label="30764">2</option>
+							<option label="30765">3</option>
+							<option label="30766">4</option>
+							<option label="30767">5</option>
+							<option label="30768">6</option>
 						</options>
 					</constraints>
 					<dependencies>

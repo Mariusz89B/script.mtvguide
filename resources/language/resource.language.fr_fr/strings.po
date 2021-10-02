@@ -968,6 +968,10 @@ msgctxt "#30768"
 msgid "14 days"
 msgstr "14 jours"
 
+msgctxt "#30769"
+msgid "Every start"
+msgstr "Chaque fois que tu cours"
+
 msgctxt "#30801"
 msgid "EPG update interval"
 msgstr "Intervalle de mise à jour EPG"

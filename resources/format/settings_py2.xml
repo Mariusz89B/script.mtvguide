@@ -191,7 +191,7 @@
 		<setting id="AutoUpdateCid" label="30703" type="bool" default="true" visible="eq(-4,0) | eq(-4,1)"/>
 		<setting id="OnlyChannelsWithStream" label="30705" type="bool" default="true" visible="eq(-5,0) | eq(-5,1)"/>
 		<setting id="UpdateEPGOnModifiedDate" label="30706" type="bool" default="true" visible="eq(-6,0) | eq(-6,1)"/>
-		<setting id="epg_interval" label="30801" type="enum" default="0" lvalues="60000|30764|30765|30766|30767|30768" visible="eq(-7,0) | eq(-7,1)"/>
+		<setting id="epg_interval" label="30801" type="enum" default="0" lvalues="60000|30769|30764|30765|30766|30767|30768" visible="eq(-7,0) | eq(-7,1)"/>
 		<setting id="epg_display_name" label="30761" type="bool" default="false" visible="eq(-8,0) | eq(-8,1)"/>
 		<setting id="show_group_channels" label="30762" type="bool" default="false" visible="eq(-9,0) | eq(-9,1)"/>
 		<setting id="useCustomParser" label="30708" type="bool" default="true" visible="eq(-10,1)"/>

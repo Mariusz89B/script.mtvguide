@@ -4667,14 +4667,10 @@ class mTVGuide(xbmcgui.WindowXML):
 
         self.setControlText(C_MAIN_DESCRIPTION, description)
         
-        p = re.compile('^http(s)?:\/\/.*')
-
         if program.channel.logo is not None:
             self.setControlImage(C_MAIN_LOGO, program.channel.logo)
         if program.imageSmall is not None and ADDON.getSetting('show_program_logo') == "true":
-            if p.match(program.imageSmall):
-                self.setControlImage(C_MAIN_IMAGE, program.imageSmall)
-            else: program.imageSmall is None
+            self.setControlImage(C_MAIN_IMAGE, program.imageSmall)
         if program.imageSmall is None:
             self.setControlImage(C_MAIN_IMAGE, 'tvguide-logo-epg.png')
         if program.imageLarge == 'live':
@@ -6967,15 +6963,11 @@ class InfoDialog(xbmcgui.WindowXMLDialog):
             description = descriptionParser.description
 
         self.setControlText(C_MAIN_DESCRIPTION, description)
-        
-        p = re.compile('^http(s)?:\/\/.*')
 
         if self.program.channel.logo is not None:
             self.setControlImage(C_MAIN_LOGO, self.program.channel.logo)
         if self.program.imageSmall is not None and ADDON.getSetting('show_program_logo') == "true":
-            if p.match(self.program.imageSmall):
-                self.setControlImage(C_MAIN_IMAGE, self.program.imageSmall)
-            else: self.program.imageSmall is None 
+            self.setControlImage(C_MAIN_IMAGE, self.program.imageSmall)
         if self.program.imageSmall is None:
             self.setControlImage(C_MAIN_IMAGE, 'tvguide-logo-epg.png')
         if self.program.imageLarge == 'live':

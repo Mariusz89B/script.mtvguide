@@ -523,6 +523,9 @@ class Database(object):
         return settingsChanged
 
     def _isCacheExpired(self, date):
+        if ADDON.getSetting('epg_interval') == '1':
+            return True
+
         if self.settingsChanged:
             return True
 
@@ -567,14 +570,16 @@ class Database(object):
             if interval == '0':
                 set_time = 'auto'
             elif interval == '1':
-                set_time = 43200
+                set_time = 0
             elif interval == '2':
-                set_time = 86400
+                set_time = 43200
             elif interval == '3':
-                set_time = 172800
+                set_time = 86400
             elif interval == '4':
-                set_time = 604800
+                set_time = 172800
             elif interval == '5':
+                set_time = 604800
+            elif interval == '6':
                 set_time = 1209600
 
             if set_time != 'auto':

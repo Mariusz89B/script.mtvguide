@@ -968,6 +968,10 @@ msgctxt "#30768"
 msgid "14 days"
 msgstr "14 dana"
 
+msgctxt "#30769"
+msgid "Every start"
+msgstr "Svaki put kad trčiš"
+
 msgctxt "#30801"
 msgid "EPG update interval"
 msgstr "Interval ažuriranja EPG"
