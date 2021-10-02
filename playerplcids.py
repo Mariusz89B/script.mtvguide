@@ -195,13 +195,13 @@ class PlayerPLUpdater(baseServiceUpdater):
     def getRequests(self, url, data={}, headers={}, params ={}):
         if data:
             if headers.get('Content-Type', '').startswith('application/json'):
-                content = sess.post(url, headers=headers, json=data, params=params, verify=True, timeout=timeouts).json()
+                content = sess.post(url, headers=headers, json=data, params=params, verify=False, timeout=timeouts).json()
 
             else:
-                content = sess.post(url, headers=headers, data=data, params=params, verify=True, timeout=timeouts).json()
+                content = sess.post(url, headers=headers, data=data, params=params, verify=False, timeout=timeouts).json()
 
         else:
-            content = sess.get(url, headers=headers, params=params, verify=True, timeout=timeouts).json()
+            content = sess.get(url, headers=headers, params=params, verify=False, timeout=timeouts).json()
 
         return content
 
@@ -431,7 +431,7 @@ class PlayerPLUpdater(baseServiceUpdater):
         if vidsesid:
             widev += '&videoSessionId=%s' % vidsesid
     
-        src = requests.get(src, allow_redirects=False, verify=True)
+        src = requests.get(src, allow_redirects=False, verify=False)
         src = src.headers['Location']
 
         return src, widev, outsub

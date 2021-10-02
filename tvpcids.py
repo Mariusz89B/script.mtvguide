@@ -89,7 +89,7 @@ class TvpUpdater(baseServiceUpdater):
         self.servicePriority    = int(ADDON.getSetting('priority_tvp'))
         self.url = url
 
-    def sendRequest(self, url, post=False, json=False, headers=None, data=None, params=None, cookies=None, verify=True, allow_redirects=False, timeout=None):
+    def sendRequest(self, url, post=False, json=False, headers=None, data=None, params=None, cookies=None, verify=False, allow_redirects=False, timeout=None):
         try:
             if post:
                 response = sess.post(url, headers=headers, data=data, params=params, cookies=cookies, verify=verify, allow_redirects=allow_redirects, timeout=timeout)

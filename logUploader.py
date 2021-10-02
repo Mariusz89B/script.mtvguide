@@ -44,10 +44,7 @@ from __future__ import unicode_literals
 
 import sys
 
-if sys.version_info[0] > 2:
-    import urllib.request, urllib.parse, urllib.error, http.client
-else:
-    import urllib, urllib2, httplib
+import requests
 
 import os, datetime
 import xbmc, xbmcaddon, xbmcgui, xbmcplugin, xbmcvfs
@@ -103,22 +100,29 @@ class LogUploader:
     def upload(self, data):
         if data is None:
             return None
-        params = {}
-        params['poster'] = 'anonymous'
-        params['content'] = data[-1500000:]
-        params['syntax'] = 'text'
-        params['expiration'] = 'week'
-        if sys.version_info[0] > 2:
-            params = urllib.parse.urlencode(params).encode('utf-8')
-        else:
-            params = urllib.urlencode(params)
+
         startTime = datetime.datetime.now()
 
         try:
-            if sys.version_info[0] > 2:
-                page = urllib.request.urlopen(URL, params, timeout=10)
-            else:
-                page = urllib2.urlopen(URL, params, timeout=10)
+            headers = {
+                'Connection': 'keep-alive',
+                'Origin': 'https://paste.ubuntu.com',
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36 Edg/94.0.992.31',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+                'Referer': 'https://paste.ubuntu.com/',
+                'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
+            }
+
+            data = {
+              'poster': 'anonymous',
+              'syntax': 'text',
+              'expiration': 'week',
+              'content': data
+            }
+
+            page = requests.post('https://paste.ubuntu.com/', headers=headers, data=data, verify=False)
+
         except Exception as ex:
             deb('LogUploader upload failed to connect to the server, exception: %s' % getExceptionString())
             deb('LogUploader Uploading files took: %s' % (datetime.datetime.now() - startTime).seconds)

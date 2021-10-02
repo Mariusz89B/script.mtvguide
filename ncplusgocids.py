@@ -352,7 +352,7 @@ class NcPlusGoUpdater(baseServiceUpdater):
 
         if not "DrmInfo" in response:
             data={"DeviceTypeId":14454, "AddDevice":False, "Email":self.login, "Password":self.password, "DeviceName":"GT-I8200", "Token":nctoken, "DeviceKey":self.devicekey, "PlatformCodename":"android", "IsHomeNetwork":False, "ServiceType":"1"}
-            response = sess.post(ncplusgoUrl + 'NcAccount/Login', headers=headers, json=data, verify=True, timeout=timeouts).json()
+            response = sess.post(ncplusgoUrl + 'NcAccount/Login', headers=headers, json=data, verify=False, timeout=timeouts).json()
             if response['Result']['Success']:
                 token = response['Token']
                 tokenexpir = response['TokenExpirationTime']

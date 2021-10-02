@@ -144,7 +144,7 @@ class WpPilotUpdater(baseServiceUpdater):
                     response = requests.post(
                         login_url,
                         json=data,
-                        verify=True,
+                        verify=False,
                         headers=headers
                     )
 
@@ -167,7 +167,7 @@ class WpPilotUpdater(baseServiceUpdater):
                     return True
 
                 elif len(self.remote_cookies) > 0:
-                    cookies_from_url = requests.get(self.remote_cookies, verify=True, timeout=10).text
+                    cookies_from_url = requests.get(self.remote_cookies, verify=False, timeout=10).text
                     cookies = json.loads(cookies_from_url)
                     self.saveToDB('wppilot_cache', self.cookiesToString(cookies))
                     return True
@@ -193,7 +193,7 @@ class WpPilotUpdater(baseServiceUpdater):
         try:
             cookies = self.readFromDB()
             headers.update({'Cookie': cookies})
-            response = requests.get(main_url, verify=True, headers=headers).json()
+            response = requests.get(main_url, verify=False, headers=headers).json()
 
             data = response.get('data', [])
 
@@ -233,7 +233,7 @@ class WpPilotUpdater(baseServiceUpdater):
             response = requests.get(
                 url,
                 params=data,
-                verify=True,
+                verify=False,
                 headers=headers,
             ).json()
 
@@ -251,7 +251,7 @@ class WpPilotUpdater(baseServiceUpdater):
                     response = requests.post(
                         close_stream_url,
                         json=json,
-                        verify=True,
+                        verify=False,
                         headers=headers
                     ).json()
                     if response.get('data', {}).get('status', '') == 'ok' and not retry:
