@@ -2423,6 +2423,29 @@
 					</dependencies>
 					<control type="toggle"/>
 				</setting>
+				<setting help="95139" id="epg_interval" label="30801" type="integer">
+					<level>1</level>
+					<default>6</default>
+					<constraints>
+						<options>
+							<option label="60000">0</option>
+							<option label="30764">1</option>
+							<option label="30765">2</option>
+							<option label="30766">3</option>
+							<option label="30767">4</option>
+							<option label="30768">5</option>
+						</options>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<and>
+								<condition operator="is" setting="source">0</condition>
+								<condition operator="is" setting="source">1</condition>
+							</and>
+						</dependency>
+					</dependencies>
+					<control format="string" type="spinner"/>
+				</setting>
 				<setting help="95134" id="epg_display_name" label="30761" type="boolean">
 					<level>1</level>
 					<default>false</default>

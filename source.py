@@ -561,6 +561,30 @@ class Database(object):
             ADDON.setSetting('epg_size', str(epgSize))
         c.close()
 
+        if programsLastUpdated is not None:
+            interval = ADDON.getSetting('epg_interval')
+
+            if interval == '0':
+                set_time = 'auto'
+            elif interval == '1':
+                set_time = 43200
+            elif interval == '2':
+                set_time = 86400
+            elif interval == '3':
+                set_time = 172800
+            elif interval == '4':
+                set_time = 604800
+            elif interval == '5':
+                set_time = 1209600
+
+            if set_time != 'auto':
+                epg_interval = datetime.datetime.fromtimestamp(datetime.datetime.now()) - set_time
+
+                if int(epg_interval) > int(programsLastUpdated):
+                    self.source.isUpdated(channelsLastUpdated, programsLastUpdated, epgSize)
+                else:
+                    return False
+
         return self.source.isUpdated(channelsLastUpdated, programsLastUpdated, epgSize)
 
     def updateChannelAndProgramListCaches(self, callback, date = datetime.datetime.now(), progress_callback = None, clearExistingProgramList = True):

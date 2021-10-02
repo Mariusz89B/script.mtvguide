@@ -948,6 +948,30 @@ msgctxt "#30763"
 msgid "Append fixed country code for all channels"
 msgstr ""
 
+msgctxt "#30764"
+msgid "12 hours"
+msgstr ""
+
+msgctxt "#30765"
+msgid "24 hours"
+msgstr ""
+
+msgctxt "#30766"
+msgid "48 hours"
+msgstr ""
+
+msgctxt "#30767"
+msgid "7 days"
+msgstr ""
+
+msgctxt "#30768"
+msgid "14 days"
+msgstr ""
+
+msgctxt "#30801"
+msgid "EPG update interval"
+msgstr ""
+
 msgctxt "#30802"
 msgid "m-TVGuide is configured to stream using"
 msgstr ""
@@ -3338,6 +3362,10 @@ msgstr ""
 
 msgctxt "#95138"
 msgid "Default keyboard and remote commands."
+msgstr ""
+
+msgctxt "#95139"
+msgid "How often the add-on will try to update the xmltv EPG file."
 msgstr ""
 
 msgctxt "#99994"

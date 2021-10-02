@@ -948,6 +948,30 @@ msgctxt "#30763"
 msgid "Append fixed country code for all channels"
 msgstr "Dodaj stały kod krajowy dla wszystkich kanałów"
 
+msgctxt "#30764"
+msgid "12 hours"
+msgstr "12 godzin"
+
+msgctxt "#30765"
+msgid "24 hours"
+msgstr "24 godziny"
+
+msgctxt "#30766"
+msgid "48 hours"
+msgstr "48 godzin"
+
+msgctxt "#30767"
+msgid "7 days"
+msgstr "7 dni"
+
+msgctxt "#30768"
+msgid "14 days"
+msgstr "14 dni"
+
+msgctxt "#30801"
+msgid "EPG update interval"
+msgstr "Interwał aktualizacji EPG"
+
 msgctxt "#30802"
 msgid "m-TVGuide is configured to stream using"
 msgstr "m-TVGuide jest skonfigurowany, aby używać dodatku"

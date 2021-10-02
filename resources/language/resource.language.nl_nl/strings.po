@@ -948,6 +948,30 @@ msgctxt "#30763"
 msgid "Append fixed country code for all channels"
 msgstr "Vaste landcode voor alle kanalen toevoegen"
 
+msgctxt "#30764"
+msgid "12 hours"
+msgstr "12 uur"
+
+msgctxt "#30765"
+msgid "24 hours"
+msgstr "24 uur"
+
+msgctxt "#30766"
+msgid "48 hours"
+msgstr "48 uur"
+
+msgctxt "#30767"
+msgid "7 days"
+msgstr "7 dagen"
+
+msgctxt "#30768"
+msgid "14 days"
+msgstr "14 dagen"
+
+msgctxt "#30801"
+msgid "EPG update interval"
+msgstr "EPG update interval"
+
 msgctxt "#30802"
 msgid "m-TVGuide is configured to stream using"
 msgstr "m-TVGuide is geconfigureerd om te streamen via"
