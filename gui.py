@@ -2475,7 +2475,10 @@ class mTVGuide(xbmcgui.WindowXML):
 
             if self.currentChannel is None:
                 prog, idx = self.getLastPlayingChannel()
-                self.currentChannel = prog.channel
+                try:
+                    self.currentChannel = prog.channel
+                except:
+                    self.currentChannel = None
 
             if xbmc.Player().isPlaying():
                 if ADDON.getSetting('start_video_minimalized') == 'false' or self.playingRecordedProgram or self.currentChannel is None:
