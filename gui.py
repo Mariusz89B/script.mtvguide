@@ -5799,10 +5799,11 @@ class mTVGuide(xbmcgui.WindowXML):
                     ADDON.setSetting('category', strings(30325))
                     self.onRedrawEPG(0, self.viewStartDate)
                     if xbmc.getCondVisibility('!Window.IsVisible(okdialog)'):
-                        if not self.controlAndProgramList:
-                            res = xbmcgui.Dialog().yesno('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30165))
-                            if res:
-                                super(mTVGuide, self).close()
+                        if xbmc.getCondVisibility('!Control.IsVisible(5000)'):
+                            if not self.controlAndProgramList:
+                                res = xbmcgui.Dialog().yesno('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30165))
+                                if res:
+                                    super(mTVGuide, self).close()
                 
                 if ADDON.getSetting('touch_panel') == 'true':
                     self._showControl(self.C_MAIN_MOUSEPANEL_CONTROLS)

@@ -2374,14 +2374,14 @@ class XMLTVSource(Source):
 
         filename = self.xmltvFile
 
-        try:
+        if self.xmltvFile.lower().endswith('.xml'):
             f = FileWrapper(filename)
             context = ElementTree.iterparse(f, events=("start", "end"))
             return parseXMLTV(context, f, f.size, self.logoFolder, progress_callback)
 
-        except:
+        else:
             with open(filename, 'rb') as file:
-                if self.xmltvFile.lower().endswith('.zip') or self.xmltvFile.lower().endswith('.zip') or '.zip' in filename:
+                if filename.lower().endswith('.zip') or filename.lower().endswith('.zip') or '.zip' in filename:
                     tnow = datetime.datetime.now()
                     deb("[EPG] Unpacking epg: {} [{} sek.]".format(filename, str((tnow-start).seconds)))
                     memfile = io.BytesIO(file.read())
@@ -2390,7 +2390,7 @@ class XMLTVSource(Source):
                     unziped.close()
                     memfile.close()
 
-                if self.xmltvFile.lower().endswith('.gz') or self.xmltvFile.lower().endswith('.gz') or '.gz' in filename:
+                if filename.lower().endswith('.gz') or filename.lower().endswith('.gz') or '.gz' in filename:
                     tnow = datetime.datetime.now()
                     deb("[EPG] Unpacking epg: {} [{} sek.]".format(filename, str((tnow-start).seconds)))
                     import gzip
@@ -2400,7 +2400,7 @@ class XMLTVSource(Source):
                     unziped.close()
                     memfile.close()
 
-                if self.xmltvFile.lower().endswith('.bz2') or self.xmltvFile.lower().endswith('.bz2') or '.bz2' in filename:
+                if filename.lower().endswith('.bz2') or filename.lower().endswith('.bz2') or '.bz2' in filename:
                     tnow = datetime.datetime.now()
                     deb("[EPG] Unpacking epg: {} [{} sek.]".format(filename, str((tnow-start).seconds)))
                     import bz2
@@ -2410,9 +2410,9 @@ class XMLTVSource(Source):
                     content = unziped
                     memfile.close()
 
-            iob = io.BytesIO(content)
-            context = ElementTree.iterparse(iob, events=("start", "end"))
-            return parseXMLTV(context, iob, len(content), self.logoFolder, progress_callback)
+                iob = io.BytesIO(content)
+                context = ElementTree.iterparse(iob, events=("start", "end"))
+                return parseXMLTV(context, iob, len(content), self.logoFolder, progress_callback)
             
     def isUpdated(self, channelsLastUpdated, programLastUpdate, epgSize):
         if channelsLastUpdated is None or not xbmcvfs.exists(self.xmltvFile):
