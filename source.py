@@ -578,9 +578,11 @@ class Database(object):
                 set_time = 1209600
 
             if set_time != 'auto':
-                epg_interval = datetime.datetime.fromtimestamp(datetime.datetime.now()) - set_time
+                epg_interval = datetime.datetime.timestamp(datetime.datetime.now()) - set_time
 
-                if int(epg_interval) > int(programsLastUpdated):
+                last_update = datetime.datetime.timestamp(programsLastUpdated)
+
+                if int(epg_interval) > int(last_update):
                     self.source.isUpdated(channelsLastUpdated, programsLastUpdated, epgSize)
                 else:
                     return False

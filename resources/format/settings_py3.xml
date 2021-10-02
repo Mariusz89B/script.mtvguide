@@ -2425,7 +2425,7 @@
 				</setting>
 				<setting help="95139" id="epg_interval" label="30801" type="integer">
 					<level>1</level>
-					<default>6</default>
+					<default>0</default>
 					<constraints>
 						<options>
 							<option label="60000">0</option>
@@ -2438,10 +2438,10 @@
 					</constraints>
 					<dependencies>
 						<dependency type="visible">
-							<and>
+							<or>
 								<condition operator="is" setting="source">0</condition>
 								<condition operator="is" setting="source">1</condition>
-							</and>
+							</or>
 						</dependency>
 					</dependencies>
 					<control format="string" type="spinner"/>
