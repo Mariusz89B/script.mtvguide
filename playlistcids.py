@@ -117,16 +117,6 @@ class PlaylistUpdater(baseServiceUpdater):
         else:
             self.stopPlaybackOnStart = False
 
-    def systemMemory(self):
-        try:
-            import psutil
-            stats = psutil.virtual_memory()  # returns a named tuple
-            available = getattr(stats, 'available')
-        except:
-            available = 0
-
-        return available
-
     def requestUrl(self, path):
         content = None
         try:
@@ -209,27 +199,38 @@ class PlaylistUpdater(baseServiceUpdater):
                     f2.write(url_setting.encode('utf-8'))
 
         else:
-            size = int(536870912) # 512 MB
-                           
-            if sys.maxsize > 2 ** 32 and int(self.systemMemory()) > size and sys.version_info[0] > 2:
-                with open(filepath, 'rb') as f:
-                    deb('Reading type: MMAP´cachePlaylist')
-                    with mmap.mmap(f.fileno(), length=0, access=mmap.ACCESS_READ) as mmap_obj:
-                        content = mmap_obj.read().decode('utf-8')
-            else:
-                if sys.version_info[0] > 2:
-                    with open(filepath, 'r', encoding='utf-8') as f:
-                        deb('Reading type: Default cachePlaylist')
-                        content = f.read()
+            try:                              
+                if sys.maxsize > 2 ** 32 and sys.version_info[0] > 2:
+                    with open(filepath, 'rb') as f:
+                        deb('Reading type: MMAP cachePlaylist')
+                        with mmap.mmap(f.fileno(), length=0, access=mmap.ACCESS_READ) as mmap_obj:
+                            content = mmap_obj.read().decode('utf-8')
                 else:
-                    try:
-                        with open(filepath, 'r') as f:
-                            deb('Reading type: Default getPlaylistContent')
+                    if sys.version_info[0] > 2:
+                        with open(filepath, 'r', encoding='utf-8') as f:
+                            deb('Reading type: Default cachePlaylist')
                             content = f.read()
-                    except:
-                        with open(filepath.decode('utf-8'), 'r') as f:
-                            deb('Reading type: Default getPlaylistContent')
-                            content = f.read()
+                    else:
+                        try:
+                            with open(filepath, 'r') as f:
+                                deb('Reading type: Default getPlaylistContent')
+                                content = f.read()
+                        except:
+                            with open(filepath.decode('utf-8'), 'r') as f:
+                                deb('Reading type: Default getPlaylistContent')
+                                content = f.read()
+
+                if content is None or content == "":
+                    raise Exception
+
+            except:
+                self.log('getPlaylistContent opening normally Error %s, type: %s, url: %s' % (getExceptionString(), urltype, path) )
+                self.log('getPlaylistContent trying to open file using xbmcvfs')
+                lf = xbmcvfs.File(filepath)
+                content = lf.read()
+                lf.close()
+                if content is None or content == "":
+                    raise Exception
 
         return content
 
@@ -282,9 +283,7 @@ class PlaylistUpdater(baseServiceUpdater):
                     raise Exception
             else:
                 try:
-                    size = int(536870912) # 512 MB
-                                   
-                    if sys.maxsize > 2 ** 32 and int(self.systemMemory()) > size and sys.version_info[0] > 2:
+                    if sys.maxsize > 2 ** 32 and sys.version_info[0] > 2:
                         with open(path, 'rb') as f:
                             deb('Reading type: MMAP getPlaylistContent')
                             with mmap.mmap(f.fileno(), length=0, access=mmap.ACCESS_READ) as mmap_obj:

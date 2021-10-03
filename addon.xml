@@ -30,10 +30,10 @@
 		<forum>http://mods-kodi.pl/forum/</forum>
 		<website>http://mods-kodi.pl/</website>
 		<email>support@m-tvguide.pl</email>
-	<news>v9.6.2 (2021-09-27)
+	<news>v9.6.2 (2021-10-03)
 - Added EPG channel stream recognition.
 - Fixed service Telewizja Polska.
-- Fixed login to service PlayerPL.
+- Fixed login to service PlayerPL, Polsat GO, Polsat GO Box.
 - Bug fixes.
 
 v9.6.1 (2021-09-17)
