@@ -1,5 +1,6 @@
 ﻿wersja 9.6.2 - 2021-10-03
 - dodano rozpoznawanie strumienia z kanałów EPG
+- dodano opcje zmiany interwału aktualizacji EPG
 - poprawka serwisu Telewizja Polska
 - poprawka logowania do serwisu PlayerPL, Polsat GO, Polsat GO Box
 - usunięte błędy

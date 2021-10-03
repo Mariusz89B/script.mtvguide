@@ -32,6 +32,7 @@
 		<email>support@m-tvguide.pl</email>
 	<news>v9.6.2 (2021-10-03)
 - Added EPG channel stream recognition.
+- Added setting for EPG interval update.
 - Fixed service Telewizja Polska.
 - Fixed login to service PlayerPL, Polsat GO, Polsat GO Box.
 - Bug fixes.
