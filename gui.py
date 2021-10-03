@@ -4539,7 +4539,7 @@ class mTVGuide(xbmcgui.WindowXML):
             try:
                 chann = channelList[0]
             except:
-                pass
+                return None, 0
 
         program = self.database.getProgramStartingAt(chann, start)
 
