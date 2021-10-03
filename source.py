@@ -522,8 +522,8 @@ class Database(object):
         deb('Settings changed: {}'.format(str(settingsChanged) ))
         return settingsChanged
 
-    def _isCacheExpired(self, date):
-        if ADDON.getSetting('epg_interval') == '1':
+    def _isCacheExpired(self, date, initializing):
+        if ADDON.getSetting('epg_interval') == '1' and initializing:
             return True
 
         if self.settingsChanged:
@@ -594,11 +594,11 @@ class Database(object):
 
         return self.source.isUpdated(channelsLastUpdated, programsLastUpdated, epgSize)
 
-    def updateChannelAndProgramListCaches(self, callback, date = datetime.datetime.now(), progress_callback = None, clearExistingProgramList = True):
-        self.eventQueue.append([self._updateChannelAndProgramListCaches, callback, date, progress_callback, clearExistingProgramList])
+    def updateChannelAndProgramListCaches(self, callback, date = datetime.datetime.now(), progress_callback = None, initializing=False, clearExistingProgramList = True):
+        self.eventQueue.append([self._updateChannelAndProgramListCaches, callback, date, progress_callback, initializing, clearExistingProgramList])
         self.event.set()
 
-    def _updateChannelAndProgramListCaches(self, date, progress_callback, clearExistingProgramList):
+    def _updateChannelAndProgramListCaches(self, date, progress_callback, initializing, clearExistingProgramList):
         deb('_updateChannelAndProgramListCache')
         import sys
 
@@ -630,7 +630,7 @@ class Database(object):
                 if serviceHandler.serviceEnabled == 'true':
                     serviceList.append(serviceHandler)
 
-        cacheExpired = self._isCacheExpired(date)
+        cacheExpired = self._isCacheExpired(date, initializing)
 
         if cacheExpired and not self.skipUpdateRetries:
             deb('_isCacheExpired')
@@ -952,17 +952,17 @@ class Database(object):
             
         self.channelList = None
 
-    def getEPGView(self, channelStart, date = datetime.datetime.now(), progress_callback = None, clearExistingProgramList = True):
-        result = self._invokeAndBlockForResult(self._getEPGView, channelStart, date, progress_callback, clearExistingProgramList)
+    def getEPGView(self, channelStart, date = datetime.datetime.now(), progress_callback = None, initializing = False, clearExistingProgramList = True):
+        result = self._invokeAndBlockForResult(self._getEPGView, channelStart, date, progress_callback, initializing, clearExistingProgramList)
         if self.updateFailed:
             raise SourceException('No channels or programs imported')
         return result
 
-    def _getEPGView(self, channelStart, date, progress_callback, clearExistingProgramList):
+    def _getEPGView(self, channelStart, date, progress_callback, initializing, clearExistingProgramList):
         if strings2.M_TVGUIDE_CLOSING:
             self.updateFailed = True
             return
-        cacheExpired = self._updateChannelAndProgramListCaches(date, progress_callback, clearExistingProgramList)
+        cacheExpired = self._updateChannelAndProgramListCaches(date, progress_callback, initializing, clearExistingProgramList)
         if strings2.M_TVGUIDE_CLOSING:
             self.updateFailed = True
             return

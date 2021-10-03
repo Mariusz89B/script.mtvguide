@@ -5430,7 +5430,7 @@ class mTVGuide(xbmcgui.WindowXML):
         timebars = [self.timebar, self.timebarBack]
         self.addControls(timebars)
 
-    def onRedrawEPGPlaying(self, channelStart, startTime):
+    def onRedrawEPGPlaying(self, channelStart, startTime, initializing=False):
         deb('onRedrawEPGVideo')
         if self.redrawingEPG or (self.database is not None and self.database.updateInProgress) or self.isClosing or strings2.M_TVGUIDE_CLOSING:
             deb('onRedrawEPGPlaying - already redrawing')
@@ -5439,7 +5439,7 @@ class mTVGuide(xbmcgui.WindowXML):
         self.mode = MODE_TV
 
         try:
-            self.channelIdx, channels, programs, cacheExpired = self.database.getEPGView(channelStart, startTime, self.onSourceProgressUpdate, clearExistingProgramList=True)
+            self.channelIdx, channels, programs, cacheExpired = self.database.getEPGView(channelStart, startTime, self.onSourceProgressUpdate, initializing, clearExistingProgramList=True)
         except src.SourceException:
             self.blockInputDueToRedrawing = False
             debug('onRedrawEPGPlaying onEPGLoadError')
@@ -5456,7 +5456,7 @@ class mTVGuide(xbmcgui.WindowXML):
         debug('onRedrawEPGPlaying done')
         return
 
-    def onRedrawEPG(self, channelStart, startTime, focusFunction=None):
+    def onRedrawEPG(self, channelStart, startTime, focusFunction=None, initializing=False):
         deb('onRedrawEPG')
         if self.redrawingEPG or (self.database is not None and self.database.updateInProgress) or self.isClosing or strings2.M_TVGUIDE_CLOSING:
             deb('onRedrawEPG - already redrawing')
@@ -5478,7 +5478,7 @@ class mTVGuide(xbmcgui.WindowXML):
         self._clearEpg()
 
         try:
-            self.channelIdx, channels, programs, cacheExpired = self.database.getEPGView(channelStart, startTime, self.onSourceProgressUpdate, clearExistingProgramList=True)
+            self.channelIdx, channels, programs, cacheExpired = self.database.getEPGView(channelStart, startTime, self.onSourceProgressUpdate, initializing, clearExistingProgramList=True)
         except src.SourceException:
             self.blockInputDueToRedrawing = False
             debug('onRedrawEPG onEPGLoadError')
@@ -5796,7 +5796,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 if not self.controlAndProgramList:
                     self.database.setCategory(strings(30325))
                     ADDON.setSetting('category', strings(30325))
-                    self.onRedrawEPG(0, self.viewStartDate)
+                    self.onRedrawEPG(0, self.viewStartDate, initializing=True)
                     if xbmc.getCondVisibility('!Window.IsVisible(okdialog)'):
                         if xbmc.getCondVisibility('!Control.IsVisible(5000)'):
                             if not self.controlAndProgramList:
