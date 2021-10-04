@@ -125,7 +125,7 @@
 	<channel id="Hallmark.us"								title="(?=Hallmark\s*Channel(\s*HD|\s*UHD)?\s*US$)" strm=""/>
 	<channel id="Hallmark.us"								title="(?=Hallmark\s*US$)" strm=""/>
 	<channel id="HallmarkDrama.us"							title="(?=HALLMARK\s*DRAMA(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="HallmarkMoviesMysteries.us"				title="(?=Hallmark\s*Movies\s*(and|&amp;)\s*Mysteries(\s*HD|\s*UHD)?\s*US$" strm=""/>
+	<channel id="HallmarkMoviesMysteries.us"				title="(?=Hallmark\s*Movies\s*(and|&amp;)\s*Mysteries(\s*HD|\s*UHD)?\s*US$)" strm=""/>
 	<channel id="Hawks.tv"									title="(?=NBA\s*ATLANTA\s*HAWKS\s*VIP\s*US$)" strm=""/>
 	<channel id="Heat.tv"									title="(?=NBA\s*MIAMI\s*HEAT\s*VIP\s*US$)" strm=""/>
 	<channel id="HistoryChannel.us"							title="(?=History(\s*HD|\s*UHD)?\s*US$)" strm=""/>
