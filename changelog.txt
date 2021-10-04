@@ -1,4 +1,7 @@
-﻿wersja 9.6.2 - 2021-10-03
+﻿wersja 9.6.3 - 2021-10-04
+- ulepszone rozpoznawanie prefiksów kraji dla kategorii grup
+
+wersja 9.6.2 - 2021-10-03
 - dodano rozpoznawanie strumienia z kanałów EPG
 - dodano opcje zmiany interwału aktualizacji EPG
 - poprawka serwisu Telewizja Polska
