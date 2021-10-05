@@ -1463,10 +1463,15 @@ class Database(object):
         sqlite3.register_converter(str('timestamp'), self.convert_datetime)
 
         program = None
+
+        if channel is None:
+            return None
+
         try:
             now = datetime.datetime.now() + datetime.timedelta(minutes=int(ADDON.getSetting('timebar_adjust')))
         except:
             now = datetime.datetime.now()
+
         c = self.conn.cursor()
         c.execute('SELECT * FROM programs WHERE channel=? AND source=? AND start_date <= ? AND end_date >= ?', [channel.id, self.source.KEY, now, now])
         row = c.fetchone()
@@ -1475,6 +1480,7 @@ class Database(object):
         else:
             program = Program(channel, channel.title, datetime.datetime.now(), datetime.datetime.now(), '', channel.logo, 'tvguide-logo-epg.png', '', '', '')
         c.close()
+            
         return program
 
     def getNextProgram(self, program):

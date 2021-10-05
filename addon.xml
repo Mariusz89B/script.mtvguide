@@ -1,36 +1,47 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.mtvguide" name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]" version="9.6.3" provider-name="Team Mods-Kodi">
-	<requires>
-		<import addon="xbmc.addon" version="17.0.0"/>
-		<import addon="script.module.inputstreamhelper" />
-		<import addon="script.module.simplejson" />
-		<import addon="script.module.requests" />
-		<import addon="script.module.dateutil" />
-        <import addon="script.module.beautifulsoup4" />
-		<import addon="script.module.routing" />
-		<import addon="script.module.iso8601" />
-		<import addon="script.module.pytz" />
-		<import addon="script.module.six" />
-		<import addon="script.module.future" />
-	</requires>
-	<extension point="xbmc.python.script" library="addon.py">
-		<provides>video</provides>
-	</extension>
-	<extension point="xbmc.service" library="service.py" start="login"/>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en_GB">m-TVGuide EPG</summary>
-		<summary lang="pl_PL">m-TVGuide EPG</summary>
-		<description lang="en_GB">Electronic program guide for Kodi.</description>
-		<description lang="pl_PL">Elektroniczny program telewizyjny dla Kodi.</description>
-		<disclaimer lang="en_GB">Feel free to use this add-on. For information visit http://mods-kodi.pl/</disclaimer>
-		<disclaimer lang="pl_PL">Zapraszamy do korzystania z dodatku. Więcej informacji na stronie http://mods-kodi.pl/</disclaimer>
-		<language>de dk en fr hr nl no pl se</language>
-		<platform>all</platform>
-		<license>Copyright mods-kodi.pl © 2013 - 2021</license>
-		<forum>http://mods-kodi.pl/forum/</forum>
-		<website>http://mods-kodi.pl/</website>
-		<email>support@m-tvguide.pl</email>
-	<news>v9.6.3 (2021-10-04)
+<addon
+    id="script.mtvguide"
+    name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]"
+    version="9.6.3"
+    provider-name="Team Mods-Kodi">
+  <requires>
+    <import addon="xbmc.addon" version="17.0.0"/>
+	<import addon="script.module.inputstreamhelper" />
+	<import addon="script.module.simplejson" />
+	<import addon="script.module.requests" />
+	<import addon="script.module.dateutil" />
+	<import addon="script.module.beautifulsoup4" />
+	<import addon="script.module.routing" />
+	<import addon="script.module.iso8601" />
+	<import addon="script.module.pytz" />
+	<import addon="script.module.six" />
+	<import addon="script.module.future" />
+  </requires>
+  <extension point="xbmc.python.script" library="addon.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.service" library="service.py" start="login"/>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">m-TVGuide EPG</summary>
+	<description lang="da_DK">Elektronisk programguide til Kodi.</description>
+    <description lang="de_DE">Elektronischer Programmführer für Kodi.</description>
+	<description lang="en_GB">Electronic program guide for Kodi.</description>
+	<description lang="fr_FR">Guide électronique des programmes pour Kodi.</description>
+	<description lang="hr_HR">Elektronički programski vodič za Kodi.</description>
+	<description lang="nl_NL">Elektronische programmagids voor Kodi.</description>
+	<description lang="nb_NO">Elektronisk programguide for Kodi.</description>
+	<description lang="pl_PL">Elektroniczny program telewizyjny dla Kodi.</description>
+	<description lang="sv_SE">Elektronisk programguide för Kodi.</description>
+	<disclaimer lang="en_GB">This add-on is unoffical and is not endorsed or supported by any of the services provided in any way. Any trademarks used belong to their owning companies and organisations.</disclaimer>
+    <disclaimer lang="pl_PL">Wtyczka nie jest oficjalna koncesjonowanego dostawy, oraz nie jest przez niego zatwierdzona i wspierana. Wszelkie użyte znaki handlowe należą do firm i organizacji podmiotu koncesjonowanego.</disclaimer>
+	<language>dk de en fr hr nl no pl se</language>
+	<platform>all</platform>
+    <license>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007 and MIT LICENSE.</license>
+    <forum>http://mods-kodi.pl/forum/</forum>
+	<website>http://mods-kodi.pl/</website>
+	<email>support@m-tvguide.pl</email>
+    <source>mods-kodi.pl © 2013 - 2021</source>
+    <news>v9.6.3 (2021-10-04)
 - Improved country prefix recognition for group categories.
 
 v9.6.2 (2021-10-03)
@@ -310,12 +321,12 @@ v9.0.0 (2020-06-21)
 - Add stream to a channel available in EPG.
 
 </news>
-	<assets>
+    <assets>
         <icon>icon.png</icon>
         <fanart>fanart.jpg</fanart>
         <screenshot>screenshots/screenshot-01.jpg</screenshot>
 		<screenshot>screenshots/screenshot-02.jpg</screenshot>
 		<screenshot>screenshots/screenshot-03.jpg</screenshot>
     </assets>
-	</extension>
+  </extension>
 </addon>

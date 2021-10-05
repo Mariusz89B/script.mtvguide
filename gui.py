@@ -4566,17 +4566,15 @@ class mTVGuide(xbmcgui.WindowXML):
 
         if xbmc.Player().isPlaying():
             if ADDON.getSetting('info_osd') == "false" or self.program is None:
-                try:
-                    program = self.database.getCurrentProgram(self.currentChannel)
-                    idx = self.database.getCurrentChannelIdx(self.currentChannel)
-                except:
-                    pass
+                program = self.database.getCurrentProgram(self.currentChannel)
+                idx = self.database.getCurrentChannelIdx(self.currentChannel)
 
-                try:
+                if program is None:
+                    program = self.program
+
+                if self.program is not None:
                     if self.program.endDate < datetime.datetime.now():
                         program, idx = self.epg.getLastPlayingChannel()
-                except:
-                    pass
 
                 try:
                     self.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format(program.channel.title))
@@ -4588,6 +4586,7 @@ class mTVGuide(xbmcgui.WindowXML):
                     self.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(strings(55016)))
                     self.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format("N/A", "N/A"))
                     self.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format("-"))
+                    return
 
         if program.description:
             description = program.description
@@ -7109,11 +7108,12 @@ class Pla(xbmcgui.WindowXMLDialog):
             program = self.database.getCurrentProgram(self.epg.currentChannel)
             idx = self.database.getCurrentChannelIdx(self.epg.currentChannel)
 
-            try:
+            if program is None:
+                program = self.program
+
+            if self.program is not None:
                 if self.program.endDate < datetime.datetime.now():
                     program, idx = self.epg.getLastPlayingChannel()
-            except:
-                pass
 
             try:
                 self.epg.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format(program.channel.title))
@@ -7125,6 +7125,7 @@ class Pla(xbmcgui.WindowXMLDialog):
                 self.epg.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(strings(55016)))
                 self.epg.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format("N/A", "N/A"))
                 self.epg.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format("-"))
+                return
 
         if ADDON.getSetting('show_time') == "true":
             nowtime = '$INFO[System.Time]'
