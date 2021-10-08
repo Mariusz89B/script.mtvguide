@@ -1,5 +1,6 @@
 ﻿wersja 9.6.3 - 2021-10-08
 - ulepszone rozpoznawanie prefiksów kraji dla kategorii grup
+- dodano okno dialogowe z informacją o maksymalnej liczbie urządzeń dla serwisu Polsat GO
 - usunięte błędy
 
 wersja 9.6.2 - 2021-10-03

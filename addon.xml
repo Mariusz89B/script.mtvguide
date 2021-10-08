@@ -43,6 +43,7 @@
     <source>mods-kodi.pl © 2013 - 2021</source>
     <news>v9.6.3 (2021-10-08)
 - Improved country prefix recognition for group categories.
+- Added max number of devices information dialog for Polsat GO services.
 - Bug fixes.
 
 v9.6.2 (2021-10-03)
