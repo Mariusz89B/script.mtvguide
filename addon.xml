@@ -41,8 +41,9 @@
 	<website>http://mods-kodi.pl/</website>
 	<email>support@m-tvguide.pl</email>
     <source>mods-kodi.pl © 2013 - 2021</source>
-    <news>v9.6.3 (2021-10-04)
+    <news>v9.6.3 (2021-10-08)
 - Improved country prefix recognition for group categories.
+- Bug fixes.
 
 v9.6.2 (2021-10-03)
 - Added EPG channel stream recognition.

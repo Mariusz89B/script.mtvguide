@@ -228,6 +228,7 @@ class PlayService(xbmc.Player, BasePlayService):
         self.reconnectFailedStreams = ADDON.getSetting('reconnect_stream')
         self.maxStreamStartupTime   = int(ADDON.getSetting('max_wait_for_playback')) * 10
         self.strmUrl                = None
+        self.service                = None
         
 
     def playUrlList(self, urlList, archiveService, archivePlaylist, resetReconnectCounter=False):
@@ -383,10 +384,10 @@ class PlayService(xbmc.Player, BasePlayService):
 
         response = sess.delete(url, headers=headers)
 
-    def getUrl(self, strmUrl, cid):
+    def getUrl(self, strmUrl, cid, service):
         mimeType = ''
 
-        UA = ADDON.getSetting('{}_user_agent'.format(self.currentlyPlayedService['service']))
+        UA = ADDON.getSetting('{}_user_agent'.format(service))
 
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0',
@@ -646,6 +647,9 @@ class PlayService(xbmc.Player, BasePlayService):
 
     def LoadVideoLink(self, channel, service, url):
         deb('LoadVideoLink {} service'.format(service))
+
+        self.service = service
+
         res = False
         startWindowed = False
 
@@ -1167,7 +1171,7 @@ class PlayService(xbmc.Player, BasePlayService):
                     if self.currentlyPlayedService['service'] not in playbackServices:
                         catchup = False
 
-                        channelInfo.strm = self.getUrl(channelInfo.strm, channelInfo.cid)
+                        channelInfo.strm = self.getUrl(channelInfo.strm, channelInfo.cid, service)
                         strmUrl = channelInfo.strm
                         strmUrl_catchup = channelInfo.catchup
 
@@ -1432,6 +1436,8 @@ class PlayService(xbmc.Player, BasePlayService):
                             xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
         else:
             deb('LoadVideoLink ERROR channelInfo is None! service: {}'.format(service))
+        self.service = service
+
         return res
 
     def onPlayBackError(self):
@@ -1584,6 +1590,11 @@ class PlayService(xbmc.Player, BasePlayService):
                     response = scraper.get(strmUrl, headers=headers, allow_redirects=False, stream=True, timeout=timeouts)
                     status = response.status_code
 
+                    base = response.content
+                    if b'<BaseURL>http://hls.redefine.pl</BaseURL>' in base and xbmc.getCondVisibility('!Player.HasMedia'):
+                        xbmcgui.Dialog().notification(self.service, strings(SERVICE_MAX_DEVICE_ID), xbmcgui.NOTIFICATION_WARNING, time=15000, sound=True)
+                        return status
+
             except HTTPError as e:
                 deb('chkConn HTTPError: {}'.format(e.reason))
                 status = e.code
@@ -1599,7 +1610,7 @@ class PlayService(xbmc.Player, BasePlayService):
             except:
                 deb('chkConn RequestException')
                 status = 400
-
+            
             time.sleep(1)
 
             if status >= 400 and xbmc.getCondVisibility('!Player.HasMedia'):
