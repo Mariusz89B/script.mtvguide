@@ -1693,6 +1693,9 @@ class Database(object):
         return customStreamUrlList
 
     def adapt_datetime(self, ts):
+        if ts == '' or ts is None:
+            ts = datetime.datetime.now()
+
         try:
             adapt_datetime = time.mktime(ts.timetuple())
         except:

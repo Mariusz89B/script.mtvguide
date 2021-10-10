@@ -2,7 +2,7 @@
 <addon
     id="script.mtvguide"
     name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]"
-    version="9.6.3"
+    version="9.6.4"
     provider-name="Team Mods-Kodi">
   <requires>
     <import addon="xbmc.addon" version="17.0.0"/>
@@ -41,7 +41,10 @@
 	<website>http://mods-kodi.pl/</website>
 	<email>support@m-tvguide.pl</email>
     <source>mods-kodi.pl © 2013 - 2021</source>
-    <news>v9.6.3 (2021-10-08)
+    <news>v9.6.4 (2021-10-10)
+- Hotfix.
+
+v9.6.3 (2021-10-08)
 - Improved country prefix recognition for group categories.
 - Added max number of devices information dialog for Polsat GO services.
 - Bug fixes.
