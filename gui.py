@@ -74,6 +74,7 @@ from recordService import RecordService
 from settingsImportExport import SettingsImp
 from skins import Skin
 from source import Program, Channel
+from groups import groupList
 
 from contextlib import contextmanager
 
@@ -245,9 +246,19 @@ HALF_HOUR = datetime.timedelta(minutes=30)
 AUTO_OSD = 666
 REFRESH_STREAMS_TIME = 14400
 
-PREDEFINED_CATEGORIES = [strings(30325), "Group: BE", "Group: CZ", "Group: DE", "Group: DK", "Group: FR", "Group: HR",
-                    "Group: IT", "Group: NO", "Group: PL", "Group: SE", "Group: SRB", "Group: UK", "Group: US", "Group: RADIO"]
+CC_LIST = list()
+CC_DICT = groupList.ccDict()
 
+PREDEFINED_CATEGORIES = []
+
+for k, v in CC_DICT.items():
+    if k == 'all':
+        all_channels = strings(30325)
+        PREDEFINED_CATEGORIES.append(all_channels)
+    else:
+        k = k.upper()
+        CC_LIST.append(k.lower())
+        PREDEFINED_CATEGORIES.append('Group: {}'.format(k))
 
 def category_formatting(label):  
     label = re.sub('^0$', '1.png', label)
@@ -678,7 +689,7 @@ class mTVGuide(xbmcgui.WindowXML):
             ADDON.setSetting('source', '1')
 
             txt = ADDON.getSetting('m-TVGuide')
-            if txt == 'http://' or txt == 'https://' or txt == '':
+            if txt != '' or txt != 'http://' or txt != 'https://' or txt != 'http://mods-kodi.pl/':
                 txt = 'http://'
 
             kb = xbmc.Keyboard(txt,'')
@@ -691,6 +702,11 @@ class mTVGuide(xbmcgui.WindowXML):
             ADDON.setSetting('m-TVGuide', c)
             
             if c is not None:
+                ans = xbmcgui.Dialog().yesno(strings(60011), strings(60012))
+                if ans:
+                    ADDON.setSetting('epg_display_name', 'true')
+                else:
+                    ADDON.setSetting('epg_display_name', 'false')
                 self.tutorialGetCountry()
             else:
                 self.tutorialGetEPG()
@@ -701,34 +717,25 @@ class mTVGuide(xbmcgui.WindowXML):
             fn = xbmcgui.Dialog().browse(1, strings(59942), '')
             ADDON.setSetting('xmltv_file', fn)
             if fn != '':
+                ans = xbmcgui.Dialog().yesno(strings(60011), strings(60012))
+                if ans:
+                    ADDON.setSetting('epg_display_name', 'true')
+                else:
+                    ADDON.setSetting('epg_display_name', 'false')
                 self.tutorialGetCountry()
             else:
                 self.tutorialGetEPG()
 
 
     def tutorialGetCountry(self):
-        ans = xbmcgui.Dialog().yesno(strings(60011), strings(60012))
-
-        if ans:
-            ADDON.setSetting('epg_display_name', 'true')
-        else:
-            ADDON.setSetting('epg_display_name', 'false')
-
         progExec = False
         resExtra = False
 
-        langList = [strings(30739), strings(59925), strings(59926), strings(59927), strings(59928), strings(59929), strings(59930),
-                 strings(59931), strings(59932), strings(59933), strings(59934), strings(59935), strings(59936), strings(59937), 'Radio']
+        langList = list()
+        ccList = list()
 
-        langResList = [strings(30739), strings(59963), strings(59964), strings(59965), strings(59966), strings(59967), strings(59968),
-                 strings(59969), strings(59970), strings(59971), strings(59972), strings(59973), strings(59974), strings(59975), 'Radio']
-
-        ccList = ['all', 'be', 'cz', 'de', 'dk', 'fr', 'hr', 'it', 'no', 'pl', 'se', 'srb', 'uk', 'us', 'radio']
-
-        res = xbmcgui.Dialog().multiselect(strings(59943),
-                    langList)
-
-        if not res:
+        continent = xbmcgui.Dialog().select(strings(30725), [strings(30727), strings(30728), strings(30729), strings(30730), strings(30731), strings(30732), '[COLOR red]' + strings(30726) + '[/COLOR]'])
+        if continent < 0:
             resBack = xbmcgui.Dialog().yesno(strings(59924), strings(59938), yeslabel=strings(59939), nolabel=strings(30308))
 
             if resBack:
@@ -738,9 +745,29 @@ class mTVGuide(xbmcgui.WindowXML):
                 ADDON.setSetting('tutorial', 'true')
                 exit()
 
+        filtered_dict = dict((k, v) for k, v in CC_DICT.items() if v['continent'] == continent or (v['continent'] == -1 and continent != 6))
+
+        for cc, value in filtered_dict.items():
+            if value['language'].isdigit():
+                country = strings(int(value['language']))
+            else:
+                country = value['language']
+            
+            if cc == 'all':
+                langList.append(country)
+            else:
+                langList.append('[B]' + cc.upper() + '[/B] - ' + country)
+            ccList.append(cc)
+
+        res = xbmcgui.Dialog().multiselect(strings(59943), langList)
+
+        if not res:
+            self.tutorialGetCountry()
+
         if res == 0:
-            for i in range(1, len(langList)):
-                ADDON.setSetting('country_code_{cc}'.format(cc=ccList[i]), 'false')
+            for i in range(len(langList)):
+                if ccList[i] != 'all':
+                    ADDON.setSetting('country_code_{cc}'.format(cc=ccList[i]), 'false')
                 ADDON.setSetting('show_group_channels', 'false')
             progExec = True
 
@@ -750,16 +777,24 @@ class mTVGuide(xbmcgui.WindowXML):
             if len(res) > 1:
                 resExtra = xbmcgui.Dialog().yesno(strings(59924), strings(59962))
 
-            for i in range(1, len(langList)):
+            for i in range(len(langList)):
                 ADDON.setSetting('country_code_{cc}'.format(cc=ccList[i]), 'false')
                 if i in res:
-                    label = langResList[i].lower()
-                    ADDON.setSetting('country_code_{cc}'.format(cc=ccList[i]), 'true')
+                    label = langList[i].lower()
+                    if ccList[i] != 'all':
+                        ADDON.setSetting('country_code_{cc}'.format(cc=ccList[i]), 'true')
                     if resExtra:
-                        response = xbmcgui.Dialog().yesno(strings(59924), strings(59944).format(label))
+                        response = xbmcgui.Dialog().yesno(strings(59924), strings(59944).format(ccList[i].upper()))
                         if response:
                             ADDON.setSetting('source', 'm-TVGuide')
-                            kb = xbmc.Keyboard('','')
+                            if ccList[i] != 'all':
+                                txt = ADDON.getSetting('epg_{cc}'.format(cc=ccList[i]))
+                            else:
+                                txt = ADDON.getSetting('m-TVGuide')
+                            if txt == '':
+                                txt = 'http://'
+
+                            kb = xbmc.Keyboard(txt,'')
                             kb.setHeading(strings(59945).format(label))
                             kb.setHiddenInput(False)
                             kb.doModal()
@@ -781,6 +816,10 @@ class mTVGuide(xbmcgui.WindowXML):
                         progExec = True
 
         if progExec is True:
+            try:
+                ADDON.setSetting(id="countryUrlChannels", value=str(strings(30721) + ' (' + strings(59919)+')'))
+            except:
+                ADDON.setSetting(id="countryUrlChannels", value=str((strings(30721) + ' (' + strings(59919)+')').encode('utf-8', 'replace'))) 
             self.tutorialGetService()
 
     def tutorialGetService(self):
@@ -5702,11 +5741,10 @@ class mTVGuide(xbmcgui.WindowXML):
             listControl.reset()
         
             items = list()
-
-            ccList = ['be', 'cz', 'de', 'dk', 'fr', 'hr', 'it', 'no', 'pl', 'se', 'srb', 'uk', 'us', 'radio']
             
             categories = PREDEFINED_CATEGORIES + list(self.categories)
-            for item in ccList:
+
+            for item in CC_LIST:
                 if ADDON.getSetting('country_code_{cc}'.format(cc=item)) == "false":
                     categories.remove('Group: {cc}'.format(cc=item.upper()))
 
@@ -6253,10 +6291,9 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
 
             items = list()
 
-            ccList = ['be', 'cz', 'de', 'dk', 'fr', 'hr', 'it', 'no', 'pl', 'se', 'srb', 'uk', 'us', 'radio']
-
             categories = PREDEFINED_CATEGORIES + list(self.categories)
-            for item in ccList:
+
+            for item in CC_LIST:
                 if ADDON.getSetting('country_code_{cc}'.format(cc=item)) == "false":
                     categories.remove('Group: {cc}'.format(cc=item.upper()))
 

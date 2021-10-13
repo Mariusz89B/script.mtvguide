@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map id="base english" version="1.0" strm="">	
+<map id="base_uk" version="1.0" strm="">	
 	<channel id="3e UK" 									title="(?=3e(\s*TV)?(\s*HD)?(\s*UK)$)" strm=""/>
 	<channel id="4Music UK" 								title="(?=4\s*Music(\s*TV)?(\s*HD)?(\s*UK)$)" strm=""/>
 	<channel id="4Seven UK" 								title="(?=4\s*Seven(\s*TV)?(\s*HD)?(\s*UK)$)" strm=""/>

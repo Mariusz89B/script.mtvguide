@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map id="base french" version="1.0" strm="">
+<map id="base_fr" version="1.0" strm="">
 	<channel id="13ÉME RUE FR" 								title="(?=(13eME|13.?ME)\s*RUE(\s*TV)?(\s*HD)?\s*FR$)" strm=""/>
 	<channel id="6TER FR" 									title="(?=6TER(\s*TV)?(\s*HD)?\s*FR$)" strm=""/>
 	<channel id="AB MOTEURS FR" 							title="(?=AB\s*MOTEURS(\s*TV)?(\s*HD)?\s*FR$)" strm=""/>

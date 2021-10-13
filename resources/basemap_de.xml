@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map id="base german" version="1.0" strm="">	
+<map id="base_de" version="1.0" strm="">	
 	<channel id="13th Street HD DE"							title="(?=13th\s*street(\s*HD)?\s*DE$)" strm=""/>
 	<channel id="3sat DE"									title="(?=3sat(\s*HD)?\s*DE$)" strm=""/>
 	<channel id="A&amp;E DE"								title="(?=(A)(\s*&amp;)?(\s*E)(\s*HD)?\s*DE$)" strm=""/>

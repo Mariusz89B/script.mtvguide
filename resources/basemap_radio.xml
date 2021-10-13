@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map id="base radio" version="1.0" strm="">	
+<map id="base_radio" version="1.0" strm="">	
 	<channel id="Antyradio"									title="(?=Anty\s*(Radio)?$)" strm=""/>
 	<channel id="Chilli Zet"								title="(?=Chilli\s*Zet(\s*Radio)?$)" strm=""/>
 	<channel id="MUZO FM"									title="(?=MUZO(\.|\s*)FM(\s*Radio)?$)" strm=""/>

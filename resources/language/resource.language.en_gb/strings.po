@@ -793,59 +793,59 @@ msgid "Incorrect password!"
 msgstr ""
 
 msgctxt "#30725"
-msgid "Enable english channels"
+msgid "Select continent"
 msgstr ""
 
 msgctxt "#30726"
-msgid "EPG - English"
+msgid "Disable group filtering"
 msgstr ""
 
 msgctxt "#30727"
-msgid "Enable danish channels"
+msgid "Africa"
 msgstr ""
 
 msgctxt "#30728"
-msgid "EPG - Danish"
+msgid "Asia"
 msgstr ""
 
 msgctxt "#30729"
-msgid "Enable french channels"
+msgid "Europe"
 msgstr ""
 
 msgctxt "#30730"
-msgid "EPG - French"
+msgid "North America"
 msgstr ""
 
 msgctxt "#30731"
-msgid "Enable german channels"
+msgid "South America"
 msgstr ""
 
 msgctxt "#30732"
-msgid "EPG - German"
+msgid "Oceania"
 msgstr ""
 
 msgctxt "#30733"
-msgid "Enable croatian channels"
+msgid ""
 msgstr ""
 
 msgctxt "#30734"
-msgid "EPG - Croatian"
+msgid ""
 msgstr ""
 
 msgctxt "#30735"
-msgid "Enable serbian channels"
+msgid ""
 msgstr ""
 
 msgctxt "#30736"
-msgid "EPG - Serbian"
+msgid ""
 msgstr ""
 
 msgctxt "#30737"
-msgid "Enable norwegian channels"
+msgid ""
 msgstr ""
 
 msgctxt "#30738"
-msgid "EPG - Norwegian"
+msgid ""
 msgstr ""
 
 msgctxt "#30739"

@@ -43,6 +43,7 @@
 import sys
 
 import requests
+import urllib3
 
 if sys.version_info[0] > 2:
     from requests.exceptions import HTTPError, ConnectionError, Timeout, RequestException
@@ -66,6 +67,8 @@ import mmap
 
 sess = cloudscraper.create_scraper()
 scraper = cloudscraper.CloudScraper()
+
+CC_DICT = groupList.ccDict()
 
 serviceName   = 'playlist'
 
@@ -118,21 +121,26 @@ class PlaylistUpdater(baseServiceUpdater):
             self.stopPlaybackOnStart = False
 
     def requestUrl(self, path):
-        content = None
-        try:
-            headers = { 'User-Agent' : 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:85.0) Gecko/20100101 Firefox/85.0' }
-            headers['Keep-Alive'] = 'timeout=60'
-            headers['Connection'] = 'Keep-Alive'
-            headers['ContentType'] = 'application/x-www-form-urlencoded'
-            headers['Accept-Encoding'] = 'gzip'
+        headers = { 'User-Agent' : 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:85.0) Gecko/20100101 Firefox/85.0' }
+        headers['Keep-Alive'] = 'timeout=60'
+        headers['Connection'] = 'Keep-Alive'
+        headers['ContentType'] = 'application/x-www-form-urlencoded'
+        headers['Accept-Encoding'] = 'gzip'
 
-            content = scraper.get(path, headers=headers, allow_redirects=False, verify=False, timeout=60).content.decode('utf-8')
+        try:
+            http = urllib3.PoolManager()
+            response = http.request('GET', path, headers=headers, timeout=60)
+            content = response.data.decode('utf-8')
 
         except:
             try:
-                content = self.sl.getJsonFromExtendedAPI(path).decode('utf-8')
+                content = scraper.get(path, headers=headers, allow_redirects=False, verify=False, timeout=60).content.decode('utf-8')
+
             except:
-                pass
+                try:
+                    content = self.sl.getJsonFromExtendedAPI(path).decode('utf-8')
+                except:
+                    content = ''
 
         return content
 
@@ -348,92 +356,92 @@ class PlaylistUpdater(baseServiceUpdater):
             regexRemoveList = list()
             regexAddList = list() 
 
-            ccList = list()
+            ccList = []
+            langBList = []
+            langCList = []
+            langDList = []
 
             regexRemoveList.append( re.compile('(\s|^)(L\s*)?(24/7:?:?|19\d\d|20\d\d|S\s*\d{1,3}\s*E\s*\d{1,4})(?=\s|$)', re.IGNORECASE) )
          
             if ADDON.getSetting('country_code_be') == 'true':
-                langReplaceList.append({ 'regex' : re.compile('(\s|^)(BE$|NL$|BEL:?|NED:?|HEVC:?|BELGIQUE:?|BELGIUM:?)(?=\s|$)|^(BE$|NL$|BEL:|NED:|HEVC:|BELGIQUE:|BELGIUM:)', re.IGNORECASE), 'lang' : 'BE'})
+                langReplaceList.append({ 'regex' : re.compile('(\s|^)(\s*BE$|\s*NL$|BEL:?|NED:?|HEVC:?|BELGIQUE:?|BELGIUM:?)(?=\s|$)|^(\s*BE$|\s*NL$|BEL:|NED:|HEVC:|BELGIQUE:|BELGIUM:)', re.IGNORECASE), 'lang' : 'BE'})
                 langReplaceList.append({ 'regex' : re.compile('(\s|^)(BE:?|NL:?)(?=\s|$)|^(BE:|NL:)'), 'lang' : 'BE'})
                 prefixList.append('BE:?|NL:?|BEL:?|NED:?|HEVC:?|BELGIQUE:?|BELGIUM:?')
-                ccList.append('BE')
 
             if ADDON.getSetting('country_code_cz') == 'true':
-                langReplaceList.append({ 'regex' : re.compile('(\s|^)(CZ$|CZE:?|CESKO:?|CZECH:?)(?=\s|$)|^(CZ$|CZE:|CESKO:|CZECH:)', re.IGNORECASE), 'lang' : 'CZ'})
+                langReplaceList.append({ 'regex' : re.compile('(\s|^)(\s*CZ$|CZE:?|CESKO:?|CZECH:?)(?=\s|$)|^(\s*CZ$|CZE:|CESKO:|CZECH:)', re.IGNORECASE), 'lang' : 'CZ'})
                 langReplaceList.append({ 'regex' : re.compile('(\s|^)(CZ:?)(?=\s|$)|^(CZ:)'), 'lang' : 'CZ'})
                 prefixList.append('CZ:?|CZE:?|CESKO:?|CZECH:?')
-                ccList.append('CZ')
 
             if ADDON.getSetting('country_code_hr') == 'true':
-                langReplaceList.append({ 'regex' : re.compile('(\s|^)(HR$|YU$|HRV:?|CRO:?|HRVATSKA:?|CROATIA:?)(?=\s|$)|^(HR$|YU$|HRV:|CRO:|HRVATSKA:|CROATIA:)', re.IGNORECASE), 'lang' : 'HR'})
+                langReplaceList.append({ 'regex' : re.compile('(\s|^)(\s*HR$|\s*YU$|HRV:?|CRO:?|HRVATSKA:?|CROATIA:?)(?=\s|$)|^(\s*HR$|\s*YU$|HRV:|CRO:|HRVATSKA:|CROATIA:)', re.IGNORECASE), 'lang' : 'HR'})
                 langReplaceList.append({ 'regex' : re.compile('(\s|^)(HR:?|YU:?)(?=\s|$)|^(HR:|YU:)'), 'lang' : 'HR'})
                 prefixList.append('HR:?|HRV:?|CRO:?|HRVATSKA:?|CROATIA:?|YU:?')
-                ccList.append('HR')
 
             if ADDON.getSetting('country_code_dk') == 'true':
-                langReplaceList.append({ 'regex' : re.compile('(\s|^)(DK$|DEN:?|DANMARK:?|DENMARK:?)(?=\s|$)|^(DK$|DEN:|DANMARK:|DENMARK:)', re.IGNORECASE), 'lang' : 'DK'})
-                langReplaceList.append({ 'regex' : re.compile('(\s|^)(DK:?)(?=\s|$)|^(DK:)'), 'lang' : 'FR'})
+                langReplaceList.append({ 'regex' : re.compile('(\s|^)(\s*DK$|DEN:?|DANMARK:?|DENMARK:?)(?=\s|$)|^(\s*DK$|DEN:|DANMARK:|DENMARK:)', re.IGNORECASE), 'lang' : 'DK'})
+                langReplaceList.append({ 'regex' : re.compile('(\s|^)(DK:?)(?=\s|$)|^(DK:)'), 'lang' : 'DK'})
                 prefixList.append('DK:?|DEN:?|DANMARK:?|DENMARK:?')
-                ccList.append('DK')
 
             if ADDON.getSetting('country_code_uk') == 'true':
-                langReplaceList.append({ 'regex' : re.compile('(\s|^)(UK$|GB$|EN$|ENG:?|GBR:?|ENGLAND:?|GREAT\sBRITAIN:?)(?=\s|$)|^(UK$|GB$|EN$|ENG:|GBR:|ENGLAND:|GREAT\sBRITAIN:)', re.IGNORECASE), 'lang' : 'UK'})
+                langReplaceList.append({ 'regex' : re.compile('(\s|^)(\s*UK$|\s*GB$|\s*EN$|ENG:?|GBR:?|ENGLAND:?|GREAT\sBRITAIN:?)(?=\s|$)|^(\s*UK$|\s*GB$|\s*EN$|ENG:|GBR:|ENGLAND:|GREAT\sBRITAIN:)', re.IGNORECASE), 'lang' : 'UK'})
                 langReplaceList.append({ 'regex' : re.compile('(\s|^)(UK:?|GB:?|EN:?)(?=\s|$)|^(UK:|GB:|EN:)'), 'lang' : 'UK'})
                 prefixList.append('UK:?|GB:?|EN:?|ENG:?|GBR:?|ENGLAND:?|GREAT\sBRITAIN:?')
-                ccList.append('UK')
 
             if ADDON.getSetting('country_code_fr') == 'true':
-                langReplaceList.append({ 'regex' : re.compile('(\s|^)(FR$|FRA:?|FRANCE:?)(?=\s|$)|^(FR$|FRA:|FRANCE:)', re.IGNORECASE), 'lang' : 'FR'})
+                langReplaceList.append({ 'regex' : re.compile('(\s|^)(\s*FR$|FRA:?|FRANCE:?)(?=\s|$)|^(\s*FR$|FRA:|FRANCE:)', re.IGNORECASE), 'lang' : 'FR'})
                 langReplaceList.append({ 'regex' : re.compile('(\s|^)(FR:?)(?=\s|$)|^(FR:)'), 'lang' : 'FR'})
                 prefixList.append('FR:?|FRA:?|FRANCE:?')
-                ccList.append('FR')
 
             if ADDON.getSetting('country_code_de') == 'true':
-                langReplaceList.append({ 'regex' : re.compile('(\s|^)(DE$|DEU:?|DEUTSCHLAND:?|GERMANY:?)(?=\s|$)|^(DE$|DEU:|DEUTSCHLAND:|GERMANY:)', re.IGNORECASE), 'lang' : 'DE'})
+                langReplaceList.append({ 'regex' : re.compile('(\s|^)(\s*DE$|DEU:?|DEUTSCHLAND:?|GERMANY:?)(?=\s|$)|^(\s*DE$|DEU:|DEUTSCHLAND:|GERMANY:)', re.IGNORECASE), 'lang' : 'DE'})
                 langReplaceList.append({ 'regex' : re.compile('(\s|^)(DE:?)(?=\s|$)|^(DE:)'), 'lang' : 'DE'})
                 prefixList.append('DE:?|DEU:?|DEUTSCHLAND:?|GERMANY:?')
-                ccList.append('DE')
 
             if ADDON.getSetting('country_code_it') == 'true':
-                langReplaceList.append({ 'regex' : re.compile('(\s|^)(IT$|ITA:?|ITALIA:?|ITALY:?)(?=\s|$)|^(IT$|ITA:|ITALIA:|ITALY:)', re.IGNORECASE), 'lang' : 'IT'})
+                langReplaceList.append({ 'regex' : re.compile('(\s|^)(\s*IT$|ITA:?|ITALIA:?|ITALY:?)(?=\s|$)|^(\s*IT$|ITA:|ITALIA:|ITALY:)', re.IGNORECASE), 'lang' : 'IT'})
                 langReplaceList.append({ 'regex' : re.compile('(\s|^)(IT:?)(?=\s|$)|^(IT:)'), 'lang' : 'IT'})
                 prefixList.append('IT:?|ITA:?|ITALIA:?|ITALY:?')
-                ccList.append('IT')
             
             if ADDON.getSetting('country_code_pl') == 'true':
-                langReplaceList.append({ 'regex' : re.compile('(\s|^)(PL$|POL:?|POLSKA:?|POLAND:?|PL/EN:?)(?=\s|$)|^(PL$|POL:|POLSKA:|POLAND:|PL/EN:)', re.IGNORECASE), 'lang' : 'PL'})
+                langReplaceList.append({ 'regex' : re.compile('(\s|^)(\s*PL$|POL:?|POLSKA:?|POLAND:?|PL/EN:?)(?=\s|$)|^(\s*PL$|POL:|POLSKA:|POLAND:|PL/EN:)', re.IGNORECASE), 'lang' : 'PL'})
                 langReplaceList.append({ 'regex' : re.compile('(\s|^)(PL:?)(?=\s|$)|^(PL:)'), 'lang' : 'PL'})
                 prefixList.append('PL:?|POL:?|POLSKA:?|POLAND:?|PL/EN:?')
-                ccList.append('PL')
             
             if ADDON.getSetting('country_code_no') == 'true':
-                langReplaceList.append({ 'regex' : re.compile('(\s|^)(NO$|NOR:?|NORGE:?|NORWAY:?)(?=\s|$)|^(NO$|NOR:|NORGE:|NORWAY:)', re.IGNORECASE), 'lang' : 'NO'})
+                langReplaceList.append({ 'regex' : re.compile('(\s|^)(\s*NO$|NOR:?|NORGE:?|NORWAY:?)(?=\s|$)|^(\s*NO$|NOR:|NORGE:|NORWAY:)', re.IGNORECASE), 'lang' : 'NO'})
                 langReplaceList.append({ 'regex' : re.compile('(\s|^)(NO:?)(?=\s|$)|^(NO:)'), 'lang' : 'NO'})
                 prefixList.append('NO:?|NOR:?|NORGE:?|NORWAY:?')
-                ccList.append('NO')
 
             if ADDON.getSetting('country_code_srb') == 'true':
-                langReplaceList.append({ 'regex' : re.compile('(\s|^)(RS$|BH$|SR$|SI$|YU$|SLO:?|SLV:?|SRB:?|SRBIJA:?|SERBIA:?|BOSNIA:?|SLOVENIA:?)(?=\s|$)|^(RS$|BH$|SR$|SI$|YU$|SLO:|SLV:|SRB:|SRBIJA:|SERBIA:|BOSNIA:|SLOVENIA:)', re.IGNORECASE), 'lang' : 'SRB'})
+                langReplaceList.append({ 'regex' : re.compile('(\s|^)(\s*RS$|\s*BH$|\s*SR$|\s*SI$|\s*YU$|SLO:?|SLV:?|SRB:?|SRBIJA:?|SERBIA:?|BOSNIA:?|SLOVENIA:?)(?=\s|$)|^(\s*RS$|\s*BH$|\s*SR$|\s*SI$|\s*YU$|SLO:|SLV:|SRB:|SRBIJA:|SERBIA:|BOSNIA:|SLOVENIA:)', re.IGNORECASE), 'lang' : 'SRB'})
                 langReplaceList.append({ 'regex' : re.compile('(\s|^)(RS:?|BH:?|SR:?|SI:?|YU:?)(?=\s|$)|^(RS:|BH:|SR:|SI:|YU:)'), 'lang' : 'SRB'})
                 prefixList.append('RS:?|BH:?|SR:?|SI:?|SLO:?|SLV:?|SRB:?|SRBIJA:?|SERBIA:?|BOSNIA:?|SLOVENIA:?|YU:?')
-                ccList.append('SRB')
 
             if ADDON.getSetting('country_code_se') == 'true':
-                langReplaceList.append({ 'regex' : re.compile('(\s|^)(SE$|SW$|SWE:?|SVERIGE:?|SWEDEN:?)(?=\s|$)|^(SE$|SW$|SWE:|SVERIGE:|SWEDEN:)', re.IGNORECASE), 'lang' : 'SE'})
+                langReplaceList.append({ 'regex' : re.compile('(\s|^)(\s*SE$|\s*SW$|SWE:?|SVERIGE:?|SWEDEN:?)(?=\s|$)|^(\s*SE$|\s*SW$|SWE:|SVERIGE:|SWEDEN:)', re.IGNORECASE), 'lang' : 'SE'})
                 langReplaceList.append({ 'regex' : re.compile('(\s|^)(SE:?|SW:?)(?=\s|$)|^(SE:|SW:)'), 'lang' : 'SE'})
                 prefixList.append('SE:?')
-                ccList.append('SE')
 
             if ADDON.getSetting('country_code_us') == 'true':
-                langReplaceList.append({ 'regex' : re.compile('(\s|^)(US$|AM$|CA$|CAN:?|USA:?|CANADA:?|AMERICA:?)(?=\s|$)|^(US$|AM$|CA$|CAN:|USA:|CANADA:|AMERICA:)', re.IGNORECASE), 'lang' : 'US'})
-                langReplaceList.append({ 'regex' : re.compile('(\s|^)(US:?|AM:?|CA:?)(?=\s|$)|^(US:|AM:|CA:)'), 'lang' : 'US'})
-                prefixList.append('US:?|AM:?|CA:?|CAN:?|USA:?|CANADA:?|AMERICA:?')
-                ccList.append('US')
+                langReplaceList.append({ 'regex' : re.compile('(\s|^)(\s*US$|\s*AM$|USA:?|AMERICA:?)(?=\s|$)|^(\s*US$|\s*AM$|USA:|AMERICA:)', re.IGNORECASE), 'lang' : 'US'})
+                langReplaceList.append({ 'regex' : re.compile('(\s|^)(US:?|AM:?)(?=\s|$)|^(US:|AM:)'), 'lang' : 'US'})
+                prefixList.append('US:?|AM:?|USA:?|AMERICA:?')
 
             if ADDON.getSetting('country_code_radio') == 'true':
                 langReplaceList.append({ 'regex' : re.compile('(\s|^)(RADIO:?)(?=\s|$)|^(RADIO:)', re.IGNORECASE), 'lang' : 'Radio'})
                 prefixList.append('RADIO:?')
-                ccList.append('RADIO')
+
+            for cc, value in CC_DICT.items():
+                if cc.upper()+':?' not in prefixList and ADDON.getSetting('country_code_{}'.format(cc)) == 'true':
+                    langReplaceList.append({ 'regex' : re.compile('(\s|^)('+cc.upper()+':?)(?=\s|$)|^('+cc.upper()+':)'), 'lang' : cc.upper()})
+                    prefixList.append(cc.upper() + ':?')
+
+                # ccLists
+                ccList.append(cc)
+                langBList.append(value['language'])
+                langCList.append(value['native'])
+                langDList.append(value['alpha-3'])
 
             if not prefixList:
                 prefixList.append(' ')
@@ -520,8 +528,6 @@ class PlaylistUpdater(baseServiceUpdater):
 
                             name = title
 
-                            #ccList = ['BE', 'CZ', 'DE', 'DK', 'FR', 'HR', 'IT', 'NO', 'PL', 'SE', 'SRB', 'UK', 'US']
-
                             if ADDON.getSetting('{}_append_country_code'.format(self.serviceName)) != '':
                                 p = re.compile(r'.*\s([a-zA-Z]{2,3})$', re.DOTALL)
 
@@ -556,14 +562,8 @@ class PlaylistUpdater(baseServiceUpdater):
 
                                 if replaceCC:
                                     langA = '|'.join(ccList)
-
-                                    langBList = ['Belgique', 'Cesko', 'Deutschland', 'Danmark', 'France', 'Hrvatska', 'Italia', 'Norge', 'Polska', 'Sverige', 'Serbia', 'Britain', 'America'] 
                                     langB = '|'.join(langBList)
-
-                                    langCList = ['Belgium', 'Czech', 'Germany', 'Danmark', 'France', 'Croatia', 'Italy', 'Norway', 'Poland', 'Sweden', 'Ex-Yu', 'United Kingdom', 'USA'] 
                                     langC = '|'.join(langCList)
-
-                                    langDList = ['BEL', 'CZE', 'GER', 'DEN', 'FRA', 'HRT', 'ITA', 'NOR', 'POL', 'SWE', 'SRB', 'ENG', 'USA']
                                     langD = '|'.join(langDList)
 
                                     ccListInt = len(ccList)
@@ -594,7 +594,7 @@ class PlaylistUpdater(baseServiceUpdater):
                                                     subsLangB = {langBList[item]: ccList[item]}
                                                     cc = ccList[subsLangB.get(item, item)]
                                                     ccCh = cc
-
+                                                
                                                 elif group.upper() == langCList[item].upper():
                                                     subsLangC = {langCList[item]: ccList[item]}
                                                     cc = ccList[subsLangC.get(item, item)]
@@ -603,7 +603,7 @@ class PlaylistUpdater(baseServiceUpdater):
                                                 elif group.upper() == langDList[item].upper():
                                                     subsLangD = {langDList[item]: ccList[item]}
                                                     cc = ccList[subsLangD.get(item, item)]
-                                                    ccCh = cc
+                                                    ccCh = cc             
 
                                             try:
                                                 cc = p.search(title).group(1)

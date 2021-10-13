@@ -64,6 +64,7 @@ except ImportError:
 
 import threading
 import requests
+import urllib3
 import os, re, time, datetime, io, zipfile
 import xbmc, xbmcgui, xbmcvfs, xbmcaddon
 import shutil
@@ -710,14 +711,14 @@ class Database(object):
                         self.conn.commit()
 
                     if isinstance(item, Channel):
-                        c.execute('INSERT OR IGNORE INTO channels(id, title, logo, titles, stream_url, visible, weight, source) VALUES(?, ?, ?, ?, ?, ?, (CASE ? WHEN -1 THEN (SELECT COALESCE(MAX(weight)+1, 0) FROM channels WHERE source=?) ELSE ? END), ?)', [item.id, item.title, item.logo, item.titles, item.streamUrl, item.visible, item.weight, self.source.KEY, item.weight, self.source.KEY])
+                        c.execute('INSERT OR REPLACE INTO channels(id, title, logo, titles, stream_url, visible, weight, source) VALUES(?, ?, ?, ?, ?, ?, (CASE ? WHEN -1 THEN (SELECT COALESCE(MAX(weight)+1, 0) FROM channels WHERE source=?) ELSE ? END), ?)', [item.id, item.title, item.logo, item.titles, item.streamUrl, item.visible, item.weight, self.source.KEY, item.weight, self.source.KEY])
                         if not c.rowcount:
                             c.execute('UPDATE channels SET title=?, logo=?, titles=?, stream_url=?, visible=(CASE ? WHEN -1 THEN visible ELSE ? END), weight=(CASE ? WHEN -1 THEN weight ELSE ? END) WHERE id=? AND source=?',
                                 [item.title, item.logo, item.titles, item.streamUrl, item.weight, item.visible, item.weight, item.weight, item.id, self.source.KEY])
 
                     elif isinstance(item, Program):
                         try:
-                            c.execute('INSERT INTO programs(channel, title, start_date, end_date, description, productionDate, director, actor, episode, image_large, image_small, categoryA, categoryB, source, updates_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                            c.execute('INSERT OR REPLACE INTO programs(channel, title, start_date, end_date, description, productionDate, director, actor, episode, image_large, image_small, categoryA, categoryB, source, updates_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                                 [item.channel, item.title, item.startDate, item.endDate, item.description, item.productionDate, item.director, item.actor, item.episode, item.imageLarge, item.imageSmall, item.categoryA, item.categoryB, self.source.KEY, updatesId])
 
                         except (sqlite3.InterfaceError) as ex:
@@ -2289,26 +2290,8 @@ class Source(object):
 
             while True:
                 try:
-                    """
-                    if sys.version_info[0] > 2:
-                        reqUrl   = urllib.request.Request(url)
-                    else:
-                        reqUrl   = urllib2.Request(url)
-                    reqUrl.add_header('User-Agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:19.0) Gecko/20121213 Firefox/19.0')
-                    reqUrl.add_header('Keep-Alive', 'timeout=20')
-                    reqUrl.add_header('ContentType', 'application/x-www-form-urlencoded')
-                    reqUrl.add_header('Connection', 'Keep-Alive')
-                    if sys.version_info[0] > 2:
-                        u = urllib.request.urlopen(reqUrl, timeout=15)
-                        filename = basename(u.url)
-                    else:
-                        u = urllib2.urlopen(reqUrl, timeout=15)
-                        filename = basename(u.url)
-
-                    content = u.read()
-                    break
-                    """
-
+                    u = None
+                    
                     headers = {
                         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:19.0) Gecko/20121213 Firefox/19.0',
                         'Keep-Alive': 'timeout=20',
@@ -2316,9 +2299,21 @@ class Source(object):
                         'Connection': 'Keep-Alive',
                     }
 
-                    u = requests.get(url, headers=headers, verify=False, timeout=15)
-                    filename = u.url
-                    content = u.content
+                    try:
+                        http = urllib3.PoolManager()
+                        u = http.request('GET', url, headers=headers, timeout=20)
+                        content = u.data
+
+                    except:
+                        u = requests.get(url, headers=headers, verify=False, timeout=20)
+                        content = u.content
+
+                    try:
+                        c_disposition = u.headers['content-disposition']
+                        filename = re.search('filename="(.+?)"', c_disposition).group(1)
+                    except:
+                        filename = url
+
                     break
 
                 except Exception as ex:

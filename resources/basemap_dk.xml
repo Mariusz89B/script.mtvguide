@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map id="base danish" version="1.0" strm="">
+<map id="base_dk" version="1.0" strm="">
 	<channel id="6eren DK" 									title="(?=6.?eren(\s*HD)?(\s*DK)$)" strm=""/>
 	<channel id="Animal Planet DK" 							title="(?=Animal\s*Planet(\s*TV)?(\s*HD)?\s*(DK|NO|SE)$)" strm=""/>
 	<channel id="C More First DK" 							title="(?=C\s*More\s*First(\s*TV)?(\s*HD)?\s*(DK|NO|SE)$)" strm=""/>

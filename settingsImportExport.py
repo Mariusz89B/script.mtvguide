@@ -52,6 +52,7 @@ else:
 import os, stat, io, zipfile, datetime, shutil, platform, re
 import xbmc, xbmcgui, xbmcvfs
 from strings import *
+from groups import groupList
 
 compressionType = zipfile.ZIP_STORED
 try:
@@ -74,6 +75,8 @@ recordAppWindows    = M_TVGUIDE_SUPPORT + 'record_apps/recording_windows.zip'
 recordAppAndroid    = M_TVGUIDE_SUPPORT + 'record_apps/recording_android.zip'
 adultEPG            = M_TVGUIDE_SUPPORT + 'freeepg/xxx.xml'
 vodEPG              = M_TVGUIDE_SUPPORT + 'freeepg/vod.xml' 
+
+CC_DICT = groupList.ccDict()
 
 class SettingsImp:
     def __init__(self):
@@ -549,182 +552,239 @@ class SettingsImp:
     def countryUrlPicker(self):
         deb('starting countryUrlPicker')
         enabling = False
-        passed = False
-        epg_none = False
-        epg = None
 
-        langList = list()
         ccListCh = list()
         langListCh = list()
+
         selectList = list()
+        epgList = list()
 
-        ccList = ['be', 'cz', 'de', 'dk', 'fr', 'hr', 'it', 'no', 'pl', 'se', 'srb', 'uk', 'us', 'radio']
+        continent = xbmcgui.Dialog().select(strings(30725), [strings(30727), strings(30728), strings(30729), strings(30730), strings(30731), strings(30732), '[COLOR red]' + strings(30726) + '[/COLOR]'])
 
-        langList = [strings(59925), strings(59926), strings(59927), strings(59928), strings(59929), strings(59930),
-                 strings(59931), strings(59932), strings(59933), strings(59934), strings(59935), strings(59936), strings(59937), 'Radio']
+        if continent is None:
+            enabling = True
+            return xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)
 
-        for (f,b) in zip(langList, ccList):
-            if b == 'pl':
-                c = ADDON.getSetting(id='m-TVGuide')
+        elif continent < 0:
+            enabling = True
+            return xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)
+
+        filtered_dict = dict((k, v) for k, v in CC_DICT.items() if v['continent'] == continent or (v['continent'] == -1 and continent != 6))
+
+        for cc, value in filtered_dict.items():
+            if value['language'].isdigit():
+                country = strings(int(value['language']))
             else:
-                c = ADDON.getSetting(id='epg_{cc}'.format(cc=b))
-            x = ADDON.getSetting(id='country_code_{cc}'.format(cc=b))
-            if c and x == 'true':
-                selectList.append(f + ' [COLOR gold][' + c + '][/COLOR]')
-            elif c == 'epg_pl' and x == 'true':
-                c = ADDON.getSetting(id='m-TVGuide')
-                selectList.append(f + ' [COLOR gold][' + c + '][/COLOR]')
-            elif ADDON.getSetting('country_code_{cc}'.format(cc=b)) == 'true':
-                selectList.append(f + ' [COLOR green]['+strings(30721)+'][/COLOR]')
+                country = value['language']
+
+            country_code = ADDON.getSetting(id='country_code_{cc}'.format(cc=cc))
+
+            main_epg = ADDON.getSetting(id='m-TVGuide')
+            epg = ADDON.getSetting(id='epg_{cc}'.format(cc=cc))
+
+            if cc == 'all':
+                enabled_main_epg = country + ' [COLOR gold][' + main_epg + '][/COLOR]'
+                disabled = country + ' [COLOR disabled][' + strings(30720) + '][/COLOR]'
             else:
-                selectList.append(f + ' [COLOR disabled]['+strings(30720)+'][/COLOR]')
+                enabled_main_epg = '[B]' + cc.upper() + '[/B] - ' + country + ' [COLOR gold][' + main_epg + '][/COLOR]'
+                disabled = '[B]' + cc.upper() + '[/B] - ' + country + ' [COLOR disabled][' + strings(30720) + '][/COLOR]'
 
-        ret_a = xbmcgui.Dialog().multiselect(strings(59943), selectList)
-        if ret_a:
-            for itemk in ccList:
-                ADDON.setSetting(id='country_code_{cc}'.format(cc=itemk), value='false')
-            
-            for item in ret_a:
-                if item in ret_a:
-                    if ccList[item] == 'pl':
-                        c = ADDON.getSetting(id='m-TVGuide')
-                    else:
-                        c = ADDON.getSetting(id='epg_{cc}'.format(cc=ccList[item]))
-                    if c:
-                        c = ' [COLOR gold][' + c + '][/COLOR]'
-                    elif c == 'epg_pl':
-                        c = ADDON.getSetting(id='m-TVGuide')
-                        c = ' [COLOR gold][' + c + '][/COLOR]'
-                    else:
-                        c = c + ' [COLOR disabled][http://][/COLOR]'
+            enabled_epg = '[B]' + cc.upper() + '[/B] - ' + country + ' [COLOR gold][' + epg + '][/COLOR]'
 
-                    langListCh.append(langList[item] + c)
-                    ccListCh.append(ccList[item])
-                    ADDON.setSetting(id='country_code_{cc}'.format(cc=ccList[item]), value='true')
-                    passed = True
-
-                    if (c == '' or 'http://') and len(ret_a) == 1:
-                        epg_none = True
-
-            if not epg_none:
-                epg = xbmcgui.Dialog().select(strings(30101), [strings(60003), strings(60004)])
-
-                if epg < 0:
-                    self.countryUrlPicker()
-
-                if epg == 0:
-                    e = ADDON.getSetting(id='m-TVGuide')
-                    if e:
-                        text = xbmcgui.Dialog().input(strings(59945).format(strings(59941)), defaultt=str(e))
-                    else:
-                        text = xbmcgui.Dialog().input(strings(59945).format(strings(59941)), defaultt=str('http://'))
-
-                    ADDON.setSetting(id='m-TVGuide', value=str(text))
-
-                    for cc in ccList:
-                        ADDON.setSetting(id='epg_{cc}'.format(cc=cc), value=str(''))
-
-            if epg == 1 or epg_none:
-                while len(ccListCh) > 0:
-                    ret_b = xbmcgui.Dialog().select(strings(30101), langListCh)
-                    if ret_b > -1:
-                        heading = re.sub('\s\[COLOR.*', '', langListCh[ret_b])
-                        c = re.findall('.*\s\W\w+\s\w+\W\[(http.*)\]\W\W\w+\W', langListCh[ret_b])
-                        c = c[0] if c else 'http://'
-                        text = xbmcgui.Dialog().input(strings(59945).format(heading), defaultt=str(c))
-                        
-                        if ccListCh[ret_b] == 'pl':
-                            ADDON.setSetting(id='m-TVGuide', value=str(text))
-                        elif len(ret_a) == 1:
-                            ADDON.setSetting(id='m-TVGuide', value=str(text))
-                            ADDON.setSetting(id='epg_{cc}'.format(cc=ccListCh[ret_b]), value=str(''))
-                        else:
-                            if ADDON.getSetting('m-TVGuide') == 'http://mods-kodi.pl/' or ADDON.getSetting('m-TVGuide') == '':
-                                ADDON.setSetting(id='m-TVGuide', value=str(text))
-                            else:
-                                ADDON.setSetting(id='epg_{cc}'.format(cc=ccListCh[ret_b]), value=str(text))
-
-                        langListCh.pop(ret_b)
-                        ccListCh.pop(ret_b)
-                        deb('epg url - enabling!')
-                        try:
-                            ADDON.setSetting(id="countryUrlChannels", value=str(strings(30721) + ' (' + strings(59919)+')'))
-                        except:
-                            ADDON.setSetting(id="countryUrlChannels", value=str((strings(30721) + ' (' + strings(59919)+')').encode('utf-8', 'replace'))) 
-
-                    else: 
-                        setList = list()
-                        for cc in ccList:
-                            cc = ADDON.getSetting(id='country_code_{cc}'.format(cc=cc))
-                            setList.append(cc)
-
-                        if 'true' in setList:
-                            deb('epg url - disabling!')
-                            try:
-                                ADDON.setSetting(id="countryUrlChannels", value=str(strings(30721) + ' (' + strings(59919)+')'))
-                            except:
-                                ADDON.setSetting(id="countryUrlChannels", value=str((strings(30721) + ' (' + strings(59919)+')').encode('utf-8', 'replace'))) 
-                            
-                        else:
-                            deb('epg url - enabling!')
-                            try:
-                                ADDON.setSetting(id="countryUrlChannels", value=str(strings(30720)))
-                            except:
-                                ADDON.setSetting(id="countryUrlChannels", value=str(strings(30720).encode('utf-8', 'replace')))
-                        break
-
-
+            if epg and country_code == 'true':
+                selectList.append(enabled_epg) 
+                epgList.append(enabled_epg)
+            elif main_epg and (country_code == 'true' or cc == 'all'):
+                selectList.append(enabled_main_epg)
+                epgList.append(enabled_main_epg) 
             else:
-                deb('epg url - enabling!')
-                try:
-                    ADDON.setSetting(id="countryUrlChannels", value=str(strings(30721) + ' (' + strings(59919)+')'))
-                except:
-                    ADDON.setSetting(id="countryUrlChannels", value=str((strings(30721) + ' (' + strings(59919)+')').encode('utf-8', 'replace')))      
+                selectList.append(disabled) 
+                if epg:
+                    epgList.append(enabled_epg) 
+                elif main_epg:
+                    epgList.append(enabled_main_epg)
+                else:
+                    epgList.append(disabled) 
+                
 
-        
-        elif ret_a is not None and not passed:
-            for item in ccList:
-                ADDON.setSetting(id='country_code_{cc}'.format(cc=item), value='false')
+        multiselect = xbmcgui.Dialog().multiselect(strings(59943), selectList)
+
+        ccList = list(filtered_dict)
+        removeList = list(CC_DICT)
+        countrys = list(filtered_dict.values())
+
+        if multiselect is None:
+            enabling = True
+            return self.countryUrlPicker()
+
+        elif not multiselect:
+            for cc in ccList:
+                ADDON.setSetting(id='country_code_{cc}'.format(cc=cc), value='false')
+
             deb('epg url - disabling!')
             try:
                 ADDON.setSetting(id="countryUrlChannels", value=str(strings(30720)))
             except:
                 ADDON.setSetting(id="countryUrlChannels", value=str(strings(30720).encode('utf-8', 'replace')))
+            xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)
+            return
 
+        elif len(multiselect) == 1:
+            for select in multiselect:
+                epg = ADDON.getSetting(id='m-TVGuide')
+                if epg:
+                    txt = xbmcgui.Dialog().input(strings(59945).format(strings(59941)), defaultt=str(epg))
+                else:
+                    txt = xbmcgui.Dialog().input(strings(59945).format(strings(59941)), defaultt=str('http://'))
+                 
+                if txt != '' or txt != 'http://' or txt != 'https://' or txt != 'http://mods-kodi.pl/':   
+                    ADDON.setSetting(id='m-TVGuide', value=str(txt))
+
+                    if ccList[select] != 'all':
+                        ADDON.setSetting(id='country_code_{cc}'.format(cc=ccList[select]), value='true')
+                        ADDON.setSetting(id='epg_{cc}'.format(cc=ccList[select]), value=str(''))
+                    
+                    removeList.remove(ccList[select])
+
+                    deb('epg url - enabling!')
+                    try:
+                        ADDON.setSetting(id="countryUrlChannels", value=str(strings(30721) + ' (' + strings(59919)+')'))
+                    except:
+                        ADDON.setSetting(id="countryUrlChannels", value=str((strings(30721) + ' (' + strings(59919)+')').encode('utf-8', 'replace'))) 
+        
+        elif len(multiselect) > 1:
+            for item in multiselect:    
+                if item in multiselect:
+                    langListCh.append(epgList[item])
+                    ccListCh.append(ccList[item])
+        
+        s = 0
+
+        while len(langListCh) > 0:
+            select = xbmcgui.Dialog().select(strings(30101), langListCh)
+            if select > -1:
+                main_epg = ADDON.getSetting('m-TVGuide')
+
+                heading = re.sub('\s\[COLOR.*', '', langListCh[select])
+                try:
+                    find = re.findall('.*\s\W\w+\s\w+\W\[(http.*)\]\W\W\w+\W', langListCh[select])
+                    epg = find[0] if find else 'http://'
+                except:
+                    epg = 'http://'
+                
+                txt = xbmcgui.Dialog().input(strings(59945).format(heading), defaultt=str(epg))
+
+                if txt != '' or txt != 'http://' or txt != 'https://' or txt != 'http://mods-kodi.pl/':
+                    if s == 0:
+                        ADDON.setSetting(id='m-TVGuide', value=str(txt))
+                        ADDON.setSetting(id='epg_{cc}'.format(cc=ccListCh[select]), value=str(''))
+                        s += 1
+
+                    elif s > 0:
+                        ADDON.setSetting(id='epg_{cc}'.format(cc=ccListCh[select]), value=str(txt))               
+                    
+                    ADDON.setSetting(id='country_code_{cc}'.format(cc=ccListCh[select]), value='true')
+
+                    removeList.remove(ccListCh[select])
+
+                    langListCh.pop(select)
+                    ccListCh.pop(select)
+
+                    deb('epg url - enabling!')
+                    try:
+                        ADDON.setSetting(id="countryUrlChannels", value=str(strings(30721) + ' (' + strings(59919)+')'))
+                    except:
+                        ADDON.setSetting(id="countryUrlChannels", value=str((strings(30721) + ' (' + strings(59919)+')').encode('utf-8', 'replace'))) 
+
+            else: 
+                setList = list()
+                for cc in ccList:
+                    cc = ADDON.getSetting(id='country_code_{cc}'.format(cc=cc))
+                    setList.append(cc)
+
+                if 'true' in setList:
+                    deb('epg url - enabling!')
+                    try:
+                        ADDON.setSetting(id="countryUrlChannels", value=str(strings(30721) + ' (' + strings(59919)+')'))
+                    except:
+                        ADDON.setSetting(id="countryUrlChannels", value=str((strings(30721) + ' (' + strings(59919)+')').encode('utf-8', 'replace'))) 
+                    
+                else:
+                    deb('epg url - disabling!')
+                    try:
+                        ADDON.setSetting(id="countryUrlChannels", value=str(strings(30720)))
+                    except:
+                        ADDON.setSetting(id="countryUrlChannels", value=str(strings(30720).encode('utf-8', 'replace')))
+            
+                break
+
+        for cc in removeList:
+            ADDON.setSetting(id='country_code_{cc}'.format(cc=cc), value='false')
         
         enabling = True
-
         xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)
 
     def countryFilePicker(self):
         deb('starting countryFilePicker')
         enabling = False
 
-        langList = list()
         ccListCh = list()
         langListCh = list()
         selectList = list()
 
-        ccList = ['be', 'cz', 'de', 'dk', 'fr', 'hr', 'it', 'no', 'pl', 'se', 'srb', 'uk', 'us', 'radio']
+        continent = xbmcgui.Dialog().select(strings(30725), [strings(30727), strings(30728), strings(30729), strings(30730), strings(30731), strings(30732), '[COLOR red]' + strings(30726) + '[/COLOR]'])
 
-        langList = [strings(59925), strings(59926), strings(59927), strings(59928), strings(59929), strings(59930),
-                 strings(59931), strings(59932), strings(59933), strings(59934), strings(59935), strings(59936), strings(59937), 'Radio']
+        if continent is None:
+            enabling = True
+            return xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)
 
-        for (f,b) in zip(langList, ccList):
-            c = ADDON.getSetting(id='country_code_{cc}'.format(cc=b))
-            if c == 'true':
-                selectList.append(f + ' [COLOR gold]['+strings(30721)+'][/COLOR]')
+        elif continent < 0:
+            enabling = True
+            return xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)
+
+        filtered_dict = dict((k, v) for k, v in CC_DICT.items() if v['continent'] == continent or (v['continent'] == -1 and continent != 6))
+
+        for cc, value in filtered_dict.items():
+            if value['language'].isdigit():
+                country = strings(int(value['language']))
             else:
-                selectList.append(f + ' [COLOR disabled]['+strings(30720)+'][/COLOR]')
+                country = value['language']
 
-        ret = xbmcgui.Dialog().multiselect(strings(59943), selectList)
-        if ret:
+            country_code = ADDON.getSetting(id='country_code_{cc}'.format(cc=cc))
+            if country_code == 'true':
+                selectList.append('[B]' + cc.upper() + '[/B] - ' + country + ' [COLOR gold][' + strings(30721) + '][/COLOR]')
+            else:
+                selectList.append('[B]' + cc.upper() + '[/B] - ' + country + ' [COLOR disabled][' + strings(30720) + '][/COLOR]')
+
+        multiselect = xbmcgui.Dialog().multiselect(strings(59943), selectList)
+
+        ccList = list(filtered_dict)
+        countrys = list(filtered_dict.values())
+
+        if multiselect is None:
+            enabling = True
+            xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)
+            return
+
+        elif not multiselect:
+            for cc in ccList:
+                ADDON.setSetting(id='country_code_{cc}'.format(cc=cc), value='false')
+
+            deb('epg url - disabling!')
+            try:
+                ADDON.setSetting(id="countryFileChannels", value=str(strings(30720)))
+            except:
+                ADDON.setSetting(id="countryFileChannels", value=str(strings(30720).encode('utf-8', 'replace')))
+            xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)
+            return
+
+        elif multiselect:
             for item in ccList:
                 ADDON.setSetting(id='country_code_{cc}'.format(cc=item), value='false')
             
-            for item in ret:
-                if item in ret:
-                    langListCh.append(langList[item])
+            for item in multiselect:
+                if item in multiselect:
+                    langListCh.append(selectList[item])
                     ccListCh.append(ccList[item])
                     ADDON.setSetting(id='country_code_{cc}'.format(cc=ccList[item]), value='true')
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map id="base us" version="1.0" strm="">
+<map id="base_us" version="1.0" strm="">
 	<channel id="5StarMax.us"								title="(?=CineMax\s*5\s*StarMax(\s*HD|\s*UHD)?\s*US$)" strm=""/>
 	<channel id="5StarMax.us"								title="(?=CineMax\s*5\s*StarMax\s*US$)" strm=""/>
 	<channel id="76ers.tv"									title="(?=NBA\s*PHILADELPHIA\s*76ERS\s*VIP\s*US$)" strm=""/>

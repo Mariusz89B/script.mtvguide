@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map id="base benelux" version="1.0" strm="">
+<map id="base_be" version="1.0" strm="">
 	<channel id="24Kitchen BE" 								title="(?=24\s*Kitchen(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
 	<channel id="3voor12 BE" 								title="(?=3\s*voor\s*12(\s*TV)?(\s*HD|\s*UHD)?\s*(BE|NL)$)" strm=""/>
 	<channel id="AB Moteurs BE" 							title="(?=AB\s*Moteurs(\s*HD|\s*UHD)?\s*(BE|FR)$)" strm=""/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map id="base serbian" version="1.0" strm="">	
+<map id="base_srb" version="1.0" strm="">	
 	<channel id="AMC SRB"									title="(?=AMC(\s*HD)?(\s*ex(\s*)?(\s*\-)?Yu|UK|US)$)" strm=""/>
 	<channel id="AXN SRB"									title="(?=AXN(\s*TV)?(\s*HD)?\s*ex(\s*)?(\s*\-)?(Yu|SRB)$)" strm=""/>
 	<channel id="AXN Spin SRB"								title="(?=AXN\s*Spin(\s*TV)?(\s*HD)?\s*ex(\s*)?(\s*\-)?(Yu|SRB)$)" strm=""/>

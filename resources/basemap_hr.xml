@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map id="base croatian" version="1.0" strm="">	
+<map id="base_hr" version="1.0" strm="">	
 	<channel id="3 SAT HR"									title="(?=3\s*SAT(\s*HD)?\s*ex(\s*)?(\s*\-)?(Yu|HR)$)" strm=""/>
 	<channel id="AL JAZEERA BALKANS HR"						title="(?=(AL)?(\s*AL)(\s*JAZEERA)(\s*BALKANS)?(\s*HD)?\s*ex(\s*)?(\s*\-)?(Yu|HR)$)" strm=""/>
 	<channel id="AMC HR"									title="(?=AMC(\s*HD)?\s*ex(\s*)?(\s*\-)?(Yu|HR)$)" strm=""/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map id="base norwegian" version="1.0" strm="">	
+<map id="base_no" version="1.0" strm="">	
 	<channel id="Al Jazeera NO"								title="(?=AL\s*JAZEERA(\s*ENGLISH)?(\s*HD)?(\s*NO|DK|SE|UK|ARB)$)" strm=""/>
 	<channel id="Animal Planet HD NO"						title="(?=ANIMAL\s*PLANET(\s*HD)?(\s*NO)$)" strm=""/>
 	<channel id="BBC Brit NO"								title="(?=BBC\s*BRIT(\s*HD)?(\s*NO|DK|SE|UK)$)" strm=""/>

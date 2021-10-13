@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map id="base" version="1.0" strm="">
+<map id="base_pl" version="1.0" strm="">
 	<channel id="13 ULICA PL" title="(?=13(TH)?\s*(ULICA|STREET)(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="13.TV PL" title="(?=13(\.)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="2X2 PL" title="(?=2\s*X\s*2(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>

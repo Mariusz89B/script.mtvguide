@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map id="base swedish" version="1.0" strm="">	
+<map id="base_se" version="1.0" strm="">	
 	<channel id="AFTONBLADET TV SE" title="(?=AFTONBLADET(\s*TV)?(\s*(HD|UHD))?\s*SE$)" strm=""/>
 	<channel id="AL JAZEERA SE" title="(?=AL\s*JAZEERA(\s*ENGLISH)?(\s*NEWS)?(\s*INT(\.)?(ERNATIONAL)?)(\s*(HD|UHD))?\s*SE$)" strm=""/>
 	<channel id="ANIMAL PLANET HD SE" title="(?=ANIMAL\s*PLANET(\s*(HD|UHD))\s*SE$)" strm=""/>

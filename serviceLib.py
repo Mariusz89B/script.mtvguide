@@ -57,6 +57,7 @@ import xbmc, xbmcgui, xbmcvfs
 from unidecode import unidecode
 from xml.etree import ElementTree
 from strings import *
+from groups import groupList
 import simplejson as json
 import strings as strings2
 import zlib
@@ -99,6 +100,8 @@ except:
     MAX_CONNECTION_TIME = 30
 
 HTTP_ConnectionTimeout = 10
+
+CC_DICT = groupList.ccDict()
 
 class ShowList:
     def __init__(self, logCall=deb):
@@ -651,19 +654,6 @@ class baseServiceUpdater:
         self.baseMapFile      = 'basemap.xml'
         self.adultMapFile     = 'adultmap.xml'
         self.vodMapFile       = 'vodmap.xml'
-        self.beneluxMapFile   = 'basemap_benelux.xml'
-        self.czechMapFile     = 'basemap_czech.xml'
-        self.croatianMapFile  = 'basemap_croatian.xml'
-        self.danishMapFile    = 'basemap_danish.xml'
-        self.englishMapFile   = 'basemap_english.xml'
-        self.frenchMapFile    = 'basemap_french.xml'
-        self.germanMapFile    = 'basemap_german.xml'
-        self.italianMapFile   = 'basemap_italian.xml'
-        self.norwegianMapFile = 'basemap_norwegian.xml'
-        self.serbianMapFile   = 'basemap_serbian.xml'
-        self.swedishMapFile   = 'basemap_swedish.xml'
-        self.usMapFile        = 'basemap_us.xml'
-        self.radioMapFile     = 'basemap_radio.xml'
         self.extraMapFile     = 'basemap_extra.xml'
         self.automap = list()
         self.mapsLoaded  = False
@@ -784,44 +774,9 @@ class baseServiceUpdater:
             if ADDON.getSetting('VOD_EPG') != "":
                 self.loadSingleBaseMap('vod', self.vodMapFile)
 
-            if ADDON.getSetting('country_code_be') == 'true':
-                self.loadSingleBaseMap('benelux', self.beneluxMapFile)
-
-            if ADDON.getSetting('country_code_cz') == 'true':
-                self.loadSingleBaseMap('czech', self.czechMapFile)
-
-            if ADDON.getSetting('country_code_hr') == 'true':
-                self.loadSingleBaseMap('croatian', self.croatianMapFile)
-
-            if ADDON.getSetting('country_code_dk') == 'true':
-                self.loadSingleBaseMap('danish', self.danishMapFile)
-
-            if ADDON.getSetting('country_code_uk') == 'true':
-                self.loadSingleBaseMap('english', self.englishMapFile)
-
-            if ADDON.getSetting('country_code_fr') == 'true':
-                self.loadSingleBaseMap('french', self.frenchMapFile)
-
-            if ADDON.getSetting('country_code_de') == 'true':
-                self.loadSingleBaseMap('german', self.germanMapFile)
-
-            if ADDON.getSetting('country_code_it') == 'true':
-                self.loadSingleBaseMap('italian', self.italianMapFile)
-
-            if ADDON.getSetting('country_code_no') == 'true':
-                self.loadSingleBaseMap('norwegian', self.norwegianMapFile)
-
-            if ADDON.getSetting('country_code_srb') == 'true':
-                self.loadSingleBaseMap('serbian', self.serbianMapFile)
-
-            if ADDON.getSetting('country_code_se') == 'true':
-                self.loadSingleBaseMap('swedish', self.swedishMapFile)
-
-            if ADDON.getSetting('country_code_us') == 'true':
-                self.loadSingleBaseMap('us', self.usMapFile)
-
-            if ADDON.getSetting('country_code_radio') == 'true':
-                self.loadSingleBaseMap('radio', self.radioMapFile)
+            for k, v in CC_DICT.items():
+                if ADDON.getSetting('country_code_{}'.format(k.lower())) == 'true':
+                    self.loadSingleBaseMap('base_' + k.lower(), 'basemap_{}.xml'.format(k.lower()))
 
             self.loadExtraBaseMap('base_extra', self.extraMapFile)
 
@@ -840,7 +795,10 @@ class baseServiceUpdater:
         else:
             localMapFilename      = os.path.join(pathMapBase, mapFilePath)
             self.log('{} file download failed - using local map: {}'.format(lang, localMapFilename))
-            map                   = MapString.loadFile(localMapFilename, self.log)
+            if xbmcvfs.exists(localMapFilename):
+                map                   = MapString.loadFile(localMapFilename, self.log)
+            else:
+                map                   = MapString.loadFile(os.path.join(pathMapBase, 'basemap.xml'), self.log)
         #entries, _, seCat         = MapString.Parse(map, None) #None so content wont be printed in logs
         entries, _, seCat         = MapString.FastParse(map, None) #None so content wont be printed in logs
         baseServiceUpdater.baseMapContent.extend(entries)

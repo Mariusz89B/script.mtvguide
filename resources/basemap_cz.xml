@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map id="base czech" version="1.0" strm="">	
+<map id="base_cz" version="1.0" strm="">	
 	<channel id="AMC HD CZ" 								title="(?=AMC(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
 	<channel id="Al Jazeera CZ" 							title="(?=Al\s*Jazeera(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>
 	<channel id="Animal Planet HD CZ" 						title="(?=Animal\s*Planet(\s*TV)?(\s*HD)?\s*CZ$)" strm=""/>

@@ -1,4 +1,8 @@
-﻿wersja 9.6.4 - 2021-10-10
+﻿wersja 9.6.5 - 2021-10-12
+- dodano moduł urllib3.
+- przebudowany menu przy wybóru EPG i przerobione kategorie grup
+
+wersja 9.6.4 - 2021-10-10
 - poprawki
 
 wersja 9.6.3 - 2021-10-08
