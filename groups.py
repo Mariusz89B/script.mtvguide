@@ -54,28 +54,25 @@ ADDON = xbmcaddon.Addon(id = ADDON_ID)
 
 onlineMapPathBase = M_TVGUIDE_SUPPORT + 'maps/'
 
-class groupList:
-    def ccDict():
-        try:
-            headers = {
-                'Connection': 'keep-alive',
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36 Edg/94.0.992.38',
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-                'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
-            }
+def ccDict():
+    try:
+        headers = {
+            'Connection': 'keep-alive',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36 Edg/94.0.992.38',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+            'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
+        }
 
-            onlineMapFilename = onlineMapPathBase + 'groups_json'
-            ccDict = requests.get(onlineMapFilename, headers=headers, timeout=10).json()
-        except:
-            pathMapBase = os.path.join(ADDON.getAddonInfo('path'), 'resources')
-            path = os.path.join(pathMapBase, 'groups.ini')
+        onlineMapFilename = onlineMapPathBase + 'groups_json'
+        ccDict = requests.get(onlineMapFilename, headers=headers, timeout=10).json()
+    except:
+        pathMapBase = os.path.join(ADDON.getAddonInfo('path'), 'resources')
+        path = os.path.join(pathMapBase, 'groups.ini')
 
-            with open(path, 'r') as f:
-                data = f.read()
-            ccDict = json.loads(data)
+        with open(path, 'r') as f:
+            data = f.read()
+        ccDict = json.loads(data)
 
-        sortedDict = {k : ccDict[k] for k in sorted(ccDict)}
+    sortedDict = {k : ccDict[k] for k in sorted(ccDict)}
 
-        return sortedDict
-
-groupList.ccDict()
+    return sortedDict

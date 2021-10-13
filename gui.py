@@ -74,7 +74,7 @@ from recordService import RecordService
 from settingsImportExport import SettingsImp
 from skins import Skin
 from source import Program, Channel
-from groups import groupList
+from groups import *
 
 from contextlib import contextmanager
 
@@ -247,7 +247,7 @@ AUTO_OSD = 666
 REFRESH_STREAMS_TIME = 14400
 
 CC_LIST = list()
-CC_DICT = groupList.ccDict()
+CC_DICT = ccDict()
 
 PREDEFINED_CATEGORIES = []
 

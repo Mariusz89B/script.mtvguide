@@ -57,6 +57,7 @@ else:
 import copy, re
 import xbmc, xbmcgui, xbmcvfs, xbmcaddon
 from strings import *
+from groups import *
 from serviceLib import *
 import cloudscraper 
 
@@ -68,7 +69,7 @@ import mmap
 sess = cloudscraper.create_scraper()
 scraper = cloudscraper.CloudScraper()
 
-CC_DICT = groupList.ccDict()
+CC_DICT = ccDict()
 
 serviceName   = 'playlist'
 

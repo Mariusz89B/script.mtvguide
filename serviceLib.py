@@ -57,7 +57,7 @@ import xbmc, xbmcgui, xbmcvfs
 from unidecode import unidecode
 from xml.etree import ElementTree
 from strings import *
-from groups import groupList
+from groups import *
 import simplejson as json
 import strings as strings2
 import zlib
@@ -101,7 +101,7 @@ except:
 
 HTTP_ConnectionTimeout = 10
 
-CC_DICT = groupList.ccDict()
+CC_DICT = ccDict()
 
 class ShowList:
     def __init__(self, logCall=deb):

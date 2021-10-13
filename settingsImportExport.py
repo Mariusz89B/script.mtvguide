@@ -52,7 +52,7 @@ else:
 import os, stat, io, zipfile, datetime, shutil, platform, re
 import xbmc, xbmcgui, xbmcvfs
 from strings import *
-from groups import groupList
+from groups import *
 
 compressionType = zipfile.ZIP_STORED
 try:
@@ -76,7 +76,7 @@ recordAppAndroid    = M_TVGUIDE_SUPPORT + 'record_apps/recording_android.zip'
 adultEPG            = M_TVGUIDE_SUPPORT + 'freeepg/xxx.xml'
 vodEPG              = M_TVGUIDE_SUPPORT + 'freeepg/vod.xml' 
 
-CC_DICT = groupList.ccDict()
+CC_DICT = ccDict()
 
 class SettingsImp:
     def __init__(self):
