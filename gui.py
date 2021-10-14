@@ -5749,7 +5749,7 @@ class mTVGuide(xbmcgui.WindowXML):
             categories = PREDEFINED_CATEGORIES + list(self.categories)
 
             for item in CC_LIST:
-                if ADDON.getSetting('country_code_{cc}'.format(cc=item)) == "false":
+                if ADDON.getSetting('country_code_{cc}'.format(cc=item)) != "true":
                     categories.remove('Group: {cc}'.format(cc=item.upper()))
 
             categories = [label.replace('Group', strings(30995)) for label in categories]
@@ -6298,7 +6298,7 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
             categories = PREDEFINED_CATEGORIES + list(self.categories)
 
             for item in CC_LIST:
-                if ADDON.getSetting('country_code_{cc}'.format(cc=item)) == "false":
+                if ADDON.getSetting('country_code_{cc}'.format(cc=item)) != "true":
                     categories.remove('Group: {cc}'.format(cc=item.upper()))
 
             categories = [label.replace('Group', strings(30995)) for label in categories]
