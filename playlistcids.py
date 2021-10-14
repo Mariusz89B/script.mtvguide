@@ -358,9 +358,9 @@ class PlaylistUpdater(baseServiceUpdater):
             regexAddList = list() 
 
             ccList = []
-            langBList = []
-            langCList = []
-            langDList = []
+            a3List = []
+            langList = []
+            nativeList = []
 
             regexRemoveList.append( re.compile('(\s|^)(L\s*)?(24/7:?:?|19\d\d|20\d\d|S\s*\d{1,3}\s*E\s*\d{1,4})(?=\s|$)', re.IGNORECASE) )
          
@@ -440,9 +440,10 @@ class PlaylistUpdater(baseServiceUpdater):
 
                 # ccLists
                 ccList.append(cc)
-                langBList.append(value['language'])
-                langCList.append(value['native'])
-                langDList.append(value['alpha-3'])
+                a3List.append(value['alpha-3'])
+                langList.append(value['language'])
+                nativeList.append(value['native'])
+                
 
             if not prefixList:
                 prefixList.append(' ')
@@ -563,14 +564,17 @@ class PlaylistUpdater(baseServiceUpdater):
 
                                 if replaceCC:
                                     langA = '|'.join(ccList)
-                                    langB = '|'.join(langBList)
-                                    langC = '|'.join(langCList)
-                                    langD = '|'.join(langDList)
+                                    langB = '|'.join(a3List)
+                                    langC = '|'.join(langList)
+                                    langD = '|'.join(nativeList)
 
                                     ccListInt = len(ccList)
                                     
                                     if any(ccExt not in title for ccExt in ccList):
-                                        p = re.compile('(?:^|[^a-zA-Z\d])({a}|{b}|{c}|{d})(?:[^a-zA-Z\d]|$)'.format(a=langA, b=langB, c=langC, d=langD), re.IGNORECASE)
+                                        try:
+                                            p = re.compile('(?:^|[^a-zA-Z\d])({a}|{b}|{c}|{d})(?:[^a-zA-Z\d]|$)'.format(a=langA, b=langB, c=langC, d=langD), re.IGNORECASE)
+                                        except:
+                                            p = re.compile('(?:^|[^a-zA-Z\d])({a}|{b}|{c}|{d})(?:[^a-zA-Z\d]|$)'.format(a=langA, b=langB, c=langC, d=langD.encode('utf-8')), re.IGNORECASE)
 
                                         if sys.version_info[0] > 2:
                                             try:
@@ -591,18 +595,18 @@ class PlaylistUpdater(baseServiceUpdater):
                                                     cc = ccList[subsLangA.get(item, item)]
                                                     ccCh = cc
 
-                                                elif group.upper() == langBList[item].upper():  
-                                                    subsLangB = {langBList[item]: ccList[item]}
+                                                elif group.upper() == a3List[item].upper():  
+                                                    subsLangB = {a3List[item]: ccList[item]}
                                                     cc = ccList[subsLangB.get(item, item)]
                                                     ccCh = cc
                                                 
-                                                elif group.upper() == langCList[item].upper():
-                                                    subsLangC = {langCList[item]: ccList[item]}
+                                                elif group.upper() == langList[item].upper():
+                                                    subsLangC = {langList[item]: ccList[item]}
                                                     cc = ccList[subsLangC.get(item, item)]
                                                     ccCh = cc
 
-                                                elif group.upper() == langDList[item].upper():
-                                                    subsLangD = {langDList[item]: ccList[item]}
+                                                elif group.upper() == nativeList[item].upper():
+                                                    subsLangD = {nativeList[item]: ccList[item]}
                                                     cc = ccList[subsLangD.get(item, item)]
                                                     ccCh = cc             
 

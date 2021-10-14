@@ -61,6 +61,8 @@ try:
 except:
     pass
 
+import collections
+
 dbFileName          = 'source.db'
 settingsFileName    = 'settings.xml'
 categoriesFileName  = 'categories.ini'
@@ -571,6 +573,10 @@ class SettingsImp:
 
         filtered_dict = dict((k, v) for k, v in CC_DICT.items() if v['continent'] == continent or (v['continent'] == -1 and continent != 6))
 
+        if sys.version_info[0] < 3:
+            filtered_dict = collections.OrderedDict(sorted(filtered_dict.items()))
+            orderedDict = collections.OrderedDict(sorted(CC_DICT.items()))
+
         for cc, value in filtered_dict.items():
             if value['language'].isdigit():
                 country = strings(int(value['language']))
@@ -610,8 +616,12 @@ class SettingsImp:
         multiselect = xbmcgui.Dialog().multiselect(strings(59943), selectList)
 
         ccList = list(filtered_dict)
-        removeList = list(CC_DICT)
         countrys = list(filtered_dict.values())
+
+        if sys.version_info[0] < 3:
+            removeList = list(orderedDict)
+        else:
+            removeList = list(CC_DICT)
 
         if multiselect is None:
             enabling = True
@@ -730,7 +740,9 @@ class SettingsImp:
 
         ccListCh = list()
         langListCh = list()
+        
         selectList = list()
+        epgList = list()
 
         continent = xbmcgui.Dialog().select(strings(30725), [strings(30727), strings(30728), strings(30729), strings(30730), strings(30731), strings(30732), '[COLOR red]' + strings(30726) + '[/COLOR]'])
 
@@ -744,6 +756,9 @@ class SettingsImp:
 
         filtered_dict = dict((k, v) for k, v in CC_DICT.items() if v['continent'] == continent or (v['continent'] == -1 and continent != 6))
 
+        if sys.version_info[0] < 3:
+            filtered_dict = collections.OrderedDict(sorted(filtered_dict.items()))
+
         for cc, value in filtered_dict.items():
             if value['language'].isdigit():
                 country = strings(int(value['language']))
@@ -751,10 +766,33 @@ class SettingsImp:
                 country = value['language']
 
             country_code = ADDON.getSetting(id='country_code_{cc}'.format(cc=cc))
-            if country_code == 'true':
-                selectList.append('[B]' + cc.upper() + '[/B] - ' + country + ' [COLOR gold][' + strings(30721) + '][/COLOR]')
+
+            main_epg = ADDON.getSetting(id='m-TVGuide')
+            epg = ADDON.getSetting(id='epg_{cc}'.format(cc=cc))
+
+            if cc == 'all':
+                enabled_main_epg = country + ' [COLOR gold][' + strings(30721) + '][/COLOR]'
+                disabled = country + ' [COLOR disabled][' + strings(30720) + '][/COLOR]'
             else:
-                selectList.append('[B]' + cc.upper() + '[/B] - ' + country + ' [COLOR disabled][' + strings(30720) + '][/COLOR]')
+                enabled_main_epg = '[B]' + cc.upper() + '[/B] - ' + country + ' [COLOR gold][' + strings(30721) + '][/COLOR]'
+                disabled = '[B]' + cc.upper() + '[/B] - ' + country + ' [COLOR disabled][' + strings(30720) + '][/COLOR]'
+
+            enabled_epg = '[B]' + cc.upper() + '[/B] - ' + country + ' [COLOR gold][' + strings(30721) + '][/COLOR]'
+
+            if epg and country_code == 'true':
+                selectList.append(enabled_epg) 
+                epgList.append(enabled_epg)
+            elif main_epg and (country_code == 'true' or cc == 'all'):
+                selectList.append(enabled_main_epg)
+                epgList.append(enabled_main_epg) 
+            else:
+                selectList.append(disabled) 
+                if epg:
+                    epgList.append(enabled_epg) 
+                elif main_epg:
+                    epgList.append(enabled_main_epg)
+                else:
+                    epgList.append(disabled) 
 
         multiselect = xbmcgui.Dialog().multiselect(strings(59943), selectList)
 
@@ -784,7 +822,7 @@ class SettingsImp:
             
             for item in multiselect:
                 if item in multiselect:
-                    langListCh.append(selectList[item])
+                    langListCh.append(epgList[item])
                     ccListCh.append(ccList[item])
                     ADDON.setSetting(id='country_code_{cc}'.format(cc=ccList[item]), value='true')
 

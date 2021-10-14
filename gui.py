@@ -62,6 +62,7 @@ import xbmc, xbmcgui, xbmcplugin, xbmcvfs, xbmcaddon
 import source as src
 from unidecode import unidecode
 from notification import Notification
+from groups import *
 from strings import *
 import strings as strings2
 import streaming
@@ -74,7 +75,8 @@ from recordService import RecordService
 from settingsImportExport import SettingsImp
 from skins import Skin
 from source import Program, Channel
-from groups import *
+
+import collections
 
 from contextlib import contextmanager
 
@@ -689,7 +691,7 @@ class mTVGuide(xbmcgui.WindowXML):
             ADDON.setSetting('source', '1')
 
             txt = ADDON.getSetting('m-TVGuide')
-            if txt != '' or txt != 'http://' or txt != 'https://' or txt != 'http://mods-kodi.pl/':
+            if txt == '' or txt == 'http://' or txt == 'https://' or txt == 'http://mods-kodi.pl/':
                 txt = 'http://'
 
             kb = xbmc.Keyboard(txt,'')
@@ -746,6 +748,8 @@ class mTVGuide(xbmcgui.WindowXML):
                 exit()
 
         filtered_dict = dict((k, v) for k, v in CC_DICT.items() if v['continent'] == continent or (v['continent'] == -1 and continent != 6))
+        if sys.version_info[0] < 3:
+            filtered_dict = collections.OrderedDict(sorted(filtered_dict.items()))
 
         for cc, value in filtered_dict.items():
             if value['language'].isdigit():
