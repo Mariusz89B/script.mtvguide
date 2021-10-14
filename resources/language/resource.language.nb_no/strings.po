@@ -174,7 +174,7 @@ msgstr "Det ser ut til at m-TVGuide-databasen er ødelagt."
 
 msgctxt "#30158"
 msgid "Please remove database file using option in plugin settings "Database settings""
-msgstr "Vennligst fjern databasefilen ved hjelp av alternativet i plugininnstillinger "Database-innstillinger""
+msgstr "Vennligst fjern databasefilen ved hjelp av alternativet i plugininnstillinger "Database innstillinger""
 
 msgctxt "#30159"
 msgid "Channel configuration is unfortunately lost."
@@ -185,8 +185,8 @@ msgid "Error is not critical and addon will start but please fix the issue!"
 msgstr "Feil er ikke kritisk, og addon vil starte, men vær så snill å løse problemet!"
 
 msgctxt "#30161"
-msgid "Error is critical and programs won't be visible, please fix EPG (electronic program guide) url!"
-msgstr "Feil er kritisk, og programmer vil ikke være synlige, vennligst reparer EPG (elektronisk programguide) url!"
+msgid "Error is critical and programs won't be visible, please fix EPG (Electronic program guide) url!"
+msgstr "Feil er kritisk, og programmer vil ikke være synlige, vennligst reparer EPG (Elektronisk programguide) url!"
 
 msgctxt "#30162"
 msgid "No description"
@@ -201,8 +201,20 @@ msgid "No available information"
 msgstr "Ingen tilgjengelig informasjon"
 
 msgctxt "#30165"
-msgid "Electronic program guide (EPG) channel names do not match channel ids, enabling detection of alternative channel names in addon settings might improve channel recognition.[CR][CR]Do you want to exit m-TVGuide?"
-msgstr "Elektronisk programguide (EPG) kanalnavn stemmer ikke overens med kanal id, aktivering av alternative kanalnavn i utvidelses innstillingene kan forbedre kanalgjenkjenning.[CR][CR]Vil du avslutte m-TVGuide?"
+msgid "Do you want to exit m-TVGuide?"
+msgstr "Vil du avslutte m-TVGuide?"
+
+msgctxt "#30166"
+msgid "Electronic program guide (EPG) channel names do not match any channel ids, enabling detection of alternative channel names in addon settings might improve channel recognition."
+msgstr "Elektronisk programguide (EPG) kanalnavn stemmer ikke overens med kanal id, aktivering av alternative kanalnavn i utvidelses innstillingene kan forbedre kanalgjenkjenning."
+
+msgctxt "#30167"
+msgid "Electronic program guide (EPG) channel names do not match any channel ids, if missing appending a country code in add-on playlist settings might improve channel recognition."
+msgstr "Elektronisk programguide (EPG) kanalnavn stemmer ikke overens med kanal id. Hvis kanalene ikke har en landskode, kan du legge til en i spillelisteinnstillingene for å forbedre kanalgjenkjenning."
+
+msgctxt "#30168"
+msgid "No channels matched. Please make sure your Electronic program guide (EPG) channel names are matching provided playlist and/or TV service channel ids."
+msgstr "Ingen kanaler samsvarer. Sørg for at kanalnavnene til den elektroniske programguiden (EPG) samsvarer med kanal id til spillelisten og/eller TV tjenesten."
 
 msgctxt "#30200"
 msgid "on [B]{}[/B] in 5 minutes..."

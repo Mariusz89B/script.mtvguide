@@ -174,7 +174,7 @@ msgstr "Es Sieht aus wie der fernseher die guide-datenbank ist beschädigt."
 
 msgctxt "#30158"
 msgid "Please remove database file using option in plugin settings "Database settings""
-msgstr "Bitte entfernen Sie die datenbankdatei mit der option in den plugin-einstellungen "Datenbankeinstellungen""
+msgstr "Bitte entfernen Sie die datenbankdatei mit der option in den plugin einstellungen "Datenbankeinstellungen""
 
 msgctxt "#30159"
 msgid "Channel configuration is unfortunately lost."
@@ -185,8 +185,8 @@ msgid "Error is not critical and addon will start but please fix the issue!"
 msgstr "Fehler ist nicht kritisch und addon wird gestartet, aber bitte beheben Sie das problem!"
 
 msgctxt "#30161"
-msgid "Error is critical and programs won't be visible, please fix EPG (electronic program guide) url!"
-msgstr "Fehler ist kritisch und programme sind nicht sichtbar, bitte korrigieren Sie die EPG (electronic program guide) url!"
+msgid "Error is critical and programs won't be visible, please fix EPG (Electronic program guide) url!"
+msgstr "Fehler ist kritisch und programme sind nicht sichtbar, bitte korrigieren Sie die EPG (Electronic program guide) url!"
 
 msgctxt "#30162"
 msgid "No description"
@@ -201,8 +201,20 @@ msgid "No available information"
 msgstr "Keine verfügbaren informationen"
 
 msgctxt "#30165"
-msgid "Electronic program guide (EPG) channel names do not match channel ids, enabling detection of alternative channel names in addon settings might improve channel recognition.[CR][CR]Do you want to exit m-TVGuide?"
-msgstr "Die Kanalnamen im elektronischen Programmführer (EPG) stimmen nicht mit der Kanal id überein, die Aktivierung der alternativen Kanalnamenerkennung in den plugin Einstellungen kann die Kanalerkennung verbessern.[CR][CR]Möchten Sie m-TVGuide beenden?"
+msgid "Do you want to exit m-TVGuide?"
+msgstr "Möchten Sie m-TVGuide beenden?"
+
+msgctxt "#30166"
+msgid "Electronic program guide (EPG) channel names do not match any channel ids, enabling detection of alternative channel names in addon settings might improve channel recognition."
+msgstr "Die Kanalnamen im elektronischen Programmführer (EPG) stimmen nicht mit der Kanal id überein, die Aktivierung der alternativen Kanalnamenerkennung in den plugin Einstellungen kann die Kanalerkennung verbessern."
+
+msgctxt "#30167"
+msgid "Electronic program guide (EPG) channel names do not match any channel ids, if missing appending a country code in add-on playlist settings might improve channel recognition."
+msgstr "Die Kanalnamen im elektronischen Programmführer (EPG) stimmen nicht mit der Kanal id überein, wenn die Kanalen keinen Ländercode haben, können Sie einen zu den playlist einstellungen hinzufügen, um die Sendererkennung zu verbessern."
+
+msgctxt "#30168"
+msgid "No channels matched. Please make sure your Electronic program guide (EPG) channel names are matching provided playlist and/or TV service channel ids."
+msgstr "Keine übereinstimmenden Kanäle. Stellen Sie sicher, dass die Kanalnamen des elektronischen Programmführers (EPG) mit der Kanal id der playlist und/oder des TV dienstes übereinstimmen."
 
 msgctxt "#30200"
 msgid "on [B]{}[/B] in 5 minutes..."

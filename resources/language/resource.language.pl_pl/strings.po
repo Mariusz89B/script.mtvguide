@@ -185,8 +185,8 @@ msgid "Error is not critical and addon will start but please fix the issue!"
 msgstr "Błąd nie jest krytyczny i wtyczka się uruchomi ale proszę usunąć niedziałający link!"
 
 msgctxt "#30161"
-msgid "Error is critical and programs won't be visible, please fix EPG (electronic program guide) url!"
-msgstr "Błąd jest krytyczny i lista programów nie będzie dostępna, proszę wpisać poprawny link do EPG (elektroniczny przewodnik po programach)!"
+msgid "Error is critical and programs won't be visible, please fix EPG (Electronic program guide) url!"
+msgstr "Błąd jest krytyczny i lista programów nie będzie dostępna, proszę wpisać poprawny link do EPG (Elektroniczny przewodnik po programach)!"
 
 msgctxt "#30162"
 msgid "No description"
@@ -201,8 +201,20 @@ msgid "No available information"
 msgstr "Brak dostępnych informacji"
 
 msgctxt "#30165"
-msgid "Electronic program guide (EPG) channel names do not match channel ids, enabling detection of alternative channel names in addon settings might improve channel recognition.[CR][CR]Do you want to exit m-TVGuide?"
-msgstr "Nazwy kanałów w elektronicznym przewodnikiem po programach (EPG) nie są zgodne z id kanałów, włączenie opcje wykrywania alternatywnych nazw kanałów w ustawieniach wtyczki może poprawić rozpoznawanie kanałów.[CR][CR]Czy chcesz zakończyć m-TVGuide?"
+msgid "Do you want to exit m-TVGuide?"
+msgstr "Czy chcesz zakończyć m-TVGuide?"
+
+msgctxt "#30166"
+msgid "Electronic program guide (EPG) channel names do not match any channel ids, enabling detection of alternative channel names in addon settings might improve channel recognition."
+msgstr "Nazwy kanałów w elektronicznym przewodnikiem po programach (EPG) nie są zgodne z id kanałów, włączenie opcji wykrywania alternatywnych nazw kanałów w ustawieniach wtyczki może poprawić rozpoznawanie kanałów."
+
+msgctxt "#30167"
+msgid "Electronic program guide (EPG) channel names do not match any channel ids, if missing appending a country code in add-on playlist settings might improve channel recognition."
+msgstr "Nazwy kanałów w elektronicznym przewodnikiem po programach (EPG) nie są zgodne z id kanałów, jeśli kanały nie posiadają kodu krajowego, istnieje możliwość dodania go w ustawieniach playlisty aby poprawić rozpoznawanie kanałów."
+
+msgctxt "#30168"
+msgid "No channels matched. Please make sure your Electronic program guide (EPG) channel names are matching provided playlist and/or TV service channel ids."
+msgstr "Brak kanałów. Upewnij się, że nazwy kanałów elektronicznego przewodnika po programach (EPG) są zgodne z id kanałów w podanymi playlistami i/lub usługami telewizyjnymi."
 
 msgctxt "#30200"
 msgid "on [B]{}[/B] in 5 minutes..."

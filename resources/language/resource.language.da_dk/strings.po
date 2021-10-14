@@ -185,7 +185,7 @@ msgid "Error is not critical and addon will start but please fix the issue!"
 msgstr "Fejl er ikke kritisk, og addon vil starte, men vær venlig at løse problemet!"
 
 msgctxt "#30161"
-msgid "Error is critical and programs won't be visible, please fix EPG (electronic program guide) url!"
+msgid "Error is critical and programs won't be visible, please fix EPG (Electronic program guide) url!"
 msgstr "Fejl er kritisk, og programmer vundet er ikke synlige, skal du rette EPG (elektronisk programguide) url!"
 
 msgctxt "#30162"
@@ -201,8 +201,20 @@ msgid "No available information"
 msgstr "Ingen tilgængelig information"
 
 msgctxt "#30165"
-msgid "Electronic program guide (EPG) channel names do not match channel ids, enabling detection of alternative channel names in addon settings might improve channel recognition.[CR][CR]Do you want to exit m-TVGuide?"
-msgstr "Elektronisk programguide (EPG) kanalnavn matcher ikke kanal id, aktivering af alternative kanalnavne i udvidelses indstillingerne kan forbedre kanalgenkendelse.[CR][CR]Vil du afslutte m-TVGuide?"
+msgid "Do you want to exit m-TVGuide?"
+msgstr "Vil du afslutte m-TVGuide?"
+
+msgctxt "#30166"
+msgid "Electronic program guide (EPG) channel names do not match any channel ids, enabling detection of alternative channel names in addon settings might improve channel recognition."
+msgstr "Elektronisk programguide (EPG) kanalnavn matcher ikke kanal id, aktivering af alternative kanalnavne i udvidelses indstillingerne kan forbedre kanalgenkendelse."
+
+msgctxt "#30167"
+msgid "Electronic program guide (EPG) channel names do not match any channel ids, if missing appending a country code in add-on playlist settings might improve channel recognition."
+msgstr "Elektronisk programguide (EPG) kanalnavn matcher ikke kanal id, hvis kanalerne ikke har en landekode kan du tilføje en til afspilningslisteindstillinger for at forbedre kanalgenkendelsen."
+
+msgctxt "#30168"
+msgid "No channels matched. Please make sure your Electronic program guide (EPG) channel names are matching provided playlist and/or TV service channel ids."
+msgstr "Ingen kanaler matchede. Sørg for, at kanalnavne på den elektroniske programguide (EPG) matcher kanal id for afspilningslisten og/eller TV tjenesten."
 
 msgctxt "#30200"
 msgid "on [B]{}[/B] in 5 minutes..."
