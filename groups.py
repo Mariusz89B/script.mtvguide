@@ -45,7 +45,9 @@ import sys
 import os
 
 import xbmc, xbmcgui, xbmcvfs, xbmcaddon
+
 import requests
+import urllib3
 import json
 from strings import *
 
@@ -64,7 +66,12 @@ def ccDict():
         }
 
         onlineMapFilename = onlineMapPathBase + 'groups_json'
-        ccDict = requests.get(onlineMapFilename, headers=headers, timeout=10).json()
+
+        try:
+            http = urllib3.PoolManager()
+            ccDict = http.request('GET', onlineMapFilename, headers=headers, timeout=10).json()
+        except:
+            ccDict = requests.get(onlineMapFilename, headers=headers, timeout=10).json()
     except:
         pathMapBase = os.path.join(ADDON.getAddonInfo('path'), 'resources')
         path = os.path.join(pathMapBase, 'groups.ini')
