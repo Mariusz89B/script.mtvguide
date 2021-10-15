@@ -365,7 +365,7 @@ class PlaylistUpdater(baseServiceUpdater):
             regexRemoveList.append( re.compile('(\s|^)(L\s*)?(24/7:?:?|19\d\d|20\d\d|S\s*\d{1,3}\s*E\s*\d{1,4})(?=\s|$)', re.IGNORECASE) )
 
             for cc, value in CC_DICT.items():
-                if cc.upper()+':?' not in prefixList and ADDON.getSetting('country_code_{}'.format(cc)) == 'true':
+                if ADDON.getSetting('country_code_{}'.format(cc)) == 'true':
                     try:
                         langReplaceList.append({ 'regex' : re.compile('(\s|^)(\s*'+cc.upper()+'$|'+value['alpha-3']+':?|'+value['language']+':?|'+value['native']+':?)(?=\s|$)|^('+value['alpha-3']+':|'+value['language']+':|'+value['native']+':)', re.IGNORECASE), 'lang' : cc.upper()})
                     except:
@@ -373,11 +373,11 @@ class PlaylistUpdater(baseServiceUpdater):
                     langReplaceList.append({ 'regex' : re.compile('(\s|^)('+cc.upper()+':?)(?=\s|$)|^('+cc.upper()+':)'), 'lang' : cc.upper()})
                     prefixList.append(cc.upper() + ':?')
 
-                # ccLists
-                ccList.append(cc)
-                a3List.append(value['alpha-3'])
-                langList.append(value['language'])
-                nativeList.append(value['native']) 
+                    # ccLists
+                    ccList.append(cc)
+                    a3List.append(value['alpha-3'])
+                    langList.append(value['language'])
+                    nativeList.append(value['native']) 
 
             if not prefixList:
                 prefixList.append(' ')
@@ -523,7 +523,7 @@ class PlaylistUpdater(baseServiceUpdater):
                                         if group:
                                             ccCh = ''
                                             for item in range(ccListInt):
-                                                if group == ccList[item]:
+                                                if group == ccList[item].upper():
                                                     subsLangA = {ccList[item]: ccList[item]}
                                                     cc = ccList[subsLangA.get(item, item)]
                                                     ccCh = cc

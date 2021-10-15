@@ -578,10 +578,14 @@ class SettingsImp:
             orderedDict = collections.OrderedDict(sorted(CC_DICT.items()))
 
         for cc, value in filtered_dict.items():
-            if value['language'].isdigit():
-                country = strings(int(value['language']))
+            lang = value.get('translated', '')
+            if lang == '':
+                lang = value['language']
+
+            if lang.isdigit():
+                country = strings(int(lang))
             else:
-                country = value['language']
+                country = lang
 
             country_code = ADDON.getSetting(id='country_code_{cc}'.format(cc=cc))
 
@@ -759,10 +763,14 @@ class SettingsImp:
             filtered_dict = collections.OrderedDict(sorted(filtered_dict.items()))
 
         for cc, value in filtered_dict.items():
-            if value['language'].isdigit():
-                country = strings(int(value['language']))
+            lang = value.get('translated', '')
+            if lang == '':
+                lang = value['language']
+
+            if lang.isdigit():
+                country = strings(int(lang))
             else:
-                country = value['language']
+                country = lang
 
             country_code = ADDON.getSetting(id='country_code_{cc}'.format(cc=cc))
 
