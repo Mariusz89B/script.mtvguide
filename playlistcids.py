@@ -528,7 +528,7 @@ class PlaylistUpdater(baseServiceUpdater):
                                                     cc = ccList[subsLangA.get(item, item)]
                                                     ccCh = cc
 
-                                                elif group.upper() == a3List[item].upper():  
+                                                elif group == a3List[item].upper():  
                                                     subsLangB = {a3List[item]: ccList[item]}
                                                     cc = ccList[subsLangB.get(item, item)]
                                                     ccCh = cc

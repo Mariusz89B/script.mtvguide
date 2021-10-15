@@ -65,16 +65,17 @@ def ccDict():
             'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
         }
 
-        onlineMapFilename = onlineMapPathBase + 'groups_json'
+        onlineMapFilename = onlineMapPathBase + 'server_groups.json'
 
         try:
             http = urllib3.PoolManager()
-            ccDict = http.request('GET', onlineMapFilename, headers=headers, timeout=10).json()
+            data = http.request('GET', onlineMapFilename, headers=headers, timeout=10)
+            data = json.loads(response.data)
         except:
             ccDict = requests.get(onlineMapFilename, headers=headers, timeout=10).json()
     except:
         pathMapBase = os.path.join(ADDON.getAddonInfo('path'), 'resources')
-        path = os.path.join(pathMapBase, 'groups.ini')
+        path = os.path.join(pathMapBase, 'groups.json')
 
         with open(path, 'r') as f:
             data = f.read()
