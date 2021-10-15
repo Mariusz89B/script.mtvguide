@@ -213,8 +213,8 @@ msgid "Electronic program guide (EPG) channel names do not match any channel ids
 msgstr "Elektronisk programguide (EPG) kanalnavn matcher ikke kanal id, hvis kanalerne ikke har en landekode kan du tilføje en til afspilningslisteindstillinger for at forbedre kanalgenkendelsen."
 
 msgctxt "#30168"
-msgid "No channels matched. Please make sure your Electronic program guide (EPG) channel names are matching provided playlist and/or TV service channel ids."
-msgstr "Ingen kanaler matchede. Sørg for, at kanalnavne på den elektroniske programguide (EPG) matcher kanal id for afspilningslisten og/eller TV tjenesten."
+msgid "No channels matched, please make sure your Electronic program guide (EPG) channel names are matching provided playlist and/or TV service channel ids. Check Kodi log for more information."
+msgstr "Ingen kanaler matchede, sørg for at kanalnavne på den elektroniske programguide (EPG) matcher kanal id for afspilningslisten og/eller TV tjenesten. Se Kodi loggen for at få flere oplysninger."
 
 msgctxt "#30200"
 msgid "on [B]{}[/B] in 5 minutes..."

@@ -213,8 +213,8 @@ msgid "Electronic program guide (EPG) channel names do not match any channel ids
 msgstr "Nazivi kanala u elektroničkom programskom vodiču (EPG) ne podudaraju se s id kanala. Ako kanali nemaju kôd zemlje, možete ga dodati u postavkama popisa za reprodukciju kako biste poboljšali prepoznavanje kanala."
 
 msgctxt "#30168"
-msgid "No channels matched. Please make sure your Electronic program guide (EPG) channel names are matching provided playlist and/or TV service channel ids."
-msgstr "Nijedan kanal nije prepoznat. Uvjerite se da se nazivi kanala u Elektroničkom programskom vodiču (EPG) podudaraju s id kanala na ponuđenim popisima za reprodukciju i/ili TV uslugama."
+msgid "No channels matched, please make sure your Electronic program guide (EPG) channel names are matching provided playlist and/or TV service channel ids. Check Kodi log for more information."
+msgstr "Nijedan kanal nije prepoznat uvjerite se da se nazivi kanala u Elektroničkom programskom vodiču (EPG) podudaraju s id kanala na ponuđenim popisima za reprodukciju i/ili TV uslugama. Za više informacija provjerite Kodi log."
 
 msgctxt "#30200"
 msgid "on [B]{}[/B] in 5 minutes..."

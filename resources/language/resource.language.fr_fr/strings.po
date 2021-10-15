@@ -213,8 +213,8 @@ msgid "Electronic program guide (EPG) channel names do not match any channel ids
 msgstr "Les noms des chaînes dans le guide électronique des programmes (EPG) ne correspondent pas à l'identifiant de la chaîne, s'il manque l'ajout d'un code de pays dans les paramètres de la liste de lecture complémentaire peut améliorer la reconnaissance des chaînes."
 
 msgctxt "#30168"
-msgid "No channels matched. Please make sure your Electronic program guide (EPG) channel names are matching provided playlist and/or TV service channel ids."
-msgstr "Aucune chaîne correspondante. Veuillez vous assurer que les noms de chaînes de votre guide électronique des programmes (EPG) correspondent aux identifiants de chaînes de liste de lecture et/ou de service de télévision fournis."
+msgid "No channels matched, please make sure your Electronic program guide (EPG) channel names are matching provided playlist and/or TV service channel ids. Check Kodi log for more information."
+msgstr "Aucune chaîne correspondante, veuillez vous assurer que les noms de chaînes de votre guide électronique des programmes (EPG) correspondent aux identifiants de chaînes de liste de lecture et/ou de service de télévision fournis. Consultez le journal Kodi pour plus d'informations."
 
 msgctxt "#30200"
 msgid "on [B]{}[/B] in 5 minutes..."
