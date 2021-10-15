@@ -505,7 +505,7 @@ msgid "Show program thumbnail"
 msgstr ""
 
 msgctxt "#30365"
-msgid "Time [CR](Attention! Reseting database required)"
+msgid "Timezone [CR](EPG update required for the changes to take effect)"
 msgstr ""
 
 msgctxt "#30366"
