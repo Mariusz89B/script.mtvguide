@@ -371,9 +371,9 @@ class PlaylistUpdater(baseServiceUpdater):
                     alpha_3 = value['alpha-3']
                     alpha_4 = value.get('alpha-4', value['alpha-3'])
                     try:
-                        langReplaceList.append({ 'regex' : re.compile('(\s|^)(\s*'+cc.upper()+'$|'+alpha_4+':?|'+alpha_3+':?|'+alpha_2+':?|'+alpha_1+':?)(?=\s|$)|^('+alpha_4+':?'+alpha_3+':|'+alpha_2+':|'+alpha_1+':)', re.IGNORECASE), 'lang' : cc.upper()})
+                        langReplaceList.append({ 'regex' : re.compile('(\s|^)(\s*'+cc.upper()+'$|'+alpha_4+':?|'+alpha_3+':?|'+alpha_2+':?|'+alpha_1+':?)(?=\s|$)|^('+alpha_4+':|'+alpha_3+':|'+alpha_2+':|'+alpha_1+':)', re.IGNORECASE), 'lang' : cc.upper()})
                     except:
-                        langReplaceList.append({ 'regex' : re.compile('(\s|^)(\s*'+cc.upper()+'$|'+alpha_4+':?'+alpha_3+':?|'+alpha_2+':?|'+alpha_1.encode('utf-8')+':?)(?=\s|$)|^('+alpha_4+':?'+alpha_3+':|'+alpha_2+':|'+alpha_1.encode('utf-8')+':)', re.IGNORECASE), 'lang' : cc.upper()})
+                        langReplaceList.append({ 'regex' : re.compile('(\s|^)(\s*'+cc.upper()+'$|'+alpha_4+':?|'+alpha_3+':?|'+alpha_2+':?|'+alpha_1.encode('utf-8')+':?)(?=\s|$)|^('+alpha_4+':|'+alpha_3+':|'+alpha_2+':|'+alpha_1.encode('utf-8')+':)', re.IGNORECASE), 'lang' : cc.upper()})
 
                     langReplaceList.append({ 'regex' : re.compile('(\s|^)('+cc.upper()+':?)(?=\s|$)|^('+cc.upper()+':)'), 'lang' : cc.upper()})
                     prefixList.append(cc.upper() + ':?')

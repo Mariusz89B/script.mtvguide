@@ -69,7 +69,7 @@ def ccDict():
 
         try:
             http = urllib3.PoolManager()
-            response = http.request('GET', onlineMapFilename, headers=headers, timeout=10)#.json()
+            response = http.request('GET', onlineMapFilename, headers=headers, timeout=10)
             ccDict = json.loads(response.data)
         except:
             ccDict = requests.get(onlineMapFilename, headers=headers, timeout=10).json()
