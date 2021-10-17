@@ -954,9 +954,9 @@ class baseServiceUpdater:
                         
                     elif x.displayName:
                         try:
-                            name_channels = list(filter(lambda v: (unidecode(x.displayName.upper()) == unidecode(v.name.upper())), self.channels))
+                            name_channels = list(filter(lambda v: (unidecode(x.displayName.upper()) == (unidecode(v.title.upper()) or unidecode(v.name.upper()))), self.channels))
                         except:
-                            name_channels = list(filter(lambda v: (unidecode(x.displayName.upper()) == unidecode(v.name.decode('utf-8').upper())), self.channels))
+                            name_channels = list(filter(lambda v: (unidecode(x.displayName.upper()) == (unidecode(v.title.decode('utf-8').upper()) or unidecode(v.name.decode('utf-8').upper()))), self.channels))
 
                     elif x.displayName == '':
                         try:

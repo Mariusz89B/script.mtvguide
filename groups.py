@@ -69,16 +69,22 @@ def ccDict():
 
         try:
             http = urllib3.PoolManager()
-            data = http.request('GET', onlineMapFilename, headers=headers, timeout=10)
-            data = json.loads(response.data)
+            response = http.request('GET', onlineMapFilename, headers=headers, timeout=10)#.json()
+            ccDict = json.loads(response.data)
         except:
             ccDict = requests.get(onlineMapFilename, headers=headers, timeout=10).json()
     except:
         pathMapBase = os.path.join(ADDON.getAddonInfo('path'), 'resources')
         path = os.path.join(pathMapBase, 'groups.json')
 
-        with open(path, 'r') as f:
-            data = f.read()
+        if sys.version_info[0] > 2:
+            with open(path, 'r', encoding='utf-8') as f:
+                data = f.read()
+        else:
+            import codecs
+            with codecs.open(path, 'r', encoding='utf-8') as f:
+                data = f.read()
+
         ccDict = json.loads(data)
 
     sortedDict = {k : ccDict[k] for k in sorted(ccDict)}
