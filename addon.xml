@@ -42,9 +42,10 @@
 	<website>http://mods-kodi.pl/</website>
 	<email>support@m-tvguide.pl</email>
     <source>mods-kodi.pl © 2013 - 2021</source>
-    <news>v9.6.5 (2021-10-12)
+    <news>v9.6.5 (2021-10-18)
 - Added urllib3 module.
 - Rebuilded EPG menu selection and group categories.
+- Improved performace.
 
 v9.6.4 (2021-10-10)
 - Hotfix.

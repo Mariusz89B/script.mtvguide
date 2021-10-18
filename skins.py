@@ -88,7 +88,7 @@ class Skin:
     ADDON_CUSTOM_SKINS_RES  = os.path.join(PROFILE_PATH, 'resources')
     ADDON_CUSTOM_SKINS      = os.path.join(ADDON_CUSTOM_SKINS_RES, 'skins')
 
-    NEW_SKINS_BASE_URL      = M_TVGUIDE_SUPPORT + 'skins_v9/'
+    NEW_SKINS_BASE_URL      = M_TVGUIDE_SUPPORT + 'skins/'
 
     NEW_SKINS_URL           = NEW_SKINS_BASE_URL + 'skinlist.xml'
 

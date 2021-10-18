@@ -47,7 +47,7 @@ import traceback, sys
 
 ADDON_ID            = 'script.mtvguide'
 RSS_FILE            = 'http://mods-kodi.pl/infusions/kodi_info/kodi_info.txt'
-M_TVGUIDE_SUPPORT   = 'http://m-tvguide.pl/support2018/'
+M_TVGUIDE_SUPPORT   = 'http://mods-kodi.pl/mtvguide/support/'
 ADDON               = xbmcaddon.Addon(id = ADDON_ID)
 ADDON_PATH          = ADDON.getAddonInfo('path')
 ADDON_CIDUPDATED    = False    #zabezpieczenie przed ponownym updatem cidow
