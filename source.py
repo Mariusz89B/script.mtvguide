@@ -565,6 +565,8 @@ class Database(object):
             ADDON.setSetting('epg_size', str(epgSize))
         c.close()
 
+        set_time = 'auto'
+
         if programsLastUpdated is not None:
             interval = ADDON.getSetting('epg_interval')
 
