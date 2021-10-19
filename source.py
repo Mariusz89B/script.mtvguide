@@ -71,9 +71,12 @@ import shutil
 import playService
 import serviceLib
 import sqlite3
+import codecs
+
 from xml.etree import ElementTree
 from strings import *
 import strings as strings2
+
 from itertools import chain
 from skins import Skin
 from random import uniform
@@ -396,14 +399,15 @@ class Database(object):
                 time.sleep(uniform(0, 0.2))
                 self.conn = sqlite3.connect(self.databasePath, detect_types=sqlite3.PARSE_DECLTYPES, cached_statements=2000)
                 self.conn.execute('PRAGMA foreign_keys = ON')
+                self.conn.execute('PRAGMA journal_mode = WAL')
+                self.conn.execute("PRAGMA locking_mode = EXCLUSIVE");
+                self.conn.execute("PRAGMA temp_store = MEMORY");
                 #self.conn.execute('PRAGMA mmap_size = 268435456');
                 #self.conn.execute('PRAGMA synchronous = OFF')
-                self.conn.execute('PRAGMA journal_mode = WAL')
                 #self.conn.execute("PRAGMA page_size = 16384");
                 #self.conn.execute("PRAGMA cache_size = 64000");
                 #self.conn.execute("PRAGMA temp_store = MEMORY");
                 #self.conn.execute("PRAGMA locking_mode = NORMAL");
-                self.conn.execute("PRAGMA locking_mode = EXCLUSIVE");
                 #self.conn.execute("PRAGMA count_changes = OFF");
                 self.conn.row_factory = sqlite3.Row
 
@@ -843,22 +847,17 @@ class Database(object):
     def epgChannels(self):
         result = dict()
 
-        c = self.conn.cursor()
+        with self.conn as conn:
+            cur = conn.execute('SELECT id, titles FROM channels')
 
-        c.execute('SELECT id, titles FROM channels')
-        for row in c:
-            id = row[str('id')]
-            titles = row[str('titles')]
-
-            if ADDON.getSetting('epg_display_name') == 'true':
-                try:
-                    result.update({id.upper(): titles.upper()})
-                except:
-                    result.update({id.upper(): ''})
-            else:
-                result.update({id.upper(): ''})
-
-        c.close()
+            for x in cur:
+                if ADDON.getSetting('epg_display_name') == 'true':
+                    try:
+                        result.update({x[0].upper(): x[1].upper()})
+                    except:
+                        result.update({x[0].upper(): x[0].upper()})
+                else:
+                    result.update({x[0].upper(): x[0].upper()})
 
         return result.items()
 
@@ -1121,46 +1120,46 @@ class Database(object):
         return result
 
     def _getChannelList(self, onlyVisible, customCategory=None, excludeCurrentCategory = False):
-        try:
-            if not self.channelList or not onlyVisible or excludeCurrentCategory or customCategory:
+        #try:
+        if not self.channelList or not onlyVisible or excludeCurrentCategory or customCategory:
 
-                if customCategory:
-                    category = customCategory
-                else:
-                    try:
-                        category = self.category.decode('utf-8')
-                    except:
-                        category = self.category
-
-                c = self.conn.cursor()
-                channelList = list()
-
-                if self.ChannelsWithStream == 'true':
-                    if onlyVisible:
-                        c.execute('SELECT DISTINCT chann.id, chann.title, chann.logo, chann.stream_url, chann.source, chann.visible, chann.weight, chann.titles FROM channels AS chann INNER JOIN custom_stream_url AS custom ON (UPPER(chann.id)) = (UPPER(custom.channel)) WHERE source=? AND visible=? ORDER BY weight', [self.source.KEY, True])
-                    else:
-                        c.execute('SELECT DISTINCT chann.id, chann.title, chann.logo, chann.stream_url, chann.source, chann.visible, chann.weight, chann.titles FROM channels AS chann INNER JOIN custom_stream_url AS custom ON (UPPER(chann.id)) = (UPPER(custom.channel)) WHERE source=? ORDER BY weight', [self.source.KEY])
-                else:
-                    if onlyVisible:
-                        c.execute('SELECT * FROM channels WHERE source=? AND visible=? ORDER BY weight', [self.source.KEY, True])
-                    else:
-                        c.execute('SELECT * FROM channels WHERE source=? ORDER BY weight', [self.source.KEY])
-                for row in c:
-                    channel = Channel(row[str('id')], row[str('title')], row[str('logo')], row[str('titles')], row[str('stream_url')], row[str('visible')], row[str('weight')])
-                    channelList.append(channel)
-                c.close()
-
-                if category:
-                    channelList = self.getCategoryChannelList(category, channelList, excludeCurrentCategory)
-
-                if onlyVisible and excludeCurrentCategory == False and customCategory is None:
-                    self.channelList = channelList
+            if customCategory:
+                category = customCategory
             else:
-                channelList = self.channelList
+                try:
+                    category = self.category.decode('utf-8')
+                except:
+                    category = self.category
 
-            return channelList
-        except:
-            pass
+            c = self.conn.cursor()
+            channelList = list()
+
+            if self.ChannelsWithStream == 'true':
+                if onlyVisible:
+                    c.execute('SELECT DISTINCT chann.id, chann.title, chann.logo, chann.stream_url, chann.source, chann.visible, chann.weight, chann.titles FROM channels AS chann INNER JOIN custom_stream_url AS custom ON (UPPER(chann.id)) = (UPPER(custom.channel)) WHERE source=? AND visible=? ORDER BY weight', [self.source.KEY, True])
+                else:
+                    c.execute('SELECT DISTINCT chann.id, chann.title, chann.logo, chann.stream_url, chann.source, chann.visible, chann.weight, chann.titles FROM channels AS chann INNER JOIN custom_stream_url AS custom ON (UPPER(chann.id)) = (UPPER(custom.channel)) WHERE source=? ORDER BY weight', [self.source.KEY])
+            else:
+                if onlyVisible:
+                    c.execute('SELECT * FROM channels WHERE source=? AND visible=? ORDER BY weight', [self.source.KEY, True])
+                else:
+                    c.execute('SELECT * FROM channels WHERE source=? ORDER BY weight', [self.source.KEY])
+            for row in c:
+                channel = Channel(row[str('id')], row[str('title')], row[str('logo')], row[str('titles')], row[str('stream_url')], row[str('visible')], row[str('weight')])
+                channelList.append(channel)
+            c.close()
+
+            if category:
+                channelList = self.getCategoryChannelList(category, channelList, excludeCurrentCategory)
+
+            if onlyVisible and excludeCurrentCategory == False and customCategory is None:
+                self.channelList = channelList
+        else:
+            channelList = self.channelList
+
+        return channelList
+        #except:
+            #pass
 
     def getAllChannelList(self, onlyVisible = True):
         result = self._invokeAndBlockForResult(self._getAllChannelList, onlyVisible)
@@ -2531,7 +2530,7 @@ class MTVGUIDESource(Source):
 
         except SourceFaultyEPGException as ex:
             deb("Failed to download custom EPG but addon should start!, EPG: {}".format(ex.epg))
-            xbmcgui.Dialog().ok(strings(LOAD_ERROR_TITLE), strings(LOAD_ERROR_LINE1) + '\n' + ex.epg + strings(LOAD_NOT_CRITICAL_ERROR))
+            xbmcgui.Dialog().ok(strings(LOAD_ERROR_TITLE), strings(LOAD_ERROR_LINE1) + '\n' + ex.epg + '\n' + strings(LOAD_NOT_CRITICAL_ERROR))
         return data
 
     def _getDataFromExternal(self, date, progress_callback, url):
@@ -2551,7 +2550,10 @@ class MTVGUIDESource(Source):
                 raise SourceFaultyEPGException(url)
 
             if ADDON.getSetting('useCustomParser') == 'true':
-                return customParseXMLTV(xml, progress_callback)
+                if sys.version_info[0] > 2:
+                    return customParseXMLTV(xml.decode('utf-8'), progress_callback)
+                else:
+                    return customParseXMLTV(xml, progress_callback)
             else:
                 iob = io.BytesIO(xml)
 
@@ -2702,18 +2704,15 @@ def customParseXMLTV(xml, progress_callback):
     programLive      = re.compile('<video>\s*<aspect>(.*?)</aspect>\s*</video>', re.DOTALL | re.MULTILINE)
 
     #replace &amp; with & and Carriage Return (CR) in xml
-    xml = xml.replace(b'&amp;', b'&').replace(b'&lt;', b'<').replace(b'&gt;', b'>').replace(b'\r', b'')
-
-    if sys.version_info[0] > 2:
-        xml = xml.decode('utf-8')
+    xml = xml.replace('&amp;', '&').replace('&lt;', '<').replace('&gt;', '>').replace('\r', '')
 
     titlesList = dict()
     logosList = dict()
 
     channels = channelRe.findall(xml)
     if len(channels) == 0:
-        deb('Error, no channels in EPG!')
-        deb('Part of faulty EPG content without channels: {}'.format(str(xml[:15000])))
+        deb(b'Error, no channels in EPG!')
+        deb(b'Part of faulty EPG content without channels: {}'.format(str(xml[:15000])))
         raise SourceFaultyEPGException('')
 
     for channel in channels:
@@ -2878,21 +2877,29 @@ def customParseXMLTV(xml, progress_callback):
 
     del programs[:]
 
+    cleanup_regex = re.compile('[!"”#$%&’()*+,-.\/:;<>?@\[\]^_`{|}~]|ADDON.*|^\s', re.IGNORECASE)
+
     categoriesList = list()
+
     for c in sorted(category_count):
-        s = "{}={}\n".format(c, category_count[c])
-        s = re.sub('[!"”#$%&’()*+,-.\/:;<>?@\[\]^_`{|}~]|ADDON.*', '', s)
-        s = re.sub(r'(^|\s)(\S)', lambda m: m.group(1) + m.group(2).upper(), s)
-        s = re.sub('^\s', '', s)
-        categoriesList.append(s)
+        if c is not None or c != '':
+            s = "{}={}\n".format(c, category_count[c])
+            s = cleanup_regex.sub('', s)
+            s = re.sub(r'(^|\s)(\S)', lambda m: m.group(1) + m.group(2).upper(), s)
+
+            if s.strip() != '':
+                categoriesList.append(s.strip())
 
     if sys.version_info[0] > 2:
         file_name = os.path.join(xbmcvfs.translatePath(ADDON.getAddonInfo('profile')), 'category_count.list')
+        with open(file_name, 'w+', encoding='utf-8') as f:
+            for line in categoriesList:
+                f.write('{}\n'.format(line))
     else:
         file_name = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('profile')), 'category_count.list')
-    
-    with open(file_name, 'wb+') as f:
-        f.write(bytearray(''.join(categoriesList), 'utf-8'))
+        with codecs.open(file_name, 'w+', encoding='utf-8') as f:
+            for line in categoriesList:
+                f.write('{}\n'.format(line))
 
     tnow = datetime.datetime.now()
     deb("[EPG] Parsing EPG by custom parser is done [{} sek.]".format(str((tnow-startTime).seconds)))
@@ -3050,21 +3057,29 @@ def parseXMLTV(context, f, size, logoFolder, progress_callback):
 
     del context
 
+    cleanup_regex = re.compile('[!"”#$%&’()*+,-.\/:;<>?@\[\]^_`{|}~]|ADDON.*|^\s', re.IGNORECASE)
+
     categoriesList = list()
+
     for c in sorted(category_count):
-        s = "{}={}\n".format(c, category_count[c])
-        s = re.sub('[!"”#$%&’()*+,-.\/:;<>?@\[\]^_`{|}~]|ADDON.*', '', s)
-        s = re.sub(r'(^|\s)(\S)', lambda m: m.group(1) + m.group(2).upper(), s)
-        s = re.sub('^\s', '', s)
-        categoriesList.append(s)
+        if c is not None or c != '':
+            s = "{}={}\n".format(c, category_count[c])
+            s = cleanup_regex.sub('', s)
+            s = re.sub(r'(^|\s)(\S)', lambda m: m.group(1) + m.group(2).upper(), s)
+
+            if s.strip() != '':
+                categoriesList.append(s.strip())
 
     if sys.version_info[0] > 2:
         file_name = os.path.join(xbmcvfs.translatePath(ADDON.getAddonInfo('profile')), 'category_count.list')
+        with open(file_name, 'w+', encoding='utf-8') as f:
+            for line in categoriesList:
+                f.write('{}\n'.format(line))
     else:
         file_name = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('profile')), 'category_count.list')
-    
-    with open(file_name, 'wb+') as f:
-        f.write(bytearray(''.join(categoriesList), 'utf-8'))
+        with codecs.open(file_name, 'w+', encoding='utf-8') as f:
+            for line in categoriesList:
+                f.write('{}\n'.format(line))
 
     tnow = datetime.datetime.now()
     deb("[EPG] Parsing EPG is done [{} sek.]".format(str((tnow-start).seconds)))

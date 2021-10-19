@@ -3579,22 +3579,23 @@ class mTVGuide(xbmcgui.WindowXML):
     def categorySearch(self):
         d = xbmcgui.Dialog()
         f = xbmcvfs.File(os.path.join(self.profilePath, 'category_count.list'))
-        if sys.version_info[0] > 2:
-            category_count = [x.split("=", 1) for x in f.read().splitlines()]
-        else:
-            category_count = [x.split(b"=", 1) for x in f.readBytes().splitlines()]
+
+        category_count = [x.split("=", 1) for x in f.read().splitlines()]
         f.close()
+
         self.context = False
         categories = []
-        for (c, v) in category_count:
-            if not self.database.category or self.database.category == "All Channels":
-                s = "{} ({})".format(c, v)
+        for x in category_count:
+            if not self.database.category or self.database.category == strings(30325):
+                s = "{} ({})".format(x[0], x[1])
             else:
-                s = c
+                s = x[0]
+                
             if sys.version_info[0] > 2:
                 categories.append(s)
             else:
                 categories.append(s.decode("utf-8"))
+
         which = d.select(strings(30324), categories)
         if which == -1:
             return
@@ -5843,7 +5844,7 @@ class mTVGuide(xbmcgui.WindowXML):
                     ADDON.setSetting('category', strings(30325))
                     self.onRedrawEPG(0, self.viewStartDate, initializing=True)
                     if xbmc.getCondVisibility('!Window.IsVisible(okdialog)'):
-                        if xbmc.getCondVisibility('!Control.IsVisible(5000)'):
+                        if xbmc.getCondVisibility('Control.IsVisible(4100)'):
                             if not self.controlAndProgramList:
                                 playlists = list()
                                 for i in range(5):

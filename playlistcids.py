@@ -208,27 +208,18 @@ class PlaylistUpdater(baseServiceUpdater):
                     f2.write(url_setting.encode('utf-8'))
 
         else:
-            try:                              
-                if sys.maxsize > 2 ** 32 and sys.version_info[0] > 2:
-                    with open(filepath, 'rb') as f:
-                        deb('Reading type: MMAP cachePlaylist')
-                        with mmap.mmap(f.fileno(), length=0, access=mmap.ACCESS_READ) as mmap_obj:
-                            content = mmap_obj.read().decode('utf-8')
+            try:  
+                if sys.version_info[0] > 2:
+                    with open(filepath, 'r', encoding='utf-8') as f: 
+                        content = [line.strip() for line in f]
                 else:
-                    if sys.version_info[0] > 2:
-                        with open(filepath, 'r', encoding='utf-8') as f:
-                            deb('Reading type: Default cachePlaylist')
-                            content = f.read()
-                    else:
-                        try:
-                            with open(filepath, 'r') as f:
-                                deb('Reading type: Default getPlaylistContent')
-                                content = f.read()
-                        except:
-                            with open(filepath.decode('utf-8'), 'r') as f:
-                                deb('Reading type: Default getPlaylistContent')
-                                content = f.read()
-
+                    try:
+                        with open(filepath, 'r') as f: 
+                            content = [line.strip() for line in f]
+                    except:
+                        with open(filepath.decode('utf-8'), 'r') as f: 
+                            content = [line.strip() for line in f]
+                
                 if content is None or content == "":
                     raise Exception
 
@@ -292,26 +283,17 @@ class PlaylistUpdater(baseServiceUpdater):
                     raise Exception
             else:
                 try:
-                    if sys.maxsize > 2 ** 32 and sys.version_info[0] > 2:
-                        with open(path, 'rb') as f:
-                            deb('Reading type: MMAP getPlaylistContent')
-                            with mmap.mmap(f.fileno(), length=0, access=mmap.ACCESS_READ) as mmap_obj:
-                                tmpcontent = mmap_obj.read().decode('utf-8')
+                    if sys.version_info[0] > 2:
+                        with open(path, 'r', encoding='utf-8') as f: 
+                            tmpcontent = [line.strip() for line in f]
                     else:
-                        if sys.version_info[0] > 2:
-                            with open(path, 'r', encoding='utf-8') as f:
-                                deb('Reading type: Default getPlaylistContent')
-                                tmpcontent = f.read()
-                        else:
-                            try:
-                                with open(path, 'r') as f:
-                                    deb('Reading type: Default getPlaylistContent')
-                                    tmpcontent = f.read()
-                            except:
-                                with open(path.decode('utf-8'), 'r') as f:
-                                    deb('Reading type: Default getPlaylistContent')
-                                    tmpcontent = f.read()
-
+                        try:
+                            with open(path, 'r') as f: 
+                                tmpcontent = [line.strip() for line in f]
+                        except:
+                            with open(path.decode('utf-8'), 'r') as f: 
+                                tmpcontent = [line.strip() for line in f]
+                    
                     if tmpcontent is None or tmpcontent == "":
                         raise Exception
                         
@@ -411,14 +393,13 @@ class PlaylistUpdater(baseServiceUpdater):
             self.log('[UPD] %-10s %-35s %-35s' % ( '-CID-', '-NAME-', '-STREAM-'))
 
             try:
-                channelsArray = self.getPlaylistContent(self.url.strip(), self.source).strip()
+                channelsArray = self.getPlaylistContent(self.url.strip(), self.source)
             except:
-                channelsArray = self.getPlaylistContent(self.url.decode('utf-8').strip(), self.source).strip()
+                channelsArray = self.getPlaylistContent(self.url.decode('utf-8').strip(), self.source)
 
             if channelsArray is not None and channelsArray != "" and len(channelsArray) > 0:
-                cleaned_playlist = cleanup_regex.sub('', channelsArray)
-                
-                for line in cleaned_playlist.splitlines():
+                for line in channelsArray:
+                    line = cleanup_regex.sub('', line)
                     stripLine = line.strip()
 
                     if '#EXTINF:' in stripLine:
