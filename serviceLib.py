@@ -902,7 +902,6 @@ class baseServiceUpdater:
         return result
 
     def loadChannelList(self, epg_channels=None):
-        from re import match
         try:
             startTime = datetime.datetime.now()
             self.channels = self.getBaseChannelList()
@@ -945,51 +944,53 @@ class baseServiceUpdater:
                     self.log('[UPD]     %-30s %-15s %-35s' % (unidecode(x.channelid), x.src, x.strm))
                     continue
                 try:
-                    name_channels = list()
-                    title_channels = list()
-                    regex_channels = list()
+                    p = re.compile(x.titleRegex, re.IGNORECASE)
 
-                    if x.titleRegex:
-                        regex_channels = list(filter(lambda v: match(x.titleRegex, v.title, re.IGNORECASE), self.channels))
-                        
-                    elif x.displayName:
+                    for y in self.channels:
+                        title = ''
+                        name = ''
+
                         try:
-                            name_channels = list(filter(lambda v: (unidecode(x.displayName.upper()) == (unidecode(v.title.upper()) or unidecode(v.name.upper()))), self.channels))
+                            title = unidecode(y.title.upper())
                         except:
-                            name_channels = list(filter(lambda v: (unidecode(x.displayName.upper()) == (unidecode(v.title.decode('utf-8').upper()) or unidecode(v.name.decode('utf-8').upper()))), self.channels))
+                            title = unidecode(y.title.decode('utf-8').upper())
 
-                    elif x.displayName == '':
                         try:
-                            title_channels = list(filter(lambda v: (unidecode(x.channelid.upper()) == unidecode(v.title.upper())), self.channels))
+                            name = unidecode(y.name.upper())
                         except:
-                            title_channels = list(filter(lambda v: (unidecode(x.channelid.upper()) == unidecode(v.title.decode('utf-8').upper())), self.channels))
+                            name = unidecode(y.name.decode('utf-8').upper())
 
-                    filtered_channels = regex_channels + name_channels + title_channels     
+                        if x.titleRegex:
+                            b = p.match(y.title)
+                        elif x.displayName:
+                            b = True if unidecode(x.displayName.upper()) == (title or name) else False
+                        elif x.displayName == '':
+                            b = True if unidecode(x.channelid.upper()) == title else False
 
-                    for y in filtered_channels:
-                        if x.strm != '' and self.addDuplicatesToList == True:
-                            newMapElement = copy.deepcopy(x)
-                            newMapElement.strm = self.rstrm % y.cid
+                        if (b):
+                            if x.strm != '' and self.addDuplicatesToList == True:
+                                newMapElement = copy.deepcopy(x)
+                                newMapElement.strm = self.rstrm % y.cid
 
-                            y.src = newMapElement.src
-                            y.strm = newMapElement.strm
-                            try:
-                                self.log('[UPD] [B] %-30s %-30s %-20s %-35s ' % (unidecode(newMapElement.channelid), unidecode(y.name), newMapElement.src, newMapElement.strm))
-                            except:
-                                self.log('[UPD] [B] %-30s %-30s %-20s %-35s ' % (unidecode(newMapElement.channelid), unidecode(y.name.decode('utf-8')), newMapElement.src, newMapElement.strm))
-                            if self.addDuplicatesAtBeginningOfList == False:
-                                self.automap.append(newMapElement)
+                                y.src = newMapElement.src
+                                y.strm = newMapElement.strm
+                                try:
+                                    self.log('[UPD] [B] %-30s %-30s %-20s %-35s ' % (unidecode(newMapElement.channelid), unidecode(y.name), newMapElement.src, newMapElement.strm))
+                                except:
+                                    self.log('[UPD] [B] %-30s %-30s %-20s %-35s ' % (unidecode(newMapElement.channelid), unidecode(y.name.decode('utf-8')), newMapElement.src, newMapElement.strm))
+                                if self.addDuplicatesAtBeginningOfList == False:
+                                    self.automap.append(newMapElement)
+                                else:
+                                    self.automap.insert(0, newMapElement)
                             else:
-                                self.automap.insert(0, newMapElement)
-                        else:
-                            x.strm = self.rstrm % y.cid
-                            y.strm = x.strm
-                            x.src  = self.serviceName
-                            y.src = x.src
-                            try:
-                                self.log('[UPD]     %-30s %-30s %-20s %-35s ' % (unidecode(x.channelid), unidecode(y.name), x.src, x.strm))
-                            except:
-                                self.log('[UPD]     %-30s %-30s %-20s %-35s ' % (unidecode(x.channelid), unidecode(y.name.decode('utf-8')), x.src, x.strm))
+                                x.strm = self.rstrm % y.cid
+                                y.strm = x.strm
+                                x.src  = self.serviceName
+                                y.src = x.src
+                                try:
+                                    self.log('[UPD]     %-30s %-30s %-20s %-35s ' % (unidecode(x.channelid), unidecode(y.name), x.src, x.strm))
+                                except:
+                                    self.log('[UPD]     %-30s %-30s %-20s %-35s ' % (unidecode(x.channelid), unidecode(y.name.decode('utf-8')), x.src, x.strm))
 
                 except Exception as ex:
                     self.log('{} Error {} {}'.format(unidecode(x.channelid), x.titleRegex, getExceptionString()))
