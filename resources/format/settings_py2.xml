@@ -304,6 +304,9 @@
 		<setting label="30953" type="action" action="RunScript($CWD/settingsImportExport.py, Export)"/>
 		<setting label="30954" type="action" option="close" action="RunScript($CWD/settingsImportExport.py, Import)"/>
 		<setting type="sep"/>
+		<setting label="70127" type="lsep"/>
+		<setting id="pragma_mode" label="70126" type="bool" default="true" />
+		<setting type="sep"/>
 		<setting label="30980" type="lsep"/>
 		<setting type="lsep"/>
 		<setting label="30952" type="action" action="RunScript($CWD/cleardb.py, clearCustom)"/>

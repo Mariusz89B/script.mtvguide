@@ -3537,7 +3537,13 @@
 				</setting>
 			</group>
 			<group id="3"/>
-			<group id="4"/>
+			<group id="4" label="70127">
+				<setting help="95140" id="pragma_mode" label="70126" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+			</group>
 			<group id="5" label="30980">
 				<setting help="95085" id="clear_customs" label="30952" type="action">
 					<level>3</level>

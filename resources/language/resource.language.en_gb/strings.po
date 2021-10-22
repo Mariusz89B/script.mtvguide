@@ -2780,6 +2780,14 @@ msgctxt "#70125"
 msgid "Remove added channels"
 msgstr ""
 
+msgctxt "#70126"
+msgid "Increase database write performance"
+msgstr ""
+
+msgctxt "#70127"
+msgid "SQLite"
+msgstr ""
+
 msgctxt "#80005"
 msgid "[COLOR blue]WP Pilot[/COLOR]"
 msgstr ""
@@ -3382,6 +3390,10 @@ msgstr ""
 
 msgctxt "#95139"
 msgid "How often the add-on will try to update the xmltv EPG file."
+msgstr ""
+
+msgctxt "#95140"
+msgid "If enabled database Write-Ahead Logging (WAL) will be used to increase write performance. Be aware that it reduces the data consistency guarantees in case of hardware failure."
 msgstr ""
 
 msgctxt "#99994"
