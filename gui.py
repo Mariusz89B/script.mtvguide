@@ -5841,32 +5841,32 @@ class mTVGuide(xbmcgui.WindowXML):
                 if ADDON.getSetting('categories_remember') == 'true' or ADDON.getSetting('category') != '':
                     self.database.setCategory(ADDON.getSetting('category'))
 
-                if not self.controlAndProgramList:
-                    self.database.setCategory(strings(30325))
-                    ADDON.setSetting('category', strings(30325))
-                    res = self.onRedrawEPG(0, self.viewStartDate, initializing=True)
-                    try:
-                        if len(res) == 0:
-                            if not self.controlAndProgramList:
-                                playlists = list()
-                                for i in range(5):
-                                    if ADDON.getSetting('playlist_{}_append_country_code'.format(i)) == '' and ADDON.getSetting('playlist_{}_enabled'.format(i)) == 'true':
-                                        playlists.append(i)
+                res = self.onRedrawEPG(0, self.viewStartDate, initializing=True)
 
-                                if ADDON.getSetting('epg_display_name') == 'false':
-                                    info = xbmcgui.Dialog().ok('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30166))
+                try:
+                    if len(res) == 0:
+                        self.database.setCategory(strings(30325))
+                        ADDON.setSetting('category', strings(30325))
+                        if not self.controlAndProgramList:
+                            playlists = list()
+                            for i in range(5):
+                                if ADDON.getSetting('playlist_{}_append_country_code'.format(i)) == '' and ADDON.getSetting('playlist_{}_enabled'.format(i)) == 'true':
+                                    playlists.append(i)
 
-                                elif playlists:
-                                    info = xbmcgui.Dialog().ok('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30167))
+                            if ADDON.getSetting('epg_display_name') == 'false':
+                                info = xbmcgui.Dialog().ok('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30166))
 
-                                else:
-                                    info = xbmcgui.Dialog().ok('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30168))
-                                 
-                                res = xbmcgui.Dialog().yesno('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30165))
-                                if res:
-                                    super(mTVGuide, self).close()
-                    except:
-                        pass
+                            elif playlists:
+                                info = xbmcgui.Dialog().ok('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30167))
+
+                            else:
+                                info = xbmcgui.Dialog().ok('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30168))
+                             
+                            res = xbmcgui.Dialog().yesno('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30165))
+                            if res:
+                                super(mTVGuide, self).close()
+                except:
+                    pass
                 
                 if ADDON.getSetting('touch_panel') == 'true':
                     self._showControl(self.C_MAIN_MOUSEPANEL_CONTROLS)
