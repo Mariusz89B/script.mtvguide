@@ -308,7 +308,6 @@
 		<setting id="pragma_mode" label="70126" type="bool" default="true" />
 		<setting type="sep"/>
 		<setting label="30980" type="lsep"/>
-		<setting type="lsep"/>
 		<setting label="30952" type="action" action="RunScript($CWD/cleardb.py, clearCustom)"/>
 		<setting label="30950" type="action" action="RunScript($CWD/cleardb.py, clearAll)"/>
 		<setting label="30955" type="action" action="RunScript($CWD/cleardb.py, deleteDb59908)"/>
