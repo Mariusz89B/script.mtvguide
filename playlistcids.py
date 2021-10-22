@@ -210,18 +210,15 @@ class PlaylistUpdater(baseServiceUpdater):
         else:
             try:  
                 if sys.version_info[0] > 2:
-                    with open(path, 'r', encoding='utf-8') as f:
-                        deb('Reading type: Default getPlaylistContent')
-                        tmpcontent = f.read()
+                    with open(filepath, 'r', encoding='utf-8') as f:
+                        content = f.read()
                 else:
                     try:
-                        with open(path, 'r') as f:
-                            deb('Reading type: Default getPlaylistContent')
-                            tmpcontent = f.read()
+                        with open(filepath, 'r') as f:
+                            content = f.read()
                     except:
-                        with open(path.decode('utf-8'), 'r') as f:
-                            deb('Reading type: Default getPlaylistContent')
-                            tmpcontent = f.read()
+                        with open(filepath.decode('utf-8'), 'r') as f:
+                            content = f.read()
                 
                 if content is None or content == "":
                     raise Exception
@@ -288,16 +285,13 @@ class PlaylistUpdater(baseServiceUpdater):
                 try:
                     if sys.version_info[0] > 2:
                         with open(path, 'r', encoding='utf-8') as f:
-                            deb('Reading type: Default getPlaylistContent')
                             tmpcontent = f.read()
                     else:
                         try:
                             with open(path, 'r') as f:
-                                deb('Reading type: Default getPlaylistContent')
                                 tmpcontent = f.read()
                         except:
                             with open(path.decode('utf-8'), 'r') as f:
-                                deb('Reading type: Default getPlaylistContent')
                                 tmpcontent = f.read()
                     
                     if tmpcontent is None or tmpcontent == "":
