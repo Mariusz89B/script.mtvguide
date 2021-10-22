@@ -1,4 +1,5 @@
-﻿wersja 9.6.6 - 2021-10-19
+﻿wersja 9.6.6 - 2021-10-23
+- dodano ustawienie rejestrowania z wyprzedzeniem w bazie danych (WAL)
 - poprawiona wydajność
 
 wersja 9.6.5 - 2021-10-19

@@ -2760,6 +2760,14 @@ msgctxt "#70125"
 msgid "Remove added channels"
 msgstr "Fjern tilføjede kanaler"
 
+msgctxt "#70126"
+msgid "Increase database write performance"
+msgstr "Forøg databaseskriveydelse"
+
+msgctxt "#70127"
+msgid "SQLite"
+msgstr "SQLite"
+
 msgctxt "#80005"
 msgid "[COLOR]WP Pilot[/COLOR]"
 msgstr "[COLOR]WP Pilot[/COLOR]"
