@@ -943,12 +943,10 @@ class baseServiceUpdater:
                     x.src = 'CONST'
                     self.log('[UPD]     %-30s %-15s %-35s' % (unidecode(x.channelid), x.src, x.strm))
                     continue
-                try:
-                    p = re.compile(x.titleRegex, re.IGNORECASE)
 
+                try:
                     for y in self.channels:
-                        title = ''
-                        name = ''
+                        b = False
 
                         try:
                             title = unidecode(y.title.upper())
@@ -961,13 +959,18 @@ class baseServiceUpdater:
                             name = unidecode(y.name.decode('utf-8').upper())
 
                         if x.titleRegex:
-                            b = p.match(y.title)
+                            p = re.compile(x.titleRegex, re.IGNORECASE)
+                            b = p.match(y.title) 
+                            
                         elif x.displayName:
-                            b = True if unidecode(x.displayName.upper()) == (title or name) else False
-                        elif x.displayName == '':
-                            b = True if unidecode(x.channelid.upper()) == title else False
+                            if unidecode(x.displayName.upper()) == (unidecode(title.upper()) or unidecode(name.upper())):
+                                b = True
 
-                        if (b):
+                        elif x.displayName == '':
+                            if unidecode(x.channelid.upper()) == unidecode(title.upper()):
+                                b = True
+
+                        if b:
                             if x.strm != '' and self.addDuplicatesToList == True:
                                 newMapElement = copy.deepcopy(x)
                                 newMapElement.strm = self.rstrm % y.cid
