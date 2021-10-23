@@ -7654,17 +7654,14 @@ class Pla(xbmcgui.WindowXMLDialog):
         debug('Pla playChannel: {}'.format(program))
         if channel.id != self.epg.currentChannel.id:
             self.ChannelChanged = 1
-            if program is None:
-                self.program = self.getCurrentProgram()
-                self.epg.program = self.program
-            else:
+            if program is not None:
                 self.program = program
                 self.epg.program = self.program
 
             self.epg.updateCurrentChannel(channel, program)
             urlList = self.database.getStreamUrlList(channel)
             if len(urlList) > 0:
-                self.epg.playService.playUrlList(urlList, self.archiveService, self.archivePlaylist, resetReconnectCounter=True)
+                self.epg.playService.playUrlList(urlList, '', '', resetReconnectCounter=True)
                 if self.showOsdOnPlay:
                     self.displayAutoOsd = True
 
