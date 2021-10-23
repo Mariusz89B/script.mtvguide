@@ -123,19 +123,19 @@ class PlaylistUpdater(baseServiceUpdater):
 
     def requestUrl(self, path):
         headers = { 'User-Agent' : 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:85.0) Gecko/20100101 Firefox/85.0' }
-        headers['Keep-Alive'] = 'timeout=60'
+        headers['Keep-Alive'] = 'timeout=15'
         headers['Connection'] = 'Keep-Alive'
         headers['ContentType'] = 'application/x-www-form-urlencoded'
         headers['Accept-Encoding'] = 'gzip'
 
         try:
             http = urllib3.PoolManager()
-            response = http.request('GET', path, headers=headers, timeout=60)
+            response = http.request('GET', path, headers=headers, timeout=15)
             content = response.data.decode('utf-8')
 
         except:
             try:
-                content = scraper.get(path, headers=headers, allow_redirects=False, verify=False, timeout=60).content.decode('utf-8')
+                content = scraper.get(path, headers=headers, allow_redirects=False, verify=False, timeout=15).content.decode('utf-8')
 
             except:
                 try:

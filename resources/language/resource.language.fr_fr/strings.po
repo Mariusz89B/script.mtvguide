@@ -216,6 +216,10 @@ msgctxt "#30168"
 msgid "No channels matched, please make sure your Electronic program guide (EPG) channel names are matching provided playlist and/or TV service channel ids. Check Kodi log for more information."
 msgstr "Aucune chaîne correspondante, veuillez vous assurer que les noms de chaînes de votre guide électronique des programmes (EPG) correspondent aux identifiants de chaînes de liste de lecture et/ou de service de télévision fournis. Consultez le journal Kodi pour plus d'informations."
 
+msgctxt "#30169"
+msgid "No channels available in EPG list. Check your settings or Kodi log for more information.[CR][CR]Do you want to exit m-TVGuide?"
+msgstr "Aucune chaîne disponible dans la liste EPG. Vérifiez vos paramètres ou le journal Kodi pour plus d'informations.[CR][CR]Voulez vous quitter m-TVGuide?"
+
 msgctxt "#30200"
 msgid "on [B]{}[/B] in 5 minutes..."
 msgstr "sur [B] {}[/B] en 5 minutes..."

@@ -5853,18 +5853,24 @@ class mTVGuide(xbmcgui.WindowXML):
                                 if ADDON.getSetting('playlist_{}_append_country_code'.format(i)) == '' and ADDON.getSetting('playlist_{}_enabled'.format(i)) == 'true':
                                     playlists.append(i)
 
-                            if ADDON.getSetting('epg_display_name') == 'false':
-                                info = xbmcgui.Dialog().ok('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30166))
+                            if xbmc.getCondVisibility('!Window.IsVisible(notification)'):  
+                                if ADDON.getSetting('epg_display_name') == 'false':
+                                    info = xbmcgui.Dialog().ok('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30166))
 
-                            elif playlists:
-                                info = xbmcgui.Dialog().ok('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30167))
+                                elif playlists:
+                                    info = xbmcgui.Dialog().ok('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30167))
 
+                                else:
+                                    info = xbmcgui.Dialog().ok('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30168))
+
+                                res = xbmcgui.Dialog().yesno('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30165))
+                                if res:
+                                    super(mTVGuide, self).close()
                             else:
-                                info = xbmcgui.Dialog().ok('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30168))
-                             
-                            res = xbmcgui.Dialog().yesno('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30165))
-                            if res:
-                                super(mTVGuide, self).close()
+                                res = xbmcgui.Dialog().yesno('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30169))
+                                if res:
+                                    super(mTVGuide, self).close()
+     
                 except:
                     pass
                 
