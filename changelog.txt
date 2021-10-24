@@ -1,6 +1,8 @@
-﻿wersja 9.6.6 - 2021-10-23
+﻿wersja 9.6.6 - 2021-10-25
 - dodano ustawienie rejestrowania z wyprzedzeniem w bazie danych (WAL)
+- ulepszone parsowanie kanałów
 - poprawiona wydajność
+- naprawiono przekierowanie strumienia playlisty odtwarzania
 
 wersja 9.6.5 - 2021-10-19
 - dodano moduł urllib3.

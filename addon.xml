@@ -42,9 +42,11 @@
 	<website>http://mods-kodi.pl/</website>
 	<email>support@m-tvguide.pl</email>
     <source>mods-kodi.pl © 2013 - 2021</source>
-    <news>v9.6.6 (2021-10-23)
+    <news>v9.6.6 (2021-10-25)
 - Added database Write-Ahead Logging (WAL) setting.
+- Improved channel parsing.
 - Improved performance.
+- Fixed playlist stream redirect.
 
 v9.6.5 (2021-10-19)
 - Added urllib3 module.
