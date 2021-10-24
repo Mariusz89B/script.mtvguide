@@ -221,16 +221,16 @@ class PlaylistUpdater(baseServiceUpdater):
                         with open(filepath.decode('utf-8'), 'r') as f:
                             content = [line.strip() for line in f]
                 
-                if content is None or content == "":
+                if not content:
                     raise Exception
 
             except:
                 self.log('getPlaylistContent opening normally Error %s, type: %s, url: %s' % (getExceptionString(), urlpath, path) )
                 self.log('getPlaylistContent trying to open file using xbmcvfs')
                 lf = xbmcvfs.File(filepath)
-                content = lf.readlines()
+                content = lf.read().splitlines()
                 lf.close()
-                if content is None or content == "":
+                if not content:
                     raise Exception
 
         return content
@@ -239,7 +239,7 @@ class PlaylistUpdater(baseServiceUpdater):
         content = None
         start_time = datetime.datetime.now()
 
-        while (content is None or content == '') and (datetime.datetime.now() - start_time).seconds < 10:
+        while not content and (datetime.datetime.now() - start_time).seconds < 10:
             try:
                 if ADDON.getSetting('{}_refr'.format(self.serviceName)) == 'true':
                     content = self.cachePlaylist(path)
@@ -249,7 +249,7 @@ class PlaylistUpdater(baseServiceUpdater):
             except Exception as ex:
                 self.log('downloadPlaylist Error {}'.format(getExceptionString()))
 
-            if (content is None or content == '') and (datetime.datetime.now() - start_time).seconds < 10:
+            if not content and (datetime.datetime.now() - start_time).seconds < 10:
                 self.log('downloadPlaylist Failed, sleeping')
                 time.sleep(0.5)
 
@@ -280,7 +280,7 @@ class PlaylistUpdater(baseServiceUpdater):
             if urltype == '0':
                 tmpcontent = self.downloadPlaylist(path)
 
-                if tmpcontent is None or tmpcontent == '':
+                if not tmpcontent:
                     raise Exception
             else:
                 try:
@@ -295,16 +295,16 @@ class PlaylistUpdater(baseServiceUpdater):
                             with open(path.decode('utf-8'), 'r') as f:
                                 tmpcontent = [line.strip() for line in f]
                     
-                    if tmpcontent is None or tmpcontent == "":
+                    if not tmpcontent:
                         raise Exception
                         
                 except:
                     self.log('getPlaylistContent opening normally Error %s, type: %s, url: %s' % (getExceptionString(), urltype, path) )
                     self.log('getPlaylistContent trying to open file using xbmcvfs')
                     lf = xbmcvfs.File(path)
-                    tmpcontent = lf.readlines()
+                    tmpcontent = lf.read().splitlines()
                     lf.close()
-                    if tmpcontent is None or tmpcontent == "":
+                    if not tmpcontent:
                         raise Exception
                 
             content = tmpcontent
@@ -398,7 +398,7 @@ class PlaylistUpdater(baseServiceUpdater):
             except:
                 channelsArray = self.getPlaylistContent(self.url.decode('utf-8').strip(), self.source)
 
-            if channelsArray is not None and channelsArray != "" and len(channelsArray) > 0:
+            if channelsArray and len(channelsArray) > 0:
                 for line in channelsArray:
                     line = cleanup_regex.sub('', line)
                     stripLine = line.strip()
