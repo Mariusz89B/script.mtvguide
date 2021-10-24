@@ -384,7 +384,7 @@ class PlayService(xbmc.Player, BasePlayService):
 
         response = sess.delete(url, headers=headers)
 
-    def getUrl(self, strmUrl, cid, service):
+    def getUrl(self, strmUrl, cid, service, retry=0):
         mimeType = ''
 
         UA = ADDON.getSetting('{}_user_agent'.format(service))
@@ -402,6 +402,8 @@ class PlayService(xbmc.Player, BasePlayService):
             conn_timeout = int(ADDON.getSetting('max_wait_for_playback'))
             read_timeout = int(ADDON.getSetting('max_wait_for_playback'))
             timeouts = (conn_timeout, read_timeout)
+
+            status = 200
             
             try:
                 response = scraper.get(strmUrl, headers=headers, allow_redirects=False, stream=True, timeout=timeouts)
@@ -411,17 +413,30 @@ class PlayService(xbmc.Player, BasePlayService):
                 else:
                     strmUrl = response.url
 
+                status = response.status_code
+
             except HTTPError as e:
+                status = 400
                 deb('HTTPError: {}'.format(str(e)))
 
             except ConnectionError as e:
+                status = 400
                 deb('ConnectionError: {}'.format(str(e)))
 
             except Timeout as e:
+                status = 400
                 deb('Timeout: {}'.format(str(e))) 
 
             except RequestException as e:
+                status = 400
                 deb('RequestException: {}'.format(str(e))) 
+
+        if status >= 400 and retry < 3:
+            self.getUrl(strmUrl, cid, service, retry)
+            retry += 1
+
+        if retry > 3:
+            return None
 
         return strmUrl
 
