@@ -1186,8 +1186,12 @@ class PlayService(xbmc.Player, BasePlayService):
                     if self.currentlyPlayedService['service'] not in playbackServices:
                         catchup = False
 
-                        channelInfo.strm = self.getUrl(channelInfo.strm, channelInfo.cid, service)
-                        strmUrl = channelInfo.strm
+                        redirected_strm = self.getUrl(channelInfo.strm, channelInfo.cid, service)
+                        if redirected_strm is not None:
+                            strmUrl = redirected_strm
+                        else:
+                            strmUrl = channelInfo.strm
+                            
                         strmUrl_catchup = channelInfo.catchup
 
                         p = re.compile('service=playlist_\d&cid=\d+_AR.*')
