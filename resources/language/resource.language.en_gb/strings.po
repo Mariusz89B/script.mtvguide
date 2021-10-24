@@ -2789,7 +2789,7 @@ msgid "Increase database write performance"
 msgstr ""
 
 msgctxt "#70127"
-msgid "SQLite"
+msgid "Backup"
 msgstr ""
 
 msgctxt "#80005"

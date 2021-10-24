@@ -2769,8 +2769,8 @@ msgid "Increase database write performance"
 msgstr "Øk skriveytelsen til databasen"
 
 msgctxt "#70127"
-msgid "SQLite"
-msgstr "SQLite"
+msgid "Backup"
+msgstr "Sikkerhetskopiering"
 
 msgctxt "#80005"
 msgid "[COLOR]WP Pilot[/COLOR]"
