@@ -949,19 +949,24 @@ class baseServiceUpdater:
 
                 try:
                     if x.titleRegex:
-                        filtered_channels = list(filter(lambda v: match(x.titleRegex, v.title, re.IGNORECASE), self.channels))
+                        #filtered_channels = [y for y in self.channels if match(x.titleRegex, y.title, re.IGNORECASE)]
+                        filtered_channels = list(filter(lambda z: match(x.titleRegex, z.title, re.IGNORECASE), self.channels))
                         
                     elif x.displayName:
                         try:
-                            filtered_channels = list(filter(lambda v: (unidecode(x.displayName.upper()) == (unidecode(v.title.upper()) or unidecode(v.name.upper()))), self.channels))
+                            #filtered_channels = [y for y in self.channels if unidecode(x.displayName.upper()) == (unidecode(y.title.upper()) or unidecode(y.name.upper()))]
+                            filtered_channels = list(filter(lambda z: (unidecode(x.displayName.upper()) == (unidecode(z.title.upper()) or unidecode(z.name.upper()))), self.channels))
                         except:
-                            filtered_channels = list(filter(lambda v: (unidecode(x.displayName.upper()) == (unidecode(v.title.decode('utf-8').upper()) or unidecode(v.name.decode('utf-8').upper()))), self.channels))
+                            #filtered_channels = [y for y in self.channels if unidecode(x.displayName.upper()) == (unidecode(y.title.decode('utf-8').upper()) or unidecode(y.name.decode('utf-8').upper()))]
+                            filtered_channels = list(filter(lambda z: (unidecode(x.displayName.upper()) == (unidecode(z.title.decode('utf-8').upper()) or unidecode(z.name.decode('utf-8').upper()))), self.channels))
 
                     elif x.displayName == '':
                         try:
-                            filtered_channels = list(filter(lambda v: (unidecode(x.channelid.upper()) == unidecode(v.title.upper())), self.channels))
+                            #filtered_channels = [y for y in self.channels if unidecode(x.channelid.upper()) == unidecode(y.title.upper())]
+                            filtered_channels = list(filter(lambda z: (unidecode(x.channelid.upper()) == unidecode(z.title.upper())), self.channels))
                         except:
-                            filtered_channels = list(filter(lambda v: (unidecode(x.channelid.upper()) == unidecode(v.title.decode('utf-8').upper())), self.channels))  
+                            #filtered_channels = [y for y in self.channels if unidecode(x.channelid.upper()) == unidecode(y.title.decode('utf-8').upper())]
+                            filtered_channels = list(filter(lambda z: (unidecode(x.channelid.upper()) == unidecode(z.title.decode('utf-8').upper())), self.channels))
 
                     for y in filtered_channels:
                         if x.strm != '' and self.addDuplicatesToList == True:

@@ -133,6 +133,7 @@ class PlaylistUpdater(baseServiceUpdater):
             response = http.request('GET', path, headers=headers, timeout=15)
             content = response.data.decode('utf-8')
 
+        
         except:
             try:
                 content = scraper.get(path, headers=headers, allow_redirects=False, verify=False, timeout=15).content.decode('utf-8')
@@ -142,8 +143,8 @@ class PlaylistUpdater(baseServiceUpdater):
                     content = self.sl.getJsonFromExtendedAPI(path).decode('utf-8')
                 except:
                     content = ''
-
-        return content
+        
+        return content.splitlines()
 
     def cachePlaylist(self, upath):
         n = datetime.datetime.now()
@@ -174,51 +175,51 @@ class PlaylistUpdater(baseServiceUpdater):
         urlpath = os.path.join(self.profilePath, 'playlists', '{playlist}.url'.format(playlist=self.serviceName))
         if os.path.exists(urlpath):
             if sys.version_info[0] > 2:
-                url = open(urlpath, 'r', encoding='utf-8').read()
+                with open(urlpath, 'r', encoding='utf-8') as f:
+                    url = [line.strip() for line in f]
             else:
-                url = open(urlpath, 'r').read()
+                with open(urlpath, 'r') as f:
+                    url = [line.strip() for line in f]
 
         else:
             url = url_setting
 
         if (int(tnow) >= int(timestamp) + int(tdel)) or not os.path.exists(filepath) or os.stat(filepath).st_size <= 0 or url != url_setting:
             content = self.requestUrl(upath)
-            if not '#EXTINF' in content:
-                content = None
-                
-            for f in os.listdir(path):
-                if not f.endswith(".m3u") or not f.endswith(".url"):
-                    continue
-                filename = os.path.basename(filepath)
-                if self.serviceName in filename:
-                    os.remove(os.path.join(path, f))
+            if content:
+                for f in os.listdir(path):
+                    if not f.endswith(".m3u") or not f.endswith(".url"):
+                        continue
+                    filename = os.path.basename(filepath)
+                    if self.serviceName in filename:
+                        os.remove(os.path.join(path, f))
 
-            if sys.version_info[0] > 2:
-                with open(filepath, 'w', encoding='utf-8') as f:
-                    f.write(content)
+                if sys.version_info[0] > 2:
+                    with open(filepath, 'w', encoding='utf-8') as f:
+                        f.write("\n".join(content))
+                else:
+                    with open(filepath, 'w') as f:
+                        f.write(str('\n'.join(content)))
 
-                with open(urlpath, 'w', encoding='utf-8') as f2:
-                    f2.write(url_setting)
-
-            else:
-                with open(filepath, 'w') as f:
-                    f.write(content.encode('utf-8'))
-
-                with open(urlpath, 'w') as f2:
-                    f2.write(url_setting.encode('utf-8'))
+                if sys.version_info[0] > 2:
+                    with open(urlpath, 'w', encoding='utf-8') as f2:
+                        f2.write(url_setting)
+                else:
+                    with open(urlpath, 'w') as f2:
+                        f2.write(url_setting)
 
         else:
             try:  
                 if sys.version_info[0] > 2:
                     with open(filepath, 'r', encoding='utf-8') as f:
-                        content = f.read()
+                        content = [line.strip() for line in f]
                 else:
                     try:
                         with open(filepath, 'r') as f:
-                            content = f.read()
+                            content = [line.strip() for line in f]
                     except:
                         with open(filepath.decode('utf-8'), 'r') as f:
-                            content = f.read()
+                            content = [line.strip() for line in f]
                 
                 if content is None or content == "":
                     raise Exception
@@ -227,7 +228,7 @@ class PlaylistUpdater(baseServiceUpdater):
                 self.log('getPlaylistContent opening normally Error %s, type: %s, url: %s' % (getExceptionString(), urlpath, path) )
                 self.log('getPlaylistContent trying to open file using xbmcvfs')
                 lf = xbmcvfs.File(filepath)
-                content = lf.read()
+                content = lf.readlines()
                 lf.close()
                 if content is None or content == "":
                     raise Exception
@@ -285,14 +286,14 @@ class PlaylistUpdater(baseServiceUpdater):
                 try:
                     if sys.version_info[0] > 2:
                         with open(path, 'r', encoding='utf-8') as f:
-                            tmpcontent = f.read()
+                            tmpcontent = [line.strip() for line in f]
                     else:
                         try:
                             with open(path, 'r') as f:
-                                tmpcontent = f.read()
+                                tmpcontent = [line.strip() for line in f]
                         except:
                             with open(path.decode('utf-8'), 'r') as f:
-                                tmpcontent = f.read()
+                                tmpcontent = [line.strip() for line in f]
                     
                     if tmpcontent is None or tmpcontent == "":
                         raise Exception
@@ -301,7 +302,7 @@ class PlaylistUpdater(baseServiceUpdater):
                     self.log('getPlaylistContent opening normally Error %s, type: %s, url: %s' % (getExceptionString(), urltype, path) )
                     self.log('getPlaylistContent trying to open file using xbmcvfs')
                     lf = xbmcvfs.File(path)
-                    tmpcontent = lf.read()
+                    tmpcontent = lf.readlines()
                     lf.close()
                     if tmpcontent is None or tmpcontent == "":
                         raise Exception
@@ -393,14 +394,13 @@ class PlaylistUpdater(baseServiceUpdater):
             self.log('[UPD] %-10s %-35s %-35s' % ( '-CID-', '-NAME-', '-STREAM-'))
 
             try:
-                channelsArray = self.getPlaylistContent(self.url.strip(), self.source).strip()
+                channelsArray = self.getPlaylistContent(self.url.strip(), self.source)
             except:
-                channelsArray = self.getPlaylistContent(self.url.decode('utf-8').strip(), self.source).strip()
+                channelsArray = self.getPlaylistContent(self.url.decode('utf-8').strip(), self.source)
 
             if channelsArray is not None and channelsArray != "" and len(channelsArray) > 0:
-                cleaned_playlist = cleanup_regex.sub('', channelsArray)
-                
-                for line in cleaned_playlist.splitlines():
+                for line in channelsArray:
+                    line = cleanup_regex.sub('', line)
                     stripLine = line.strip()
 
                     if '#EXTINF:' in stripLine:
@@ -554,7 +554,7 @@ class PlaylistUpdater(baseServiceUpdater):
                                         title = ''                  
 
                             title = title.replace('  ', ' ').strip()
-                                
+                                    
 
                     elif title is not None and regexCorrectStream.match(stripLine):
                         if title != '':
