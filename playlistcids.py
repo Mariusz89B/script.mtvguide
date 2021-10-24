@@ -64,7 +64,7 @@ import cloudscraper
 from contextlib import contextmanager
 from unidecode import unidecode
 
-import mmap
+import codecs
 
 sess = cloudscraper.create_scraper()
 scraper = cloudscraper.CloudScraper()
@@ -178,7 +178,7 @@ class PlaylistUpdater(baseServiceUpdater):
                 with open(urlpath, 'r', encoding='utf-8') as f:
                     url = [line.strip() for line in f]
             else:
-                with open(urlpath, 'r') as f:
+                with codecs.open(urlpath, 'r', encoding='utf-8') as f:
                     url = [line.strip() for line in f]
 
         else:
@@ -198,14 +198,14 @@ class PlaylistUpdater(baseServiceUpdater):
                     with open(filepath, 'w', encoding='utf-8') as f:
                         f.write("\n".join(content))
                 else:
-                    with open(filepath, 'w') as f:
-                        f.write(str('\n'.join(content)))
+                    with codecs.open(filepath, 'w', encoding='utf-8') as f:
+                        f.write('\n'.join(content))
 
                 if sys.version_info[0] > 2:
                     with open(urlpath, 'w', encoding='utf-8') as f2:
                         f2.write(url_setting)
                 else:
-                    with open(urlpath, 'w') as f2:
+                    with codecs.open(urlpath, 'w', encoding='utf-8') as f2:
                         f2.write(url_setting)
 
         else:
@@ -215,10 +215,10 @@ class PlaylistUpdater(baseServiceUpdater):
                         content = [line.strip() for line in f]
                 else:
                     try:
-                        with open(filepath, 'r') as f:
+                        with codecs.open(filepath, 'r', encoding='utf-8') as f:
                             content = [line.strip() for line in f]
                     except:
-                        with open(filepath.decode('utf-8'), 'r') as f:
+                        with codecs.open(filepath.decode('utf-8'), 'r', encoding='utf-8') as f:
                             content = [line.strip() for line in f]
                 
                 if not content:
@@ -289,10 +289,10 @@ class PlaylistUpdater(baseServiceUpdater):
                             tmpcontent = [line.strip() for line in f]
                     else:
                         try:
-                            with open(path, 'r') as f:
+                            with codecs.open(path, 'r', encoding='utf-8') as f:
                                 tmpcontent = [line.strip() for line in f]
                         except:
-                            with open(path.decode('utf-8'), 'r') as f:
+                            with codecs.open(path.decode('utf-8'), 'r', encoding='utf-8') as f:
                                 tmpcontent = [line.strip() for line in f]
                     
                     if not tmpcontent:

@@ -58,7 +58,6 @@ import xbmc, xbmcaddon, xbmcgui, xbmcplugin, xbmcvfs
 import inputstreamhelper
 
 import json
-import codecs
 import calendar
 import time
 from collections import OrderedDict
