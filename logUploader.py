@@ -45,6 +45,7 @@ from __future__ import unicode_literals
 import sys
 
 import requests
+import codecs
 
 import os, datetime
 import xbmc, xbmcaddon, xbmcgui, xbmcplugin, xbmcvfs
@@ -90,7 +91,7 @@ class LogUploader:
                 with open(filename, 'r', encoding='utf-8') as content_file:
                     content = content_file.read()
             else:
-                with open(filename, 'r') as content_file:
+                with codecs.open(filename, 'r', encoding='utf-8') as content_file:
                     content = content_file.read()
             if content is None:
                 deb('LogUploader upload ERROR could not get content of log file')
@@ -104,24 +105,14 @@ class LogUploader:
         startTime = datetime.datetime.now()
 
         try:
-            headers = {
-                'Connection': 'keep-alive',
-                'Origin': 'https://paste.ubuntu.com',
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36 Edg/94.0.992.31',
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-                'Referer': 'https://paste.ubuntu.com/',
-                'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
-            }
-
             data = {
               'poster': 'anonymous',
               'syntax': 'text',
               'expiration': 'week',
-              'content': data
+              'content': data[-1500000:]
             }
 
-            page = requests.post('https://paste.ubuntu.com/', headers=headers, data=data, verify=False)
+            page = requests.post('https://paste.ubuntu.com/', data=data, verify=False)
 
         except Exception as ex:
             deb('LogUploader upload failed to connect to the server, exception: %s' % getExceptionString())
