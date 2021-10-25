@@ -387,6 +387,8 @@ class PlayService(xbmc.Player, BasePlayService):
     def getUrl(self, strmUrl, cid, service, retry=0):
         mimeType = ''
 
+        status = 200
+
         UA = ADDON.getSetting('{}_user_agent'.format(service))
 
         headers = {
@@ -403,8 +405,6 @@ class PlayService(xbmc.Player, BasePlayService):
             read_timeout = int(ADDON.getSetting('max_wait_for_playback'))
             timeouts = (conn_timeout, read_timeout)
 
-            status = 200
-            
             try:
                 response = scraper.get(strmUrl, headers=headers, allow_redirects=False, stream=True, timeout=timeouts)
                 if 'Location' in response.headers and '_TS' not in cid:
@@ -1185,6 +1185,8 @@ class PlayService(xbmc.Player, BasePlayService):
                     playbackServices = ['C More', 'Polsat GO', 'Polsat GO Box', 'Ipla', 'nc+ GO', 'PlayerPL', 'Telia Play', 'Telewizja Polska', 'WP Pilot']
                     if self.currentlyPlayedService['service'] not in playbackServices:
                         catchup = False
+
+                        strmUrl = ''
 
                         redirected_strm = self.getUrl(channelInfo.strm, channelInfo.cid, service)
                         if redirected_strm is not None:
