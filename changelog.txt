@@ -1,4 +1,7 @@
-﻿wersja 9.6.6 - 2021-10-25
+﻿wersja 9.6.7 - 2021-10-25
+- dodano nagłówki Content-Type do rozpoznawania typ plików EPG.
+
+wersja 9.6.6 - 2021-10-25
 - dodano ustawienie rejestrowania z wyprzedzeniem w bazie danych (WAL)
 - ulepszone parsowanie kanałów
 - poprawiona wydajność

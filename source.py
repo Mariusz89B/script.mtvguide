@@ -848,17 +848,14 @@ class Database(object):
     def epgChannels(self):
         result = dict()
 
-        with self.conn as conn:
-            cur = conn.execute('SELECT id, titles FROM channels')
-
-            for x in cur:
-                if ADDON.getSetting('epg_display_name') == 'true':
-                    try:
-                        result.update({x[0].upper(): x[1].upper()})
-                    except:
-                        result.update({x[0].upper(): x[0].upper()})
-                else:
-                    result.update({x[0].upper(): x[0].upper()})
+        c = self.conn.cursor()
+        c.execute('SELECT id, titles FROM channels')
+            
+        for row in c:
+            if ADDON.getSetting('epg_display_name') == 'true':
+                result.update({str(row['id']).upper():str(row['titles']).upper()})
+            else:
+                result.update({str(row['id']).upper():str(row['id']).upper()})
 
         return result.items()
 
@@ -2293,6 +2290,9 @@ class Source(object):
             while True:
                 try:
                     u = None
+
+                    filename = ''
+                    contentType = ''
                     
                     headers = {
                         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:19.0) Gecko/20121213 Firefox/19.0',
@@ -2315,6 +2315,11 @@ class Source(object):
                         filename = re.search('filename="(.+?)"', c_disposition).group(1)
                     except:
                         filename = url
+                        
+                    try:
+                        contentType = u.headers['Content-Type']
+                    except:
+                        pass
 
                     break
 
@@ -2331,7 +2336,7 @@ class Source(object):
             except:
                 pass
 
-            if url.lower().endswith('.zip') or remoteFilename.lower().endswith('.zip') or '.zip' in filename:
+            if url.lower().endswith('.zip') or remoteFilename.lower().endswith('.zip') or '.zip' in filename or 'zip' in contentType:
                 tnow = datetime.datetime.now()
                 deb("[EPG] Unpacking epg: {} [{} sek.]".format(url, str((tnow-start).seconds)))
                 memfile = io.BytesIO(content)
@@ -2340,7 +2345,7 @@ class Source(object):
                 unziped.close()
                 memfile.close()
 
-            if url.lower().endswith('.gz') or remoteFilename.lower().endswith('.gz') or '.gz' in filename:
+            if url.lower().endswith('.gz') or remoteFilename.lower().endswith('.gz') or '.gz' in filename or 'gzip' in contentType:
                 tnow = datetime.datetime.now()
                 deb("[EPG] Unpacking epg: {} [{} sek.]".format(url, str((tnow-start).seconds)))
                 import gzip

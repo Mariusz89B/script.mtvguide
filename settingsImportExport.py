@@ -730,12 +730,12 @@ class SettingsImp:
                         ADDON.setSetting(id="countryUrlChannels", value=str(strings(30720).encode('utf-8', 'replace')))
             
                 break
-
-        for cc in removeList:
-            ADDON.setSetting(id='country_code_{cc}'.format(cc=cc), value='false')
         
         enabling = True
         xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)
+
+        for cc in removeList:
+            ADDON.setSetting(id='country_code_{cc}'.format(cc=cc), value='false')
 
     def countryFilePicker(self):
         deb('starting countryFilePicker')
@@ -849,7 +849,6 @@ class SettingsImp:
                     ADDON.setSetting(id="countryFileChannels", value=str(strings(30720)))
                 except:
                     ADDON.setSetting(id="countryFileChannels", value=str(strings(30720).encode('utf-8', 'replace')))
-
             
         enabling = True
 
