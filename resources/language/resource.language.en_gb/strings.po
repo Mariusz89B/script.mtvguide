@@ -961,7 +961,7 @@ msgid "Enable only channels in pre-defined groups"
 msgstr ""
 
 msgctxt "#30763"
-msgid "Append fixed country code for all channels"
+msgid "Append fixed country code"
 msgstr ""
 
 msgctxt "#30764"
@@ -1937,7 +1937,7 @@ msgid "Save plugin settings!"
 msgstr ""
 
 msgctxt "#55001"
-msgid "Change User-Agent"
+msgid "Add User-Agent"
 msgstr ""
 
 msgctxt "#55002"
@@ -2792,6 +2792,26 @@ msgctxt "#70127"
 msgid "Backup"
 msgstr ""
 
+msgctxt "#70128"
+msgid "Replace country code"
+msgstr ""
+
+msgctxt "#70129"
+msgid "Alpha-2 [CC]"
+msgstr ""
+
+msgctxt "#70130"
+msgid "Alpha-3 [CCC]"
+msgstr ""
+
+msgctxt "#70131"
+msgid "ccTLD [.cc]"
+msgstr ""
+
+msgctxt "#70132"
+msgid "Country name [Country]"
+msgstr ""
+
 msgctxt "#80005"
 msgid "[COLOR blue]WP Pilot[/COLOR]"
 msgstr ""
@@ -3398,6 +3418,10 @@ msgstr ""
 
 msgctxt "#95140"
 msgid "If enabled database Write-Ahead Logging (WAL) will be used to increase write performance. Be aware that it reduces the data consistency guarantees in case of hardware failure."
+msgstr ""
+
+msgctxt "#95141"
+msgid "Select to replace country code pattern to match M3U playlist channels with EPG channel id or display-names."
 msgstr ""
 
 msgctxt "#99994"

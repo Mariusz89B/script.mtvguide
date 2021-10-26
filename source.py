@@ -854,7 +854,8 @@ class Database(object):
             for x in cur:
                 if ADDON.getSetting('epg_display_name') == 'true':
                     try:
-                        result.update({x[0].upper(): x[1].upper()})
+                        titles = x[0].upper() + ',' + x[1].upper()
+                        result.update({x[0].upper(): titles})
                     except:
                         result.update({x[0].upper(): x[0].upper()})
                 else:

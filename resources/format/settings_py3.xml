@@ -1434,6 +1434,30 @@
 						<heading>59908</heading>
 					</control>
 				</setting>
+				<setting help="95141" id="playlist_1_pattern" label="70128" type="string" parent="playlist_1_enabled">
+					<level>0</level>
+					<default>1</default>
+					<constraints>
+						<options>
+							<option label="70007">0</option>
+							<option label="70129">1</option>
+							<option label="70130">2</option>
+							<option label="70131">3</option>
+							<option label="70132">4</option>
+						</options>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<and>
+								<condition operator="is" setting="playlist_1_enabled">true</condition>
+								<condition operator="gt" setting="nr_of_playlists">0</condition>
+							</and>
+						</dependency>
+					</dependencies>
+					<control format="string" type="list">
+						<heading>70128</heading>
+					</control>
+				</setting>
 				<setting help="95136" id="playlist_1_append_country_code" label="30763" type="string" parent="playlist_1_enabled">
 					<level>0</level>
 					<default/>
@@ -1635,6 +1659,30 @@
 					</dependencies>
 					<control format="file" type="button">
 						<heading>59908</heading>
+					</control>
+				</setting>
+				<setting help="95141" id="playlist_2_pattern" label="70128" type="string" parent="playlist_2_enabled">
+					<level>0</level>
+					<default>1</default>
+					<constraints>
+						<options>
+							<option label="70007">0</option>
+							<option label="70129">1</option>
+							<option label="70130">2</option>
+							<option label="70131">3</option>
+							<option label="70132">4</option>
+						</options>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<and>
+								<condition operator="is" setting="playlist_2_enabled">true</condition>
+								<condition operator="gt" setting="nr_of_playlists">1</condition>
+							</and>
+						</dependency>
+					</dependencies>
+					<control format="string" type="list">
+						<heading>70128</heading>
 					</control>
 				</setting>
 				<setting help="95136" id="playlist_2_append_country_code" label="30763" type="string" parent="playlist_2_enabled">
@@ -1840,6 +1888,30 @@
 						<heading>59908</heading>
 					</control>
 				</setting>
+				<setting help="95141" id="playlist_3_pattern" label="70128" type="string" parent="playlist_3_enabled">
+					<level>0</level>
+					<default>1</default>
+					<constraints>
+						<options>
+							<option label="70007">0</option>
+							<option label="70129">1</option>
+							<option label="70130">2</option>
+							<option label="70131">3</option>
+							<option label="70132">4</option>
+						</options>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<and>
+								<condition operator="is" setting="playlist_3_enabled">true</condition>
+								<condition operator="gt" setting="nr_of_playlists">2</condition>
+							</and>
+						</dependency>
+					</dependencies>
+					<control format="string" type="list">
+						<heading>70128</heading>
+					</control>
+				</setting>
 				<setting help="95136" id="playlist_3_append_country_code" label="30763" type="string" parent="playlist_3_enabled">
 					<level>0</level>
 					<default/>
@@ -2043,6 +2115,30 @@
 						<heading>59908</heading>
 					</control>
 				</setting>
+				<setting help="95141" id="playlist_4_pattern" label="70128" type="string" parent="playlist_4_enabled">
+					<level>0</level>
+					<default>1</default>
+					<constraints>
+						<options>
+							<option label="70007">0</option>
+							<option label="70129">1</option>
+							<option label="70130">2</option>
+							<option label="70131">3</option>
+							<option label="70132">4</option>
+						</options>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<and>
+								<condition operator="is" setting="playlist_4_enabled">true</condition>
+								<condition operator="gt" setting="nr_of_playlists">3</condition>
+							</and>
+						</dependency>
+					</dependencies>
+					<control format="string" type="list">
+						<heading>70128</heading>
+					</control>
+				</setting>
 				<setting help="95136" id="playlist_4_append_country_code" label="30763" type="string" parent="playlist_4_enabled">
 					<level>0</level>
 					<default/>
@@ -2244,6 +2340,30 @@
 					</dependencies>
 					<control format="file" type="button">
 						<heading>59908</heading>
+					</control>
+				</setting>
+				<setting help="95141" id="playlist_5_pattern" label="70128" type="string" parent="playlist_5_enabled">
+					<level>0</level>
+					<default>1</default>
+					<constraints>
+						<options>
+							<option label="70007">0</option>
+							<option label="70129">1</option>
+							<option label="70130">2</option>
+							<option label="70131">3</option>
+							<option label="70132">4</option>
+						</options>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<and>
+								<condition operator="is" setting="playlist_5_enabled">true</condition>
+								<condition operator="gt" setting="nr_of_playlists">4</condition>
+							</and>
+						</dependency>
+					</dependencies>
+					<control format="string" type="list">
+						<heading>70128</heading>
 					</control>
 				</setting>
 				<setting help="95136" id="playlist_5_append_country_code" label="30763" type="string" parent="playlist_5_enabled">

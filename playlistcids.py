@@ -344,34 +344,59 @@ class PlaylistUpdater(baseServiceUpdater):
             a3List = []
             langList = []
             nativeList = []
+            dotList = []
 
             regexRemoveList.append( re.compile('(\s|^)(L\s*)?(24/7:?:?|19\d\d|20\d\d|S\s*\d{1,3}\s*E\s*\d{1,4})(?=\s|$)', re.IGNORECASE) )
 
             for cc, value in CC_DICT.items():
+                cc_pattern = cc.upper()
+                cc_pattern_regex = cc_pattern
+
+                # Alpha-2
+                if ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '1':
+                    cc_pattern = cc.upper()
+
+                # Alpha-3
+                elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '2':
+                    cc_pattern = value['alpha-3']
+                    
+                # ccTLD
+                elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '3':
+                    cc_pattern = '.' + cc.lower()
+                    cc_pattern_regex = re.escape(cc_pattern)
+
+                # Entity
+                elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '4':
+                    cc_pattern = value['language']
+
                 if ADDON.getSetting('country_code_{}'.format(cc)) == 'true':
                     alpha_1 = value['native']
                     alpha_2 = value['language']
                     alpha_3 = value['alpha-3']
                     alpha_4 = value.get('alpha-4', value['alpha-3'])
                     try:
-                        langReplaceList.append({ 'regex' : re.compile('(\s|^)(\s*'+cc.upper()+'$|'+alpha_4+':?|'+alpha_3+':?|'+alpha_2+':?|'+alpha_1+':?)(?=\s|$)|^('+alpha_4+':|'+alpha_3+':|'+alpha_2+':|'+alpha_1+':)', re.IGNORECASE), 'lang' : cc.upper()})
+                        langReplaceList.append({ 'regex' : re.compile('(\s|^)(\s*'+cc.upper()+'$|'+alpha_4+':?|'+alpha_3+':?|'+alpha_2+':?|'+alpha_1+':?)(?=\s|$)|^('+alpha_4+':|'+alpha_3+':|'+alpha_2+':|'+alpha_1+':)', re.IGNORECASE), 'lang' : cc_pattern})
                     except:
-                        langReplaceList.append({ 'regex' : re.compile('(\s|^)(\s*'+cc.upper()+'$|'+alpha_4+':?|'+alpha_3+':?|'+alpha_2+':?|'+alpha_1.encode('utf-8')+':?)(?=\s|$)|^('+alpha_4+':|'+alpha_3+':|'+alpha_2+':|'+alpha_1.encode('utf-8')+':)', re.IGNORECASE), 'lang' : cc.upper()})
+                        langReplaceList.append({ 'regex' : re.compile('(\s|^)(\s*'+cc.upper()+'$|'+alpha_4+':?|'+alpha_3+':?|'+alpha_2+':?|'+alpha_1.encode('utf-8')+':?)(?=\s|$)|^('+alpha_4+':|'+alpha_3+':|'+alpha_2+':|'+alpha_1.encode('utf-8')+':)', re.IGNORECASE), 'lang' : cc_pattern})
 
-                    langReplaceList.append({ 'regex' : re.compile('(\s|^)('+cc.upper()+':?)(?=\s|$)|^('+cc.upper()+':)'), 'lang' : cc.upper()})
-                    prefixList.append(cc.upper() + ':?')
+                    langReplaceList.append({ 'regex' : re.compile('(\s|^)('+cc.upper()+':?)(?=\s|$)|^('+cc.upper()+':)'), 'lang' : cc_pattern})
+                    prefixList.append(cc_pattern_regex + ':?')
 
                     # ccLists
                     ccList.append(cc)
                     a3List.append(value['alpha-3'])
                     langList.append(value['language'])
                     nativeList.append(value['native']) 
+                    dotList.append('.' + cc.lower())
 
             if not prefixList:
                 prefixList.append(' ')
 
             prefix = '|'.join(map(str, prefixList))
-            regexAddList.append( re.compile('(\s|^)(L\s*)?({prefix})(?=\s|$)'.format(prefix=prefix)) )
+            if ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '3':
+                regexAddList.append( re.compile('(\S|^)(L\s*)?({prefix})(?=\S|$)'.format(prefix=prefix)) )
+            else:
+                regexAddList.append( re.compile('(\s|^)(L\s*)?({prefix})(?=\s|$)'.format(prefix=prefix)) )
 
             regexHD            =     re.compile('(\s|^)(720p|720|FHD|1080p|1080|HD\sHD|HD)(?=\s|$)',                              re.IGNORECASE)
             regexUHD            =    re.compile('(\s|^)(4K|UHD)(?=\s|$)',                              re.IGNORECASE)
@@ -450,6 +475,8 @@ class PlaylistUpdater(baseServiceUpdater):
 
                             name = title
 
+                            nonCCList = ['sd', 'hd', 'uhd', '4k', 'tv']
+
                             if ADDON.getSetting('{}_append_country_code'.format(self.serviceName)) != '':
                                 p = re.compile(r'.*\s([a-zA-Z]{2,3})$', re.DOTALL)
 
@@ -458,15 +485,13 @@ class PlaylistUpdater(baseServiceUpdater):
                                 except:
                                     cc = ''
 
-                                if cc not in ccList:
-                                    replaceCC = True
-                                else:
+                                if cc.lower() not in ccList or cc.lower() in nonCCList:
                                     if p.match(title):
                                         replaceCC = True
 
                                 if replaceCC:
                                     title = title + ' ' + ADDON.getSetting('{}_append_country_code'.format(self.serviceName))
-                            else:
+                            elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) != '0':
                                 replaceCC = False
 
                                 p = re.compile(r'.*\s([a-zA-Z]{2,3})$', re.DOTALL)
@@ -476,9 +501,7 @@ class PlaylistUpdater(baseServiceUpdater):
                                 except:
                                     cc = ''
 
-                                if cc not in ccList:
-                                    replaceCC = True
-                                else:
+                                if cc.lower() not in ccList or cc.lower() in nonCCList:
                                     if p.match(title):
                                         replaceCC = True
 
@@ -487,14 +510,15 @@ class PlaylistUpdater(baseServiceUpdater):
                                     langB = '|'.join(a3List)
                                     langC = '|'.join(langList)
                                     langD = '|'.join(nativeList)
+                                    langE = '|'.join(dotList)
 
                                     ccListInt = len(ccList)
                                     
                                     if any(ccExt not in title for ccExt in ccList):
                                         try:
-                                            p = re.compile('(?:^|[^a-zA-Z\d])({a}|{b}|{c}|{d})(?:[^a-zA-Z\d]|$)'.format(a=langA, b=langB, c=langC, d=langD), re.IGNORECASE)
+                                            p = re.compile('(?:^|[^a-zA-Z\d])({a}|{b}|{c}|{d}|{e})(?:[^a-zA-Z\d]|$)'.format(a=langA, b=langB, c=langC, d=langD, e=langE), re.IGNORECASE)
                                         except:
-                                            p = re.compile('(?:^|[^a-zA-Z\d])({a}|{b}|{c}|{d})(?:[^a-zA-Z\d]|$)'.format(a=langA, b=langB, c=langC, d=langD.encode('utf-8')), re.IGNORECASE)
+                                            p = re.compile('(?:^|[^a-zA-Z\d])({a}|{b}|{c}|{d}|{e})(?:[^a-zA-Z\d]|$)'.format(a=langA, b=langB, c=langC, d=langD.encode('utf-8'), e=langE), re.IGNORECASE)
 
                                         if sys.version_info[0] > 2:
                                             try:
@@ -528,33 +552,39 @@ class PlaylistUpdater(baseServiceUpdater):
                                                 elif group.upper() == nativeList[item].upper():
                                                     subsLangD = {nativeList[item]: ccList[item]}
                                                     cc = ccList[subsLangD.get(item, item)]
-                                                    ccCh = cc             
+                                                    ccCh = cc
+
+                                                elif '.' + group.lower() == dotList[item]:
+                                                    subsLangE = {dotList[item]: ccList[item]}
+                                                    cc = ccList[subsLangE.get(item, item)]
+                                                    ccCh = cc
 
                                             try:
                                                 cc = p.search(title).group(1)
                                             except:
                                                 cc = ''
 
-                                            if cc not in ccList:
-                                                string = ' ' + ccCh
-                                                title = re.sub('$', string, title)
+                                            string = ' ' + ccCh.upper()
+                                            title = re.sub('$', string, title)
 
                             for langReplaceMap in langReplaceList:
                                 title, match = langReplaceMap['regex'].subn('', title)
                                 if match > 0:
-                                    title += ' ' + langReplaceMap['lang']
+                                    if ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '3':
+                                        title += '' + langReplaceMap['lang']
+                                    else:
+                                        title += ' ' + langReplaceMap['lang']
 
                             for regexRemove in regexRemoveList:
                                 if( regexRemove.findall(title) ):
-                                    title = ''   
+                                    title = ''
 
                             if ADDON.getSetting('show_group_channels') == 'true':
                                 for regexAdd in regexAddList:
                                     if not ( regexAdd.findall(title) ):
                                         title = ''                  
 
-                            title = title.replace('  ', ' ').strip()
-                                    
+                            title = title.replace('  ', ' ').strip()                        
 
                     elif title is not None and regexCorrectStream.match(stripLine):
                         if title != '':

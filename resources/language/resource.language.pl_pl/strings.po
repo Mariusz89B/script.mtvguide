@@ -961,8 +961,8 @@ msgid "Enable only channels in pre-defined groups"
 msgstr "Wyświetlaj tylko kanały we wstępnie zdefiniowanych grupach"
 
 msgctxt "#30763"
-msgid "Append fixed country code for all channels"
-msgstr "Dodaj stały kod krajowy dla wszystkich kanałów"
+msgid "Append fixed country code"
+msgstr "Dodaj stały kod krajowy"
 
 msgctxt "#30764"
 msgid "12 hours"
@@ -1933,8 +1933,8 @@ msgid "Save plugin settings!"
 msgstr "Zapisz ustawienia wtyczki!"
 
 msgctxt "#55001"
-msgid "Change User-Agent"
-msgstr "Zmień User-Agent"
+msgid "Add User-Agent"
+msgstr "Dodaj User-Agent"
 
 msgctxt "#55002"
 msgid "Username"
@@ -2771,6 +2771,26 @@ msgstr "Zwiększ wydajność zapisu w bazie danych"
 msgctxt "#70127"
 msgid "Backup"
 msgstr "Kopia zapasowa"
+
+msgctxt "#70128"
+msgid "Replace country code"
+msgstr "Zamień kod krajowy"
+
+msgctxt "#70129"
+msgid "Alpha-2 [CC]"
+msgstr "Alpha-2 [CC]"
+
+msgctxt "#70130"
+msgid "Alpha-3 [CCC]"
+msgstr "Alpha-3 [CCC]"
+
+msgctxt "#70131"
+msgid "ccTLD [.cc]"
+msgstr "ccTLD [.cc]"
+
+msgctxt "#70132"
+msgid "Country name [Country]"
+msgstr "Nazwa kraju [Kraj]"
 
 msgctxt "#80005"
 msgid "[COLOR]WP Pilot[/COLOR]"

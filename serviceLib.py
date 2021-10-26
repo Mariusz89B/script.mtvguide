@@ -936,6 +936,9 @@ class baseServiceUpdater:
 
             filtered_channels = []
 
+            # automap = base + epg
+            # channels = playlist
+
             for x in self.automap[:]:
                 if strings2.M_TVGUIDE_CLOSING:
                     self.log('loadChannelList loop service %s requested abort!' % self.serviceName)
@@ -976,9 +979,9 @@ class baseServiceUpdater:
                             y.src = newMapElement.src
                             y.strm = newMapElement.strm
                             try:
-                                self.log('[UPD] [B] %-30s %-30s %-20s %-35s ' % (unidecode(newMapElement.channelid), unidecode(y.name), newMapElement.src, newMapElement.strm))
+                                self.log('[UPD] [B] %-30s %-30s %-20s %-35s ' % (unidecode(newMapElement.channelid), unidecode(y.title), newMapElement.src, newMapElement.strm))
                             except:
-                                self.log('[UPD] [B] %-30s %-30s %-20s %-35s ' % (unidecode(newMapElement.channelid), unidecode(y.name.decode('utf-8')), newMapElement.src, newMapElement.strm))
+                                self.log('[UPD] [B] %-30s %-30s %-20s %-35s ' % (unidecode(newMapElement.channelid), unidecode(y.title.decode('utf-8')), newMapElement.src, newMapElement.strm))
                             if self.addDuplicatesAtBeginningOfList == False:
                                 self.automap.append(newMapElement)
                             else:
@@ -989,9 +992,9 @@ class baseServiceUpdater:
                             x.src  = self.serviceName
                             y.src = x.src
                             try:
-                                self.log('[UPD]     %-30s %-30s %-20s %-35s ' % (unidecode(x.channelid), unidecode(y.name), x.src, x.strm))
+                                self.log('[UPD]     %-30s %-30s %-20s %-35s ' % (unidecode(x.channelid), unidecode(y.title), x.src, x.strm))
                             except:
-                                self.log('[UPD]     %-30s %-30s %-20s %-35s ' % (unidecode(x.channelid), unidecode(y.name.decode('utf-8')), x.src, x.strm))
+                                self.log('[UPD]     %-30s %-30s %-20s %-35s ' % (unidecode(x.channelid), unidecode(y.title.decode('utf-8')), x.src, x.strm))
 
                 except Exception as ex:
                     self.log('{} Error {} {}'.format(unidecode(x.channelid), x.titleRegex, getExceptionString()))
@@ -1019,19 +1022,19 @@ class baseServiceUpdater:
             channelList = list()
             for y in self.channels:
                 if y.src == '' or y.src != self.serviceName:
-                    if y.name != '':
+                    if y.title != '':
                         try:
                             try:
-                                channelList.append(unidecode(y.name))
+                                channelList.append(unidecode(y.title))
                             except:
-                                channelList.append(unidecode(y.name.decode('utf-8')))
+                                channelList.append(unidecode(y.title.decode('utf-8')))
                         except:
                             pass
 
                         try:
-                            self.log('[UPD] CID=%-12s NAME=%-40s TITLE=%-40s STRM=%-45s' % (y.cid, unidecode(y.name), unidecode(y.title), y.strm))
+                            self.log('[UPD] CID=%-12s NAME=%-40s TITLE=%-40s STRM=%-45s' % (y.cid, unidecode(y.title), unidecode(y.title), y.strm))
                         except:
-                            self.log('[UPD] CID=%-12s NAME=%-40s TITLE=%-40s STRM=%-45s' % (y.cid, unidecode(y.name.decode('utf-8')), unidecode(y.title.decode('utf-8')), y.strm))
+                            self.log('[UPD] CID=%-12s NAME=%-40s TITLE=%-40s STRM=%-45s' % (y.cid, unidecode(y.title.decode('utf-8')), unidecode(y.title.decode('utf-8')), y.strm))
 
             if sys.version_info[0] > 2:
                 with open(file_name, 'ab+') as f:

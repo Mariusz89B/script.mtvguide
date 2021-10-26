@@ -1,4 +1,7 @@
-﻿wersja 9.6.8 - 2021-10-26
+﻿wersja 9.6.9 - 2021-10-26
+- dodana opcja wymiany kodu krajowego
+
+wersja 9.6.8 - 2021-10-26
 - naprawiono problemy z bazą Python 2.7
 
 wersja 9.6.7 - 2021-10-25
