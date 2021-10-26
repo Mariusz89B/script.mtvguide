@@ -848,14 +848,17 @@ class Database(object):
     def epgChannels(self):
         result = dict()
 
-        c = self.conn.cursor()
-        c.execute('SELECT id, titles FROM channels')
-            
-        for row in c:
-            if ADDON.getSetting('epg_display_name') == 'true':
-                result.update({str(row['id']).upper():str(row['titles']).upper()})
-            else:
-                result.update({str(row['id']).upper():str(row['id']).upper()})
+        with self.conn as conn:
+            cur = conn.execute('SELECT id, titles FROM channels')
+
+            for x in cur:
+                if ADDON.getSetting('epg_display_name') == 'true':
+                    try:
+                        result.update({x[0].upper(): x[1].upper()})
+                    except:
+                        result.update({x[0].upper(): x[0].upper()})
+                else:
+                    result.update({x[0].upper(): x[0].upper()})
 
         return result.items()
 

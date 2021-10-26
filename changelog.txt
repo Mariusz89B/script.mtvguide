@@ -1,4 +1,7 @@
-﻿wersja 9.6.7 - 2021-10-25
+﻿wersja 9.6.8 - 2021-10-26
+- naprawiono problemy z bazą Python 2.7
+
+wersja 9.6.7 - 2021-10-25
 - dodano nagłówki Content-Type do rozpoznawania typ plików EPG.
 
 wersja 9.6.6 - 2021-10-25
