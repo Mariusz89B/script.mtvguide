@@ -133,7 +133,6 @@ class PlaylistUpdater(baseServiceUpdater):
             response = http.request('GET', path, headers=headers, timeout=15)
             content = response.data.decode('utf-8')
 
-        
         except:
             try:
                 content = scraper.get(path, headers=headers, allow_redirects=False, verify=False, timeout=15).content.decode('utf-8')

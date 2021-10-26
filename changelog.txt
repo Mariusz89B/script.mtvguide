@@ -1,5 +1,6 @@
-﻿wersja 9.6.9 - 2021-10-26
+﻿wersja 9.6.9 - 2021-10-27
 - dodana opcja wymiany kodu krajowego
+- poprawka cachowania playlist
 
 wersja 9.6.8 - 2021-10-26
 - naprawiono problemy z bazą Python 2.7
