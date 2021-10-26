@@ -184,7 +184,10 @@ class PlaylistUpdater(baseServiceUpdater):
         else:
             url = url_setting
 
-        if (int(tnow) >= int(timestamp) + int(tdel)) or not os.path.exists(filepath) or os.stat(filepath).st_size <= 0 or url != url_setting:
+        cachedate = int(timestamp) + int(tdel)
+
+        if int(tnow) >= int(cachedate) or (not os.path.exists(filepath) or os.stat(filepath).st_size <= 0 or url[0] != url_setting):
+            deb('CACHE M3U: Write, expiration: {}'.format(datetime.datetime.fromtimestamp(int(cachedate))))
             content = self.requestUrl(upath)
             if content:
                 for f in os.listdir(path):
@@ -209,6 +212,7 @@ class PlaylistUpdater(baseServiceUpdater):
                         f2.write(url_setting)
 
         else:
+            deb('CACHE M3U: Read')
             try:  
                 if sys.version_info[0] > 2:
                     with open(filepath, 'r', encoding='utf-8') as f:
@@ -384,10 +388,12 @@ class PlaylistUpdater(baseServiceUpdater):
 
                     # ccLists
                     ccList.append(cc)
-                    a3List.append(value['alpha-3'])
-                    langList.append(value['language'])
-                    nativeList.append(value['native']) 
-                    dotList.append('.' + cc.lower())
+
+                    if ADDON.getSetting('{}_pattern'.format(self.serviceName)) != '0':  
+                        a3List.append(value['alpha-3'])
+                        langList.append(value['language'])
+                        nativeList.append(value['native']) 
+                        dotList.append('.' + cc.lower())
 
             if not prefixList:
                 prefixList.append(' ')
