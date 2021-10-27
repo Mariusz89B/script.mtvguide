@@ -901,6 +901,12 @@ class baseServiceUpdater:
 
         return result
 
+    def decodeString(self, s):
+        if sys.version_info[0] < 3:
+            s = s if isinstance(s, unicode) else s.decode('utf-8')
+        
+        return s
+
     def loadChannelList(self, epg_channels=None):
         from re import match
         try:
@@ -960,7 +966,7 @@ class baseServiceUpdater:
                             filtered_channels = [z for z in self.channels if unidecode(x.displayName.upper()) == (unidecode(z.title.upper()) or unidecode(z.name.upper()))]
                             #filtered_channels = list(filter(lambda z: (unidecode(x.displayName.upper()) == (unidecode(z.title.upper()) or unidecode(z.name.upper()))), self.channels))
                         except:
-                            filtered_channels = [z for z in self.channels if unidecode(x.displayName.upper()) == (unidecode(z.title.decode('utf-8').upper()) or unidecode(z.name.decode('utf-8').upper()))]
+                            filtered_channels = [z for z in self.channels if unidecode(x.displayName.upper()) == (unidecode(self.decodeString(z.title).upper()) or unidecode(self.decodeString(z.name).upper()))]
                             #filtered_channels = list(filter(lambda z: (unidecode(x.displayName.upper()) == (unidecode(z.title.decode('utf-8').upper()) or unidecode(z.name.decode('utf-8').upper()))), self.channels))
 
                     elif x.displayName == '':
@@ -968,7 +974,7 @@ class baseServiceUpdater:
                             filtered_channels = [z for z in self.channels if unidecode(x.channelid.upper()) == unidecode(z.title.upper())]
                             #filtered_channels = list(filter(lambda z: (unidecode(x.channelid.upper()) == unidecode(z.title.upper())), self.channels))
                         except:
-                            filtered_channels = [z for z in self.channels if unidecode(x.channelid.upper()) == unidecode(z.title.decode('utf-8').upper())]
+                            filtered_channels = [z for z in self.channels if unidecode(x.channelid.upper()) == unidecode(self.decodeString(z.title).upper())]
                             #filtered_channels = list(filter(lambda z: (unidecode(x.channelid.upper()) == unidecode(z.title.decode('utf-8').upper())), self.channels))
 
                     for y in filtered_channels:
@@ -981,7 +987,7 @@ class baseServiceUpdater:
                             try:
                                 self.log('[UPD] [B] %-30s %-30s %-20s %-35s ' % (unidecode(newMapElement.channelid), unidecode(y.title), newMapElement.src, newMapElement.strm))
                             except:
-                                self.log('[UPD] [B] %-30s %-30s %-20s %-35s ' % (unidecode(newMapElement.channelid), unidecode(y.title.decode('utf-8')), newMapElement.src, newMapElement.strm))
+                                self.log('[UPD] [B] %-30s %-30s %-20s %-35s ' % (unidecode(newMapElement.channelid), unidecode(self.decodeString(y.title)), newMapElement.src, newMapElement.strm))
                             if self.addDuplicatesAtBeginningOfList == False:
                                 self.automap.append(newMapElement)
                             else:
@@ -994,7 +1000,7 @@ class baseServiceUpdater:
                             try:
                                 self.log('[UPD]     %-30s %-30s %-20s %-35s ' % (unidecode(x.channelid), unidecode(y.title), x.src, x.strm))
                             except:
-                                self.log('[UPD]     %-30s %-30s %-20s %-35s ' % (unidecode(x.channelid), unidecode(y.title.decode('utf-8')), x.src, x.strm))
+                                self.log('[UPD]     %-30s %-30s %-20s %-35s ' % (unidecode(x.channelid), unidecode(self.decodeString(y.title)), x.src, x.strm))
 
                 except Exception as ex:
                     self.log('{} Error {} {}'.format(unidecode(x.channelid), x.titleRegex, getExceptionString()))
@@ -1027,14 +1033,14 @@ class baseServiceUpdater:
                             try:
                                 channelList.append(unidecode(y.title))
                             except:
-                                channelList.append(unidecode(y.title.decode('utf-8')))
+                                channelList.append(unidecode(self.decodeString(y.title)))
                         except:
                             pass
 
                         try:
-                            self.log('[UPD] CID=%-12s NAME=%-40s TITLE=%-40s STRM=%-45s' % (y.cid, unidecode(y.title), unidecode(y.title), y.strm))
+                            self.log('[UPD] CID=%-12s TITLE=%-40s ORIG_NAME=%-40s STRM=%-45s' % (y.cid, unidecode(y.title), unidecode(y.name), y.strm))
                         except:
-                            self.log('[UPD] CID=%-12s NAME=%-40s TITLE=%-40s STRM=%-45s' % (y.cid, unidecode(y.title.decode('utf-8')), unidecode(y.title.decode('utf-8')), y.strm))
+                            self.log('[UPD] CID=%-12s TITLE=%-40s ORIG_NAME=%-40s STRM=%-45s' % (y.cid, unidecode(self.decodeString(y.title)), unidecode(self.decodeString(y.name)), y.strm))
 
             if sys.version_info[0] > 2:
                 with open(file_name, 'ab+') as f:

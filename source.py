@@ -2723,7 +2723,7 @@ def customParseXMLTV(xml, progress_callback):
 
         try:
             titleList = channelTitleRe.findall(channel)
-            titles = ','.join([(str(elem)).upper() for elem in titleList])
+            titles = ','.join([elem.upper() for elem in titleList])
 
         except:
             titles = id
