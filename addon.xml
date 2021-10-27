@@ -43,6 +43,7 @@
 	<email>support@m-tvguide.pl</email>
     <source>mods-kodi.pl © 2013 - 2021</source>
     <news>v9.7.0 (2021-10-28)
+- Fixed encoding issues Python 2.7.
 - Bug fixes.
 
 v9.6.9 (2021-10-27)

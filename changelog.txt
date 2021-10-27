@@ -1,4 +1,5 @@
 ﻿wersja 9.7.0 - 2021-10-28
+- naprawiono problemy z kodowaniem Python 2.7
 - poprawione błędy
 
 wersja 9.6.9 - 2021-10-27

@@ -486,15 +486,16 @@ class MapString:
         rstrm = ''
         categories = {}
         if logCall:
+            logCall('\n\n')
             logCall('[UPD] Parsing basemap file')
-        
+            logCall('-------------------------------------------------------------------------------------')
         if sys.version_info[0] > 2:
             xmlstr = xmlstr.decode('utf-8')
         else:
             xmlstr = xmlstr if isinstance(xmlstr, unicode) else xmlstr.decode('utf-8')
 
         if logCall:
-            logCall('[UPD] %-35s %-50s %s' % ('ID' , 'TITLE_REGEX', 'STRM'))
+            logCall('[UPD] %-35s %-50s %-35s' % ('-TITLE-' , '-REGEX-', '-STRM-'))
 
         result = list()
 
@@ -511,7 +512,10 @@ class MapString:
             astrm = channelStrmRe.search(channel).group(1)
 
             if logCall:
-                logCall('[UPD] %-35s %-50s %s' % (aid, atitle, astrm))
+                try:
+                    logCall('[UPD] %-35s %-50s %-35s' % (unidecode(aid), atitle, astrm))
+                except:
+                    logCall('[UPD] %-35s %-50s %-35s' % (unidecode(aid.decode('utf-8')), atitle, astrm))
             result.append(MapString(channelid=aid, titleRegex=atitle, strm=astrm, src='', displayName=''))
             rstrm = astrm
 
@@ -529,6 +533,9 @@ class MapString:
                 category_tags_set.add(('' + tag.lower()))
             categories[category_name] = category_tags_set
 
+        if logCall:
+            logCall('-------------------------------------------------------------------------------------')
+
         return [result, rstrm, categories]
 
     @staticmethod
@@ -536,7 +543,9 @@ class MapString:
         rstrm = ''
         categories={}
         if logCall:
+            logCall('\n\n')
             logCall('[UPD] Parsing basemap file')
+            logCall('-------------------------------------------------------------------------------------')
         if sys.version_info[0] > 2:
             iob = io.BytesIO(xmlstr)
         else:
@@ -545,7 +554,7 @@ class MapString:
         event, root = next(context)
         elements_parsed = 0
         if logCall:
-            logCall('[UPD] %-35s %-50s %s' % ('ID' , 'TITLE_REGEX', 'STRM'))
+            logCall('[UPD] %-35s %-50s %-35s' % ('-TITLE-' , '-REGEX-', '-STRM-'))
         result = list()
         for event, elem in context:
             if event == "end":
@@ -554,7 +563,10 @@ class MapString:
                     atitle = elem.get("title")
                     astrm  = elem.get("strm")
                     if logCall:
-                        logCall('[UPD] %-35s %-50s %s' % (aid, atitle, astrm))
+                        try:
+                            logCall('[UPD] %-35s %-50s %-35s' % (unidecode(aid), atitle, astrm))
+                        except:
+                            logCall('[UPD] %-35s %-50s %-35s' % (unidecode(aid.decode('utf-8')), atitle, astrm))
                     result.append(MapString(channelid=aid, titleRegex=atitle, strm=astrm, src='', displayName=''))
                 if elem.tag == "map":
                     rstrm = elem.get("strm")
@@ -568,7 +580,8 @@ class MapString:
                         else:
                             category_tags_set.add((u'' + tag.lower()))
                     categories[category_name] = category_tags_set
-        #if logCall:
+        if logCall:
+            logCall('-------------------------------------------------------------------------------------')
             #logCall('\n')
             #if rstrm != '':
                 #logCall('[UPD] Stream rule = %s' % rstrm)
@@ -913,12 +926,12 @@ class baseServiceUpdater:
             startTime = datetime.datetime.now()
             self.channels = self.getBaseChannelList()
             if len(self.channels) <= 0:
-                self.log('loadChannelList error lodaing channel list for service %s - aborting!' % self.serviceName)
+                self.log('loadChannelList error lodaing channel list for service {} - aborting!'.format(self.serviceName))
                 self.close()
                 return
 
             if strings2.M_TVGUIDE_CLOSING:
-                self.log('loadChannelList service %s requested abort!' % self.serviceName)
+                self.log('loadChannelList service {} requested abort!'.format(self.serviceName))
                 self.close()
                 return
 
@@ -926,10 +939,10 @@ class baseServiceUpdater:
             self.loadMapFile()
             self.log('Loading channels and map took: %s seconds' % (datetime.datetime.now() - startTime).seconds)
 
-            self.log('\n')
-            self.log('[UPD] Matching STRM')
+            self.log('\n\n')
+            self.log('[UPD] Matched streams')
             self.log('-------------------------------------------------------------------------------------')
-            self.log('[UPD]     %-30s %-30s %-20s %-35s' % ('-ID mTvGuide-', '-    Orig Name    -', '-    SRC   -', '-    STRM   -'))
+            self.log('[UPD]     %-40s %-40s %-35s' % ('-TITLE-', '-ORIG NAME-', '-SERVICE-'))
 
             result = list()
             names = list()
@@ -942,18 +955,15 @@ class baseServiceUpdater:
 
             filtered_channels = []
 
-            # automap = base + epg
-            # channels = playlist
-
             for x in self.automap[:]:
                 if strings2.M_TVGUIDE_CLOSING:
-                    self.log('loadChannelList loop service %s requested abort!' % self.serviceName)
+                    self.log('loadChannelList loop service {} requested abort!'.format(self.serviceName))
                     self.close()
                     return
 
                 if x.strm != '':
                     x.src = 'CONST'
-                    self.log('[UPD]     %-30s %-15s %-35s' % (unidecode(x.channelid), x.src, x.strm))
+                    self.log('[UPD]     %-40s %-12s %-35s' % (unidecode(x.channelid), x.src, x.strm))
                     continue
 
                 try:
@@ -985,9 +995,9 @@ class baseServiceUpdater:
                             y.src = newMapElement.src
                             y.strm = newMapElement.strm
                             try:
-                                self.log('[UPD] [B] %-30s %-30s %-20s %-35s ' % (unidecode(newMapElement.channelid), unidecode(y.title), newMapElement.src, newMapElement.strm))
+                                self.log('[UPD] [B] %-40s %-40s %-35s ' % (unidecode(newMapElement.channelid), unidecode(y.title), newMapElement.strm))
                             except:
-                                self.log('[UPD] [B] %-30s %-30s %-20s %-35s ' % (unidecode(newMapElement.channelid), unidecode(self.decodeString(y.title)), newMapElement.src, newMapElement.strm))
+                                self.log('[UPD] [B] %-40s %-40s %-35s ' % (unidecode(newMapElement.channelid), unidecode(self.decodeString(y.title)), newMapElement.strm))
                             if self.addDuplicatesAtBeginningOfList == False:
                                 self.automap.append(newMapElement)
                             else:
@@ -998,17 +1008,18 @@ class baseServiceUpdater:
                             x.src  = self.serviceName
                             y.src = x.src
                             try:
-                                self.log('[UPD]     %-30s %-30s %-20s %-35s ' % (unidecode(x.channelid), unidecode(y.title), x.src, x.strm))
+                                self.log('[UPD]     %-40s %-40s %-35s ' % (unidecode(x.channelid), unidecode(y.title), x.strm))
                             except:
-                                self.log('[UPD]     %-30s %-30s %-20s %-35s ' % (unidecode(x.channelid), unidecode(self.decodeString(y.title)), x.src, x.strm))
+                                self.log('[UPD]     %-40s %-40s %-35s ' % (unidecode(x.channelid), unidecode(self.decodeString(y.title)), x.strm))
 
                 except Exception as ex:
-                    self.log('{} Error {} {}'.format(unidecode(x.channelid), x.titleRegex, getExceptionString()))
+                    self.log('{} Error: {} {}'.format(unidecode(x.channelid), x.titleRegex, getExceptionString()))
 
-
-            self.log('\n')
-            self.log('[UPD] STRM does not match for %s channels:' % self.serviceName)
             self.log('-------------------------------------------------------------------------------------')
+            self.log('\n\n')
+            self.log('[UPD] Not matched streams for {} channels:'.format(self.serviceName))
+            self.log('-------------------------------------------------------------------------------------')
+            self.log('[UPD]     %-40s %-40s %-12s %-35s' % ('-TITLE-', '-ORIG NAME-', '-CID-', '-STRM-'))
 
             if sys.version_info[0] > 2:
                 try:
@@ -1038,9 +1049,9 @@ class baseServiceUpdater:
                             pass
 
                         try:
-                            self.log('[UPD] CID=%-12s TITLE=%-40s ORIG_NAME=%-40s STRM=%-45s' % (y.cid, unidecode(y.title), unidecode(y.name), y.strm))
+                            self.log('[UPD]     %-40s %-40s %-12s %-35s' % (unidecode(y.title.upper()), unidecode(y.name), y.cid, y.strm))
                         except:
-                            self.log('[UPD] CID=%-12s TITLE=%-40s ORIG_NAME=%-40s STRM=%-45s' % (y.cid, unidecode(self.decodeString(y.title)), unidecode(self.decodeString(y.name)), y.strm))
+                            self.log('[UPD]     %-40s %-40s %-12s %-35s' % (unidecode(self.decodeString(y.title.upper())), unidecode(self.decodeString(y.name)), y.cid, y.strm))
 
             if sys.version_info[0] > 2:
                 with open(file_name, 'ab+') as f:
@@ -1066,12 +1077,13 @@ class baseServiceUpdater:
                         f.write(str('\n'))
                     f.write(str('\n'.join(channelList)))
 
+            self.log('-------------------------------------------------------------------------------------')
             self.log("[UPD] The analysis has been completed...")
             self.log('Loading everything took: %s seconds' % (datetime.datetime.now() - startTime).seconds)
             self.log('\n')
 
         except Exception as ex:
-            self.log('loadChannelList Error %s' % getExceptionString())
+            self.log('loadChannelList exception: {}'.format(getExceptionString()))
         self.close()
 
     def getChannel(self, cid):
@@ -1080,7 +1092,7 @@ class baseServiceUpdater:
             for chann in channels:
                 if chann.cid == cid:
                     return self.getChannelStream(copy.deepcopy(chann))
-            self.log('ERROR getChannel not found cid: %s in channel list!' % cid)
+            self.log('ERROR getChannel not found cid: {} in channel list!'.format(cid))
         except:
-            self.log('getChannel exception: %s' % getExceptionString())
+            self.log('getChannel exception: {}'.format(getExceptionString()))
         return None

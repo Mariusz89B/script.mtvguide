@@ -186,7 +186,7 @@ class PlaylistUpdater(baseServiceUpdater):
         cachedate = int(timestamp) + int(tdel)
 
         if int(tnow) >= int(cachedate) or (not os.path.exists(filepath) or os.stat(filepath).st_size <= 0 or url[0] != url_setting):
-            deb('CACHE M3U: Write, expiration: {}'.format(datetime.datetime.fromtimestamp(int(cachedate))))
+            deb('[UPD] Cache playlist: Write, expiration date: {}'.format(datetime.datetime.fromtimestamp(int(cachedate))))
             content = self.requestUrl(upath)
             if content:
                 for f in os.listdir(path):
@@ -211,7 +211,7 @@ class PlaylistUpdater(baseServiceUpdater):
                         f2.write(url_setting)
 
         else:
-            deb('CACHE M3U: Read')
+            deb('[UPD] Cache playlist: Read')
             try:  
                 if sys.version_info[0] > 2:
                     with open(filepath, 'r', encoding='utf-8') as f:
@@ -418,15 +418,16 @@ class PlaylistUpdater(baseServiceUpdater):
 
             title = None
             nextFreeCid = 0
-            self.log('\n\n')
-            self.log('[UPD] Downloading a list of available channels for {}'.format(self.serviceName))
-            self.log('[UPD] -------------------------------------------------------------------------------------')
-            self.log('[UPD] %-10s %-35s %-35s' % ( '-CID-', '-NAME-', '-STREAM-'))
-
+            
             try:
                 channelsArray = self.getPlaylistContent(self.url.strip(), self.source)
             except:
                 channelsArray = self.getPlaylistContent(self.url.decode('utf-8').strip(), self.source)
+
+            self.log('\n\n')
+            self.log('[UPD] Downloading a list of available channels for {}'.format(self.serviceName))
+            self.log('-------------------------------------------------------------------------------------')
+            self.log('[UPD]     %-40s %-12s %-35s' % ( '-ORIG NAME-', '-CID-', '-STRM-'))
 
             if channelsArray and len(channelsArray) > 0:
                 for line in channelsArray:
@@ -626,7 +627,7 @@ class PlaylistUpdater(baseServiceUpdater):
                                 sdList.append(TvCid(cid=channelCid, name=name, title=title, strm=stripLine, catchup=catchupLine))
 
                             
-                            self.log('[UPD] %-10s %-35s %-35s' % (channelCid, title, stripLine))
+                            self.log('[UPD]     %-40s %-12s %-35s' % (title, channelCid, stripLine))
                             nextFreeCid = nextFreeCid + 1
                         #else:
                             #self.log('[UPD] %-10s %-35s %-35s' % ('-', 'No title!', stripLine))
@@ -640,6 +641,8 @@ class PlaylistUpdater(baseServiceUpdater):
                 result = sdList
                 result.extend(hdList)
                 result.extend(uhdList)
+
+            self.log('-------------------------------------------------------------------------------------')
 
         except Exception as ex:
             self.log('getChannelList Error %s' % getExceptionString())

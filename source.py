@@ -790,7 +790,7 @@ class Database(object):
         #END self._isCacheExpired(date):
 
         #zabezpieczenie: is invoked again by XBMC after a video addon exits after being invoked by XBMC.RunPlugin(..)
-        deb('AutoUpdateCid={} : services_updated={} : self.updateFailed={}'.format(ADDON.getSetting('AutoUpdateCid'), self.services_updated, self.updateFailed))
+        deb('[UPD] AutoUpdateCid={} : services_updated={} : self.updateFailed={}'.format(ADDON.getSetting('AutoUpdateCid'), self.services_updated, self.updateFailed))
         #jezeli nie udalo sie pobranie epg lub juz aktualizowalismy CIDy lub w opcjach nie mamy zaznaczonej automatycznek altualizacji
         if self.updateFailed or updateServices == False:
             return cacheExpired #to wychodzimy - nie robimy aktualizacji
@@ -905,18 +905,19 @@ class Database(object):
             
             if c.rowcount:
                 deb('\n\n')
-                deb('----------------------------------------------------------------------------------------------')
-                deb('List of streams having stream URL assigned but no EPG is available - fix it!\n')
-                deb('%-35s %-35s' % ('-    NAME    -', '-    STREAM    -'))
+                deb('List of streams having stream URL assigned but no EPG is available - fix it!')
+                deb('-------------------------------------------------------------------------------------')
+                deb('[UPD]     %-40s %-35s' % ( '-TITLE-', '-SERVICE-'))
                 #cur = self.conn.cursor()
                 for row in c:
-                    deb('%-35s %-35s' % (unidecode(row[str('channel')]), row[str('stream_url')]))
+                    deb('[UPD]     %-40s %-35s' % (unidecode(row[str('channel')]), row[str('stream_url')]))
                     #cur.execute('INSERT OR IGNORE INTO channels(id, title, logo, stream_url, visible, weight, source) VALUES(?, ?, ?, ?, ?, (CASE ? WHEN -1 THEN (SELECT COALESCE(MAX(weight)+1, 0) FROM channels WHERE source=?) ELSE ? END), ?)', [row['channel'], row['channel'], '', '', 1, -1, 'm-TVGuide', -1, 'm-TVGuide'])
                 #self.conn.commit()
                 deb('End of streams without EPG!')
-                deb('----------------------------------------------------------------------------------------------')
+                deb('-------------------------------------------------------------------------------------------')
                 deb('\n\n')
             c.close()
+
         except Exception as ex:
             deb('printStreamsWithoutChannelEPG Error: {}'.format(getExceptionString()))
 
@@ -1122,7 +1123,6 @@ class Database(object):
         return result
 
     def _getChannelList(self, onlyVisible, customCategory=None, excludeCurrentCategory = False):
-        #try:
         if not self.channelList or not onlyVisible or excludeCurrentCategory or customCategory:
 
             if customCategory:
@@ -1160,8 +1160,6 @@ class Database(object):
             channelList = self.channelList
 
         return channelList
-        #except:
-            #pass
 
     def getAllChannelList(self, onlyVisible = True):
         result = self._invokeAndBlockForResult(self._getAllChannelList, onlyVisible)
@@ -2342,7 +2340,7 @@ class Source(object):
 
             if url.lower().endswith('.zip') or remoteFilename.lower().endswith('.zip') or '.zip' in filename or 'zip' in contentType:
                 tnow = datetime.datetime.now()
-                deb("[EPG] Unpacking epg: {} [{} sek.]".format(url, str((tnow-start).seconds)))
+                deb("[EPG] Type: .zip, Unpacking epg: {} [{} sek.]".format(url, str((tnow-start).seconds)))
                 memfile = io.BytesIO(content)
                 unziped = zipfile.ZipFile(memfile)
                 content = unziped.read(unziped.namelist()[0])
@@ -2351,7 +2349,7 @@ class Source(object):
 
             if url.lower().endswith('.gz') or remoteFilename.lower().endswith('.gz') or '.gz' in filename or 'gzip' in contentType:
                 tnow = datetime.datetime.now()
-                deb("[EPG] Unpacking epg: {} [{} sek.]".format(url, str((tnow-start).seconds)))
+                deb("[EPG] Type: .gz, Unpacking epg: {} [{} sek.]".format(url, str((tnow-start).seconds)))
                 import gzip
                 memfile = io.BytesIO(content)
                 unziped = gzip.GzipFile(fileobj=memfile)
@@ -2361,7 +2359,7 @@ class Source(object):
 
             if url.lower().endswith('.bz2') or remoteFilename.lower().endswith('.bz2') or '.bz2' in filename:
                 tnow = datetime.datetime.now()
-                deb("[EPG] Unpacking epg: {} [{} sek.]".format(url, str((tnow-start).seconds)))
+                deb("[EPG] Type: .bz2, Unpacking epg: {} [{} sek.]".format(url, str((tnow-start).seconds)))
                 import bz2
                 memfile = io.BytesIO(content)
                 memfile.seek(0)
@@ -2403,7 +2401,7 @@ class XMLTVSource(Source):
             with open(filename, 'rb') as file:
                 if filename.lower().endswith('.zip') or filename.lower().endswith('.zip') or '.zip' in filename:
                     tnow = datetime.datetime.now()
-                    deb("[EPG] Unpacking epg: {} [{} sek.]".format(filename, str((tnow-start).seconds)))
+                    deb("[EPG] Type: .zip, Unpacking epg: {} [{} sek.]".format(filename, str((tnow-start).seconds)))
                     memfile = io.BytesIO(file.read())
                     unziped = zipfile.ZipFile(memfile)
                     content = unziped.read(unziped.namelist()[0])
@@ -2412,7 +2410,7 @@ class XMLTVSource(Source):
 
                 if filename.lower().endswith('.gz') or filename.lower().endswith('.gz') or '.gz' in filename:
                     tnow = datetime.datetime.now()
-                    deb("[EPG] Unpacking epg: {} [{} sek.]".format(filename, str((tnow-start).seconds)))
+                    deb("[EPG] Type: .gz, Unpacking epg: {} [{} sek.]".format(filename, str((tnow-start).seconds)))
                     import gzip
                     memfile = io.BytesIO(file.read())
                     unziped = gzip.GzipFile(fileobj=memfile)
@@ -2422,7 +2420,7 @@ class XMLTVSource(Source):
 
                 if filename.lower().endswith('.bz2') or filename.lower().endswith('.bz2') or '.bz2' in filename:
                     tnow = datetime.datetime.now()
-                    deb("[EPG] Unpacking epg: {} [{} sek.]".format(filename, str((tnow-start).seconds)))
+                    deb("[EPG] Type: .bz2, Unpacking epg: {} [{} sek.]".format(filename, str((tnow-start).seconds)))
                     import bz2
                     memfile = io.BytesIO(file.read())
                     memfile.seek(0)
@@ -2479,12 +2477,8 @@ class MTVGUIDESource(Source):
                 self.profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
 
     def getDataFromExternal(self, date, progress_callback = None):
-        #try:
         data = self._getDataFromExternal(date, progress_callback, self.MTVGUIDEUrl)
-        #except SourceFaultyEPGException, ex:
-            #deb("Failed to download main EPG, channels wont be available!, EPG: {}".format(ex.epg))
-            #xbmcgui.Dialog().ok(strings(LOAD_ERROR_TITLE), strings(LOAD_ERROR_LINE1), ex.epg, strings(LOAD_CRITICAL_ERROR))
-            #return list()
+
         try:
             if self.MTVGUIDEUrl2 != "" and not strings2.M_TVGUIDE_CLOSING:
                 parsedData = self._getDataFromExternal(date, progress_callback, self.MTVGUIDEUrl2)
@@ -2583,7 +2577,7 @@ class MTVGUIDESource(Source):
             return True
         epgSize = self.getEpgSize(epgSizeInDB)
         if int(epgSize) != int(epgSizeInDB):
-            debug('isUpdated detected new EPG! size in DB is: {}, on server: {}'.format(epgSizeInDB, epgSize))
+            debug('[UPD] isUpdated detected new EPG! size in DB is: {}, on server: {}'.format(epgSizeInDB, epgSize))
             return True
         return False
 
@@ -2606,14 +2600,14 @@ class MTVGUIDESource(Source):
 
                 try:
                     new_size = int(response.headers['Content-Length'].strip())
-                    deb('getEpgSize Content-Length: {}'.format(new_size))
+                    deb('[UPD] getEpgSize Content-Length: {}'.format(new_size))
                 except:
                     new_size = 0
 
                 if new_size <= 0:
                     data = response.content
                     new_size = len(data)
-                    deb('getEpgSize Content: {}'.format(new_size))
+                    deb('[UPD] getEpgSize Content: {}'.format(new_size))
 
                 #if new_size < 10000:
                     #raise Exception('getEpgSize too smal EPG size received: {}'.format(new_size))
@@ -2621,7 +2615,7 @@ class MTVGUIDESource(Source):
                 self.EPGSize = new_size
                 break
             except Exception as ex:
-                deb('getEpgSize exception {} failedCounter {}'.format(str(ex), failedCounter))
+                deb('[UPD] getEpgSize exception {} failedCounter {}'.format(str(ex), failedCounter))
                 failedCounter = failedCounter + 1
                 time.sleep(0.1)
 
@@ -2634,7 +2628,7 @@ class MTVGUIDESource(Source):
         return self.EPGSize
 
     def resetEpgSize(self):
-        debug('resetEpgSize')
+        debug('[UPD] resetEpgSize')
         self.EPGSize = self.getEpgSize(self.EPGSize, forceCheck=True)
 
     def close(self):
