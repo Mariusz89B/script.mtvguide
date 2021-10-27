@@ -384,7 +384,7 @@ class PlayService(xbmc.Player, BasePlayService):
 
         response = sess.delete(url, headers=headers)
 
-    def getUrl(self, strmUrl, cid, service, retry=0):
+    def getUrl(self, strmUrl, cid, service, retry=False):
         mimeType = ''
 
         status = 200
@@ -431,11 +431,11 @@ class PlayService(xbmc.Player, BasePlayService):
                 status = 400
                 deb('RequestException: {}'.format(str(e))) 
 
-        if status >= 400 and retry < 3:
+        if status >= 400 and not retry:
+            retry = True
             self.getUrl(strmUrl, cid, service, retry)
-            retry += 1
 
-        if retry > 3:
+        if retry:
             return None
 
         return strmUrl
