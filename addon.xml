@@ -2,7 +2,7 @@
 <addon
     id="script.mtvguide"
     name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]"
-    version="9.6.9"
+    version="9.7.0"
     provider-name="Team Mods-Kodi">
   <requires>
     <import addon="xbmc.addon" version="17.0.0"/>
@@ -42,7 +42,10 @@
 	<website>http://mods-kodi.pl/</website>
 	<email>support@m-tvguide.pl</email>
     <source>mods-kodi.pl © 2013 - 2021</source>
-    <news>v9.6.9 (2021-10-27)
+    <news>v9.7.0 (2021-10-28)
+- Bug fixes.
+
+v9.6.9 (2021-10-27)
 - Added replace country code setting.
 - Fixed caching playlists.
 

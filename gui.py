@@ -2010,6 +2010,8 @@ class mTVGuide(xbmcgui.WindowXML):
         if ADDON.getSetting('epg_interval') == '0':
             epgSize = ADDON.getSetting('epg_size')
             epgDbSize = self.database.source.getEpgSize()
+            if epgDbSize == '' or epgDbSize is None:
+                epgDbSize = 0
 
             #deb('getEpgSize: {}'.format(epgSize))
             #deb('getEpgDbSize: {}'.format(epgDbSize))
