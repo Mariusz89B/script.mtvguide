@@ -92,7 +92,7 @@ sess = requests.Session()
 class WpPilotUpdater(baseServiceUpdater):
     def __init__(self):
         self.serviceName        = serviceName
-        self.localMapFile       = 'basemap.xml'
+        self.localMapFile       = 'basemap_pl.xml'
         baseServiceUpdater.__init__(self)
         self.serviceEnabled     = ADDON.getSetting('videostar_enabled')
         self.login              = ADDON.getSetting('videostar_username').strip()

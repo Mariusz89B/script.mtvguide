@@ -124,9 +124,9 @@ class TeliaPlayUpdater(baseServiceUpdater):
         self.serviceName        = serviceName
         self.localMapFile       = 'basemap.xml'
         if ADDON.getSetting('teliaplay_locale') == '0':
-            self.localMapFile = 'basemap_danish.xml'
+            self.localMapFile = 'basemap_dk.xml'
         elif ADDON.getSetting('teliaplay_locale') == '1':
-            self.localMapFile = 'basemap_swedish.xml'
+            self.localMapFile = 'basemap_se.xml'
 
         baseServiceUpdater.__init__(self)
         self.serviceEnabled     = ADDON.getSetting('teliaplay_enabled') 

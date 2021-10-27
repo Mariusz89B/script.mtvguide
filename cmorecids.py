@@ -82,13 +82,13 @@ class CmoreUpdater(baseServiceUpdater):
         self.serviceName        = serviceName
         self.localMapFile       = 'basemap.xml'
         if ADDON.getSetting('cmore_locale') == 'cmore.se':
-            self.localMapFile = 'basemap_swedish.xml'
+            self.localMapFile = 'basemap_se.xml'
             locale = 'sv_SE'
         elif ADDON.getSetting('cmore_locale') == 'cmore.dk':
-            self.localMapFile = 'basemap_danish.xml'
+            self.localMapFile = 'basemap_dk.xml'
             locale = 'da_DK'
         elif ADDON.getSetting('cmore_locale') == 'cmore.no':
-            self.localMapFile = 'basemap_norwegian.xml'
+            self.localMapFile = 'basemap_no.xml'
             locale = 'nb_NO'
         else:
             locale = ''

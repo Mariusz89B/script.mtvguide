@@ -94,7 +94,7 @@ timeouts = (15, 30)
 class IplaUpdater(baseServiceUpdater):
     def __init__(self):
         self.serviceName        = serviceName
-        self.localMapFile       = 'basemap.xml'
+        self.localMapFile       = 'basemap_pl.xml'
         baseServiceUpdater.__init__(self)
         self.serviceEnabled     = ADDON.getSetting('ipla_enabled')
         self.login              = ADDON.getSetting('ipla_username').strip()

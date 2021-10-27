@@ -93,7 +93,7 @@ timeouts = (15, 30)
 class PolsatGoBoxUpdater(baseServiceUpdater):
     def __init__(self):
         self.serviceName        = serviceName
-        self.localMapFile       = 'basemap.xml'
+        self.localMapFile       = 'basemap_pl.xml'
         baseServiceUpdater.__init__(self)
         self.serviceEnabled     = ADDON.getSetting('pgobox_enabled')
         self.login              = ADDON.getSetting('pgobox_username').strip()

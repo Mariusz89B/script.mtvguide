@@ -91,7 +91,7 @@ timeouts = (15, 30)
 class NcPlusGoUpdater(baseServiceUpdater):
     def __init__(self):
         self.serviceName        = serviceName
-        self.localMapFile       = 'basemap.xml'
+        self.localMapFile       = 'basemap_pl.xml'
         baseServiceUpdater.__init__(self)
         self.serviceEnabled     = ADDON.getSetting('ncplusgo_enabled')
         self.login              = ADDON.getSetting('ncplusgo_username').strip()
