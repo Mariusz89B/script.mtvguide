@@ -857,9 +857,9 @@ class Database(object):
                         titles = x[0].upper() + ',' + x[1].upper()
                         result.update({x[0].upper(): titles})
                     except:
-                        result.update({x[0].upper(): x[0].upper()})
+                        result.update({x[0].upper(): ''})
                 else:
-                    result.update({x[0].upper(): x[0].upper()})
+                    result.update({x[0].upper(): ''})
 
         return result.items()
 
@@ -2988,7 +2988,7 @@ def parseXMLTV(context, f, size, logoFolder, progress_callback):
                 titles = None
                 
                 titleList = elem.findall("display-name")
-                titles = ','.join([str(x.text.upper()) for x in titleList])
+                titles = ','.join([x.text.upper() for x in titleList])
 
                 if not titles:
                     titles = elem.get("id").upper()

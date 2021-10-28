@@ -1,4 +1,7 @@
-﻿wersja 9.7.1 - 2021-10-29
+﻿wersja 9.7.2 - 2021-10-29
+- poprawki
+
+wersja 9.7.1 - 2021-10-29
 - aktualizacja map bazowych
 
 wersja 9.7.0 - 2021-10-28

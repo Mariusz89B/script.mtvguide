@@ -403,15 +403,15 @@ class PlaylistUpdater(baseServiceUpdater):
             else:
                 regexAddList.append( re.compile('(\s|^)(L\s*)?({prefix})(?=\s|$)'.format(prefix=prefix)) )
 
-            regexHD            =     re.compile('(\s|^)(720p|720|FHD|1080p|1080|HD\sHD|HD)(?=\s|$)',                              re.IGNORECASE)
-            regexUHD            =    re.compile('(\s|^)(4K|UHD)(?=\s|$)',                              re.IGNORECASE)
+            regexHD = re.compile('(\s|^)(720p|720|FHD|1080p|1080|HD\sHD|HD)(?=\s|$)', re.IGNORECASE)
+            regexUHD = re.compile('(\s|^)(4K|UHD)(?=\s|$)', re.IGNORECASE)
 
-            regex_chann_name   =     re.compile('tvg-id="[^"]*"',                                                  re.IGNORECASE)
+            regex_chann_name   =     re.compile('tvg-id="[^"]*"', re.IGNORECASE)
             if ADDON.getSetting('VOD_EPG') == "":
-                regexCorrectStream =     re.compile('^(plugin|http|rtmp)(?!.*?[.]((\.)(mp4|mkv|avi|mov|wma)))',                 re.IGNORECASE)
+                regexCorrectStream =     re.compile('^(plugin|http|rtmp)(?!.*?[.]((\.)(mp4|mkv|avi|mov|wma)))', re.IGNORECASE)
                 regexRemoveList.append( re.compile('(\s|^)(L\s*)?((?i)VOD)(?=\s|$)', re.IGNORECASE) )
             else:
-                regexCorrectStream =     re.compile('^plugin|http|^rtmp',                                                 re.IGNORECASE)
+                regexCorrectStream =     re.compile('^plugin|http|^rtmp', re.IGNORECASE)
 
             if ADDON.getSetting('XXX_EPG') == "":
                 regexRemoveList.append( re.compile('(\s|^)(L\s*)?((?i)Adult)(?=\s|$)', re.IGNORECASE) )
@@ -590,7 +590,12 @@ class PlaylistUpdater(baseServiceUpdater):
                                     if not ( regexAdd.findall(title) ):
                                         title = ''                  
 
-                            title = title.replace('  ', ' ').strip()                        
+                            title = title.replace('  ', ' ').strip() 
+
+                            if ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '5':   
+                                title = title.replace(' ' + langReplaceMap['lang'], '')
+                                for item in nonCCList:
+                                    title = title.replace(' ' + item.upper(), ' ')
 
                     elif title is not None and regexCorrectStream.match(stripLine):
                         if title != '':
@@ -629,6 +634,7 @@ class PlaylistUpdater(baseServiceUpdater):
                             
                             self.log('[UPD]     %-40s %-12s %-35s' % (title, channelCid, stripLine))
                             nextFreeCid = nextFreeCid + 1
+                    
                         #else:
                             #self.log('[UPD] %-10s %-35s %-35s' % ('-', 'No title!', stripLine))
 

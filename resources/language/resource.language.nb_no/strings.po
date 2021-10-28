@@ -2792,6 +2792,10 @@ msgctxt "#70132"
 msgid "Country name [Country]"
 msgstr "Landsnavn [Land]"
 
+msgctxt "#70133"
+msgid "Remove all definitions"
+msgstr "Fjern alle definisjoner"
+
 msgctxt "#80005"
 msgid "[COLOR]WP Pilot[/COLOR]"
 msgstr "[COLOR]WP Pilot[/COLOR]"

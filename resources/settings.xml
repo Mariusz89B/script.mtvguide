@@ -123,7 +123,7 @@
 		<setting id="playlist_1_source" label="59907" type="enum" default="0" lvalues="59919|59908" visible="eq(-4,true) + gt(-5,0)" subsetting="true"/>
 		<setting id="playlist_1_url" label="59906" type="text" visible="eq(-1,0) + eq(-5,true) + gt(-6,0)" default="" subsetting="true"/>
 		<setting id="playlist_1_file" label="59908" type="file" visible="eq(-2,1) + eq(-6,true) + gt(-7,0)" default="" subsetting="true"/>
-		<setting id="playlist_1_pattern" type="select" label="70128" default="1" lvalues="70007|70129|70130|70131|70132" visible="eq(-7,true) + gt(-8,0)" subsetting="true"/>
+		<setting id="playlist_1_pattern" type="select" label="70128" default="1" lvalues="70007|70129|70130|70131|70132|70133" visible="eq(-7,true) + gt(-8,0)" subsetting="true"/>
 		<setting id="playlist_1_append_country_code" label="30763" type="text" default="" visible="eq(-8,true) + gt(-9,0)" subsetting="true"/>
 		<setting id="playlist_1_user_agent" label="55001" type="text" visible="eq(-9,true) + gt(-10,0)" default="" subsetting="true"/>
 		<setting id="playlist_1_stop_when_starting" type="bool" label="30974" default="false" visible="eq(-10,true) + gt(-11,0)" subsetting="true"/>
@@ -137,7 +137,7 @@
 		<setting id="playlist_2_source" label="59907" type="enum" default="0" lvalues="59919|59908" visible="eq(-4,true) + gt(-18,1)" subsetting="true"/>
 		<setting id="playlist_2_url" label="59906" type="text" visible="eq(-1,0) + eq(-5,true) + gt(-19,1)" default="" subsetting="true"/>
 		<setting id="playlist_2_file" label="59908" type="file" visible="eq(-2,1) + eq(-6,true) + gt(-20,1)" default="" subsetting="true"/>
-		<setting id="playlist_2_pattern" type="select" label="70128" default="1" lvalues="70007|70129|70130|70131|70132" visible="eq(-7,true) + gt(-21,0)" subsetting="true"/>
+		<setting id="playlist_2_pattern" type="select" label="70128" default="1" lvalues="70007|70129|70130|70131|70132|70133" visible="eq(-7,true) + gt(-21,0)" subsetting="true"/>
 		<setting id="playlist_2_append_country_code" label="30763" type="text" default="" visible="eq(-8,true) + gt(-22,1)" subsetting="true"/>
 		<setting id="playlist_2_user_agent" label="55001" type="text" visible="eq(-9,true) + gt(-23,1)" default="" subsetting="true"/>
 		<setting id="playlist_2_stop_when_starting" type="bool" label="30974" default="false" visible="eq(-10,true) + gt(-24,1)" subsetting="true"/>
@@ -151,7 +151,7 @@
 		<setting id="playlist_3_source" label="59907" type="enum" default="0" lvalues="59919|59908" visible="eq(-4,true) + gt(-31,2)" subsetting="true"/>
 		<setting id="playlist_3_url" label="59906" type="text" visible="eq(-1,0) + eq(-5,true) + gt(-32,2)" default="" subsetting="true"/>
 		<setting id="playlist_3_file" label="59908" type="file" visible="eq(-2,1) + eq(-6,true) + gt(-33,2)" default="" subsetting="true"/>
-		<setting id="playlist_3_pattern" type="select" label="70128" default="1" lvalues="70007|70129|70130|70131|70132" visible="eq(-7,true) + gt(-34,0)" subsetting="true"/>
+		<setting id="playlist_3_pattern" type="select" label="70128" default="1" lvalues="70007|70129|70130|70131|70132|70133" visible="eq(-7,true) + gt(-34,0)" subsetting="true"/>
 		<setting id="playlist_3_append_country_code" label="30763" type="text" default="" visible="eq(-8,true) + gt(-35,3)" subsetting="true"/>
 		<setting id="playlist_3_user_agent" label="55001" type="text" visible="eq(-9,true) + gt(-36,2)" default="" subsetting="true"/>
 		<setting id="playlist_3_stop_when_starting" type="bool" label="30974" default="false" visible="eq(-10,true) + gt(-37,2)" subsetting="true"/>
@@ -165,7 +165,7 @@
 		<setting id="playlist_4_source" label="59907" type="enum" default="0" lvalues="59919|59908" visible="eq(-4,true) + gt(-44,3)" subsetting="true"/>
 		<setting id="playlist_4_url" label="59906" type="text" visible="eq(-1,0) + eq(-5,true) + gt(-45,3)" default="" subsetting="true"/>
 		<setting id="playlist_4_file" label="59908" type="file" visible="eq(-2,1) + eq(-6,true) + gt(-46,3)" default="" subsetting="true"/>
-		<setting id="playlist_4_pattern" type="select" label="70128" default="1" lvalues="70007|70129|70130|70131|70132" visible="eq(-7,true) + gt(-47,0)" subsetting="true"/>
+		<setting id="playlist_4_pattern" type="select" label="70128" default="1" lvalues="70007|70129|70130|70131|70132|70133" visible="eq(-7,true) + gt(-47,0)" subsetting="true"/>
 		<setting id="playlist_4_append_country_code" label="30763" type="text" default="" visible="eq(-8,true) + gt(-48,3)" subsetting="true"/>
 		<setting id="playlist_4_user_agent" label="55001" type="text" visible="eq(-9,true) + gt(-49,3)" default="" subsetting="true"/>
 		<setting id="playlist_4_stop_when_starting" type="bool" label="30974" default="false" visible="eq(-10,true) + gt(-50,3)" subsetting="true"/>
@@ -179,7 +179,7 @@
 		<setting id="playlist_5_source" label="59907" type="enum" default="0" lvalues="59919|59908" visible="eq(-4,true) + gt(-57,4)" subsetting="true"/>
 		<setting id="playlist_5_url" label="59906" type="text" visible="eq(-1,0) + eq(-5,true) + gt(-58,4)" default="" subsetting="true"/>
 		<setting id="playlist_5_file" label="59908" type="file" visible="eq(-2,1) + eq(-6,true) + gt(-59,4)" default="" subsetting="true"/>
-		<setting id="playlist_5_pattern" type="select" label="70128" default="1" lvalues="70007|70129|70130|70131|70132" visible="eq(-7,true) + gt(-60,0)" subsetting="true"/>
+		<setting id="playlist_5_pattern" type="select" label="70128" default="1" lvalues="70007|70129|70130|70131|70132|70133" visible="eq(-7,true) + gt(-60,0)" subsetting="true"/>
 		<setting id="playlist_5_append_country_code" label="30763" type="text" default="" visible="eq(-8,true) + gt(-61,3)" subsetting="true"/>
 		<setting id="playlist_5_user_agent" label="55001" type="text" visible="eq(-9,true) + gt(-62,4)" default="" subsetting="true"/>
 		<setting id="playlist_5_stop_when_starting" type="bool" label="30974" default="false" visible="eq(-10,true) + gt(-63,4)" subsetting="true"/>
