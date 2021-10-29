@@ -854,7 +854,7 @@ class Database(object):
             for x in cur:
                 if ADDON.getSetting('epg_display_name') == 'true':
                     try:
-                        titles = x[0].upper() + ',' + x[1].upper()
+                        titles = x[0].upper() + ', ' + x[1].upper()
                         result.update({x[0].upper(): titles})
                     except:
                         result.update({x[0].upper(): ''})
@@ -2717,7 +2717,7 @@ def customParseXMLTV(xml, progress_callback):
 
         try:
             titleList = channelTitleRe.findall(channel)
-            titles = ','.join([elem.upper() for elem in titleList])
+            titles = ', '.join([elem.upper() for elem in titleList])
 
         except:
             titles = id
@@ -2736,12 +2736,12 @@ def customParseXMLTV(xml, progress_callback):
             if sys.version_info[0] > 2:
                 for t, ts in list(titlesList.items()):
                     if id == t:
-                        titles = titles + ',' + ts
+                        titles = titles + ', ' + ts
 
             else:
                 for t, ts in list(titlesList.iteritems()):
                     if id == t:
-                        titles = titles + ',' + ts
+                        titles = titles + ', ' + ts
 
             if titles is not None:
                 titlesList.update({id: titles})
@@ -2801,7 +2801,7 @@ def customParseXMLTV(xml, progress_callback):
                 else:
                     category_count[txt] = 1
                 category_list.append(txt)
-        categories = ','.join(category_list)
+        categories = ', '.join(category_list)
 
         try:
             desc  = programDesc.search(program).group(1)
@@ -2876,7 +2876,7 @@ def customParseXMLTV(xml, progress_callback):
 
     cleanup_regex = re.compile('[!"”#$%&’()*+,-.\/:;<>?@\[\]^_`{|}~]|ADDON.*|^\s', re.IGNORECASE)
 
-    categoriesList = list()
+    categoriesList = []
 
     for c in sorted(category_count):
         if c is not None or c != '':
@@ -2944,7 +2944,7 @@ def parseXMLTV(context, f, size, logoFolder, progress_callback):
                     else:
                         category_count[txt] = 1
                     category_list.append(txt)
-                categories = ','.join(category_list)
+                categories = ', '.join(category_list)
 
                 live3 = ''
                 live = elem.findtext("video")
@@ -2988,7 +2988,7 @@ def parseXMLTV(context, f, size, logoFolder, progress_callback):
                 titles = None
                 
                 titleList = elem.findall("display-name")
-                titles = ','.join([x.text.upper() for x in titleList])
+                titles = ', '.join([x.text.upper() for x in titleList])
 
                 if not titles:
                     titles = elem.get("id").upper()
@@ -3013,12 +3013,12 @@ def parseXMLTV(context, f, size, logoFolder, progress_callback):
                     if sys.version_info[0] > 2:
                         for t, ts in list(titlesList.items()):
                             if id == t:
-                                titles = titles + ',' + ts
+                                titles = titles + ', ' + ts
 
                     else:
                         for t, ts in list(titlesList.iteritems()):
                             if id == t:
-                                titles = titles + ',' + ts
+                                titles = titles + ', ' + ts
 
                     if titles is not None:
                         titlesList.update({id: titles})
@@ -3056,7 +3056,7 @@ def parseXMLTV(context, f, size, logoFolder, progress_callback):
 
     cleanup_regex = re.compile('[!"”#$%&’()*+,-.\/:;<>?@\[\]^_`{|}~]|ADDON.*|^\s', re.IGNORECASE)
 
-    categoriesList = list()
+    categoriesList = []
 
     for c in sorted(category_count):
         if c is not None or c != '':

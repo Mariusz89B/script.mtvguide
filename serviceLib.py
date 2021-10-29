@@ -506,18 +506,23 @@ class MapString:
            
         channels = channelRe.findall(xmlstr)
 
-        for channel in channels:
-            aid = channelIdRe.search(channel).group(1)
-            atitle = channelTitleRe.search(channel).group(1)
-            astrm = channelStrmRe.search(channel).group(1)
+        try:
+            for channel in channels:
+                aid = channelIdRe.search(channel).group(1)
+                for achannel in aid.split(', '):
+                    atitle = channelTitleRe.search(channel).group(1)
+                    astrm = channelStrmRe.search(channel).group(1)
 
-            if logCall:
-                try:
-                    logCall('[UPD] %-35s %-50s %-35s' % (unidecode(aid), atitle, astrm))
-                except:
-                    logCall('[UPD] %-35s %-50s %-35s' % (unidecode(aid.decode('utf-8')), atitle, astrm))
-            result.append(MapString(channelid=aid, titleRegex=atitle, strm=astrm, src='', displayName=''))
-            rstrm = astrm
+                    if logCall:
+                        try:
+                            logCall('[UPD] %-35s %-50s %-35s' % (unidecode(aid), atitle, astrm))
+                        except:
+                            logCall('[UPD] %-35s %-50s %-35s' % (unidecode(aid.decode('utf-8')), atitle, astrm))
+
+                    result.append(MapString(channelid=achannel, titleRegex=atitle, strm=astrm, src='', displayName=''))
+                    rstrm = astrm
+        except:
+            pass
 
         categoriesRe    = re.compile('(<category name=".*?".*tags=".*?"/>)')
         categoryRe      = re.compile('<category name="(.*?)"', re.DOTALL)
@@ -536,55 +541,6 @@ class MapString:
         if logCall:
             logCall('-------------------------------------------------------------------------------------')
 
-        return [result, rstrm, categories]
-
-    @staticmethod
-    def Parse(xmlstr, logCall=deb):
-        rstrm = ''
-        categories={}
-        if logCall:
-            logCall('\n\n')
-            logCall('[UPD] Parsing basemap file')
-            logCall('-------------------------------------------------------------------------------------')
-        if sys.version_info[0] > 2:
-            iob = io.BytesIO(xmlstr)
-        else:
-            iob = StringIO.StringIO(xmlstr)
-        context = ElementTree.iterparse(iob, events=("start", "end"))
-        event, root = next(context)
-        elements_parsed = 0
-        if logCall:
-            logCall('[UPD] %-35s %-50s %-35s' % ('-TITLE-' , '-REGEX-', '-STRM-'))
-        result = list()
-        for event, elem in context:
-            if event == "end":
-                if elem.tag == "channel":
-                    aid    = elem.get("id")
-                    atitle = elem.get("title")
-                    astrm  = elem.get("strm")
-                    if logCall:
-                        try:
-                            logCall('[UPD] %-35s %-50s %-35s' % (unidecode(aid), atitle, astrm))
-                        except:
-                            logCall('[UPD] %-35s %-50s %-35s' % (unidecode(aid.decode('utf-8')), atitle, astrm))
-                    result.append(MapString(channelid=aid, titleRegex=atitle, strm=astrm, src='', displayName=''))
-                if elem.tag == "map":
-                    rstrm = elem.get("strm")
-                if elem.tag == "category":
-                    category_tags_set = set()
-                    category_name = elem.get("name")
-                    category_tags = elem.get("tags").split('|')
-                    for tag in category_tags:
-                        if sys.version_info[0] > 2:
-                            category_tags_set.add(('' + tag.lower()))
-                        else:
-                            category_tags_set.add((u'' + tag.lower()))
-                    categories[category_name] = category_tags_set
-        if logCall:
-            logCall('-------------------------------------------------------------------------------------')
-            #logCall('\n')
-            #if rstrm != '':
-                #logCall('[UPD] Stream rule = %s' % rstrm)
         return [result, rstrm, categories]
 
     @staticmethod
@@ -788,7 +744,7 @@ class baseServiceUpdater:
                 self.loadSingleBaseMap('vod', self.vodMapFile)
 
             for k, v in CC_DICT.items():
-                if ADDON.getSetting('country_code_{}'.format(k.lower())) == 'true':
+                if ADDON.getSetting('country_code_{}'.format(k.lower())) != 'false':
                     self.loadSingleBaseMap('base_' + k.lower(), 'basemap_{}.xml'.format(k.lower()))
 
             self.loadExtraBaseMap('base_extra', self.extraMapFile)
@@ -812,7 +768,6 @@ class baseServiceUpdater:
                 map                   = MapString.loadFile(localMapFilename, self.log)
             else:
                 map                   = MapString.loadFile(os.path.join(pathMapBase, 'basemap.xml'), self.log)
-        #entries, _, seCat         = MapString.Parse(map, None) #None so content wont be printed in logs
         entries, _, seCat         = MapString.FastParse(map, None) #None so content wont be printed in logs
         baseServiceUpdater.baseMapContent.extend(entries)
         for id in seCat:
@@ -827,7 +782,6 @@ class baseServiceUpdater:
             xbmcvfs.copy(os.path.join(pathMapBase, mapFilePath), os.path.join(pathMapExtraBase, mapFilePath))
         localMapFilename      = os.path.join(pathMapExtraBase, mapFilePath)
         map                   = MapString.loadFile(localMapFilename, self.log)
-        #entries, _, seCat         = MapString.Parse(map, None) #None so content wont be printed in logs
         entries, _, seCat         = MapString.FastParse(map, None) #None so content wont be printed in logs
         baseServiceUpdater.baseMapContent.extend(entries)
         for id in seCat:
@@ -861,11 +815,9 @@ class baseServiceUpdater:
 
                 if dedicatedMapfile:
                     if not self.refreshingStreams:
-                        #dedicatedMap, rstrm, _ = MapString.Parse(dedicatedMapfile, self.log)
                         dedicatedMap, rstrm, _ = MapString.FastParse(dedicatedMapfile, self.log)
                     else:
                         #Avoid printing content of map to log on every refresh
-                        #dedicatedMap, rstrm, _ = MapString.Parse(dedicatedMapfile, None)
                         dedicatedMap, rstrm, _ = MapString.FastParse(dedicatedMapfile, None)
                     for dedicatedEntry in dedicatedMap:
                         for baseEntry in self.automap:
@@ -948,8 +900,8 @@ class baseServiceUpdater:
             titles = list()
 
             for title, titles in epg_channels:
-                for t in titles.split(','):
-                    result.append(MapString(channelid=title, titleRegex='', strm='', src='', displayName=t))
+                for dtitle in titles.split(', '):
+                    result.append(MapString(channelid=title, titleRegex='', strm='', src='', displayName=dtitle))
 
             self.automap.extend(result)
 

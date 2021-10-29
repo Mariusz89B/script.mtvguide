@@ -329,14 +329,14 @@ class PlaylistUpdater(baseServiceUpdater):
             hdList = list()
             uhdList = list()
 
-            cleanup_regex      =     re.compile("\[COLOR\s*\w*\]|\[/COLOR\]|\[B\]|\[/B\]|\[I\]|\[/I\]|^\s*|\s*$",  re.IGNORECASE)
+            cleanup_regex      =     re.compile("\[COLOR\s*\w*\]|\[/COLOR\]|\[B\]|\[/B\]|\[I\]|\[/I\]|^\s*|\s*$", re.IGNORECASE)
 
-            #regexReplaceList.append( re.compile('[^A-Za-z0-9+/:]+',                                                re.IGNORECASE) )
-            regexReplaceList.append( re.compile('[^A-Za-zÀ-ȕ0-9+/:]+',                                                re.IGNORECASE) )
+            #regexReplaceList.append( re.compile('[^A-Za-z0-9+/:]+', re.IGNORECASE) )
+            regexReplaceList.append( re.compile('[^A-Za-zÀ-ȕ0-9+/:]+', re.IGNORECASE) )
 
-            regexReplaceList.append( re.compile('\sL\s',                                                           re.IGNORECASE) )
-            regexReplaceList.append( re.compile('(\s|^)(FEED|EUROPE|NORDIC|SCANDINAVIA|ADULT:|EXTRA:|VIP:|VIP|AUDIO|L1|B|BACKUP|MULTI|SUB|SUBTITLE(S)?|NAPISY|VIASAT:|XXX|XXX:|\d{1,2}\s*FPS|LIVE\s*DURING\s*EVENTS\s*ONLY)(?=\s|$)',  re.IGNORECASE) )
-            regexReplaceList.append( re.compile('(\s|^)(FULL|SD|LQ|HQ|RAW|LOW|HIGH|QUALITY)(?=\s|$)',  re.IGNORECASE) )
+            regexReplaceList.append( re.compile('\sL\s', re.IGNORECASE) )
+            regexReplaceList.append( re.compile('(\s|^)(FEED|EUROPE|NORDIC|SCANDINAVIA|ADULT:|EXTRA:|VIP:|VIP|AUDIO|L1|B|BACKUP|MULTI|SUB|SUBTITLE(S)?|NAPISY|VIASAT:|XXX|XXX:|\d{1,2}\s*FPS|LIVE\s*DURING\s*EVENTS\s*ONLY)(?=\s|$)', re.IGNORECASE) )
+            regexReplaceList.append( re.compile('(\s|^)(FULL|SD|LQ|HQ|RAW|LOW|HIGH|QUALITY)(?=\s|$)', re.IGNORECASE) )
 
             langReplaceList = list()
             prefixList = list()
@@ -482,6 +482,7 @@ class PlaylistUpdater(baseServiceUpdater):
                             name = title
 
                             nonCCList = ['sd', 'hd', 'uhd', '4k', 'tv']
+                            replaceCC = False
 
                             if ADDON.getSetting('{}_append_country_code'.format(self.serviceName)) != '':
                                 p = re.compile(r'.*\s([a-zA-Z]{2,3})$', re.DOTALL)
