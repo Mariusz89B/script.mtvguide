@@ -5791,7 +5791,10 @@ class mTVGuide(xbmcgui.WindowXML):
         self.redrawingEPG = False
         self._hideControl(self.C_MAIN_LOADING)
         if not strings2.M_TVGUIDE_CLOSING:
-            xbmcgui.Dialog().ok(strings(LOAD_ERROR_TITLE), strings(LOAD_ERROR_LINE1) + '\n' + ADDON.getSetting('m-TVGuide').strip() + '\n' + strings(LOAD_ERROR_LINE2))
+            if ADDON.getSetting('source') == '0':
+                xbmcgui.Dialog().ok(strings(LOAD_ERROR_TITLE), strings(LOAD_ERROR_LINE1) + '\n' + ADDON.getSetting('xmltv_file').strip() + '\n' + strings(LOAD_ERROR_LINE2))
+            else:
+                xbmcgui.Dialog().ok(strings(LOAD_ERROR_TITLE), strings(LOAD_ERROR_LINE1) + '\n' + ADDON.getSetting('m-TVGuide').strip() + '\n' + strings(LOAD_ERROR_LINE2))
         self.close()
 
     def onSourceNotConfigured(self):
@@ -5799,9 +5802,9 @@ class mTVGuide(xbmcgui.WindowXML):
         self.redrawingEPG = False
         self._hideControl(self.C_MAIN_LOADING)
         if ADDON.getSetting('source') == '0':
-            xbmcgui.Dialog().ok(strings(LOAD_ERROR_TITLE), strings(LOAD_ERROR_LINE1) + '\n' + strings(CONFIGURATION_ERROR_LINE2))
+            xbmcgui.Dialog().ok(strings(LOAD_ERROR_TITLE), strings(LOAD_ERROR_LINE1) + '\n' + ADDON.getSetting('xmltv_file').strip() + '\n' + strings(LOAD_ERROR_LINE2))
         else:
-            xbmcgui.Dialog().ok(strings(LOAD_ERROR_TITLE), strings(LOAD_ERROR_LINE1) + '\n' + ADDON.getSetting('m-TVGuide').strip())
+            xbmcgui.Dialog().ok(strings(LOAD_ERROR_TITLE), strings(LOAD_ERROR_LINE1) + '\n' + ADDON.getSetting('m-TVGuide').strip() + '\n' + strings(LOAD_ERROR_LINE2))
         self.close()
 
     def isSourceInitializationCancelled(self):

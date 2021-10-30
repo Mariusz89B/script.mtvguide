@@ -715,7 +715,12 @@ class Database(object):
 
 
                     if imported % 10000 == 0:
-                        self.conn.commit()
+                        try:
+                            self.conn.commit()
+                        except:
+                            xbmcgui.Dialog().ok(strings(LOAD_ERROR_TITLE), strings(EPG_FORMAT_ERROR))
+                            strings2.M_TVGUIDE_CLOSING = True
+                            return False
 
                     if isinstance(item, Channel):
                         c.execute('INSERT OR REPLACE INTO channels(id, title, logo, titles, stream_url, visible, weight, source) VALUES(?, ?, ?, ?, ?, ?, (CASE ? WHEN -1 THEN (SELECT COALESCE(MAX(weight)+1, 0) FROM channels WHERE source=?) ELSE ? END), ?)', [item.id, item.title, item.logo, item.titles, item.streamUrl, item.visible, item.weight, self.source.KEY, item.weight, self.source.KEY])
@@ -766,7 +771,10 @@ class Database(object):
             except SourceFaultyEPGException:
                 deb('SourceFaultyEPGException unable to load main EPG, trying to continue despite of that')
                 self.skipUpdateRetries = True
-                xbmcgui.Dialog().ok(strings(LOAD_ERROR_TITLE), strings(LOAD_ERROR_LINE1) + ' ' + ADDON.getSetting('m-TVGuide').strip() + '\n' + strings(LOAD_ERROR_LINE2))
+                if ADDON.getSetting('source') == '0':
+                    xbmcgui.Dialog().ok(strings(LOAD_ERROR_TITLE), strings(LOAD_ERROR_LINE1) + '\n' + ADDON.getSetting('xmltv_file').strip() + '\n' + strings(LOAD_ERROR_LINE2))
+                else:
+                    xbmcgui.Dialog().ok(strings(LOAD_ERROR_TITLE), strings(LOAD_ERROR_LINE1) + '\n' + ADDON.getSetting('m-TVGuide').strip() + '\n' + strings(LOAD_ERROR_LINE2))
 
             except Exception:
                 import traceback as tb
