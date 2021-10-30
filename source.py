@@ -2399,7 +2399,7 @@ class XMLTVSource(Source):
 
         else:
             with open(filename, 'rb') as file:
-                if filename.lower().endswith('.zip') or filename.lower().endswith('.zip') or '.zip' in filename:
+                if filename.lower().endswith('.zip') or '.zip' in filename:
                     tnow = datetime.datetime.now()
                     deb("[EPG] Type: .zip, Unpacking epg: {} [{} sek.]".format(filename, str((tnow-start).seconds)))
                     memfile = io.BytesIO(file.read())
@@ -2408,7 +2408,7 @@ class XMLTVSource(Source):
                     unziped.close()
                     memfile.close()
 
-                if filename.lower().endswith('.gz') or filename.lower().endswith('.gz') or '.gz' in filename:
+                if filename.lower().endswith('.gz') or '.gz' in filename:
                     tnow = datetime.datetime.now()
                     deb("[EPG] Type: .gz, Unpacking epg: {} [{} sek.]".format(filename, str((tnow-start).seconds)))
                     import gzip
@@ -2418,7 +2418,7 @@ class XMLTVSource(Source):
                     unziped.close()
                     memfile.close()
 
-                if filename.lower().endswith('.bz2') or filename.lower().endswith('.bz2') or '.bz2' in filename:
+                if filename.lower().endswith('.bz2') or '.bz2' in filename:
                     tnow = datetime.datetime.now()
                     deb("[EPG] Type: .bz2, Unpacking epg: {} [{} sek.]".format(filename, str((tnow-start).seconds)))
                     import bz2
@@ -2635,6 +2635,33 @@ class MTVGUIDESource(Source):
         if self.timer and self.timer.is_alive():
             self.timer.cancel()
 
+
+def catList(category_count):
+    cleanup_regex = re.compile('[!"”#$%&’()*+,-.\/:;<>?@\[\]^_`{|}~]|ADDON.*|^\s', re.IGNORECASE)
+
+    categoriesList = []
+
+    for c in sorted(category_count):
+        if c is not None or c != '':
+            s = "{}={}\n".format(c, category_count[c])
+            s = cleanup_regex.sub('', s)
+            s = re.sub(r'(^|\s)(\S)', lambda m: m.group(1) + m.group(2).upper(), s)
+
+            if s.strip() != '':
+                categoriesList.append(s.strip())
+
+    if sys.version_info[0] > 2:
+        file_name = os.path.join(xbmcvfs.translatePath(ADDON.getAddonInfo('profile')), 'category_count.list')
+        with open(file_name, 'w+', encoding='utf-8') as f:
+            for line in categoriesList:
+                f.write('{}\n'.format(line))
+    else:
+        file_name = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('profile')), 'category_count.list')
+        with codecs.open(file_name, 'w+', encoding='utf-8') as f:
+            for line in categoriesList:
+                f.write('{}\n'.format(line))
+
+
 def parseXMLTVDate(dateString):
     if dateString is not None:
         if dateString.find(' ') != -1:
@@ -2731,34 +2758,6 @@ def customParseXMLTV(xml, progress_callback):
             logo = channelIconRe.search(channel).group(1)
         except:
             logo = None
-
-        if ADDON.getSetting('epg_display_name') == 'true':
-            if sys.version_info[0] > 2:
-                for t, ts in list(titlesList.items()):
-                    if id == t:
-                        titles = titles + ', ' + ts
-
-            else:
-                for t, ts in list(titlesList.iteritems()):
-                    if id == t:
-                        titles = titles + ', ' + ts
-
-            if titles is not None:
-                titlesList.update({id: titles})
-
-            if sys.version_info[0] > 2:
-                for l, ls in list(logosList.items()):
-                    if id == l:
-                        if logo is None:
-                            logo = ls
-            else:
-                for l, ls in list(logosList.iteritems()):
-                    if id == l:
-                        if logo is None:
-                            logo = ls
-         
-            if logo is not None:
-                logosList.update({id: logo})
 
         channel = None
         yield Channel(id, title, logo, titles)
@@ -2874,33 +2873,11 @@ def customParseXMLTV(xml, progress_callback):
 
     del programs[:]
 
-    cleanup_regex = re.compile('[!"”#$%&’()*+,-.\/:;<>?@\[\]^_`{|}~]|ADDON.*|^\s', re.IGNORECASE)
-
-    categoriesList = []
-
-    for c in sorted(category_count):
-        if c is not None or c != '':
-            s = "{}={}\n".format(c, category_count[c])
-            s = cleanup_regex.sub('', s)
-            s = re.sub(r'(^|\s)(\S)', lambda m: m.group(1) + m.group(2).upper(), s)
-
-            if s.strip() != '':
-                categoriesList.append(s.strip())
-
-    if sys.version_info[0] > 2:
-        file_name = os.path.join(xbmcvfs.translatePath(ADDON.getAddonInfo('profile')), 'category_count.list')
-        with open(file_name, 'w+', encoding='utf-8') as f:
-            for line in categoriesList:
-                f.write('{}\n'.format(line))
-    else:
-        file_name = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('profile')), 'category_count.list')
-        with codecs.open(file_name, 'w+', encoding='utf-8') as f:
-            for line in categoriesList:
-                f.write('{}\n'.format(line))
-
     tnow = datetime.datetime.now()
     deb("[EPG] Parsing EPG by custom parser is done [{} sek.]".format(str((tnow-startTime).seconds)))
 
+    thread = threading.Thread(name='catList', target = catList, args=[category_count])
+    thread.start()
 
 def parseXMLTV(context, f, size, logoFolder, progress_callback):
     deb("[EPG] Parsing EPG")
@@ -3009,35 +2986,6 @@ def parseXMLTV(context, f, size, logoFolder, progress_callback):
                     if iconElement is not None:
                         logo = iconElement.get("src")
 
-                if ADDON.getSetting('epg_display_name') == 'true':
-                    if sys.version_info[0] > 2:
-                        for t, ts in list(titlesList.items()):
-                            if id == t:
-                                titles = titles + ', ' + ts
-
-                    else:
-                        for t, ts in list(titlesList.iteritems()):
-                            if id == t:
-                                titles = titles + ', ' + ts
-
-                    if titles is not None:
-                        titlesList.update({id: titles})
-
-
-                    if sys.version_info[0] > 2:
-                        for l, ls in list(logosList.items()):
-                            if id == l:
-                                if logo is None:
-                                    logo = ls
-                    else:
-                        for l, ls in list(logosList.iteritems()):
-                            if id == l:
-                                if logo is None:
-                                    logo = ls
-
-                    if logo is not None:
-                        logosList.update({id: logo})
-
                 result = Channel(id, title, logo, titles)
 
             if result:
@@ -3054,32 +3002,11 @@ def parseXMLTV(context, f, size, logoFolder, progress_callback):
 
     del context
 
-    cleanup_regex = re.compile('[!"”#$%&’()*+,-.\/:;<>?@\[\]^_`{|}~]|ADDON.*|^\s', re.IGNORECASE)
-
-    categoriesList = []
-
-    for c in sorted(category_count):
-        if c is not None or c != '':
-            s = "{}={}\n".format(c, category_count[c])
-            s = cleanup_regex.sub('', s)
-            s = re.sub(r'(^|\s)(\S)', lambda m: m.group(1) + m.group(2).upper(), s)
-
-            if s.strip() != '':
-                categoriesList.append(s.strip())
-
-    if sys.version_info[0] > 2:
-        file_name = os.path.join(xbmcvfs.translatePath(ADDON.getAddonInfo('profile')), 'category_count.list')
-        with open(file_name, 'w+', encoding='utf-8') as f:
-            for line in categoriesList:
-                f.write('{}\n'.format(line))
-    else:
-        file_name = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('profile')), 'category_count.list')
-        with codecs.open(file_name, 'w+', encoding='utf-8') as f:
-            for line in categoriesList:
-                f.write('{}\n'.format(line))
-
     tnow = datetime.datetime.now()
     deb("[EPG] Parsing EPG is done [{} sek.]".format(str((tnow-start).seconds)))
+
+    thread = threading.Thread(name='catList', target = catList, args=[category_count])
+    thread.start()
 
 class FileWrapper(object):
     def __init__(self, filename):
