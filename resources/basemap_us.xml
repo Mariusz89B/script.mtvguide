@@ -1,264 +1,264 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map id="base_us" version="1.0" strm="">
-	<channel id="5StarMax US"								title="(?=CineMax\s*5\s*StarMax(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="5StarMax US"								title="(?=CineMax\s*5\s*StarMax\s*US$)" strm=""/>
-	<channel id="76ers.tv"									title="(?=NBA\s*PHILADELPHIA\s*76ERS\s*VIP\s*US$)" strm=""/>
-	<channel id="ABC7WLS US"								title="(?=ABC7\s*Chicago(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="AMC US"									title="(?=AMC(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="AMC US"									title="(?=AMC\s*US$)" strm=""/>
-	<channel id="AXSTV US"									title="(?=AXS(\s*TV)?(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="AandE US"									title="(?=A(and|&amp;)E(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="AandE US"									title="(?=A(and|&amp;)E(\s*TV)?(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="Accuweather US"							title="(?=AccuWeather\s*US$)" strm=""/>
-	<channel id="AmericanHeroesChannel US"					title="(?=American\s*Heroes(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="AnimalPlanet US"							title="(?=Animal\s*Planet(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="AnimalPlanet US"							title="(?=Animal\s*Planet\s*US$)" strm=""/>
-	<channel id="AntennaTV US"								title="(?=Antenna(\s*TV)?\s*US$)" strm=""/>
-	<channel id="BBCAmerica US"								title="(?=BBC\s*America(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="BBCAmerica US"								title="(?=BBC\s*America\s*US$)" strm=""/>
-	<channel id="BET US"									title="(?=BET(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="BETSoul US"								title="(?=BET\s*SOUL\s*US$)" strm=""/>
-	<channel id="BETjams US"								title="(?=BET\s*Jams\s*US$)" strm=""/>
-	<channel id="BNC US"									title="(?=Black\s*News\s*Channel\s*US$)" strm=""/>
-	<channel id="BetHer US"									title="(?=BET\s*HER(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="BigTenNetwork US"							title="(?=BIG\s*TEN\s*NETWORK\s*US$)" strm=""/>
-	<channel id="Blazers.tv"								title="(?=NBA\s*PORTLAND\s*TRAIL\s*BLAZERS\s*VIP\s*US$)" strm=""/>
-	<channel id="BloombergTV US"							title="(?=Bloomberg(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="BloombergTV US"							title="(?=Bloomberg(\s*TV)?(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="BloombergTV US"							title="(?=Bloomberg(\s*TV)?\s*US$)" strm=""/>
-	<channel id="BloombergTV US"							title="(?=Bloomberg\s*US$)" strm=""/>
-	<channel id="Boomerang US"								title="(?=Boomerang(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="Boomerang US"								title="(?=Boomerang\s*US$)" strm=""/>
-	<channel id="BounceTV US"								title="(?=Bounce(\s*TV)?\s*US$)" strm=""/>
-	<channel id="Bravo US"									title="(?=Bravo(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="Bucks.tv"									title="(?=NBA\s*MILWAUKEE\s*BUCKS\s*VIP\s*US$)" strm=""/>
-	<channel id="Bulls.tv"									title="(?=NBA\s*CHICAGO\s*BULLS\s*VIP\s*US$)" strm=""/>
-	<channel id="BuzzrTV US"								title="(?=Buzzr(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="CBSSportsNetwork US"						title="(?=CBS\s*SPORTS\s*HQ$)" strm=""/>
-	<channel id="CBSSportsNetwork US"						title="(?=CBS\s*Sports\s*Network(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="CBSSportsNetwork US"						title="(?=CBS\s*Sports\s*Network\s*US$)" strm=""/>
-	<channel id="CBSWBBM US"								title="(?=CBS2\s*Chicago(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="CMT US"									title="(?=CMT(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="CNBC US"									title="(?=CNBC(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="CNBC US"									title="(?=CNBC\s*US$)" strm=""/>
-	<channel id="CNN US"									title="(?=CNN(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="CNN US"									title="(?=CNN\s*US$)" strm=""/>
-	<channel id="CTVComedy.ca"								title="(?=CTV\s*COMEDY(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="CTVDrama.ca"								title="(?=CTV\s*DRAMA(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="CTVSciFi.ca"								title="(?=CTV\s*sci(\-|\s*)fi(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="CartoonNetwork US"							title="(?=Cartoon\s*Network(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="CartoonNetwork US"							title="(?=Cartoon\s*Network\s*US$)" strm=""/>
-	<channel id="Cavaliers.tv"								title="(?=NBA\s*CLEVELAND\s*CAVALIERS\s*VIP\s*US$)" strm=""/>
-	<channel id="Celtics.tv"								title="(?=NBA\s*BOSTON\s*CELTICS\s*VIP\s*US$)" strm=""/>
-	<channel id="CheddarBusiness US"						title="(?=Cheddar(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="Cinemax US"								title="(?=Cinemax\s*US$)" strm=""/>
-	<channel id="Clippers.tv"								title="(?=NBA\s*LOS\s*ANGELES\s*CLIPPERS\s*VIP\s*US$)" strm=""/>
-	<channel id="ComedyCentral US"							title="(?=Comedy\s*Central(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="ComedyCentral US"							title="(?=Comedy\s*Central\s*US$)" strm=""/>
-	<channel id="Comet US"									title="(?=Comet\s*tv(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="CookingChannel US"							title="(?=COOKING\s*CHANNEL\s*US$)" strm=""/>
-	<channel id="CookingChannel US"							title="(?=Cooking\s*Channel(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="CourtTV US"								title="(?=Court(\s*TV)?\s*US$)" strm=""/>
-	<channel id="CoziTV US"									title="(?=Cozi(\s*TV)?\s*US$)" strm=""/>
-	<channel id="DAZN.ca"									title="(?=DAZN\s*1\s*VIP\s*SPORTS$)" strm=""/>
-	<channel id="DAZN.ca"									title="(?=DAZN\s*2\s*VIP\s*SPORTS$)" strm=""/>
-	<channel id="DestinationAmerica US"						title="(?=Destination\s*America(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="DiscoveryChannel US"						title="(?=Discovery\s*Channel(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="DiscoveryChannel US"						title="(?=Discovery\s*Channel\s*US$)" strm=""/>
-	<channel id="DiscoveryChannel US"						title="(?=Investigation\s*Discovery(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="DiscoveryFamily US"						title="(?=Discovery\s*Family(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="DiscoveryLife US"							title="(?=Discovery\s*Life(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="DisneyChannel US"							title="(?=Disney\s*Channel(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="DisneyChannel US"							title="(?=Disney\s*Channel\s*UK$)" strm=""/>
-	<channel id="DisneyJunior US"							title="(?=Disney\s*Junior(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="DisneyXD US"								title="(?=Disney\s*XD(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="DoItYourselfNetwork US"					title="(?=DIY\s*Network(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="DoItYourselfNetwork US"					title="(?=DIY\s*Network\s*US$)" strm=""/>
-	<channel id="EEntertainment US"							title="(?=E!\s*Entertainment(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="EPIX US"									title="(?=EPIX\s*(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="EPIX2 US"									title="(?=EPIX\s*2(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="EPIXHits US"								title="(?=EPIX\s*HITS(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="ESPN US"									title="(?=ESPN\s*1(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="ESPN US"									title="(?=ESPN\s*1\s*US$)" strm=""/>
-	<channel id="ESPN2 US"									title="(?=ESPN\s*2(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="ESPN2 US"									title="(?=ESPN\s*2\s*US$)" strm=""/>
-	<channel id="ESPNU US"									title="(?=ESPN\s*U(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="EpixDriveIn US"							title="(?=EPIX\s*DRIVE\s*IN(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="FOX32WFLD US"								title="(?=Fox32\s*Chicago(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="FOXSoccerPlus US"							title="(?=Fox\s*Soccer\s*Plus(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="FOXSoccerPlus US"							title="(?=Fox\s*Soccer\s*Plus\s*US$)" strm=""/>
-	<channel id="FX.mx"										title="(?=FXM(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="FX US"										title="(?=FX(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="FX US"										title="(?=FX\s*US$)" strm=""/>
-	<channel id="FXX US"									title="(?=FXX(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="FXX US"									title="(?=FXX\s*East(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="FYI US"									title="(?=FYI(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="FoodNetwork US"							title="(?=Food\s*Network(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="FoodNetwork US"							title="(?=Food\s*Network\s*US$)" strm=""/>
-	<channel id="FoxBusiness US"							title="(?=Fox\s*Business(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="FoxNews US"								title="(?=Fox\s*News(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="FoxSports1 US"								title="(?=Fox\s*Sports\s*1(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="FoxSports1 US"								title="(?=Fox\s*Sports\s*1\s*US$)" strm=""/>
-	<channel id="FoxSports2 US"								title="(?=Fox\s*Sports\s*2(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="FoxSports2 US"								title="(?=Fox\s*Sports\s*2\s*US$)" strm=""/>
-	<channel id="FreeSpeech US"								title="(?=Free\s*Speech(\s*TV)?\s*US$)" strm=""/>
-	<channel id="Freeform US"								title="(?=FreeForm(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="Freeform US"								title="(?=Free\s*Form(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="FuseTV US"									title="(?=Fuse(\s*TV)?(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="GameShowNetwork US"						title="(?=GSN(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="GolfChannel US"							title="(?=NBC\s*Golf\s*Channel(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="GolfChannel US"							title="(?=NBC\s*Golf\s*Channel\s*US$)" strm=""/>
-	<channel id="Grizzlies.tv"								title="(?=NBA\s*MEMPHIS\s*GRIZZLIES\s*VIP\s*US$)" strm=""/>
-	<channel id="HBO US"									title="(?=HBO(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="HBO US"									title="(?=HBO\s*US$)" strm=""/>
-	<channel id="HBO2 US"									title="(?=HBO\s*2\s*US$)" strm=""/>
-	<channel id="HBOComedy US"								title="(?=HBO\s*Comedy(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="HBOFamily US"								title="(?=HBO\s*Family(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="HBOLatino US"								title="(?=HBO\s*LATINO(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="HBOSignature.id"							title="(?=HBO\s*Signature\s*US$)" strm=""/>
-	<channel id="HBOSignature US"							title="(?=HBO\s*Signature(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="HBOZone US"								title="(?=HBO\s*Zone\s*US$)" strm=""/>
-	<channel id="HDNetMovies US"							title="(?=HDNET\s*MOVIES(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="HGTV US"									title="(?=HGTV(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="HGTV US"									title="(?=HGTV\s*US$)" strm=""/>
-	<channel id="HLN US"									title="(?=HLN\s*US$)" strm=""/>
-	<channel id="Hallmark US"								title="(?=Hallmark\s*Channel(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="Hallmark US"								title="(?=Hallmark\s*US$)" strm=""/>
-	<channel id="HallmarkDrama US"							title="(?=HALLMARK\s*DRAMA(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="HallmarkMoviesMysteries US"				title="(?=Hallmark\s*Movies\s*(and|&amp;)\s*Mysteries(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="Hawks.tv"									title="(?=NBA\s*ATLANTA\s*HAWKS\s*VIP\s*US$)" strm=""/>
-	<channel id="Heat.tv"									title="(?=NBA\s*MIAMI\s*HEAT\s*VIP\s*US$)" strm=""/>
-	<channel id="HistoryChannel US"							title="(?=History(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="HistoryChannel US"							title="(?=History\s*US$)" strm=""/>
-	<channel id="Hornets.tv"								title="(?=NBA\s*CHARLOTTE\s*HORNETS\s*VIP\s*US$)" strm=""/>
-	<channel id="ION US"									title="(?=ION(\s*TV)?(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="IndependentFilmChannel US"					title="(?=IFC(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="InvestigationDiscovery US"					title="(?=Investigation\s*Discovery(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="Jazz.tv"									title="(?=NBA\s*UTAH\s*JAZZ\s*VIP\s*US$)" strm=""/>
-	<channel id="Kings.tv"									title="(?=NBA\s*SACRAMENTO\s*KINGS\s*VIP\s*US$)" strm=""/>
-	<channel id="Knicks.tv"									title="(?=NBA\s*NEW\s*YORK\s*KNICKS\s*VIP\s*US$)" strm=""/>
-	<channel id="Lakers.tv"									title="(?=NBA\s*LOS\s*ANGELES\s*LAKERS\s*VIP\s*US$)" strm=""/>
-	<channel id="LifetimeMovies US"							title="(?=Lifetime\s*Movies(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="LifetimeNetwork US"						title="(?=Lifetime(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="Logo US"									title="(?=Logo(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="LonghornNetwork US"						title="(?=LONGHORN\s*NETWORK(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="MGM US"									title="(?=MGM\s*US$)" strm=""/>
-	<channel id="MLBNetwork US"								title="(?=MLB(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="MLBNetwork US"								title="(?=MLB\s*Network(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="MLBNetwork US"								title="(?=MLB\s*Network\s*US$)" strm=""/>
-	<channel id="MSNBC US"									title="(?=MSNBC(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="MSNBC US"									title="(?=MSNBC(\s*HD|\s*UHD)?\s*Web\s*US$)" strm=""/>
-	<channel id="MTV US"									title="(?=MTV(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="MTV2 US"									title="(?=MTV2(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="MTVBase.uk"								title="(?=MTV\s*Base(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="MTVClassic US"								title="(?=MTV\s*Classic(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="MTVLive US"								title="(?=MTV\s*LIVE(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="MTVU US"									title="(?=MTV\s*U(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="Magic.tv"									title="(?=NBA\s*ORLANDO\s*MAGIC\s*VIP\s*US$)" strm=""/>
-	<channel id="Mavericks.tv"								title="(?=NBA\s*DALLAS\s*MAVERICKS\s*VIP\s*US$)" strm=""/>
-	<channel id="MoreMax US"								title="(?=Cinemax\s*MoreMax(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="MotorTrend US"								title="(?=Motorsport(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="MotorTrend US"								title="(?=Motortrend(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="NBATV US"									title="(?=NBA(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="NBATV US"									title="(?=NBA(\s*TV)?(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="NBATV US"									title="(?=NBA(\s*TV)?\s*US$)" strm=""/>
-	<channel id="NBC5WMAQ US"								title="(?=NBC\s*5\s*WMAQ\s*Chicago(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="NBCSportsChicago US"						title="(?=NBC\s*Sports\s*Chicago(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="NBCSportsNetwork US"						title="(?=NBC\s*Sports\s*Network(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="NFLNetwork US"								title="(?=NFL\s*Network(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="NFLNetwork US"								title="(?=NFL\s*Network\s*US$)" strm=""/>
-	<channel id="NFLRedZone US"								title="(?=NFL\s*Redzone(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="NHLNetwork US"								title="(?=NHL\s*Network(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="NHLNetwork US"								title="(?=NHL\s*Network\s*US$)" strm=""/>
-	<channel id="NasaTV.ba"									title="(?=Nasa(\s*TV)?(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="NatGeo US"									title="(?=National\s*Geographic(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="NatGeoWild US"								title="(?=Nat\s*Geo\s*Wild(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="Nets.tv"									title="(?=NBA\s*BROOKLYN\s*NETS\s*VIP\s*US$)" strm=""/>
-	<channel id="NewEnglandSportsNetwork US"				title="(?=NESN(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="NewEnglandSportsNetworkPlus US"			title="(?=NESN\s*Plus(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="Newsmax US"								title="(?=Newsmax(\s*TV)?(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="NickMusic US"								title="(?=Nick\s*Music\s*US$)" strm=""/>
-	<channel id="Nicktoons US"								title="(?=Nicktoons(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="Nuggets.tv"								title="(?=NBA\s*DENVER\s*NUGGETS\s*VIP\s*US$)" strm=""/>
-	<channel id="OlympicChannel US"							title="(?=Olympic\s*Channel(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="OneAmericaNews US"							title="(?=One\s*America\s*News\s*US$)" strm=""/>
-	<channel id="OprahWinfreyNetwork US"					title="(?=Oprah\s*Winfrey\s*Network(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="OutdoorChannel US"							title="(?=Outdoor\s*Channel(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="Oxygen US"									title="(?=Oxygen(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="PAC12Arizona US"							title="(?=PAC(\-|\s*)12\s*Arizona\s*US$)" strm=""/>
-	<channel id="PAC12BayArea US"							title="(?=PAC(\-|\s*)12\s*Bay\s*Area\s*US$)" strm=""/>
-	<channel id="PAC12LosAngeles US"						title="(?=PAC(\-|\s*)12\s*Los\s*Angeles\s*US$)" strm=""/>
-	<channel id="PAC12Oregon US"							title="(?=PAC(\-|\s*)12\s*Oregon\s*US$)" strm=""/>
-	<channel id="PAC12Washington US"						title="(?=PAC(\-|\s*)12\s*Washington\s*US$)" strm=""/>
-	<channel id="Pacers.tv"									title="(?=NBA\s*INDIANA\s*PACERS\s*VIP\s*US$)" strm=""/>
-	<channel id="ParamountNetwork US"						title="(?=Paramount\s*Network(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="ParamountNetwork US"						title="(?=Paramount\s*Network\s*US$)" strm=""/>
-	<channel id="Pelicans.tv"								title="(?=NBA\s*NEW\s*ORLEANS\s*PELICANS\s*VIP\s*US$)" strm=""/>
-	<channel id="Pistons.tv"								title="(?=NBA\s*DETROIT\s*PISTONS\s*VIP\s*US$)" strm=""/>
-	<channel id="Raptors.tv"								title="(?=NBA\s*TORONTO\s*RAPTORS\s*VIP\s*US$)" strm=""/>
-	<channel id="RedBullTV US"								title="(?=Redbull(\s*TV)?(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="ReelzChannel US"							title="(?=Reelz(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="Revolt US"									title="(?=Revolt(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="Rockets.tv"								title="(?=NBA\s*HOUSTON\s*ROCKETS\s*VIP\s*US$)" strm=""/>
-	<channel id="SECNetwork US"								title="(?=SEC\s*Network(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="Science US"								title="(?=Discovery\s*Science(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="Showtime US"								title="(?=Showtime(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="Showtime US"								title="(?=Showtime\s*US$)" strm=""/>
-	<channel id="Showtime2 US"								title="(?=Showtime\s*2(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="Showtime2 US"								title="(?=Showtime\s*2\s*US$)" strm=""/>
-	<channel id="ShowtimeShowcase US"						title="(?=Showtime\s*Showcase(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="SmithsonianChannel US"						title="(?=Smithsonian\s*Channel(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="SportsmanChannel US"						title="(?=SPORTSMAN\s*CHANNEL\s*US$)" strm=""/>
-	<channel id="Spurs.tv"									title="(?=NBA\s*SAN\s*ANTONIO\s*SPURS\s*VIP\s*US$)" strm=""/>
-	<channel id="StartTV US"								title="(?=Start(\s*TV)?(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="Starz US"									title="(?=Starz\s*US$)" strm=""/>
-	<channel id="StarzComedy US"							title="(?=Starz\s*Comedy\s*US$)" strm=""/>
-	<channel id="StarzEdge US"								title="(?=Starz\s*Edge(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="StarzEdge US"								title="(?=Starz\s*Edge\s*US$)" strm=""/>
-	<channel id="StarzEncore US"							title="(?=Starz\s*Encore(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="StarzEncore US"							title="(?=Starz\s*Encore\s*US$)" strm=""/>
-	<channel id="StarzEncoreAction US"						title="(?=Starz\s*Encore\s*Action\s*US$)" strm=""/>
-	<channel id="StarzEncoreFamily US"						title="(?=Starz\s*Encore\s*Family\s*US$)" strm=""/>
-	<channel id="StarzEncoreWesterns US"					title="(?=Starz\s*Encore\s*Western\s*US$)" strm=""/>
-	<channel id="StarzInBlack US"							title="(?=Starz\s*In\s*Black\s*US$)" strm=""/>
-	<channel id="StarzKidsFamily US"						title="(?=Starz\s*Kids\s*(and|&amp;)\s*Family\s*US$)" strm=""/>
-	<channel id="SundanceTV US"								title="(?=SUNDANCE\s*US$)" strm=""/>
-	<channel id="Suns.tv"									title="(?=NBA\s*PHOENIX\s*SUNS\s*VIP\s*US$)" strm=""/>
-	<channel id="Syfy US"									title="(?=SyFy(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="TBDTV US"									title="(?=TBD(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="TBS US"									title="(?=TBS(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="TLC US"									title="(?=TLC(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="TNT US"									title="(?=TNT(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="TNT US"									title="(?=TNT\s*US$)" strm=""/>
-	<channel id="TVG2 US"									title="(?=TVG2(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="TVLandEast US"								title="(?=Tvland(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="TennisChannel US"							title="(?=Tennis\s*Channel(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="TheCowboyChannel US"						title="(?=COWBOY\s*CHANNEL(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="Thunder.tv"								title="(?=NBA\s*OKLAHOMA\s*CITY\s*THUNDER\s*VIP\s*US$)" strm=""/>
-	<channel id="Timberwolves.tv"							title="(?=NBA\s*MINNESOTA\s*TIMBERWOLVES\s*VIP\s*US$)" strm=""/>
-	<channel id="TravelChannel US"							title="(?=Travel\s*Channel(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="TurnerClassicMovies US"					title="(?=TCM(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="UFC.tv"									title="(?=UFC\s*Fight\s*Pass\s*VIP\s*US$)" strm=""/>
-	<channel id="USANetwork US"								title="(?=USA(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="UniversalKids US"							title="(?=Universal\s*Kids(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="VH1 US"									title="(?=VH1\s*Classic\s*US$)" strm=""/>
-	<channel id="Viceland US"								title="(?=Viceland(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="WGN9Chicago US"							title="(?=WGN(\-|\s*)TV\s*9\s*Chicago(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="WGN9Chicago US"							title="(?=WGN(\-|\s*)TV\s*9\s*Chicago\s*US$)" strm=""/>
-	<channel id="WGNAmerica US"								title="(?=WGN\s*America(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="WLWTDT2 US"								title="(?=ME(\s*TV)?(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="WWE US"									title="(?=WWE\s*Network(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="WWE US"									title="(?=WWE\s*Network\s*2(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="WWE US"									title="(?=WWE\s*Network\s*2\s*US$)" strm=""/>
-	<channel id="WWE US"									title="(?=WWE\s*Network\s*US$)" strm=""/>
-	<channel id="Warriors.tv"								title="(?=NBA\s*GOLDEN\s*STATE\s*WARRIORS\s*VIP\s*US$)" strm=""/>
-	<channel id="WeTV US"									title="(?=We(\s*TV)?(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="WeatherChannel US"							title="(?=The\s*Weather\s*Channel(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="WeatherNation US"							title="(?=WEATHER\s*NATION(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="Wizards.tv"								title="(?=NBA\s*WASHINGTON\s*WIZARDS\s*VIP\s*US$)" strm=""/>
-	<channel id="WorldFishingNetwork US"					title="(?=WORLD\s*FISHING\s*NETWORK(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="YESNetwork US"								title="(?=Yes\s*Network(\s*HD|\s*UHD)?\s*US$)" strm=""/>
-	<channel id="truTV US"									title="(?=truTV(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="5StarMax.us, 5StarMax US"								title="(?=CineMax\s*5\s*StarMax(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="5StarMax.us, 5StarMax US"								title="(?=CineMax\s*5\s*StarMax\s*US$)" strm=""/>
+	<channel id="76ers.tv"76ers.tv"									title="(?=NBA\s*PHILADELPHIA\s*76ERS\s*VIP\s*US$)" strm=""/>
+	<channel id="ABC7WLS.us, ABC7WLS US"								title="(?=ABC7\s*Chicago(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="AMC.us, AMC US"									title="(?=AMC(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="AMC.us, AMC US"									title="(?=AMC\s*US$)" strm=""/>
+	<channel id="AXSTV.us, AXSTV US"									title="(?=AXS(\s*TV)?(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="AandE.us, AandE US"									title="(?=A(and|&amp;)E(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="AandE.us, AandE US"									title="(?=A(and|&amp;)E(\s*TV)?(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="Accuweather.us, Accuweather US"							title="(?=AccuWeather\s*US$)" strm=""/>
+	<channel id="AmericanHeroesChannel.us, AmericanHeroesChannel US"					title="(?=American\s*Heroes(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="AnimalPlanet.us, AnimalPlanet US"							title="(?=Animal\s*Planet(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="AnimalPlanet.us, AnimalPlanet US"							title="(?=Animal\s*Planet\s*US$)" strm=""/>
+	<channel id="AntennaTV.us, AntennaTV US"								title="(?=Antenna(\s*TV)?\s*US$)" strm=""/>
+	<channel id="BBCAmerica.us, BBCAmerica US"								title="(?=BBC\s*America(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="BBCAmerica.us, BBCAmerica US"								title="(?=BBC\s*America\s*US$)" strm=""/>
+	<channel id="BET.us, BET US"									title="(?=BET(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="BETSoul.us, BETSoul US"								title="(?=BET\s*SOUL\s*US$)" strm=""/>
+	<channel id="BETjams.us, BETjams US"								title="(?=BET\s*Jams\s*US$)" strm=""/>
+	<channel id="BNC.us, BNC US"									title="(?=Black\s*News\s*Channel\s*US$)" strm=""/>
+	<channel id="BetHer.us, BetHer US"									title="(?=BET\s*HER(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="BigTenNetwork.us, BigTenNetwork US"							title="(?=BIG\s*TEN\s*NETWORK\s*US$)" strm=""/>
+	<channel id="Blazers.tv"Blazers.tv"								title="(?=NBA\s*PORTLAND\s*TRAIL\s*BLAZERS\s*VIP\s*US$)" strm=""/>
+	<channel id="BloombergTV.us, BloombergTV US"							title="(?=Bloomberg(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="BloombergTV.us, BloombergTV US"							title="(?=Bloomberg(\s*TV)?(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="BloombergTV.us, BloombergTV US"							title="(?=Bloomberg(\s*TV)?\s*US$)" strm=""/>
+	<channel id="BloombergTV.us, BloombergTV US"							title="(?=Bloomberg\s*US$)" strm=""/>
+	<channel id="Boomerang.us, Boomerang US"								title="(?=Boomerang(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="Boomerang.us, Boomerang US"								title="(?=Boomerang\s*US$)" strm=""/>
+	<channel id="BounceTV.us, BounceTV US"								title="(?=Bounce(\s*TV)?\s*US$)" strm=""/>
+	<channel id="Bravo.us, Bravo US"									title="(?=Bravo(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="Bucks.tv"Bucks.tv"									title="(?=NBA\s*MILWAUKEE\s*BUCKS\s*VIP\s*US$)" strm=""/>
+	<channel id="Bulls.tv"Bulls.tv"									title="(?=NBA\s*CHICAGO\s*BULLS\s*VIP\s*US$)" strm=""/>
+	<channel id="BuzzrTV.us, BuzzrTV US"								title="(?=Buzzr(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="CBSSportsNetwork.us, CBSSportsNetwork US"						title="(?=CBS\s*SPORTS\s*HQ$)" strm=""/>
+	<channel id="CBSSportsNetwork.us, CBSSportsNetwork US"						title="(?=CBS\s*Sports\s*Network(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="CBSSportsNetwork.us, CBSSportsNetwork US"						title="(?=CBS\s*Sports\s*Network\s*US$)" strm=""/>
+	<channel id="CBSWBBM.us, CBSWBBM US"								title="(?=CBS2\s*Chicago(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="CMT.us, CMT US"									title="(?=CMT(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="CNBC.us, CNBC US"									title="(?=CNBC(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="CNBC.us, CNBC US"									title="(?=CNBC\s*US$)" strm=""/>
+	<channel id="CNN.us, CNN US"									title="(?=CNN(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="CNN.us, CNN US"									title="(?=CNN\s*US$)" strm=""/>
+	<channel id="CTVComedy.ca"CTVComedy.ca"								title="(?=CTV\s*COMEDY(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="CTVDrama.ca"CTVDrama.ca"								title="(?=CTV\s*DRAMA(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="CTVSciFi.ca"CTVSciFi.ca"								title="(?=CTV\s*sci(\-|\s*)fi(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="CartoonNetwork.us, CartoonNetwork US"							title="(?=Cartoon\s*Network(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="CartoonNetwork.us, CartoonNetwork US"							title="(?=Cartoon\s*Network\s*US$)" strm=""/>
+	<channel id="Cavaliers.tv"Cavaliers.tv"								title="(?=NBA\s*CLEVELAND\s*CAVALIERS\s*VIP\s*US$)" strm=""/>
+	<channel id="Celtics.tv"Celtics.tv"								title="(?=NBA\s*BOSTON\s*CELTICS\s*VIP\s*US$)" strm=""/>
+	<channel id="CheddarBusiness.us, CheddarBusiness US"						title="(?=Cheddar(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="Cinemax.us, Cinemax US"								title="(?=Cinemax\s*US$)" strm=""/>
+	<channel id="Clippers.tv"Clippers.tv"								title="(?=NBA\s*LOS\s*ANGELES\s*CLIPPERS\s*VIP\s*US$)" strm=""/>
+	<channel id="ComedyCentral.us, ComedyCentral US"							title="(?=Comedy\s*Central(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="ComedyCentral.us, ComedyCentral US"							title="(?=Comedy\s*Central\s*US$)" strm=""/>
+	<channel id="Comet.us, Comet US"									title="(?=Comet\s*tv(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="CookingChannel.us, CookingChannel US"							title="(?=COOKING\s*CHANNEL\s*US$)" strm=""/>
+	<channel id="CookingChannel.us, CookingChannel US"							title="(?=Cooking\s*Channel(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="CourtTV.us, CourtTV US"								title="(?=Court(\s*TV)?\s*US$)" strm=""/>
+	<channel id="CoziTV.us, CoziTV US"									title="(?=Cozi(\s*TV)?\s*US$)" strm=""/>
+	<channel id="DAZN.ca"DAZN.ca"									title="(?=DAZN\s*1\s*VIP\s*SPORTS$)" strm=""/>
+	<channel id="DAZN.ca"DAZN.ca"									title="(?=DAZN\s*2\s*VIP\s*SPORTS$)" strm=""/>
+	<channel id="DestinationAmerica.us, DestinationAmerica US"						title="(?=Destination\s*America(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="DiscoveryChannel.us, DiscoveryChannel US"						title="(?=Discovery\s*Channel(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="DiscoveryChannel.us, DiscoveryChannel US"						title="(?=Discovery\s*Channel\s*US$)" strm=""/>
+	<channel id="DiscoveryChannel.us, DiscoveryChannel US"						title="(?=Investigation\s*Discovery(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="DiscoveryFamily.us, DiscoveryFamily US"						title="(?=Discovery\s*Family(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="DiscoveryLife.us, DiscoveryLife US"							title="(?=Discovery\s*Life(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="DisneyChannel.us, DisneyChannel US"							title="(?=Disney\s*Channel(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="DisneyChannel.us, DisneyChannel US"							title="(?=Disney\s*Channel\s*UK$)" strm=""/>
+	<channel id="DisneyJunior.us, DisneyJunior US"							title="(?=Disney\s*Junior(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="DisneyXD.us, DisneyXD US"								title="(?=Disney\s*XD(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="DoItYourselfNetwork.us, DoItYourselfNetwork US"					title="(?=DIY\s*Network(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="DoItYourselfNetwork.us, DoItYourselfNetwork US"					title="(?=DIY\s*Network\s*US$)" strm=""/>
+	<channel id="EEntertainment.us, EEntertainment US"							title="(?=E!\s*Entertainment(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="EPIX.us, EPIX US"									title="(?=EPIX\s*(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="EPIX2.us, EPIX2 US"									title="(?=EPIX\s*2(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="EPIXHits.us, EPIXHits US"								title="(?=EPIX\s*HITS(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="ESPN.us, ESPN US"									title="(?=ESPN\s*1(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="ESPN.us, ESPN US"									title="(?=ESPN\s*1\s*US$)" strm=""/>
+	<channel id="ESPN2.us, ESPN2 US"									title="(?=ESPN\s*2(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="ESPN2.us, ESPN2 US"									title="(?=ESPN\s*2\s*US$)" strm=""/>
+	<channel id="ESPNU.us, ESPNU US"									title="(?=ESPN\s*U(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="EpixDriveIn.us, EpixDriveIn US"							title="(?=EPIX\s*DRIVE\s*IN(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="FOX32WFLD.us, FOX32WFLD US"								title="(?=Fox32\s*Chicago(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="FOXSoccerPlus.us, FOXSoccerPlus US"							title="(?=Fox\s*Soccer\s*Plus(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="FOXSoccerPlus.us, FOXSoccerPlus US"							title="(?=Fox\s*Soccer\s*Plus\s*US$)" strm=""/>
+	<channel id="FX.mx"FX.mx"										title="(?=FXM(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="FX.us, FX US"										title="(?=FX(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="FX.us, FX US"										title="(?=FX\s*US$)" strm=""/>
+	<channel id="FXX.us, FXX US"									title="(?=FXX(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="FXX.us, FXX US"									title="(?=FXX\s*East(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="FYI.us, FYI US"									title="(?=FYI(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="FoodNetwork.us, FoodNetwork US"							title="(?=Food\s*Network(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="FoodNetwork.us, FoodNetwork US"							title="(?=Food\s*Network\s*US$)" strm=""/>
+	<channel id="FoxBusiness.us, FoxBusiness US"							title="(?=Fox\s*Business(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="FoxNews.us, FoxNews US"								title="(?=Fox\s*News(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="FoxSports1.us, FoxSports1 US"								title="(?=Fox\s*Sports\s*1(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="FoxSports1.us, FoxSports1 US"								title="(?=Fox\s*Sports\s*1\s*US$)" strm=""/>
+	<channel id="FoxSports2.us, FoxSports2 US"								title="(?=Fox\s*Sports\s*2(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="FoxSports2.us, FoxSports2 US"								title="(?=Fox\s*Sports\s*2\s*US$)" strm=""/>
+	<channel id="FreeSpeech.us, FreeSpeech US"								title="(?=Free\s*Speech(\s*TV)?\s*US$)" strm=""/>
+	<channel id="Freeform.us, Freeform US"								title="(?=FreeForm(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="Freeform.us, Freeform US"								title="(?=Free\s*Form(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="FuseTV.us, FuseTV US"									title="(?=Fuse(\s*TV)?(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="GameShowNetwork.us, GameShowNetwork US"						title="(?=GSN(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="GolfChannel.us, GolfChannel US"							title="(?=NBC\s*Golf\s*Channel(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="GolfChannel.us, GolfChannel US"							title="(?=NBC\s*Golf\s*Channel\s*US$)" strm=""/>
+	<channel id="Grizzlies.tv"Grizzlies.tv"								title="(?=NBA\s*MEMPHIS\s*GRIZZLIES\s*VIP\s*US$)" strm=""/>
+	<channel id="HBO.us, HBO US"									title="(?=HBO(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="HBO.us, HBO US"									title="(?=HBO\s*US$)" strm=""/>
+	<channel id="HBO2.us, HBO2 US"									title="(?=HBO\s*2\s*US$)" strm=""/>
+	<channel id="HBOComedy.us, HBOComedy US"								title="(?=HBO\s*Comedy(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="HBOFamily.us, HBOFamily US"								title="(?=HBO\s*Family(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="HBOLatino.us, HBOLatino US"								title="(?=HBO\s*LATINO(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="HBOSignature.id"HBOSignature.id"							title="(?=HBO\s*Signature\s*US$)" strm=""/>
+	<channel id="HBOSignature.us, HBOSignature US"							title="(?=HBO\s*Signature(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="HBOZone.us, HBOZone US"								title="(?=HBO\s*Zone\s*US$)" strm=""/>
+	<channel id="HDNetMovies.us, HDNetMovies US"							title="(?=HDNET\s*MOVIES(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="HGTV.us, HGTV US"									title="(?=HGTV(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="HGTV.us, HGTV US"									title="(?=HGTV\s*US$)" strm=""/>
+	<channel id="HLN.us, HLN US"									title="(?=HLN\s*US$)" strm=""/>
+	<channel id="Hallmark.us, Hallmark US"								title="(?=Hallmark\s*Channel(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="Hallmark.us, Hallmark US"								title="(?=Hallmark\s*US$)" strm=""/>
+	<channel id="HallmarkDrama.us, HallmarkDrama US"							title="(?=HALLMARK\s*DRAMA(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="HallmarkMoviesMysteries.us, HallmarkMoviesMysteries US"				title="(?=Hallmark\s*Movies\s*(and|&amp;)\s*Mysteries(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="Hawks.tv"Hawks.tv"									title="(?=NBA\s*ATLANTA\s*HAWKS\s*VIP\s*US$)" strm=""/>
+	<channel id="Heat.tv"Heat.tv"									title="(?=NBA\s*MIAMI\s*HEAT\s*VIP\s*US$)" strm=""/>
+	<channel id="HistoryChannel.us, HistoryChannel US"							title="(?=History(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="HistoryChannel.us, HistoryChannel US"							title="(?=History\s*US$)" strm=""/>
+	<channel id="Hornets.tv"Hornets.tv"								title="(?=NBA\s*CHARLOTTE\s*HORNETS\s*VIP\s*US$)" strm=""/>
+	<channel id="ION.us, ION US"									title="(?=ION(\s*TV)?(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="IndependentFilmChannel.us, IndependentFilmChannel US"					title="(?=IFC(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="InvestigationDiscovery.us, InvestigationDiscovery US"					title="(?=Investigation\s*Discovery(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="Jazz.tv"Jazz.tv"									title="(?=NBA\s*UTAH\s*JAZZ\s*VIP\s*US$)" strm=""/>
+	<channel id="Kings.tv"Kings.tv"									title="(?=NBA\s*SACRAMENTO\s*KINGS\s*VIP\s*US$)" strm=""/>
+	<channel id="Knicks.tv"Knicks.tv"									title="(?=NBA\s*NEW\s*YORK\s*KNICKS\s*VIP\s*US$)" strm=""/>
+	<channel id="Lakers.tv"Lakers.tv"									title="(?=NBA\s*LOS\s*ANGELES\s*LAKERS\s*VIP\s*US$)" strm=""/>
+	<channel id="LifetimeMovies.us, LifetimeMovies US"							title="(?=Lifetime\s*Movies(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="LifetimeNetwork.us, LifetimeNetwork US"						title="(?=Lifetime(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="Logo.us, Logo US"									title="(?=Logo(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="LonghornNetwork.us, LonghornNetwork US"						title="(?=LONGHORN\s*NETWORK(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="MGM.us, MGM US"									title="(?=MGM\s*US$)" strm=""/>
+	<channel id="MLBNetwork.us, MLBNetwork US"								title="(?=MLB(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="MLBNetwork.us, MLBNetwork US"								title="(?=MLB\s*Network(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="MLBNetwork.us, MLBNetwork US"								title="(?=MLB\s*Network\s*US$)" strm=""/>
+	<channel id="MSNBC.us, MSNBC US"									title="(?=MSNBC(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="MSNBC.us, MSNBC US"									title="(?=MSNBC(\s*HD|\s*UHD)?\s*Web\s*US$)" strm=""/>
+	<channel id="MTV.us, MTV US"									title="(?=MTV(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="MTV2.us, MTV2 US"									title="(?=MTV2(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="MTVBase.uk"MTVBase.uk"								title="(?=MTV\s*Base(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="MTVClassic.us, MTVClassic US"								title="(?=MTV\s*Classic(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="MTVLive.us, MTVLive US"								title="(?=MTV\s*LIVE(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="MTVU.us, MTVU US"									title="(?=MTV\s*U(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="Magic.tv"Magic.tv"									title="(?=NBA\s*ORLANDO\s*MAGIC\s*VIP\s*US$)" strm=""/>
+	<channel id="Mavericks.tv"Mavericks.tv"								title="(?=NBA\s*DALLAS\s*MAVERICKS\s*VIP\s*US$)" strm=""/>
+	<channel id="MoreMax.us, MoreMax US"								title="(?=Cinemax\s*MoreMax(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="MotorTrend.us, MotorTrend US"								title="(?=Motorsport(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="MotorTrend.us, MotorTrend US"								title="(?=Motortrend(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="NBATV.us, NBATV US"									title="(?=NBA(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="NBATV.us, NBATV US"									title="(?=NBA(\s*TV)?(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="NBATV.us, NBATV US"									title="(?=NBA(\s*TV)?\s*US$)" strm=""/>
+	<channel id="NBC5WMAQ.us, NBC5WMAQ US"								title="(?=NBC\s*5\s*WMAQ\s*Chicago(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="NBCSportsChicago.us, NBCSportsChicago US"						title="(?=NBC\s*Sports\s*Chicago(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="NBCSportsNetwork.us, NBCSportsNetwork US"						title="(?=NBC\s*Sports\s*Network(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="NFLNetwork.us, NFLNetwork US"								title="(?=NFL\s*Network(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="NFLNetwork.us, NFLNetwork US"								title="(?=NFL\s*Network\s*US$)" strm=""/>
+	<channel id="NFLRedZone.us, NFLRedZone US"								title="(?=NFL\s*Redzone(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="NHLNetwork.us, NHLNetwork US"								title="(?=NHL\s*Network(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="NHLNetwork.us, NHLNetwork US"								title="(?=NHL\s*Network\s*US$)" strm=""/>
+	<channel id="NasaTV.ba"NasaTV.ba"									title="(?=Nasa(\s*TV)?(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="NatGeo.us, NatGeo US"									title="(?=National\s*Geographic(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="NatGeoWild.us, NatGeoWild US"								title="(?=Nat\s*Geo\s*Wild(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="Nets.tv"Nets.tv"									title="(?=NBA\s*BROOKLYN\s*NETS\s*VIP\s*US$)" strm=""/>
+	<channel id="NewEnglandSportsNetwork.us, NewEnglandSportsNetwork US"				title="(?=NESN(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="NewEnglandSportsNetworkPlus.us, NewEnglandSportsNetworkPlus US"			title="(?=NESN\s*Plus(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="Newsmax.us, Newsmax US"								title="(?=Newsmax(\s*TV)?(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="NickMusic.us, NickMusic US"								title="(?=Nick\s*Music\s*US$)" strm=""/>
+	<channel id="Nicktoons.us, Nicktoons US"								title="(?=Nicktoons(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="Nuggets.tv"Nuggets.tv"								title="(?=NBA\s*DENVER\s*NUGGETS\s*VIP\s*US$)" strm=""/>
+	<channel id="OlympicChannel.us, OlympicChannel US"							title="(?=Olympic\s*Channel(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="OneAmericaNews.us, OneAmericaNews US"							title="(?=One\s*America\s*News\s*US$)" strm=""/>
+	<channel id="OprahWinfreyNetwork.us, OprahWinfreyNetwork US"					title="(?=Oprah\s*Winfrey\s*Network(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="OutdoorChannel.us, OutdoorChannel US"							title="(?=Outdoor\s*Channel(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="Oxygen.us, Oxygen US"									title="(?=Oxygen(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="PAC12Arizona.us, PAC12Arizona US"							title="(?=PAC(\-|\s*)12\s*Arizona\s*US$)" strm=""/>
+	<channel id="PAC12BayArea.us, PAC12BayArea US"							title="(?=PAC(\-|\s*)12\s*Bay\s*Area\s*US$)" strm=""/>
+	<channel id="PAC12LosAngeles.us, PAC12LosAngeles US"						title="(?=PAC(\-|\s*)12\s*Los\s*Angeles\s*US$)" strm=""/>
+	<channel id="PAC12Oregon.us, PAC12Oregon US"							title="(?=PAC(\-|\s*)12\s*Oregon\s*US$)" strm=""/>
+	<channel id="PAC12Washington.us, PAC12Washington US"						title="(?=PAC(\-|\s*)12\s*Washington\s*US$)" strm=""/>
+	<channel id="Pacers.tv"Pacers.tv"									title="(?=NBA\s*INDIANA\s*PACERS\s*VIP\s*US$)" strm=""/>
+	<channel id="ParamountNetwork.us, ParamountNetwork US"						title="(?=Paramount\s*Network(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="ParamountNetwork.us, ParamountNetwork US"						title="(?=Paramount\s*Network\s*US$)" strm=""/>
+	<channel id="Pelicans.tv"Pelicans.tv"								title="(?=NBA\s*NEW\s*ORLEANS\s*PELICANS\s*VIP\s*US$)" strm=""/>
+	<channel id="Pistons.tv"Pistons.tv"								title="(?=NBA\s*DETROIT\s*PISTONS\s*VIP\s*US$)" strm=""/>
+	<channel id="Raptors.tv"Raptors.tv"								title="(?=NBA\s*TORONTO\s*RAPTORS\s*VIP\s*US$)" strm=""/>
+	<channel id="RedBullTV.us, RedBullTV US"								title="(?=Redbull(\s*TV)?(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="ReelzChannel.us, ReelzChannel US"							title="(?=Reelz(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="Revolt.us, Revolt US"									title="(?=Revolt(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="Rockets.tv"Rockets.tv"								title="(?=NBA\s*HOUSTON\s*ROCKETS\s*VIP\s*US$)" strm=""/>
+	<channel id="SECNetwork.us, SECNetwork US"								title="(?=SEC\s*Network(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="Science.us, Science US"								title="(?=Discovery\s*Science(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="Showtime.us, Showtime US"								title="(?=Showtime(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="Showtime.us, Showtime US"								title="(?=Showtime\s*US$)" strm=""/>
+	<channel id="Showtime2.us, Showtime2 US"								title="(?=Showtime\s*2(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="Showtime2.us, Showtime2 US"								title="(?=Showtime\s*2\s*US$)" strm=""/>
+	<channel id="ShowtimeShowcase.us, ShowtimeShowcase US"						title="(?=Showtime\s*Showcase(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="SmithsonianChannel.us, SmithsonianChannel US"						title="(?=Smithsonian\s*Channel(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="SportsmanChannel.us, SportsmanChannel US"						title="(?=SPORTSMAN\s*CHANNEL\s*US$)" strm=""/>
+	<channel id="Spurs.tv"Spurs.tv"									title="(?=NBA\s*SAN\s*ANTONIO\s*SPURS\s*VIP\s*US$)" strm=""/>
+	<channel id="StartTV.us, StartTV US"								title="(?=Start(\s*TV)?(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="Starz.us, Starz US"									title="(?=Starz\s*US$)" strm=""/>
+	<channel id="StarzComedy.us, StarzComedy US"							title="(?=Starz\s*Comedy\s*US$)" strm=""/>
+	<channel id="StarzEdge.us, StarzEdge US"								title="(?=Starz\s*Edge(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="StarzEdge.us, StarzEdge US"								title="(?=Starz\s*Edge\s*US$)" strm=""/>
+	<channel id="StarzEncore.us, StarzEncore US"							title="(?=Starz\s*Encore(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="StarzEncore.us, StarzEncore US"							title="(?=Starz\s*Encore\s*US$)" strm=""/>
+	<channel id="StarzEncoreAction.us, StarzEncoreAction US"						title="(?=Starz\s*Encore\s*Action\s*US$)" strm=""/>
+	<channel id="StarzEncoreFamily.us, StarzEncoreFamily US"						title="(?=Starz\s*Encore\s*Family\s*US$)" strm=""/>
+	<channel id="StarzEncoreWesterns.us, StarzEncoreWesterns US"					title="(?=Starz\s*Encore\s*Western\s*US$)" strm=""/>
+	<channel id="StarzInBlack.us, StarzInBlack US"							title="(?=Starz\s*In\s*Black\s*US$)" strm=""/>
+	<channel id="StarzKidsFamily.us, StarzKidsFamily US"						title="(?=Starz\s*Kids\s*(and|&amp;)\s*Family\s*US$)" strm=""/>
+	<channel id="SundanceTV.us, SundanceTV US"								title="(?=SUNDANCE\s*US$)" strm=""/>
+	<channel id="Suns.tv"Suns.tv"									title="(?=NBA\s*PHOENIX\s*SUNS\s*VIP\s*US$)" strm=""/>
+	<channel id="Syfy.us, Syfy US"									title="(?=SyFy(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="TBDTV.us, TBDTV US"									title="(?=TBD(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="TBS.us, TBS US"									title="(?=TBS(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="TLC.us, TLC US"									title="(?=TLC(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="TNT.us, TNT US"									title="(?=TNT(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="TNT.us, TNT US"									title="(?=TNT\s*US$)" strm=""/>
+	<channel id="TVG2.us, TVG2 US"									title="(?=TVG2(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="TVLandEast.us, TVLandEast US"								title="(?=Tvland(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="TennisChannel.us, TennisChannel US"							title="(?=Tennis\s*Channel(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="TheCowboyChannel.us, TheCowboyChannel US"						title="(?=COWBOY\s*CHANNEL(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="Thunder.tv"Thunder.tv"								title="(?=NBA\s*OKLAHOMA\s*CITY\s*THUNDER\s*VIP\s*US$)" strm=""/>
+	<channel id="Timberwolves.tv"Timberwolves.tv"							title="(?=NBA\s*MINNESOTA\s*TIMBERWOLVES\s*VIP\s*US$)" strm=""/>
+	<channel id="TravelChannel.us, TravelChannel US"							title="(?=Travel\s*Channel(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="TurnerClassicMovies.us, TurnerClassicMovies US"					title="(?=TCM(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="UFC.tv"UFC.tv"									title="(?=UFC\s*Fight\s*Pass\s*VIP\s*US$)" strm=""/>
+	<channel id="USANetwork.us, USANetwork US"								title="(?=USA(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="UniversalKids.us, UniversalKids US"							title="(?=Universal\s*Kids(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="VH1.us, VH1 US"									title="(?=VH1\s*Classic\s*US$)" strm=""/>
+	<channel id="Viceland.us, Viceland US"								title="(?=Viceland(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="WGN9Chicago.us, WGN9Chicago US"							title="(?=WGN(\-|\s*)TV\s*9\s*Chicago(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="WGN9Chicago.us, WGN9Chicago US"							title="(?=WGN(\-|\s*)TV\s*9\s*Chicago\s*US$)" strm=""/>
+	<channel id="WGNAmerica.us, WGNAmerica US"								title="(?=WGN\s*America(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="WLWTDT2.us, WLWTDT2 US"								title="(?=ME(\s*TV)?(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="WWE.us, WWE US"									title="(?=WWE\s*Network(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="WWE.us, WWE US"									title="(?=WWE\s*Network\s*2(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="WWE.us, WWE US"									title="(?=WWE\s*Network\s*2\s*US$)" strm=""/>
+	<channel id="WWE.us, WWE US"									title="(?=WWE\s*Network\s*US$)" strm=""/>
+	<channel id="Warriors.tv"Warriors.tv"								title="(?=NBA\s*GOLDEN\s*STATE\s*WARRIORS\s*VIP\s*US$)" strm=""/>
+	<channel id="WeTV.us, WeTV US"									title="(?=We(\s*TV)?(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="WeatherChannel.us, WeatherChannel US"							title="(?=The\s*Weather\s*Channel(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="WeatherNation.us, WeatherNation US"							title="(?=WEATHER\s*NATION(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="Wizards.tv"Wizards.tv"								title="(?=NBA\s*WASHINGTON\s*WIZARDS\s*VIP\s*US$)" strm=""/>
+	<channel id="WorldFishingNetwork.us, WorldFishingNetwork US"					title="(?=WORLD\s*FISHING\s*NETWORK(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="YESNetwork.us, YESNetwork US"								title="(?=Yes\s*Network(\s*HD|\s*UHD)?\s*US$)" strm=""/>
+	<channel id="truTV.us, truTV US"									title="(?=truTV(\s*HD|\s*UHD)?\s*US$)" strm=""/>
 
 	<category name="Movie" 									tags="Action|Action \ Comedy|Adventure|Classic|Comedy|Comedy \ Drama|Drama|Fable|Family|Fantasy|Horror|Movies|Mystery|Romance|Sci-Fi|Science|Short Film|Spy|Suspense|Thriller|True Story|Western"/>
 	<category name="Series" 								tags="Sitcom|Soaps"/>

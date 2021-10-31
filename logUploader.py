@@ -87,12 +87,17 @@ class LogUploader:
     def getLog(self, filename):
         if os.path.isfile(filename):
             content = None
-            if sys.version_info[0] > 2:
-                with open(filename, 'r', encoding='utf-8') as content_file:
-                    content = content_file.read()
-            else:
-                with codecs.open(filename, 'r', encoding='utf-8') as content_file:
-                    content = content_file.read()
+            try:
+                if sys.version_info[0] > 2:
+                    with open(filename, 'r', encoding='utf-8') as content_file:
+                        content = content_file.read()
+                else:
+                    with codecs.open(filename, 'r', encoding='utf-8') as content_file:
+                        content = content_file.read()
+            except:
+                with open(filename, 'rb') as f:
+                    content = f.read().decode(errors='replace')
+
             if content is None:
                 deb('LogUploader upload ERROR could not get content of log file')
             return content

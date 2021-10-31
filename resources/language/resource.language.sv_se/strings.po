@@ -2552,6 +2552,10 @@ msgctxt "#69064"
 msgid "Downloading"
 msgstr "Nedladdning"
 
+msgctxt "#69069"
+msgid "Could not initialize EPG, file is wrong XMLTV format."
+msgstr "Det gick inte att initiera EPG, filen är fel XMLTV format."
+
 msgctxt "#70000"
 msgid "Program title"
 msgstr "Program"
