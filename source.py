@@ -723,7 +723,7 @@ class Database(object):
                             return False
 
                     if isinstance(item, Channel):
-                        c.execute('INSERT OR REPLACE INTO channels(id, title, logo, titles, stream_url, visible, weight, source) VALUES(?, ?, ?, ?, ?, ?, (CASE ? WHEN -1 THEN (SELECT COALESCE(MAX(weight)+1, 0) FROM channels WHERE source=?) ELSE ? END), ?)', [item.id, item.title, item.logo, item.titles, item.streamUrl, item.visible, item.weight, self.source.KEY, item.weight, self.source.KEY])
+                        c.execute('INSERT OR IGNORE INTO channels(id, title, logo, titles, stream_url, visible, weight, source) VALUES(?, ?, ?, ?, ?, ?, (CASE ? WHEN -1 THEN (SELECT COALESCE(MAX(weight)+1, 0) FROM channels WHERE source=?) ELSE ? END), ?)', [item.id, item.title, item.logo, item.titles, item.streamUrl, item.visible, item.weight, self.source.KEY, item.weight, self.source.KEY])
                         if not c.rowcount:
                             c.execute('UPDATE channels SET title=?, logo=?, titles=?, stream_url=?, visible=(CASE ? WHEN -1 THEN visible ELSE ? END), weight=(CASE ? WHEN -1 THEN weight ELSE ? END) WHERE id=? AND source=?',
                                 [item.title, item.logo, item.titles, item.streamUrl, item.weight, item.visible, item.weight, item.weight, item.id, self.source.KEY])
