@@ -355,8 +355,11 @@ class PlaylistUpdater(baseServiceUpdater):
                 cc_pattern = cc.upper()
                 cc_pattern_regex = cc_pattern
 
+                if ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '0':
+                    cc_pattern_regex = cc.upper() + ':?|' + value['alpha-3'] + ':?|' + re.escape('.' + cc.lower()) + ':?|' + value['language']
+
                 # Alpha-2
-                if ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '1':
+                elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '1':
                     cc_pattern = cc.upper()
 
                 # Alpha-3
@@ -368,7 +371,7 @@ class PlaylistUpdater(baseServiceUpdater):
                     cc_pattern = '.' + cc.lower()
                     cc_pattern_regex = re.escape(cc_pattern)
 
-                # Entity
+                # Lang
                 elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '4':
                     cc_pattern = value['language']
 
@@ -398,7 +401,9 @@ class PlaylistUpdater(baseServiceUpdater):
                 prefixList.append(' ')
 
             prefix = '|'.join(map(str, prefixList))
-            if ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '3':
+            if ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '0':
+                regexAddList.append( re.compile('(\S|\s|^)(L\s*)?({prefix})(?=\S|\s|$)'.format(prefix=prefix)) )
+            elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '3':
                 regexAddList.append( re.compile('(\S|^)(L\s*)?({prefix})(?=\S|$)'.format(prefix=prefix)) )
             else:
                 regexAddList.append( re.compile('(\s|^)(L\s*)?({prefix})(?=\s|$)'.format(prefix=prefix)) )
@@ -452,10 +457,12 @@ class PlaylistUpdater(baseServiceUpdater):
                             except:
                                 tmpTitle = unidecode(splitedLine[len(splitedLine) - 1].strip().decode('utf-8'))
 
-                        if tmpTitle == '':
-                            match = regex_chann_name.findall(stripLine)
-                            if len(match) > 0:
-                                tmpTitle = match[0].replace("tvg-id=","").replace('"','').strip()
+                        tvg_id = False
+
+                        match = regex_chann_name.findall(stripLine)
+                        if len(match) > 0:
+                            tmpTitle = match[0].replace("tvg-id=","").replace('"','').strip()
+                            tvg_id = True
 
                         if tmpTitle is not None and tmpTitle != '':
                             title = tmpTitle
@@ -463,8 +470,9 @@ class PlaylistUpdater(baseServiceUpdater):
                             HDStream = False
                             UHDStream = False
 
-                            for regexReplace in regexReplaceList:
-                                title = regexReplace.sub(' ', title)
+                            if not tvg_id:
+                                for regexReplace in regexReplaceList:
+                                    title = regexReplace.sub(' ', title)
                             
                             title, match = regexHD.subn(' HD ', title)
                             if match > 0:
@@ -498,7 +506,8 @@ class PlaylistUpdater(baseServiceUpdater):
 
                                 if replaceCC:
                                     title = title + ' ' + ADDON.getSetting('{}_append_country_code'.format(self.serviceName))
-                            elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) != '0':
+
+                            elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) != '0' and not tvg_id:
                                 replaceCC = False
 
                                 p = re.compile(r'.*\s([a-zA-Z]{2,3})$', re.DOTALL)
@@ -574,13 +583,14 @@ class PlaylistUpdater(baseServiceUpdater):
                                             string = ' ' + ccCh.upper()
                                             title = re.sub('$', string, title)
 
-                            for langReplaceMap in langReplaceList:
-                                title, match = langReplaceMap['regex'].subn('', title)
-                                if match > 0:
-                                    if ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '3':
-                                        title += '' + langReplaceMap['lang']
-                                    else:
-                                        title += ' ' + langReplaceMap['lang']
+                            if ADDON.getSetting('{}_pattern'.format(self.serviceName)) != '0':
+                                for langReplaceMap in langReplaceList:
+                                    title, match = langReplaceMap['regex'].subn('', title)
+                                    if match > 0:
+                                        if ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '3':
+                                            title += '' + langReplaceMap['lang']
+                                        else:
+                                            title += ' ' + langReplaceMap['lang']
 
                             for regexRemove in regexRemoveList:
                                 if( regexRemove.findall(title) ):
@@ -591,12 +601,12 @@ class PlaylistUpdater(baseServiceUpdater):
                                     if not ( regexAdd.findall(title) ):
                                         title = ''                  
 
-                            title = title.replace('  ', ' ').strip() 
-
                             if ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '5':   
                                 title = title.replace(' ' + langReplaceMap['lang'], '')
                                 for item in nonCCList:
                                     title = title.replace(' ' + item.upper(), ' ')
+
+                            title = title.replace('  ', ' ').strip()
 
                     elif title is not None and regexCorrectStream.match(stripLine):
                         if title != '':

@@ -258,9 +258,27 @@ for k, v in CC_DICT.items():
         all_channels = strings(30325)
         PREDEFINED_CATEGORIES.append(all_channels)
     else:
-        k = k.upper()
-        CC_LIST.append(k.lower())
-        PREDEFINED_CATEGORIES.append('Group: {}'.format(k))
+        if ADDON.getSetting('country_code_{cc}'.format(cc=k)) == "true":
+            alpha_2 = k.upper()
+            alpha_3 = v['alpha-3']
+            cc_tdl = '.' + k.lower()
+            lang = v['language']
+
+            CC_LIST.append(k.lower())
+
+            for i in range(5):
+                if ADDON.getSetting('playlist_{}_pattern'.format(i)) == "0":
+                    PREDEFINED_CATEGORIES.append('Group: {}'.format(alpha_2))
+                elif ADDON.getSetting('playlist_{}_pattern'.format(i)) == "1":
+                    PREDEFINED_CATEGORIES.append('Group: {}'.format(alpha_2))
+                elif ADDON.getSetting('playlist_{}_pattern'.format(i)) == "2":
+                    PREDEFINED_CATEGORIES.append('Group: {}'.format(alpha_3))
+                elif ADDON.getSetting('playlist_{}_pattern'.format(i)) == "3":
+                    PREDEFINED_CATEGORIES.append('Group: {}'.format(cc_tdl))
+                elif ADDON.getSetting('playlist_{}_pattern'.format(i)) == "4":
+                    PREDEFINED_CATEGORIES.append('Group: {}'.format(lang))
+
+                PREDEFINED_CATEGORIES = list(dict.fromkeys(PREDEFINED_CATEGORIES))
 
 def category_formatting(label):  
     label = re.sub('^0$', '1.png', label)
@@ -5759,7 +5777,10 @@ class mTVGuide(xbmcgui.WindowXML):
 
             for item in CC_LIST:
                 if ADDON.getSetting('country_code_{cc}'.format(cc=item)) != "true":
-                    categories.remove('Group: {cc}'.format(cc=item.upper()))
+                    for k,v in CC_DICT.items():
+                        if item == k:
+                            if v in categories:
+                                categories.remove('Group: {cc}'.format(cc=v))
 
             categories = [label.replace('Group', strings(30995)) for label in categories]
 
@@ -5852,6 +5873,8 @@ class mTVGuide(xbmcgui.WindowXML):
                     if len(res) == 0:
                         self.database.setCategory(strings(30325))
                         ADDON.setSetting('category', strings(30325))
+                        self._clearEpg()
+                        self.onRedrawEPG(0, self.viewStartDate, initializing=False)
                         if not self.controlAndProgramList:
                             playlists = list()
                             for i in range(5):
@@ -6333,7 +6356,10 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
 
             for item in CC_LIST:
                 if ADDON.getSetting('country_code_{cc}'.format(cc=item)) != "true":
-                    categories.remove('Group: {cc}'.format(cc=item.upper()))
+                    for k,v in CC_DICT.items():
+                        if item == k:
+                            if v in categories:
+                                categories.remove('Group: {cc}'.format(cc=v))
 
             categories = [label.replace('Group', strings(30995)) for label in categories]
 
