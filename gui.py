@@ -279,7 +279,7 @@ for k, v in CC_DICT.items():
                     elif ADDON.getSetting('playlist_{}_pattern'.format(i)) == "4":
                         PREDEFINED_CATEGORIES.append('Group: {}'.format(lang))
 
-                    PREDEFINED_CATEGORIES = list(dict.fromkeys(PREDEFINED_CATEGORIES))
+            PREDEFINED_CATEGORIES = list(collections.OrderedDict.fromkeys(PREDEFINED_CATEGORIES))
 
 def category_formatting(label):  
     label = re.sub('^0$', '1.png', label)
