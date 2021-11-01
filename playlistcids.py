@@ -501,10 +501,6 @@ class PlaylistUpdater(baseServiceUpdater):
                                     cc = ''
 
                                 if cc.lower() not in ccList or cc.lower() in nonCCList:
-                                    if p.match(title):
-                                        replaceCC = True
-
-                                if replaceCC:
                                     title = title + ' ' + ADDON.getSetting('{}_append_country_code'.format(self.serviceName))
 
                             elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) != '0' and not tvg_id:
@@ -601,12 +597,12 @@ class PlaylistUpdater(baseServiceUpdater):
                                     if not ( regexAdd.findall(title) ):
                                         title = ''                  
 
+                            title = title.replace('  ', ' ').strip()
+
                             if ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '5':   
                                 title = title.replace(' ' + langReplaceMap['lang'], '')
                                 for item in nonCCList:
-                                    title = title.replace(' ' + item.upper(), ' ')
-
-                            title = title.replace('  ', ' ').strip()
+                                    title = title.replace(' ' + item.upper(), ' ')                            
 
                     elif title is not None and regexCorrectStream.match(stripLine):
                         if title != '':
