@@ -744,7 +744,8 @@ class baseServiceUpdater:
                 self.loadSingleBaseMap('vod', self.vodMapFile)
 
             for k, v in CC_DICT.items():
-                if ADDON.getSetting('country_code_{}'.format(k.lower())) == 'true':
+                cc = ADDON.getSetting('country_code_{}'.format(k.lower()))
+                if cc == 'true' and cc != '':
                     self.loadSingleBaseMap('base_' + k.lower(), 'basemap_{}.xml'.format(k.lower()))
 
             self.loadExtraBaseMap('base_extra', self.extraMapFile)

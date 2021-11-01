@@ -452,205 +452,211 @@ class PlayService(xbmc.Player, BasePlayService):
 
 
     def catchupTeliaPlay(self, channelInfo, utc, lutc):
-        base = ['https://teliatv.dk', 'https://www.teliaplay.se']
-        classic = ['https://teliatv.dk', 'https://classic.teliaplay.se']
+        try:
+            base = ['https://teliatv.dk', 'https://www.teliaplay.se']
+            classic = ['https://teliatv.dk', 'https://classic.teliaplay.se']
 
-        host = ['www.teliatv.dk', 'www.teliaplay.se']
-        hclassic = ['www.teliatv.dk', 'classic.teliaplay.se']
+            host = ['www.teliatv.dk', 'www.teliaplay.se']
+            hclassic = ['www.teliatv.dk', 'classic.teliaplay.se']
 
-        cc = ['dk', 'se']
+            cc = ['dk', 'se']
 
-        country            = int(ADDON.getSetting('teliaplay_locale'))
-        
-        dashjs             = ADDON.getSetting('teliaplay_devush')
-        beartoken          = ADDON.getSetting('teliaplay_beartoken')
-        tv_client_boot_id  = ADDON.getSetting('teliaplay_tv_client_boot_id')
-        usern              = ADDON.getSetting('teliaplay_usern')
-        sessionid          = ADDON.getSetting('teliaplay_sess_id')
+            country            = int(ADDON.getSetting('teliaplay_locale'))
+            
+            dashjs             = ADDON.getSetting('teliaplay_devush')
+            beartoken          = ADDON.getSetting('teliaplay_beartoken')
+            tv_client_boot_id  = ADDON.getSetting('teliaplay_tv_client_boot_id')
+            usern              = ADDON.getSetting('teliaplay_usern')
+            sessionid          = ADDON.getSetting('teliaplay_sess_id')
 
-        UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36 Edg/89.0.774.63'
+            UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36 Edg/89.0.774.63'
 
-        utc = str(int(utc) * 1000 + 1000)
-        lutc = str(int(lutc) * 1000)
+            utc = str(int(utc) * 1000 + 1000)
+            lutc = str(int(lutc) * 1000)
 
-        n = datetime.datetime.now()
+            n = datetime.datetime.now()
 
-        if sys.version_info[0] > 2:
-            now = int(time.mktime(n.timetuple())) * 1000
-            tday = str(((int(time.time() // 86400)) * 86400) * 1000)
-            yday = str(((int(time.time() // 86400)) * 86400 - 86400 ) * 1000)
-        else:
-            now = int(time.mktime(n.timetuple())) * 1000
-            tday = str(((int(time.mktime(n.timetuple()) // 86400)) * 86400) * 1000)
-            yday = str(((int(time.mktime(n.timetuple()) // 86400)) * 86400 - 86400 ) * 1000)
-
-        if int(utc) < int(tday):
-            timestamp = yday
-        else:
-            timestamp = tday
-
-        headers = {
-            'Authority': 'graphql-telia.t6a.net',
-            'tv-client-name': 'web',
-            'tv-client-boot-id': tv_client_boot_id,
-            'DNT': '1',
-            'sec-ch-ua-mobile': '?0',
-            'Authorization': 'Bearer '+ beartoken,
-            'tv-client-tz': 'Europe/Stockholm',
-            'Content-Type': 'application/json',
-            'X-Country': cc[country],
-            'User-Agent': UA,
-            'tv-client-version': '1.16.6',
-            'sec-ch-ua': '"Chromium";v="92", " Not A;Brand";v="99", "Microsoft Edge";v="92"',
-            'Accept': '*/*',
-            'Origin': base[country],
-            'Sec-Fetch-Site': 'cross-site',
-            'Sec-Fetch-Mode': 'cors',
-            'Sec-Fetch-Dest': 'empty',
-            'Referer': base[country]+'/',
-            'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
-        }
-
-        params = (
-            ('operationName', 'getTvChannel'),
-            ('variables', '{"timestamp":'+timestamp+',"offset":0,"id":"'+str(self.channCid(channelInfo.cid))+'"}'),
-            ('extensions', '{"persistedQuery":{"version":1,"sha256Hash":"05f9356e33be31cb36938442b37776097b304241072bf1bc31af53f65dfaf417"}}'),
-        )
-
-        response = requests.get('https://graphql-telia.t6a.net/graphql', headers=headers, params=params, cookies=sess.cookies, verify=False).json()
-
-        media_id = ''
-        watch_mode = ''
-
-        programItems = response['data']['channel']['programs']['programItems']
-        for item in programItems:
-            start_time = item['startTime']['timestamp']
-            end_time = item['endTime']['timestamp']
-            if int(utc) >= int(start_time) and int(utc) <= int(end_time):
-                media_id = item['media']['id']
-                title = item['media']['title']
-
-                if sys.version_info[0] > 2:
-                    p = re.compile('\WwatchMode\W:\s*\W(.*?)\W,', re.M)
-                else:
-                    p = re.compile('\WwatchMode\W:\s*\W(.*?)\W},', re.M)
-
-                watch_modes = p.findall(json.dumps(item['media']['playback']['play']))
-
-                if ('ONDEMAND' in watch_modes or 'STARTOVER' in watch_modes) and media_id != '':
-                    streamType = 'MEDIA'
-
-                else:
-                    res = xbmcgui.Dialog().yesno(strings(30998), strings(59980))
-                    if res:
-                        media_id = self.channCid(channelInfo.cid)
-                        streamType = 'CHANNEL'
-                    else:
-                        return None, None
-
-        catchupType = 'ONDEMAND'
-        if int(end_time) > int(now):
-            catchupType = 'STARTOVER'
-
-        url = 'https://streaminggateway-telia.clientapi-prod.live.tv.telia.net/streaminggateway/rest/secure/v2/streamingticket/{type}/{cid}?country={cc}'.format(type=streamType, cid=(str(media_id)), cc=cc[country].upper())
-
-        headers = {
-            'Connection': 'keep-alive',
-            'sec-ch-ua': '"Chromium";v="92", " Not A;Brand";v="99", "Microsoft Edge";v="92"',
-            'tv-client-boot-id': tv_client_boot_id,
-            'DNT': '1',
-            'sec-ch-ua-mobile': '?0',
-            'Authorization': 'Bearer '+ beartoken,
-            'Content-Type': 'application/json',
-            'X-Country': cc[country],
-            'User-Agent': UA,
-            'Accept': '*/*',
-            'Origin': base[country],
-            'Sec-Fetch-Site': 'cross-site',
-            'Sec-Fetch-Mode': 'cors',
-            'Sec-Fetch-Dest': 'empty',
-            'Referer': base[country]+'/',
-            'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
-        }
-
-        params = (
-            ('country', cc[country].upper()),
-        )
-
-        data = {
-            "sessionId": six.text_type(uuid.uuid4()),
-            "whiteLabelBrand":"TELIA",
-            "watchMode": catchupType,
-            "accessControl":"SUBSCRIPTION",
-            "device": {
-                "deviceId": tv_client_boot_id,
-                "category":"unknown",
-                "packagings":["DASH_MP4_CTR"],
-                "drmType":"WIDEVINE",
-                "capabilities":[],
-                "screen": {
-                    "height":1080,
-                    "width":1920
-                    },
-                "model":"windows_desktop"
-                },
-                "preferences": {
-                    "audioLanguage":["undefined"],
-                    "accessibility":[]}
-                    }
-
-        response = requests.post(url, headers=headers, json=data, params=params, cookies=sess.cookies, verify=False).json()
-
-        hea = ''
-
-        LICENSE_URL = response.get('streams', '')[0].get('drm', '').get('licenseUrl', '')
-        stream_url = response.get('streams', '')[0].get('url', '')
-        headr = response.get('streams', '')[0].get('drm', '').get('headers', '')
-
-        if 'X-AxDRM-Message' in headr:
-            hea = 'Content-Type=&X-AxDRM-Message=' + dashjs
-
-        elif 'x-dt-auth-token' in headr:
-            hea = 'Content-Type=&x-dt-auth-token=' + dashjs
-
-        else:
             if sys.version_info[0] > 2:
-                hea = urllib.parse.urlencode(headr)
+                now = int(time.mktime(n.timetuple())) * 1000
+                tday = str(((int(time.time() // 86400)) * 86400) * 1000)
+                yday = str(((int(time.time() // 86400)) * 86400 - 86400 ) * 1000)
             else:
-                hea = urllib.urlencode(headr)
+                now = int(time.mktime(n.timetuple())) * 1000
+                tday = str(((int(time.mktime(n.timetuple()) // 86400)) * 86400) * 1000)
+                yday = str(((int(time.mktime(n.timetuple()) // 86400)) * 86400 - 86400 ) * 1000)
 
-            if 'Content-Type=&' not in hea:
-                hea = 'Content-Type=&' + hea
+            if int(utc) < int(tday):
+                timestamp = yday
+            else:
+                timestamp = tday
 
-        license_url = LICENSE_URL + '|' + hea + '|R{SSM}|'
+            headers = {
+                'Authority': 'graphql-telia.t6a.net',
+                'tv-client-name': 'web',
+                'tv-client-boot-id': tv_client_boot_id,
+                'DNT': '1',
+                'sec-ch-ua-mobile': '?0',
+                'Authorization': 'Bearer '+ beartoken,
+                'tv-client-tz': 'Europe/Stockholm',
+                'Content-Type': 'application/json',
+                'X-Country': cc[country],
+                'User-Agent': UA,
+                'tv-client-version': '1.16.6',
+                'sec-ch-ua': '"Chromium";v="92", " Not A;Brand";v="99", "Microsoft Edge";v="92"',
+                'Accept': '*/*',
+                'Origin': base[country],
+                'Sec-Fetch-Site': 'cross-site',
+                'Sec-Fetch-Mode': 'cors',
+                'Sec-Fetch-Dest': 'empty',
+                'Referer': base[country]+'/',
+                'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
+            }
 
-        deleteUrl = 'https://streaminggateway-telia.clientapi-prod.live.tv.telia.net/streaminggateway/rest/secure/v2/streamingticket/{type}/{cid}?country={cc}'.format(type=streamType, cid=(str(media_id)), cc=cc[country].upper())
+            params = (
+                ('operationName', 'getTvChannel'),
+                ('variables', '{"timestamp":'+timestamp+',"offset":0,"id":"'+str(self.channCid(channelInfo.cid))+'"}'),
+                ('extensions', '{"persistedQuery":{"version":1,"sha256Hash":"05f9356e33be31cb36938442b37776097b304241072bf1bc31af53f65dfaf417"}}'),
+            )
 
-        headers = {
-            'Connection': 'keep-alive',
-            'sec-ch-ua': '"Chromium";v="92", " Not A;Brand";v="99", "Microsoft Edge";v="92"',
-            'tv-client-boot-id': tv_client_boot_id,
-            'DNT': '1',
-            'sec-ch-ua-mobile': '?0',
-            'Authorization': 'Bearer '+ beartoken,
-            'Content-Type': 'application/json',
-            'X-Country': cc[country],
-            'User-Agent': UA,
-            'Accept': '*/*',
-            'Origin': base[country],
-            'Sec-Fetch-Site': 'cross-site',
-            'Sec-Fetch-Mode': 'cors',
-            'Sec-Fetch-Dest': 'empty',
-            'Referer': base[country]+'/',
-            'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
-        }
+            response = requests.get('https://graphql-telia.t6a.net/graphql', headers=headers, params=params, cookies=sess.cookies, verify=False).json()
+            if response.get('errors', ''):
+                return None, None
 
-        thread = threading.Thread(name='deleteSession', target=self.deleteSession, args=[deleteUrl, headers])
-        thread = threading.Timer(3.0, self.deleteSession, args=[deleteUrl, headers])
-        thread.start()
+            media_id = ''
+            watch_mode = ''
 
-        return stream_url, license_url
+            programItems = response['data']['channel']['programs']['programItems']
+            for item in programItems:
+                start_time = item['startTime']['timestamp']
+                end_time = item['endTime']['timestamp']
+                if int(utc) >= int(start_time) and int(utc) <= int(end_time):
+                    media_id = item['media']['id']
+                    title = item['media']['title']
 
+                    if sys.version_info[0] > 2:
+                        p = re.compile('\WwatchMode\W:\s*\W(.*?)\W,', re.M)
+                    else:
+                        p = re.compile('\WwatchMode\W:\s*\W(.*?)\W},', re.M)
+
+                    watch_modes = p.findall(json.dumps(item['media']['playback']['play']))
+
+                    if ('ONDEMAND' in watch_modes or 'STARTOVER' in watch_modes) and media_id != '':
+                        streamType = 'MEDIA'
+
+                    else:
+                        res = xbmcgui.Dialog().yesno(strings(30998), strings(59980))
+                        if res:
+                            media_id = self.channCid(channelInfo.cid)
+                            streamType = 'CHANNEL'
+                        else:
+                            return None, None
+
+            catchupType = 'ONDEMAND'
+            if int(end_time) > int(now):
+                catchupType = 'STARTOVER'
+
+            url = 'https://streaminggateway-telia.clientapi-prod.live.tv.telia.net/streaminggateway/rest/secure/v2/streamingticket/{type}/{cid}?country={cc}'.format(type=streamType, cid=(str(media_id)), cc=cc[country].upper())
+
+            headers = {
+                'Connection': 'keep-alive',
+                'sec-ch-ua': '"Chromium";v="92", " Not A;Brand";v="99", "Microsoft Edge";v="92"',
+                'tv-client-boot-id': tv_client_boot_id,
+                'DNT': '1',
+                'sec-ch-ua-mobile': '?0',
+                'Authorization': 'Bearer '+ beartoken,
+                'Content-Type': 'application/json',
+                'X-Country': cc[country],
+                'User-Agent': UA,
+                'Accept': '*/*',
+                'Origin': base[country],
+                'Sec-Fetch-Site': 'cross-site',
+                'Sec-Fetch-Mode': 'cors',
+                'Sec-Fetch-Dest': 'empty',
+                'Referer': base[country]+'/',
+                'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
+            }
+
+            params = (
+                ('country', cc[country].upper()),
+            )
+
+            data = {
+                "sessionId": six.text_type(uuid.uuid4()),
+                "whiteLabelBrand":"TELIA",
+                "watchMode": catchupType,
+                "accessControl":"SUBSCRIPTION",
+                "device": {
+                    "deviceId": tv_client_boot_id,
+                    "category":"unknown",
+                    "packagings":["DASH_MP4_CTR"],
+                    "drmType":"WIDEVINE",
+                    "capabilities":[],
+                    "screen": {
+                        "height":1080,
+                        "width":1920
+                        },
+                    "model":"windows_desktop"
+                    },
+                    "preferences": {
+                        "audioLanguage":["undefined"],
+                        "accessibility":[]}
+                        }
+
+            response = requests.post(url, headers=headers, json=data, params=params, cookies=sess.cookies, verify=False).json()
+
+            hea = ''
+
+            LICENSE_URL = response.get('streams', '')[0].get('drm', '').get('licenseUrl', '')
+            stream_url = response.get('streams', '')[0].get('url', '')
+            headr = response.get('streams', '')[0].get('drm', '').get('headers', '')
+
+            if 'X-AxDRM-Message' in headr:
+                hea = 'Content-Type=&X-AxDRM-Message=' + dashjs
+
+            elif 'x-dt-auth-token' in headr:
+                hea = 'Content-Type=&x-dt-auth-token=' + dashjs
+
+            else:
+                if sys.version_info[0] > 2:
+                    hea = urllib.parse.urlencode(headr)
+                else:
+                    hea = urllib.urlencode(headr)
+
+                if 'Content-Type=&' not in hea:
+                    hea = 'Content-Type=&' + hea
+
+            license_url = LICENSE_URL + '|' + hea + '|R{SSM}|'
+
+            deleteUrl = 'https://streaminggateway-telia.clientapi-prod.live.tv.telia.net/streaminggateway/rest/secure/v2/streamingticket/{type}/{cid}?country={cc}'.format(type=streamType, cid=(str(media_id)), cc=cc[country].upper())
+
+            headers = {
+                'Connection': 'keep-alive',
+                'sec-ch-ua': '"Chromium";v="92", " Not A;Brand";v="99", "Microsoft Edge";v="92"',
+                'tv-client-boot-id': tv_client_boot_id,
+                'DNT': '1',
+                'sec-ch-ua-mobile': '?0',
+                'Authorization': 'Bearer '+ beartoken,
+                'Content-Type': 'application/json',
+                'X-Country': cc[country],
+                'User-Agent': UA,
+                'Accept': '*/*',
+                'Origin': base[country],
+                'Sec-Fetch-Site': 'cross-site',
+                'Sec-Fetch-Mode': 'cors',
+                'Sec-Fetch-Dest': 'empty',
+                'Referer': base[country]+'/',
+                'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
+            }
+
+            thread = threading.Thread(name='deleteSession', target=self.deleteSession, args=[deleteUrl, headers])
+            thread = threading.Timer(3.0, self.deleteSession, args=[deleteUrl, headers])
+            thread.start()
+
+            return stream_url, license_url
+
+        except Exception as ex:
+            deb('catchupTeliaPlay exception: {}'.format(ex))
+            return None, None
 
     @contextmanager
     def busyDialog(self):
