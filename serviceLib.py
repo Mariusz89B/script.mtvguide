@@ -515,9 +515,9 @@ class MapString:
 
                     if logCall:
                         try:
-                            logCall('[UPD] %-35s %-50s %-35s' % (unidecode(aid), atitle, astrm))
+                            logCall('[UPD] %-35s %-50s %-35s' % (unidecode(achannel), atitle, astrm))
                         except:
-                            logCall('[UPD] %-35s %-50s %-35s' % (unidecode(aid.decode('utf-8')), atitle, astrm))
+                            logCall('[UPD] %-35s %-50s %-35s' % (unidecode(achannel.decode('utf-8')), atitle, astrm))
 
                     result.append(MapString(channelid=achannel, titleRegex=atitle, strm=astrm, src='', displayName=''))
                     rstrm = astrm
