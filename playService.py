@@ -496,10 +496,11 @@ class PlayService(xbmc.Player, BasePlayService):
             'DNT': '1',
             'sec-ch-ua-mobile': '?0',
             'Authorization': 'Bearer '+ beartoken,
+            'tv-client-tz': 'Europe/Stockholm',
             'Content-Type': 'application/json',
             'X-Country': cc[country],
             'User-Agent': UA,
-            'tv-client-version': '1.2.0',
+            'tv-client-version': '1.16.6',
             'sec-ch-ua': '"Chromium";v="92", " Not A;Brand";v="99", "Microsoft Edge";v="92"',
             'Accept': '*/*',
             'Origin': base[country],
@@ -513,7 +514,7 @@ class PlayService(xbmc.Player, BasePlayService):
         params = (
             ('operationName', 'getTvChannel'),
             ('variables', '{"timestamp":'+timestamp+',"offset":0,"id":"'+str(self.channCid(channelInfo.cid))+'"}'),
-            ('extensions', '{"persistedQuery":{"version":1,"sha256Hash":"6760f09a1fde5f410dc80906db28789631cc8c8b4887ff0c24ed76ff25eca71a"}}'),
+            ('extensions', '{"persistedQuery":{"version":1,"sha256Hash":"05f9356e33be31cb36938442b37776097b304241072bf1bc31af53f65dfaf417"}}'),
         )
 
         response = requests.get('https://graphql-telia.t6a.net/graphql', headers=headers, params=params, cookies=sess.cookies, verify=False).json()
