@@ -267,18 +267,19 @@ for k, v in CC_DICT.items():
             CC_LIST.append(k.lower())
 
             for i in range(5):
-                if ADDON.getSetting('playlist_{}_pattern'.format(i)) == "0":
-                    PREDEFINED_CATEGORIES.append('Group: {}'.format(alpha_2))
-                elif ADDON.getSetting('playlist_{}_pattern'.format(i)) == "1":
-                    PREDEFINED_CATEGORIES.append('Group: {}'.format(alpha_2))
-                elif ADDON.getSetting('playlist_{}_pattern'.format(i)) == "2":
-                    PREDEFINED_CATEGORIES.append('Group: {}'.format(alpha_3))
-                elif ADDON.getSetting('playlist_{}_pattern'.format(i)) == "3":
-                    PREDEFINED_CATEGORIES.append('Group: {}'.format(cc_tdl))
-                elif ADDON.getSetting('playlist_{}_pattern'.format(i)) == "4":
-                    PREDEFINED_CATEGORIES.append('Group: {}'.format(lang))
+                if ADDON.getSetting('playlist_{}_enabled'.format(i)) == 'true':
+                    if ADDON.getSetting('playlist_{}_pattern'.format(i)) == "0":
+                        PREDEFINED_CATEGORIES.append('Group: {}'.format(alpha_2))
+                    elif ADDON.getSetting('playlist_{}_pattern'.format(i)) == "1":
+                        PREDEFINED_CATEGORIES.append('Group: {}'.format(alpha_2))
+                    elif ADDON.getSetting('playlist_{}_pattern'.format(i)) == "2":
+                        PREDEFINED_CATEGORIES.append('Group: {}'.format(alpha_3))
+                    elif ADDON.getSetting('playlist_{}_pattern'.format(i)) == "3":
+                        PREDEFINED_CATEGORIES.append('Group: {}'.format(cc_tdl))
+                    elif ADDON.getSetting('playlist_{}_pattern'.format(i)) == "4":
+                        PREDEFINED_CATEGORIES.append('Group: {}'.format(lang))
 
-                PREDEFINED_CATEGORIES = list(dict.fromkeys(PREDEFINED_CATEGORIES))
+                    PREDEFINED_CATEGORIES = list(dict.fromkeys(PREDEFINED_CATEGORIES))
 
 def category_formatting(label):  
     label = re.sub('^0$', '1.png', label)
@@ -768,6 +769,8 @@ class mTVGuide(xbmcgui.WindowXML):
 
         if continent == 0:
             filtered_dict = CC_DICT
+            del filtered_dict['all']
+            
         else:
             filtered_dict = dict((k, v) for k, v in CC_DICT.items() if int(v['continent']) + 1 == continent or (int(v['continent']) + 1 == -1 and continent != 7))
 

@@ -77,7 +77,7 @@
 	<channel id="DUCK TV, DUCK TV PL" title="(?=DUCK(\s*TV)?(\s*(HD|UHD|4K))?(\s*ENG)?\s*PL$)" strm=""/>
 	<channel id="E! ENTERTAINMENT, E! ENTERTAINMENT PL" title="(?=E(!)?(\s*ENTERTAINMENT)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="E-SPORT, E-SPORT PL" title="(?=E(\-|\s*)?SPORT(S)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
-	<channel id="ELEVEN SPORTS 1 4K, ELEVEN SPORTS 1 4K PL" title="(?=(ELEVEN|11)(\s*SPORT(S)?)?(\s*1)?(\s*(UHD|4K))(\s*TV)?\s*PL$)" strm=""/>
+	<channel id="ELEVEN SPORTS 4K, ELEVEN SPORTS 4K PL" title="(?=(ELEVEN|11)(\s*SPORT(S)?)?(\s*1)?(\s*(UHD|4K))(\s*TV)?\s*PL$)" strm=""/>
 	<channel id="ELEVEN SPORTS 1, ELEVEN SPORTS 1 PL" title="(?=(ELEVEN|11)(\s*SPORT(S)?)?(\s*1)?(\s*TV)?(\s*HD)?\s*PL$)" strm=""/>
 	<channel id="ELEVEN SPORTS 2, ELEVEN SPORTS 2 PL" title="(?=(ELEVEN|11|E)(\s*SPORT)(S)?(\s*2)(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="ELEVEN SPORTS 3, ELEVEN SPORTS 3 PL" title="(?=(ELEVEN|11|E)\s*(SPORT(S)?(\s*3)|EXTRA)(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
@@ -238,7 +238,7 @@
 	<channel id="TENIS PREMIUM 1, TENIS PREMIUM 1 PL" title="(?=TENIS\s*PREMIUM(\s*1)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="TENIS PREMIUM 2, TENIS PREMIUM 2 PL" title="(?=TENIS\s*PREMIUM\s*2(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="TLC, TLC PL" title="(?=TLC(\s*POLSKA)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
-	<channel id="TNT, TNT PL" title="(?=TNT(\s*CHANNEL)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
+	<channel id="WARNER TV, WARNER TV PL" title="(?=WARNER(\s*BROS(\.)?)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="TOP KIDS JR, TOP KIDS JR PL" title="(?=TOP\s*KIDS\s*(JR(\.)?|JUNIOR)(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="TOP KIDS, TOP KIDS PL" title="(?=TOP\s*KIDS(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="TOYA, TOYA PL" title="(?=TOYA(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
