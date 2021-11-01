@@ -561,7 +561,7 @@ class SettingsImp:
         selectList = list()
         epgList = list()
 
-        continent = xbmcgui.Dialog().select(strings(30725), [strings(30727), strings(30728), strings(30729), strings(30730), strings(30731), strings(30732), '[COLOR red]' + strings(30726) + '[/COLOR]'])
+        continent = xbmcgui.Dialog().select(strings(30725), [strings(30325), strings(30727), strings(30728), strings(30729), strings(30730), strings(30731), strings(30732), '[COLOR red]' + strings(30726) + '[/COLOR]'])
 
         if continent is None:
             enabling = True
@@ -571,7 +571,10 @@ class SettingsImp:
             enabling = True
             return xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)
 
-        filtered_dict = dict((k, v) for k, v in CC_DICT.items() if v['continent'] == continent or (v['continent'] == -1 and continent != 6))
+        if continent == 0:
+            filtered_dict = CC_DICT
+        else:
+            filtered_dict = dict((k, v) for k, v in CC_DICT.items() if int(v['continent']) + 1 == continent or (int(v['continent']) + 1 == -1 and continent != 7))
 
         if sys.version_info[0] < 3:
             filtered_dict = collections.OrderedDict(sorted(filtered_dict.items()))
@@ -747,7 +750,7 @@ class SettingsImp:
         selectList = list()
         epgList = list()
 
-        continent = xbmcgui.Dialog().select(strings(30725), [strings(30727), strings(30728), strings(30729), strings(30730), strings(30731), strings(30732), '[COLOR red]' + strings(30726) + '[/COLOR]'])
+        continent = xbmcgui.Dialog().select(strings(30725), [strings(30325), strings(30727), strings(30728), strings(30729), strings(30730), strings(30731), strings(30732), '[COLOR red]' + strings(30726) + '[/COLOR]'])
 
         if continent is None:
             enabling = True
@@ -757,7 +760,10 @@ class SettingsImp:
             enabling = True
             return xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)
 
-        filtered_dict = dict((k, v) for k, v in CC_DICT.items() if v['continent'] == continent or (v['continent'] == -1 and continent != 6))
+        if continent == 0:
+            filtered_dict = CC_DICT
+        else:
+            filtered_dict = dict((k, v) for k, v in CC_DICT.items() if int(v['continent']) + 1 == continent or (int(v['continent']) + 1 == -1 and continent != 7))
 
         if sys.version_info[0] < 3:
             filtered_dict = collections.OrderedDict(sorted(filtered_dict.items()))
