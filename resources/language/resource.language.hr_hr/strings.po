@@ -2800,6 +2800,22 @@ msgctxt "#70133"
 msgid "Remove all definitions"
 msgstr "Ukloni sve definicije"
 
+msgctxt "#70134"
+msgid "Sort list alphabetically"
+msgstr "Popis poredaj po abecedi"
+
+msgctxt "#70135"
+msgid "Sort group by category"
+msgstr "Poređaj grupu po kategoriji"
+
+msgctxt "#70136"
+msgid "EPG list sorting"
+msgstr "Razvrstavanje EPG liste"
+
+msgctxt "#70137"
+msgid "Enable tvg-id matching"
+msgstr "Omogući podudaranje tvg-id"
+
 msgctxt "#80005"
 msgid "[COLOR]WP Pilot[/COLOR]"
 msgstr "[COLOR]WP Pilot[/COLOR]"

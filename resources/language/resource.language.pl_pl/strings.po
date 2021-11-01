@@ -2800,6 +2800,22 @@ msgctxt "#70133"
 msgid "Remove all definitions"
 msgstr "Usuń wszystkie definicje"
 
+msgctxt "#70134"
+msgid "Sort list alphabetically"
+msgstr "Sortuj listę alfabetycznie"
+
+msgctxt "#70135"
+msgid "Sort group by category"
+msgstr "Sortuj grupę według kategorii"
+
+msgctxt "#70136"
+msgid "EPG list sorting"
+msgstr "Sortowanie listy EPG"
+
+msgctxt "#70137"
+msgid "Enable tvg-id matching"
+msgstr "Włącz wykrywanie tvg-id"
+
 msgctxt "#80005"
 msgid "[COLOR]WP Pilot[/COLOR]"
 msgstr "[COLOR]WP Pilot[/COLOR]"

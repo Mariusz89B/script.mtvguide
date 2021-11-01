@@ -2572,6 +2572,26 @@
 					</dependencies>
 					<control format="string" type="spinner"/>
 				</setting>
+				<setting help="95142" id="channel_filter_sort" label="70136" type="integer">
+					<level>1</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="70007">0</option>
+							<option label="70134">1</option>
+							<option label="70135">2</option>
+						</options>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<or>
+								<condition operator="is" setting="source">0</condition>
+								<condition operator="is" setting="source">1</condition>
+							</or>
+						</dependency>
+					</dependencies>
+					<control format="string" type="spinner"/>
+				</setting>
 				<setting help="95134" id="epg_display_name" label="30761" type="boolean">
 					<level>1</level>
 					<default>false</default>
@@ -2586,6 +2606,19 @@
 					<control type="toggle"/>
 				</setting>
 				<setting help="95135" id="show_group_channels" label="30762" type="boolean">
+					<level>1</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="visible">
+							<or>
+								<condition operator="is" setting="source">0</condition>
+								<condition operator="is" setting="source">1</condition>
+							</or>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting help="95143" id="tvg_id" label="70137" type="boolean">
 					<level>1</level>
 					<default>false</default>
 					<dependencies>

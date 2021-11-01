@@ -460,7 +460,7 @@ class PlaylistUpdater(baseServiceUpdater):
                         tvg_id = False
 
                         match = regex_chann_name.findall(stripLine)
-                        if len(match) > 0:
+                        if len(match) > 0 and ADDON.getSetting('tvg_id') == 'true':
                             tmpTitle = match[0].replace("tvg-id=","").replace('"','').strip()
                             tvg_id = True
 

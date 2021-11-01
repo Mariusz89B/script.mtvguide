@@ -1160,6 +1160,41 @@ class Database(object):
                     channelList.append(channel)
                 c.close()
 
+                NONE = "0"
+                SORT = "1"
+                CATEGORIES = "2"
+                newCList = []
+
+                cats = False
+
+                if list(self.getAllCategories()):
+                    cats = True
+                    f = xbmcvfs.File('special://profile/addon_data/script.mtvguide/categories.ini','rb')
+                    lines = f.read().splitlines()
+                    f.close()
+                    filter = []
+                    seen = set()
+                    for line in lines:
+                        if "=" not in line:
+                            continue
+                        name,cat = line.split('=')
+                        if cat == self.category:
+                            if name not in seen:
+                                filter.append(name)
+                            seen.add(name)
+
+                if ADDON.getSetting('channel_filter_sort') == SORT:
+                    channelList = sorted(channelList, key=lambda channel: channel.title.lower())
+
+                elif ADDON.getSetting('channel_filter_sort') == CATEGORIES:
+                    for filter_name in filter:
+                        for channel in channelList:
+                            if channel.title == filter_name:
+                                newCList.append(channel)
+
+                    if newCList:
+                        channelList = newCList
+
                 if category:
                     channelList = self.getCategoryChannelList(category, channelList, excludeCurrentCategory)
 

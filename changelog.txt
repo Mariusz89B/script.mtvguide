@@ -1,4 +1,5 @@
 ﻿wersja 9.7.4 - 2021-11-01
+- dodano ustawienie sortowania listy EPG
 - poprawka tvg-id
 
 wersja 9.7.3 - 2021-11-01

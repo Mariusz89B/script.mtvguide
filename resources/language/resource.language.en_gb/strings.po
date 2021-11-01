@@ -2820,6 +2820,22 @@ msgctxt "#70133"
 msgid "Remove all definitions"
 msgstr ""
 
+msgctxt "#70134"
+msgid "Sort list alphabetically"
+msgstr ""
+
+msgctxt "#70135"
+msgid "Sort group by category"
+msgstr ""
+
+msgctxt "#70136"
+msgid "EPG list sorting"
+msgstr ""
+
+msgctxt "#70137"
+msgid "Enable tvg-id matching"
+msgstr ""
+
 msgctxt "#80005"
 msgid "[COLOR blue]WP Pilot[/COLOR]"
 msgstr ""
@@ -3430,6 +3446,14 @@ msgstr ""
 
 msgctxt "#95141"
 msgid "Select to replace country code pattern to match M3U playlist channels with EPG channel id or display-names."
+msgstr ""
+
+msgctxt "#95142"
+msgid "Select in which order to display channels in EPG list."
+msgstr ""
+
+msgctxt "#95143"
+msgid "Add-on matches tvg-id instead of channel name."
 msgstr ""
 
 msgctxt "#99994"
