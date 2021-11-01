@@ -576,7 +576,7 @@ class SettingsImp:
             del filtered_dict['all']
 
         else:
-            filtered_dict = dict((k, v) for k, v in CC_DICT.items() if int(v['continent']) + 1 == continent or (int(v['continent']) + 1 == -1 and continent != 7))
+            filtered_dict = dict((k, v) for k, v in CC_DICT.items() if int(v['continent']) + 1 == continent or (int(v['continent']) + 1 == -1 and continent != 6))
 
         if sys.version_info[0] < 3:
             filtered_dict = collections.OrderedDict(sorted(filtered_dict.items()))
@@ -767,7 +767,7 @@ class SettingsImp:
             del filtered_dict['all']
             
         else:
-            filtered_dict = dict((k, v) for k, v in CC_DICT.items() if int(v['continent']) + 1 == continent or (int(v['continent']) + 1 == -1 and continent != 7))
+            filtered_dict = dict((k, v) for k, v in CC_DICT.items() if int(v['continent']) + 1 == continent or (int(v['continent']) + 1 == -1 and continent != 6))
 
         if sys.version_info[0] < 3:
             filtered_dict = collections.OrderedDict(sorted(filtered_dict.items()))
