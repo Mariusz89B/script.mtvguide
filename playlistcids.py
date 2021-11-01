@@ -489,8 +489,9 @@ class PlaylistUpdater(baseServiceUpdater):
 
                             name = title
 
-                            nonCCList = ['sd', 'hd', 'uhd', '4k', 'tv']
-                            replaceCC = False
+                            nonCCList = ['SD', 'HD', 'UHD', '4K', 'TV']
+
+                            allCC = ccList + a3List + langList + nativeList + dotList
 
                             if ADDON.getSetting('{}_append_country_code'.format(self.serviceName)) != '':
                                 p = re.compile(r'.*\s([a-zA-Z]{2,3})$', re.DOTALL)
@@ -500,12 +501,10 @@ class PlaylistUpdater(baseServiceUpdater):
                                 except:
                                     cc = ''
 
-                                if cc.lower() not in ccList or cc.lower() in nonCCList:
+                                if cc not in allCC or cc.upper() in nonCCList:
                                     title = title + ' ' + ADDON.getSetting('{}_append_country_code'.format(self.serviceName))
 
                             elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) != '0' and not tvg_id:
-                                replaceCC = False
-
                                 p = re.compile(r'.*\s([a-zA-Z]{2,3})$', re.DOTALL)
 
                                 try:
@@ -513,11 +512,7 @@ class PlaylistUpdater(baseServiceUpdater):
                                 except:
                                     cc = ''
 
-                                if cc.lower() not in ccList or cc.lower() in nonCCList:
-                                    if p.match(title):
-                                        replaceCC = True
-
-                                if replaceCC:
+                                if cc not in allCC or cc.upper() in nonCCList:
                                     langA = '|'.join(ccList)
                                     langB = '|'.join(a3List)
                                     langC = '|'.join(langList)
