@@ -463,12 +463,11 @@ class PlaylistUpdater(baseServiceUpdater):
 
                         match = regex_chann_name.findall(stripLine)
                         if len(match) > 0 and ADDON.getSetting('tvg_id') == 'true':
-                            tvgTitle = match[0].replace("tvg-id=","").replace('"','').strip()
+                            tvg_title = match[0].replace("tvg-id=","").replace('"','').strip()
                             tvg_id = True
 
                         if tmpTitle is not None and tmpTitle != '':
                             title = tmpTitle
-                            tvg_title = tvgTitle
 
                             HDStream = False
                             UHDStream = False
