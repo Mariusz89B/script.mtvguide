@@ -1232,8 +1232,8 @@ class Database(object):
 
     def getCategoryChannelList(self, category, channelList, excludeCurrentCategory):
         blankspace = True
-        if '.' in category:
-            category = re.escape(category)
+        category_re = re.compile('.*\s\.\w{2,3}')
+        if category_re.match(category):
             blankspace = False
 
         newChannelList = list()
@@ -1245,7 +1245,7 @@ class Database(object):
             if blankspace:
                 channel_regex = re.compile('.* {}$'.format(predefined.group(1)), re.IGNORECASE)
             else:
-                channel_regex = re.compile('.*{}$'.format(predefined.group(1)), re.IGNORECASE)
+                channel_regex = re.compile('.*{}$'.format(re.escape(predefined.group(1))), re.IGNORECASE)
 
             for channel in channelList[:]:  
                 if channel_regex.match(channel.title):

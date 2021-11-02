@@ -422,6 +422,7 @@ class PlaylistUpdater(baseServiceUpdater):
                 regexRemoveList.append( re.compile('(\s|^)(L\s*)?((?i)Adult)(?=\s|$)', re.IGNORECASE) )
 
             title = None
+            tvg_title = None
             nextFreeCid = 0
             
             try:
@@ -443,6 +444,7 @@ class PlaylistUpdater(baseServiceUpdater):
                         tmpTitle = ''
                         name = ''
                         title = ''
+                        tvg_title = ''
                         splitedLine = stripLine.split(',')
 
                         p = re.compile('^.*catchup-source="http[s]?.*$', re.IGNORECASE)
@@ -461,11 +463,12 @@ class PlaylistUpdater(baseServiceUpdater):
 
                         match = regex_chann_name.findall(stripLine)
                         if len(match) > 0 and ADDON.getSetting('tvg_id') == 'true':
-                            tmpTitle = match[0].replace("tvg-id=","").replace('"','').strip()
+                            tvgTitle = match[0].replace("tvg-id=","").replace('"','').strip()
                             tvg_id = True
 
                         if tmpTitle is not None and tmpTitle != '':
                             title = tmpTitle
+                            tvg_title = tvgTitle
 
                             HDStream = False
                             UHDStream = False
@@ -599,8 +602,8 @@ class PlaylistUpdater(baseServiceUpdater):
                                 for item in nonCCList:
                                     title = title.replace(' ' + item.upper(), ' ')                            
 
-                    elif title is not None and regexCorrectStream.match(stripLine):
-                        if title != '':
+                    elif (title is not None or tvg_title is not None) and regexCorrectStream.match(stripLine):
+                        if (title != '' or tvg_title != ''):
                             try:
                                 catchupLine
                             except:
@@ -627,13 +630,18 @@ class PlaylistUpdater(baseServiceUpdater):
                             if UHDStream:
                                 channelCid = channelCid + '_UHD'
                                 uhdList.append(TvCid(cid=channelCid, name=name, title=title, strm=stripLine, catchup=catchupLine))
+                                if tvg_title:
+                                    uhdList.append(TvCid(cid=channelCid, name=tvg_title, title=tvg_title, strm=stripLine, catchup=catchupLine))
                             elif HDStream:
                                 channelCid = channelCid + '_HD'
                                 hdList.append(TvCid(cid=channelCid, name=name, title=title, strm=stripLine, catchup=catchupLine))
+                                if tvg_title:
+                                    hdList.append(TvCid(cid=channelCid, name=tvg_title, title=tvg_title, strm=stripLine, catchup=catchupLine))
                             else:
                                 sdList.append(TvCid(cid=channelCid, name=name, title=title, strm=stripLine, catchup=catchupLine))
-
-                            
+                                if tvg_title:
+                                    sdList.append(TvCid(cid=channelCid, name=tvg_title, title=tvg_title, strm=stripLine, catchup=catchupLine))
+                        
                             self.log('[UPD]     %-40s %-12s %-35s' % (title, channelCid, stripLine))
                             nextFreeCid = nextFreeCid + 1
                     
