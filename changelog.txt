@@ -1,4 +1,7 @@
-﻿wersja 9.7.6 - 2021-11-03
+﻿wersja 9.7.7 - 2021-11-04
+- poprawione błędy
+
+wersja 9.7.6 - 2021-11-03
 - porawki
 
 wersja 9.7.5 - 2021-11-02

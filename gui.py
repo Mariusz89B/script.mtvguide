@@ -2054,7 +2054,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 ADDON.setSetting('epg_size', str(epgDbSize))
 
             if int(epgSize) != int(epgDbSize):
-                if xbmc.Player().isPlaying():
+                if xbmc.Player().isPlaying() and self.mode == MODE_TV:
                     self.onRedrawEPGPlaying(self.channelIdx, self.viewStartDate)
                 else:
                     self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
@@ -4657,7 +4657,14 @@ class mTVGuide(xbmcgui.WindowXML):
                     program = self.program
 
                 if self.program is not None:
-                    if self.program.endDate < datetime.datetime.now():
+                    endDate = datetime.datetime.now()
+
+                    try:
+                        endDate = datetime.datetime.strptime(self.program.endDate, '%Y-%m-%d %H:%M:%S')
+                    except:
+                        endDate = self.program.endDate
+
+                    if endDate < datetime.datetime.now():
                         program, idx = self.epg.getLastPlayingChannel()
 
                 try:
@@ -7229,7 +7236,14 @@ class Pla(xbmcgui.WindowXMLDialog):
                 program = self.program
 
             if self.program is not None:
-                if self.program.endDate < datetime.datetime.now():
+                endDate = datetime.datetime.now()
+                
+                try:
+                    endDate = datetime.datetime.strptime(self.program.endDate, '%Y-%m-%d %H:%M:%S')
+                except:
+                    endDate = self.program.endDate
+
+                if endDate < datetime.datetime.now():
                     program, idx = self.epg.getLastPlayingChannel()
 
             try:
