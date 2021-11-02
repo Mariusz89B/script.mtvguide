@@ -266,6 +266,8 @@ for k, v in CC_DICT.items():
 
             CC_LIST.append(k.lower())
 
+            serviceList = ['cmore', 'ipla', 'ncplusgo', 'playerpl', 'polsatgo', 'pgobox', 'teliaplay', 'tvp', 'videostar']
+
             for i in range(5):
                 if ADDON.getSetting('playlist_{}_enabled'.format(i)) == 'true':
                     if ADDON.getSetting('playlist_{}_pattern'.format(i)) == "0":
@@ -278,6 +280,10 @@ for k, v in CC_DICT.items():
                         PREDEFINED_CATEGORIES.append('Group: {}'.format(cc_tdl))
                     elif ADDON.getSetting('playlist_{}_pattern'.format(i)) == "4":
                         PREDEFINED_CATEGORIES.append('Group: {}'.format(lang))
+            
+            for s in serviceList:
+                if ADDON.getSetting('{}_enabled'.format(s)) == 'true':
+                    PREDEFINED_CATEGORIES.append('Group: {}'.format(alpha_2))
 
             PREDEFINED_CATEGORIES = list(collections.OrderedDict.fromkeys(PREDEFINED_CATEGORIES))
 
@@ -755,7 +761,7 @@ class mTVGuide(xbmcgui.WindowXML):
         langList = list()
         ccList = list()
 
-        continent = xbmcgui.Dialog().select(strings(30725), [strings(30325), strings(30727), strings(30728), strings(30729), strings(30730), strings(30731), strings(30732), '[COLOR red]' + strings(30726) + '[/COLOR]'])
+        continent = xbmcgui.Dialog().select(strings(30725), [xbmc.getLocalizedString(593), strings(30727), strings(30728), strings(30729), strings(30730), strings(30731), strings(30732), '[COLOR red]' + strings(30726) + '[/COLOR]'])
         
         if continent < 0:
             resBack = xbmcgui.Dialog().yesno(strings(59924), strings(59938), yeslabel=strings(59939), nolabel=strings(30308))
@@ -767,12 +773,14 @@ class mTVGuide(xbmcgui.WindowXML):
                 ADDON.setSetting('tutorial', 'true')
                 exit()
 
-        if continent == 0:
-            filtered_dict = CC_DICT
-            del filtered_dict['all']
-            
+        elif continent == 0:
+            filtered_dict = dict((k, v) for k, v in CC_DICT.items() if int(v['continent']) != 7)
+
+        elif continent == 7:
+            filtered_dict = dict((k, v) for k, v in CC_DICT.items() if int(v['continent']) == 7)
+
         else:
-            filtered_dict = dict((k, v) for k, v in CC_DICT.items() if int(v['continent']) + 1 == continent or (int(v['continent']) + 1 == -1 and continent != 6))
+            filtered_dict = dict((k, v) for k, v in CC_DICT.items() if int(v['continent']) == continent or (int(v['continent']) == -1 and continent != 6))
 
         if sys.version_info[0] < 3:
             filtered_dict = collections.OrderedDict(sorted(filtered_dict.items()))

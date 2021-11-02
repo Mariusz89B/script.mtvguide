@@ -1,8 +1,8 @@
-﻿wersja 9.7.5.1 - 2021-11-02
+﻿wersja 9.7.6 - 2021-11-03
 - porawki
 
 wersja 9.7.5 - 2021-11-02
-- poprawki
+- poprawione błędy
 
 wersja 9.7.4 - 2021-11-01
 - dodano ustawienie sortowania listy EPG

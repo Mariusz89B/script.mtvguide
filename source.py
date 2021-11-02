@@ -2630,6 +2630,9 @@ class MTVGUIDESource(Source):
         if channelsLastUpdated is None or programLastUpdate is None or epgSizeInDB == 0:
             return True
         epgSize = self.getEpgSize(epgSizeInDB)
+        if epgSize == '' or epgSize is None:
+            epgSize = 0
+
         if int(epgSize) != int(epgSizeInDB):
             debug('[UPD] isUpdated detected new EPG! size in DB is: {}, on server: {}'.format(epgSizeInDB, epgSize))
             return True
