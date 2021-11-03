@@ -758,24 +758,36 @@ class baseServiceUpdater:
 
     def loadSingleBaseMap(self, lang, mapFilePath):
         self.log('Loading {} channel map'.format(lang))
-        onlineMapFilename   = onlineMapPathBase + mapFilePath
-        map                 = self.sl.getJsonFromExtendedAPI(onlineMapFilename, max_conn_time=9, http_timeout=5, verbose=False)
+        entries = None
+        
+        localMapFilename      = os.path.join(pathMapBase, mapFilePath)
+        onlineMapFilename     = onlineMapPathBase + mapFilePath
+        map                   = self.sl.getJsonFromExtendedAPI(onlineMapFilename, max_conn_time=9, http_timeout=5, verbose=False)
         if map:
             self.log('successfully downloaded online {} map file: {}'.format(lang, onlineMapFilename))
         else:
-            localMapFilename      = os.path.join(pathMapBase, mapFilePath)
-            self.log('{} file download failed - using local map: {}'.format(lang, localMapFilename))
             if xbmcvfs.exists(localMapFilename):
-                map                   = MapString.loadFile(localMapFilename, self.log)
+                map = MapString.loadFile(localMapFilename, self.log)
             else:
-                map                   = MapString.loadFile(os.path.join(pathMapBase, 'basemap.xml'), self.log)
-        entries, _, seCat         = MapString.FastParse(map, None) #None so content wont be printed in logs
-        baseServiceUpdater.baseMapContent.extend(entries)
-        for id in seCat:
-            if id in baseServiceUpdater.categories:
-                baseServiceUpdater.categories[id].update(seCat[id])
+                map = MapString.loadFile(os.path.join(pathMapBase, 'basemap.xml'), self.log)
+
+            entries, _, seCat         = MapString.FastParse(map, None)
+            self.log('{} file download failed - using local map: {}'.format(lang, localMapFilename))
+
+        if xbmcvfs.exists(localMapFilename):
+            localmap = MapString.loadFile(localMapFilename, self.log)
+            if len(map) == len(localmap):
+                entries, _, seCat         = MapString.FastParse(map, None)
             else:
-                baseServiceUpdater.categories[id] = seCat[id]
+               entries, _, seCat         = MapString.FastParse(localmap, None)
+
+        if entries is not None:
+            baseServiceUpdater.baseMapContent.extend(entries)
+            for id in seCat:
+                if id in baseServiceUpdater.categories:
+                    baseServiceUpdater.categories[id].update(seCat[id])
+                else:
+                    baseServiceUpdater.categories[id] = seCat[id]
 
     def loadExtraBaseMap(self, lang, mapFilePath):
         self.log('Loading {} channel map'.format(lang))
@@ -783,7 +795,7 @@ class baseServiceUpdater:
             xbmcvfs.copy(os.path.join(pathMapBase, mapFilePath), os.path.join(pathMapExtraBase, mapFilePath))
         localMapFilename      = os.path.join(pathMapExtraBase, mapFilePath)
         map                   = MapString.loadFile(localMapFilename, self.log)
-        entries, _, seCat         = MapString.FastParse(map, None) #None so content wont be printed in logs
+        entries, _, seCat         = MapString.FastParse(map, None)
         baseServiceUpdater.baseMapContent.extend(entries)
         for id in seCat:
             if id in baseServiceUpdater.categories:
