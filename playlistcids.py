@@ -496,7 +496,7 @@ class PlaylistUpdater(baseServiceUpdater):
                             nonCCList = ['SD', 'HD', 'UHD', '4K', 'TV']
 
                             if ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '0':
-                                allCC = None
+                                allCC = ccList + a3List + dotList + langList + nativeList
 
                             elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '1':
                                 allCC = ccList
