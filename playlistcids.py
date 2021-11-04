@@ -62,6 +62,7 @@ from serviceLib import *
 import cloudscraper 
 
 from contextlib import contextmanager
+from unidecode import unidecode
 
 import codecs
 
@@ -456,9 +457,9 @@ class PlaylistUpdater(baseServiceUpdater):
 
                         if len(splitedLine) > 1:
                             try:
-                                tmpTitle = splitedLine[len(splitedLine) - 1].strip()
+                                tmpTitle = unidecode(splitedLine[len(splitedLine) - 1].strip())
                             except:
-                                tmpTitle = splitedLine[len(splitedLine) - 1].strip().decode('utf-8')
+                                tmpTitle = unidecode(splitedLine[len(splitedLine) - 1].strip().decode('utf-8'))
 
                         tvg_id = False
 
