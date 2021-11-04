@@ -391,10 +391,10 @@ class PlaylistUpdater(baseServiceUpdater):
                     prefixList.append(cc_pattern_regex + ':?')
 
                     # ccLists
-                    ccList.append(cc)
+                    ccList.append(cc.upper())
 
                     if ADDON.getSetting('{}_pattern'.format(self.serviceName)) != '0':  
-                        a3List.append(value['alpha-3'])
+                        a3List.append(value['alpha-3'].upper())
                         langList.append(value['language'])
                         nativeList.append(value['native']) 
                         dotList.append('.' + cc.lower())
@@ -493,128 +493,96 @@ class PlaylistUpdater(baseServiceUpdater):
 
                             name = title
 
-                            nonCCList = ['SD', 'HD', 'UHD', '4K', 'TV']
+                            langA = '|'.join(ccList)
+                            langB = '|'.join(a3List)
+                            langC = '|'.join(langList)
+                            langD = '|'.join(nativeList)
+                            langE = '|'.join(dotList)
 
                             if ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '0':
-                                allCC = ccList + a3List + dotList + langList + nativeList
+                                lang = langA + langB + langC + langD + langE
+                                recase = False
 
-                            elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '1':
-                                allCC = ccList
-
+                            if ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '1':
+                                lang = langA
+                                recase = False
                             elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '2':
-                                allCC = a3List
-
+                                lang = langB
+                                recase = False
                             elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '3':
-                                allCC = dotList
-
+                                lang = langE
+                                recase = True
                             elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '4':
-                                allCC = langList + nativeList
-                            
-                            else:
-                                allCC = ccList
+                                lang = langC + '|' + langD
+                                recase = True
 
-                            if ADDON.getSetting('{}_append_country_code'.format(self.serviceName)) != '':
-                                p = re.compile(r'((^|(\s))(L\s*)?([A-Z]{2,3})((:|\s)|$)|(\.)([a-z]{2}))', re.DOTALL)
-
+                            if recase:
                                 try:
-                                    cc = p.search(title).group(1)
+                                    regex_match = re.compile('(^|(\s))(L\s*)?({lang})((:|\s)|$)'.format(lang=lang), re.IGNORECASE)
                                 except:
-                                    cc = ''
+                                    regex_match = re.compile('(^|(\s))(L\s*)?({lang})((:|\s)|$)'.format(lang=lang.encode('utf-8')), re.IGNORECASE)
+                            else:   
+                                try:
+                                    regex_match = re.compile('((^|(\s))(L\s*)?({lang})((:|\s)|$)|(\.)({lower}))'.format(lang=lang.upper(), lower=lang.lower()))
+                                except:
+                                    regex_match = re.compile('((^|(\s))(L\s*)?({lang})((:|\s)|$)|(\.)({lower}))'.format(lang=lang.upper().encode('utf-8'), lower=lang.lower()))
 
-                                if cc not in allCC or cc.upper() in nonCCList:
+                            if ADDON.getSetting('{}_append_country_code'.format(self.serviceName)) != '' and ADDON.getSetting('{}_enabled'.format(self.serviceName)) == 'true':
+                                match = regex_match.findall(title)
+                                if not match:
                                     title = title + ' ' + ADDON.getSetting('{}_append_country_code'.format(self.serviceName))
 
-                            elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) != '0' and not tvg_id and allCC:
-                                p = re.compile(r'((^|(\s))(L\s*)?([A-Z]{2,3})((:|\s)|$)|(\.)([a-z]{2}))', re.DOTALL)
-
-                                try:
-                                    cc = p.search(title).group(1)
-                                except:
-                                    cc = ''
-
-                                if cc not in allCC or cc.upper() in nonCCList:
-                                    langA = '|'.join(ccList)
-                                    langB = '|'.join(a3List)
-                                    langC = '|'.join(langList)
-                                    langD = '|'.join(nativeList)
-                                    langE = '|'.join(dotList)
-
+                            elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) != '0'and ADDON.getSetting('{}_enabled'.format(self.serviceName)) == 'true' and not tvg_id:
+                                match = regex_match.findall(title)
+                                if not match:
                                     ccListInt = len(ccList)
-                                    
-                                    if any(ccExt not in title for ccExt in allCC):
-                                        lang = langA
-                                        recase = False
 
-                                        if ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '1':
-                                            lang = langA
-                                            recase = False
-                                        elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '2':
-                                            lang = langB
-                                            recase = False
-                                        elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '3':
-                                            lang = langE
-                                            recase = True
-                                        elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '4':
-                                            lang = langC + '|' + langD
-                                            recase = True
+                                    if sys.version_info[0] > 2:
+                                        try:
+                                            group = regex_match.search(str(splitedLine[0])).group(1)
+                                        except:
+                                            group = ''
+                                    else:
+                                        try:
+                                            group = regex_match.search(str(splitedLine[0]).encode('utf-8')).group(1)
+                                        except:
+                                            group = ''
 
-                                        if recase:
-                                            try:
-                                                p = re.compile('(^|(\s))(L\s*)?({r})((:)|$)'.format(r=lang), re.IGNORECASE)
-                                            except:
-                                                p = re.compile('(^|(\s))(L\s*)?({r})((:)|$)'.format(r=lang.encode('utf-8')), re.IGNORECASE)
-                                        else:   
-                                            try:
-                                                p = re.compile('((^|(\s))(L\s*)?({r})((:|\s)|$)|(\.)({s}))'.format(r=lang.upper(), s=lang.lower()))
-                                            except:
-                                                p = re.compile('((^|(\s))(L\s*)?({r})((:|\s)|$)|(\.)({s}))'.format(r=lang.upper().encode('utf-8'), s=lang.lower()))
+                                    if group:
+                                        ccCh = ''
+                                        for item in range(ccListInt):
+                                            if group == ccList[item].upper():
+                                                subsLangA = {ccList[item]: ccList[item]}
+                                                cc = ccList[subsLangA.get(item, item)]
+                                                ccCh = cc
 
-                                        if sys.version_info[0] > 2:
-                                            try:
-                                                group = p.search(str(splitedLine[0])).group(1)
-                                            except:
-                                                group = ''
-                                        else:
-                                            try:
-                                                group = p.search(str(splitedLine[0]).encode('utf-8')).group(1)
-                                            except:
-                                                group = ''
+                                            elif group == a3List[item].upper():  
+                                                subsLangB = {a3List[item]: ccList[item]}
+                                                cc = ccList[subsLangB.get(item, item)]
+                                                ccCh = cc
+                                            
+                                            elif group.upper() == langList[item].upper():
+                                                subsLangC = {langList[item]: ccList[item]}
+                                                cc = ccList[subsLangC.get(item, item)]
+                                                ccCh = cc
 
-                                        if group:
-                                            ccCh = ''
-                                            for item in range(ccListInt):
-                                                if group == ccList[item].upper():
-                                                    subsLangA = {ccList[item]: ccList[item]}
-                                                    cc = ccList[subsLangA.get(item, item)]
-                                                    ccCh = cc
+                                            elif group.upper() == nativeList[item].upper():
+                                                subsLangD = {nativeList[item]: ccList[item]}
+                                                cc = ccList[subsLangD.get(item, item)]
+                                                ccCh = cc
 
-                                                elif group == a3List[item].upper():  
-                                                    subsLangB = {a3List[item]: ccList[item]}
-                                                    cc = ccList[subsLangB.get(item, item)]
-                                                    ccCh = cc
-                                                
-                                                elif group.upper() == langList[item].upper():
-                                                    subsLangC = {langList[item]: ccList[item]}
-                                                    cc = ccList[subsLangC.get(item, item)]
-                                                    ccCh = cc
+                                            elif group.lower() == dotList[item]:
+                                                subsLangE = {dotList[item]: ccList[item]}
+                                                cc = ccList[subsLangE.get(item, item)]
+                                                ccCh = cc
 
-                                                elif group.upper() == nativeList[item].upper():
-                                                    subsLangD = {nativeList[item]: ccList[item]}
-                                                    cc = ccList[subsLangD.get(item, item)]
-                                                    ccCh = cc
+                                        try:
+                                            cc = regex_match.search(title).group(1)
+                                        except:
+                                            cc = ''
 
-                                                elif group.lower() == dotList[item]:
-                                                    subsLangE = {dotList[item]: ccList[item]}
-                                                    cc = ccList[subsLangE.get(item, item)]
-                                                    ccCh = cc
-
-                                            try:
-                                                cc = p.search(title).group(1)
-                                            except:
-                                                cc = ''
-
-                                            string = ' ' + ccCh.upper()
-                                            title = re.sub('$', string, title)
+                                        string = ' ' + ccCh.upper()
+                                        title = re.sub('$', string, title)
 
                             if ADDON.getSetting('{}_pattern'.format(self.serviceName)) != '0':
                                 for langReplaceMap in langReplaceList:
