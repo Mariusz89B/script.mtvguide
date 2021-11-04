@@ -259,33 +259,8 @@ for k, v in CC_DICT.items():
         PREDEFINED_CATEGORIES.append(all_channels)
     else:
         if ADDON.getSetting('country_code_{cc}'.format(cc=k)) == "true":
-            alpha_2 = k.upper()
-            alpha_3 = v['alpha-3']
-            cc_tdl = '.' + k.lower()
-            lang = v['language']
-
             CC_LIST.append(k.lower())
-
-            serviceList = ['cmore', 'ipla', 'ncplusgo', 'playerpl', 'polsatgo', 'pgobox', 'teliaplay', 'tvp', 'videostar']
-
-            for i in range(5):
-                if ADDON.getSetting('playlist_{}_enabled'.format(i)) == 'true':
-                    if ADDON.getSetting('playlist_{}_pattern'.format(i)) == "0":
-                        PREDEFINED_CATEGORIES.append('Group: {}'.format(alpha_2))
-                    elif ADDON.getSetting('playlist_{}_pattern'.format(i)) == "1":
-                        PREDEFINED_CATEGORIES.append('Group: {}'.format(alpha_2))
-                    elif ADDON.getSetting('playlist_{}_pattern'.format(i)) == "2":
-                        PREDEFINED_CATEGORIES.append('Group: {}'.format(alpha_3))
-                    elif ADDON.getSetting('playlist_{}_pattern'.format(i)) == "3":
-                        PREDEFINED_CATEGORIES.append('Group: {}'.format(cc_tdl))
-                    elif ADDON.getSetting('playlist_{}_pattern'.format(i)) == "4":
-                        PREDEFINED_CATEGORIES.append('Group: {}'.format(lang))
-            
-            for s in serviceList:
-                if ADDON.getSetting('{}_enabled'.format(s)) == 'true':
-                    PREDEFINED_CATEGORIES.append('Group: {}'.format(alpha_2))
-
-            PREDEFINED_CATEGORIES = list(collections.OrderedDict.fromkeys(PREDEFINED_CATEGORIES))
+            PREDEFINED_CATEGORIES.append('Group: {}'.format(k.upper()))
 
 def category_formatting(label):  
     label = re.sub('^0$', '1.png', label)

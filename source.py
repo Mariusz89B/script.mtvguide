@@ -81,6 +81,10 @@ from itertools import chain
 from skins import Skin
 from random import uniform
 
+from groups import *
+
+CC_DICT = ccDict()
+
 NUMBER_OF_SERVICE_PRIORITIES = 12
 SETTINGS_TO_CHECK = ['source', 'xmltv_file', 'xmltv_logo_folder',
                      'm-TVGuide', 'm-TVGuide2', 'm-TVGuide3',
@@ -1230,25 +1234,38 @@ class Database(object):
             channelList = self.channelListAll
         return channelList
 
-    def getCategoryChannelList(self, category, channelList, excludeCurrentCategory):
-        blankspace = True
-        category_re = re.compile('.*\s\.\w{2,3}')
-        if category_re.match(category):
-            blankspace = False
+    def addCategory(self, category):
+        categories = []
 
+        for k, v in CC_DICT.items():
+            if k.upper() == category.upper():
+                if ADDON.getSetting('country_code_{cc}'.format(cc=k)) == "true":
+                    categories.append(k.upper())
+                    categories.append('.'+k.lower())
+                    categories.append(v['alpha-3'])
+                    categories.append(v['language'])
+                    categories.append(v['native'])
+            else:
+                categories.append(category)
+
+        return categories
+
+    def getCategoryChannelList(self, category, channelList, excludeCurrentCategory):
         newChannelList = list()
         predefined_category_re = re.compile(r'\w+: ([^\s]*)', re.IGNORECASE)
         predefined = predefined_category_re.search(category)
 
         if predefined:
-            deb('Using predefined category: {}'.format(predefined.group(1)))
-            if blankspace:
-                channel_regex = re.compile('.* {}$'.format(predefined.group(1)), re.IGNORECASE)
-            else:
-                channel_regex = re.compile('.*{}$'.format(re.escape(predefined.group(1))), re.IGNORECASE)
+            categories = self.addCategory(predefined.group(1))
 
-            for channel in channelList[:]:  
-                if channel_regex.match(channel.title):
+            deb('Using predefined category: {}'.format(predefined.group(1)))
+            for cat in categories:
+                predefined = '|'.join(re.escape(cat))
+
+            channel_regex = re.compile('.*({})$'.format(predefined))
+
+            for channel in channelList[:]:
+                if channel_regex.match(channel.id):
                     newChannelList.append(channel)
                     channelList.remove(channel)
                     #deb('Adding channel: {}'.format(channel.title))
@@ -1262,7 +1279,7 @@ class Database(object):
                     for channelInCategory in channelsInCategory:
                         if channel.title == channelInCategory:
                             newChannelList.append(channel)
-                            channelList.remove(channel)
+                        channelList.remove(channel)
 
         if len(newChannelList) > 0 and not excludeCurrentCategory:
             channelList = newChannelList

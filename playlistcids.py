@@ -532,7 +532,7 @@ class PlaylistUpdater(baseServiceUpdater):
                                 if not match:
                                     title = title + ' ' + ADDON.getSetting('{}_append_country_code'.format(self.serviceName))
 
-                            elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) != '0'and ADDON.getSetting('{}_enabled'.format(self.serviceName)) == 'true':
+                            elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) != '0' and ADDON.getSetting('{}_enabled'.format(self.serviceName)) == 'true':
                                 match = regex_match.findall(title)
                                 if not match:
                                     ccListInt = len(ccList)
