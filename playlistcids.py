@@ -447,6 +447,7 @@ class PlaylistUpdater(baseServiceUpdater):
                         name = ''
                         title = ''
                         tvg_title = ''
+
                         splitedLine = stripLine.split(',')
 
                         p = re.compile('^.*catchup-source="http[s]?.*$', re.IGNORECASE)
@@ -468,15 +469,15 @@ class PlaylistUpdater(baseServiceUpdater):
                             tvg_title = match[0].replace("tvg-id=","").replace('"','').strip()
                             tvg_id = True
 
+
                         if tmpTitle is not None and tmpTitle != '':
                             title = tmpTitle
 
                             HDStream = False
                             UHDStream = False
 
-                            if not tvg_id:
-                                for regexReplace in regexReplaceList:
-                                    title = regexReplace.sub(' ', title)
+                            for regexReplace in regexReplaceList:
+                                title = regexReplace.sub(' ', title)
                             
                             title, match = regexHD.subn(' HD ', title)
                             if match > 0:
@@ -502,7 +503,6 @@ class PlaylistUpdater(baseServiceUpdater):
                             if ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '0':
                                 lang = langA + langB + langC + langD + langE
                                 recase = False
-
                             if ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '1':
                                 lang = langA
                                 recase = False
@@ -532,7 +532,7 @@ class PlaylistUpdater(baseServiceUpdater):
                                 if not match:
                                     title = title + ' ' + ADDON.getSetting('{}_append_country_code'.format(self.serviceName))
 
-                            elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) != '0'and ADDON.getSetting('{}_enabled'.format(self.serviceName)) == 'true' and not tvg_id:
+                            elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) != '0'and ADDON.getSetting('{}_enabled'.format(self.serviceName)) == 'true':
                                 match = regex_match.findall(title)
                                 if not match:
                                     ccListInt = len(ccList)
@@ -596,18 +596,29 @@ class PlaylistUpdater(baseServiceUpdater):
                             for regexRemove in regexRemoveList:
                                 if( regexRemove.findall(title) ):
                                     title = ''
+                                if tvg_id:
+                                    if( regexRemove.findall(tvg_title) ):
+                                        tvg_title = ''
 
                             if ADDON.getSetting('show_group_channels') == 'true':
                                 for regexAdd in regexAddList:
                                     if not ( regexAdd.findall(title) ):
-                                        title = ''                  
+                                        title = '' 
+                                    if tvg_id:
+                                        if not ( regexAdd.findall(tvg_title) ):
+                                            tvg_title = ''                 
 
                             title = title.replace('  ', ' ').strip()
 
                             if ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '5':   
                                 title = title.replace(' ' + langReplaceMap['lang'], '')
                                 for item in nonCCList:
-                                    title = title.replace(' ' + item.upper(), ' ')                            
+                                    title = title.replace(' ' + item.upper(), ' ')       
+
+
+                            if tvg_id:
+                                if tvg_title == title:
+                                    tvg_title = ''                   
 
                     elif (title is not None or tvg_title is not None) and regexCorrectStream.match(stripLine):
                         if (title != '' or tvg_title != ''):
@@ -637,19 +648,21 @@ class PlaylistUpdater(baseServiceUpdater):
                             if UHDStream:
                                 channelCid = channelCid + '_UHD'
                                 uhdList.append(TvCid(cid=channelCid, name=name, title=title, strm=stripLine, catchup=catchupLine))
-                                if tvg_id:
+                                if tvg_id and tvg_title != '':
                                     uhdList.append(TvCid(cid=channelCid, name=tvg_title, title=tvg_title, strm=stripLine, catchup=catchupLine))
                             elif HDStream:
                                 channelCid = channelCid + '_HD'
                                 hdList.append(TvCid(cid=channelCid, name=name, title=title, strm=stripLine, catchup=catchupLine))
-                                if tvg_id:
+                                if tvg_id and tvg_title != '':
                                     hdList.append(TvCid(cid=channelCid, name=tvg_title, title=tvg_title, strm=stripLine, catchup=catchupLine))
                             else:
                                 sdList.append(TvCid(cid=channelCid, name=name, title=title, strm=stripLine, catchup=catchupLine))
-                                if tvg_id:
+                                if tvg_id and tvg_title != '':
                                     sdList.append(TvCid(cid=channelCid, name=tvg_title, title=tvg_title, strm=stripLine, catchup=catchupLine))
-                        
+
                             self.log('[UPD]     %-40s %-12s %-35s' % (title, channelCid, stripLine))
+                            if tvg_id and tvg_title != '':
+                                self.log('[TVG]     %-40s %-12s %-35s' % (tvg_title, channelCid, stripLine))
                             nextFreeCid = nextFreeCid + 1
                     
                         #else:

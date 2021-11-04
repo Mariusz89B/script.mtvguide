@@ -7399,9 +7399,9 @@ class Pla(xbmcgui.WindowXMLDialog):
         except:
             index = channelList[0]
 
-        program = Program(channel=index, title='', startDate='', endDate='', description='', productionDate='', director='', actor='', episode='', imageLarge='', imageSmall='', categoryA='', categoryB='')
+        self.program = Program(channel=index, title='', startDate='', endDate='', description='', productionDate='', director='', actor='', episode='', imageLarge='', imageSmall='', categoryA='', categoryB='')
         
-        self.playChannel(program.channel, program)
+        self.playChannel(self.program.channel, self.program)
 
     def onAction(self, action):
         debug('Pla onAction keyId {}, buttonCode {}'.format(action.getId(), action.getButtonCode()))
