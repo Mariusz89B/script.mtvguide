@@ -62,12 +62,13 @@ from serviceLib import *
 import cloudscraper 
 
 from contextlib import contextmanager
-from unidecode import unidecode
 
 import codecs
 
 sess = cloudscraper.create_scraper()
 scraper = cloudscraper.CloudScraper()
+
+UA = xbmc.getUserAgent()
 
 CC_DICT = ccDict()
 
@@ -122,7 +123,7 @@ class PlaylistUpdater(baseServiceUpdater):
             self.stopPlaybackOnStart = False
 
     def requestUrl(self, path):
-        headers = { 'User-Agent' : 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:85.0) Gecko/20100101 Firefox/85.0' }
+        headers = { 'User-Agent' : UA }
         headers['Keep-Alive'] = 'timeout=15'
         headers['Connection'] = 'Keep-Alive'
         headers['ContentType'] = 'application/x-www-form-urlencoded'
@@ -332,7 +333,7 @@ class PlaylistUpdater(baseServiceUpdater):
             cleanup_regex      =     re.compile("\[COLOR\s*\w*\]|\[/COLOR\]|\[B\]|\[/B\]|\[I\]|\[/I\]|^\s*|\s*$", re.IGNORECASE)
 
             #regexReplaceList.append( re.compile('[^A-Za-z0-9+/:]+', re.IGNORECASE) )
-            regexReplaceList.append( re.compile('[^A-Za-zÀ-ȕ0-9+/:]+', re.IGNORECASE) )
+            regexReplaceList.append( re.compile('[^A-Za-zÀ-ȕ0-9+\/:\.]+', re.IGNORECASE) )
 
             regexReplaceList.append( re.compile('\sL\s', re.IGNORECASE) )
             regexReplaceList.append( re.compile('(\s|^)(FEED|FPS60|EUROPE|NORDIC|SCANDINAVIA|ADULT:|EXTRA:|VIP:|VIP|AUDIO|L1|B|BACKUP|MULTI|SUB|SUBTITLE(S)?|NAPISY|VIASAT:|XXX|XXX:|\d{1,2}\s*FPS|LIVE\s*DURING\s*EVENTS\s*ONLY)(?=\s|$)', re.IGNORECASE) )
@@ -414,12 +415,12 @@ class PlaylistUpdater(baseServiceUpdater):
             regex_chann_name   =     re.compile('tvg-id="[^"]*"', re.IGNORECASE)
             if ADDON.getSetting('VOD_EPG') == "":
                 regexCorrectStream =     re.compile('^(plugin|http|rtmp)(?!.*?[.]((\.)(mp4|mkv|avi|mov|wma)))', re.IGNORECASE)
-                regexRemoveList.append( re.compile('(\s|^)(L\s*)?((?i)VOD)(?=\s|$)', re.IGNORECASE) )
+                regexRemoveList.append( re.compile('(\s|^)?(L\s*)?((?i)Vod|VOD|On\sDemand)(?=\s|$)', re.IGNORECASE) )
             else:
                 regexCorrectStream =     re.compile('^plugin|http|^rtmp', re.IGNORECASE)
 
             if ADDON.getSetting('XXX_EPG') == "":
-                regexRemoveList.append( re.compile('(\s|^)(L\s*)?((?i)Adult)(?=\s|$)', re.IGNORECASE) )
+                regexRemoveList.append( re.compile('(\s|^)?(L\s*)?((?i)Adult|XXX)(?=\s|$)', re.IGNORECASE) )
 
             title = None
             tvg_title = None
@@ -455,9 +456,9 @@ class PlaylistUpdater(baseServiceUpdater):
 
                         if len(splitedLine) > 1:
                             try:
-                                tmpTitle = unidecode(splitedLine[len(splitedLine) - 1].strip())
+                                tmpTitle = splitedLine[len(splitedLine) - 1].strip()
                             except:
-                                tmpTitle = unidecode(splitedLine[len(splitedLine) - 1].strip().decode('utf-8'))
+                                tmpTitle = splitedLine[len(splitedLine) - 1].strip().decode('utf-8')
 
                         tvg_id = False
 
@@ -493,10 +494,26 @@ class PlaylistUpdater(baseServiceUpdater):
 
                             nonCCList = ['SD', 'HD', 'UHD', '4K', 'TV']
 
-                            allCC = ccList + a3List + langList + nativeList + dotList
+                            if ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '0':
+                                allCC = None
+
+                            elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '1':
+                                allCC = ccList
+
+                            elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '2':
+                                allCC = a3List
+
+                            elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '3':
+                                allCC = dotList
+
+                            elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '4':
+                                allCC = langList + nativeList
+                            
+                            else:
+                                allCC = ccList
 
                             if ADDON.getSetting('{}_append_country_code'.format(self.serviceName)) != '':
-                                p = re.compile(r'.*\s([a-zA-Z]{2,3})$', re.DOTALL)
+                                p = re.compile(r'((^|(\s))(L\s*)?([A-Z]{2,3})((:|\s)|$)|(\.)([a-z]{2}))', re.DOTALL)
 
                                 try:
                                     cc = p.search(title).group(1)
@@ -506,8 +523,8 @@ class PlaylistUpdater(baseServiceUpdater):
                                 if cc not in allCC or cc.upper() in nonCCList:
                                     title = title + ' ' + ADDON.getSetting('{}_append_country_code'.format(self.serviceName))
 
-                            elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) != '0' and not tvg_id:
-                                p = re.compile(r'.*\s([a-zA-Z]{2,3})$', re.DOTALL)
+                            elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) != '0' and not tvg_id and allCC:
+                                p = re.compile(r'((^|(\s))(L\s*)?([A-Z]{2,3})((:|\s)|$)|(\.)([a-z]{2}))', re.DOTALL)
 
                                 try:
                                     cc = p.search(title).group(1)
@@ -523,11 +540,33 @@ class PlaylistUpdater(baseServiceUpdater):
 
                                     ccListInt = len(ccList)
                                     
-                                    if any(ccExt not in title for ccExt in ccList):
-                                        try:
-                                            p = re.compile('(?:^|[^a-zA-Z\d])({a}|{b}|{c}|{d}|{e})(?:[^a-zA-Z\d]|$)'.format(a=langA, b=langB, c=langC, d=langD, e=langE), re.IGNORECASE)
-                                        except:
-                                            p = re.compile('(?:^|[^a-zA-Z\d])({a}|{b}|{c}|{d}|{e})(?:[^a-zA-Z\d]|$)'.format(a=langA, b=langB, c=langC, d=langD.encode('utf-8'), e=langE), re.IGNORECASE)
+                                    if any(ccExt not in title for ccExt in allCC):
+                                        lang = langA
+                                        recase = False
+
+                                        if ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '1':
+                                            lang = langA
+                                            recase = False
+                                        elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '2':
+                                            lang = langB
+                                            recase = False
+                                        elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '3':
+                                            lang = langE
+                                            recase = True
+                                        elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '4':
+                                            lang = langC + '|' + langD
+                                            recase = True
+
+                                        if recase:
+                                            try:
+                                                p = re.compile('(^|(\s))(L\s*)?({r})((:)|$)'.format(r=lang), re.IGNORECASE)
+                                            except:
+                                                p = re.compile('(^|(\s))(L\s*)?({r})((:)|$)'.format(r=lang.encode('utf-8')), re.IGNORECASE)
+                                        else:   
+                                            try:
+                                                p = re.compile('((^|(\s))(L\s*)?({r})((:|\s)|$)|(\.)({s}))'.format(r=lang.upper(), s=lang.lower()))
+                                            except:
+                                                p = re.compile('((^|(\s))(L\s*)?({r})((:|\s)|$)|(\.)({s}))'.format(r=lang.upper().encode('utf-8'), s=lang.lower()))
 
                                         if sys.version_info[0] > 2:
                                             try:
@@ -563,7 +602,7 @@ class PlaylistUpdater(baseServiceUpdater):
                                                     cc = ccList[subsLangD.get(item, item)]
                                                     ccCh = cc
 
-                                                elif '.' + group.lower() == dotList[item]:
+                                                elif group.lower() == dotList[item]:
                                                     subsLangE = {dotList[item]: ccList[item]}
                                                     cc = ccList[subsLangE.get(item, item)]
                                                     ccCh = cc
@@ -629,16 +668,16 @@ class PlaylistUpdater(baseServiceUpdater):
                             if UHDStream:
                                 channelCid = channelCid + '_UHD'
                                 uhdList.append(TvCid(cid=channelCid, name=name, title=title, strm=stripLine, catchup=catchupLine))
-                                if tvg_title:
+                                if tvg_id:
                                     uhdList.append(TvCid(cid=channelCid, name=tvg_title, title=tvg_title, strm=stripLine, catchup=catchupLine))
                             elif HDStream:
                                 channelCid = channelCid + '_HD'
                                 hdList.append(TvCid(cid=channelCid, name=name, title=title, strm=stripLine, catchup=catchupLine))
-                                if tvg_title:
+                                if tvg_id:
                                     hdList.append(TvCid(cid=channelCid, name=tvg_title, title=tvg_title, strm=stripLine, catchup=catchupLine))
                             else:
                                 sdList.append(TvCid(cid=channelCid, name=name, title=title, strm=stripLine, catchup=catchupLine))
-                                if tvg_title:
+                                if tvg_id:
                                     sdList.append(TvCid(cid=channelCid, name=tvg_title, title=tvg_title, strm=stripLine, catchup=catchupLine))
                         
                             self.log('[UPD]     %-40s %-12s %-35s' % (title, channelCid, stripLine))

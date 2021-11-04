@@ -489,6 +489,7 @@ class MapString:
             logCall('\n\n')
             logCall('[UPD] Parsing basemap file')
             logCall('-------------------------------------------------------------------------------------')
+        
         if sys.version_info[0] > 2:
             xmlstr = xmlstr.decode('utf-8')
         else:
@@ -552,7 +553,8 @@ class MapString:
                 with open(path, 'rb') as content_file:
                     content = content_file.read()
             else:
-                with open(path, 'r') as content_file:
+                import codecs
+                with codecs.open(path, 'r', encoding='utf-8') as content_file:
                     content = content_file.read()
         except Exception as ex:
             logCall('loadFile exception: %s' % getExceptionString())
@@ -759,7 +761,7 @@ class baseServiceUpdater:
     def loadSingleBaseMap(self, lang, mapFilePath):
         self.log('Loading {} channel map'.format(lang))
         entries = None
-        
+
         localMapFilename      = os.path.join(pathMapBase, mapFilePath)
         onlineMapFilename     = onlineMapPathBase + mapFilePath
         map                   = self.sl.getJsonFromExtendedAPI(onlineMapFilename, max_conn_time=9, http_timeout=5, verbose=False)

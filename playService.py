@@ -84,7 +84,6 @@ from contextlib import contextmanager
 
 import playlistcids
 import cmorecids
-#import francetvcids
 import iplacids
 import ncplusgocids
 import playerplcids
@@ -97,6 +96,8 @@ import wppilotcids
 sess = cloudscraper.create_scraper()
 scraper = cloudscraper.CloudScraper()
 
+UA = xbmc.getUserAgent()
+
 SERVICES = {
     playlistcids.serviceName + '_1' : playlistcids.PlaylistUpdater(instance_number=1),
     playlistcids.serviceName + '_2' : playlistcids.PlaylistUpdater(instance_number=2),
@@ -104,7 +105,6 @@ SERVICES = {
     playlistcids.serviceName + '_4' : playlistcids.PlaylistUpdater(instance_number=4),
     playlistcids.serviceName + '_5' : playlistcids.PlaylistUpdater(instance_number=5),
     cmorecids.serviceName           : cmorecids.CmoreUpdater(),
-    #francetvcids.serviceName        : francetvcids.FranceTVUpdater(),
     iplacids.serviceName            : iplacids.IplaUpdater(),
     ncplusgocids.serviceName        : ncplusgocids.NcPlusGoUpdater(),
     playerplcids.serviceName        : playerplcids.PlayerPLUpdater(),
@@ -389,17 +389,17 @@ class PlayService(xbmc.Player, BasePlayService):
 
         status = 200
 
-        UA = ADDON.getSetting('{}_user_agent'.format(service))
+        UAx = ADDON.getSetting('{}_user_agent'.format(service))
 
         headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0',
+            'User-Agent': UA,
             'Accept': 'application/json, text/javascript, */*; q=0.01',
             'Accept-Language': 'pl,en-US;q=0.7,en;q=0.3',
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
         }
 
-        if UA:
-            headers.update({'User-Agent': UA})
+        if UAx:
+            headers.update({'User-Agent': UAx})
         
             conn_timeout = int(ADDON.getSetting('max_wait_for_playback'))
             read_timeout = int(ADDON.getSetting('max_wait_for_playback'))
@@ -468,8 +468,6 @@ class PlayService(xbmc.Player, BasePlayService):
             tv_client_boot_id  = ADDON.getSetting('teliaplay_tv_client_boot_id')
             usern              = ADDON.getSetting('teliaplay_usern')
             sessionid          = ADDON.getSetting('teliaplay_sess_id')
-
-            UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36 Edg/89.0.774.63'
 
             utc = str(int(utc) * 1000 + 1000)
             lutc = str(int(lutc) * 1000)
@@ -754,9 +752,7 @@ class PlayService(xbmc.Player, BasePlayService):
 
                             licenseUrl, licenseData = channelInfo.lic
                             strmUrl = channelInfo.strm
-                                
-                            UA = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:84.0) Gecko/20100101 Firefox/84.0'
-                            
+
                             PROTOCOL = 'mpd'
                             DRM = 'com.widevine.alpha'
 
@@ -820,9 +816,7 @@ class PlayService(xbmc.Player, BasePlayService):
 
                         licServ = 'https://wv.drm.insyscd.net/AcquireLicense.ashx'
                         licenseUrl = 'DrmChallengeCustomData='+quote(licenseUrl)
-                        
-                        UA = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0'
-                        
+
                         PROTOCOL = 'mpd'
                         DRM = 'com.widevine.alpha'
                         
@@ -924,8 +918,6 @@ class PlayService(xbmc.Player, BasePlayService):
 
                             licServ = 'https://b2c-www.redefine.pl/rpc/drm/'
 
-                            UA = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.9 Safari/537.36'
-
                             PROTOCOL = 'mpd'
                             DRM = 'com.widevine.alpha'
 
@@ -975,9 +967,7 @@ class PlayService(xbmc.Player, BasePlayService):
 
                             licenseUrl, licenseData = channelInfo.lic
                             strmUrl = channelInfo.strm
-                                
-                            UA = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0'
-                            
+
                             PROTOCOL = 'mpd'
                             DRM = 'com.widevine.alpha'
 
@@ -1055,8 +1045,6 @@ class PlayService(xbmc.Player, BasePlayService):
                                 if not strmUrl:
                                     return None
 
-                        UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36 Edg/89.0.774.63'
-
                         PROTOCOL = 'mpd'
                         DRM = 'com.widevine.alpha'
 
@@ -1100,8 +1088,6 @@ class PlayService(xbmc.Player, BasePlayService):
                                 from urllib import urlencode, quote_plus, quote, unquote
 
                             strmUrl = channelInfo.strm
-                                
-                            UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36 Edg/92.0.902.55'
 
                             PROTOCOL = ''
                             DRM = 'com.widevine.alpha'
@@ -1599,17 +1585,17 @@ class PlayService(xbmc.Player, BasePlayService):
                 status = response.code
 
                 if status == 200:
-                    UA = ADDON.getSetting('{}_user_agent'.format(self.currentlyPlayedService['service']))
+                    UAx = ADDON.getSetting('{}_user_agent'.format(self.currentlyPlayedService['service']))
 
                     headers = {
-                        'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0',
+                        'User-Agent': UA,
                         'Accept': 'application/json, text/javascript, */*; q=0.01',
                         'Accept-Language': 'pl,en-US;q=0.7,en;q=0.3',
                         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
                     }
 
-                    if UA:
-                        headers.update({'User-Agent': UA})
+                    if UAx:
+                        headers.update({'User-Agent': UAx})
 
                     conn_timeout = int(ADDON.getSetting('max_wait_for_playback'))
                     read_timeout = int(ADDON.getSetting('max_wait_for_playback'))
