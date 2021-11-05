@@ -2393,12 +2393,11 @@ class Source(object):
                         contentType = u.headers['Content-Type']
                     except:
                         pass
-
                     break
 
                 except Exception as ex:
                     failCounter+=1
-                    deb('_downloadUrl Error downloading url: {}, Exceptiion: {}, failcounter: {}'.format(url, str(ex), failCounter))
+                    deb('_downloadUrl Error downloading url: {}, Exception: {}, failcounter: {}'.format(url, str(ex), failCounter))
                     if strings2.M_TVGUIDE_CLOSING:
                         raise SourceUpdateCanceledException()
                     if failCounter > 3:
@@ -2441,6 +2440,19 @@ class Source(object):
             u.close()
             tnow = datetime.datetime.now()
             deb("[EPG] Downloading done [{} sek.]".format(str((tnow-start).seconds)))
+
+
+            if not b'<channel' in content:
+                deb('Detected not valid EPG XML, url: {}'.format(url))
+                try:
+                    deb('Faulty EPG content: {}'.format(str(content[:15000])))
+                except:
+                    deb('Faulty EPG content: {}'.format(str(content[:15000]).decode('utf-8')))
+                
+                #not a valid EPG XML
+                deb("Error downloading EPG: {}\n\nDetails:\n{}".format(url, getExceptionString()))
+                raise SourceFaultyEPGException(url)
+
             return content
 
         except SourceUpdateCanceledException as cancelException:
@@ -2518,19 +2530,6 @@ class MTVGUIDESource(Source):
         self.MTVGUIDEUrl3      = ADDON.getSetting('m-TVGuide3').strip()
         self.XXX_EPG_Url       = ADDON.getSetting('XXX_EPG').strip()
         self.VOD_EPG_Url       = ADDON.getSetting('VOD_EPG').strip()
-        self.Benelux_EPG_Url   = ADDON.getSetting('epg_be').strip()
-        self.Czech_EPG_Url     = ADDON.getSetting('epg_cz').strip()
-        self.Croatian_EPG_Url  = ADDON.getSetting('epg_hr').strip()
-        self.Danish_EPG_Url    = ADDON.getSetting('epg_dk').strip()
-        self.English_EPG_Url   = ADDON.getSetting('epg_uk').strip()
-        self.French_EPG_Url    = ADDON.getSetting('epg_fr').strip()
-        self.German_EPG_Url    = ADDON.getSetting('epg_de').strip()
-        self.Italian_EPG_Url   = ADDON.getSetting('epg_it').strip()
-        self.Norwegian_EPG_Url = ADDON.getSetting('epg_no').strip()
-        self.Serbian_EPG_Url   = ADDON.getSetting('epg_srb').strip()
-        self.Swedish_EPG_Url   = ADDON.getSetting('epg_se').strip()
-        self.Us_EPG_Url        = ADDON.getSetting('epg_us').strip()
-        self.Radio_EPG_Url     = ADDON.getSetting('epg_radio').strip()
         self.epgBasedOnLastModDate = ADDON.getSetting('UpdateEPGOnModifiedDate')
         self.EPGSize    = None
         self.logoFolder = None
@@ -2548,83 +2547,60 @@ class MTVGUIDESource(Source):
                 self.profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
 
     def getDataFromExternal(self, date, progress_callback = None):
-        data = self._getDataFromExternal(date, progress_callback, self.MTVGUIDEUrl)
+        parsedData = {}
+
+        parsedData.update({self.MTVGUIDEUrl:{'date': date}})
 
         try:
             if self.MTVGUIDEUrl2 != "" and not strings2.M_TVGUIDE_CLOSING:
-                parsedData = self._getDataFromExternal(date, progress_callback, self.MTVGUIDEUrl2)
-                data = chain(data, parsedData)
+                parsedData.update({self.MTVGUIDEUrl2:{'date': date}})
             if self.MTVGUIDEUrl3 != "" and not strings2.M_TVGUIDE_CLOSING:
-                parsedData = self._getDataFromExternal(date, progress_callback, self.MTVGUIDEUrl3)
-                data = chain(data, parsedData)
+                parsedData.update({self.MTVGUIDEUrl3:{'date': date}})
             if self.XXX_EPG_Url != "":
-                parsedData = self._getDataFromExternal(date, progress_callback, self.XXX_EPG_Url)
-                data = chain(data, parsedData)
+                parsedData.update({self.XXX_EPG_Url:{'date': date}})
             if self.VOD_EPG_Url != "":
-                parsedData = self._getDataFromExternal(date, progress_callback, self.VOD_EPG_Url)
-                data = chain(data, parsedData)
-            if self.Benelux_EPG_Url != "" and ADDON.getSetting('country_code_be') == 'true':
-                parsedData = self._getDataFromExternal(date, progress_callback, self.Benelux_EPG_Url)
-                data = chain(data, parsedData)
-            if self.Czech_EPG_Url != "" and ADDON.getSetting('country_code_cz') == 'true':
-                parsedData = self._getDataFromExternal(date, progress_callback, self.Czech_EPG_Url)
-                data = chain(data, parsedData)
-            if self.Croatian_EPG_Url != "" and ADDON.getSetting('country_code_hr') == 'true':
-                parsedData = self._getDataFromExternal(date, progress_callback, self.Croatian_EPG_Url)
-                data = chain(data, parsedData)
-            if self.Danish_EPG_Url != "" and ADDON.getSetting('country_code_dk') == 'true':
-                parsedData = self._getDataFromExternal(date, progress_callback, self.Danish_EPG_Url)
-                data = chain(data, parsedData)
-            if self.English_EPG_Url != "" and ADDON.getSetting('country_code_uk') == 'true':
-                parsedData = self._getDataFromExternal(date, progress_callback, self.English_EPG_Url)
-                data = chain(data, parsedData)
-            if self.French_EPG_Url != "" and ADDON.getSetting('country_code_fr') == 'true':
-                parsedData = self._getDataFromExternal(date, progress_callback, self.French_EPG_Url)
-                data = chain(data, parsedData)
-            if self.German_EPG_Url != "" and ADDON.getSetting('country_code_de') == 'true':
-                parsedData = self._getDataFromExternal(date, progress_callback, self.German_EPG_Url)
-                data = chain(data, parsedData)
-            if self.Italian_EPG_Url != "" and ADDON.getSetting('country_code_it') == 'true':
-                parsedData = self._getDataFromExternal(date, progress_callback, self.Italian_EPG_Url)
-                data = chain(data, parsedData)
-            if self.Norwegian_EPG_Url != "" and ADDON.getSetting('country_code_no') == 'true':
-                parsedData = self._getDataFromExternal(date, progress_callback, self.Norwegian_EPG_Url)
-                data = chain(data, parsedData)
-            if self.Serbian_EPG_Url != "" and ADDON.getSetting('country_code_srb') == 'true':
-                parsedData = self._getDataFromExternal(date, progress_callback, self.Serbian_EPG_Url)
-                data = chain(data, parsedData)
-            if self.Swedish_EPG_Url != "" and ADDON.getSetting('country_code_se') == 'true':
-                parsedData = self._getDataFromExternal(date, progress_callback, self.Swedish_EPG_Url)
-                data = chain(data, parsedData)
-            if self.Us_EPG_Url != "" and ADDON.getSetting('country_code_us') == 'true':
-                parsedData = self._getDataFromExternal(date, progress_callback, self.Us_EPG_Url)
-                data = chain(data, parsedData)
-            if self.Radio_EPG_Url != "" and ADDON.getSetting('country_code_radio') == 'true':
-                parsedData = self._getDataFromExternal(date, progress_callback, self.Radio_EPG_Url)
-                data = chain(data, parsedData)
+                parsedData.update({self.VOD_EPG_Url:{'date': date}})
+
+            for k, v in CC_DICT.items():
+                epg = ADDON.getSetting('epg_{cc}'.format(cc=k)).strip()
+                if epg != '' and ADDON.getSetting('country_code_{cc}'.format(cc=k)) == 'true':
+                    if epg:
+                        parsedData.update({epg:{'date': date}})
+                    else:
+                        pass    
+
+            data = self._getDataFromExternal(parsedData, progress_callback)
 
         except SourceFaultyEPGException as ex:
             deb("Failed to download custom EPG but addon should start!, EPG: {}".format(ex.epg))
             xbmcgui.Dialog().ok(strings(LOAD_ERROR_TITLE), strings(LOAD_ERROR_LINE1) + '\n' + ex.epg + '\n' + strings(LOAD_NOT_CRITICAL_ERROR))
+            
+            parsedDataEx = {}
+            parsedDataEx.update({self.MTVGUIDEUrl:{'date': date}})
+            data = self._getDataFromExternal(parsedDataEx, progress_callback)
+
         return data
 
-    def _getDataFromExternal(self, date, progress_callback, url):
-        try:
-            xml = self._downloadUrl(url)
+    def _getDataFromExternal(self, data, progress_callback):
+        xml = b''
+
+        for url, v in data.items():
+            date = v['date']
+
+            try:
+                xml += bytearray(self._downloadUrl(url))
+
+            except SourceUpdateCanceledException as cancelException:
+                raise cancelException
+
+            except Exception as ex:
+                deb("Error downloading EPG: {}\n\nDetails:\n{}".format(url, getExceptionString()))
+                raise SourceFaultyEPGException(url)
 
             if strings2.M_TVGUIDE_CLOSING:
                 raise SourceUpdateCanceledException()
 
-            if not b'<channel' in xml:
-                deb('Detected not valid EPG XML, url: {}'.format(url))
-                try:
-                    deb('Faulty EPG content: {}'.format(str(xml[:15000])))
-                except:
-                    deb('Faulty EPG content: {}'.format(str(xml[:15000]).decode('utf-8')))
-                
-                #not a valid EPG XML
-                raise SourceFaultyEPGException(url)
-
+        try:        
             if ADDON.getSetting('useCustomParser') == 'true':
                 return customParseXMLTV(xml.decode('utf-8'), progress_callback)
 

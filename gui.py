@@ -5945,7 +5945,7 @@ class mTVGuide(xbmcgui.WindowXML):
             self.progressPreviousPercentage = percentageComplete
             delta = datetime.datetime.now() - self.progressStartTime
 
-            if percentageComplete < 20:
+            if percentageComplete < 15:
                 self.setControlLabel(self.C_MAIN_LOADING_TIME_LEFT, strings(CALCULATING_REMAINING_TIME))
             else:
                 secondsLeft = int(delta.seconds) / float(percentageComplete) * (100.0 - percentageComplete)
