@@ -402,16 +402,15 @@ class Database(object):
                 self.unlockDbTimer.start()
                 time.sleep(uniform(0, 0.2))
                 self.conn = sqlite3.connect(self.databasePath, detect_types=sqlite3.PARSE_DECLTYPES, cached_statements=2000)
-                self.conn.execute('PRAGMA foreign_keys = ON')
+                self.conn.execute('PRAGMA foreign_keys = ON');
                 self.conn.execute("PRAGMA locking_mode = EXCLUSIVE");
                 if ADDON.getSetting('pragma_mode') == 'true':
-                    self.conn.execute('PRAGMA journal_mode = WAL')
+                    self.conn.execute('PRAGMA journal_mode = WAL');
                     self.conn.execute("PRAGMA temp_store = MEMORY");
+                    self.conn.execute("PRAGMA synchronous = NORMAL");
                 #self.conn.execute('PRAGMA mmap_size = 268435456');
-                #self.conn.execute('PRAGMA synchronous = OFF')
                 #self.conn.execute("PRAGMA page_size = 16384");
                 #self.conn.execute("PRAGMA cache_size = 64000");
-                #self.conn.execute("PRAGMA temp_store = MEMORY");
                 #self.conn.execute("PRAGMA locking_mode = NORMAL");
                 #self.conn.execute("PRAGMA count_changes = OFF");
                 self.conn.row_factory = sqlite3.Row
@@ -2786,9 +2785,6 @@ def customParseXMLTV(xml, progress_callback):
     #replace &amp; with & and Carriage Return (CR) in xml
     xml = xml.replace('&amp;', '&').replace('&lt;', '<').replace('&gt;', '>').replace('\r', '')
 
-    titlesList = dict()
-    logosList = dict()
-
     channels = channelRe.findall(xml)
     if len(channels) == 0:
         deb('Error, no channels in EPG!')
@@ -2946,9 +2942,6 @@ def parseXMLTV(context, f, size, logoFolder, progress_callback):
     elements_parsed = 0
     category_count = {}
 
-    titlesList = dict()
-    logosList = dict()
-
     for event, elem in context:
         if event == "end":
             result = None
@@ -3004,13 +2997,11 @@ def parseXMLTV(context, f, size, logoFolder, progress_callback):
     
                 icon = None
                 if iconElement is not None:
-                    if 'http' in iconElement:
-                        icon = iconElement
+                    icon = iconElement
                 else:
                     iconElementEx = elem.find("icon")
                     if iconElementEx is not None:
-                        if 'http' in iconElementEx.get("src"):
-                            icon = iconElementEx.get("src")
+                        icon = iconElementEx.get("src")
                 if not description:
                     description = strings(NO_DESCRIPTION)
                 result = Program(channel, elem.findtext('title'), TimeZone(parseXMLTVDate(elem.get('start'))),TimeZone( parseXMLTVDate(elem.get('stop'))), description, productionDate=date, director=director, actor=actor, episode=episode, imageLarge=live3, imageSmall=icon, categoryA=cata,categoryB=catb)
