@@ -1434,7 +1434,7 @@
 						<heading>59908</heading>
 					</control>
 				</setting>
-				<setting help="95141" id="playlist_1_pattern" label="70128" type="string" parent="playlist_1_enabled">
+				<setting help="95141" id="playlist_1_pattern" label="70128" type="integer" parent="playlist_1_enabled">
 					<level>0</level>
 					<default>1</default>
 					<constraints>
@@ -1662,7 +1662,7 @@
 						<heading>59908</heading>
 					</control>
 				</setting>
-				<setting help="95141" id="playlist_2_pattern" label="70128" type="string" parent="playlist_2_enabled">
+				<setting help="95141" id="playlist_2_pattern" label="70128" type="integer" parent="playlist_2_enabled">
 					<level>0</level>
 					<default>1</default>
 					<constraints>
@@ -1890,7 +1890,7 @@
 						<heading>59908</heading>
 					</control>
 				</setting>
-				<setting help="95141" id="playlist_3_pattern" label="70128" type="string" parent="playlist_3_enabled">
+				<setting help="95141" id="playlist_3_pattern" label="70128" type="integer" parent="playlist_3_enabled">
 					<level>0</level>
 					<default>1</default>
 					<constraints>
@@ -2118,7 +2118,7 @@
 						<heading>59908</heading>
 					</control>
 				</setting>
-				<setting help="95141" id="playlist_4_pattern" label="70128" type="string" parent="playlist_4_enabled">
+				<setting help="95141" id="playlist_4_pattern" label="70128" type="integer" parent="playlist_4_enabled">
 					<level>0</level>
 					<default>1</default>
 					<constraints>
@@ -2346,7 +2346,7 @@
 						<heading>59908</heading>
 					</control>
 				</setting>
-				<setting help="95141" id="playlist_5_pattern" label="70128" type="string" parent="playlist_5_enabled">
+				<setting help="95141" id="playlist_5_pattern" label="70128" type="integer" parent="playlist_5_enabled">
 					<level>0</level>
 					<default>1</default>
 					<constraints>

@@ -2,7 +2,7 @@
 <addon
     id="script.mtvguide"
     name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]"
-    version="9.7.7"
+    version="9.7.8"
     provider-name="Team Mods-Kodi">
   <requires>
     <import addon="xbmc.addon" version="17.0.0"/>
@@ -42,7 +42,10 @@
 	<website>http://mods-kodi.pl/</website>
 	<email>support@m-tvguide.pl</email>
     <source>mods-kodi.pl © 2013 - 2021</source>
-    <news>v9.7.7 (2021-11-04)
+    <news>v9.7.8 (2021-11-05)
+- Updated EPG parsing.
+
+v9.7.7 (2021-11-04)
 - Updated default User-Agent request header.
 - Updated regex channel matching.
 - Added possibility to modify local basemap.
