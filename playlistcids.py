@@ -540,10 +540,11 @@ class PlaylistUpdater(baseServiceUpdater):
                             langD = '|'.join(nativeList)
                             langE = '|'.join(dotList)
 
-                            all_lang = langA + '|' + langB + '|' + langC + '|' + langD + '|' + langE
+                            non_escaped = langA + '|' + langB + '|' + langC + '|' + langD
+                            escaped = re.sub(r'\.', r'\\.', langE)
 
                             if PATTERN == 0:
-                                lang = all_lang
+                                lang = langA + '|' + langB + '|' + langC + '|' + langD + '|' + langE 
                                 
                             elif PATTERN == 1:
                                 lang = langA
@@ -562,15 +563,15 @@ class PlaylistUpdater(baseServiceUpdater):
 
                             if PATTERN <= 2:
                                 try:
-                                    regex_match = re.compile('(^|(\s))(L\s*)?({lang})((:|\s)|$)'.format(lang=lang.upper()))
+                                    regex_match = re.compile('(^|(\s))(L\s*)?((?i){lang})((:|\s)|$)'.format(lang=lang.upper()))
                                 except:
-                                    regex_match = re.compile('(^|(\s))(L\s*)?({lang})((:|\s)|$)'.format(lang=lang.upper().encode('utf-8')))
+                                    regex_match = re.compile('(^|(\s))(L\s*)?((?i){lang})((:|\s)|$)'.format(lang=lang.upper().encode('utf-8')))
 
                             elif PATTERN == 3:
-                                    try:
-                                        regex_match = re.compile('({lang})'.format(lang=lang.lower()))
-                                    except:
-                                        regex_match = re.compile('({lang})'.format(lang=lang.lower().encode('utf-8')))
+                                try:
+                                    regex_match = re.compile('((?i){lang})'.format(lang=lang.lower()))
+                                except:
+                                    regex_match = re.compile('((?i){lang})'.format(lang=lang.lower().encode('utf-8')))
                             
                             elif PATTERN == 4: 
                                 try:
@@ -580,25 +581,24 @@ class PlaylistUpdater(baseServiceUpdater):
 
                             if APPEND != '' and self.serviceEnabled == 'true':
                                 match = regex_match.match(title)
-                                if not match:
+                                if match is None:
                                     title = title + ' ' + APPEND
 
                             elif PATTERN > 0 and self.serviceEnabled == 'true':
                                 match = regex_match.match(title)
-                                if not match:
+                                if match is None:
                                     ccListInt = len(ccList)
 
-                                    escaped = re.sub(r'\.', r'\\.', all_lang)
-                                    pattern = re.compile('(?=\s|\W|[a-zA-Z]|^)(L\s*)?({lang})(?=\s|\W|[a-zA-Z]|$)'.format(lang=escaped))
+                                    pattern = re.compile('((?:^|[^a-zA-Z])({n})(?:[^a-zA-Z]|$)|({e}))'.format(n=non_escaped, e=escaped))
 
                                     if sys.version_info[0] > 2:
                                         try:
-                                            group = pattern.search(str(splitedLine[0])).group(2)
+                                            group = pattern.search(str(splitedLine[0])).group(1).strip()
                                         except:
                                             group = ''
                                     else:
                                         try:
-                                            group = pattern.search(str(splitedLine[0]).encode('utf-8')).group(2)
+                                            group = pattern.search(str(splitedLine[0]).encode('utf-8')).group(1).strip()
                                         except:
                                             group = ''
 
