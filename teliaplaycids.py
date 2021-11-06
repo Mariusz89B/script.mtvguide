@@ -555,7 +555,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
 
             for channel in channels:
                 if channel['id'] in self.engagementLiveChannels:
-                    cid = channel["id"] + '_TS_1'
+                    cid = channel["id"] + '_TS_3'
                     name = channel ["name"]
                     title = channel ["name"] + ' ' + ca[self.country]
                     img = channel["id"]

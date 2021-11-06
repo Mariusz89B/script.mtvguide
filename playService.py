@@ -523,6 +523,8 @@ class PlayService(xbmc.Player, BasePlayService):
             media_id = ''
             watch_mode = ''
 
+            streamType = 'MEDIA'
+
             programItems = response['data']['channel']['programs']['programItems']
             for item in programItems:
                 start_time = item['startTime']['timestamp']

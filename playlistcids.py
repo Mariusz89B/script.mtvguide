@@ -352,7 +352,7 @@ class PlaylistUpdater(baseServiceUpdater):
             hdList = list()
             uhdList = list()
 
-            cleanup_regex      =     re.compile("\[COLOR\s*\w*\]|\[/COLOR\]|\[B\]|\[/B\]|\[I\]|\[/I\]|^\s*|\s*$", re.IGNORECASE)
+            cleanup_regex = re.compile("\[COLOR\s*\w*\]|\[/COLOR\]|\[B\]|\[/B\]|\[I\]|\[/I\]|^\s*|\s*$", re.IGNORECASE)
 
             #regexReplaceList.append( re.compile('[^A-Za-z0-9+/:]+', re.IGNORECASE) )
             regexReplaceList.append( re.compile('[^A-Za-zÀ-ȕ0-9+\/:\.]+', re.IGNORECASE) )
@@ -584,7 +584,7 @@ class PlaylistUpdater(baseServiceUpdater):
                                 if match is None:
                                     title = title + ' ' + APPEND
 
-                            elif PATTERN > 0 and self.serviceEnabled == 'true':
+                            elif PATTERN > 0 and PATTERN < 5 and self.serviceEnabled == 'true':
                                 match = regex_match.match(title)
                                 if match is None:
                                     ccListInt = len(ccList)
@@ -656,9 +656,8 @@ class PlaylistUpdater(baseServiceUpdater):
                             title = re.sub('  ', ' ', title).strip()
 
                             if PATTERN == 5:
-                                title = title.replace(' ' + langReplaceMap['lang'], '')
-                                for item in nonCCList:
-                                    title = re.sub(' ' + item.upper(), ' ', title)
+                                for langReplaceMap in langReplaceList:
+                                    title = re.sub(langReplaceMap['lang'], '', title)
 
                             if tvg_id:
                                 if tvg_title == title:
