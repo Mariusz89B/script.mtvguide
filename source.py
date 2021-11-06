@@ -865,11 +865,16 @@ class Database(object):
     def epgChannels(self):
         result = dict()
 
+        if ADDON.getSetting('epg_display_name') == 'true':
+            DISPLAY = True
+        else:
+            DISPLAY = False
+
         with self.conn as conn:
             cur = conn.execute('SELECT id, titles FROM channels')
 
             for x in cur:
-                if ADDON.getSetting('epg_display_name') == 'true':
+                if DISPLAY:
                     try:
                         titles = x[0].upper() + ', ' + x[1].upper()
                         result.update({x[0].upper(): titles})
