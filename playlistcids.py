@@ -540,11 +540,10 @@ class PlaylistUpdater(baseServiceUpdater):
                             langD = '|'.join(nativeList)
                             langE = '|'.join(dotList)
 
-                            recase = False
-                            dot = False
+                            all_lang = langA + '|' + langB + '|' + langC + '|' + langD + '|' + langE
 
                             if PATTERN == 0:
-                                lang = langA + langB + langC + langD + langE
+                                lang = all_lang
                                 
                             elif PATTERN == 1:
                                 lang = langA
@@ -557,6 +556,9 @@ class PlaylistUpdater(baseServiceUpdater):
 
                             elif PATTERN == 4:
                                 lang = langC + '|' + langD
+
+                            else:
+                                lang = ''
 
                             if PATTERN <= 2:
                                 try:
@@ -577,23 +579,26 @@ class PlaylistUpdater(baseServiceUpdater):
                                     regex_match = re.compile('(^|(\s))(L\s*)?({lang})((:|\s)|$)'.format(lang=lang.encode('utf-8')), re.IGNORECASE)
 
                             if APPEND != '' and self.serviceEnabled == 'true':
-                                match = regex_match.findall(title)
+                                match = regex_match.match(title)
                                 if not match:
                                     title = title + ' ' + APPEND
 
                             elif PATTERN > 0 and self.serviceEnabled == 'true':
-                                match = regex_match.findall(title)
+                                match = regex_match.match(title)
                                 if not match:
                                     ccListInt = len(ccList)
 
+                                    escaped = re.sub(r'\.', r'\\.', all_lang)
+                                    pattern = re.compile('(?=\s|\W|[a-zA-Z]|^)(L\s*)?({lang})(?=\s|\W|[a-zA-Z]|$)'.format(lang=escaped))
+
                                     if sys.version_info[0] > 2:
                                         try:
-                                            group = regex_match.search(str(splitedLine[0])).group(1)
+                                            group = pattern.search(str(splitedLine[0])).group(2)
                                         except:
                                             group = ''
                                     else:
                                         try:
-                                            group = regex_match.search(str(splitedLine[0]).encode('utf-8')).group(1)
+                                            group = pattern.search(str(splitedLine[0]).encode('utf-8')).group(2)
                                         except:
                                             group = ''
 
