@@ -1245,55 +1245,65 @@ class Database(object):
         return channelList
 
     def addCategory(self, category):
-        categories = []
+        try:
+            categories = []
 
-        for k, v in CC_DICT.items():
-            if k.upper() == category.upper():
-                if ADDON.getSetting('country_code_{cc}'.format(cc=k)) == "true":
-                    categories.append(k.upper())
-                    categories.append('.'+k.lower())
-                    categories.append(v['alpha-3'])
-                    categories.append(v['language'])
-                    categories.append(v['native'])
-            else:
-                categories.append(category)
+            for k, v in CC_DICT.items():
+                if k.upper() == category.upper():
+                    if ADDON.getSetting('country_code_{cc}'.format(cc=k)) == "true":
+                        categories.append(k.upper())
+                        categories.append('.'+k.lower())
+                        categories.append(v['alpha-3'])
+                        categories.append(v['language'])
+                        categories.append(v['native'])
+                else:
+                    categories.append(category)
 
-        return categories
+            return categories
+        except Exception as ex:
+            deb('addCategory error: {}'.format(ex))
+
 
     def getCategoryChannelList(self, category, channelList, excludeCurrentCategory):
-        newChannelList = list()
-        predefined_category_re = re.compile(r'\w+: ([^\s]*)', re.IGNORECASE)
-        predefined = predefined_category_re.search(category)
+        try:
+            newChannelList = list()
+            predefined_category_re = re.compile(r'\w+: ([^\s]*)', re.IGNORECASE)
+            predefined = predefined_category_re.search(category)
 
-        if predefined:
-            categories = self.addCategory(predefined.group(1))
+            if predefined:
+                categories = self.addCategory(predefined.group(1))
 
-            deb('Using predefined category: {}'.format(predefined.group(1)))
-            for cat in categories:
-                predefined = '|'.join(re.escape(cat))
+                deb('Using predefined category: {}'.format(predefined.group(1)))
+                for cat in categories:
+                    predefined = '|'.join(re.escape(cat))
 
-            channel_regex = re.compile('.*({})$'.format(predefined))
+                channel_regex = re.compile('.*({})$'.format(predefined))
 
-            for channel in channelList[:]:
-                if channel_regex.match(channel.id):
-                    newChannelList.append(channel)
-                    channelList.remove(channel)
-                    #deb('Adding channel: {}'.format(channel.title))
-                else:
-                    channelList.remove(channel)
-
-        else:
-            channelsInCategory = self.getChannelsInCategory(category)
-            if len(channelsInCategory) > 0:
                 for channel in channelList[:]:
-                    for channelInCategory in channelsInCategory:
-                        if channel.title == channelInCategory:
-                            newChannelList.append(channel)
+                    if channel_regex.match(channel.id):
+                        newChannelList.append(channel)
+                        channelList.remove(channel)
+                        #deb('Adding channel: {}'.format(channel.title))
+                    else:
                         channelList.remove(channel)
 
-        if len(newChannelList) > 0 and not excludeCurrentCategory:
-            channelList = newChannelList
-        return channelList
+            else:
+                channelsInCategory = self.getChannelsInCategory(category)
+                if len(channelsInCategory) > 0:
+                    for channel in channelList[:]:
+                        for channelInCategory in channelsInCategory:
+                            if channel.title == channelInCategory:
+                                newChannelList.append(channel)
+                            try:
+                                channelList.remove(channel)
+                            except:
+                                pass
+
+            if len(newChannelList) > 0 and not excludeCurrentCategory:
+                channelList = newChannelList
+            return channelList
+        except Exception as ex:
+            deb('getCategoryChannelList error: {}'.format(ex))
 
     def getCategoryMap(self):
         categoryMap = list()
