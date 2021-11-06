@@ -124,6 +124,26 @@ class PlaylistUpdater(baseServiceUpdater):
         else:
             self.stopPlaybackOnStart = False
 
+        if ADDON.getSetting('{}_refr'.format(self.serviceName)) == 'true':
+            self.refr = True
+        else:
+            self.refr = False
+
+        if ADDON.getSetting('archive_support') == 'true':
+            self.catchup = True
+        else:
+            self.catchup = False
+
+        if ADDON.getSetting('tvg_id') == 'true':
+            self.tvg = True
+        else:
+            self.tvg = False
+
+        if ADDON.getSetting('show_group_channels') == 'true':
+            self.filtered = True
+        else:
+            self.filtered = False
+
     def requestUrl(self, path):
         headers = { 'User-Agent' : UA }
         headers['Keep-Alive'] = 'timeout=15'
@@ -247,7 +267,7 @@ class PlaylistUpdater(baseServiceUpdater):
 
         while not content and (datetime.datetime.now() - start_time).seconds < 10:
             try:
-                if ADDON.getSetting('{}_refr'.format(self.serviceName)) == 'true':
+                if self.refr:
                     content = self.cachePlaylist(path)
                 else:
                     content = self.requestUrl(path)
@@ -354,28 +374,50 @@ class PlaylistUpdater(baseServiceUpdater):
 
             regexRemoveList.append( re.compile('(\s|^)(L\s*)?(24/7:?:?|19\d\d|20\d\d|S\s*\d{1,3}\s*E\s*\d{1,4})(?=\s|$)', re.IGNORECASE) )
 
+            APPEND = ADDON.getSetting('{}_append_country_code'.format(self.serviceName))
+
+            PATTERN = -1
+
+            if ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '0':
+                PATTERN = 0
+
+            elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '1':
+                PATTERN = 1
+
+            elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '2':
+                PATTERN = 2
+
+            elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '3':
+                PATTERN = 3
+
+            elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '4':
+                PATTERN = 4
+
+            elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '5':
+                PATTERN = 5
+
             for cc, value in CC_DICT.items():
                 cc_pattern = cc.upper()
                 cc_pattern_regex = cc_pattern
 
-                if ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '0':
+                if PATTERN == 0:
                     cc_pattern_regex = cc.upper() + ':?|' + value['alpha-3'] + ':?|' + re.escape('.' + cc.lower()) + ':?|' + value['language']
 
                 # Alpha-2
-                elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '1':
+                elif PATTERN == 1:
                     cc_pattern = cc.upper()
 
                 # Alpha-3
-                elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '2':
+                elif PATTERN == 2:
                     cc_pattern = value['alpha-3']
                     
                 # ccTLD
-                elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '3':
+                elif PATTERN == 3:
                     cc_pattern = '.' + cc.lower()
                     cc_pattern_regex = re.escape(cc_pattern)
 
                 # Lang
-                elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '4':
+                elif PATTERN == 4:
                     cc_pattern = value['language']
 
                 if ADDON.getSetting('country_code_{}'.format(cc)) == 'true':
@@ -394,7 +436,7 @@ class PlaylistUpdater(baseServiceUpdater):
                     # ccLists
                     ccList.append(cc.upper())
 
-                    if ADDON.getSetting('{}_pattern'.format(self.serviceName)) != '0':  
+                    if PATTERN > 0:  
                         a3List.append(value['alpha-3'].upper())
                         langList.append(value['language'])
                         nativeList.append(value['native']) 
@@ -404,9 +446,9 @@ class PlaylistUpdater(baseServiceUpdater):
                 prefixList.append(' ')
 
             prefix = '|'.join(map(str, prefixList))
-            if ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '0':
+            if PATTERN == 0:
                 regexAddList.append( re.compile('(\S|\s|^)(L\s*)?({prefix})(?=\S|\s|$)'.format(prefix=prefix)) )
-            elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '3':
+            elif PATTERN == 3:
                 regexAddList.append( re.compile('(\S|^)(L\s*)?({prefix})(?=\S|$)'.format(prefix=prefix)) )
             else:
                 regexAddList.append( re.compile('(\s|^)(L\s*)?({prefix})(?=\s|$)'.format(prefix=prefix)) )
@@ -453,7 +495,7 @@ class PlaylistUpdater(baseServiceUpdater):
 
                         catchup_regex = re.compile('^.*catchup-source="http[s]?.*$', re.IGNORECASE)
 
-                        if catchup_regex.match(stripLine) and ADDON.getSetting('archive_support') == 'true':
+                        if catchup_regex.match(stripLine) and self.catchup:
                             catchup_source_regex = re.compile('catchup-source="(.*?)"')
                             catchupLine = catchup_source_regex.search(stripLine).group(1)
 
@@ -466,7 +508,7 @@ class PlaylistUpdater(baseServiceUpdater):
                         tvg_id = False
 
                         match = regex_chann_name.findall(stripLine)
-                        if len(match) > 0 and ADDON.getSetting('tvg_id') == 'true':
+                        if len(match) > 0 and self.tvg:
                             tvg_title = match[0].replace("tvg-id=","").replace('"','').strip()
                             tvg_id = True
 
@@ -499,40 +541,47 @@ class PlaylistUpdater(baseServiceUpdater):
                             langE = '|'.join(dotList)
 
                             recase = False
+                            dot = False
 
-                            if ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '0':
+                            if PATTERN == 0:
                                 lang = langA + langB + langC + langD + langE
-                                recase = False
-                            if ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '1':
+                                
+                            elif PATTERN == 1:
                                 lang = langA
-                                recase = False
-                            elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '2':
+                                
+                            elif PATTERN == 2:
                                 lang = langB
-                                recase = False
-                            elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '3':
-                                lang = langA
-                                recase = True
-                            elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '4':
-                                lang = langC + '|' + langD
-                                recase = True
 
-                            if recase:
+                            elif PATTERN == 3:
+                                lang = langE
+
+                            elif PATTERN == 4:
+                                lang = langC + '|' + langD
+
+                            if PATTERN <= 2:
+                                try:
+                                    regex_match = re.compile('(^|(\s))(L\s*)?({lang})((:|\s)|$)'.format(lang=lang.upper()))
+                                except:
+                                    regex_match = re.compile('(^|(\s))(L\s*)?({lang})((:|\s)|$)'.format(lang=lang.upper().encode('utf-8')))
+
+                            elif PATTERN == 3:
+                                    try:
+                                        regex_match = re.compile('({lang})'.format(lang=lang.lower()))
+                                    except:
+                                        regex_match = re.compile('({lang})'.format(lang=lang.lower().encode('utf-8')))
+                            
+                            elif PATTERN == 4: 
                                 try:
                                     regex_match = re.compile('(^|(\s))(L\s*)?({lang})((:|\s)|$)'.format(lang=lang), re.IGNORECASE)
                                 except:
                                     regex_match = re.compile('(^|(\s))(L\s*)?({lang})((:|\s)|$)'.format(lang=lang.encode('utf-8')), re.IGNORECASE)
-                            else:   
-                                try:
-                                    regex_match = re.compile('((^|(\s))(L\s*)?({lang})((:|\s)|$)|(\.)({lower}))'.format(lang=lang.upper(), lower=lang.lower()))
-                                except:
-                                    regex_match = re.compile('((^|(\s))(L\s*)?({lang})((:|\s)|$)|(\.)({lower}))'.format(lang=lang.upper().encode('utf-8'), lower=lang.lower()))
 
-                            if ADDON.getSetting('{}_append_country_code'.format(self.serviceName)) != '' and ADDON.getSetting('{}_enabled'.format(self.serviceName)) == 'true':
+                            if APPEND != '' and self.serviceEnabled == 'true':
                                 match = regex_match.findall(title)
                                 if not match:
-                                    title = title + ' ' + ADDON.getSetting('{}_append_country_code'.format(self.serviceName))
+                                    title = title + ' ' + APPEND
 
-                            elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) != '0' and ADDON.getSetting('{}_enabled'.format(self.serviceName)) == 'true':
+                            elif PATTERN > 0 and self.serviceEnabled == 'true':
                                 match = regex_match.findall(title)
                                 if not match:
                                     ccListInt = len(ccList)
@@ -575,11 +624,11 @@ class PlaylistUpdater(baseServiceUpdater):
                                             string = ' ' + ccCh.upper()
                                             title = re.sub('$', string, title)
 
-                            if ADDON.getSetting('{}_pattern'.format(self.serviceName)) != '0':
+                            if PATTERN > 0:
                                 for langReplaceMap in langReplaceList:
                                     title, match = langReplaceMap['regex'].subn('', title)
                                     if match > 0:
-                                        if ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '3':
+                                        if PATTERN == 3:
                                             title += '' + langReplaceMap['lang']
                                         else:
                                             title += ' ' + langReplaceMap['lang']
@@ -591,7 +640,7 @@ class PlaylistUpdater(baseServiceUpdater):
                                     if( regexRemove.findall(tvg_title) ):
                                         tvg_title = ''
 
-                            if ADDON.getSetting('show_group_channels') == 'true':
+                            if self.filtered:
                                 for regexAdd in regexAddList:
                                     if not ( regexAdd.findall(title) ):
                                         title = '' 
@@ -601,7 +650,7 @@ class PlaylistUpdater(baseServiceUpdater):
 
                             title = re.sub('  ', ' ', title).strip()
 
-                            if ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '5':   
+                            if PATTERN == 5:
                                 title = title.replace(' ' + langReplaceMap['lang'], '')
                                 for item in nonCCList:
                                     title = re.sub(' ' + item.upper(), ' ', title)
@@ -621,7 +670,7 @@ class PlaylistUpdater(baseServiceUpdater):
 
                             catchupDaysList = ['catchup-days=', 'timeshift=']
 
-                            if any(x in splitedLine[0] for x in catchupDaysList) and ADDON.getSetting('archive_support') == 'true':
+                            if any(x in splitedLine[0] for x in catchupDaysList) and self.catchup:
                                 pdays = re.compile('.*(timeshift=|catchup-days=)"(.*?)".*')
                                 
                                 days = pdays.search(splitedLine[0]).group(2)
@@ -630,7 +679,7 @@ class PlaylistUpdater(baseServiceUpdater):
 
                             catchupList = ['catchup', 'timeshift']
 
-                            if any(x in splitedLine[0] for x in catchupList) and ADDON.getSetting('archive_support') == 'true':
+                            if any(x in splitedLine[0] for x in catchupList) and self.catchup:
                                 channelCid = str(nextFreeCid) + '_AR' + '_' + days
                             else:
                                 channelCid = str(nextFreeCid)
