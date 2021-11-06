@@ -63,6 +63,7 @@ import cloudscraper
 
 from contextlib import contextmanager
 from unidecode import unidecode
+from collections import OrderedDict
 
 import codecs
 
@@ -450,11 +451,11 @@ class PlaylistUpdater(baseServiceUpdater):
 
                         splitedLine = stripLine.split(',')
 
-                        p = re.compile('^.*catchup-source="http[s]?.*$', re.IGNORECASE)
+                        catchup_regex = re.compile('^.*catchup-source="http[s]?.*$', re.IGNORECASE)
 
-                        if p.match(stripLine) and ADDON.getSetting('archive_support') == 'true':
-                            catchup = re.compile('catchup-source="(.*?)"')
-                            catchupLine = catchup.search(stripLine).group(1)
+                        if catchup_regex.match(stripLine) and ADDON.getSetting('archive_support') == 'true':
+                            catchup_source_regex = re.compile('catchup-source="(.*?)"')
+                            catchupLine = catchup_source_regex.search(stripLine).group(1)
 
                         if len(splitedLine) > 1:
                             try:
@@ -487,10 +488,7 @@ class PlaylistUpdater(baseServiceUpdater):
                             if match > 0:
                                 UHDStream = True
 
-                            title = self.removeDuplicates(title)
-
-                            words = title.split()
-                            title = (" ".join(sorted(set(words), key=words.index)))
+                            title = ' '.join(OrderedDict((w,w) for w in title.split()).keys())
 
                             name = title
 
@@ -499,6 +497,8 @@ class PlaylistUpdater(baseServiceUpdater):
                             langC = '|'.join(langList)
                             langD = '|'.join(nativeList)
                             langE = '|'.join(dotList)
+
+                            recase = False
 
                             if ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '0':
                                 lang = langA + langB + langC + langD + langE
@@ -510,7 +510,7 @@ class PlaylistUpdater(baseServiceUpdater):
                                 lang = langB
                                 recase = False
                             elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '3':
-                                lang = langE
+                                lang = langA
                                 recase = True
                             elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '4':
                                 lang = langC + '|' + langD
@@ -553,36 +553,27 @@ class PlaylistUpdater(baseServiceUpdater):
                                         for item in range(ccListInt):
                                             if group == ccList[item].upper():
                                                 subsLangA = {ccList[item]: ccList[item]}
-                                                cc = ccList[subsLangA.get(item, item)]
-                                                ccCh = cc
+                                                ccCh = ccList[subsLangA.get(item, item)]
 
                                             elif group == a3List[item].upper():  
                                                 subsLangB = {a3List[item]: ccList[item]}
-                                                cc = ccList[subsLangB.get(item, item)]
-                                                ccCh = cc
+                                                ccCh = ccList[subsLangB.get(item, item)]
                                             
                                             elif group.upper() == langList[item].upper():
                                                 subsLangC = {langList[item]: ccList[item]}
-                                                cc = ccList[subsLangC.get(item, item)]
-                                                ccCh = cc
+                                                ccCh = ccList[subsLangC.get(item, item)]
 
                                             elif group.upper() == nativeList[item].upper():
                                                 subsLangD = {nativeList[item]: ccList[item]}
-                                                cc = ccList[subsLangD.get(item, item)]
-                                                ccCh = cc
+                                                ccCh = ccList[subsLangD.get(item, item)]
 
                                             elif group.lower() == dotList[item]:
                                                 subsLangE = {dotList[item]: ccList[item]}
-                                                cc = ccList[subsLangE.get(item, item)]
-                                                ccCh = cc
+                                                ccCh = ccList[subsLangE.get(item, item)]
 
-                                        try:
-                                            cc = regex_match.search(title).group(1)
-                                        except:
-                                            cc = ''
-
-                                        string = ' ' + ccCh.upper()
-                                        title = re.sub('$', string, title)
+                                        if ccCh:
+                                            string = ' ' + ccCh.upper()
+                                            title = re.sub('$', string, title)
 
                             if ADDON.getSetting('{}_pattern'.format(self.serviceName)) != '0':
                                 for langReplaceMap in langReplaceList:
@@ -608,13 +599,12 @@ class PlaylistUpdater(baseServiceUpdater):
                                         if not ( regexAdd.findall(tvg_title) ):
                                             tvg_title = ''                 
 
-                            title = title.replace('  ', ' ').strip()
+                            title = re.sub('  ', ' ', title).strip()
 
                             if ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '5':   
                                 title = title.replace(' ' + langReplaceMap['lang'], '')
                                 for item in nonCCList:
-                                    title = title.replace(' ' + item.upper(), ' ')       
-
+                                    title = re.sub(' ' + item.upper(), ' ', title)
 
                             if tvg_id:
                                 if tvg_title == title:
@@ -683,10 +673,6 @@ class PlaylistUpdater(baseServiceUpdater):
         except Exception as ex:
             self.log('getChannelList Error %s' % getExceptionString())
         return result
-
-    def removeDuplicates(self, s):
-      p = r"\b(HD|UHD)(?:\W+\1\b)+"
-      return re.sub(p, r"\1", s, flags=re.IGNORECASE)
 
     def getChannelStream(self, chann):
         try:
