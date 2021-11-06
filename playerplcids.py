@@ -272,12 +272,14 @@ class PlayerPLUpdater(baseServiceUpdater):
                 ADDON.setSetting('playerpl_selected_profile', self.SELECTED_PROFILE)
                 return True
 
-            if self.LOGGED != 'true':
-                ADDON.setSetting('playerpl_logged', 'false')
-                return False
+            #if self.LOGGED != 'true':
+                #ADDON.setSetting('playerpl_logged', 'false')
+                #return False
 
             if self.LOGGED == 'true':
                 return True
+            else:
+                return False
 
         except:
             self.log('Exception while trying to log in: {}'.format(getExceptionString()))

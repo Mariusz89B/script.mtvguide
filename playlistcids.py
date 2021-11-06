@@ -288,7 +288,7 @@ class PlaylistUpdater(baseServiceUpdater):
         fpath = os.path.join(self.profilePath, 'playlists')
         filepath = os.path.join(self.profilePath, 'playlists', '{playlist}.m3u'.format(playlist=self.serviceName))
 
-        try:
+        if os.path.exists(fpath):
             playlists.remove(self.serviceName)
 
             for f in os.listdir(fpath):
@@ -298,8 +298,6 @@ class PlaylistUpdater(baseServiceUpdater):
                         os.remove(os.path.join(fpath, '{playlist}.url'.format(playlist=playlist)))
                     except:
                         pass
-        except:
-            pass
 
         try:
             self.log('getPlaylistContent opening playlist: %s, urltype: %s' % (path, urltype))
@@ -344,13 +342,13 @@ class PlaylistUpdater(baseServiceUpdater):
         return content
 
     def getChannelList(self, silent):
-        result = list()
+        result = []
         try:
-            regexReplaceList = list()
+            regexReplaceList = []
 
-            sdList = list()
-            hdList = list()
-            uhdList = list()
+            sdList = []
+            hdList = []
+            uhdList = []
 
             cleanup_regex = re.compile("\[COLOR\s*\w*\]|\[/COLOR\]|\[B\]|\[/B\]|\[I\]|\[/I\]|^\s*|\s*$", re.IGNORECASE)
 
@@ -361,10 +359,10 @@ class PlaylistUpdater(baseServiceUpdater):
             regexReplaceList.append( re.compile('(\s|^)(FEED|FPS60|EUROPE|NORDIC|SCANDINAVIA|ADULT:|EXTRA:|VIP:|VIP|AUDIO|L1|B|BACKUP|MULTI|SUB|SUBTITLE(S)?|NAPISY|VIASAT:|XXX|XXX:|\d{1,2}\s*FPS|LIVE\s*DURING\s*EVENTS\s*ONLY)(?=\s|$)', re.IGNORECASE) )
             regexReplaceList.append( re.compile('(\s|^)(FULL|SD|LQ|HQ|RAW|LOW|HIGH|QUALITY)(?=\s|$)', re.IGNORECASE) )
 
-            langReplaceList = list()
-            prefixList = list()
-            regexRemoveList = list()
-            regexAddList = list() 
+            langReplaceList = []
+            prefixList = []
+            regexRemoveList = []
+            regexAddList = []
 
             ccList = []
             a3List = []
