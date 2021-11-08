@@ -248,6 +248,8 @@ class RecordService(BasePlayService):
 
     def recordProgramGui(self, program, catchupList, watch='', length=''):
         self.program = program
+        _program = None
+
         self.isDownload = False
         updateDB = False
 
@@ -277,8 +279,11 @@ class RecordService(BasePlayService):
                                 if saveRecording == True:
                                     self.startOffsetDownload *= 60
                                     self.endOffsetDownload *= 60
-                                    if self.scheduleDownload(program, self.startOffsetDownload, self.endOffsetDownload):
-                                        self.epg.database.addRecording(program, self.startOffsetDownload, self.endOffsetDownload)
+                                    _program = self.epg.database.getPrograms(program.channel, program, self.program.startDate, self.program.endDate)
+                                    if _program is None:
+                                        _program = program
+                                    if self.scheduleDownload(_program, _program.startDate, _program.endDate):
+                                        self.epg.database.addRecording(_program, _program.startDate, _program.endDate)
                                         updateDB = True
                                 elif chkdate == False:
                                     xbmcgui.Dialog().ok(failedDownloadDialogName, strings(59998))
@@ -331,7 +336,6 @@ class RecordService(BasePlayService):
 
     def scheduleDownload(self, program, startOffset, endOffset, delayRecording = 0):
         program = copy.deepcopy(program)
-        program.endDate += datetime.timedelta(seconds=endOffset)
 
         if sys.version_info[0] > 2:
             deb('DownloadService scheduling download for program {}, starting at {}, start offset {}'.format(program.title, program.startDate, startOffset))

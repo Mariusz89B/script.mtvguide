@@ -653,7 +653,7 @@ class PlaylistUpdater(baseServiceUpdater):
 
                             title = re.sub('  ', ' ', title).strip()
 
-                            if PATTERN == 5:
+                            if PATTERN == 5: #### need fix
                                 for langReplaceMap in langReplaceList:
                                     title = re.sub(langReplaceMap['lang'], '', title)
 

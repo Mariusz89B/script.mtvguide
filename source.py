@@ -1602,6 +1602,22 @@ class Database(object):
         c.close()
         return previousProgram
 
+    def getPrograms(self, channel, _program, startTime, endTime):
+        return self._invokeAndBlockForResult(self._getPrograms, channel, _program, startTime, endTime)
+
+    def _getPrograms(self, channel, _program, startTime, endTime):
+        result = None
+
+        c = self.conn.cursor()
+        c.execute('SELECT * FROM programs WHERE channel = ? AND source = ?  AND ( (end_date > ?) AND (start_date < ? ) )', [channel.id, self.source.KEY, startTime, endTime])
+        for row in c:
+            program = Program(channel, row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')])
+            if program.title == _program.title:
+                result = program
+
+        c.close()
+        return result
+
     def getProgramStartingAt(self, channel, startTime):
         return self._invokeAndBlockForResult(self._getProgramStartingAt, channel, startTime)
 
@@ -2836,6 +2852,7 @@ def customParseXMLTV(xml, progress_callback):
     elements_parsed = 0
     category_count = {}
     programs = programRe.findall(xml)
+    
     del xml
     xml = None
     totalElement = len(programs)
@@ -2858,6 +2875,7 @@ def customParseXMLTV(xml, progress_callback):
         except:
             stop = ''
         category = programCategory.findall(program)
+        
         category_list = []
         for c in category:
             txt = c
