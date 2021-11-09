@@ -42,8 +42,11 @@
 	<website>http://mods-kodi.pl/</website>
 	<email>support@m-tvguide.pl</email>
     <source>mods-kodi.pl © 2013 - 2021</source>
-    <news>v9.7.8 (2021-11-05)
+    <news>v9.7.8 (2021-11-09)
 - Updated EPG parsing.
+- Fixed download notification error.
+- Improved overall channel matching.
+- Optimizations.
 
 v9.7.7 (2021-11-04)
 - Updated default User-Agent request header.

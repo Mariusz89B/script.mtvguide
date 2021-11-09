@@ -1,5 +1,8 @@
-﻿wersja 9.7.8 - 2021-11-05
+﻿wersja 9.7.8 - 2021-11-09
 - aktualizacja parsowania EPG
+- naprawiono błąd powiadomienia o pobieraniu.
+- poprawiono ogólne dopasowanie kanałów.
+- optymalizacje.
 
 wersja 9.7.7 - 2021-11-04
 - zaktualizowano domyślny User-Agent

@@ -418,6 +418,10 @@ class PlaylistUpdater(baseServiceUpdater):
                 elif PATTERN == 4:
                     cc_pattern = value['language']
 
+                # Remove all
+                elif PATTERN == 5:
+                    cc_pattern_regex = cc.upper() + ':?|' + value['alpha-3'] + ':?|' + re.escape('.' + cc.lower()) + ':?|' + value['language']
+
                 if ADDON.getSetting('country_code_{}'.format(cc)) == 'true':
                     alpha_1 = value['native']
                     alpha_2 = value['language']
@@ -433,12 +437,10 @@ class PlaylistUpdater(baseServiceUpdater):
 
                     # ccLists
                     ccList.append(cc.upper())
-
-                    if PATTERN > 0:  
-                        a3List.append(value['alpha-3'].upper())
-                        langList.append(value['language'])
-                        nativeList.append(value['native']) 
-                        dotList.append('.' + cc.lower())
+                    a3List.append(value['alpha-3'].upper())
+                    langList.append(value['language'])
+                    nativeList.append(value['native']) 
+                    dotList.append('.' + cc.lower())
 
             if not prefixList:
                 prefixList.append(' ')
@@ -466,6 +468,7 @@ class PlaylistUpdater(baseServiceUpdater):
 
             title = None
             tvg_title = None
+            
             nextFreeCid = 0
             
             try:
@@ -582,7 +585,7 @@ class PlaylistUpdater(baseServiceUpdater):
                                 if match is None:
                                     title = title + ' ' + APPEND
 
-                            elif PATTERN > 0 and PATTERN < 5 and self.serviceEnabled == 'true':
+                            elif self.serviceEnabled == 'true':
                                 match = regex_match.match(title)
                                 if match is None:
                                     ccListInt = len(ccList)
@@ -627,14 +630,15 @@ class PlaylistUpdater(baseServiceUpdater):
                                             string = ' ' + ccCh.upper()
                                             title = re.sub('$', string, title)
 
-                            if PATTERN > 0:
-                                for langReplaceMap in langReplaceList:
-                                    title, match = langReplaceMap['regex'].subn('', title)
-                                    if match > 0:
-                                        if PATTERN == 3:
-                                            title += '' + langReplaceMap['lang']
-                                        else:
-                                            title += ' ' + langReplaceMap['lang']
+                            for langReplaceMap in langReplaceList:
+                                title, match = langReplaceMap['regex'].subn('', title)
+                                if match > 0:
+                                    if PATTERN == 3:
+                                        title += '' + langReplaceMap['lang']
+                                    elif PATTERN == 5:
+                                        title = re.sub(langReplaceMap['lang'], '', title)
+                                    else:
+                                        title += ' ' + langReplaceMap['lang']
 
                             for regexRemove in regexRemoveList:
                                 if( regexRemove.findall(title) ):
@@ -649,13 +653,12 @@ class PlaylistUpdater(baseServiceUpdater):
                                         title = '' 
                                     if tvg_id:
                                         if not ( regexAdd.findall(tvg_title) ):
-                                            tvg_title = ''                 
+                                            tvg_title = ''       
 
                             title = re.sub('  ', ' ', title).strip()
 
-                            if PATTERN == 5: #### need fix
-                                for langReplaceMap in langReplaceList:
-                                    title = re.sub(langReplaceMap['lang'], '', title)
+                            if PATTERN == 0 and self.filtered and title != '':
+                                title = name
 
                             if tvg_id:
                                 if tvg_title == title:
