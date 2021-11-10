@@ -1,4 +1,7 @@
-﻿wersja 9.7.8 - 2021-11-09
+﻿wersja 9.7.9 - 2021-11-10
+- poprawka cachowania playlist
+
+wersja 9.7.8 - 2021-11-09
 - aktualizacja parsowania EPG
 - naprawiono błąd powiadomienia o pobieraniu.
 - poprawiono ogólne dopasowanie kanałów.

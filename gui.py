@@ -80,6 +80,9 @@ import collections
 
 from contextlib import contextmanager
 
+osAndroid = xbmc.getCondVisibility('system.platform.android')
+osRpi = xbmc.getCondVisibility('system.platform.linux.raspberrypi')
+
 MODE_EPG = 'EPG'
 MODE_TV = 'TV'
 
@@ -321,6 +324,16 @@ def timebarAdjust():
     if timebar_adjust == '':
         timebar_adjust = 0
     return timebar_adjust
+
+def getDistro():
+    if xbmc.getCondVisibility('System.HasAddon(service.coreelec.settings)'):
+        return "CoreElec"
+    elif xbmc.getCondVisibility('System.HasAddon(service.libreelec.settings)'):
+        return "LibreElec"
+    elif xbmc.getCondVisibility('System.HasAddon(service.osmc.settings)'):
+        return "OSMC"
+    else:
+        return "Kodi"
 
 
 class proxydt(datetime.datetime):
@@ -1265,20 +1278,44 @@ class mTVGuide(xbmcgui.WindowXML):
                     ADDON.setSetting('record_folder', '')
                     ADDON.setSetting('tutorial', 'false')
                     xbmcgui.Dialog().ok(strings(70100), strings(70102))
-                    xbmc.executebuiltin("Quit")
+                    if osAndroid:
+                        xbmc.executebuiltin("Quit")
+                    elif osRpi:
+                        xbmc.executebuiltin("Reboot")
+                    else:
+                        if getDistro() == 'Kodi':
+                            xbmc.executebuiltin("RestartApp")
+                        else:
+                            xbmc.executebuiltin("Reboot")
                     time.sleep(5)
                     
             else:
                 run = SettingsImp().downloadRecordApp()
                 ADDON.setSetting('tutorial', 'false')
                 xbmcgui.Dialog().ok(strings(70100), strings(70102))
-                xbmc.executebuiltin("Quit")
+                if osAndroid:
+                    xbmc.executebuiltin("Quit")
+                elif osRpi:
+                    xbmc.executebuiltin("Reboot")
+                else:
+                    if getDistro() == 'Kodi':
+                        xbmc.executebuiltin("RestartApp")
+                    else:
+                        xbmc.executebuiltin("Reboot")
                 time.sleep(5)
 
         else:
             ADDON.setSetting('tutorial', 'false')
             xbmcgui.Dialog().ok(strings(70100), strings(70102))
-            xbmc.executebuiltin("Quit")
+            if osAndroid:
+                xbmc.executebuiltin("Quit")
+            elif osRpi:
+                xbmc.executebuiltin("Reboot")
+            else:
+                if getDistro() == 'Kodi':
+                    xbmc.executebuiltin("RestartApp")
+                else:
+                    xbmc.executebuiltin("Reboot")
             time.sleep(5)
 
     def tutorialExec(self):
@@ -1719,7 +1756,15 @@ class mTVGuide(xbmcgui.WindowXML):
                                 f3.close()
 
                         xbmcgui.Dialog().ok(strings(70100), strings(70102))
-                        xbmc.executebuiltin("Quit")
+                        if osAndroid:
+                            xbmc.executebuiltin("Quit")
+                        elif osRpi:
+                            xbmc.executebuiltin("Reboot")
+                        else:
+                            if getDistro() == 'Kodi':
+                                xbmc.executebuiltin("RestartApp")
+                            else:
+                                xbmc.executebuiltin("Reboot")
                         exit()
                     else:
                         xbmcgui.Dialog().ok(strings(70105), strings(70103))
@@ -6266,14 +6311,11 @@ class mTVGuide(xbmcgui.WindowXML):
                         if not self.recordService.isRecordOngoing() and not xbmc.Player().isPlaying():
                             self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
                     else:
-                        deb(
-                            'refreshStreamsLoop services will be refreshed if no activity for 60s, currently no activity for {} seconds'.format(
-                                diffSeconds))
+                        deb('refreshStreamsLoop services will be refreshed if no activity for 60s, currently no activity for {} seconds'.format(diffSeconds))
                         refreshTime = 60
             else:
                 refreshTime = 600
-                deb('refreshStreamsLoop delaying service refresh for {} seconds due to playback or record'.format(
-                    refreshTime))
+                deb('refreshStreamsLoop delaying service refresh for {} seconds due to playback or record'.format(refreshTime))
 
             if not strings2.M_TVGUIDE_CLOSING and not self.isClosing:
                 self.refreshStreamsTimer = threading.Timer(refreshTime, self.refreshStreamsLoop)

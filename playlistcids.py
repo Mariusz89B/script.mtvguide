@@ -291,13 +291,17 @@ class PlaylistUpdater(baseServiceUpdater):
         if os.path.exists(fpath):
             playlists.remove(self.serviceName)
 
-            for f in os.listdir(fpath):
+            try:
                 for playlist in playlists:
                     try:
                         os.remove(os.path.join(fpath, '{playlist}.m3u'.format(playlist=playlist)))
                         os.remove(os.path.join(fpath, '{playlist}.url'.format(playlist=playlist)))
                     except:
                         pass
+
+            except Exception as ex:
+                deb('getPlaylistContent Exception: {}'.format(ex))
+                pass
 
         try:
             self.log('getPlaylistContent opening playlist: %s, urltype: %s' % (path, urltype))
@@ -473,7 +477,8 @@ class PlaylistUpdater(baseServiceUpdater):
             
             try:
                 channelsArray = self.getPlaylistContent(self.url.strip(), self.source)
-            except:
+            except Exception as ex:
+                deb('channelsArray Exception: {}'.format(ex))
                 channelsArray = self.getPlaylistContent(self.url.decode('utf-8').strip(), self.source)
 
             self.log('\n\n')
