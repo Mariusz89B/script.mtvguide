@@ -1,4 +1,7 @@
-﻿wersja 9.7.9 - 2021-11-10
+﻿wersja 9.8.0 - 2021-11-12
+- poprawki
+
+wersja 9.7.9 - 2021-11-10
 - poprawka cachowania playlist
 
 wersja 9.7.8 - 2021-11-09
