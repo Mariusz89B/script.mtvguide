@@ -692,6 +692,10 @@ class baseServiceUpdater:
         self.log('no premium for service: {}'.format(self.serviceName))
         xbmcgui.Dialog().notification(self.serviceName, strings(SERVICE_NO_PREMIUM), sound=False)
 
+    def noContentMessage(self):
+        self.log('no content for service: {}'.format(self.serviceName))
+        xbmcgui.Dialog().notification(self.serviceName, strings(SERVICE_NO_CONTENT), sound=False)
+
     def startLoadingChannelList(self, automap=None):
         if self.thread is None or not self.thread.is_alive():
             self.traceList.append('\n')

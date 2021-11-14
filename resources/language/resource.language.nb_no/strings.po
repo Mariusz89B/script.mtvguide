@@ -2144,6 +2144,10 @@ msgctxt "#57039"
 msgid "Content is not included in your service"
 msgstr "Innholdet er ikke inkludert i pakken din"
 
+msgctxt "#57040"
+msgid "No content available in your service"
+msgstr "Ingen innhold tilgjengelig i tjenesten din"
+
 msgctxt "#57041"
 msgid "Site error, select proper site that matches your account"
 msgstr "Nettstedsfeil, velg riktig nettsted som samsvarer med kontoen din"

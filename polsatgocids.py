@@ -61,20 +61,20 @@ from serviceLib import *
 
 serviceName         = 'Polsat GO'
 
-UA = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0'
-UAPG = "pg_pc_windows_firefox_html/1 (Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0)"
-UAPGwidevine = "pg_pc_windows_firefox_html/1 (Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0) (Windows 7; widevine=true)"
+UAIPLA = "pg_pc_windows_firefox_html/1 (Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0)"
+UAPG = "pg_pc_windows_firefox_html/1 (Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36 Edg/93.0.961.38)"
+OSINFO = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0"
 
 try:
     if sys.version_info[0] > 2:
-        COOKIEFILE = os.path.join(xbmcvfs.translatePath(ADDON.getAddonInfo('profile')), 'pgo.cookie')
+        COOKIEFILE = os.path.join(xbmcvfs.translatePath(ADDON.getAddonInfo('profile')), 'polsatgo.cookie')
     else:
-        COOKIEFILE = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('profile')), 'pgo.cookie')
+        COOKIEFILE = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('profile')), 'polsatgo.cookie')
 except:
     if sys.version_info[0] > 2:
-        COOKIEFILE = os.path.join(xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8'), 'pgo.cookie')
+        COOKIEFILE = os.path.join(xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8'), 'polsatgo.cookie')
     else:
-        COOKIEFILE = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8'), 'pgo.cookie')
+        COOKIEFILE = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8'), 'polsatgo.cookie')
 
 sess = requests.Session()
 if sys.version_info[0] > 2:
@@ -92,28 +92,183 @@ class PolsatGoUpdater(baseServiceUpdater):
         self.serviceEnabled     = ADDON.getSetting('polsatgo_enabled')
         self.login              = ADDON.getSetting('polsatgo_username').strip()
         self.password           = ADDON.getSetting('polsatgo_password').strip()
-        self.servicePriority    = int(ADDON.getSetting('priority_polsatgo'))
-        self.clid               = ADDON.getSetting('polsatgo_clientId')
-        self.devid              = ADDON.getSetting('polsatgo_devid')
-        self.stoken             = ADDON.getSetting('polsatgo_sesstoken')
-        self.sexpir             = ADDON.getSetting('polsatgo_sessexpir')
-        self.skey               = ADDON.getSetting('polsatgo_sesskey')
-        self.auth               = 'https://b2c-www.redefine.pl/rpc/auth/'
-        self.host               = 'b2c-www.redefine.pl'
-        self.origin             = 'https://polsatgo.pl'
-        self.navigate           = 'https://b2c-www.redefine.pl/rpc/navigation/'
+        self.api_base           = 'https://b2c-www.redefine.pl/rpc/'
+
+        self.navigate           = self.api_base+'navigation/'   
+        
+        self.auth               = self.api_base+'auth/'
+
+        self.headers = {
+                'Accept': 'application/json',
+                'DNT': '1',
+                'Content-Type': 'application/json;charset=UTF-8',
+                'User-Agent': OSINFO,
+                'Origin': 'https://polsatgo.pl',
+                'Referer': 'https://polsatgo.pl/',
+                'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
+            }
+
+        self.device_id = ADDON.getSetting('polsatgo_device_id')
+        self.client_id = ADDON.getSetting('polsatgo_client_id')
+        self.id_ = ADDON.getSetting('polsatgo_id_')
+
+        self.sesstoken = ADDON.getSetting('polsatgo_sesstoken')
+        self.sessexpir = ADDON.getSetting('polsatgo_sessexpir')
+        self.sesskey= ADDON.getSetting('polsatgo_sesskey')
+        
+        self.myperms = ADDON.getSetting('polsatgo_myperm')
+        self.myperms2 = None
+
+        self.servicePriority    = int(ADDON.getSetting('priority_ipla'))
+        self.addDuplicatesToList = True
+
         self.client = ADDON.getSetting('polsatgo_client')
 
-    def getHmac(self, data):
-        skey = ADDON.getSetting('polsatgo_sesskey')
+        self.dane = self.sesstoken+'|'+self.sessexpir+'|{0}|{1}'
+        
+        if sys.version_info[0] > 2:
+            try:
+                self.profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
+            except:
+                self.profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
+        else:
+            try:
+                self.profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile'))
+            except:
+                self.profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
+
+    def getRequests(self, url, data={}, headers={}, params ={}):
+        if data:
+            content = sess.post(url, headers=headers, json=data, params=params, verify=False, timeout=timeouts).json()
+        else:
+            content = sess.get(url, headers=headers, params=params, verify=False, timeout=timeouts).json()
+        return content
+
+    def loginService(self):
+        try:
+            if self.device_id == '' or self.client_id == '' or self.id_ == '':
+                self.createDatas()
+
+            if self.login and self.password:
+                self.device_id = ADDON.getSetting('polsatgo_device_id')
+                self.client_id = ADDON.getSetting('polsatgo_client_id')
+                self.client = ADDON.getSetting('polsatgo_client')
+                
+                if self.client == 'Polsat Go':
+                    post = {"id":1,"jsonrpc":"2.0","method":"login","params":{"ua":UAPG,  "deviceId":{"type":"other","value":self.device_id},"userAgentData":{"portal":"pg","deviceType":"pc","application":"firefox","player":"html","build":1,"os":"windows","osInfo":OSINFO},"authData":{"login":self.login,"password":self.password,"deviceId":{"type":"other","value":self.device_id}},"clientId":self.client_id}}
+                else:
+                    post = {"id":1,"jsonrpc":"2.0","method":"login","params":{"ua":UAIPLA,"deviceId":{"type":"other","value":self.device_id},"userAgentData":{"portal":"pg","deviceType":"pc","application":"firefox","player":"html","build":1,"os":"windows","osInfo":OSINFO},"clientId":self.client_id,"authData":{"login":self.login,"password":self.password,"deviceId":{"type":"other","value":self.device_id}}}}
+
+                data = self.getRequests(self.auth, data=post, headers=self.headers)
+
+                try:
+                    if data['error']['data']["type"] == "RulesException":
+                        post = {"id":1,"jsonrpc":"2.0","method":"acceptRules","params":{"ua":"pg_mobile_android_chrome_html/1 (Mozilla/5.0 (Linux; Android 10; Redmi Note 8 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.62 Mobile Safari/537.36)","deviceId":{"type":"other","value":self.device_id},"userAgentData":{"portal":"pg","deviceType":"mobile","application":"chrome","player":"html","build":1,"os":"android","osInfo":"Mozilla/5.0 (Linux; Android 10; Redmi Note 8 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.62 Mobile Safari/537.36"},"clientId":self.client_id,"rulesIds":[105],"authData":{"authProvider":"icok","login":self.login,"password":self.password,"deviceId":{"type":"other","value":self.device_id}}}}
+                        data = getRequests(self.auth, data=post, headers=self.headers)
+                except:
+                    pass
+
+                if data.get('error', None):
+                    msg = data['error']['data']['userMessage']
+                    ADDON.setSetting('polsatgo_sesstoken', '')
+                    ADDON.setSetting('polsatgo_sessexpir', '')
+                    ADDON.setSetting('polsatgo_sesskey', '')
+                    ADDON.setSetting('polsatgo_myperm', '')
+                    ADDON.setSetting('polsatgo_device_id', '')
+                    ADDON.setSetting('polsatgo_client_id', '')
+
+                    self.loginErrorMessage() 
+                    return False
+
+                else:
+                    myper = []
+                    for i in data["result"]["accessGroups"]:
+                        if 'sc:' in i:
+                            myper.append(str(i))
+                        if 'oth:' in i:
+                            myper.append(str(i))
+                        if 'loc:' in i:
+                            myper.append(str(i))
+                        if 'cp_sub_ext:' in i:
+                            myper.append(str(i.replace('cp_sub_ext','sc')))
+                        if 'cp_sub_base:' in i:
+                            myper.append(str(i.replace('cp_sub_base','sc')))
+
+                    ADDON.setSetting('polsatgo_myperm', str(myper))
+
+                    sesja = data['result']['session']
+            
+                    self.sesstoken = sesja['id']
+                    self.sessexpir = str(sesja['keyExpirationTime'])
+                    self.sesskey = sesja['key']
+                    
+                    ADDON.setSetting('polsatgo_sesstoken', self.sesstoken)
+                    ADDON.setSetting('polsatgo_sessexpir', str(self.sessexpir))
+                    ADDON.setSetting('polsatgo_sesskey', self.sesskey)
+                    
+                return True
+                
+        except:
+            self.log('getLogin exception: {}'.format(getExceptionString()))
+            self.connErrorMessage()  
+        return False
+
+    def createDatas(self):
+        import random
+        def getSystemId(il):
+            def gen_hex_code(myrange=6):
+                return ''.join([random.choice('0123456789ABCDEF') for x in range(myrange)])
+        
+            systemid = gen_hex_code(il) + '-' + gen_hex_code(4) + '-' + gen_hex_code(4) + '-' + gen_hex_code(4) + '-' + gen_hex_code(12)
+            systemid = systemid.strip()
+
+            return systemid
+
+        def uniq_id():
+            device_id = ''
+        
+            if ADDON.getSetting('polsatgo_device_id'):
+                device_id = ADDON.getSetting('polsatgo_device_id')
+            else:
+                device_id = getSystemId(10)
+            ADDON.setSetting('polsatgo_device_id', device_id)
+            return device_id
+            
+        def client_id():
+            client_id = ''
+        
+            if ADDON.getSetting('polsatgo_client_id'):
+                client_id = ADDON.getSetting('polsatgo_client_id')
+            else:
+                client_id = getSystemId(10)
+            ADDON.setSetting('polsatgo_client_id', client_id)
+            return client_id
+            
+        def id_():
+            id_ = ''
+        
+            if ADDON.getSetting('polsatgo_id_'):
+                id_ = ADDON.getSetting('polsatgo_id_')
+            else:
+                id_ = str(int(''.join([str(random.randint(0,9)) for _ in range(4)])))
+            ADDON.setSetting('polsatgo_id_', id_)
+            return id_
+
+        self.device_id = uniq_id()
+        self.client_id = client_id()
+        self.id_ = id_()
+
+        ADDON.setSetting('polsatgo_logged', 'true')
+
+    def getHmac(self, dane):
         import hmac
         import hashlib 
         import binascii
         import base64
         from hashlib import sha256
-        ss = data
+        ssdalej = dane
         import base64
-
+        
         def base64_decode(s):
             """Add missing padding to string and return the decoded base64 string."""
             #log = logging.getLogger()
@@ -130,469 +285,235 @@ class PolsatGoUpdater(baseServiceUpdater):
                 elif padding == 3:
                     s += b'='
                 return base64.b64decode(s)
-        secretAccessKey = base64_decode(skey.replace('-','+').replace('_','/'))
+
+        secretAccessKey = base64_decode(self.sesskey.replace('-','+').replace('_','/'))
         
-        auth = hmac.new(secretAccessKey, ss.encode("ascii"), sha256)
+        auth = hmac.new(secretAccessKey, ssdalej.encode("ascii"), sha256)
         vv = base64.b64encode(bytes(auth.digest())).decode("ascii")
 
         aa = vv
-        bb = ss+'|'+aa.replace('+','-').replace('/','_')
+        bb = ssdalej+'|'+aa.replace('+','-').replace('/','_')
+
         return bb
 
-    def getRequests(self, url, data={}, headers={}, params ={}):
-        if data:
-            content = sess.post(url, headers=headers, json=data, params=params, verify=False, timeout=timeouts).json()
-        else:
-            content = sess.get(url, headers=headers, params=params, verify=False, timeout=timeouts).json()
-        return content
+    def sesja(self, data):
+        sesja = data['result']['session']
 
-    def loginService(self):
-        try:
-            headers = {
-                'Host': self.host,
-                'User-Agent': UA,
-                'Accept': 'application/json',
-                'Accept-Language': 'pl,en-US;q=0.7,en;q=0.3',
-                'Content-Type': 'application/json;charset=utf-8',
-                'Origin': self.origin,
-                'Referer': self.origin,
-                'Sec-Fetch-Dest': 'empty',
-                'Sec-Fetch-Mode': 'cors',
-                'Sec-Fetch-Site': 'cross-site',
-            }
-
-            def gen_hex_code(myrange=6):
-                return ''.join([random.choice('0123456789ABCDEF') for x in range(myrange)])
-            
-            def ipla_system_id():
-                myrand = gen_hex_code(10) + '-' + gen_hex_code(4) + '-' + gen_hex_code(4) + '-' + gen_hex_code(4) + '-' + gen_hex_code(12)
-                return myrand
-
-            if not self.clid and not self.devid:
-                self.clid = ipla_system_id()
-                ADDON.setSetting('polsatgo_clientId', self.clid)
-
-                self.devid = ipla_system_id()
-                ADDON.setSetting('polsatgo_devid', self.devid)
-                
-                return self.loginService()
-            else:
-                self.login = ADDON.getSetting('polsatgo_username')
-                self.password = ADDON.getSetting('polsatgo_password')   
-
-                if self.login and self.password:
-                    data = {
-                        "id": 1,
-                        "jsonrpc": "2.0",
-                        "method": "login",
-                        "params": {
-                            "ua": UAPG,
-                            "deviceId": {
-                                "type": "other",
-                                "value": self.devid
-                            },
-                            "userAgentData": {
-                                "portal": "pg",
-                                "deviceType": "pc",
-                                "application": "firefox",
-                                "player": "html",
-                                "build": 1,
-                                "os": "windows",
-                                "osInfo": UA
-                            },
-                            "clientId": "",
-                            "authData": {
-                                "login": self.login,
-                                "password": self.password,
-                                "deviceId": {
-                                    "type": "other",
-                                    "value": self.devid}}}
-                    }
-
-                    jdata = self.getRequests(self.auth, data=data, headers=headers)
-
-                    if sys.version_info[0] > 2:
-                        response = jdata
-                    else:
-                        response = json.loads(json.dumps(jdata))
-
-                    try:
-                        error = response['error']
-                        if error:
-                            message = error['message']
-                            self.loginErrorMessage()
-                        return False
-                    except:
-                        pass
-
-                        session = response['result']['session']
-                        sesstoken = session['id']
-                        sessexpir = str(session['keyExpirationTime'])
-                        sesskey = session['key']
-
-                        ADDON.setSetting('polsatgo_sesstoken', sesstoken)
-                        ADDON.setSetting('polsatgo_sessexpir', str(sessexpir))
-                        ADDON.setSetting('polsatgo_sesskey', sesskey)
-
-                        dane = sesstoken+'|'+sessexpir+'|auth|getSession'
-                        authdata = self.getHmac(dane)
-
-                        data = {
-                            "id": 1,
-                            "jsonrpc": "2.0",
-                            "method": "getSession",
-                            "params": {
-                                "ua": UAPG,
-                                "deviceId": {
-                                    "type": "other",
-                                    "value": self.devid
-                                },
-                                "userAgentData": {
-                                    "portal": "pg",
-                                    "deviceType": "pc",
-                                    "application": "firefox",
-                                    "player": "html",
-                                    "build": 1,
-                                    "os": "windows",
-                                    "osInfo": UA
-                                },
-                                "authData": {
-                                    "sessionToken": authdata
-                                },
-                                "clientId": ""}
-                        }
-
-                        jdata = self.getRequests(self.auth, data=data, headers=headers)
-                        if sys.version_info[0] > 2:
-                            response = jdata
-                        else:
-                            response = json.loads(json.dumps(jdata))
-
-                        session = response['result']['session']
-
-                        sesstoken = session['id']
-                        sessexpir = str(session['keyExpirationTime'])
-                        sesskey = session['key']
-
-                        ADDON.setSetting('polsatgo_sesstoken', sesstoken)
-                        ADDON.setSetting('polsatgo_sessexpir', str(sessexpir))
-                        ADDON.setSetting('polsatgo_sesskey', sesskey)
-
-                        accesgroup = response['result']['accessGroups']
-                        ADDON.setSetting('polsatgo_accgroups', str(accesgroup))
-
-                        dane = sesstoken+'|'+sessexpir+'|auth|getProfiles'
-                        authdata = self.getHmac(dane)
-
-                        data = {
-                            "id": 1,
-                            "jsonrpc": "2.0",
-                            "method": "getProfiles",
-                            "params": {
-                                "ua": UAPG,
-                                "deviceId": {
-                                    "type": "other",
-                                    "value": self.devid
-                                },
-                                "userAgentData": {
-                                    "portal": "pg",
-                                    "deviceType": "pc",
-                                    "application": "firefox",
-                                    "player": "html",
-                                    "build": 1,
-                                    "os": "windows",
-                                    "osInfo": UA
-                                },
-                                "authData": {
-                                    "sessionToken": authdata
-                                },
-                                "clientId": ""}
-                        }
-
-                        jdata = self.getRequests(self.auth, data=data, headers=headers)
-                        if sys.version_info[0] > 2:
-                            response = jdata
-                        else:
-                            response = json.loads(json.dumps(jdata))
-
-                        nids = []
-                        for result in response['result']:
-                            nids.append({'id':result['id'],'nazwa':result["name"],'img':result["avatarId"]})    
-                        if len(nids) > 1:
-                            profile = [x.get('nazwa') for x in nids]
-                            sel = xbmcgui.Dialog().select('Wybierz profil', profile)    
-                            if sel > -1:
-                                id = nids[sel].get('id')
-                                nazwa = nids[sel].get('nazwa')
-                                avt = nids[sel].get('img')
-                                profil = nazwa+'|'+id
-                            else:
-                                id = str(nids[0].get('id'))
-                                nazwa = nids[0].get('nazwa')
-                                avt = nids[sel].get('img')
-                                profil = nazwa+'|'+id
-
-                        else:
-                            id = str(nids[0].get('id'))
-                            nazwa = nids[0].get('nazwa')
-                            avt = nids[0].get('img')
-                            profil = nazwa+'|'+id
-
-                        dane = sesstoken+'|'+sessexpir+'|auth|setSessionProfile'
-                        authdata = self.getHmac(dane)
-
-                        data = {
-                            "id": 1,
-                            "jsonrpc": "2.0",
-                            "method": "setSessionProfile",
-                            "params": {
-                                "ua": UAPG,
-                                "deviceId": {
-                                    "type": "other",
-                                    "value": self.devid
-                                },
-                                "userAgentData": {
-                                    "portal": "pg",
-                                    "deviceType": "pc",
-                                    "application": "firefox",
-                                    "player": "html",
-                                    "build": 1,
-                                    "os": "windows",
-                                    "osInfo": UA
-                                },
-                                "authData": {
-                                    "sessionToken": authdata
-                                },
-                                "clientId": "",
-                                "profileId": id}
-                        }
-
-                        jdata = self.getRequests(self.auth, data=data, headers=headers)
-                        if sys.version_info[0] > 2:
-                            response = jdata
-                        else:
-                            response = json.loads(json.dumps(jdata))
-
-                        dane = sesstoken+'|'+sessexpir+'|auth|getSession'
-                        authdata = self.getHmac(dane)
-
-                        data = {
-                            "id": 1,
-                            "jsonrpc": "2.0",
-                            "method": "getSession",
-                            "params": {
-                                "ua": UAPG,
-                                "deviceId": {
-                                    "type": "other",
-                                    "value": self.devid
-                                },
-                                "userAgentData": {
-                                    "portal": "pg",
-                                    "deviceType": "pc",
-                                    "application": "firefox",
-                                    "player": "html",
-                                    "build": 1,
-                                    "os": "windows",
-                                    "osInfo": UA
-                                },
-                                "authData": {
-                                    "sessionToken": authdata
-                                },
-                                "clientId": ""}
-                        }
-
-                        jdata = self.getRequests(self.auth, data=data, headers=headers)
-                        if sys.version_info[0] > 2:
-                            response = jdata
-                        else:
-                            response = json.loads(json.dumps(jdata))
-
-                        session = response['result']['session']
-
-                        sesstoken = session['id']
-                        sessexpir = str(session['keyExpirationTime'])
-                        sesskey = session['key']
-
-                        ADDON.setSetting('polsatgo_sesstoken', sesstoken)
-                        ADDON.setSetting('polsatgo_sessexpir', str(sessexpir))
-                        ADDON.setSetting('polsatgo_sesskey', sesskey)
-
-                        accesgroup = response['result']['accessGroups']
-                        ADDON.setSetting('polsatgo_accgroups', str(accesgroup))
-
-                        return True
-
-                else:
-                    self.loginErrorMessage()
-                    return False
-
-        except:
-            self.log('getLogin exception: {}'.format(getExceptionString()))
-            self.connErrorMessage()
-        return False
+        self.sesstoken = sesja['id']
+        self.sessexpir = str(sesja['keyExpirationTime'])
+        self.sesskey = sesja['key']
+        
+        ADDON.setSetting('polsatgo_sesstoken', self.sesstoken)
+        ADDON.setSetting('polsatgo_sessexpir', str(self.sessexpir))
+        ADDON.setSetting('polsatgo_sesskey', self.sesskey)
+        return self.sesstoken+'|'+self.sessexpir+'|{0}|{1}'
 
     def getChannelList(self, silent):
         result = list()
-
+        
         if not self.loginService():
             return result
-        
+
         self.log('\n\n')
-        self.log('[UPD] Downloading list of available {}'.format(self.serviceName))
+        self.log('[UPD] Downloading list of available {} channels from {}'.format(self.serviceName, self.url))
         self.log('[UPD] -------------------------------------------------------------------------------------')
-        self.log('[UPD] %-15s %-35s %-30s' % ('-CID-', '-NAME-', '-TITLE-'))
-        
-        try:    
+        self.log('[UPD] %-10s %-35s %-35s' % ( '-CID-', '-NAME-', '-IMG-'))
+
+        try:
+            self.getSesja()
+            items = []
+
+            self.sesstoken = ADDON.getSetting('polsatgo_sesstoken')
+            self.sessexpir = ADDON.getSetting('polsatgo_sessexpir')
+            
+            self.dane = self.sesstoken+'|'+self.sessexpir+'|{0}|{1}'
+
+            dane = (self.dane).format('navigation','getTvChannels')
+            
+            authdata = self.getHmac(dane)
+
+            self.client_id = ADDON.getSetting('polsatgo_client_id')
+
             headers = {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36 Edg/93.0.961.52',
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-                'Referer': 'https://polsatgo.pl/kanaly-tv',
+                'Accept': 'application/json',
+                'DNT': '1',
+                'Content-Type': 'application/json;charset=UTF-8',
+                'User-Agent': OSINFO,
+                'Origin': 'https://polsatgo.pl',
+                'Referer': 'https://polsatgo.pl/',
                 'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
             }
 
-            url = 'https://polsatgo.pl/kanaly-tv'
+            postData = {
+                "id":1,
+                "jsonrpc":"2.0",
+                "method":"getTvChannels",
+                "params": {
+                    "offset":0,
+                    "limit":1000,
+                    "filters":[],
+                    "ua":UAIPLA,
+                    "deviceId": {
+                        "type":"other",
+                        "value":""
+                        },
 
-            res = requests.get(url, headers)
+                    "userAgentData": {
+                        "portal":"pg",
+                        "deviceType":"pc",
+                        "application":"firefox",
+                        "player":"html",
+                        "build":1,
+                        "os":"windows",
+                        "osInfo":OSINFO
+                        },
 
-            text = re.findall('type=\"application\/json\">(.+?)<\/script>', res.text)[0]
-            json_data = json.loads(text)
+                    "authData": {
+                        "sessionToken":authdata
+                        },
 
-            jdata = json_data['props']['pageProps']['lists']['results']
+                    "clientId":self.client_id}
+            }
 
-            for item in jdata:
-                cid = item['id']
-                name = item['title']
-                title = item['title'] + ' PL'
-                img = item['thumbnails'][-1]['src']
+            data = self.getRequests(self.navigate, data=postData, headers=headers)
+            channels = data['result']['results']
 
-                program = TvCid(cid=cid, name=name, title=title, img=img) 
+            for i in channels:
+                img = i['thumbnails'][0]['src']
+                cid = i['id']
+                name = i['title'].upper()
+                title = i['title'].upper() + ' PL'
+                
+                name = name.replace(' SD', '')
+                title = title.replace(' SD', '')
+
+                program = TvCid(cid=cid, name=name, title=title, img=img)
                 result.append(program)
 
             if len(result) <= 0:
-                self.log('Error while parsing service {}, returned data is: {}'.format(self.serviceName, str(response)))
+                self.log('Error while parsing service %s' % (self.serviceName))
 
-        except:
-            self.log('getChannelList exception: {}'.format(getExceptionString()))
+        except Exception as e:
+            self.log('getChannelList exception: %s' % getExceptionString())
             self.wrongService()
         return result
 
+    def channCid(self, cid):
+        try:
+            r = re.compile('^(.*?)_TS_.*$', re.IGNORECASE)
+            cid = r.findall(cid)[0]
+        except:
+            cid 
+
+        return cid
+
+    def getSesja(self):
+        self.sesstoken = ADDON.getSetting('polsatgo_sesstoken')
+        self.sessexpir = ADDON.getSetting('polsatgo_sessexpir')
+
+        self.dane = self.sesstoken+'|'+self.sessexpir+'|{0}|{1}'
+
+        dane = (self.dane).format('auth','getSession')
+        authdata = self.getHmac(dane)
+
+        self.client_id = ADDON.getSetting('polsatgo_client_id')
+
+        postData = {"id":1,"jsonrpc":"2.0","method":"getSession","params":{"userAgentData":{"portal":"pg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":UAIPLA,"authData":{"sessionToken":authdata},"clientId":self.client_id}}
+
+        data = self.getRequests(self.auth, data=postData, headers=self.headers)
+
+        self.dane = self.sesja(data)
+        return
+
+    def checkAccess(self, chann):
+        id_ = self.channCid(chann.cid)
+        acc = False
+
+        self.sesstoken = ADDON.getSetting('polsatgo_sesstoken')
+        self.sessexpir = ADDON.getSetting('polsatgo_sessexpir')
+
+        self.dane = self.sesstoken+'|'+self.sessexpir+'|{0}|{1}'
+
+        dane = self.dane.format('drm','checkProductAccess')
+        authdata = self.getHmac(dane)
+        postData = {"id":1,"jsonrpc":"2.0","method":"checkProductAccess","params":{"userAgentData":{"portal":"pg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":UAIPLA,"product":{"id":id_,"type":"media","subType":"movie"},"authData":{"sessionToken":authdata},"clientId":self.client_id}}
+
+        if 'HBOacc' in id_:
+
+            postData = {"id":1,"jsonrpc":"2.0","method":"checkProductAccess","params":{"userAgentData":{"portal":"pg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":UAIPLA,"product":{"id":"hbo","type":"multiple","subType":"packet"},"authData":{"sessionToken":authdata},"clientId":self.client_id}}   
+        elif 'HBOtv' in id_:
+                id_=id_.split('|')[0]
+                postData = {"id":1,"jsonrpc":"2.0","method":"checkProductAccess","params":{"userAgentData":{"portal":"pg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":UAIPLA,"product":{"id":id_,"type":"media","subType":"tv"},"authData":{"sessionToken":authdata},"clientId":self.client_id}}    
+                
+        data = self.getRequests('https://b2c-www.redefine.pl/rpc/drm/', data=postData, headers=self.headers)
+        
+        acc = True if data['result']["statusDescription"] == "has access" else False
+
     def getChannelStream(self, chann):
         data = None
-        cpid = int(0)
-        id = chann.cid
+        id_ = self.channCid(chann.cid)
+        cpid = 0
 
         try:
-            stoken = ADDON.getSetting('polsatgo_sesstoken')
-            sexpir = ADDON.getSetting('polsatgo_sessexpir')
+            self.getSesja()
+            acc = True
+            if '|' in id_ :
+                cpid = 1
+                if not 'HBOtv' in id_:
+                    id_ = id_.split('|')[0]
+                    #cpid= 0
+                else:   
+                    id_ = id_#.split('|')[0]
+                acc = self.checkAccess(id_)
+            if acc:
+                if 'HBOtv' in id_:
+                    id_ = id_.split('|')[0]
+                    cpid = 0
 
-            headers = {
-                'Host': self.host,
-                'User-Agent': UA,
-                'Accept': 'application/json',
-                'Accept-Language': 'pl,en-US;q=0.7,en;q=0.3',
-                'Content-Type': 'application/json;charset=utf-8',
-                'Origin': self.origin,
-                'Referer': self.origin,
-                'Sec-Fetch-Dest': 'empty',
-                'Sec-Fetch-Mode': 'cors',
-                'Sec-Fetch-Site': 'cross-site',
-            }
+                self.sesstoken = ADDON.getSetting('polsatgo_sesstoken')
+                self.sessexpir = ADDON.getSetting('polsatgo_sessexpir')
 
-            dane = stoken+'|'+sexpir+'|auth|getSession'
-            authdata = self.getHmac(dane)
+                self.dane = self.sesstoken+'|'+self.sessexpir+'|{0}|{1}'
 
-            data = {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getSession",
-                "params": {
-                    "ua": UAPG,
-                    "deviceId": {
-                        "type": "other",
-                        "value": self.devid
-                    },
-                    "userAgentData": {
-                        "portal": "pg",
-                        "deviceType": "pc",
-                        "application": "firefox",
-                        "player": "html",
-                        "build": 1,
-                        "os": "windows",
-                        "osInfo": UA
-                    },
-                    "authData": {
-                        "sessionToken": authdata
-                    },
-                    "clientId": ""}}
-
-            response = requests.post(self.auth, headers=headers, json=data, timeout=15, verify=False).json()
-            session = response['result']['session']
-
-            sesstoken = session['id']
-            sessexpir = str(session['keyExpirationTime'])
-            sesskey = session['key']
-
-            ADDON.setSetting('polsatgo_sesstoken', sesstoken)
-            ADDON.setSetting('polsatgo_sessexpir', str(sessexpir))
-            ADDON.setSetting('polsatgo_sesskey', sesskey)
-
-            stoken = ADDON.getSetting('polsatgo_sesstoken')
-            sexpir = ADDON.getSetting('polsatgo_sessexpir')
-
-            dane = stoken+'|'+sexpir+'|navigation|prePlayData'
-            authdata = self.getHmac(dane)
-
-            data = {"jsonrpc":"2.0","id":1,"method":"prePlayData","params":{"ua":UAPGwidevine,"userAgentData":{"deviceType":"pc","application":"firefox","os":"windows","build":2150100,"portal":"pg","player":"html","widevine":True},"cpid":cpid,"mediaId":id,"authData":{"sessionToken":authdata},"clientId":self.clid}}
-
-            response = requests.post(self.navigate, headers=headers, json=data, timeout=15, verify=False).json()
-            playback = response['result']['mediaItem']['playback']
-            mediaid = playback['mediaId']['id']
-            mediaSources = playback['mediaSources'][0]
-            keyid = mediaSources['keyId']
-            sourceid = mediaSources['id']
-
-            try:
-                cc = mediaSources['authorizationServices']['pseudo']
-                dane = stoken+'|'+sexpir+'|drm|getPseudoLicense'
-                authdata = self.getHmac(dane)
-                devcid = self.devid.replace('-','')
+                dane = self.dane.format('navigation','prePlayData')
                 
-                data = {
-                    "jsonrpc":"2.0",
-                    "id":1,
-                    "method":"getPseudoLicense",
-                    "params": {
-                        "ua":"cpgo_www_html5/2",
-                        "cpid":1,
-                        "mediaId":mediaid,
-                        "sourceId":sourceid,
-                        "deviceId": {
-                            "type":"other",
-                            "value":devcid 
-                        },
-                        "authData": {
-                            "sessionToken":authdata}}}
-
-                response = requests.post('https://b2c-www.redefine.pl/rpc/drm/', headers=headers, json=data, timeout=15, verify=False).json()
-
-                licenseUrl = None
-                data = response['result']['url']
-            except:
-                stream_url = mediaSources['url']
-                
-                dane = stoken+'|'+sexpir+'|drm|getWidevineLicense'
                 authdata = self.getHmac(dane)
-                devcid = self.devid.replace('-','')
+                
+                postData = {"jsonrpc":"2.0","id":1,"method":"prePlayData","params":{"ua":"pg_pc_windows_firefox_html/1 (Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0) (Windows 7; widevine=True)","userAgentData":{"deviceType":"pc","application":"firefox","os":"windows","build":2160500,"portal":"pg","player":"html","widevine":True},"cpid":cpid,"mediaId":id_,"authData":{"sessionToken":authdata},"clientId":self.client_id}}
+            
+                data = self.getRequests(self.navigate, data=postData, headers=self.headers)
 
-                cdata = quote('{"jsonrpc":"2.0","id":1,"method":"getWidevineLicense","params":{"cpid":%d,"mediaId":"'%cpid+mediaid+'","sourceId":"'+sourceid+'","keyId":"'+keyid+'","object":"b{SSM}","deviceId":{"type":"other","value":"'+self.devid+'"},"ua":"pg_pc_windows_firefox_html/2150100","authData":{"sessionToken":"'+authdata+'"}}}')
+                playback = data['result']['mediaItem']['playback']
+                mediaid = playback['mediaId']['id']
+                mediaSources = playback['mediaSources'][0]
+                keyid = mediaSources['keyId']
+                sourceid = mediaSources['id']
+                cc = mediaSources.get('authorizationServices', None).get('pseudo', None)
+                if not cc:
+                    hd = {'Accept-Charset': 'UTF-8','User-Agent': OSINFO,}
+                    licenseUrl = mediaSources['authorizationServices']['widevine']['getWidevineLicenseUrl']
+                    dane = self.dane.format('drm','getWidevineLicense')
+                    authdata = self.getHmac(dane)
+                    devcid = (self.device_id).replace('-','')
+                    licenseData = quote('{"jsonrpc":"2.0","id":1,"method":"getWidevineLicense","params":{"userAgentData":{"deviceType":"pc","application":"firefox","os":"windows","build":2160500,"portal":"pg","player":"html","widevine":true},"cpid":%s'%cpid+',"mediaId":"'+mediaid+'","sourceId":"'+sourceid+'","keyId":"'+keyid+'","object":"b{SSM}","deviceId":{"type":"other","value":"'+devcid+'"},"ua":"pg_pc_windows_firefox_html/2160500","authData":{"sessionToken":"'+authdata+'"},"clientId":"'+self.client_id+'"}}')
+                
+                    data = mediaSources['url']
+                else:
+                    dane = self.dane.format('drm','getPseudoLicense')
+                    authdata = self.getHmac(dane)
+                    devcid = (self.device_id).replace('-','')
 
-                licenseUrl = cdata
-                data = stream_url
-        
+                    postData = {"jsonrpc":"2.0","id":1,"method":"getPseudoLicense","params":{"ua":UAIPLA,"userAgentData":{"deviceType":"pc","application":"firefox","os":"windows","build":1,"portal":"pg","osInfo":OSINFO,"player":"html","widevine":True},"cpid":cpid,"mediaId":mediaid,"sourceId":sourceid,"deviceId":{"type":"other","value":devcid},"authData":{"sessionToken":authdata},"clientId":self.client_id}}
+
+                    getData = self.getRequests('https://b2c-www.redefine.pl/rpc/drm/', data=postData, headers=self.headers)
+
+                    data = getData['result']['url']
+
             if data is not None and data != "":
-                chann.lic = licenseUrl
                 chann.strm = data
-                self.log('getChannelStream found matching channel: cid: {}, name: {}, rtmp:{}'.format(id, chann.name, chann.strm))
+                chann.lic = licenseUrl, licenseData
+                
+                self.log('getChannelStream found matching channel: cid: {}, name: {}, rtmp:{}'.format(chann.cid, chann.name, chann.strm))
                 return chann
             else:
                 self.log('getChannelStream error getting channel stream2, result: {}'.format(str(data)))
@@ -601,4 +522,3 @@ class PolsatGoUpdater(baseServiceUpdater):
         except Exception as e:
             self.log('getChannelStream exception while looping: {}\n Data: {}'.format(getExceptionString(), str(data)))
         return None
-            

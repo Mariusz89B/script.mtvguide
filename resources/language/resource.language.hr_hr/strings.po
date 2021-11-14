@@ -2144,6 +2144,10 @@ msgctxt "#57039"
 msgid "Content is not included in your service"
 msgstr "Sadržaj nije uključen u vašu uslugu"
 
+msgctxt "#57040"
+msgid "No content available in your service"
+msgstr "Nema dostupnog sadržaja u vašoj usluzi"
+
 msgctxt "#57041"
 msgid "Site error, select proper site that matches your account"
 msgstr "Pogreška web lokacije, odaberite odgovarajuću web lokaciju koja odgovara vašem računu"

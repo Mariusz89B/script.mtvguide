@@ -2144,6 +2144,10 @@ msgctxt "#57039"
 msgid "Content is not included in your service"
 msgstr "Brak tego kanału w twoim abonamencie"
 
+msgctxt "#57040"
+msgid "No content available in your service"
+msgstr "Brak dostępnych treści w Twoim serwisie"
+
 msgctxt "#57041"
 msgid "Site error, select proper site that matches your account"
 msgstr "Błąd serwisu, wybierz odpowiedni serwis który odpowiada z Twojim kontem"

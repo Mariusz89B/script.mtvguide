@@ -1,4 +1,7 @@
-﻿wersja 9.8.0 - 2021-11-12
+﻿wersja 9.8.1 - 2021-11-14
+- poprawki serwisów Polsat GO i Polsat GO Box
+
+wersja 9.8.0 - 2021-11-12
 - poprawki
 
 wersja 9.7.9 - 2021-11-10

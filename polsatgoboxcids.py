@@ -68,7 +68,7 @@ from serviceLib import *
 serviceName         = 'Polsat GO Box'
 
 UAIPLA = "pg_pc_windows_firefox_html/1 (Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0)"
-UAPG = "pbg_pc_windows_edge_html/1 (Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36 Edg/93.0.961.38)"
+UAPG = "pbg_pc_windows_firefox_html/1 (Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36 Edg/93.0.961.38)"
 OSINFO = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0"
 
 try:
@@ -161,8 +161,8 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
                 self.client_id = ADDON.getSetting('pgobox_client_id')
                 self.client = ADDON.getSetting('pgobox_client')
                 
-                if self.client == 'Polsat Box' or self.client == 'Ipla':
-                    post = {"id":1,"jsonrpc":"2.0","method":"login","params":{"ua":UAPG,  "deviceId":{"type":"other","value":self.device_id},"userAgentData":{"portal":"pbg","deviceType":"pc","application":"edge","player":"html","build":1,"os":"windows","osInfo":OSINFO},"authData":{"login":self.login,"password":self.password,"deviceId":{"type":"other","value":self.device_id}},"clientId":self.client_id}}
+                if self.client == 'Polsat Box':
+                    post = {"id":1,"jsonrpc":"2.0","method":"login","params":{"ua":UAPG,  "deviceId":{"type":"other","value":self.device_id},"userAgentData":{"portal":"pbg","deviceType":"pc","application":"firefox","player":"html","build":1,"os":"windows","osInfo":OSINFO},"authData":{"login":self.login,"password":self.password,"deviceId":{"type":"other","value":self.device_id}},"clientId":self.client_id}}
                 else:
                     post = {"id":1,"jsonrpc":"2.0","method":"login","params":{"ua":UAIPLA,"deviceId":{"type":"other","value":self.device_id},"userAgentData":{"portal":"pbg","deviceType":"pc","application":"firefox","player":"html","build":1,"os":"windows","osInfo":OSINFO},"clientId":self.client_id,"authData":{"login":self.login,"password":self.password,"deviceId":{"type":"other","value":self.device_id}}}}
 
@@ -340,52 +340,71 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
 
             self.client_id = ADDON.getSetting('pgobox_client_id')
 
-            postData = {"id":1,"jsonrpc":"2.0","method":"getTvChannels","params":{"userAgentData":{"portal":"pbg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":UAIPLA,"authData":{"sessionToken":authdata},"clientId":self.client_id}}
+            headers = {
+                'Accept': 'application/json',
+                'DNT': '1',
+                'Content-Type': 'application/json;charset=UTF-8',
+                'User-Agent': OSINFO,
+                'Origin': 'https://polsatboxgo.pl',
+                'Referer': 'https://polsatboxgo.pl/',
+                'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
+            }
 
-            data = self.getRequests(self.navigate, data=postData, headers=self.headers)
+            postData = {
+                "id":1,
+                "jsonrpc":"2.0",
+                "method":"getTvChannels",
+                "params": {
+                    "offset":0,
+                    "limit":1000,
+                    "filters":[],
+                    "ua":UAIPLA,
+                    "deviceId": {
+                        "type":"other",
+                        "value":""
+                        },
+
+                    "userAgentData": {
+                        "portal":"pbg",
+                        "deviceType":"pc",
+                        "application":"firefox",
+                        "player":"html",
+                        "build":1,
+                        "os":"windows",
+                        "osInfo":OSINFO
+                        },
+
+                    "authData": {
+                        "sessionToken":authdata
+                        },
+
+                    "clientId":self.client_id}
+            }
+
+            data = self.getRequests(self.navigate, data=postData, headers=headers)
             channels = data['result']['results']
 
-            if self.client == 'Polsat Box':
-                url = 'https://polsatboxgo.pl/_next/data/k8U0j5yZZ8y9WAUPn7ktX/channels.json'
+            #myper=[]
 
-                headers = {
-                    'sec-ch-ua': '"Microsoft Edge";v="93", " Not;A Brand";v="99", "Chromium";v="93"',
-                    'Referer': 'https://polsatboxgo.pl/kanaly-tv',
-                    'DNT': '1',
-                    'sec-ch-ua-mobile': '?0',
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36 Edg/93.0.961.38',
-                    'sec-ch-ua-platform': '"Windows"',
-                }
-
-                data = requests.get(url, headers=headers, cookies=sess.cookies).json()
-                channels = data['pageProps']['lists']['results']
-                    
-
-            myper=[]
-
-            self.myperms = ADDON.getSetting('pgobox_myperm')
-            for i in eval(self.myperms):
-                if 'sc:' in i:
-                    myper.append(str(i))
-                if 'oth:' in i:
-                    myper.append(str(i))                
-
+            #self.myperms = ADDON.getSetting('pgobox_myperm')
+            #for i in eval(self.myperms):
+                #myper.append(str(i))
+                 
             for i in channels:
-                item = {}
-                channelperms = i['grantExpression'].split('*')
-                channelperms = [w.replace('+plat:all', '') for w in channelperms]
-                for j in myper:
-                    if j in channelperms or i['title']=='Polsat' or i['title']=='TV4':
-                        img = i['thumbnails'][0]['src']
-                        cid = i['id']
-                        name = i['title'].upper()
-                        title = i['title'].upper() + ' PL'
-                        
-                        name = name.replace(' SD', '')
-                        title = title.replace(' SD', '')
+                #channelperms = i['grantExpression'].split('*')
+                #channelperms = [w.replace('+plat:all', '') for w in channelperms]
+                #for j in myper:
+                    #if j in channelperms or 'Polsat' in i['title'] or i['title']=='TV4':
+                img = i['thumbnails'][0]['src']
+                cid = i['id']
+                name = i['title'].upper()
+                title = i['title'].upper() + ' PL'
+                
+                name = name.replace(' SD', '')
+                title = title.replace(' SD', '')
 
-                        program = TvCid(cid=cid, name=name, title=title, img=img)
-                        result.append(program)
+                program = TvCid(cid=cid, name=name, title=title, img=img)
+                result.append(program)
 
             if len(result) <= 0:
                 self.log('Error while parsing service %s' % (self.serviceName))
