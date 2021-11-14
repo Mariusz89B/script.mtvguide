@@ -417,6 +417,7 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
                 result.append(program)
 
             if len(result) <= 0:
+                self.noContentMessage()
                 self.log('Error while parsing service %s' % (self.serviceName))
 
         except Exception as e:

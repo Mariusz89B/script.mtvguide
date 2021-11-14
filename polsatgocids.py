@@ -159,7 +159,7 @@ class PolsatGoUpdater(baseServiceUpdater):
                 else:
                     post = {"id":1,"jsonrpc":"2.0","method":"login","params":{"ua":UAIPLA,"deviceId":{"type":"other","value":self.device_id},"userAgentData":{"portal":"pg","deviceType":"pc","application":"firefox","player":"html","build":1,"os":"windows","osInfo":OSINFO},"clientId":self.client_id,"authData":{"login":self.login,"password":self.password,"deviceId":{"type":"other","value":self.device_id}}}}
                     UAPG = UAIPLA
-                    
+
                 data = self.getRequests(self.auth, data=post, headers=self.headers)
 
                 try:
@@ -392,6 +392,7 @@ class PolsatGoUpdater(baseServiceUpdater):
                 result.append(program)
 
             if len(result) <= 0:
+                self.noContentMessage()
                 self.log('Error while parsing service %s' % (self.serviceName))
 
         except Exception as e:
