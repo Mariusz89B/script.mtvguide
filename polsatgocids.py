@@ -174,13 +174,7 @@ class PolsatGoUpdater(baseServiceUpdater):
 
                 if data.get('error', None):
                     msg = data['error']['data']['userMessage']
-                    ADDON.setSetting('polsatgo_sesstoken', '')
-                    ADDON.setSetting('polsatgo_sessexpir', '')
-                    ADDON.setSetting('polsatgo_sesskey', '')
-                    ADDON.setSetting('polsatgo_myperm', '')
-                    ADDON.setSetting('polsatgo_device_id', '')
-                    ADDON.setSetting('polsatgo_client_id', '')
-
+                    self.wrongService()
                     self.loginErrorMessage() 
                     return False
 
