@@ -191,14 +191,14 @@ class PolsatGoUpdater(baseServiceUpdater):
                             myper.append(str(i))
                         if 'oth:' in i:
                             myper.append(str(i))
-                        if 'loc:' in i:
-                            myper.append(str(i))
                         if 'cp_sub_ext:' in i:
                             myper.append(str(i.replace('cp_sub_ext','sc')))
                         if 'cp_sub_base:' in i:
                             myper.append(str(i.replace('cp_sub_base','sc')))
 
-                    ADDON.setSetting('polsatgo_myperm', str(myper))
+                    w_myperm = ", ".join(myper)
+
+                    ADDON.setSetting('polsatgo_myperm', str(w_myperm))
 
                     sesja = data['result']['session']
             
@@ -382,17 +382,28 @@ class PolsatGoUpdater(baseServiceUpdater):
             data = self.getRequests(self.navigate, data=postData, headers=headers)
             channels = data['result']['results']
 
-            for i in channels:
-                img = i['thumbnails'][0]['src']
-                cid = i['id']
-                name = i['title'].upper()
-                title = i['title'].upper() + ' PL'
-                
-                name = name.replace(' SD', '')
-                title = title.replace(' SD', '')
+            myper = []
 
-                program = TvCid(cid=cid, name=name, title=title, img=img)
-                result.append(program)
+            self.myperms = ADDON.getSetting('pgobox_myperm')
+
+            for i in self.myperms.split(', '):
+                myper.append(str(i))
+
+            for i in channels:
+                channelperms = i['grantExpression'].split('*')
+                channelperms = [w.replace('*plat:all', '') for w in channelperms]
+                for j in myper:
+                    if j in channelperms or i['title'] == 'Polsat' or i['title'] == 'TV4':
+                        img = i['thumbnails'][0]['src']
+                        cid = i['id']
+                        name = i['title'].upper()
+                        title = i['title'].upper() + ' PL'
+                        
+                        name = name.replace(' SD', '')
+                        title = title.replace(' SD', '')
+
+                        program = TvCid(cid=cid, name=name, title=title, img=img)
+                        result.append(program)
 
             if len(result) <= 0:
                 self.noContentMessage()
