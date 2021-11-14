@@ -158,7 +158,8 @@ class PolsatGoUpdater(baseServiceUpdater):
                     post = {"id":1,"jsonrpc":"2.0","method":"login","params":{"ua":UAPG,  "deviceId":{"type":"other","value":self.device_id},"userAgentData":{"portal":"pg","deviceType":"pc","application":"firefox","player":"html","build":1,"os":"windows","osInfo":OSINFO},"authData":{"login":self.login,"password":self.password,"deviceId":{"type":"other","value":self.device_id}},"clientId":self.client_id}}
                 else:
                     post = {"id":1,"jsonrpc":"2.0","method":"login","params":{"ua":UAIPLA,"deviceId":{"type":"other","value":self.device_id},"userAgentData":{"portal":"pg","deviceType":"pc","application":"firefox","player":"html","build":1,"os":"windows","osInfo":OSINFO},"clientId":self.client_id,"authData":{"login":self.login,"password":self.password,"deviceId":{"type":"other","value":self.device_id}}}}
-
+                    UAPG = UAIPLA
+                    
                 data = self.getRequests(self.auth, data=post, headers=self.headers)
 
                 try:
@@ -352,7 +353,7 @@ class PolsatGoUpdater(baseServiceUpdater):
                     "offset":0,
                     "limit":1000,
                     "filters":[],
-                    "ua":UAIPLA,
+                    "ua":UAPG,
                     "deviceId": {
                         "type":"other",
                         "value":""
@@ -418,7 +419,7 @@ class PolsatGoUpdater(baseServiceUpdater):
 
         self.client_id = ADDON.getSetting('polsatgo_client_id')
 
-        postData = {"id":1,"jsonrpc":"2.0","method":"getSession","params":{"userAgentData":{"portal":"pg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":UAIPLA,"authData":{"sessionToken":authdata},"clientId":self.client_id}}
+        postData = {"id":1,"jsonrpc":"2.0","method":"getSession","params":{"userAgentData":{"portal":"pg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":UAPG,"authData":{"sessionToken":authdata},"clientId":self.client_id}}
 
         data = self.getRequests(self.auth, data=postData, headers=self.headers)
 
@@ -436,14 +437,14 @@ class PolsatGoUpdater(baseServiceUpdater):
 
         dane = self.dane.format('drm','checkProductAccess')
         authdata = self.getHmac(dane)
-        postData = {"id":1,"jsonrpc":"2.0","method":"checkProductAccess","params":{"userAgentData":{"portal":"pg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":UAIPLA,"product":{"id":id_,"type":"media","subType":"movie"},"authData":{"sessionToken":authdata},"clientId":self.client_id}}
+        postData = {"id":1,"jsonrpc":"2.0","method":"checkProductAccess","params":{"userAgentData":{"portal":"pg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":UAPG,"product":{"id":id_,"type":"media","subType":"movie"},"authData":{"sessionToken":authdata},"clientId":self.client_id}}
 
         if 'HBOacc' in id_:
 
-            postData = {"id":1,"jsonrpc":"2.0","method":"checkProductAccess","params":{"userAgentData":{"portal":"pg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":UAIPLA,"product":{"id":"hbo","type":"multiple","subType":"packet"},"authData":{"sessionToken":authdata},"clientId":self.client_id}}   
+            postData = {"id":1,"jsonrpc":"2.0","method":"checkProductAccess","params":{"userAgentData":{"portal":"pg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":UAPG,"product":{"id":"hbo","type":"multiple","subType":"packet"},"authData":{"sessionToken":authdata},"clientId":self.client_id}}   
         elif 'HBOtv' in id_:
                 id_=id_.split('|')[0]
-                postData = {"id":1,"jsonrpc":"2.0","method":"checkProductAccess","params":{"userAgentData":{"portal":"pg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":UAIPLA,"product":{"id":id_,"type":"media","subType":"tv"},"authData":{"sessionToken":authdata},"clientId":self.client_id}}    
+                postData = {"id":1,"jsonrpc":"2.0","method":"checkProductAccess","params":{"userAgentData":{"portal":"pg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":UAPG,"product":{"id":id_,"type":"media","subType":"tv"},"authData":{"sessionToken":authdata},"clientId":self.client_id}}    
                 
         data = self.getRequests('https://b2c-www.redefine.pl/rpc/drm/', data=postData, headers=self.headers)
         
@@ -503,7 +504,7 @@ class PolsatGoUpdater(baseServiceUpdater):
                     authdata = self.getHmac(dane)
                     devcid = (self.device_id).replace('-','')
 
-                    postData = {"jsonrpc":"2.0","id":1,"method":"getPseudoLicense","params":{"ua":UAIPLA,"userAgentData":{"deviceType":"pc","application":"firefox","os":"windows","build":1,"portal":"pg","osInfo":OSINFO,"player":"html","widevine":True},"cpid":cpid,"mediaId":mediaid,"sourceId":sourceid,"deviceId":{"type":"other","value":devcid},"authData":{"sessionToken":authdata},"clientId":self.client_id}}
+                    postData = {"jsonrpc":"2.0","id":1,"method":"getPseudoLicense","params":{"ua":UAPG,"userAgentData":{"deviceType":"pc","application":"firefox","os":"windows","build":1,"portal":"pg","osInfo":OSINFO,"player":"html","widevine":True},"cpid":cpid,"mediaId":mediaid,"sourceId":sourceid,"deviceId":{"type":"other","value":devcid},"authData":{"sessionToken":authdata},"clientId":self.client_id}}
 
                     getData = self.getRequests('https://b2c-www.redefine.pl/rpc/drm/', data=postData, headers=self.headers)
 

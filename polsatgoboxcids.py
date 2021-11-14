@@ -165,6 +165,7 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
                     post = {"id":1,"jsonrpc":"2.0","method":"login","params":{"ua":UAPG,  "deviceId":{"type":"other","value":self.device_id},"userAgentData":{"portal":"pbg","deviceType":"pc","application":"firefox","player":"html","build":1,"os":"windows","osInfo":OSINFO},"authData":{"login":self.login,"password":self.password,"deviceId":{"type":"other","value":self.device_id}},"clientId":self.client_id}}
                 else:
                     post = {"id":1,"jsonrpc":"2.0","method":"login","params":{"ua":UAIPLA,"deviceId":{"type":"other","value":self.device_id},"userAgentData":{"portal":"pbg","deviceType":"pc","application":"firefox","player":"html","build":1,"os":"windows","osInfo":OSINFO},"clientId":self.client_id,"authData":{"login":self.login,"password":self.password,"deviceId":{"type":"other","value":self.device_id}}}}
+                    UAPG = UAIPLA
 
                 data = self.getRequests(self.auth, data=post, headers=self.headers)
                 try:
@@ -201,6 +202,7 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
                             myper.append(str(i.replace('cp_sub_base','sc')))
 
                     ADDON.setSetting('pgobox_myperm', str(myper))
+                    self.myperms = myper
 
                     sesja = data['result']['session']
             
@@ -213,7 +215,7 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
                     ADDON.setSetting('pgobox_sesskey', self.sesskey)
                     
                 return True
-                
+            
         except:
             self.log('getLogin exception: {}'.format(getExceptionString()))
             self.connErrorMessage()  
@@ -358,7 +360,7 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
                     "offset":0,
                     "limit":1000,
                     "filters":[],
-                    "ua":UAIPLA,
+                    "ua":UAPG,
                     "deviceId": {
                         "type":"other",
                         "value":""
@@ -384,17 +386,25 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
             data = self.getRequests(self.navigate, data=postData, headers=headers)
             channels = data['result']['results']
 
-            #myper=[]
+            myper=[]
 
-            #self.myperms = ADDON.getSetting('pgobox_myperm')
+            self.myperms = ADDON.getSetting('pgobox_myperm')
+
             #for i in eval(self.myperms):
-                #myper.append(str(i))
+                #if 'sc:' in i:
+                    #myper.append(str(i))
+                #if 'oth:' in i:
+                    #myper.append(str(i))
+                #if 'loc:' in i:
+                    #myper.append(str(i))
+                #if 'cp_:' in i:
+                    #myper.append(str(i))
                  
             for i in channels:
                 #channelperms = i['grantExpression'].split('*')
-                #channelperms = [w.replace('+plat:all', '') for w in channelperms]
+                #channelperms = [w.replace('*plat:all', '') for w in channelperms]
                 #for j in myper:
-                    #if j in channelperms or 'Polsat' in i['title'] or i['title']=='TV4':
+                    #if j in channelperms or u'transmisja bezpłatna' in i['title']:
                 img = i['thumbnails'][0]['src']
                 cid = i['id']
                 name = i['title'].upper()
@@ -434,7 +444,7 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
 
         self.client_id = ADDON.getSetting('pgobox_client_id')
 
-        postData = {"id":1,"jsonrpc":"2.0","method":"getSession","params":{"userAgentData":{"portal":"pbg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":UAIPLA,"authData":{"sessionToken":authdata},"clientId":self.client_id}}
+        postData = {"id":1,"jsonrpc":"2.0","method":"getSession","params":{"userAgentData":{"portal":"pbg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":UAPG,"authData":{"sessionToken":authdata},"clientId":self.client_id}}
 
         data = self.getRequests(self.auth, data=postData, headers=self.headers)
 
@@ -452,14 +462,14 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
 
         dane = self.dane.format('drm','checkProductAccess')
         authdata = self.getHmac(dane)
-        postData = {"id":1,"jsonrpc":"2.0","method":"checkProductAccess","params":{"userAgentData":{"portal":"pbg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":UAIPLA,"product":{"id":id_,"type":"media","subType":"movie"},"authData":{"sessionToken":authdata},"clientId":self.client_id}}
+        postData = {"id":1,"jsonrpc":"2.0","method":"checkProductAccess","params":{"userAgentData":{"portal":"pbg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":UAPG,"product":{"id":id_,"type":"media","subType":"movie"},"authData":{"sessionToken":authdata},"clientId":self.client_id}}
 
         if 'HBOacc' in id_:
 
-            postData = {"id":1,"jsonrpc":"2.0","method":"checkProductAccess","params":{"userAgentData":{"portal":"pbg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":UAIPLA,"product":{"id":"hbo","type":"multiple","subType":"packet"},"authData":{"sessionToken":authdata},"clientId":self.client_id}}   
+            postData = {"id":1,"jsonrpc":"2.0","method":"checkProductAccess","params":{"userAgentData":{"portal":"pbg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":UAPG,"product":{"id":"hbo","type":"multiple","subType":"packet"},"authData":{"sessionToken":authdata},"clientId":self.client_id}}   
         elif 'HBOtv' in id_:
                 id_=id_.split('|')[0]
-                postData = {"id":1,"jsonrpc":"2.0","method":"checkProductAccess","params":{"userAgentData":{"portal":"pbg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":UAIPLA,"product":{"id":id_,"type":"media","subType":"tv"},"authData":{"sessionToken":authdata},"clientId":self.client_id}}    
+                postData = {"id":1,"jsonrpc":"2.0","method":"checkProductAccess","params":{"userAgentData":{"portal":"pbg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":UAPG,"product":{"id":id_,"type":"media","subType":"tv"},"authData":{"sessionToken":authdata},"clientId":self.client_id}}    
                 
         data = self.getRequests('https://b2c-www.redefine.pl/rpc/drm/', data=postData, headers=self.headers)
         
@@ -519,7 +529,7 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
                     authdata = self.getHmac(dane)
                     devcid = (self.device_id).replace('-','')
 
-                    postData = {"jsonrpc":"2.0","id":1,"method":"getPseudoLicense","params":{"ua":UAIPLA,"userAgentData":{"deviceType":"pc","application":"firefox","os":"windows","build":1,"portal":"pbg","osInfo":OSINFO,"player":"html","widevine":True},"cpid":cpid,"mediaId":mediaid,"sourceId":sourceid,"deviceId":{"type":"other","value":devcid},"authData":{"sessionToken":authdata},"clientId":self.client_id}}
+                    postData = {"jsonrpc":"2.0","id":1,"method":"getPseudoLicense","params":{"ua":UAPG,"userAgentData":{"deviceType":"pc","application":"firefox","os":"windows","build":1,"portal":"pbg","osInfo":OSINFO,"player":"html","widevine":True},"cpid":cpid,"mediaId":mediaid,"sourceId":sourceid,"deviceId":{"type":"other","value":devcid},"authData":{"sessionToken":authdata},"clientId":self.client_id}}
 
                     getData = self.getRequests('https://b2c-www.redefine.pl/rpc/drm/', data=postData, headers=self.headers)
 
