@@ -2840,6 +2840,14 @@ msgctxt "#70137"
 msgid "Enable tvg-id matching"
 msgstr ""
 
+msgctxt "#70138"
+msgid "Check license server certificate"
+msgstr ""
+
+msgctxt "#70139"
+msgid "Login incorrect, ICOK clients please select proper service"
+msgstr ""
+
 msgctxt "#80005"
 msgid "[COLOR blue]WP Pilot[/COLOR]"
 msgstr ""
@@ -3458,6 +3466,10 @@ msgstr ""
 
 msgctxt "#95143"
 msgid "Add-on matches tvg-id channel names."
+msgstr ""
+
+msgctxt "#95144"
+msgid "DRM license verification."
 msgstr ""
 
 msgctxt "#99994"

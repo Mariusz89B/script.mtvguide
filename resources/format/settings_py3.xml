@@ -621,8 +621,8 @@
 					<default>Polsat Go</default>
 					<constraints>
 						<options>
-							<option label="Ipla">Ipla</option>
 							<option label="Polsat Go">Polsat Go</option>
+							<option label="ICOK">ICOK</option>
 						</options>
 					</constraints>
 					<dependencies>
@@ -634,6 +634,17 @@
 					<control format="string" type="list">
 						<heading>30368</heading>
 					</control>
+				</setting>
+				<setting help="95144" id="polsatgo_drmcert" label="70138" type="boolean" parent="polsatgo_enabled">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="polsatgo_enabled">true</condition>
+							<condition operator="is" setting="country_service">0</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
 				</setting>
 				<setting help="95012" id="priority_polsatgo" label="55009" type="integer" parent="polsatgo_enabled">
 					<level>0</level>
@@ -724,8 +735,8 @@
 					<default>Polsat Box</default>
 					<constraints>
 						<options>
-							<option label="Ipla">Ipla</option>
 							<option label="Polsat Box">Polsat Box</option>
+							<option label="ICOK">ICOK</option>
 						</options>
 					</constraints>
 					<dependencies>
@@ -737,6 +748,17 @@
 					<control format="string" type="list">
 						<heading>30368</heading>
 					</control>
+				</setting>
+				<setting help="95144" id="pgobox_drmcert" label="70138" type="boolean" parent="pgobox_enabled">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="pgobox_enabled">true</condition>
+							<condition operator="is" setting="country_service">0</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
 				</setting>
 				<setting help="95012" id="priority_pgobox" label="55009" type="integer" parent="pgobox_enabled">
 					<level>0</level>

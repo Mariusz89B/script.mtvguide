@@ -45,23 +45,35 @@ from __future__ import unicode_literals
 
 import sys
 
-import os, copy, re
-import xbmc, xbmcvfs
+if sys.version_info[0] > 2:
+    import urllib.request, urllib.parse, urllib.error
+    from urllib.parse import urlencode, quote_plus, quote, unquote, parse_qsl
+    import http.cookiejar
+else:
+    import urllib
+    from urllib import urlencode, quote_plus, quote, unquote
+    import cookielib
+
+import urllib3
 import requests
 
+requests.packages.urllib3.disable_warnings()
+requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += ':HIGH:!DH:!aNULL'
 try:
-    from urllib.parse import urlencode, quote_plus, quote
-except ImportError:
-    from urllib import urlencode, quote_plus, quote
+    requests.packages.urllib3.contrib.pyopenssl.util.ssl_.DEFAULT_CIPHERS += ':HIGH:!DH:!aNULL'
+except AttributeError:
+    # no pyopenssl support used / needed / available
+    pass
 
-import random
-
+import re, os, copy, random, json
+import xbmc, xbmcaddon, xbmcgui, xbmcplugin, xbmcvfs
 from strings import *
 from serviceLib import *
 
 serviceName = 'Polsat GO'
 
 OSINFO = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0"
+UAIPLA = "pg_pc_windows_firefox_html/1 (Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0)"
 
 try:
     if sys.version_info[0] > 2:
@@ -97,14 +109,14 @@ class PolsatGoUpdater(baseServiceUpdater):
         self.auth               = self.api_base+'auth/'
 
         self.headers = {
-                'Accept': 'application/json',
-                'DNT': '1',
-                'Content-Type': 'application/json;charset=UTF-8',
-                'User-Agent': OSINFO,
-                'Origin': 'https://polsatgo.pl',
-                'Referer': 'https://polsatgo.pl/',
-                'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
-            }
+            'Accept': 'application/json',
+            'DNT': '1',
+            'Content-Type': 'application/json;charset=UTF-8',
+            'User-Agent': OSINFO,
+            'Origin': 'https://polsatgo.pl',
+            'Referer': 'https://polsatgo.pl/',
+            'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
+        }
 
         self.device_id = ADDON.getSetting('polsatgo_device_id')
         self.client_id = ADDON.getSetting('polsatgo_client_id')
@@ -115,30 +127,13 @@ class PolsatGoUpdater(baseServiceUpdater):
         self.sesskey= ADDON.getSetting('polsatgo_sesskey')
         
         self.myperms = ADDON.getSetting('polsatgo_myperm')
-        self.myperms2 = None
 
-        self.servicePriority    = int(ADDON.getSetting('priority_ipla'))
+        self.servicePriority    = int(ADDON.getSetting('priority_polsatgo'))
         self.addDuplicatesToList = True
 
         self.client = ADDON.getSetting('polsatgo_client')
 
         self.dane = self.sesstoken+'|'+self.sessexpir+'|{0}|{1}'
-        
-        if sys.version_info[0] > 2:
-            try:
-                self.profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
-            except:
-                self.profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
-        else:
-            try:
-                self.profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile'))
-            except:
-                self.profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
-
-        if self.client == 'Polsat Go':
-            self.UAPG = "pg_pc_windows_firefox_html/1 (Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36 Edg/93.0.961.38)"
-        else:
-            self.UAPG = "pg_pc_windows_firefox_html/1 (Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0)"
     
 
     def getRequests(self, url, data={}, headers={}, params ={}):
@@ -150,25 +145,27 @@ class PolsatGoUpdater(baseServiceUpdater):
 
     def loginService(self):
         try:
+            self.device_id = ADDON.getSetting('polsatgo_device_id')
+            self.client_id = ADDON.getSetting('polsatgo_client_id')
+            self.id_ = ADDON.getSetting('polsatgo_id_')
+
             if self.device_id == '' or self.client_id == '' or self.id_ == '':
                 self.createDatas()
 
             if self.login and self.password:
-                self.device_id = ADDON.getSetting('polsatgo_device_id')
-                self.client_id = ADDON.getSetting('polsatgo_client_id')
                 self.client = ADDON.getSetting('polsatgo_client')
-                
-                if self.client == 'Polsat Go':
-                    post = {"id":1,"jsonrpc":"2.0","method":"login","params":{"ua":self.UAPG,"deviceId":{"type":"other","value":self.device_id},"userAgentData":{"portal":"pg","deviceType":"pc","application":"firefox","player":"html","build":1,"os":"windows","osInfo":OSINFO},"clientId":self.client_id,"authData":{"authProvider":"icok","login":self.login,"password":self.password,"deviceId":{"type":"other","value":self.device_id}}}}
-                else:
-                    post = {"id":1,"jsonrpc":"2.0","method":"login","params":{"ua":self.UAPG,"deviceId":{"type":"other","value":self.device_id},"userAgentData":{"portal":"pg","deviceType":"pc","application":"firefox","player":"html","build":1,"os":"windows","osInfo":OSINFO},"clientId":self.client_id,"authData":{"login":self.login,"password":self.password,"deviceId":{"type":"other","value":self.device_id}}}}
 
-                data = self.getRequests(self.auth, data=post, headers=self.headers)
+                if self.client == 'ICOK':
+                    postData = {"id":1,"jsonrpc":"2.0","method":"login","params":{"ua":"pg_pc_windows_firefox_html/1 (Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36 Edg/93.0.961.38)","deviceId":{"type":"other","value":self.device_id},"userAgentData":{"portal":"pg","deviceType":"pc","application":"firefox","player":"html","build":1,"os":"windows","osInfo":OSINFO},"clientId":self.client_id,"authData":{"authProvider":"icok","login":self.login,"password":self.password,"deviceId":{"type":"other","value":self.device_id}}}}
+                else:
+                    postData = {"id":1,"jsonrpc":"2.0","method":"login","params":{"ua":UAIPLA,"deviceId":{"type":"other","value":self.device_id},"userAgentData":{"portal":"pg","deviceType":"pc","application":"firefox","player":"html","build":1,"os":"windows","osInfo":OSINFO},"clientId":self.client_id,"authData":{"login":self.login,"password":self.password,"deviceId":{"type":"other","value":self.device_id}}}}
+
+                data = self.getRequests(self.auth, data=postData, headers=self.headers)
 
                 try:
                     if data['error']['data']["type"] == "RulesException":
-                        post = {"id":1,"jsonrpc":"2.0","method":"acceptRules","params":{"ua":"pg_mobile_android_chrome_html/1 (Mozilla/5.0 (Linux; Android 10; Redmi Note 8 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.62 Mobile Safari/537.36)","deviceId":{"type":"other","value":self.device_id},"userAgentData":{"portal":"pg","deviceType":"mobile","application":"chrome","player":"html","build":1,"os":"android","osInfo":"Mozilla/5.0 (Linux; Android 10; Redmi Note 8 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.62 Mobile Safari/537.36"},"clientId":self.client_id,"rulesIds":[105],"authData":{"authProvider":"icok","login":self.login,"password":self.password,"deviceId":{"type":"other","value":self.device_id}}}}
-                        data = getRequests(self.auth, data=post, headers=self.headers)
+                        postData = {"id":1,"jsonrpc":"2.0","method":"acceptRules","params":{"ua":"pg_mobile_android_chrome_html/1 (Mozilla/5.0 (Linux; Android 10; Redmi Note 8 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.62 Mobile Safari/537.36)","deviceId":{"type":"other","value":self.device_id},"userAgentData":{"portal":"pg","deviceType":"mobile","application":"chrome","player":"html","build":1,"os":"android","osInfo":"Mozilla/5.0 (Linux; Android 10; Redmi Note 8 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.62 Mobile Safari/537.36"},"clientId":self.client_id,"rulesIds":[105],"authData":{"authProvider":"icok","login":self.login,"password":self.password,"deviceId":{"type":"other","value":self.device_id}}}}
+                        data = getRequests(self.auth, data=postData, headers=self.headers)
                 except:
                     pass
 
@@ -331,29 +328,18 @@ class PolsatGoUpdater(baseServiceUpdater):
             authdata = self.getHmac(dane)
 
             self.client_id = ADDON.getSetting('polsatgo_client_id')
-
-            headers = {
-                'Accept': 'application/json',
-                'DNT': '1',
-                'Content-Type': 'application/json;charset=UTF-8',
-                'User-Agent': OSINFO,
-                'Origin': 'https://polsatgo.pl',
-                'Referer': 'https://polsatgo.pl/',
-                'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
-            }
+            self.device_id = ADDON.getSetting('pgobox_device_id')
 
             postData = {
                 "id":1,
                 "jsonrpc":"2.0",
                 "method":"getTvChannels",
                 "params": {
-                    "offset":0,
-                    "limit":1000,
                     "filters":[],
-                    "ua":self.UAPG,
+                    "ua":UAIPLA,
                     "deviceId": {
                         "type":"other",
-                        "value":""
+                        "value":self.device_id
                         },
 
                     "userAgentData": {
@@ -373,7 +359,7 @@ class PolsatGoUpdater(baseServiceUpdater):
                     "clientId":self.client_id}
             }
 
-            data = self.getRequests(self.navigate, data=postData, headers=headers)
+            data = self.getRequests(self.navigate, data=postData, headers=self.headers)
             channels = data['result']['results']
 
             myper = []
@@ -405,7 +391,7 @@ class PolsatGoUpdater(baseServiceUpdater):
 
         except Exception as e:
             self.log('getChannelList exception: %s' % getExceptionString())
-            self.wrongService()
+            xbmcgui.Dialog().notification(serviceName, strings(70139))
         return result
 
     def channCid(self, cid):
@@ -428,7 +414,7 @@ class PolsatGoUpdater(baseServiceUpdater):
 
         self.client_id = ADDON.getSetting('polsatgo_client_id')
 
-        postData = {"id":1,"jsonrpc":"2.0","method":"getSession","params":{"userAgentData":{"portal":"pg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":self.UAPG,"authData":{"sessionToken":authdata},"clientId":self.client_id}}
+        postData = {"id":1,"jsonrpc":"2.0","method":"getSession","params":{"userAgentData":{"portal":"pg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":UAIPLA,"authData":{"sessionToken":authdata},"clientId":self.client_id}}
 
         data = self.getRequests(self.auth, data=postData, headers=self.headers)
 
@@ -446,21 +432,22 @@ class PolsatGoUpdater(baseServiceUpdater):
 
         dane = self.dane.format('drm','checkProductAccess')
         authdata = self.getHmac(dane)
-        postData = {"id":1,"jsonrpc":"2.0","method":"checkProductAccess","params":{"userAgentData":{"portal":"pg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":self.UAPG,"product":{"id":id_,"type":"media","subType":"movie"},"authData":{"sessionToken":authdata},"clientId":self.client_id}}
+        postData = {"id":1,"jsonrpc":"2.0","method":"checkProductAccess","params":{"userAgentData":{"portal":"pg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":UAIPLA,"product":{"id":id_,"type":"media","subType":"movie"},"authData":{"sessionToken":authdata},"clientId":self.client_id}}
 
         if 'HBOacc' in id_:
 
-            postData = {"id":1,"jsonrpc":"2.0","method":"checkProductAccess","params":{"userAgentData":{"portal":"pg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":self.UAPG,"product":{"id":"hbo","type":"multiple","subType":"packet"},"authData":{"sessionToken":authdata},"clientId":self.client_id}}   
+            postData = {"id":1,"jsonrpc":"2.0","method":"checkProductAccess","params":{"userAgentData":{"portal":"pg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":UAIPLA,"product":{"id":"hbo","type":"multiple","subType":"packet"},"authData":{"sessionToken":authdata},"clientId":self.client_id}}   
         elif 'HBOtv' in id_:
                 id_=id_.split('|')[0]
-                postData = {"id":1,"jsonrpc":"2.0","method":"checkProductAccess","params":{"userAgentData":{"portal":"pg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":self.UAPG,"product":{"id":id_,"type":"media","subType":"tv"},"authData":{"sessionToken":authdata},"clientId":self.client_id}}    
+                postData = {"id":1,"jsonrpc":"2.0","method":"checkProductAccess","params":{"userAgentData":{"portal":"pg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":UAIPLA,"product":{"id":id_,"type":"media","subType":"tv"},"authData":{"sessionToken":authdata},"clientId":self.client_id}}    
                 
         data = self.getRequests('https://b2c-www.redefine.pl/rpc/drm/', data=postData, headers=self.headers)
         
         acc = True if data['result']["statusDescription"] == "has access" else False
 
     def getChannelStream(self, chann):
-        data = None
+        stream = None
+
         id_ = self.channCid(chann.cid)
         cpid = 0
 
@@ -507,28 +494,28 @@ class PolsatGoUpdater(baseServiceUpdater):
                     devcid = (self.device_id).replace('-','')
                     licenseData = quote('{"jsonrpc":"2.0","id":1,"method":"getWidevineLicense","params":{"userAgentData":{"deviceType":"pc","application":"firefox","os":"windows","build":2160500,"portal":"pg","player":"html","widevine":true},"cpid":%s'%cpid+',"mediaId":"'+mediaid+'","sourceId":"'+sourceid+'","keyId":"'+keyid+'","object":"b{SSM}","deviceId":{"type":"other","value":"'+devcid+'"},"ua":"pg_pc_windows_firefox_html/2160500","authData":{"sessionToken":"'+authdata+'"},"clientId":"'+self.client_id+'"}}')
                 
-                    data = mediaSources['url']
+                    stream = mediaSources['url']
                 else:
                     dane = self.dane.format('drm','getPseudoLicense')
                     authdata = self.getHmac(dane)
                     devcid = (self.device_id).replace('-','')
 
-                    postData = {"jsonrpc":"2.0","id":1,"method":"getPseudoLicense","params":{"ua":self.UAPG,"userAgentData":{"deviceType":"pc","application":"firefox","os":"windows","build":1,"portal":"pg","osInfo":OSINFO,"player":"html","widevine":True},"cpid":cpid,"mediaId":mediaid,"sourceId":sourceid,"deviceId":{"type":"other","value":devcid},"authData":{"sessionToken":authdata},"clientId":self.client_id}}
+                    postData = {"jsonrpc":"2.0","id":1,"method":"getPseudoLicense","params":{"ua":UAIPLA,"userAgentData":{"deviceType":"pc","application":"firefox","os":"windows","build":1,"portal":"pg","osInfo":OSINFO,"player":"html","widevine":True},"cpid":cpid,"mediaId":mediaid,"sourceId":sourceid,"deviceId":{"type":"other","value":devcid},"authData":{"sessionToken":authdata},"clientId":self.client_id}}
 
                     getData = self.getRequests('https://b2c-www.redefine.pl/rpc/drm/', data=postData, headers=self.headers)
 
-                    data = getData['result']['url']
+                    stream = getData['result']['url']
 
-            if data is not None and data != "":
-                chann.strm = data
+            if stream is not None and stream != "":
+                chann.strm = stream
                 chann.lic = licenseUrl, licenseData
                 
                 self.log('getChannelStream found matching channel: cid: {}, name: {}, rtmp:{}'.format(chann.cid, chann.name, chann.strm))
                 return chann
             else:
-                self.log('getChannelStream error getting channel stream2, result: {}'.format(str(data)))
+                self.log('getChannelStream error getting channel stream2, result: {}'.format(str(stream)))
                 return None
 
         except Exception as e:
-            self.log('getChannelStream exception while looping: {}\n Data: {}'.format(getExceptionString(), str(data)))
+            self.log('getChannelStream exception while looping: {}\n Data: {}'.format(getExceptionString(), str(stream)))
         return None

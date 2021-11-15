@@ -2820,6 +2820,14 @@ msgctxt "#70137"
 msgid "Enable tvg-id matching"
 msgstr "Activer la correspondance tvg-id"
 
+msgctxt "#70138"
+msgid "Check license server certificate"
+msgstr "Vérifier le certificat du serveur de licences"
+
+msgctxt "#70139"
+msgid "Login incorrect, ICOK clients select proper service"
+msgstr "Login incorrect, clients ICOK sont invités à choisir le service approprié"
+
 msgctxt "#80005"
 msgid "[COLOR]WP Pilot[/COLOR]"
 msgstr "[COLOR]WP Pilot[/COLOR]"
