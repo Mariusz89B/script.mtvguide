@@ -58,7 +58,7 @@
 		<setting id="polsatgo_username" type="text" label="55002" default="" visible="eq(-1,true) + eq(-40,0)" subsetting="true"/>
 		<setting id="polsatgo_password" type="text" option="hidden" label="55003" default="" visible="eq(-2,true) + eq(-41,0)" subsetting="true"/>
 		<setting id="polsatgo_client" type="select" label="30368" default="Polsat Go" values="Polsat Go|ICOK" visible="eq(-3,true) + eq(-42,0)" subsetting="true"/>
-		<setting id="polsatgo_drmcert" type="bool" label="70138" default="false" visible="eq(-4,true) + eq(-43,0)"/>
+		<setting id="polsatgo_drmcert" type="bool" label="70138" default="false" visible="eq(-4,true) + eq(-43,0)" subsetting="true"/>
 		<setting id="priority_polsatgo" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-5,true) + eq(-44,0)" subsetting="true"/>
 		<setting label="30371" type="action" action="RunScript($CWD/clearpolsatgo.py, clearPolsatGO)" visible="eq(-6,true) + eq(-45,0)" subsetting="true"/>
 		<setting id="polsatgo_clientId" visible="false" subsetting="true"/>
@@ -71,7 +71,7 @@
 		<setting id="pgobox_username" type="text" label="55002" default="" visible="eq(-1,true) + eq(-52,0)" subsetting="true"/>
 		<setting id="pgobox_password" type="text" option="hidden" label="55003" default="" visible="eq(-2,true) + eq(-53,0)" subsetting="true"/>
 		<setting id="pgobox_client" type="select" label="30368" default="Polsat Box" values="Polsat Box|ICOK" visible="eq(-3,true) + eq(-54,0)" subsetting="true"/>
-		<setting id="pgobox_drmcert" type="bool" label="70138" default="false" visible="eq(-4,true) + eq(-55,0)"/>
+		<setting id="pgobox_drmcert" type="bool" label="70138" default="false" visible="eq(-4,true) + eq(-55,0)" subsetting="true"/>
 		<setting id="priority_pgobox" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-5,true) + eq(-56,0)" subsetting="true"/>
 		<setting label="30371" type="action" action="RunScript($CWD/clearpolsatgobox.py, clearPolsatGOBox)" visible="eq(-6,true) + eq(-57,0)" subsetting="true"/>
 		<setting id="pgobox_device_id" visible="false" subsetting="true"/>

@@ -2825,7 +2825,7 @@ msgid "Check license server certificate"
 msgstr "Certificaat van licentieserver controleren"
 
 msgctxt "#70139"
-msgid "Login incorrect, ICOK clients select proper service"
+msgid "Login incorrect, ICOK clients please select proper service"
 msgstr "Login fout, ICOK klanten wordt gevraagd om de juiste service te kiezen"
 
 msgctxt "#80005"

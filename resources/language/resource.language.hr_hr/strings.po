@@ -2825,7 +2825,7 @@ msgid "Check license server certificate"
 msgstr "Provjerite certifikat poslužitelja licenci"
 
 msgctxt "#70139"
-msgid "Login incorrect, ICOK clients select proper service"
+msgid "Login incorrect, ICOK clients please select proper service"
 msgstr "Netočna prijava, ICOK klijenti traže se da odaberu odgovarajuću uslugu"
 
 msgctxt "#80005"

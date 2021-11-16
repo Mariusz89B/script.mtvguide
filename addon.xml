@@ -2,7 +2,7 @@
 <addon
     id="script.mtvguide"
     name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]"
-    version="9.8.1-beta.6"
+    version="9.8.1"
     provider-name="Team Mods-Kodi">
   <requires>
     <import addon="xbmc.addon" version="17.0.0"/>
@@ -42,7 +42,7 @@
 	<website>http://mods-kodi.pl/</website>
 	<email>support@m-tvguide.pl</email>
     <source>mods-kodi.pl © 2013 - 2021</source>
-    <news>v9.8.1 (2021-11-14)
+    <news>v9.8.1 (2021-11-16)
 - Fixed service Polsat GO and Polsat GO Box.
 
 v9.8.0 (2021-11-12)
