@@ -58,7 +58,7 @@
 		<setting id="polsatgo_username" type="text" label="55002" default="" visible="eq(-1,true) + eq(-40,0)" subsetting="true"/>
 		<setting id="polsatgo_password" type="text" option="hidden" label="55003" default="" visible="eq(-2,true) + eq(-41,0)" subsetting="true"/>
 		<setting id="polsatgo_client" type="select" label="30368" default="Polsat Go" values="Polsat Go|ICOK" visible="eq(-3,true) + eq(-42,0)" subsetting="true"/>
-		<setting id="polsatgo_drmcert" type="bool" label="70138" default="false" visible="eq(-4,true) + eq(-43,0)" subsetting="true"/>
+		<setting id="polsatgo_drmcert" type="bool" label="70138" default="false" visible="eq(-4,true) + eq(-43,0)"/>
 		<setting id="priority_polsatgo" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-5,true) + eq(-44,0)" subsetting="true"/>
 		<setting label="30371" type="action" action="RunScript($CWD/clearpolsatgo.py, clearPolsatGO)" visible="eq(-6,true) + eq(-45,0)" subsetting="true"/>
 		<setting id="polsatgo_clientId" visible="false" subsetting="true"/>
@@ -71,7 +71,7 @@
 		<setting id="pgobox_username" type="text" label="55002" default="" visible="eq(-1,true) + eq(-52,0)" subsetting="true"/>
 		<setting id="pgobox_password" type="text" option="hidden" label="55003" default="" visible="eq(-2,true) + eq(-53,0)" subsetting="true"/>
 		<setting id="pgobox_client" type="select" label="30368" default="Polsat Box" values="Polsat Box|ICOK" visible="eq(-3,true) + eq(-54,0)" subsetting="true"/>
-		<setting id="pgobox_drmcert" type="bool" label="70138" default="false" visible="eq(-4,true) + eq(-55,0)" subsetting="true"/>
+		<setting id="pgobox_drmcert" type="bool" label="70138" default="false" visible="eq(-4,true) + eq(-55,0)"/>
 		<setting id="priority_pgobox" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-5,true) + eq(-56,0)" subsetting="true"/>
 		<setting label="30371" type="action" action="RunScript($CWD/clearpolsatgobox.py, clearPolsatGOBox)" visible="eq(-6,true) + eq(-57,0)" subsetting="true"/>
 		<setting id="pgobox_device_id" visible="false" subsetting="true"/>
@@ -225,7 +225,8 @@
 		<setting label="30742" type="lsep" visible="lt(-31,2)"/>
 		<setting type="sep" visible="lt(-32,2)"/>
 		<setting label="30365" type="lsep" visible="lt(-33,2)"/>
-		<setting id="time_zone" label="30911" type="labelenum" default="+01:00" values="-12:00|-11:00|-10:00|-09:30|-09:00|-08:00|-07:00|-06:00|-05:00|-04:30|-04:00|-03:30|-03:00|-02:00|-01:00|00:00|+01:00|+02:00|+03:00|+03:30|+04:00|+04:30|+05:00|+05:30|+05:45|+06:00|+06:30|+07:00|+08:00|+09:00|+09:30|+10:00|+10:30|+11:00|+11:30|+12:00|+12:45|+13:00|+14:00|" visible="lt(-34,2)"/>
+		<setting id="auto_time_zone" label="30378" type="bool" default="true" visible="lt(-34,2)"/>
+		<setting id="time_zone" label="30911" type="labelenum" default="+01:00" values="-12:00|-11:00|-10:00|-09:30|-09:00|-08:00|-07:00|-06:00|-05:00|-04:30|-04:00|-03:30|-03:00|-02:00|-01:00|00:00|+01:00|+02:00|+03:00|+03:30|+04:00|+04:30|+05:00|+05:30|+05:45|+06:00|+06:30|+07:00|+08:00|+09:00|+09:30|+10:00|+10:30|+11:00|+11:30|+12:00|+12:45|+13:00|+14:00|" visible="lt(-35,2) + eq(-1,false)"/>
 		<setting id="country_code_be" default="false" visible="false"/>
 		<setting id="country_code_cz" default="false" visible="false"/>
 		<setting id="country_code_de" default="false" visible="false"/>

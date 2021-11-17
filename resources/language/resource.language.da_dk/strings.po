@@ -560,6 +560,10 @@ msgctxt "#30377"
 msgid "PVR channel manager"
 msgstr "PVR kanalhåndtering"
 
+msgctxt "#30378"
+msgid "Auto timezone"
+msgstr "Automatisk tidszone"
+
 msgctxt "#30500"
 msgid "Edit channel order and visibility"
 msgstr "Rediger kanal rækkefølge og synlighed"

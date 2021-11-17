@@ -560,6 +560,10 @@ msgctxt "#30377"
 msgid "PVR channel manager"
 msgstr "PVR upravitelj programa"
 
+msgctxt "#30378"
+msgid "Auto timezone"
+msgstr "Automatska vremenska zona"
+
 msgctxt "#30500"
 msgid "Edit channel order and visibility"
 msgstr "Uredite redoslijed kanala i vidljivost"

@@ -2807,9 +2807,13 @@
 					</control>
 				</setting>
 			</group>
-			<group id="12"/>
-			<group id="13" label="30742"/>
-			<group id="14" label="30365">
+			<group id="12" label="30742"/>
+			<group id="13" label="30365">
+				<setting help="95145" id="auto_time_zone" label="30378" type="boolean">
+					<level>1</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
 				<setting help="95041" id="time_zone" label="30911" type="string">
 					<level>1</level>
 					<default>+01:00</default>
@@ -2858,10 +2862,7 @@
 					</constraints>
 					<dependencies>
 						<dependency type="visible">
-							<or>
-								<condition operator="is" setting="source">0</condition>
-								<condition operator="is" setting="source">1</condition>
-							</or>
+							<condition operator="is" setting="auto_time_zone">false</condition>
 						</dependency>
 					</dependencies>
 					<control format="string" type="spinner"/>

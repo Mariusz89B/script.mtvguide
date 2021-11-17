@@ -560,6 +560,10 @@ msgctxt "#30377"
 msgid "PVR channel manager"
 msgstr ""
 
+msgctxt "#30378"
+msgid "Auto timezone"
+msgstr ""
+
 msgctxt "#30500"
 msgid "Edit channel order and visibility"
 msgstr ""
@@ -3470,6 +3474,10 @@ msgstr ""
 
 msgctxt "#95144"
 msgid "DRM license verification."
+msgstr ""
+
+msgctxt "#95145"
+msgid "Reads the timezone value provided in EPG file."
 msgstr ""
 
 msgctxt "#99994"

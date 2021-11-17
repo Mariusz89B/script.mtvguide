@@ -85,6 +85,12 @@ from groups import *
 
 CC_DICT = ccDict()
 
+ZONE_CONFIG = ADDON.getSetting('auto_time_zone')
+if ZONE_CONFIG == 'true':
+    TIME_ZONE_AUTO = True
+else:
+    TIME_ZONE_AUTO = False
+
 NUMBER_OF_SERVICE_PRIORITIES = 12
 SETTINGS_TO_CHECK = ['source', 'xmltv_file', 'xmltv_logo_folder',
                      'm-TVGuide', 'm-TVGuide2', 'm-TVGuide3',
@@ -102,7 +108,6 @@ SETTINGS_TO_CHECK = ['source', 'xmltv_file', 'xmltv_logo_folder',
                      'country_code_se', 'epg_se',
                      'country_code_us', 'epg_us',
                      'country_code_radio', 'epg_radio']
-
 
 class Channel(object):
     def __init__(self, id, title, logo = None, titles = None, streamUrl = None, visible = True, weight = -1):
@@ -2507,6 +2512,7 @@ class XMLTVSource(Source):
     def __init__(self, addon):
         self.logoFolder = addon.getSetting('xmltv_logo_folder')
         self.xmltvFile = addon.getSetting('xmltv_file')
+
         if not self.xmltvFile or not xbmcvfs.exists(self.xmltvFile):
             raise SourceNotConfiguredException()
     def getDataFromExternal(self, date, progress_callback = None):
@@ -2752,48 +2758,54 @@ def catList(category_count):
 
 
 def parseXMLTVDate(dateString):
-    if dateString is not None:
+    autoZone = None
+    if dateString:
         if dateString.find(' ') != -1:
-            # remove timezone information
+            timeZone = dateString[dateString.find(' '):]
+            autoZone = timeZone.replace(timeZone[-2:], ':' + timeZone[-2:]).replace(' ', '')
             dateString = dateString[:dateString.find(' ')]
+
         t = time.strptime(dateString, '%Y%m%d%H%M%S')
-        return datetime.datetime(t.tm_year, t.tm_mon, t.tm_mday, t.tm_hour, t.tm_min, t.tm_sec)
+        if TIME_ZONE_AUTO:
+            return datetime.datetime(t.tm_year, t.tm_mon, t.tm_mday, t.tm_hour, t.tm_min, t.tm_sec), autoZone
+        else:
+            return datetime.datetime(t.tm_year, t.tm_mon, t.tm_mday, t.tm_hour, t.tm_min, t.tm_sec), None
     else:
         return None
 
 
-zone = ADDON.getSetting('time_zone')
-zoneDiff = time.strptime(zone[1:],'%H:%M')
-if '+' in zone:
-    zoneInt = 1
-elif '-' in zone:
-    zoneInt = 2
-else:
-    zoneInt = 0
+def TimeZone(dateString, AUTO_ZONE=None):
+    ZONE = ADDON.getSetting('time_zone')
 
-def TimeZone(dateString):
-    if dateString is not None:
+    if AUTO_ZONE and TIME_ZONE_AUTO:
+        ZONE = AUTO_ZONE
+    else:
+        ZONE = '00:00'
+
+    zoneDiff = time.strptime(ZONE[1:],'%H:%M')
+    
+    if '+' in ZONE:
+        zoneInt = 1
+    elif '-' in ZONE:
+        zoneInt = 2
+    else:
+        zoneInt = 0
+
+    if dateString:
         if zoneInt == 2:
-            dateString = dateString - datetime.timedelta(hours=zoneDiff.tm_hour) - datetime.timedelta(minutes=zoneDiff.tm_min) - datetime.timedelta(hours=1)
+            newDateString = dateString[0] - datetime.timedelta(hours=zoneDiff.tm_hour) - datetime.timedelta(minutes=zoneDiff.tm_min)
         elif zoneInt == 1:
-            dateString = dateString + datetime.timedelta(hours=zoneDiff.tm_hour) + datetime.timedelta(minutes=zoneDiff.tm_min) - datetime.timedelta(hours=1)
+            newDateString = dateString[0] + datetime.timedelta(hours=zoneDiff.tm_hour) + datetime.timedelta(minutes=zoneDiff.tm_min)
         else:
-            dateString = dateString - datetime.timedelta(hours=1)
+            newDateString = dateString[0]
 
-        return dateString
+        return newDateString
     else:
         return None
 
 def customParseXMLTV(xml, progress_callback):
     deb("[EPG] Parsing EPG by custom parser")
     startTime = datetime.datetime.now()
-
-    def customParseXMLTVDate(dateString):
-        if dateString is not None:
-            t = time.strptime(dateString, '%Y%m%d%H%M%S')
-            return datetime.datetime(t.tm_year, t.tm_mon, t.tm_mday, t.tm_hour, t.tm_min, t.tm_sec)
-        else:
-            return None
 
     #regex for channel
     channelRe        = re.compile('(<channel.*?</channel>)',                re.DOTALL)
@@ -2805,8 +2817,8 @@ def customParseXMLTV(xml, progress_callback):
     programRe        = re.compile('(<programme.*?</programme>)',            re.DOTALL)
     programChannelRe = re.compile('channel="(.*?)"',                        re.DOTALL)
     programTitleRe   = re.compile('<title.*?>(.*?)</title>',                re.DOTALL)
-    programStartRe   = re.compile('start="(.*?)( .*?)?"',                   re.DOTALL)
-    programStopRe    = re.compile('stop="(.*?)( .*?)?"',                    re.DOTALL)
+    programStartRe   = re.compile('start="(.*?)"',                          re.DOTALL)
+    programStopRe    = re.compile('stop="(.*?)"',                           re.DOTALL)
     programDesc      = re.compile('<desc.*?>(.*?)</desc>',                  re.DOTALL)
     programIcon      = re.compile('<icon\s*src="(.*?)"',                    re.DOTALL)
     programCategory  = re.compile('<category.*?>(.*?)</category>',          re.DOTALL)
@@ -2870,11 +2882,11 @@ def customParseXMLTV(xml, progress_callback):
         except AttributeError:
             title = ''
         try:
-            start = TimeZone(customParseXMLTVDate( programStartRe.search(program).group(1)))
+            start = TimeZone(parseXMLTVDate( programStartRe.search(program).group(1)))
         except:
             start = ''
         try:
-            stop = TimeZone(customParseXMLTVDate( programStopRe.search(program).group(1)))
+            stop = TimeZone(parseXMLTVDate( programStopRe.search(program).group(1)))
         except:
             stop = ''
         category = programCategory.findall(program)

@@ -67,14 +67,15 @@ class StreamsService(object):
 
     def loadFavourites(self):
         entries = list()
-        if sys.version_info[0] > 2:
-            path = xbmcvfs.translatePath('special://userdata/favourites.xml')
-        else:
-            path = xbmc.translatePath('special://userdata/favourites.xml')
         if os.path.exists(path):
-            f = open(path)
-            xml = f.read()
-            f.close()
+            if sys.version_info[0] > 2:
+                path = xbmcvfs.translatePath('special://userdata/favourites.xml')
+                with open(path, 'r', encoding='utf-8') as f:
+                    xml = f.read()
+            else:
+                path = xbmc.translatePath('special://userdata/favourites.xml')
+                with codecs.open(path, 'r', encoding='utf-8') as f:
+                    xml = f.read()
 
             try:
                 doc = ElementTree.fromstring(xml)
