@@ -66,14 +66,15 @@ class StreamsService(object):
             print('unable to parse addons.ini')
 
     def loadFavourites(self):
-        entries = list()
-        if os.path.exists(path):
-            if sys.version_info[0] > 2:
-                path = xbmcvfs.translatePath('special://userdata/favourites.xml')
+        entries = list() 
+        if sys.version_info[0] > 2:
+            path = xbmcvfs.translatePath('special://userdata/favourites.xml')
+            if os.path.exists(path):
                 with open(path, 'r', encoding='utf-8') as f:
                     xml = f.read()
-            else:
-                path = xbmc.translatePath('special://userdata/favourites.xml')
+        else:
+            path = xbmc.translatePath('special://userdata/favourites.xml')
+            if os.path.exists(path):
                 with codecs.open(path, 'r', encoding='utf-8') as f:
                     xml = f.read()
 
