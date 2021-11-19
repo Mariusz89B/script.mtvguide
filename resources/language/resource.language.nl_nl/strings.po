@@ -689,12 +689,24 @@ msgid "Browse..."
 msgstr "Bladeren..."
 
 msgctxt "#30611"
-msgid "Click [B]Browse[/B] below and navigate to your stream file.[CR]When you have chosen your file you can preview the stream to test if it works in KODI."
-msgstr "Klik hieronder op [B]Bladeren[/B] en ga naar uw streambestand.[CR]Wanneer u uw bestand hebt gekozen, kunt u een voorbeeld van de stream bekijken om te testen of deze in KODI werkt."
+msgid "Click [B]Browse[/B] below and select a stream file.[CR]If selected, try out your stream with preview button."
+msgstr "Klik op [B]Bladeren[/B] hieronder en selecteer een streambestand.[CR]Indien geselecteerd, probeer je stream uit met de voorbeeldknop."
+
+msgctxt "#30612"
+msgid "Select a unmatched playlist stream, from enabled [B]M3U playlists[/B].[CR]If selected, try out your stream with preview button."
+msgstr "Selecteer een ongeëvenaarde afspeellijststream, uit ingeschakelde [B]M3U afspeellijsten[/B].[CR]Indien geselecteerd, probeer uw stream uit met de voorbeeldknop."
+
+msgctxt "#30613"
+msgid "Select a stream from [B]addons.ini[/B] file, located in the add-on directory.[CR]If selected, try out your stream with preview button."
+msgstr "Selecteer een stream uit het bestand [B]addons.ini[/B] in de map met add-ons.[CR]Indien geselecteerd, probeer je stream uit met de voorbeeldknop."
+
+msgctxt "#30614"
+msgid "Select a stream from installed [B]KODI video add-ons[/B].[CR]If selected, try out your stream with preview button."
+msgstr "Selecteer een stream uit de geïnstalleerde [B]KODI video add-ons[/B].[CR]Indien geselecteerd, probeer uw stream uit met de voorbeeldknop."
 
 msgctxt "#30620"
-msgid "Choose a favourite. Only [B]PlayMedia[/B] favourites are supported."
-msgstr "Kies een favoriet. Alleen [B]PlayMedia[/B] -favorieten worden ondersteund."
+msgid "Select a favourite media stream. Only [B]PlayMedia[/B] favourites are supported.[CR]If selected, try out your stream with preview button."
+msgstr "Selecteer een favoriete mediastream. Alleen [B]PlayMedia[/B] favorieten worden ondersteund.[CR]Indien geselecteerd, probeer uw stream uit met de voorbeeldknop."
 
 msgctxt "#30621"
 msgid "Live, schedule recording or download program.[CR]Add a task, use time-shift to urge or delay start of recording / download."

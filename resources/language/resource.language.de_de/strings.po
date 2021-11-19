@@ -689,12 +689,24 @@ msgid "Browse..."
 msgstr "Durchsuchen..."
 
 msgctxt "#30611"
-msgid "Click [B]Browse[/B] below and navigate to your stream file.[CR]When you have chosen your file you can preview the stream to test if it works in KODI."
-msgstr "Klicken Sie auf [B]Durchsuchen Sie[/B] und navigieren Sie zu ihrer stream-datei[CR]wenn Sie ihre datei ausgewählt haben, können Sie eine vorschau des streams anzeigen, um zu testen, ob er in KODI funktioniert."
+msgid "Click [B]Browse[/B] below and select a stream file.[CR]If selected, try out your stream with preview button."
+msgstr "Klicke unten auf [B]Durchsuchen[/B] und wähle eine Stream Datei aus.[CR]Wenn ausgewählt, probiere deinen Stream mit der Vorschau Schaltfläche aus."
+
+msgctxt "#30612"
+msgid "Select a unmatched playlist stream, from enabled [B]M3U playlists[/B].[CR]If selected, try out your stream with preview button."
+msgstr "Wählen Sie einen nicht übereinstimmenden Playlist Stream aus aktivierten [B]M3U Playlists[/B].[CR]Wenn ausgewählt, probieren Sie Ihren Stream mit der Vorschau Schaltfläche aus."
+
+msgctxt "#30613"
+msgid "Select a stream from [B]addons.ini[/B] file, located in the add-on directory.[CR]If selected, try out your stream with preview button."
+msgstr "Wählen Sie einen Stream aus der Datei [B]addons.ini[/B] aus, die sich im add-on Verzeichnis befindet.[CR]Wenn ausgewählt, probieren Sie Ihren Stream mit der Vorschau Schaltfläche aus."
+
+msgctxt "#30614"
+msgid "Select a stream from installed [B]KODI video add-ons[/B].[CR]If selected, try out your stream with preview button."
+msgstr "Wählen Sie einen Stream aus den installierten [B]KODI video add-ons[/B].[CR]Wenn ausgewählt, probieren Sie Ihren Stream mit der Vorschau Schaltfläche aus."
 
 msgctxt "#30620"
-msgid "Choose a favourite. Only [B]PlayMedia[/B] favourites are supported."
-msgstr "Wähle einen favoriten. Nur [B]PlayMedia[/B] favoriten werden unterstützt."
+msgid "Select a favourite media stream. Only [B]PlayMedia[/B] favourites are supported.[CR]If selected, try out your stream with preview button."
+msgstr "Wählen Sie einen bevorzugten Medienstream aus. Es werden nur [B]PlayMedia[/B] favoriten unterstützt.[CR]Wenn ausgewählt, probieren Sie Ihren Stream mit der Vorschau Schaltfläche aus."
 
 msgctxt "#30621"
 msgid "Live, schedule recording or download program.[CR]Add a task, use time-shift to urge or delay start of recording / download."

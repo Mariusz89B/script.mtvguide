@@ -689,12 +689,24 @@ msgid "Browse..."
 msgstr "Bläddra..."
 
 msgctxt "#30611"
-msgid "Click [B]Browse[/B] below and navigate to your stream file.[CR]When you have chosen your file you can preview the stream to test if it works in KODI."
-msgstr "Klicka på [B]Bläddra[/B] nedan och navigera till din ström-fil.[CR]När du har valt din fil kan du förhandsvisa strömmen för att prova att det fungerar i KODI."
+msgid "Click [B]Browse[/B] below and select a stream file.[CR]If selected, try out your stream with preview button."
+msgstr "Klicka på [B]Bläddra[/B] nedan och välj en strömfil.[CR]Om det är valt, prova din ström med förhandsgranskningsknapp."
+
+msgctxt "#30612"
+msgid "Select a unmatched playlist stream, from enabled [B]M3U playlists[/B].[CR]If selected, try out your stream with preview button."
+msgstr "Välj en omatchad spellistström, från aktiverade [B]M3U spellistor[/B].[CR]Om valt, prova din stream med förhandsgranskningsknapp."
+
+msgctxt "#30613"
+msgid "Select a stream from [B]addons.ini[/B] file, located in the add-on directory.[CR]If selected, try out your stream with preview button."
+msgstr "Välj en ström från filen [B]addons.ini[/B], som återfinns i tilläggskatalogen.[CR]Om valt, prova din ström med förhandsgranskningsknappen."
+
+msgctxt "#30614"
+msgid "Select a stream from installed [B]KODI video add-ons[/B].[CR]If selected, try out your stream with preview button."
+msgstr "Välj en ström från installerade [B]KODI videotillägg[/B].[CR]Om valt, prova din ström med förhandsgranskningsknappen."
 
 msgctxt "#30620"
-msgid "Choose a favourite. Only [B]PlayMedia[/B] favourites are supported."
-msgstr "Välj en favorit nedan. Endast [B]PlayMedia[/B] favoriter stödjs."
+msgid "Select a favourite media stream. Only [B]PlayMedia[/B] favourites are supported.[CR]If selected, try out your stream with preview button."
+msgstr "Välj en favoritmediaström. Endast [B]PlayMedia[/B] favoriter stöds.[CR]Om valt, prova din stream med förhandsgranskningsknapp."
 
 msgctxt "#30621"
 msgid "Live, schedule recording or download program.[CR]Add a task, use time-shift to urge or delay start of recording / download."

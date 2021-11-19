@@ -689,12 +689,24 @@ msgid "Browse..."
 msgstr "Gennemse..."
 
 msgctxt "#30611"
-msgid "Click [B]Browse[/B] below and navigate to your stream file.[CR]When you have chosen your file you can preview the stream to test if it works in KODI."
-msgstr "Klik på [B]Gennemse[/B] nedenfor og naviger til din strømfil.[CR]Når du har valgt din fil, kan du forhåndsvise strømmen til at teste, om den virker i KODI."
+msgid "Click [B]Browse[/B] below and select a stream file.[CR]If selected, try out your stream with preview button."
+msgstr "Klik på [B]Gennemse[/B] nedenfor og vælg en stream fil.[CR]Hvis valgt, prøv din stream med preview knap."
+
+msgctxt "#30612"
+msgid "Select a unmatched playlist stream, from enabled [B]M3U playlists[/B].[CR]If selected, try out your stream with preview button."
+msgstr "Vælg en uovertruffen afspilningslistestrøm fra aktiverede [B]M3U afspilningslister[/B].[CR]Hvis valgt, prøv din stream med preview knap."
+
+msgctxt "#30613"
+msgid "Select a stream from [B]addons.ini[/B] file, located in the add-on directory.[CR]If selected, try out your stream with preview button."
+msgstr "Vælg en stream fra [B]addons.ini[/B] fil, der er placeret i tilføjelsesbiblioteket.[CR]Hvis valgt, prøv din stream med preview knap."
+
+msgctxt "#30614"
+msgid "Select a stream from installed [B]KODI video add-ons[/B].[CR]If selected, try out your stream with preview button."
+msgstr "Vælg en stream fra installerede [B]KODI videotilføjelser[/B].[CR]Hvis valgt, prøv din stream med preview knap."
 
 msgctxt "#30620"
-msgid "Choose a favourite. Only [B]PlayMedia[/B] favourites are supported."
-msgstr "Vælg en favorit. Kun [B]PlayMedia[/B] favoritter understøttes."
+msgid "Select a favourite media stream. Only [B]PlayMedia[/B] favourites are supported.[CR]If selected, try out your stream with preview button."
+msgstr "Vælg en favoritmediestream. Kun [B]PlayMedia[/B] favoritter understøttes.[CR]Hvis valgt, prøv din stream med preview knappen."
 
 msgctxt "#30621"
 msgid "Live, schedule recording or download program.[CR]Add a task, use time-shift to urge or delay start of recording / download."

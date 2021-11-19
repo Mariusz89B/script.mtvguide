@@ -689,12 +689,24 @@ msgid "Browse..."
 msgstr "Pregledaj"
 
 msgctxt "#30611"
-msgid "Click [B]Browse[/B] below and navigate to your stream file.[CR]When you have chosen your file you can preview the stream to test if it works in KODI."
-msgstr "Kliknite [B]Pregledajte[/B] u nastavku i prijeđite na datoteku streama.[CR]Kada ste odabrali datoteku, možete pregledati stream kako biste provjerili radi li se u KODI-u."
+msgid "Click [B]Browse[/B] below and select a stream file.[CR]If selected, try out your stream with preview button."
+msgstr "Kliknite [B]Pregledaj[/B] ispod i odaberite datoteku streama.[CR]Ako je odabrano, isprobajte svoj stream s gumbom za pregled."
+
+msgctxt "#30612"
+msgid "Select a unmatched playlist stream, from enabled [B]M3U playlists[/B].[CR]If selected, try out your stream with preview button."
+msgstr "Odaberite neusklađeni stream popisa za reprodukciju iz omogućenih [B]M3U popisa pjesama[/B].[CR]Ako je odabrano, isprobajte svoj stream s gumbom za pregled."
+
+msgctxt "#30613"
+msgid "Select a stream from [B]addons.ini[/B] file, located in the add-on directory.[CR]If selected, try out your stream with preview button."
+msgstr "Odaberite stream iz datoteke [B]addons.ini[/B] koja se nalazi u direktoriju dodataka.[CR]Ako je odabrano, isprobajte svoj stream s gumbom za pregled."
+
+msgctxt "#30614"
+msgid "Select a stream from installed [B]KODI video add-ons[/B].[CR]If selected, try out your stream with preview button."
+msgstr "Odaberite stream iz instaliranih [B]KODI video dodataka[/B].[CR]Ako je odabrano, isprobajte svoj stream s gumbom za pregled."
 
 msgctxt "#30620"
-msgid "Choose a favourite. Only [B]PlayMedia[/B] favourites are supported."
-msgstr "Odaberite omiljenu. Podržane su samo [B]PlayMedia[/B] favoriti."
+msgid "Select a favourite media stream. Only [B]PlayMedia[/B] favourites are supported.[CR]If selected, try out your stream with preview button."
+msgstr "Odaberite omiljeni medijski stream. Podržani su samo favoriti [B]PlayMedia[/B].[CR]Ako je odabrano, isprobajte svoj stream s gumbom za pregled."
 
 msgctxt "#30621"
 msgid "Live, schedule recording or download program.[CR]Add a task, use time-shift to urge or delay start of recording / download."

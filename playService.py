@@ -1048,9 +1048,15 @@ class PlayService(xbmc.Player, BasePlayService):
                                 utc = catchupList[2]
                                 lutc = catchupList[3]
 
-                                strmUrl, licenseUrl = self.catchupTeliaPlay(channelInfo, utc, lutc)
-                                if not strmUrl:
-                                    return None
+                                strmUrlx, licenseUrl = self.catchupTeliaPlay(channelInfo, utc, lutc)
+                                if not strmUrlx:
+                                    res = xbmcgui.Dialog().yesno(strings(30998), strings(59980))
+                                    if res:
+                                        strmUrl = strmUrl
+                                    else:
+                                        return None
+                                else:
+                                    strmUrl = strmUrlx
 
                         PROTOCOL = 'mpd'
                         DRM = 'com.widevine.alpha'
@@ -1181,7 +1187,7 @@ class PlayService(xbmc.Player, BasePlayService):
                             self.unlockCurrentlyPlayedService()
                             xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
 
-                if pl.match(service):
+                if pl.match(service) or channelInfo.title == 'StreamSetupDialog':
                     playbackServices = ['C More', 'Polsat GO', 'Polsat GO Box', 'Ipla', 'nc+ GO', 'PlayerPL', 'Telia Play', 'Telewizja Polska', 'WP Pilot']
                     if self.currentlyPlayedService['service'] not in playbackServices:
                         catchup = False

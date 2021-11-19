@@ -4307,7 +4307,7 @@ class mTVGuide(xbmcgui.WindowXML):
         strmList = file.read().splitlines()
 
         strmList = sorted(set(strmList))
-        strmList = [x.strip() for x in strmList if x.strip()]
+        strmList = [x.split(', ')[0].strip() for x in strmList if x.split(', ')[0].strip()]
 
         res = xbmcgui.Dialog().select(strings(59994), [strings(30988), strings(59997)])
 
@@ -4532,7 +4532,7 @@ class mTVGuide(xbmcgui.WindowXML):
         elif ret == 11:
             if removeStrm:
                 self.database.deleteCustomStreamUrl(program.channel)
-            d = StreamSetupDialog(self.database, program.channel)
+            d = StreamSetupDialog(self.database, program.channel, self)
             d.doModal()
             del d
 
@@ -6720,6 +6720,7 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
     C_STREAM_FAVOURITES_TAB = 102
     C_STREAM_ADDONS_TAB = 103
     C_STREAM_BROWSE_TAB = 104
+    C_STREAM_PLAYLIST_TAB = 108
     C_STREAM_STRM_BROWSE = 1001
     C_STREAM_STRM_FILE_LABEL = 1005
     C_STREAM_STRM_PREVIEW = 1002
@@ -6737,13 +6738,17 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
     C_STREAM_ADDONS_OK = 3006
     C_STREAM_ADDONS_CANCEL = 3007
     C_STREAM_BROWSE_ADDONS = 4001
-    C_STREAM_BROWSE_STREAMS = 4002
+    C_STREAM_BROWSE_DIRS = 4002
     C_STREAM_BROWSE_NAME = 4003
     C_STREAM_BROWSE_DESCRIPTION = 4004
     C_STREAM_BROWSE_PREVIEW = 4005
     C_STREAM_BROWSE_OK = 4006
     C_STREAM_BROWSE_CANCEL = 4007
-    C_STREAM_BROWSE_DIRS = 4008
+    C_STREAM_PLAYLIST_STREAMS = 8002
+    C_STREAM_PLAYLIST_PREVIEW = 8005
+    C_STREAM_PLAYLIST_OK = 8006
+    C_STREAM_PLAYLIST_CANCEL = 8007
+    CLOSE_ALL = 1000
 
     C_STREAM_VISIBILITY_MARKER = 100
 
@@ -6751,23 +6756,39 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
     VISIBLE_FAVOURITES = 'favourites'
     VISIBLE_ADDONS = 'addons'
     VISIBLE_BROWSE = 'browse'
+    VISIBLE_PLAYLIST = 'playlist'
 
-    def __new__(cls, database, channel):
+    def __new__(cls, database, channel, epg):
         return super(StreamSetupDialog, cls).__new__(cls, 'script-tvguide-streamsetup.xml', Skin.getSkinBasePath(), Skin.getSkinName(), skin_resolution)
 
-    def __init__(self, database, channel):
+    def __init__(self, database, channel, epg):
         """
         @type database: source.Database
         @type channel:source.Channel
         """
         super(StreamSetupDialog, self).__init__()
+        self.epg = epg
         self.database = database
         self.channel = channel
         self.previousAddonId = None
         self.previousDirsId = None
+        self.returnListContent = None
+        self.playable = None
         self.previousBrowseId = None
         self.strmFile = None
         self.streamingService = streaming.StreamsService()
+
+        if sys.version_info[0] > 2:
+            try:
+                self.profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
+            except:
+                self.profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
+        else:
+            try:
+                self.profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile'))
+            except:
+                self.profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
+
 
     def close(self):
         if xbmc.Player().isPlaying():
@@ -6775,6 +6796,8 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
         super(StreamSetupDialog, self).close()
 
     def onInit(self):
+        xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
+
         self.getControl(self.C_STREAM_VISIBILITY_MARKER).setLabel(self.VISIBLE_STRM)
 
         favourites = self.streamingService.loadFavourites()
@@ -6830,12 +6853,33 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
         listControl.addItems(items)
         self.updateDirsInfo()
 
+        file = xbmcvfs.File(os.path.join(self.profilePath, 'custom_channels.list'), 'r')
+        strmList = file.read().splitlines()
+
+        strmList = sorted(set(strmList))
+        strmList = [x.strip() for x in strmList if x.strip()]
+
+        items = list()
+        for i in strmList:
+            playlist = i.split(', ')
+            label = playlist[0]
+            stream = playlist[1]
+            item = xbmcgui.ListItem(label)
+            item.setProperty('stream', stream)
+            items.append(item)
+
+        listControl = self.getControl(StreamSetupDialog.C_STREAM_PLAYLIST_STREAMS)
+        listControl.addItems(items)
+
+
     def onAction(self, action):
         if action.getId() in [ACTION_PARENT_DIR, ACTION_PREVIOUS_MENU, KEY_NAV_BACK, KEY_CONTEXT_MENU] or action.getButtonCode() in [KEY_CONTEXT]:
-            self.close()
-            return
+            if xbmc.Player().isPlaying():
+                xbmc.Player().stop()
+            else:
+                self.close()
 
-        elif self.getFocusId() == self.C_STREAM_ADDONS:
+        if self.getFocusId() == self.C_STREAM_ADDONS:
             self.updateAddonInfo()
 
         elif self.getFocusId() == self.C_STREAM_BROWSE_ADDONS:
@@ -6856,11 +6900,14 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
                 self.strmFile = stream
 
         elif controlId == self.C_STREAM_BROWSE_OK:
-            listControl = self.getControl(self.C_STREAM_BROWSE_STREAMS)
+            listControl = self.getControl(self.C_STREAM_BROWSE_DIRS)
             item = listControl.getSelectedItem()
-            if item:
-                stream = item.getProperty('stream')
+            if item and self.playable:
+                stream = self.strmFile
                 self.database.setCustomStreamUrl(self.channel, stream)
+                xbmcgui.Dialog().notification(self.channel.title, strings(59993).format(item.getLabel()))
+            else:
+                return
             self.close()
 
         elif controlId == self.C_STREAM_ADDONS_OK:
@@ -6869,6 +6916,7 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
             if item:
                 stream = item.getProperty('stream')
                 self.database.setCustomStreamUrl(self.channel, stream)
+                xbmcgui.Dialog().notification(self.channel.title, strings(59993).format(item.getLabel()))
             self.close()
 
         elif controlId == self.C_STREAM_FAVOURITES_OK:
@@ -6877,21 +6925,38 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
             if item:
                 stream = item.getProperty('stream')
                 self.database.setCustomStreamUrl(self.channel, stream)
+                xbmcgui.Dialog().notification(self.channel.title, strings(59993).format(item.getLabel()))
             self.close()
 
         elif controlId == self.C_STREAM_STRM_OK:
-            self.database.setCustomStreamUrl(self.channel, self.strmFile)
+            listControl = self.getControl(self.C_STREAM_STRM_BROWSE)
+            item = listControl.getSelectedItem()
+            if item:
+                stream = item.getProperty('stream')
+                self.database.setCustomStreamUrl(self.channel, stream)
+                xbmcgui.Dialog().notification(self.channel.title, strings(59993).format(item.getLabel()))
             self.close()
 
-        elif controlId in [self.C_STREAM_ADDONS_CANCEL, self.C_STREAM_FAVOURITES_CANCEL, self.C_STREAM_STRM_CANCEL]:
+        elif controlId == self.C_STREAM_PLAYLIST_OK:
+            listControl = self.getControl(self.C_STREAM_PLAYLIST_STREAMS)
+            item = listControl.getSelectedItem()
+            if item:
+                stream = item.getProperty('stream')
+                self.database.setCustomStreamUrl(self.channel, stream)
+                xbmcgui.Dialog().notification(self.channel.title, strings(59993).format(item.getLabel()))
             self.close()
 
-        elif controlId in [self.C_STREAM_ADDONS_PREVIEW, self.C_STREAM_FAVOURITES_PREVIEW, self.C_STREAM_STRM_PREVIEW]:
+        elif controlId in [self.C_STREAM_ADDONS_CANCEL, self.C_STREAM_FAVOURITES_CANCEL, self.C_STREAM_STRM_CANCEL, self.C_STREAM_BROWSE_CANCEL, self.C_STREAM_PLAYLIST_CANCEL, self.CLOSE_ALL]:
+            self.close()
+
+        elif controlId in [self.C_STREAM_ADDONS_PREVIEW, self.C_STREAM_FAVOURITES_PREVIEW, self.C_STREAM_STRM_PREVIEW, self.C_STREAM_BROWSE_PREVIEW, self.C_STREAM_PLAYLIST_PREVIEW]:
             if xbmc.Player().isPlaying():
                 xbmc.Player().stop()
                 self.getControl(self.C_STREAM_ADDONS_PREVIEW).setLabel(strings(PREVIEW_STREAM))
                 self.getControl(self.C_STREAM_FAVOURITES_PREVIEW).setLabel(strings(PREVIEW_STREAM))
                 self.getControl(self.C_STREAM_STRM_PREVIEW).setLabel(strings(PREVIEW_STREAM))
+                self.getControl(self.C_STREAM_BROWSE_PREVIEW).setLabel(strings(PREVIEW_STREAM))
+                self.getControl(self.C_STREAM_PLAYLIST_PREVIEW).setLabel(strings(PREVIEW_STREAM))
                 return
 
             stream = None
@@ -6901,26 +6966,47 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
                 item = listControl.getSelectedItem()
                 if item:
                     stream = item.getProperty('stream')
+
             if visible == self.VISIBLE_FAVOURITES:
                 listControl = self.getControl(self.C_STREAM_FAVOURITES)
                 item = listControl.getSelectedItem()
                 if item:
                     stream = item.getProperty('stream')
+
             if visible == self.VISIBLE_STRM:
                 stream = self.strmFile
 
             if visible == self.VISIBLE_BROWSE:
                 listControl = self.getControl(self.C_STREAM_BROWSE_ADDONS)
                 item = listControl.getSelectedItem()
+                if item and self.playable:
+                    stream = self.strmFile
+
+            if visible == self.VISIBLE_PLAYLIST:
+                listControl = self.getControl(self.C_STREAM_PLAYLIST_STREAMS)
+                item = listControl.getSelectedItem()
                 if item:
                     stream = item.getProperty('stream')
 
             if stream is not None:
-                xbmc.Player().play(item=stream, windowed=True)
+                self.playChannel(stream)
                 if xbmc.Player().isPlaying():
                     self.getControl(self.C_STREAM_ADDONS_PREVIEW).setLabel(strings(STOP_PREVIEW))
                     self.getControl(self.C_STREAM_FAVOURITES_PREVIEW).setLabel(strings(STOP_PREVIEW))
                     self.getControl(self.C_STREAM_STRM_PREVIEW).setLabel(strings(STOP_PREVIEW))
+                    self.getControl(self.C_STREAM_BROWSE_PREVIEW).setLabel(strings(STOP_PREVIEW))
+                    self.getControl(self.C_STREAM_PLAYLIST_PREVIEW).setLabel(strings(STOP_PREVIEW))
+
+
+    def playChannel(self, stream):
+        debug('Pla playChannel: {}'.format(stream))
+
+        channel = Channel(id='StreamSetupDialog', title='StreamSetupDialog', logo='', titles='', streamUrl=stream, visible='', weight='')
+
+        urlList = self.database.getStreamUrlList(channel)
+        if len(urlList) > 0:
+            self.epg.playService.playUrlList(urlList, '', '', resetReconnectCounter=True)
+
 
     def onFocus(self, controlId):
         if controlId == self.C_STREAM_STRM_TAB:
@@ -6935,6 +7021,9 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
         if controlId == self.C_STREAM_BROWSE_TAB:
             self.getControl(self.C_STREAM_VISIBILITY_MARKER).setLabel(self.VISIBLE_BROWSE)
 
+        if controlId == self.C_STREAM_PLAYLIST_TAB:
+            self.getControl(self.C_STREAM_VISIBILITY_MARKER).setLabel(self.VISIBLE_PLAYLIST)
+
     def updateAddonInfo(self):
         listControl = self.getControl(self.C_STREAM_ADDONS)
         item = listControl.getSelectedItem()
@@ -6946,7 +7035,7 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
 
         self.previousAddonId = item.getProperty('addon_id')
         addon = xbmcaddon.Addon(id=item.getProperty('addon_id'))
-        self.getControl(self.C_STREAM_ADDONS_NAME).setLabel('{}'.format(addon.getAddonInfo('name')))
+        self.getControl(self.C_STREAM_ADDONS_NAME).setLabel('[B]%s[/B]' % addon.getAddonInfo('name'))
         self.getControl(self.C_STREAM_ADDONS_DESCRIPTION).setText(addon.getAddonInfo('description'))
 
         streams = self.streamingService.getAddonStreams(item.getProperty('addon_id'))
@@ -6963,49 +7052,57 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
         listControl.addItems(items)
 
     def updateDirsInfo(self):
-        listControl = self.getControl(self.C_STREAM_BROWSE_ADDONS)
-        item = listControl.getSelectedItem()
-        if item is None:
-            return
-
-        self.previousBrowseId = item.getProperty('addon_id')
-
         try:
-            addon = xbmcaddon.Addon(id=item.getProperty('addon_id'))
-        except:
-            return
-        self.getControl(self.C_STREAM_BROWSE_NAME).setLabel('[B]%s[/B]' % addon.getAddonInfo('name'))
-        self.getControl(self.C_STREAM_BROWSE_DESCRIPTION).setText(addon.getAddonInfo('description'))
+            listControl = self.getControl(self.C_STREAM_BROWSE_ADDONS)
+            item = listControl.getSelectedItem()
+            if item is None:
+                return
 
-        id = addon.getAddonInfo('id')
-        if id == xbmcaddon.Addon().getAddonInfo('id'):
-            return
-        path = "plugin://%s" % id
-        self.previousDirsId = path
+            self.previousBrowseId = item.getProperty('addon_id')
 
-        response = json.loads(xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media":"files"}, "id": 100}' % path))
-        
-        files = response["result"]["files"]
+            try:
+                addon = xbmcaddon.Addon(id=item.getProperty('addon_id'))
+            except:
+                return
 
-        dirs = dict([[f["label"], f["file"]] for f in files if f["filetype"] == "directory"])
+            self.getControl(self.C_STREAM_BROWSE_NAME).setLabel('[B]%s[/B]' % addon.getAddonInfo('name'))
+            self.getControl(self.C_STREAM_BROWSE_DESCRIPTION).setText(addon.getAddonInfo('description'))
 
-        items = list()
-        item = xbmcgui.ListItem(addon.getAddonInfo('name'))
-        item.setProperty('stream', path)
-        items.append(item)
-        
-        for label in dirs:
-            stream = dirs[label]
-            if item.getProperty('addon_id') == "plugin.video.meta":
-                label = self.channel.title
-            stream = stream.replace("<channel>", self.channel.title.replace(" ","%20"))
-            item = xbmcgui.ListItem(label)
-            item.setProperty('stream', stream)
+            id = addon.getAddonInfo('id')
+            if id == xbmcaddon.Addon().getAddonInfo('id'):
+                return
+
+            path = "plugin://%s" % id
+            self.previousDirsId = path
+            self.returnListContent = path
+
+            response = json.loads(xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media":"files"}, "id": 100}' % path))
+            files = response["result"]["files"]
+
+            dirs = dict([[f["label"], f["file"]] for f in files if f["filetype"] == "directory"])
+
+            items = list()
+            item = xbmcgui.ListItem(addon.getAddonInfo('name'))
+            item.setProperty('stream', path)
             items.append(item)
+            
+            for label in dirs:
+                stream = dirs[label]
+                if item.getProperty('addon_id') == "plugin.video.meta":
+                    label = self.channel.title
+                stream = stream.replace("<channel>", self.channel.title.replace(" ","%20"))
+                item = xbmcgui.ListItem(label)
+                item.setProperty('stream', stream)
+                items.append(item)
 
-        listControl = self.getControl(StreamSetupDialog.C_STREAM_BROWSE_DIRS)
-        listControl.reset()
-        listControl.addItems(items)
+            listControl = self.getControl(StreamSetupDialog.C_STREAM_BROWSE_DIRS)
+            listControl.reset()
+            listControl.addItems(items)
+
+        except:
+            pass
+
+        xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
 
     def updateBrowseInfo(self):
         listControl = self.getControl(self.C_STREAM_BROWSE_DIRS)
@@ -7016,36 +7113,33 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
         previousDirsId = self.previousDirsId
         self.previousDirsId = item.getProperty('stream')
 
-        response = json.loads(xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media":"files"}, "id": 100}' % previousDirsId))#RPC.files.get_directory(media="files", directory=path, properties=["thumbnail"])
-        files = response["result"]["files"]
-        dirs = dict([[f["label"], f["file"]] for f in files if f["filetype"] == "directory"])
-        links = dict([[f["label"], f["file"]] for f in files if f["filetype"] == "file"])
+        if self.playable:
+            return
 
-        items = list() 
+        response = json.loads(xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media":"files"}, "id": 100}' % self.previousDirsId))
+        files = response["result"]["files"]
+        dirs = {}
+
+        items = []       
+
         item = xbmcgui.ListItem('[B]..[/B]')
-        item.setProperty('stream', previousDirsId)
+        item.setProperty('stream', self.returnListContent)
         items.append(item)
 
-        for label in dirs:
-            stream = dirs[label]
+        for prop in files:
+            dirs.update(prop)
+            stream = dirs.get('file')
+            label = dirs.get('label')
+            if dirs.get('filetype') == 'file':
+                self.playable = True
+                self.strmFile = item.getProperty('stream')
             item = xbmcgui.ListItem(label)
             item.setProperty('stream', stream)
             items.append(item)
+        
         listControl = self.getControl(StreamSetupDialog.C_STREAM_BROWSE_DIRS)
         listControl.reset()
         listControl.addItems(items)
-
-        items = list()
-
-        for label in links:
-            stream = links[label]
-            item = xbmcgui.ListItem(label)
-            item.setProperty('stream', stream)
-            items.append(item)       
-        listControl = self.getControl(StreamSetupDialog.C_STREAM_BROWSE_STREAMS)
-        listControl.reset()
-        listControl.addItems(items)  
-
 
 class ChooseStreamAddonDialog(xbmcgui.WindowXMLDialog):
     C_SELECTION_LIST = 1000

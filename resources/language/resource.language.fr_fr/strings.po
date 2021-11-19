@@ -689,12 +689,24 @@ msgid "Browse..."
 msgstr "Parcourir..."
 
 msgctxt "#30611"
-msgid "Click [B]Browse[/B] below and navigate to your stream file.[CR]When you have chosen your file you can preview the stream to test if it works in KODI."
-msgstr "Cliquer [B]Parcourir[/B] ci-dessous et accédez à votre fichier de flux.[CR]Lorsque vous avez choisi votre fichier, vous pouvez prévisualiser le flux pour tester s'il fonctionne dans KODI."
+msgid "Click [B]Browse[/B] below and select a stream file.[CR]If selected, try out your stream with preview button."
+msgstr "Cliquez sur [B]Parcourir[/B] ci dessous et sélectionnez un fichier de flux.[CR]Si sélectionné, essayez votre flux avec le bouton de prévisualisation."
+
+msgctxt "#30612"
+msgid "Select a unmatched playlist stream, from enabled [B]M3U playlists[/B].[CR]If selected, try out your stream with preview button."
+msgstr "Sélectionnez un flux de liste de lecture sans correspondance, parmi les [B]listes de lecture M3U activées[/B].[CR]Si sélectionné, essayez votre flux avec le bouton de prévisualisation."
+
+msgctxt "#30613"
+msgid "Select a stream from [B]addons.ini[/B] file, located in the add-on directory.[CR]If selected, try out your stream with preview button."
+msgstr "Sélectionnez un flux à partir du fichier [B]addons.ini[/B], situé dans le répertoire du module complémentaire.[CR]Si sélectionné, essayez votre flux avec le bouton de prévisualisation."
+
+msgctxt "#30614"
+msgid "Select a stream from installed [B]KODI video add-ons[/B].[CR]If selected, try out your stream with preview button."
+msgstr "Sélectionnez un flux parmi les [B]modules complémentaires vidéo KODI[/B] installés.[CR]Si sélectionné, essayez votre flux avec le bouton de prévisualisation."
 
 msgctxt "#30620"
-msgid "Choose a favourite. Only [B]PlayMedia[/B] favourites are supported."
-msgstr "Choisissez un favori. Seuls les favoris [B]PlayMedia[/B] sont pris en charge."
+msgid "Select a favourite media stream. Only [B]PlayMedia[/B] favourites are supported.[CR]If selected, try out your stream with preview button."
+msgstr "Sélectionnez un flux multimédia favori. Seuls les favoris [B]PlayMedia[/B] sont pris en charge.[CR]Si sélectionné, essayez votre flux avec le bouton de prévisualisation."
 
 msgctxt "#30621"
 msgid "Live, schedule recording or download program.[CR]Add a task, use time-shift to urge or delay start of recording / download."

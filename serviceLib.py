@@ -1010,9 +1010,9 @@ class baseServiceUpdater:
                     if y.title != '':
                         try:
                             try:
-                                channelList.append(unidecode(y.title))
+                                channelList.append(unidecode(y.title) + ', ' + y.strm)
                             except:
-                                channelList.append(unidecode(self.decodeString(y.title)))
+                                channelList.append(unidecode(self.decodeString(y.title)) + ', ' + y.strm)
                         except:
                             pass
 
