@@ -2779,7 +2779,7 @@ def TimeZone(dateString, AUTO_ZONE=None):
 
     if AUTO_ZONE and TIME_ZONE_AUTO:
         ZONE = AUTO_ZONE
-    else:
+    elif AUTO_ZONE is None and TIME_ZONE_AUTO:
         ZONE = '00:00'
 
     zoneDiff = time.strptime(ZONE[1:],'%H:%M')
