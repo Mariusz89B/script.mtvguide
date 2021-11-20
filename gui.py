@@ -6714,6 +6714,9 @@ class ChannelsMenu(xbmcgui.WindowXMLDialog):
         xbmc.sleep(50)
         self.swapInProgress = False
 
+    def close(self):
+        super(ChannelsMenu, self).close()
+
 
 class StreamSetupDialog(xbmcgui.WindowXMLDialog):
     C_STREAM_STRM_TAB = 101
@@ -6748,7 +6751,6 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
     C_STREAM_PLAYLIST_PREVIEW = 8005
     C_STREAM_PLAYLIST_OK = 8006
     C_STREAM_PLAYLIST_CANCEL = 8007
-    CLOSE_ALL = 1000
 
     C_STREAM_VISIBILITY_MARKER = 100
 
@@ -6789,11 +6791,6 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
             except:
                 self.profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
 
-
-    def close(self):
-        if xbmc.Player().isPlaying():
-            xbmc.Player().stop()
-        super(StreamSetupDialog, self).close()
 
     def onInit(self):
         xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
@@ -6837,17 +6834,19 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
         addons = response["result"]["addons"]
         items = list()
         for id in addons:
-            if id.get('type', '') == 'xbmc.python.pluginsource':
-                try:
-                    id = str(id['addonid'])
-                    addon = xbmcaddon.Addon(id=id) # raises Exception if addon is not installed
-                    item = xbmcgui.ListItem(addon.getAddonInfo('name'))
-                    item.setArt({'icon': addon.getAddonInfo('icon'), 'thumb': addon.getAddonInfo('icon')})
-                    item.setProperty('addon_id', id)
-                    items.append(item)
-                except Exception as ex:
-                    deb('Addons.GetAddons Exception: {}'.format(ex))
-                    pass
+            pattern = re.compile('^plugin')
+            if pattern.match(str(id['addonid'])):
+                if id.get('type', '') == 'xbmc.python.pluginsource':
+                    try:
+                        id = str(id['addonid'])
+                        addon = xbmcaddon.Addon(id=id) # raises Exception if addon is not installed
+                        item = xbmcgui.ListItem(addon.getAddonInfo('name'))
+                        item.setArt({'icon': addon.getAddonInfo('icon'), 'thumb': addon.getAddonInfo('icon')})
+                        item.setProperty('addon_id', id)
+                        items.append(item)
+                    except Exception as ex:
+                        deb('Addons.GetAddons Exception: {}'.format(ex))
+                        pass
 
         listControl = self.getControl(StreamSetupDialog.C_STREAM_BROWSE_ADDONS)
         listControl.addItems(items)
@@ -6878,6 +6877,7 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
                 xbmc.Player().stop()
             else:
                 self.close()
+                return self.epg.onRedrawEPG(self.epg.channelIdx + 1, self.epg.viewStartDate)
 
         if self.getFocusId() == self.C_STREAM_ADDONS:
             self.updateAddonInfo()
@@ -6909,6 +6909,7 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
             else:
                 return
             self.close()
+            return self.epg.onRedrawEPG(self.epg.channelIdx, self.epg.viewStartDate, self.epg._getCurrentProgramFocus)
 
         elif controlId == self.C_STREAM_ADDONS_OK:
             listControl = self.getControl(self.C_STREAM_ADDONS_STREAMS)
@@ -6918,6 +6919,7 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
                 self.database.setCustomStreamUrl(self.channel, stream)
                 xbmcgui.Dialog().notification(self.channel.title, strings(59993).format(item.getLabel()))
             self.close()
+            return self.epg.onRedrawEPG(self.epg.channelIdx, self.epg.viewStartDate, self.epg._getCurrentProgramFocus)
 
         elif controlId == self.C_STREAM_FAVOURITES_OK:
             listControl = self.getControl(self.C_STREAM_FAVOURITES)
@@ -6927,6 +6929,7 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
                 self.database.setCustomStreamUrl(self.channel, stream)
                 xbmcgui.Dialog().notification(self.channel.title, strings(59993).format(item.getLabel()))
             self.close()
+            return self.epg.onRedrawEPG(self.epg.channelIdx, self.epg.viewStartDate, self.epg._getCurrentProgramFocus)
 
         elif controlId == self.C_STREAM_STRM_OK:
             listControl = self.getControl(self.C_STREAM_STRM_BROWSE)
@@ -6936,6 +6939,7 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
                 self.database.setCustomStreamUrl(self.channel, stream)
                 xbmcgui.Dialog().notification(self.channel.title, strings(59993).format(item.getLabel()))
             self.close()
+            return self.epg.onRedrawEPG(self.epg.channelIdx, self.epg.viewStartDate, self.epg._getCurrentProgramFocus)
 
         elif controlId == self.C_STREAM_PLAYLIST_OK:
             listControl = self.getControl(self.C_STREAM_PLAYLIST_STREAMS)
@@ -6945,9 +6949,11 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
                 self.database.setCustomStreamUrl(self.channel, stream)
                 xbmcgui.Dialog().notification(self.channel.title, strings(59993).format(item.getLabel()))
             self.close()
+            return self.epg.onRedrawEPG(self.epg.channelIdx, self.epg.viewStartDate, self.epg._getCurrentProgramFocus)
 
-        elif controlId in [self.C_STREAM_ADDONS_CANCEL, self.C_STREAM_FAVOURITES_CANCEL, self.C_STREAM_STRM_CANCEL, self.C_STREAM_BROWSE_CANCEL, self.C_STREAM_PLAYLIST_CANCEL, self.CLOSE_ALL]:
+        elif controlId in [self.C_STREAM_ADDONS_CANCEL, self.C_STREAM_FAVOURITES_CANCEL, self.C_STREAM_STRM_CANCEL, self.C_STREAM_BROWSE_CANCEL, self.C_STREAM_PLAYLIST_CANCEL]:
             self.close()
+            return self.epg.onRedrawEPG(self.epg.channelIdx + 1, self.epg.viewStartDate)
 
         elif controlId in [self.C_STREAM_ADDONS_PREVIEW, self.C_STREAM_FAVOURITES_PREVIEW, self.C_STREAM_STRM_PREVIEW, self.C_STREAM_BROWSE_PREVIEW, self.C_STREAM_PLAYLIST_PREVIEW]:
             if xbmc.Player().isPlaying():
@@ -6997,17 +7003,6 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
                     self.getControl(self.C_STREAM_BROWSE_PREVIEW).setLabel(strings(STOP_PREVIEW))
                     self.getControl(self.C_STREAM_PLAYLIST_PREVIEW).setLabel(strings(STOP_PREVIEW))
 
-
-    def playChannel(self, stream):
-        debug('Pla playChannel: {}'.format(stream))
-
-        channel = Channel(id='StreamSetupDialog', title='StreamSetupDialog', logo='', titles='', streamUrl=stream, visible='', weight='')
-
-        urlList = self.database.getStreamUrlList(channel)
-        if len(urlList) > 0:
-            self.epg.playService.playUrlList(urlList, '', '', resetReconnectCounter=True)
-
-
     def onFocus(self, controlId):
         if controlId == self.C_STREAM_STRM_TAB:
             self.getControl(self.C_STREAM_VISIBILITY_MARKER).setLabel(self.VISIBLE_STRM)
@@ -7023,6 +7018,15 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
 
         if controlId == self.C_STREAM_PLAYLIST_TAB:
             self.getControl(self.C_STREAM_VISIBILITY_MARKER).setLabel(self.VISIBLE_PLAYLIST)
+
+    def playChannel(self, stream):
+        debug('Pla playChannel: {}'.format(stream))
+
+        channel = Channel(id='StreamSetupDialog', title='StreamSetupDialog', logo='', titles='', streamUrl=stream, visible='', weight='')
+
+        urlList = self.database.getStreamUrlList(channel)
+        if len(urlList) > 0:
+            self.epg.playService.playUrlList(urlList, '', '', resetReconnectCounter=True)
 
     def updateAddonInfo(self):
         listControl = self.getControl(self.C_STREAM_ADDONS)
@@ -7141,6 +7145,9 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
         listControl.reset()
         listControl.addItems(items)
 
+    def close(self):
+        super(StreamSetupDialog, self).close()
+
 class ChooseStreamAddonDialog(xbmcgui.WindowXMLDialog):
     C_SELECTION_LIST = 1000
 
@@ -7178,6 +7185,9 @@ class ChooseStreamAddonDialog(xbmcgui.WindowXMLDialog):
 
     def onFocus(self, controlId):
         pass
+
+    def close(self):
+        super(ChooseStreamAddonDialog, self).close()
 
 
 class InfoDialog(xbmcgui.WindowXMLDialog):
@@ -8057,6 +8067,9 @@ class Pla(xbmcgui.WindowXMLDialog):
         except:
             pass
         return None
+
+    def close(self):
+        super(Pla, self).close()
 
 class ProgramListDialog(xbmcgui.WindowXMLDialog):
     C_PROGRAM_LIST = 1000

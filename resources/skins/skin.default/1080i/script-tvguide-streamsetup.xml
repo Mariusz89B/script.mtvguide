@@ -376,7 +376,7 @@
 							<posy>0</posy>
 							<width>1060</width>
 							<height>70</height>
-							<texture colordiffuse="1F000000">../../skin.default/media/osd/grey.png</texture>
+							<texture colordiffuse="1F000000">../../skin.default/media/osd/white.png</texture>
 						</control>
 						<control type="label">
 							<posx>56</posx>
@@ -396,7 +396,7 @@
 							<posy>0</posy>
 							<width>1060</width>
 							<height>70</height>
-							<texture colordiffuse="button_focus">../../skin.default/media/osd/grey.png</texture>
+							<texture colordiffuse="button_focus">../../skin.default/media/osd/white.png</texture>
 							<visible>!Control.HasFocus(3002)</visible>
 						</control>
 						<control type="image">
@@ -404,7 +404,7 @@
 							<posy>0</posy>
 							<width>1060</width>
 							<height>70</height>
-							<texture colordiffuse="button_focus">../../skin.default/media/osd/grey.png</texture>
+							<texture colordiffuse="button_focus">../../skin.default/media/osd/white.png</texture>
 							<visible>Control.HasFocus(3002)</visible>
 						</control>
 						<control type="label">
