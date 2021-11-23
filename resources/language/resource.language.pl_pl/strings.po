@@ -25,8 +25,8 @@ msgid "[B]Loading...[/B]"
 msgstr "[B]Trwa ładowanie danych...[/B]"
 
 msgctxt "#30002"
-msgid "Calculating remaning time..."
-msgstr "Obliczanie pozostałego czasu..."
+msgid "Downloading data..."
+msgstr "Pobieranie danych..."
 
 msgctxt "#30003"
 msgid "Approximately {} seconds left..."

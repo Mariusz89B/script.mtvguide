@@ -25,7 +25,7 @@ msgid "[B]Loading...[/B]"
 msgstr ""
 
 msgctxt "#30002"
-msgid "Calculating remaning time..."
+msgid "Downloading data..."
 msgstr ""
 
 msgctxt "#30003"

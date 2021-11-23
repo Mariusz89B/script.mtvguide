@@ -1400,7 +1400,7 @@ class mTVGuide(xbmcgui.WindowXML):
         chkSkinProfile = addonSkin
 
         estuary = ['skin.default']
-        confluence = ['skin.xx']
+        confluence = ['skin.confluence', 'skin.xx']
 
         if chkSkinProfile in estuary:
             chkSkinProfile = 'skin.estuary'
@@ -1462,6 +1462,10 @@ class mTVGuide(xbmcgui.WindowXML):
                 check = functools.reduce(lambda i, j : i and j, map(lambda m, k: m == k, checkProfileFonts, checkKodiFonts), True)
             else:
                 check = set(checkProfileFonts) == set(checkKodiFonts)
+
+            deb('Skin check: {}'.format(check))
+            deb('Skin fonts: {}'.format(font))
+            deb('Skin match: {}'.format(match))
 
             if check is False or font is False or match is False:
                 # Background
@@ -1951,6 +1955,8 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def close(self, background=False):
         deb('close')
+        xbmc.executebuiltin('Dialog.Close(busydialog)')
+
         if not self.isClosing:
             if not background:
                 if self.recordService.isRecordOngoing():
@@ -2152,7 +2158,7 @@ class mTVGuide(xbmcgui.WindowXML):
                             if cellWidth < 35:
                                 archive  = ''
                             else:
-                                if skin_catchup_size == '1':
+                                if skin_catchup_size == '1' or addonSkin == 'skin.confluence':
                                     archive = '[UPPERCASE][COLOR FF0cbe24][B]• [/B][/COLOR][/UPPERCASE]'
                                 else:
                                     archive = '[UPPERCASE][COLOR FF0cbe24][B]● [/B][/COLOR][/UPPERCASE]'
@@ -2164,7 +2170,7 @@ class mTVGuide(xbmcgui.WindowXML):
                             if cellWidth < 35:
                                 archive  = ''
                             else:
-                                if skin_catchup_size == '1':
+                                if skin_catchup_size == '1' or addonSkin == 'skin.confluence':
                                     archive = '[UPPERCASE][COLOR FF0cbe24][B]• [/B][/COLOR][/UPPERCASE]'
                                 else:
                                     archive = '[UPPERCASE][COLOR FF0cbe24][B]● [/B][/COLOR][/UPPERCASE]'
@@ -6725,10 +6731,10 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
     C_STREAM_BROWSE_TAB = 104
     C_STREAM_PLAYLIST_TAB = 108
     C_STREAM_STRM_BROWSE = 1001
-    C_STREAM_STRM_FILE_LABEL = 1005
     C_STREAM_STRM_PREVIEW = 1002
     C_STREAM_STRM_OK = 1003
     C_STREAM_STRM_CANCEL = 1004
+    C_STREAM_STRM_FILE_LABEL = 1005
     C_STREAM_FAVOURITES = 2001
     C_STREAM_FAVOURITES_PREVIEW = 2002
     C_STREAM_FAVOURITES_OK = 2003

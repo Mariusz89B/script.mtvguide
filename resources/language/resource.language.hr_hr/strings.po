@@ -25,8 +25,8 @@ msgid "[B]Loading...[/B]"
 msgstr "[B]Učitavanje...[/B]"
 
 msgctxt "#30002"
-msgid "Calculating remaning time..."
-msgstr "Izračunavanje vremena zadržavanja..."
+msgid "Downloading data..."
+msgstr "Preuzimanje podataka..."
 
 msgctxt "#30003"
 msgid "Approximately {} seconds left..."

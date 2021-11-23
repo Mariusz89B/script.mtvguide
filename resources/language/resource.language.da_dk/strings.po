@@ -25,8 +25,8 @@ msgid "[B]Loading...[/B]"
 msgstr "[B]Indlæser...[/ B]"
 
 msgctxt "#30002"
-msgid "Calculating remaning time..."
-msgstr "Beregning af tilbagekøbstid..."
+msgid "Downloading data..."
+msgstr "Downloader data..."
 
 msgctxt "#30003"
 msgid "Approximately {} seconds left..."

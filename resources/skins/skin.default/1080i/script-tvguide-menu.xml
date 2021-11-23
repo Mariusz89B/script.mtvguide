@@ -58,6 +58,13 @@
 			<texturefocus></texturefocus>
 			<texturenofocus></texturenofocus>
 		</control>
+		
+		<control type="button" id="4977">
+			<description>Background</description>
+            <posx>9999</posx>
+            <posy>9999</posy>
+			<onfocus>Action(Back)</onfocus>
+		</control>
 
 		<control type="button" id="4000">
 			<posx>0</posx>
@@ -291,6 +298,8 @@
 			<height>70</height>
 			<onup>60560</onup>
 			<ondown>7004</ondown>
+			<onleft>4977</onleft>
+			<onright>4977</onright>
 			<align>left</align>
 			<aligny>center</aligny>
 			<font>font13</font>
@@ -324,6 +333,8 @@
 			<height>70</height>
 			<onup>7004</onup>
 			<ondown>4016</ondown>
+			<onleft>4977</onleft>
+			<onright>4977</onright>
 			<align>left</align>
 			<aligny>center</aligny>
 			<font>font13</font>
@@ -345,6 +356,8 @@
 			<height>70</height>
 			<onup>4015</onup>
 			<ondown>60560</ondown>
+			<onleft>4977</onleft>
+			<onright>4977</onright>
 			<align>left</align>
 			<aligny>center</aligny>
 			<font>font13</font>
