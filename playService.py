@@ -248,7 +248,7 @@ class PlayService(xbmc.Player, BasePlayService):
             deb('PlayService playUrlList waiting for thread to terminate')
             self.terminating = True
             while self.thread is not None and self.thread.is_alive() and currentThreadData['terminate'] == False:
-                xbmc.sleep(100)
+                time.sleep(100)
 
         if currentThreadData['terminate'] == True:
             deb('playUrlList decided to terminate thread starting playback')

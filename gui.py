@@ -4984,6 +4984,10 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def playChannel2(self, program):
         deb('playChannel2')
+
+        if xbmc.Player().isPlaying():
+            time.sleep(0.2)
+
         self.program = program
 
         # Playback for services
@@ -5189,6 +5193,9 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def playChannel(self, channel, program=None):
         deb('playChannel')
+
+        if xbmc.Player().isPlaying():
+            time.sleep(0.2)
 
         # Playback for services
         if ADDON.getSetting('archive_support') == 'true':
