@@ -319,13 +319,26 @@ class Skin:
 
     @staticmethod
     def deleteCustomSkins(show_dialog):
+        if sys.version_info[0] > 2:
+            try:
+                PROFILE_PATH  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
+            except:
+                PROFILE_PATH  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
+        else:
+            try:
+                PROFILE_PATH  = xbmc.translatePath(ADDON.getAddonInfo('profile'))
+            except:
+                PROFILE_PATH  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
+
+        ADDON.setSetting('Skin', 'skin.default')
+
         if os.path.isdir(Skin.ADDON_CUSTOM_SKINS_RES):
             try:
                 shutil.rmtree(Skin.ADDON_CUSTOM_SKINS_RES)
             except:
                 pass
         if show_dialog:
-            xbmcgui.Dialog().ok(strings(31004), strings(30969))
+            xbmcgui.Dialog().ok(strings(30714), strings(30969)+'.')
 
         try:
             file = os.path.join(PROFILE_PATH, 'fonts.list')

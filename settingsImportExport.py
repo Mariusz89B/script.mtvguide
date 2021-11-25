@@ -162,14 +162,14 @@ class SettingsImp:
 
             if success == True:
                 try:
-                    xbmcgui.Dialog().ok(strings(58002),"\n" + strings(58005))
+                    xbmcgui.Dialog().ok(strings(58002),"\n" + strings(58005) + '.')
                 except:
-                    xbmcgui.Dialog().ok(strings(58002).encode('utf-8'),"\n" + strings(58005).encode('utf-8'))
+                    xbmcgui.Dialog().ok(strings(58002).encode('utf-8'),"\n" + strings(58005).encode('utf-8') + '.')
             else:
                 try:
-                    xbmcgui.Dialog().ok(strings(58002),"\n" + strings(58006))
+                    xbmcgui.Dialog().ok(strings(58002),"\n" + strings(58006) + '.')
                 except:
-                    xbmcgui.Dialog().ok(strings(58002).encode('utf-8'),"\n" + strings(58006).encode('utf-8'))
+                    xbmcgui.Dialog().ok(strings(58002).encode('utf-8'),"\n" + strings(58006).encode('utf-8') + '.')
         return success
 
     def importSettings(self):
@@ -205,14 +205,14 @@ class SettingsImp:
 
             if success == True:
                 try:
-                    xbmcgui.Dialog().ok(strings(58003),"\n" + strings(58008))
+                    xbmcgui.Dialog().ok(strings(58003),"\n" + strings(58008) + '.')
                 except:
-                    xbmcgui.Dialog().ok(strings(58003).encode('utf-8'),"\n" + strings(58008).encode('utf-8'))
+                    xbmcgui.Dialog().ok(strings(58003).encode('utf-8'),"\n" + strings(58008).encode('utf-8') + '.')
             else:
                 try:
-                    xbmcgui.Dialog().ok(strings(58003),"\n" + strings(58009) + "\n" + strings(58010))
+                    xbmcgui.Dialog().ok(strings(58003),"\n" + strings(58009) + "\n" + strings(58010) + '.')
                 except:
-                    xbmcgui.Dialog().ok(strings(58003).encode('utf-8'),"\n" + strings(58009).encode('utf-8') + "\n" + strings(58010).encode('utf-8'))
+                    xbmcgui.Dialog().ok(strings(58003).encode('utf-8'),"\n" + strings(58009).encode('utf-8') + "\n" + strings(58010).encode('utf-8') + '.')
         return success
 
     def importRecordApp(self, filename):
