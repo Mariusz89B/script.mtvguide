@@ -1400,7 +1400,7 @@ class mTVGuide(xbmcgui.WindowXML):
         chkSkinProfile = addonSkin
 
         estuary = ['skin.default']
-        confluence = ['skin.confluence', 'skin.xx']
+        confluence = ['skin.xx']
 
         if chkSkinProfile in estuary:
             chkSkinProfile = 'skin.estuary'
@@ -6890,7 +6890,7 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
                 xbmc.Player().stop()
             else:
                 self.close()
-                return self.epg.onRedrawEPG(self.epg.channelIdx + 1, self.epg.viewStartDate)
+                return self.epg.onRedrawEPG(self.epg.channelIdx, self.epg.viewStartDate)
 
         if self.getFocusId() == self.C_STREAM_ADDONS:
             self.updateAddonInfo()
@@ -6966,7 +6966,7 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
 
         elif controlId in [self.C_STREAM_ADDONS_CANCEL, self.C_STREAM_FAVOURITES_CANCEL, self.C_STREAM_STRM_CANCEL, self.C_STREAM_BROWSE_CANCEL, self.C_STREAM_PLAYLIST_CANCEL]:
             self.close()
-            return self.epg.onRedrawEPG(self.epg.channelIdx + 1, self.epg.viewStartDate)
+            return self.epg.onRedrawEPG(self.epg.channelIdx, self.epg.viewStartDate)
 
         elif controlId in [self.C_STREAM_ADDONS_PREVIEW, self.C_STREAM_FAVOURITES_PREVIEW, self.C_STREAM_STRM_PREVIEW, self.C_STREAM_BROWSE_PREVIEW, self.C_STREAM_PLAYLIST_PREVIEW]:
             if xbmc.Player().isPlaying():

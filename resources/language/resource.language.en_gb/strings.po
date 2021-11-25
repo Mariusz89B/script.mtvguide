@@ -3489,7 +3489,7 @@ msgid "DRM license verification."
 msgstr ""
 
 msgctxt "#95145"
-msgid "Reads the timezone value provided in EPG file."
+msgid "Automatically selects the timezone value provided in EPG file."
 msgstr ""
 
 msgctxt "#99994"
