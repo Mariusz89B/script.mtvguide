@@ -1607,42 +1607,42 @@ class mTVGuide(xbmcgui.WindowXML):
                     
                     if profile_1080i == 1 and kodi_720p == 1:
                         newSize = re.sub(r"(?s)(?<=<size>)\d+(?=</size>)",
-                                   lambda m: str(int(m.group(0)) // 1.488), fileContent)
+                                   lambda m: str(int(m.group(0)) // 1.5), fileContent)
                         file_font_size = xbmcvfs.File(os.path.join(self.profilePath, 'resources', 'skins', addonSkin, path2, 'Font.temp'), 'w+')
                         file_font_size.write(newSize)
                         file_font_size.close()
 
                     elif profile_xml == 1 and kodi_720p == 1:
                         newSize = re.sub(r"(?s)(?<=<size>)\d+(?=</size>)",
-                                   lambda m: str(int(m.group(0)) // 1.488), fileContent)
+                                   lambda m: str(int(m.group(0)) // 1.5), fileContent)
                         file_font_size = xbmcvfs.File(os.path.join(self.profilePath, 'resources', 'skins', addonSkin, path2, 'Font.temp'), 'w+')
                         file_font_size.write(newSize)
                         file_font_size.close()
 
                     elif profile_16x9 == 1 and kodi_720p == 1:
                         newSize = re.sub(r"(?s)(?<=<size>)\d+(?=</size>)",
-                                   lambda m: str(int(m.group(0)) // 1.488), fileContent)
+                                   lambda m: str(int(m.group(0)) // 1.5), fileContent)
                         file_font_size = xbmcvfs.File(os.path.join(self.profilePath, 'resources', 'skins', addonSkin, path2, 'Font.temp'), 'w+')
                         file_font_size.write(newSize)
                         file_font_size.close()
 
                     elif profile_720p == 1 and kodi_1080i == 1:
                         newSize = re.sub(r"(?s)(?<=<size>)\d+(?=</size>)", 
-                                    lambda m: str(int(m.group(0)) * 1.488), fileContent)
+                                    lambda m: str(int(m.group(0)) * 1.5), fileContent)
                         file_font_size = xbmcvfs.File(os.path.join(self.profilePath, 'resources', 'skins', addonSkin, path2, 'Font.temp'), 'w+')
                         file_font_size.write(newSize)
                         file_font_size.close()
 
                     elif profile_720p == 1 and kodi_xml == 1:
                         newSize = re.sub(r"(?s)(?<=<size>)\d+(?=</size>)",
-                                    lambda m: str(int(m.group(0)) * 1.488), fileContent)
+                                    lambda m: str(int(m.group(0)) * 1.5), fileContent)
                         file_font_size = xbmcvfs.File(os.path.join(self.profilePath, 'resources', 'skins', addonSkin, path2, 'Font.temp'), 'w+')
                         file_font_size.write(newSize)
                         file_font_size.close()
 
                     elif profile_720p == 1 and kodi_16x9 == 1:
                         newSize = re.sub(r"(?s)(?<=<size>)\d+(?=</size>)",
-                                    lambda m: str(int(m.group(0)) * 1.488), fileContent)
+                                    lambda m: str(int(m.group(0)) * 1.5), fileContent)
                         file_font_size = xbmcvfs.File(os.path.join(self.profilePath, 'resources', 'skins', addonSkin, path2, 'Font.temp'), 'w+')
                         file_font_size.write(newSize)
                         file_font_size.close()
