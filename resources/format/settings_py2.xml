@@ -252,7 +252,8 @@
 		<setting id="autostart_channel_number" label="30920" type="number" default="1" visible="eq(-1,false) + eq(-2,true)"/>
 		<setting type="sep"/>
 		<setting id="timebar_adjust" label="30366" type="slider" default="0" option="int" range="-31,30"/>
-		<setting id="notifications_enabled" label="30106" type="bool" default="true"/>
+		<setting id="service_notifications_enabled" label="30106" type="bool" default="true"/>
+		<setting id="program_notifications_enabled" label="30107" type="bool" default="true"/>
 		<setting id="sleep__enabled" type="bool" label="89001" default="false"/>
 		<setting id="sleep_timer" type="number" label="89003" default="90" visible="eq(-1,true)"/>
 		<setting id="sleep__action" type="enum" label="89002" default="0" lvalues="89004|89005|89006|89007" visible="eq(-2,true)"/>

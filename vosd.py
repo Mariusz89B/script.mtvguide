@@ -393,7 +393,7 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
 
         if secToStartProg > 0:
             #Future program, not started yet
-            if ADDON.getSetting('notifications_enabled') == 'true':
+            if ADDON.getSetting('program_notifications_enabled') == 'true':
                 if not self.gu.epg.notification.isScheduled(self.program):
                     self.scheduleControl.setVisible(True)
                     self.scheduleControl.setEnabled(True)

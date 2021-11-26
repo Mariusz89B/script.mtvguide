@@ -3154,7 +3154,12 @@
 						<popup>false</popup>
 					</control>
 				</setting>
-				<setting help="95048" id="notifications_enabled" label="30106" type="boolean">
+				<setting help="95048" id="service_notifications_enabled" label="30106" type="boolean">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting help="95146" id="program_notifications_enabled" label="30107" type="boolean">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>

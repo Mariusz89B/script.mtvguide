@@ -97,7 +97,11 @@ msgid "Done!"
 msgstr ""
 
 msgctxt "#30106"
-msgid "Show service notification"
+msgid "Show service notifications"
+msgstr ""
+
+msgctxt "#30107"
+msgid "Show schedule programme notifications"
 msgstr ""
 
 msgctxt "#30108"
@@ -3490,6 +3494,10 @@ msgstr ""
 
 msgctxt "#95145"
 msgid "Automatically selects the timezone value provided in EPG file."
+msgstr ""
+
+msgctxt "#95146"
+msgid "Recieve notifications regarding scheduled programs."
 msgstr ""
 
 msgctxt "#99994"

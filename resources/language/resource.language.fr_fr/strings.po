@@ -97,8 +97,12 @@ msgid "Done!"
 msgstr "Fait!"
 
 msgctxt "#30106"
-msgid "Show service notification"
-msgstr "Afficher la notification de service"
+msgid "Show service notifications"
+msgstr "Afficher les notifications de service"
+
+msgctxt "#30107"
+msgid "Show schedule programme notifications"
+msgstr "Afficher les notifications de programmées"
 
 msgctxt "#30108"
 msgid "Clear all reminders..."

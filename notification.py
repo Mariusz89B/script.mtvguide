@@ -105,7 +105,7 @@ class Notification(object):
             xbmc.executebuiltin('CancelAlarm({}-now,True)'.format(name.encode('utf-8', 'replace')))
             xbmc.executebuiltin('AlarmClock({}-now,Notification({},{},10000,{}),{},True)'.format(name.encode('utf-8', 'replace'), programTitle.encode('utf-8', 'replace'), description.encode('utf-8', 'replace'), self.icon, timeToNotification))
 
-        if ADDON.getSetting('notifications_enabled') == 'true' and timeToNotification > 0:
+        if ADDON.getSetting('program_notifications_enabled') == 'true' and timeToNotification > 0:
             for chann in self.channels:
                 if chann.title == channelTitle:
                     program = self.database.getProgramStartingAt(chann, startTime)

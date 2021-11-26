@@ -4216,13 +4216,11 @@ class mTVGuide(xbmcgui.WindowXML):
 
                 if epgChann != '':
                     newChannel = Channel(epgChann, epgChann, logo)
-                    self.database.addChannel(newChannel)
 
-                    self.channelsFromStream(epgChann)
+                    self.channelsFromStream(epgChann=epgChann, newChannel=newChannel)
         
     def letterSort(self, channels):
         epgList = list()
-
 
         v = ([channel.title.upper() for channel in self.database.getChannelList(customCategory=strings(30325))])
         n = ([channel.title.upper() for channel in self.database.getAllChannelList()])
@@ -4306,16 +4304,16 @@ class mTVGuide(xbmcgui.WindowXML):
 
         else:
             epgChann = epgList[res]
-            self.channelsFromStream(epgChann, epgList, channels)
+            self.channelsFromStream(epgChann=epgChann, epgList=epgList, channels=channels)
 
-    def channelsFromStream(self, epgChann="", epgList="", channels=""):
+    def channelsFromStream(self, epgChann="", epgList="", channels="", newChannel=""):
         file = xbmcvfs.File(os.path.join(self.profilePath, 'custom_channels.list'), 'r')
         strmList = file.read().splitlines()
 
         strmList = sorted(set(strmList))
         strmList = [x.split(', ')[0].strip() for x in strmList if x.split(', ')[0].strip()]
 
-        res = xbmcgui.Dialog().select(strings(59994), [strings(30988), strings(59997)])
+        res = xbmcgui.Dialog().select(strings(59994), [strings(30988), strings(59997), 'Skip'])
 
         if res < 0:
             if epgList != '':
@@ -4328,16 +4326,16 @@ class mTVGuide(xbmcgui.WindowXML):
                 res = xbmcgui.Dialog().select(strings(59992), strmList)
                 if res < 0:
                     if epgList != '':
-                        self.channelsFromStream(epgChann, epgList, channels)
+                        self.channelsFromStream(epgChann=epgChann, epgList=epgList, channels=channels)
                     else:
                         self.channelsSelect()
                 else:
                     regChann = strmList[res]
-                    self.channelRegex(epgChann, regChann)
+                    self.channelRegex(epgChann, regChann, newChannel)
             else:
                 xbmcgui.Dialog().ok(strings(31009), strings(30376))
                 if epgList != '':
-                    self.channelsFromStream(epgChann, epgList, channels)
+                    self.channelsFromStream(epgChann=epgChann, epgList=epgList, channels=channels)
                 else:
                     self.channelsSelect()
 
@@ -4347,7 +4345,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
             if res < 0:
                 if epgList != '':
-                    self.channelsFromStream(epgChann, epgList, channels)
+                    self.channelsFromStream(epgChann=epgChann, epgList=epgList, channels=channels)
                 else:
                     self.channelsSelect()
 
@@ -4361,21 +4359,24 @@ class mTVGuide(xbmcgui.WindowXML):
                     
                     if res < 0:
                         if epgList != '':
-                            self.channelsFromStream(epgChann, epgList, channels)
+                            self.channelsFromStream(epgChann=epgChann, epgList=epgList, channels=channels)
                         else:
                             self.channelsSelect()
                     else:
                         regChann = strmList[res]
-                        self.channelRegex(epgChann, regChann)
+                        self.channelRegex(epgChann, regChann, newChannel)
                 else:
                     xbmcgui.Dialog().ok(strings(31009), strings(30376))
                     if epgList != '':
-                        self.channelsFromStream(epgChann, epgList, channels)
+                        self.channelsFromStream(epgChann=epgChann, epgList=epgList, channels=channels)
                     else:
                         self.channelsSelect()
 
+        elif res == 2:
+            self.channelRegex(epgChann, epgChann, newChannel)
 
-    def channelRegex(self, epgChann, regChann):
+
+    def channelRegex(self, epgChann, regChann, newChannel):
         # regex format
         if sys.version_info[0] > 2:
             regChann = unidecode(regChann)
@@ -4395,6 +4396,9 @@ class mTVGuide(xbmcgui.WindowXML):
 
         # add to basemap
         item = '<channel id="{}"\t\t\t\t\t\t\t\t\ttitle="{}" strm=""/>'.format(epgChann, regex)
+
+        # add to database
+        self.database.addChannel(newChannel)
 
         with open(os.path.join(self.profilePath, 'basemap_extra.xml'), mode='rb+') as f:
             s = f.read()
@@ -4686,7 +4690,7 @@ class mTVGuide(xbmcgui.WindowXML):
                     endDate = datetime.datetime.now()
 
                     try:
-                        endDate = datetime.datetime.strptime(self.program.endDate, '%Y-%m-%d %H:%M:%S')
+                        endDate = datetime.proxydt.strptime(str(self.program.endDate), '%Y-%m-%d %H:%M:%S')
                     except:
                         endDate = self.program.endDate
 
@@ -5569,7 +5573,7 @@ class mTVGuide(xbmcgui.WindowXML):
             self.onEPGLoadError()
             return
 
-        if cacheExpired == True and ADDON.getSetting('notifications_enabled') == 'true':
+        if cacheExpired == True and ADDON.getSetting('program_notifications_enabled') == 'true':
             # make sure notifications are scheduled for newly downloaded programs
             self.notification.scheduleNotifications()
         
@@ -5610,7 +5614,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
         self.catchupChannels = channels
 
-        if cacheExpired == True and ADDON.getSetting('notifications_enabled') == 'true':
+        if cacheExpired == True and ADDON.getSetting('program_notifications_enabled') == 'true':
             # make sure notifications are scheduled for newly downloaded programs
             self.notification.scheduleNotifications()
 
@@ -5898,7 +5902,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
         if success:
             self.notification = Notification(self.database, ADDON.getAddonInfo('path'), self)
-            if ADDON.getSetting('notifications_enabled') == 'true':
+            if ADDON.getSetting('program_notifications_enabled') == 'true':
                 self.notification.scheduleNotifications()
 
             if ADDON.getSetting('background_services') == 'true':
@@ -5908,7 +5912,9 @@ class mTVGuide(xbmcgui.WindowXML):
 
             if not background:
                 self.recordService.scheduleAllRecordings()
-            self.rssFeed = src.RssFeed(url=RSS_FILE, last_message=self.database.getLastRssDate(), update_date_call=self.database.updateRssDate)
+
+            if ADDON.getSetting('service_program_notifications_enabled') == 'true':
+                self.rssFeed = src.RssFeed(url=RSS_FILE, last_message=self.database.getLastRssDate(), update_date_call=self.database.updateRssDate)
 
             if strings2.M_TVGUIDE_CLOSING == False:
 
@@ -7520,7 +7526,7 @@ class Pla(xbmcgui.WindowXMLDialog):
                 endDate = datetime.datetime.now()
                 
                 try:
-                    endDate = datetime.datetime.strptime(self.program.endDate, '%Y-%m-%d %H:%M:%S')
+                    endDate = datetime.proxydt.strptime(str(self.program.endDate), '%Y-%m-%d %H:%M:%S')
                 except:
                     endDate = self.program.endDate
 
