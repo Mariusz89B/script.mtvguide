@@ -1008,6 +1008,14 @@ msgctxt "#30769"
 msgid "Every start"
 msgstr "Jeder Anfang"
 
+msgctxt "#30770"
+msgid "Restore fonts"
+msgstr "Schriften wiederherstellen"
+
+msgctxt "#30771"
+msgid "Font file has been restored"
+msgstr "Schriftdateien wurden wiederhergestellt"
+
 msgctxt "#30801"
 msgid "EPG update interval"
 msgstr "EPG Aktualisierungsintervall"

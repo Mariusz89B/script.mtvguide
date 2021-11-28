@@ -357,6 +357,7 @@
 	<category label="30702">
 		<setting id="Skin" label="30914" type="action" action="RunScript($CWD/skins.py, SelectSkin)" default="skin.default"/>
 		<setting id="skin_fontpack" label="70105" type="bool" default="true" />
+		<setting label="30770" type="action" action="RunScript($CWD/skins.py, RestoreFont)"/>
 		<setting label="30714" type="action" action="RunScript($CWD/skins.py, DeleteSkins)"/>
 	</category>
 	<category label="30930">

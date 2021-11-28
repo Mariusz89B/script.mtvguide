@@ -1008,6 +1008,14 @@ msgctxt "#30769"
 msgid "Every start"
 msgstr "Przy każdym uruchomieniu"
 
+msgctxt "#30770"
+msgid "Restore fonts"
+msgstr "Przywróć czcionki"
+
+msgctxt "#30771"
+msgid "Font file has been restored"
+msgstr "Plik czcionek został przywrócony"
+
 msgctxt "#30801"
 msgid "EPG update interval"
 msgstr "Interwał aktualizacji EPG"

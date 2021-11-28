@@ -4042,6 +4042,14 @@
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
+				<setting help="95147" id="restore_font" label="30770" type="action">
+					<level>2</level>
+					<data>RunScript(special://home/addons/script.mtvguide/skins.py,RestoreFont)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control format="action" type="button"/>
+				</setting>
 				<setting help="95113" id="delete_skins" label="30714" type="action">
 					<level>2</level>
 					<data>RunScript(special://home/addons/script.mtvguide/skins.py,DeleteSkins)</data>

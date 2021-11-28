@@ -318,7 +318,7 @@ class Skin:
         return Skin.parseVersion(ADDON.getAddonInfo('version'))
 
     @staticmethod
-    def deleteCustomSkins(show_dialog):
+    def restoreFont(show_dialog):
         if sys.version_info[0] > 2:
             try:
                 PROFILE_PATH  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
@@ -330,6 +330,65 @@ class Skin:
             except:
                 PROFILE_PATH  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
 
+        currentSkin = xbmc.getSkinDir()
+
+        if sys.version_info[0] > 2:
+            kodiPath = xbmcvfs.translatePath("special://home/")
+            kodiPathMain = xbmcvfs.translatePath("special://xbmc/")
+            kodiSkinPath = xbmcvfs.translatePath("special://skin/")
+        else:
+            kodiPath = xbmc.translatePath("special://home/")
+            kodiPathMain = xbmc.translatePath("special://xbmc/")
+            kodiSkinPath = xbmc.translatePath("special://skin/")
+
+        if xbmcvfs.exists(os.path.join(kodiSkinPath, 'xml/')):
+            path1 = 'xml'
+        elif xbmcvfs.exists(os.path.join(kodiSkinPath, '720p/')):
+            path1 = '720p'
+        elif xbmcvfs.exists(os.path.join(kodiSkinPath, '1080i/')):
+            path1 = '1080i'
+        elif xbmcvfs.exists(os.path.join(kodiSkinPath, '16x9/')):
+            path1 = '16x9'
+
+        if sys.version_info[0] > 2:
+            addons = xbmcvfs.translatePath(os.path.join('special://', 'home', 'addons', currentSkin, path1, 'Font.xml'))
+            skins = xbmcvfs.translatePath(os.path.join('special://','skin', currentSkin, path1, 'Font.xml'))
+            backup_addons = xbmcvfs.translatePath(os.path.join('special://', 'home', 'addons', currentSkin, path1, 'Font.backup'))
+            backup_skins = xbmcvfs.translatePath(os.path.join('special://','skin', currentSkin, path1, 'Font.backup'))
+        else:
+            addons = xbmc.translatePath(os.path.join('special://', 'home', 'addons', currentSkin, path1, 'Font.xml'))
+            skins = xbmc.translatePath(os.path.join('special://','skin', currentSkin, path1, 'Font.xml'))
+            backup_addons = xbmc.translatePath(os.path.join('special://', 'home', 'addons', currentSkin, path1, 'Font.backup'))
+            backup_skins = xbmc.translatePath(os.path.join('special://','skin', currentSkin, path1, 'Font.backup'))
+
+        if currentSkin == 'skin.estuary' or currentSkin == 'skin.estouchy':
+            check = xbmcvfs.exists(backup_addons)
+            if check:
+                xbmcvfs.delete(addons)
+                xbmcvfs.rename(backup_addons, addons)
+        else:
+            check = xbmcvfs.exists(backup_skins)
+            if check:
+                xbmcvfs.delete(skins)
+                xbmcvfs.rename(backup_skins, skins)
+
+        if show_dialog:
+            xbmcgui.Dialog().ok(strings(30770), strings(30771)+'.')
+
+        try:
+            file = os.path.join(PROFILE_PATH, 'fonts.list')
+            if sys.version_info[0] > 2:
+                with open(file, 'w+', encoding='utf-8') as f:
+                    f.write('')
+            else:
+                import codecs
+                with codecs.open(file, 'w+', encoding='utf-8') as f:
+                    f.write('')
+        except:
+            deb('Error: fonts.list is missing')
+
+    @staticmethod
+    def deleteCustomSkins(show_dialog):
         ADDON.setSetting('Skin', 'skin.default')
 
         if os.path.isdir(Skin.ADDON_CUSTOM_SKINS_RES):
@@ -337,19 +396,11 @@ class Skin:
                 shutil.rmtree(Skin.ADDON_CUSTOM_SKINS_RES)
             except:
                 pass
+
+        self.restoreFont(False)
+
         if show_dialog:
             xbmcgui.Dialog().ok(strings(30714), strings(30969)+'.')
-
-        try:
-            file = os.path.join(PROFILE_PATH, 'fonts.list')
-            if sys.version_info[0] > 2:
-                with open(file, 'wb+') as f:
-                    f.write(bytearray(''), 'utf-8')
-            else:
-                with open(file, 'w+') as f:
-                    f.write(str(''))
-        except:
-            deb('Error: fonts.list is missing')
 
 
 class SkinPicker():
@@ -442,7 +493,6 @@ class SkinPicker():
                 pass
         return download_list
 
-
 if len(sys.argv) > 1 and sys.argv[1] == 'SelectSkin':
     #Skin._checkForUpdates()
     Skin.selectSkin()
@@ -468,5 +518,8 @@ if len(sys.argv) > 1 and sys.argv[1] == 'SelectSkin':
                     new_f.write(line)
     except:
         None
+
 elif len(sys.argv) > 1 and sys.argv[1] == 'DeleteSkins':
     Skin.deleteCustomSkins(True)
+elif len(sys.argv) > 1 and sys.argv[1] == 'RestoreFont':
+    Skin.restoreFont(True)

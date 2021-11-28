@@ -1524,6 +1524,10 @@ class mTVGuide(xbmcgui.WindowXML):
                                     xbmcgui.Dialog().ok(strings(70105), strings(70103))
                                     exit()
 
+                    path2 = 'xml'
+                    path3 = 'xml'
+                    path4 = 'xml'
+
                     # Check path
                     if xbmcvfs.exists(os.path.join(self.profilePath, 'resources', 'skins', addonSkin, 'xml/')):
                         path2 = 'xml'
@@ -6265,7 +6269,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
                         diff = datetime.datetime.now() - self.lastKeystroke
                         diffSeconds = (diff.days * 86400) + diff.seconds
-                        debug('updateTimebar seconds since last user action {}'.format(diffSeconds))
+                        #debug('updateTimebar seconds since last user action {}'.format(diffSeconds))
                         if diffSeconds > 300:
                             deb('updateTimebar redrawing EPG start')
                             self.lastKeystroke = datetime.datetime.now()
@@ -6280,7 +6284,7 @@ class mTVGuide(xbmcgui.WindowXML):
                     self.timebarBack.setWidth(p - int(cell_width))
                     diff = datetime.datetime.now() - self.lastKeystroke
                     diffSeconds = (diff.days * 86400) + diff.seconds
-                    debug('updateTimebar seconds since last user action {}'.format(diffSeconds))
+                    #debug('updateTimebar seconds since last user action {}'.format(diffSeconds))
                     if diffSeconds > 300:
                         deb('updateTimebar redrawing EPG start')
                         self.lastKeystroke = datetime.datetime.now()
@@ -6793,7 +6797,7 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
         self.channel = channel
         self.previousAddonId = None
         self.previousDirsId = None
-        self.returnListContent = None
+        self.returnContent = None
         self.playable = None
         self.previousBrowseId = None
         self.strmFile = None
@@ -7097,7 +7101,7 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
 
             path = "plugin://%s" % id
             self.previousDirsId = path
-            self.returnListContent = path
+            self.returnContent = path
 
             response = json.loads(xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media":"files"}, "id": 100}' % path))
             files = response["result"]["files"]
@@ -7136,17 +7140,22 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
         previousDirsId = self.previousDirsId
         self.previousDirsId = item.getProperty('stream')
 
-        if self.playable:
-            return
-
+        if item.getLabel() == '[B]..[/B]':
+            item.setProperty('stream', self.returnContent)
+            self.previousDirsId = item.getProperty('stream')
+        else:
+            if self.playable:
+                self.playable = False
+                self.previousDirsId = self.previousDirsId
+        
         response = json.loads(xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media":"files"}, "id": 100}' % self.previousDirsId))
         files = response["result"]["files"]
         dirs = {}
 
-        items = []       
+        items = []
 
         item = xbmcgui.ListItem('[B]..[/B]')
-        item.setProperty('stream', self.returnListContent)
+        item.setProperty('stream', self.returnContent)
         items.append(item)
 
         for prop in files:

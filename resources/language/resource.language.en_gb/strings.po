@@ -1008,6 +1008,14 @@ msgctxt "#30769"
 msgid "Every start"
 msgstr ""
 
+msgctxt "#30770"
+msgid "Restore fonts"
+msgstr ""
+
+msgctxt "#30771"
+msgid "Font file has been restored"
+msgstr ""
+
 msgctxt "#30801"
 msgid "EPG update interval"
 msgstr ""
@@ -3498,6 +3506,10 @@ msgstr ""
 
 msgctxt "#95146"
 msgid "Recieve notifications regarding scheduled programs."
+msgstr ""
+
+msgctxt "#95147"
+msgid "Restore current Kodi skin Font.xml file to it's original state and deletes all add-on skin fonts modifications."
 msgstr ""
 
 msgctxt "#99994"

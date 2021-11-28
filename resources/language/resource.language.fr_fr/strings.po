@@ -1008,6 +1008,14 @@ msgctxt "#30769"
 msgid "Every start"
 msgstr "Chaque fois que tu cours"
 
+msgctxt "#30770"
+msgid "Restore fonts"
+msgstr "Restaurer les polices"
+
+msgctxt "#30771"
+msgid "Font file has been restored"
+msgstr "Restaurer les polices"
+
 msgctxt "#30801"
 msgid "EPG update interval"
 msgstr "Intervalle de mise à jour EPG"
