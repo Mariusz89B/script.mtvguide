@@ -299,9 +299,11 @@ class Skin:
                         xbmcgui.Dialog().notification(strings(30702), strings(30709) + ": " + skin.name, time=7000, sound=False)
                     if success and skin.name == Skin.getSkinName():
                         usedSkinUpdated = True
+
         if usedSkinUpdated:
             if not xbmc.getCondVisibility('Window.IsVisible(yesnodialog)'):
                 xbmcgui.Dialog().ok(strings(30709), strings(30979))
+
         deb('Skin finished update')
         return usedSkinUpdated
 
@@ -397,7 +399,10 @@ class Skin:
             except:
                 pass
 
-        self.restoreFont(False)
+        Skin.restoreFont(False)
+
+        ### Add copy defualt skin
+        Skin.fixSkinIfNeeded()
 
         if show_dialog:
             xbmcgui.Dialog().ok(strings(30714), strings(30969)+'.')
