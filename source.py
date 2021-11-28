@@ -407,13 +407,14 @@ class Database(object):
                 self.unlockDbTimer.start()
                 time.sleep(uniform(0, 0.2))
                 self.conn = sqlite3.connect(self.databasePath, detect_types=sqlite3.PARSE_DECLTYPES, cached_statements=2000)
-                self.conn.execute('PRAGMA foreign_keys = ON');
+                self.conn.execute("PRAGMA foreign_keys = ON");
                 self.conn.execute("PRAGMA locking_mode = EXCLUSIVE");
-                if ADDON.getSetting('pragma_mode') == 'true':
-                    self.conn.execute('PRAGMA journal_mode = WAL');
+                self.conn.execute("PRAGMA encoding = 'UTF-8'");
+                if ADDON.getSetting("pragma_mode") == "true":
+                    self.conn.execute("PRAGMA journal_mode = WAL");
                     self.conn.execute("PRAGMA temp_store = MEMORY");
                     self.conn.execute("PRAGMA synchronous = NORMAL");
-                #self.conn.execute('PRAGMA mmap_size = 268435456');
+                #self.conn.execute("PRAGMA mmap_size = 268435456");
                 #self.conn.execute("PRAGMA page_size = 16384");
                 #self.conn.execute("PRAGMA cache_size = 64000");
                 #self.conn.execute("PRAGMA locking_mode = NORMAL");
@@ -722,7 +723,7 @@ class Database(object):
 
                         # programs updated
                         c.execute("UPDATE sources SET channels_updated=? WHERE id=?", [0, self.source.KEY])
-                        c.execute("INSERT INTO updates(source, date, programs_updated, epg_size) VALUES(?, ?, ?, ?)", [self.source.KEY, 0, 0, 0])
+                        c.execute("INSERT INTO updates(source, date, programs_updated, epg_size) VALUES(?, ?, ?, ?)", [self.source.KEY, dateStr, 0, 0])
 
                         self.conn.commit()
                         updatesId = c.lastrowid
