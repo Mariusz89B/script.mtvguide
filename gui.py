@@ -7143,35 +7143,39 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
         if item.getLabel() == '[B]..[/B]':
             item.setProperty('stream', self.returnContent)
             self.previousDirsId = item.getProperty('stream')
+            self.playable = False
+
         else:
             if self.playable:
-                self.playable = False
-                self.previousDirsId = self.previousDirsId
+                self.previousDirsId = None
         
-        response = json.loads(xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media":"files"}, "id": 100}' % self.previousDirsId))
-        files = response["result"]["files"]
-        dirs = {}
+        try:
+            response = json.loads(xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media":"files"}, "id": 100}' % self.previousDirsId))
+            files = response["result"]["files"]
+            dirs = {}
 
-        items = []
+            items = []
 
-        item = xbmcgui.ListItem('[B]..[/B]')
-        item.setProperty('stream', self.returnContent)
-        items.append(item)
-
-        for prop in files:
-            dirs.update(prop)
-            stream = dirs.get('file')
-            label = dirs.get('label')
-            if dirs.get('filetype') == 'file':
-                self.playable = True
-                self.strmFile = item.getProperty('stream')
-            item = xbmcgui.ListItem(label)
-            item.setProperty('stream', stream)
+            item = xbmcgui.ListItem('[B]..[/B]')
+            item.setProperty('stream', self.returnContent)
             items.append(item)
-        
-        listControl = self.getControl(StreamSetupDialog.C_STREAM_BROWSE_DIRS)
-        listControl.reset()
-        listControl.addItems(items)
+
+            for prop in files:
+                dirs.update(prop)
+                stream = dirs.get('file')
+                label = dirs.get('label')
+                if dirs.get('filetype') == 'file':
+                    self.playable = True
+                    self.strmFile = item.getProperty('stream')
+                item = xbmcgui.ListItem(label)
+                item.setProperty('stream', stream)
+                items.append(item)
+            
+            listControl = self.getControl(StreamSetupDialog.C_STREAM_BROWSE_DIRS)
+            listControl.reset()
+            listControl.addItems(items)
+        except:
+            pass
 
     def close(self):
         super(StreamSetupDialog, self).close()
