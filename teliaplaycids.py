@@ -661,6 +661,9 @@ class TeliaPlayUpdater(baseServiceUpdater):
             if 'X-AxDRM-Message' in headr:
                 hea = 'Content-Type=&X-AxDRM-Message=' + self.dashjs
 
+            elif 'x-dt-auth-token' in headr:
+                hea = 'Content-Type=&x-dt-auth-token=' + headr.get('x-dt-auth-token', self.dashjs)
+
             else:
                 if sys.version_info[0] > 2:
                     hea = urllib.parse.urlencode(headr)

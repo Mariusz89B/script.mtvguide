@@ -1,5 +1,9 @@
-﻿wersja 9.8.2 - 2021-11-17
-- wersja testowa
+﻿wersja 9.8.3 - 2021-12-03
+- poprawka archiwum dla serwisu Telia Play
+
+wersja 9.8.2 - 2021-11-28
+- dodano wbudowaną przeglądarkę dodatków
+- poprawione błędy
 
 wersja 9.8.1 - 2021-11-16
 - poprawki serwisów Polsat GO i Polsat GO Box
@@ -12,9 +16,9 @@ wersja 9.7.9 - 2021-11-10
 
 wersja 9.7.8 - 2021-11-09
 - aktualizacja parsowania EPG
-- naprawiono błąd powiadomienia o pobieraniu.
-- poprawiono ogólne dopasowanie kanałów.
-- optymalizacje.
+- naprawiono błąd powiadomienia o pobieraniu
+- poprawiono ogólne dopasowanie kanałów
+- optymalizacje
 
 wersja 9.7.7 - 2021-11-04
 - zaktualizowano domyślny User-Agent

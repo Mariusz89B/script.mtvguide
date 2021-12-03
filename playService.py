@@ -473,13 +473,12 @@ class PlayService(xbmc.Player, BasePlayService):
             lutc = str(int(lutc) * 1000)
 
             n = datetime.datetime.now()
+            now = int(time.mktime(n.timetuple())) * 1000
 
             if sys.version_info[0] > 2:
-                now = int(time.mktime(n.timetuple())) * 1000
                 tday = str(((int(time.time() // 86400)) * 86400) * 1000)
                 yday = str(((int(time.time() // 86400)) * 86400 - 86400 ) * 1000)
             else:
-                now = int(time.mktime(n.timetuple())) * 1000
                 tday = str(((int(time.mktime(n.timetuple()) // 86400)) * 86400) * 1000)
                 yday = str(((int(time.mktime(n.timetuple()) // 86400)) * 86400 - 86400 ) * 1000)
 
@@ -559,19 +558,15 @@ class PlayService(xbmc.Player, BasePlayService):
 
             headers = {
                 'Connection': 'keep-alive',
-                'sec-ch-ua': '"Chromium";v="92", " Not A;Brand";v="99", "Microsoft Edge";v="92"',
                 'tv-client-boot-id': tv_client_boot_id,
                 'DNT': '1',
-                'sec-ch-ua-mobile': '?0',
                 'Authorization': 'Bearer '+ beartoken,
-                'Content-Type': 'application/json',
+                'tv-client-tz': 'Europe/Stockholm',
                 'X-Country': cc[country],
                 'User-Agent': UA,
+                'content-type': 'application/json',
                 'Accept': '*/*',
                 'Origin': base[country],
-                'Sec-Fetch-Site': 'cross-site',
-                'Sec-Fetch-Mode': 'cors',
-                'Sec-Fetch-Dest': 'empty',
                 'Referer': base[country]+'/',
                 'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
             }
@@ -587,7 +582,7 @@ class PlayService(xbmc.Player, BasePlayService):
                 "accessControl":"SUBSCRIPTION",
                 "device": {
                     "deviceId": tv_client_boot_id,
-                    "category":"unknown",
+                    "category":"desktop_windows",
                     "packagings":["DASH_MP4_CTR"],
                     "drmType":"WIDEVINE",
                     "capabilities":[],
@@ -595,12 +590,15 @@ class PlayService(xbmc.Player, BasePlayService):
                         "height":1080,
                         "width":1920
                         },
+                    
+                    "os":"Windows",
                     "model":"windows_desktop"
                     },
+
                     "preferences": {
-                        "audioLanguage":["undefined"],
+                        "audioLanguage":[],
                         "accessibility":[]}
-                        }
+                }
 
             response = requests.post(url, headers=headers, json=data, params=params, cookies=sess.cookies, verify=False).json()
 
@@ -614,7 +612,7 @@ class PlayService(xbmc.Player, BasePlayService):
                 hea = 'Content-Type=&X-AxDRM-Message=' + dashjs
 
             elif 'x-dt-auth-token' in headr:
-                hea = 'Content-Type=&x-dt-auth-token=' + dashjs
+                hea = 'Content-Type=&x-dt-auth-token=' + headr.get('x-dt-auth-token', dashjs)
 
             else:
                 if sys.version_info[0] > 2:
@@ -1048,7 +1046,8 @@ class PlayService(xbmc.Player, BasePlayService):
                                 utc = catchupList[2]
                                 lutc = catchupList[3]
 
-                                strmUrlx, licenseUrl = self.catchupTeliaPlay(channelInfo, utc, lutc)
+                                strmUrlx, licenseUrlx = self.catchupTeliaPlay(channelInfo, utc, lutc)
+
                                 if not strmUrlx:
                                     res = xbmcgui.Dialog().yesno(strings(30998), strings(59980))
                                     if res:
@@ -1057,6 +1056,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                         return None
                                 else:
                                     strmUrl = strmUrlx
+                                    licenseUrl = licenseUrlx
 
                         PROTOCOL = 'mpd'
                         DRM = 'com.widevine.alpha'
