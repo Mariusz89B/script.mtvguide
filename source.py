@@ -2842,16 +2842,18 @@ def customParseXMLTV(xml, progress_callback):
         id = (channelIdRe.search(channel).group(1)).upper()
 
         try:
-            titleList = channelTitleRe.findall(channel)
-            titles = ', '.join([elem.upper() for elem in titleList])
-
-        except:
-            titles = id
-
-        try:
             title = channelTitleRe.search(channel).group(1)
+            title = re.sub('[^\d+a-zA-Z,\s]+', '', title)
         except:
             title = id
+
+        try:
+            titleList = channelTitleRe.findall(channel)
+            titles = ', '.join([elem.upper() for elem in titleList])
+            titles = re.sub('[^\d+a-zA-Z,\s]+', '', titles)
+
+        except:
+            titles = title
 
         try:
             logo = channelIconRe.search(channel).group(1)
@@ -3062,11 +3064,13 @@ def parseXMLTV(context, f, size, logoFolder, progress_callback):
                 
                 titleList = elem.findall("display-name")
                 titles = ', '.join([x.text.upper() for x in titleList])
+                titles = re.sub('[^\d+a-zA-Z,\s]+', '', titles)
 
                 if not titles:
                     titles = elem.get("id").upper()
 
                 title = elem.findtext("display-name")
+                title = re.sub('[^\d+a-zA-Z,\s]+', '', title)
                 
                 if title == "":
                     title = id

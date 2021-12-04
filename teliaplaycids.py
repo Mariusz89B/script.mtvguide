@@ -132,11 +132,13 @@ class TeliaPlayUpdater(baseServiceUpdater):
         self.serviceEnabled     = ADDON.getSetting('teliaplay_enabled') 
         self.login              = ADDON.getSetting('teliaplay_username').strip()
         self.password           = ADDON.getSetting('teliaplay_password').strip()
+        self.servicePriority    = int(ADDON.getSetting('priority_teliaplay'))
+
         try:
-            self.servicePriority    = int(ADDON.getSetting('priority_teliaplay'))
             self.country            = int(ADDON.getSetting('teliaplay_locale'))
         except:
-            pass
+            self.country            = 0
+
         self.dashjs             = ADDON.getSetting('teliaplay_devush')
         self.sessionid          = ADDON.getSetting('teliaplay_sess_id')
         self.tv_client_boot_id  = ADDON.getSetting('teliaplay_tv_client_boot_id')
@@ -556,8 +558,21 @@ class TeliaPlayUpdater(baseServiceUpdater):
             for channel in channels:
                 if channel['id'] in self.engagementLiveChannels:
                     cid = channel["id"] + '_TS_3'
-                    name = channel ["name"]
-                    title = channel ["name"] + ' ' + ca[self.country]
+                    name = channel["name"]
+
+                    try:
+                        res = channel["resolutions"]
+                        
+                        p = re.compile('\d+')
+                        res_int = p.search(res[0]).group(0)
+
+                    except:
+                        res_int = 0
+
+                    if int(res_int) > 576 and ' HD' not in name:
+                        title = channel["name"] + ' HD ' + ca[self.country]
+                    else:
+                        title = channel["name"] + ' ' + ca[self.country]
                     img = channel["id"]
                 
                     program = TvCid(cid=cid, name=name, title=title, img=img) 

@@ -81,7 +81,7 @@ class clearDB:
                 except:
                     pass
 
-            xbmcgui.Dialog().ok(strings(DB_DELETED), strings(30969))
+            xbmcgui.Dialog().ok(strings(DB_DELETED), strings(30969)+'.')
         else:
             self.database.initialize(self.onInitialized)
 
