@@ -191,6 +191,7 @@ class RecordService(BasePlayService):
         self.startOffsetDownload = 0
         self.endOffsetDownload   = 0
         self.downloading         = False
+        self.showDialogOk        = False
 
         if ADDON.getSetting('ffmpeg_dis_cop_un') == 'true':
             self.ffmpegDisableCopyUnknown = True
@@ -248,6 +249,7 @@ class RecordService(BasePlayService):
 
     def recordProgramGui(self, program, catchupList, watch='', length=''):
         self.program = program
+        self.showDialogOk = True
         _program = None
 
         self.isDownload = False
@@ -592,12 +594,13 @@ class RecordService(BasePlayService):
         drmList = ['C More', 'Polsat GO', 'Polsat GO Box', 'Ipla', 'nc+ GO', 'PlayerPL', 'Telia Play']
 
         p = re.compile('service=(.+?)&cid=.*')
-        for item in drmList:
-            service = p.findall(url)[0]
-            if item == service:
+        service = p.findall(url)[0]
+        if service in drmList:
+            if self.showDialogOk:
                 xbmcgui.Dialog().ok('Digital rights management (DRM)', 'The selected stream from {url} is protected by Digital rights management (DRM) system, the digital content is restricted and cannot be recorded. m-TVGuide will continue on to try and record next available stream.'.format(url=service)) 
-                threadData['nrOfReattempts'] += 1
-                return
+                self.showDialogOk = False
+            threadData['nrOfReattempts'] += 1
+            return #go to next stream - this one seems to be locked
 
         cid, service = self.parseUrl(url)
         channelInfo = self.getChannelDownload(cid, service)
@@ -1224,12 +1227,13 @@ class RecordService(BasePlayService):
         drmList = ['C More', 'Polsat GO', 'Polsat GO Box', 'Ipla', 'nc+ GO', 'PlayerPL', 'Telia Play']
 
         p = re.compile('service=(.+?)&cid=.*')
-        for item in drmList:
-            service = p.findall(url)[0]
-            if item == service:
+        service = p.findall(url)[0]
+        if service in drmList:
+            if self.showDialogOk:
                 xbmcgui.Dialog().ok('Digital rights management (DRM)', 'The selected stream from {url} is protected by Digital rights management (DRM) system, the digital content is restricted and cannot be recorded. m-TVGuide will continue on to try and record next available stream.'.format(url=service)) 
-                threadData['nrOfReattempts'] += 1
-                return
+                self.showDialogOk = False
+            threadData['nrOfReattempts'] += 1
+            return #go to next stream - this one seems to be locked
 
         cid, service = self.parseUrl(url)
         channelInfo = self.getChannel(cid, service)

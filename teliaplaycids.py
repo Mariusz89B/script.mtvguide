@@ -602,19 +602,15 @@ class TeliaPlayUpdater(baseServiceUpdater):
 
             headers = {
                 'Connection': 'keep-alive',
-                'sec-ch-ua': '"Chromium";v="92", " Not A;Brand";v="99", "Microsoft Edge";v="92"',
-                'tv-client-boot-id': 'eac9b61f-906e-467a-896e-adeac15f68fb',
+                'tv-client-boot-id': self.tv_client_boot_id,
                 'DNT': '1',
-                'sec-ch-ua-mobile': '?0',
                 'Authorization': 'Bearer '+ self.beartoken,
-                'content-type': 'application/json',
+                'tv-client-tz': 'Europe/Stockholm',
                 'X-Country': cc[self.country],
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36 Edg/92.0.902.84',
+                'User-Agent': UA,
+                'content-type': 'application/json',
                 'Accept': '*/*',
                 'Origin': base[self.country],
-                'Sec-Fetch-Site': 'cross-site',
-                'Sec-Fetch-Mode': 'cors',
-                'Sec-Fetch-Dest': 'empty',
                 'Referer': base[self.country]+'/',
                 'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
             }
@@ -630,7 +626,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 "accessControl":"SUBSCRIPTION",
                 "device": {
                     "deviceId": self.tv_client_boot_id,
-                    "category":"unknown",
+                    "category":"desktop_windows",
                     "packagings":["DASH_MP4_CTR"],
                     "drmType":"WIDEVINE",
                     "capabilities":[],
@@ -638,17 +634,18 @@ class TeliaPlayUpdater(baseServiceUpdater):
                         "height":1080,
                         "width":1920
                         },
-                    "model":"windows_desktop"
-                    },
-                    "preferences": {
-                        "audioLanguage":["undefined"],
-                        "accessibility":[]}
-                        }
+                        "os":"Windows",
+                        "model":"windows_desktop"
+                        },
+                        "preferences": {
+                            "audioLanguage":["undefined"],
+                            "accessibility":[]}
+                }
 
             response = self.sendRequest(url, post=True, headers=headers, json=data, params=params, cookies=sess.cookies, verify=True, timeout=timeouts)
             if not response:
-                data = None
-                return data 
+                self.connErrorMessage()
+                return None 
 
             response = response.json()
 

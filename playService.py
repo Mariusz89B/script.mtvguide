@@ -492,19 +492,14 @@ class PlayService(xbmc.Player, BasePlayService):
                 'tv-client-name': 'web',
                 'tv-client-boot-id': tv_client_boot_id,
                 'DNT': '1',
-                'sec-ch-ua-mobile': '?0',
                 'Authorization': 'Bearer '+ beartoken,
                 'tv-client-tz': 'Europe/Stockholm',
                 'Content-Type': 'application/json',
                 'X-Country': cc[country],
                 'User-Agent': UA,
                 'tv-client-version': '1.16.6',
-                'sec-ch-ua': '"Chromium";v="92", " Not A;Brand";v="99", "Microsoft Edge";v="92"',
                 'Accept': '*/*',
                 'Origin': base[country],
-                'Sec-Fetch-Site': 'cross-site',
-                'Sec-Fetch-Mode': 'cors',
-                'Sec-Fetch-Dest': 'empty',
                 'Referer': base[country]+'/',
                 'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
             }
@@ -601,6 +596,9 @@ class PlayService(xbmc.Player, BasePlayService):
                 }
 
             response = requests.post(url, headers=headers, json=data, params=params, cookies=sess.cookies, verify=False).json()
+            if not response:
+                xbmcgui.Dialog().notification(self.serviceName, strings(SERVICE_ERROR), xbmcgui.NOTIFICATION_WARNING, time=15000, sound=True)
+                return None, None
 
             hea = ''
 
