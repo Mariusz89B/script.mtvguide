@@ -1205,9 +1205,17 @@ class Database(object):
                     filter = []
                     seen = set()
                     for line in lines:
-                        if b"=" not in line:
-                            continue
-                        name,cat = line.split(b'=')
+                        if sys.version_info[0] > 2:
+                            if "=" not in line:
+                                continue
+                        else:
+                            if b"=" not in line:
+                                continue
+
+                        if sys.version_info[0] > 2:
+                            name,cat = line.split('=')
+                        else:
+                            name,cat = line.split(b'=')
                         if cat == self.category:
                             if name not in seen:
                                 filter.append(name)
