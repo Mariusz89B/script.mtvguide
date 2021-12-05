@@ -995,24 +995,34 @@ class Database(object):
         if strings2.M_TVGUIDE_CLOSING:
             self.updateFailed = True
             return
+
         cacheExpired = self._updateChannelAndProgramListCaches(date, progress_callback, initializing, clearExistingProgramList)
         if strings2.M_TVGUIDE_CLOSING:
             self.updateFailed = True
             return
+
         channels = self._getChannelList(onlyVisible = True)
 
-        if channelStart < 0:
-            modulo = len(channels) % Database.CHANNELS_PER_PAGE
-            if modulo > 0:
-                channelStart = len(channels) - modulo
-            else:
-                channelStart = len(channels) - Database.CHANNELS_PER_PAGE
-        elif channelStart > len(channels) - 1:
-            channelStart = 0
-        channelEnd = channelStart + Database.CHANNELS_PER_PAGE
-        channelsOnPage = channels[channelStart : channelEnd]
-        programs = self._getProgramList(channelsOnPage, date)
-        return [channelStart, channelsOnPage, programs, cacheExpired]
+        try:
+            if channelStart < 0:
+                modulo = len(channels) % Database.CHANNELS_PER_PAGE
+                if modulo > 0:
+                    channelStart = len(channels) - modulo
+                else:
+                    channelStart = len(channels) - Database.CHANNELS_PER_PAGE
+            elif channelStart > len(channels) - 1:
+                channelStart = 0
+
+            channelEnd = channelStart + Database.CHANNELS_PER_PAGE
+            channelsOnPage = channels[channelStart : channelEnd]
+
+            programs = self._getProgramList(channelsOnPage, date)
+            return [channelStart, channelsOnPage, programs, cacheExpired]
+            
+        except Exception as ex:
+            deb('getEPGView Exception: {}'.format(ex))
+            self.updateFailed = True
+            return
 
     def getCurrentChannelIdx(self, currentChannel):
         channels = self.getChannelList()
@@ -1195,9 +1205,9 @@ class Database(object):
                     filter = []
                     seen = set()
                     for line in lines:
-                        if "=" not in line:
+                        if b"=" not in line:
                             continue
-                        name,cat = line.split('=')
+                        name,cat = line.split(b'=')
                         if cat == self.category:
                             if name not in seen:
                                 filter.append(name)
@@ -1224,8 +1234,13 @@ class Database(object):
                 channelList = self.channelList
 
             return channelList
-        except:
-            pass
+        except Exception as ex:
+            deb('getChannelList Exception: {}'.format(ex))
+            if self.channelList:
+                channelList = self.channelList
+            else:
+                channelList = list()
+            return channelList
 
     def getAllChannelList(self, onlyVisible = True):
         result = self._invokeAndBlockForResult(self._getAllChannelList, onlyVisible)
