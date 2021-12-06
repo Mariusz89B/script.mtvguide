@@ -1,4 +1,7 @@
-﻿wersja 9.8.3 - 2021-12-06
+﻿wersja 9.8.4 - 2021-12-07
+- poprawka błędu przy dodawaniem kanału
+
+wersja 9.8.3 - 2021-12-06
 - poprawka archiwum dla serwisu Telia Play
 - poprawione błędy
 

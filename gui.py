@@ -4219,9 +4219,8 @@ class mTVGuide(xbmcgui.WindowXML):
                     logo = ''
 
                 if epgChann != '':
-                    newChannel = Channel(epgChann, epgChann, logo)
-
-                    self.channelsFromStream(epgChann=epgChann, newChannel=newChannel)
+                    newChannel = epgChann
+                    self.channelsFromStream(epgChann=epgChann, newChannel=newChannel, logo=logo)
         
     def letterSort(self, channels):
         epgList = list()
@@ -4380,7 +4379,7 @@ class mTVGuide(xbmcgui.WindowXML):
             self.channelRegex(epgChann, epgChann, newChannel)
 
 
-    def channelRegex(self, epgChann, regChann, newChannel):
+    def channelRegex(self, epgChann, regChann, newChannel="", logo=""):
         # regex format
         if sys.version_info[0] > 2:
             regChann = unidecode(regChann)
@@ -4402,7 +4401,9 @@ class mTVGuide(xbmcgui.WindowXML):
         item = '<channel id="{}"\t\t\t\t\t\t\t\t\ttitle="{}" strm=""/>'.format(epgChann, regex)
 
         # add to database
-        self.database.addChannel(newChannel)
+        if newChannel != '' or newChannel is not None:
+            add = Channel(newChannel, newChannel, logo)
+            self.database.addChannel(add)
 
         with open(os.path.join(self.profilePath, 'basemap_extra.xml'), mode='rb+') as f:
             s = f.read()
