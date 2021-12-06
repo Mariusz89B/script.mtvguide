@@ -13,7 +13,6 @@ List of available television providers
 
 * **C More** - C More Entertainment
 * **Ipla** - Cyfrowy Polsat S.A.
-* **nc+ GO** - ITI Neovision S.A.
 * **PlayerPL** - TVN S.A.
 * **Polsat GO** - Telewizja Polsat Sp. Z.o.o.
 * **Polsat GO Box** - Cyfrowy Polsat S.A.
@@ -37,7 +36,6 @@ Detailed regulations of the television providers can be found on their websites.
 
 * **C More** - https://www.cmore.se/artiklar/anvandarvillkor/
 * **Ipla** - https://www.ipla.tv/regulamins/
-* **nc+ GO** - https://ncplusgo.pl/Cms/Page?codename=regulamin/
 * **PlayerPL** - https://player.pl/regulamin.pdf
 * **Polsat GO** - https://redirector.redefine.pl/versions/regulamin_polsat_go.pdf
 * **Polsat GO Box** - https://polsatboxgo.pl/panel/regulaminy
@@ -49,7 +47,6 @@ Account registration takes place on the television provider website.
 
 * **C More** - https://www.cmore.se/skapakonto/
 * **Ipla** - https://www.ipla.tv/register/
-* **nc+ GO** - https://ncplusgo.pl/konto/rejestracja/
 * **PlayerPL** - https://player.pl/
 * **Polsat GO** - https://polsatgo.pl/zarejestruj/
 * **Polsat GO Box** - https://polsatboxgo.pl/zarejestruj
