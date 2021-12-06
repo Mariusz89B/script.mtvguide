@@ -2,7 +2,7 @@
 <addon
     id="script.mtvguide"
     name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]"
-    version="9.8.3-beta.6"
+    version="9.8.3"
     provider-name="Team Mods-Kodi">
   <requires>
     <import addon="xbmc.addon" version="17.0.0"/>
@@ -42,8 +42,9 @@
 	<website>http://mods-kodi.pl/</website>
 	<email>support@m-tvguide.pl</email>
     <source>mods-kodi.pl © 2013 - 2021</source>
-    <news>v9.8.3 (2021-12-03)
+    <news>v9.8.3 (2021-12-06)
 - Fixed service Telia Play catchup.
+- Bug fixes.
 
 v9.8.2 (2021-11-28)
 - Added built-in addon browser.

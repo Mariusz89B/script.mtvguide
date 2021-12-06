@@ -61,6 +61,7 @@ try:
 except:
     pass
 
+#import gzip
 import collections
 
 dbFileName          = 'source.db'
@@ -185,13 +186,25 @@ class SettingsImp:
                 os.makedirs(self.profilePath)
 
             if filename[-4:] == '.zip':
-                zf = zipfile.ZipFile(filename)
-                for fileN in [ dbFileName, settingsFileName, categoriesFileName ]:
-                    try:
-                        zf.extract(fileN, self.profilePath)
-                        success = True
-                    except Exception as ex:
-                        deb('SettingsImp importSettings: Error got exception %s while reading archive %s' % (getExceptionString(), filename))
+                try:
+                    zf = zipfile.ZipFile(filename)
+                    for fileN in [ dbFileName, settingsFileName, categoriesFileName ]:
+                        try:
+                            zf.extract(fileN, self.profilePath)
+                            success = True
+                        except Exception as ex:
+                            deb('SettingsImp importSettings: Error got exception %s while reading archive %s' % (getExceptionString(), filename))
+                except Exception as ex:
+                    deb('importSettings Exception: {}'.format(ex))
+                    ### Force import
+                    #try:
+                        #for fileN in [ dbFileName, settingsFileName, categoriesFileName ]:
+                            #with gzip.open(filename, 'r') as f_in, open(os.path.join(self.profilePath, fileN), 'wb') as f_out:
+                                #shutil.copyfileobj(f_in, f_out)
+                            #success = True
+                    #except Exception as ex:
+                        #deb('SettingsImp importSettings: Error got exception %s while reading archive %s' % (getExceptionString(), filename))
+
             else:
                 deb('Importing settings as single files!')
                 for fileN in [ dbFileName, settingsFileName, categoriesFileName ]:
@@ -205,14 +218,14 @@ class SettingsImp:
 
             if success == True:
                 try:
-                    xbmcgui.Dialog().ok(strings(58003),"\n" + strings(58008) + '.')
+                    xbmcgui.Dialog().ok(strings(58003),"\n" + strings(58008) + ".")
                 except:
-                    xbmcgui.Dialog().ok(strings(58003).encode('utf-8'),"\n" + strings(58008).encode('utf-8') + '.')
+                    xbmcgui.Dialog().ok(strings(58003).encode('utf-8'),"\n" + strings(58008).encode('utf-8') + ".")
             else:
                 try:
-                    xbmcgui.Dialog().ok(strings(58003),"\n" + strings(58009) + "\n" + strings(58010) + '.')
+                    xbmcgui.Dialog().ok(strings(58003),"\n" + strings(58009) + "." + "\n" + strings(58010) + ".")
                 except:
-                    xbmcgui.Dialog().ok(strings(58003).encode('utf-8'),"\n" + strings(58009).encode('utf-8') + "\n" + strings(58010).encode('utf-8') + '.')
+                    xbmcgui.Dialog().ok(strings(58003).encode('utf-8'),"\n" + strings(58009).encode('utf-8') + "." + "\n" + strings(58010).encode('utf-8') + ".")
         return success
 
     def importRecordApp(self, filename):
