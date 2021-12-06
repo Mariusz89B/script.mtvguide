@@ -1960,6 +1960,10 @@ msgctxt "#310014"
 msgid "Save plugin settings!"
 msgstr "Spremi postavke dodataka!"
 
+msgctxt "#310015"
+msgid "System management"
+msgstr "Upravljanje sustavom"
+
 msgctxt "#55001"
 msgid "Add User-Agent"
 msgstr "Dodajte User-Agent"

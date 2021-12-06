@@ -1960,6 +1960,10 @@ msgctxt "#310014"
 msgid "Save plugin settings!"
 msgstr "Zapisz ustawienia wtyczki!"
 
+msgctxt "#310015"
+msgid "System management"
+msgstr "Zarządzanie systemem"
+
 msgctxt "#55001"
 msgid "Add User-Agent"
 msgstr "Dodaj User-Agent"

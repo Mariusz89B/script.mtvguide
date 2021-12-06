@@ -8,7 +8,6 @@ Lista dostępnych nadawców telewizji
 
 C More - C More Entertainment
 Ipla - Cyfrowy Polsat S.A.
-nc + GO - ITI Neovision S.A.
 PlayerPL - TVN S.A.
 Polsat GO - Telewizja Polsat Sp. Z.o.o.
 Polsat GO Box - Cyfrowy Polsat S.A.
@@ -32,7 +31,6 @@ Szczegółowe przepisy koncesjonowanego dostawcy można znaleźć na stronie ope
 	
 C More - https://www.cmore.se/artiklar/anvandarvillkor
 Ipla - https://www.ipla.tv/regulamins
-nc + GO - https://ncplusgo.pl/Cms/Page?codename=regulamin&mobile=False
 PlayerPL - https://player.pl/regulamin.pdf
 Polsat GO - https://redirector.redefine.pl/versions/regulamin_polsat_go.pdf
 Polsat GO Box - https://polsatboxgo.pl/panel/regulaminy
@@ -44,7 +42,6 @@ Rejestracja konta odbywa się na stronie operatora.
 
 C More - https://www.cmore.se/skapakonto/
 Ipla - https://www.ipla.tv/register/
-nc+ GO - https://ncplusgo.pl/konto/rejestracja/
 PlayerPL - https://player.pl/
 Polsat GO - https://polsatgo.pl/zarejestruj/
 Polsat GO Box - https://polsatboxgo.pl/zarejestruj

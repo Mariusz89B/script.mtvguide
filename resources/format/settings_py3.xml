@@ -251,134 +251,6 @@
 						<heading/>
 					</control>
 				</setting>
-				<setting help="95007" id="ncplusgo_enabled" label="59923" type="boolean">
-					<level>0</level>
-					<default>false</default>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="is" setting="country_service">0</condition>
-						</dependency>
-					</dependencies>
-					<control type="toggle"/>
-				</setting>
-				<setting help="95010" id="ncplusgo_username" label="55002" type="string" parent="ncplusgo_enabled">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="is" setting="ncplusgo_enabled">true</condition>
-							<condition operator="is" setting="country_service">0</condition>
-						</dependency>
-					</dependencies>
-					<control format="string" type="edit">
-						<heading>55002</heading>
-					</control>
-				</setting>
-				<setting help="95011" id="ncplusgo_password" label="55003" type="string" parent="ncplusgo_enabled">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="is" setting="ncplusgo_enabled">true</condition>
-							<condition operator="is" setting="country_service">0</condition>
-						</dependency>
-					</dependencies>
-					<control format="string" type="edit">
-						<heading>55003</heading>
-						<hidden>true</hidden>
-					</control>
-				</setting>
-				<setting help="95012" id="priority_ncplusgo" label="55009" type="integer" parent="ncplusgo_enabled">
-					<level>0</level>
-					<default>6</default>
-					<constraints>
-						<options>
-							<option label="55010">0</option>
-							<option label="55011">1</option>
-							<option label="55017">2</option>
-							<option label="55012">3</option>
-							<option label="55018">4</option>
-							<option label="55013">5</option>
-							<option label="55019">6</option>
-							<option label="55014">7</option>
-							<option label="55020">8</option>
-							<option label="55021">9</option>
-							<option label="55022">10</option>
-							<option label="55023">11</option>
-						</options>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="is" setting="ncplusgo_enabled">true</condition>
-							<condition operator="is" setting="country_service">0</condition>
-						</dependency>
-					</dependencies>
-					<control format="string" type="spinner"/>
-				</setting>
-				<setting help="95013" id="clear_ncplusgo" label="30371" type="action" parent="ncplusgo_enabled">
-					<level>0</level>
-					<data>RunScript(special://home/addons/script.mtvguide/clearncplusgo.py,clearNcPlusGO)</data>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="is" setting="ncplusgo_enabled">true</condition>
-							<condition operator="is" setting="country_service">0</condition>
-						</dependency>
-					</dependencies>
-					<control format="action" type="button"/>
-				</setting>
-				<setting help="" id="ncplusgo_imei" type="string" parent="ncplusgo_enabled">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<visible>false</visible>
-					<control format="string" type="edit">
-						<heading/>
-					</control>
-				</setting>
-				<setting help="" id="ncplusgo_ftimenow" type="string" parent="ncplusgo_enabled">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<visible>false</visible>
-					<control format="string" type="edit">
-						<heading/>
-					</control>
-				</setting>
-				<setting help="" id="ncplusgo_dev2repl" type="string" parent="ncplusgo_enabled">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<visible>false</visible>
-					<control format="string" type="edit">
-						<heading/>
-					</control>
-				</setting>
-				<setting help="" id="ncplusgo_ncToken" type="string" parent="ncplusgo_enabled">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<visible>false</visible>
-					<control format="string" type="edit">
-						<heading/>
-					</control>
-				</setting>
 				<setting help="95007" id="playerpl_enabled" label="30903" type="boolean">
 					<level>0</level>
 					<default>false</default>
@@ -3722,7 +3594,7 @@
 					</control>
 				</setting>
 			</group>
-			<group id="3" label="30916">
+			<group id="3" label="310015">
 				<setting help="95140" id="pragma_mode" label="70126" type="boolean">
 					<level>0</level>
 					<default>true</default>

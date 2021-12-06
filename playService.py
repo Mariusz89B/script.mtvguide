@@ -85,7 +85,6 @@ from contextlib import contextmanager
 import playlistcids
 import cmorecids
 import iplacids
-import ncplusgocids
 import playerplcids
 import polsatgocids
 import polsatgoboxcids
@@ -106,7 +105,6 @@ SERVICES = {
     playlistcids.serviceName + '_5' : playlistcids.PlaylistUpdater(instance_number=5),
     cmorecids.serviceName           : cmorecids.CmoreUpdater(),
     iplacids.serviceName            : iplacids.IplaUpdater(),
-    ncplusgocids.serviceName        : ncplusgocids.NcPlusGoUpdater(),
     playerplcids.serviceName        : playerplcids.PlayerPLUpdater(),
     polsatgocids.serviceName        : polsatgocids.PolsatGoUpdater(),
     polsatgoboxcids.serviceName     : polsatgoboxcids.PolsatGoBoxUpdater(),
@@ -793,72 +791,6 @@ class PlayService(xbmc.Player, BasePlayService):
                             self.unlockCurrentlyPlayedService()
                             xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
 
-                if service == 'nc+ GO':
-                    try:
-                        self.playbackStopped = False
-
-                        try:
-                            from urllib.parse import urlencode, quote_plus, quote, unquote
-                        except ImportError:
-                            from urllib import urlencode, quote_plus, quote, unquote
-
-                        licenseUrl = channelInfo.lic
-                        strmUrl = channelInfo.strm
-
-                        if sys.version_info[0] > 2:
-                            from urllib.parse import parse_qsl, quote, unquote, urlencode, quote_plus
-
-                        else:
-                            from urllib import unquote, quote, urlencode, quote_plus
-                            from urlparse import parse_qsl
-
-                        licServ = 'https://wv.drm.insyscd.net/AcquireLicense.ashx'
-                        licenseUrl = 'DrmChallengeCustomData='+quote(licenseUrl)
-
-                        PROTOCOL = 'mpd'
-                        DRM = 'com.widevine.alpha'
-                        
-                        import inputstreamhelper
-                        is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
-                        if is_helper.check_inputstream():      
-                            ListItem = xbmcgui.ListItem(path=strmUrl)
-                            ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
-                            ListItem.setContentLookup(False)
-                            if sys.version_info[0] > 2:
-                                ListItem.setProperty('inputstream', is_helper.inputstream_addon)
-                            else:
-                                ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
-                            ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
-                            ListItem.setMimeType('application/xml+dash')
-                            ListItem.setProperty('inputstream.adaptive.stream_headers', 'User-Agent='+quote(UA)+'&auth=SSL/TLS&verifypeer=false')
-                            ListItem.setProperty('inputstream.adaptive.license_type', DRM)
-                            #ListItem.setProperty('inputstream.adaptive.manifest_update_parameter', 'full')
-                            ListItem.setProperty('inputstream.adaptive.license_key', licServ+'|'+licenseUrl+'&auth=SSL/TLS&verifypeer=false|R{SSM}|')
-                            #ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
-                            ListItem.setProperty('IsPlayable', 'true')
-
-                            catchup = self.archiveService
-
-                            if catchup == '':
-                                sec = 90.0 
-                            else:
-                                sec = catchup.total_seconds()
-
-                            # 3H stream
-                            playTime = 11160 - sec 
-
-                            ListItem.setProperty('StartOffset', str(playTime))
-                            ListItem.setProperty('inputstream.adaptive.play_timeshift_buffer', 'true')
-
-                        self.strmUrl = strmUrl
-                        xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
-                        res = True
-
-                    except Exception as ex:
-                        deb('Exception while trying to play video: {}'.format(getExceptionString()))
-                        self.unlockCurrentlyPlayedService()
-                        xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
-
                 if service == 'PlayerPL':
                     try:
                         self.playbackStopped = False
@@ -1186,7 +1118,7 @@ class PlayService(xbmc.Player, BasePlayService):
                             xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
 
                 if pl.match(service) or channelInfo.title == 'StreamSetupDialog':
-                    playbackServices = ['C More', 'Polsat GO', 'Polsat GO Box', 'Ipla', 'nc+ GO', 'PlayerPL', 'Telia Play', 'Telewizja Polska', 'WP Pilot']
+                    playbackServices = ['C More', 'Polsat GO', 'Polsat GO Box', 'Ipla', 'PlayerPL', 'Telia Play', 'Telewizja Polska', 'WP Pilot']
                     if self.currentlyPlayedService['service'] not in playbackServices:
                         catchup = False
 
