@@ -1710,7 +1710,7 @@ msgstr "Föredra HD-ström"
 
 msgctxt "#30976"
 msgid "Refresh EPG table periodically"
-msgstr "Uppdatera EPG tabellen regelbundet"
+msgstr "Uppdatera EPG tablå regelbundet"
 
 msgctxt "#30977"
 msgid "Max stream startup time (sec)"
