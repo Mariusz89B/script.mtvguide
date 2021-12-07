@@ -903,10 +903,20 @@ class Database(object):
                 if x.strm is not None and x.strm != '':
                     #deb('[UPD] Updating: CH=%-35s STRM=%-30s SRC={}'.format(x.channelid, x.strm, x.src))
                     try:
+                        numbers = None
+                        p = re.compile('\w+\d+')
+                        if p.match(x.channelid):
+                            numbers = re.sub(r"([0-9]+(\.[0-9]+)?)",r" \1", x.channelid).strip()
+
                         try:
                             c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid, x.strm])
+                            if numbers:
+                                c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [numbers, x.strm])
                         except:
                             c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid.decode('utf-8'), x.strm])
+                            if numbers:
+                                c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [numbers.decode('utf-8'), x.strm])
+
                         nrOfChannelsUpdated += 1
                     except Exception as ex:
                         deb('[UPD] Error updating stream: {}'.format(getExceptionString()))
@@ -1786,6 +1796,7 @@ class Database(object):
 
         for chann in channels:
             channelList.append(chann.id.upper())
+            channelList.append(chann.title.upper())
 
         c = self.conn.cursor()
         c.execute("SELECT channel, stream_url FROM custom_stream_url")
