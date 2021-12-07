@@ -2501,6 +2501,19 @@ class Source(object):
                 unziped.close()
                 memfile.close()
 
+            if url.lower().endswith('.xz') or remoteFilename.lower().endswith('.xz') or '.xz' in filename or 'xz' in contentType:
+                tnow = datetime.datetime.now()
+                deb("[EPG] Type: .xz, Unpacking epg: {} [{} sek.]".format(url, str((tnow-start).seconds)))
+                try:
+                    import lzma
+                except ImportError:
+                    from backports import lzma
+                memfile = io.BytesIO(content)
+                unziped = lzma.LZMAFile(filename=memfile)
+                content = unziped.read()
+                unziped.close()
+                memfile.close()
+
             if url.lower().endswith('.bz2') or remoteFilename.lower().endswith('.bz2') or '.bz2' in filename:
                 tnow = datetime.datetime.now()
                 deb("[EPG] Type: .bz2, Unpacking epg: {} [{} sek.]".format(url, str((tnow-start).seconds)))
@@ -2572,6 +2585,19 @@ class XMLTVSource(Source):
                     import gzip
                     memfile = io.BytesIO(file.read())
                     unziped = gzip.GzipFile(fileobj=memfile)
+                    content = unziped.read()
+                    unziped.close()
+                    memfile.close()
+
+                if filename.lower().endswith('.xz') or '.xz' in filename:
+                    tnow = datetime.datetime.now()
+                    deb("[EPG] Type: .xz, Unpacking epg: {} [{} sek.]".format(url, str((tnow-start).seconds)))
+                    try:
+                        import lzma
+                    except ImportError:
+                        from backports import lzma
+                    memfile = io.BytesIO(content)
+                    unziped = lzma.LZMAFile(filename=memfile)
                     content = unziped.read()
                     unziped.close()
                     memfile.close()

@@ -1,4 +1,7 @@
-﻿wersja 9.8.4 - 2021-12-07
+﻿wersja 9.8.5 - 2021-12-07
+- dodane wsparcie dla plików .xz
+
+wersja 9.8.4 - 2021-12-07
 - poprawka błędu przy dodawaniem kanału
 
 wersja 9.8.3 - 2021-12-06
@@ -37,7 +40,7 @@ wersja 9.7.5 - 2021-11-02
 - poprawione błędy
 
 wersja 9.7.4 - 2021-11-01
-- dodano ustawienie sortowania listy EPG
+- dodane ustawienie sortowania listy EPG
 - poprawka tvg-id
 
 wersja 9.7.3 - 2021-11-01
