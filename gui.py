@@ -4228,6 +4228,9 @@ class mTVGuide(xbmcgui.WindowXML):
         v = ([channel.title.upper() for channel in self.database.getChannelList(customCategory=strings(30325)) if channel.title.upper()])
         n = ([channel.title.upper() for channel in self.database.getAllChannelList() if channel.title.upper()])
 
+        epgList = v + n
+        epgList = list(dict.fromkeys(epgList))
+
         if channels < 2:
             if channels == 0:
                 res = xbmcgui.Dialog().select(strings(59994), [strings(30988), strings(59997)])
@@ -4236,7 +4239,6 @@ class mTVGuide(xbmcgui.WindowXML):
                     self.channelsSelect()
 
                 if res == 0:
-                    epgList = v + n
                     epgList = sorted(epgList)
 
                     if epgList:
@@ -4254,7 +4256,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
                     else:
                         check = letterList[res]
-                        epgList = [idx for idx in v + n if idx[0].lower() == check.lower()] 
+                        epgList = [idx for idx in epgList if idx[0].lower() == check.lower()] 
                         epgList = sorted(epgList)
                 
                         if epgList:
