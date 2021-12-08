@@ -895,13 +895,16 @@ class Database(object):
         try:
             #if len(streams.automap) > 0 and len(streams.channels) > 0:
             self.deleteCustomStreams(streamSource, serviceStreamRegex)
-            deb('[UPD] Updating database')
+            #deb('-------------------------------------------------------------------------------------')
+            #deb('[UPD] Updating database')
+            #deb('-------------------------------------------------------------------------------------')
+            #deb('[UPD]     %-40s %-40s %-35s' % ('-TITLE-', '-ORIG NAME-', '-SERVICE-'))
             nrOfChannelsUpdated = 0
             c = self.conn.cursor()
 
             for x in streams.automap:
                 if x.strm is not None and x.strm != '':
-                    #deb('[UPD] Updating: CH=%-35s STRM=%-30s SRC={}'.format(x.channelid, x.strm, x.src))
+                    #deb('[UPD]     %-40s %-40s %-35s ' % (x.channelid, x.channelid, x.strm))
                     try:
                         numbers = None
                         p = re.compile('\w+\d+')
@@ -923,14 +926,14 @@ class Database(object):
 
             self.conn.commit()
             c.close()
-            deb('[UPD] Finished updating database, stored: {} streams from service: {}'.format(nrOfChannelsUpdated, streamSource))
+            #deb('[UPD] Finished updating database, stored: {} streams from service: {}'.format(nrOfChannelsUpdated, streamSource))
         
         except Exception as ex:
             deb('[UPD] Error updating streams: {}'.format(getExceptionString()))
 
             self.conn.commit()
             c.close()
-            deb('[UPD] Finished updating database, stored: {} streams from service: {}'.format(nrOfChannelsUpdated, streamSource))
+            #deb('[UPD] Finished updating database, stored: {} streams from service: {}'.format(nrOfChannelsUpdated, streamSource))
         
         except Exception as ex:
             deb('[UPD] Error updating streams: {}'.format(getExceptionString()))
@@ -939,7 +942,7 @@ class Database(object):
         from unidecode import unidecode
         try:
             c = self.conn.cursor()
-            c.execute("SELECT custom.channel, custom.stream_url FROM custom_stream_url as custom LEFT JOIN channels as chann ON (UPPER(custom.channel)) = (UPPER(chann.id)) WHERE chann.id IS NULL")
+            c.execute("SELECT custom.channel, custom.stream_url FROM custom_stream_url as custom LEFT JOIN channels as chann ON (UPPER(custom.channel)) = (UPPER(chann.id) OR UPPER(custom.channel)) = (UPPER(chann.title)) WHERE chann.id IS NULL")
             
             if c.rowcount:
                 deb('\n\n')
@@ -1187,9 +1190,9 @@ class Database(object):
 
                 if self.ChannelsWithStream == 'true':
                     if onlyVisible:
-                        c.execute('SELECT DISTINCT chann.id, chann.title, chann.logo, chann.stream_url, chann.source, chann.visible, chann.weight, chann.titles FROM channels AS chann INNER JOIN custom_stream_url AS custom ON (UPPER(chann.id)) = (UPPER(custom.channel)) WHERE source=? AND visible=? ORDER BY weight', [self.source.KEY, True])
+                        c.execute('SELECT DISTINCT chann.id, chann.title, chann.logo, chann.stream_url, chann.source, chann.visible, chann.weight, chann.titles FROM channels AS chann INNER JOIN custom_stream_url AS custom ON (UPPER(chann.id)) = (UPPER(custom.channel)) OR (UPPER(chann.title)) = (UPPER(custom.channel)) WHERE source=? AND visible=? ORDER BY weight', [self.source.KEY, True])
                     else:
-                        c.execute('SELECT DISTINCT chann.id, chann.title, chann.logo, chann.stream_url, chann.source, chann.visible, chann.weight, chann.titles FROM channels AS chann INNER JOIN custom_stream_url AS custom ON (UPPER(chann.id)) = (UPPER(custom.channel)) WHERE source=? ORDER BY weight', [self.source.KEY])
+                        c.execute('SELECT DISTINCT chann.id, chann.title, chann.logo, chann.stream_url, chann.source, chann.visible, chann.weight, chann.titles FROM channels AS chann INNER JOIN custom_stream_url AS custom ON (UPPER(chann.id)) = (UPPER(custom.channel)) OR (UPPER(chann.title)) = (UPPER(custom.channel)) WHERE source=? ORDER BY weight', [self.source.KEY])
                 else:
                     if onlyVisible:
                         c.execute('SELECT * FROM channels WHERE source=? AND visible=? ORDER BY weight', [self.source.KEY, True])
@@ -1765,7 +1768,7 @@ class Database(object):
     def _getCustomStreamUrlList(self, channel):
         result = list()
         c = self.conn.cursor()
-        c.execute("SELECT stream_url FROM custom_stream_url WHERE channel like ?", [channel.id])
+        c.execute("SELECT stream_url FROM custom_stream_url WHERE channel like ? OR channel like ?", [channel.id, channel.title])
         for row in c:
             url = row[str('stream_url')]
             result.append(url)

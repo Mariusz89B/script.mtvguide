@@ -893,6 +893,7 @@ class baseServiceUpdater:
 
     def loadChannelList(self, epg_channels=None):
         from re import match
+
         try:
             startTime = datetime.datetime.now()
             self.channels = self.getBaseChannelList()
@@ -914,6 +915,8 @@ class baseServiceUpdater:
             self.log('[UPD] Matched streams')
             self.log('-------------------------------------------------------------------------------------')
             self.log('[UPD]     %-40s %-40s %-35s' % ('-TITLE-', '-ORIG NAME-', '-SERVICE-'))
+
+            channelList = list()
 
             result = list()
             titles = list()
@@ -962,6 +965,7 @@ class baseServiceUpdater:
 
                             y.src = newMapElement.src
                             y.strm = newMapElement.strm
+
                             try:
                                 self.log('[UPD] [B] %-40s %-40s %-35s ' % (unidecode(newMapElement.channelid), unidecode(y.title), newMapElement.strm))
                             except:
@@ -975,6 +979,17 @@ class baseServiceUpdater:
                             y.strm = x.strm
                             x.src  = self.serviceName
                             y.src = x.src
+
+                            try:
+                                if y.strm == '':
+                                    y.strm == 'None'
+                                try:
+                                    channelList.append(unidecode(y.title) + ', ' + y.strm)
+                                except:
+                                    channelList.append(unidecode(self.decodeString(y.title)) + ', ' + y.strm)
+                            except:
+                                pass
+
                             try:
                                 self.log('[UPD]     %-40s %-40s %-35s ' % (unidecode(x.channelid), unidecode(y.title), x.strm))
                             except:
@@ -1004,11 +1019,12 @@ class baseServiceUpdater:
             if not os.path.exists(profilePath):
                 os.makedirs(profilePath)
 
-            channelList = list()
             for y in self.channels:
                 if y.src == '' or y.src != self.serviceName:
                     if y.title != '':
                         try:
+                            if y.strm == '':
+                                y.strm == 'None'
                             try:
                                 channelList.append(unidecode(y.title) + ', ' + y.strm)
                             except:
@@ -1020,6 +1036,8 @@ class baseServiceUpdater:
                             self.log('[UPD]     %-40s %-40s %-12s %-35s' % (unidecode(y.title.upper()), unidecode(y.name), y.cid, y.strm))
                         except:
                             self.log('[UPD]     %-40s %-40s %-12s %-35s' % (unidecode(self.decodeString(y.title.upper())), unidecode(self.decodeString(y.name)), y.cid, y.strm))
+
+            channelList = list(dict.fromkeys(channelList))
 
             if sys.version_info[0] > 2:
                 with open(file_name, 'ab+') as f:

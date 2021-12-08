@@ -4225,8 +4225,8 @@ class mTVGuide(xbmcgui.WindowXML):
     def letterSort(self, channels):
         epgList = list()
 
-        v = ([channel.title.upper() for channel in self.database.getChannelList(customCategory=strings(30325))])
-        n = ([channel.title.upper() for channel in self.database.getAllChannelList()])
+        v = ([channel.title.upper() for channel in self.database.getChannelList(customCategory=strings(30325)) if channel.title.upper()])
+        n = ([channel.title.upper() for channel in self.database.getAllChannelList() if channel.title.upper()])
 
         if channels < 2:
             if channels == 0:
@@ -4316,7 +4316,7 @@ class mTVGuide(xbmcgui.WindowXML):
         strmList = sorted(set(strmList))
         strmList = [x.split(', ')[0].strip() for x in strmList if x.split(', ')[0].strip()]
 
-        res = xbmcgui.Dialog().select(strings(59994), [strings(30988), strings(59997), 'Skip'])
+        res = xbmcgui.Dialog().select(strings(59994), [strings(30988), strings(59997)])
 
         if res < 0:
             if epgList != '':
@@ -4326,7 +4326,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
         elif res == 0:
             if strmList:
-                res = xbmcgui.Dialog().select(strings(59992), strmList)
+                res = xbmcgui.Dialog().select(strings(59992) + ': [COLOR gold]' + epgChann + '[/COLOR]', strmList)
                 if res < 0:
                     if epgList != '':
                         self.channelsFromStream(epgChann=epgChann, epgList=epgList, channels=channels)
@@ -4358,7 +4358,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 strmList = sorted(strmList)
 
                 if strmList:
-                    res = xbmcgui.Dialog().select(strings(59992), strmList)
+                    res = xbmcgui.Dialog().select(strings(59992) + ': [COLOR gold]' + epgChann + '[/COLOR]', strmList)
                     
                     if res < 0:
                         if epgList != '':
@@ -4375,8 +4375,8 @@ class mTVGuide(xbmcgui.WindowXML):
                     else:
                         self.channelsSelect()
 
-        elif res == 2:
-            self.channelRegex(epgChann, epgChann, newChannel)
+        #elif res == 2:
+            #self.channelRegex(epgChann, epgChann, newChannel)
 
 
     def channelRegex(self, epgChann, regChann, newChannel="", logo=""):
