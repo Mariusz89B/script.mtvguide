@@ -837,11 +837,11 @@ class Database(object):
                     break
 
                 if priority == service.servicePriority:
-                    service.startLoadingChannelList(epgChannels.items())
+                    service.startLoadingChannelList(epgChannels)
                     progress_callback(100, "{}: {}".format(strings(59915), service.getDisplayName()) )
                     service.waitUntilDone()
                     
-                    self.storeCustomStreams(service, service.serviceName, service.serviceRegex, epgChannels)
+                    self.storeCustomStreams(service, service.serviceName, service.serviceRegex)
 
         serviceList = list()
         self.printStreamsWithoutChannelEPG()
@@ -895,9 +895,9 @@ class Database(object):
                 else:
                     result.update({x[0].upper(): ''})
 
-        return result#.items()
+        return result.items()
 
-    def storeCustomStreams(self, streams, streamSource, serviceStreamRegex, epgChannels):
+    def storeCustomStreams(self, streams, streamSource, serviceStreamRegex):
         try:
             #if len(streams.automap) > 0 and len(streams.channels) > 0:
             self.deleteCustomStreams(streamSource, serviceStreamRegex)
@@ -907,13 +907,6 @@ class Database(object):
             #deb('[UPD]     %-40s %-40s %-35s' % ('-TITLE-', '-ORIG NAME-', '-SERVICE-'))
             nrOfChannelsUpdated = 0
             c = self.conn.cursor()
-
-            epgChannList = epgChannels.values()
-
-            epgList = []
-            for elem in epgChannList:
-                for item in elem.split(', '):
-                    epgList.append(item)
 
             for x in streams.automap:
                 if x.strm is not None and x.strm != '':
@@ -925,17 +918,13 @@ class Database(object):
                             channelid = re.sub(r"([0-9]+(\.[0-9]+)?)",r" \1", x.channelid).strip()
 
                         try:
-                            if x.channelid.upper() in epgList:
-                                c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid, x.strm])
+                            c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid, x.strm])
                             if channelid:
-                                if channelid.upper() in epgList:
-                                    c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [channelid, x.strm])
+                                c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [channelid, x.strm])
                         except:
-                            if x.channelid.upper() in epgList:
-                                c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid.decode('utf-8'), x.strm])
+                            c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid.decode('utf-8'), x.strm])
                             if channelid:
-                                if channelid.upper() in epgList:
-                                    c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [channelid.decode('utf-8'), x.strm])
+                                c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [channelid.decode('utf-8'), x.strm])
 
                         if channelid:
                             nrOfChannelsUpdated += 2
@@ -997,7 +986,7 @@ class Database(object):
             serviceHandler = playService.SERVICES[serviceName]
             if serviceHandler.serviceEnabled == 'true':
                 serviceHandler.resetService()
-                serviceHandler.startLoadingChannelList(epgChannels.items())
+                serviceHandler.startLoadingChannelList(epgChannels)
                 serviceList.append(serviceHandler)
 
         deb('[UPD] Starting updating STRM')
@@ -1005,7 +994,7 @@ class Database(object):
             for service in serviceList:
                 if priority == service.servicePriority:
                     service.waitUntilDone()
-                    self.storeCustomStreams(service, service.serviceName, service.serviceRegex, epgChannels)
+                    self.storeCustomStreams(service, service.serviceName, service.serviceRegex)
 
     def setCategory(self, category):
         try:
