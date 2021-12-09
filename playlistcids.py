@@ -581,12 +581,13 @@ class PlaylistUpdater(baseServiceUpdater):
                                 except:
                                     regex_match = re.compile('((?i){lang})'.format(lang=lang.lower().encode('utf-8')))
                             
-                            elif PATTERN == 4: 
+                            elif PATTERN > 4: 
                                 try:
                                     regex_match = re.compile('(^|(\s))(L\s*)?({lang})((:|\s)|$)'.format(lang=lang), re.IGNORECASE)
                                 except:
                                     regex_match = re.compile('(^|(\s))(L\s*)?({lang})((:|\s)|$)'.format(lang=lang.encode('utf-8')), re.IGNORECASE)
 
+                            
                             if APPEND != '' and self.serviceEnabled == 'true':
                                 match = regex_match.match(title)
                                 if match is None:
@@ -654,7 +655,7 @@ class PlaylistUpdater(baseServiceUpdater):
                                     if( regexRemove.findall(tvg_title) ):
                                         tvg_title = ''
 
-                            if self.filtered:
+                            if self.filtered and PATTERN != 5:
                                 for regexAdd in regexAddList:
                                     if not ( regexAdd.findall(title) ):
                                         title = '' 

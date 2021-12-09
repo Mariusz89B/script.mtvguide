@@ -91,6 +91,12 @@ if ZONE_CONFIG == 'true':
 else:
     TIME_ZONE_AUTO = False
 
+ALT_CHANN = ADDON.getSetting('epg_display_name')
+if ALT_CHANN == 'true':
+    CH_DISP_NAME = True
+else:
+    CH_DISP_NAME = False
+
 NUMBER_OF_SERVICE_PRIORITIES = 12
 SETTINGS_TO_CHECK = ['source', 'xmltv_file', 'xmltv_logo_folder',
                      'm-TVGuide', 'm-TVGuide2', 'm-TVGuide3',
@@ -831,11 +837,11 @@ class Database(object):
                     break
 
                 if priority == service.servicePriority:
-                    service.startLoadingChannelList(epgChannels)
+                    service.startLoadingChannelList(epgChannels.items())
                     progress_callback(100, "{}: {}".format(strings(59915), service.getDisplayName()) )
                     service.waitUntilDone()
                     
-                    self.storeCustomStreams(service, service.serviceName, service.serviceRegex)
+                    self.storeCustomStreams(service, service.serviceName, service.serviceRegex, epgChannels)
 
         serviceList = list()
         self.printStreamsWithoutChannelEPG()
@@ -889,9 +895,9 @@ class Database(object):
                 else:
                     result.update({x[0].upper(): ''})
 
-        return result.items()
+        return result#.items()
 
-    def storeCustomStreams(self, streams, streamSource, serviceStreamRegex):
+    def storeCustomStreams(self, streams, streamSource, serviceStreamRegex, epgChannels):
         try:
             #if len(streams.automap) > 0 and len(streams.channels) > 0:
             self.deleteCustomStreams(streamSource, serviceStreamRegex)
@@ -902,25 +908,39 @@ class Database(object):
             nrOfChannelsUpdated = 0
             c = self.conn.cursor()
 
+            epgChannList = epgChannels.values()
+
+            epgList = []
+            for elem in epgChannList:
+                for item in elem.split(', '):
+                    epgList.append(item)
+
             for x in streams.automap:
                 if x.strm is not None and x.strm != '':
                     #deb('[UPD]     %-40s %-40s %-35s ' % (x.channelid, x.channelid, x.strm))
                     try:
-                        numbers = None
+                        channelid = None
                         p = re.compile('\w+\d+')
-                        if p.match(x.channelid):
-                            numbers = re.sub(r"([0-9]+(\.[0-9]+)?)",r" \1", x.channelid).strip()
+                        if p.match(x.channelid) and CH_DISP_NAME:
+                            channelid = re.sub(r"([0-9]+(\.[0-9]+)?)",r" \1", x.channelid).strip()
 
                         try:
-                            c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid, x.strm])
-                            if numbers:
-                                c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [numbers, x.strm])
+                            if x.channelid.upper() in epgList:
+                                c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid, x.strm])
+                            if channelid:
+                                if channelid.upper() in epgList:
+                                    c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [channelid, x.strm])
                         except:
-                            c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid.decode('utf-8'), x.strm])
-                            if numbers:
-                                c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [numbers.decode('utf-8'), x.strm])
+                            if x.channelid.upper() in epgList:
+                                c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid.decode('utf-8'), x.strm])
+                            if channelid:
+                                if channelid.upper() in epgList:
+                                    c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [channelid.decode('utf-8'), x.strm])
 
-                        nrOfChannelsUpdated += 1
+                        if channelid:
+                            nrOfChannelsUpdated += 2
+                        else:
+                            nrOfChannelsUpdated += 1
                     except Exception as ex:
                         deb('[UPD] Error updating stream: {}'.format(getExceptionString()))
 
@@ -977,7 +997,7 @@ class Database(object):
             serviceHandler = playService.SERVICES[serviceName]
             if serviceHandler.serviceEnabled == 'true':
                 serviceHandler.resetService()
-                serviceHandler.startLoadingChannelList(epgChannels)
+                serviceHandler.startLoadingChannelList(epgChannels.items())
                 serviceList.append(serviceHandler)
 
         deb('[UPD] Starting updating STRM')
@@ -985,7 +1005,7 @@ class Database(object):
             for service in serviceList:
                 if priority == service.servicePriority:
                     service.waitUntilDone()
-                    self.storeCustomStreams(service, service.serviceName, service.serviceRegex)
+                    self.storeCustomStreams(service, service.serviceName, service.serviceRegex, epgChannels)
 
     def setCategory(self, category):
         try:
@@ -2916,12 +2936,15 @@ def customParseXMLTV(xml, progress_callback):
         except:
             title = id
 
-        try:
-            titleList = channelTitleRe.findall(channel)
-            titles = ', '.join([elem.upper() for elem in titleList])
-            titles = re.sub('[^\d+a-zA-Z,\s]+', '', titles)
+        if CH_DISP_NAME:
+            try:
+                titleList = channelTitleRe.findall(channel)
+                titles = ', '.join([elem.upper() for elem in titleList])
+                titles = re.sub('[^\d+a-zA-Z,\s]+', '', titles)
 
-        except:
+            except:
+                titles = title
+        else:
             titles = title
 
         try:
@@ -3131,9 +3154,10 @@ def parseXMLTV(context, f, size, logoFolder, progress_callback):
 
                 titles = None
                 
-                titleList = elem.findall("display-name")
-                titles = ', '.join([x.text.upper() for x in titleList])
-                titles = re.sub('[^\d+a-zA-Z,\s]+', '', titles)
+                if CH_DISP_NAME:
+                    titleList = elem.findall("display-name")
+                    titles = ', '.join([x.text.upper() for x in titleList])
+                    titles = re.sub('[^\d+a-zA-Z,\s]+', '', titles)
 
                 if not titles:
                     titles = elem.get("id").upper()
