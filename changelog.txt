@@ -1,4 +1,7 @@
-﻿wersja 9.8.5 - 2021-12-12
+﻿wersja 9.8.6 - 2021-12-13
+- naprawiono odświeżanie tabeli EPG po zakończeniu nagrywania
+
+wersja 9.8.5 - 2021-12-12
 - dodane wsparcie dla plików .xz
 - poprawione błędy
 

@@ -2,7 +2,7 @@
 <addon
     id="script.mtvguide"
     name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]"
-    version="9.8.5"
+    version="9.8.6-beta.1"
     provider-name="Team Mods-Kodi">
   <requires>
     <import addon="xbmc.addon" version="17.0.0"/>
@@ -42,7 +42,10 @@
 	<website>http://mods-kodi.pl/</website>
 	<email>support@m-tvguide.pl</email>
     <source>mods-kodi.pl © 2013 - 2021</source>
-    <news>v9.8.5 (2021-12-12)
+    <news>v9.8.6 (2021-12-13)
+- Fixed EPG table refresh on record completion.
+
+v9.8.5 (2021-12-12)
 - Added .xz file support.
 - Bug fixes.
 

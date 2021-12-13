@@ -1202,6 +1202,7 @@ class RecordService(BasePlayService):
         else:
             deb('RecordService - end of recording program: {}'.format(threadData['program'].title.encode('utf-8')))
 
+        self.epg.database.removeRecording(threadData['program'])
         threadData['notificationDisplayed'] = True
         self.showEndRecordNotification(threadData)
 
