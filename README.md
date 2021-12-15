@@ -5,7 +5,7 @@
 [![Kodi](https://img.shields.io/badge/platform-Kodi-lightgrey.svg)](https://kodi.tv/)
 
 # Support us!
-We are doing everything in our effort to create the best m-TVGuide experience, contribute to our development and support further work. 
+We are doing everything in our effort to create the best TVGuide experience, contribute to our development and support further work. 
 
 All donations are appreciated.<br>
 https://www.paypal.me/mariusz89b
