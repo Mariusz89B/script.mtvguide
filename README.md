@@ -7,7 +7,7 @@
 # Support us!
 We are doing everything in our effort to continue work on this add-on, contribute to our development and support further work. 
 
-All donations are appreciated.
+All donations are appreciated.<br>
 https://www.paypal.me/mariusz89b
 
 # m-TVGuide
