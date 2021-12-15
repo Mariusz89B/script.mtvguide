@@ -4,6 +4,12 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 [![Kodi](https://img.shields.io/badge/platform-Kodi-lightgrey.svg)](https://kodi.tv/)
 
+# Support us!
+We are doing everything in our effort to continue work on this add-on, contribute to our development and support further work. 
+
+All donations are appreciated.
+https://www.paypal.me/mariusz89b
+
 # m-TVGuide
 
 This is a Kodi add-on with support for an electronic tvguide (EPG) and that allows 
