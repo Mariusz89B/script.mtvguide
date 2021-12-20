@@ -585,8 +585,8 @@ msgid "Cancel"
 msgstr "Abbrechen"
 
 msgctxt "#30504"
-msgid "Notification from mods-kodi.pl"
-msgstr "Benachrichtigung von mods-kodi.pl"
+msgid "Notification from service administration"
+msgstr "Benachrichtigung der Dienstverwaltung"
 
 msgctxt "#30505"
 msgid "Genre"
@@ -821,8 +821,8 @@ msgid "Enable"
 msgstr "Aktiviert"
 
 msgctxt "#30723"
-msgid "Password for adult channels taken from mods-kodi"
-msgstr "Passwort für kanäle von erwachsenen eingeben, die von mods-kodi"
+msgid "Password for adult channels taken from help section"
+msgstr "Passwort für kanäle von erwachsenen eingeben, die von Hilfebereich"
 
 msgctxt "#30724"
 msgid "Incorrect password!"

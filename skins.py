@@ -88,9 +88,9 @@ class Skin:
     ADDON_CUSTOM_SKINS_RES  = os.path.join(PROFILE_PATH, 'resources')
     ADDON_CUSTOM_SKINS      = os.path.join(ADDON_CUSTOM_SKINS_RES, 'skins')
 
-    NEW_SKINS_BASE_URL      = M_TVGUIDE_SUPPORT + 'skins/'
+    NEW_SKINS_BASE_URL      = 'https://github.com/Mariusz89B/script.mtvguide-support/raw/main/skins/'
 
-    NEW_SKINS_URL           = NEW_SKINS_BASE_URL + 'skinlist.xml'
+    NEW_SKINS_URL           = 'https://raw.githubusercontent.com/Mariusz89B/script.mtvguide-support/main/skins/skinlist.xml'
 
     CURRENT_SKIN            = ADDON.getSetting('Skin')
     CURRENT_SKIN_DIR        = None

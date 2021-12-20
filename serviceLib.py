@@ -743,10 +743,10 @@ class baseServiceUpdater:
 
             self.loadSingleBaseMap('base', self.baseMapFile)
 
-            if ADDON.getSetting('XXX_EPG') != "":
+            if ADDON.getSetting('XXX_EPG') == "true":
                 self.loadSingleBaseMap('adult', self.adultMapFile)
 
-            if ADDON.getSetting('VOD_EPG') != "":
+            if ADDON.getSetting('VOD_EPG') == "true":
                 self.loadSingleBaseMap('vod', self.vodMapFile)
 
             for k, v in CC_DICT.items():

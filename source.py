@@ -2016,14 +2016,14 @@ class Database(object):
 
             if version < [6, 6, 9]:
                 #its version 6.6.8...
-                ADDON.setSetting(id="XXX_EPG", value=(""))
+                ADDON.setSetting(id="XXX_EPG", value=("false"))
                 ADDON.setSetting(id="showAdultChannels", value=(strings(30720)))
                 c.execute('UPDATE version SET major=6, minor=6, patch=9')
                 self.conn.commit()
 
             if version < [6, 6, 9]:
                 #its version 6.6.8...
-                ADDON.setSetting(id="VOD_EPG", value=(""))
+                ADDON.setSetting(id="VOD_EPG", value=("false"))
                 ADDON.setSetting(id="showVodChannels", value=(strings(30720)))
                 c.execute('UPDATE version SET major=6, minor=6, patch=9')
                 self.conn.commit()
@@ -2652,8 +2652,6 @@ class MTVGUIDESource(Source):
         self.MTVGUIDEUrl       = ADDON.getSetting('m-TVGuide').strip()
         self.MTVGUIDEUrl2      = ADDON.getSetting('m-TVGuide2').strip()
         self.MTVGUIDEUrl3      = ADDON.getSetting('m-TVGuide3').strip()
-        self.XXX_EPG_Url       = ADDON.getSetting('XXX_EPG').strip()
-        self.VOD_EPG_Url       = ADDON.getSetting('VOD_EPG').strip()
         self.epgBasedOnLastModDate = ADDON.getSetting('UpdateEPGOnModifiedDate')
         self.EPGSize    = None
         self.logoFolder = None
@@ -2680,10 +2678,6 @@ class MTVGUIDESource(Source):
                 parsedData.update({self.MTVGUIDEUrl2:{'date': date}})
             if self.MTVGUIDEUrl3 != "" and not strings2.M_TVGUIDE_CLOSING:
                 parsedData.update({self.MTVGUIDEUrl3:{'date': date}})
-            if self.XXX_EPG_Url != "":
-                parsedData.update({self.XXX_EPG_Url:{'date': date}})
-            if self.VOD_EPG_Url != "":
-                parsedData.update({self.VOD_EPG_Url:{'date': date}})
 
             for k, v in CC_DICT.items():
                 epg = ADDON.getSetting('epg_{cc}'.format(cc=k)).strip()

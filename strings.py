@@ -46,8 +46,8 @@ import xbmcaddon, xbmc
 import traceback, sys
 
 ADDON_ID            = 'script.mtvguide'
-RSS_FILE            = 'http://mods-kodi.pl/infusions/kodi_info/kodi_info.txt'
-M_TVGUIDE_SUPPORT   = 'http://mods-kodi.pl/mtvguide/support/'
+RSS_FILE            = 'https://raw.githubusercontent.com/Mariusz89B/script.mtvguide-support/main/kodi_info.txt'
+M_TVGUIDE_SUPPORT   = 'https://raw.githubusercontent.com/Mariusz89B/script.mtvguide-support/main/'
 ADDON               = xbmcaddon.Addon(id = ADDON_ID)
 ADDON_PATH          = ADDON.getAddonInfo('path')
 ADDON_CIDUPDATED    = False    #zabezpieczenie przed ponownym updatem cidow
