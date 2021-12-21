@@ -2,7 +2,7 @@
 <addon
     id="script.mtvguide"
     name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]"
-    version="9.8.6-beta.2"
+    version="9.8.6-beta.3"
     provider-name="Team Mods-Kodi">
   <requires>
     <import addon="xbmc.addon" version="17.0.0"/>
@@ -44,6 +44,7 @@
     <source>mods-kodi.pl © 2013 - 2021</source>
     <news>v9.8.6 (2021-12-20)
 - Fixed EPG table refresh on record completion.
+- Fixed service Polsat GO access groups.
 
 v9.8.5 (2021-12-12)
 - Added .xz file support.

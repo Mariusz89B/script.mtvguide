@@ -183,9 +183,13 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
                 else:
                     myper = []
                     for i in data["result"]["accessGroups"]:
+                        if ':true' in i:
+                            myper.append(str(i))
                         if 'sc:' in i:
                             myper.append(str(i))
                         if 'oth:' in i:
+                            myper.append(str(i))
+                        if 'loc:' in i:
                             myper.append(str(i))
                         if 'cp_sub_ext:' in i:
                             myper.append(str(i.replace('cp_sub_ext','sc')))
