@@ -92,13 +92,14 @@ Please see the **`LICENSE.txt`** file for details.
 
 Please report any legal questions or issues to Github.com
 
-Bug reports should be reported in issues section: <br>
+Bug reports should be reported in issues section:<br>
 https://github.com/Mariusz89B/script.mtvguide/issues/new/choose
 
 Remember to include a full, non-cut off Kodi debug log. 
 See the Kodi wiki page for more detailed instructions on how to obtain the log file.
 
-Additional support/discussion about the add-on can be found on our github https://github.com/Mariusz89B/script.mtvguide/discussions
+Additional support/discussion about the add-on can be found on our github:<br>
+https://github.com/Mariusz89B/script.mtvguide/discussions
 
 <br>
 
