@@ -2605,7 +2605,7 @@
 				</setting>
 				<setting help="95034" id="m-TVGuide" label="30118" type="string">
 					<level>0</level>
-					<default/>
+					<default>https://</default>
 					<constraints>
 						<allowempty>true</allowempty>
 					</constraints>

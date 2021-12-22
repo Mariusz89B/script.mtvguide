@@ -78,11 +78,12 @@ Szczegółowe informacje można znaleźć w pliku LICENSE.txt.
 
 Wsparcie
 
-Wszelkie pytania lub problemy należy zgłaszać na adres support@m-tvguide.pl
+Wszelkie pytania prawne lub problemy prosimy zgłaszać na Github.com
 
-O występujących błędach powiadom administrację serwisu http://mods-kodi.pl podając pełne, 
-nie odcięte alerty dziennika debugowania Kodi.
+Zgłoszenia błędów należy zgłaszać w dziale problemów:
+https://github.com/Mariusz89B/script.mtvguide/issues/new/choose
 
-Dodatkowe wsparcie oraz pomoc uzyskasz logując się na naszą stronę http://mods-kodi.pl
+Pamiętaj, aby dołączyć pełny, log debugowania Kodi. Zobacz stronę wiki Kodi, aby uzyskać szczegółowe instrukcje dotyczące uzyskiwania pliku log.
 
-Te orzeczenie jest również dostępne w języku polskim na stronie http://m-tvguide.pl/regulamin/.
+Dodatkowe wsparcie/dyskusje na temat dodatku można znaleźć na naszym githubie:
+https://github.com/Mariusz89B/script.mtvguide/discussions

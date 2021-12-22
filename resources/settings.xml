@@ -203,7 +203,7 @@
 		<setting label="30111" type="lsep" visible="eq(-19,0) | eq(-19,1)"/>
 		<setting id="xmltv_file" label="30103" type="file" visible="eq(-20,0)"/>
 		<setting id="xmltv_logo_folder" label="30116" type="folder" visible="eq(-21,0)"/>
-		<setting id="m-TVGuide" label="30118" type="text" visible="eq(-22,1)" default=""/>
+		<setting id="m-TVGuide" label="30118" type="text" visible="eq(-22,1)" default="https://"/>
 		<setting id="m-TVGuide2" label="30119" type="text" visible="eq(-23,1)" default=""/>
 		<setting id="m-TVGuide3" label="30120" type="text" visible="eq(-24,1)" default=""/>
 		<setting type="sep" visible="eq(-25,0) | eq(-25,1) + eq(-1,false)"/>

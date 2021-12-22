@@ -704,7 +704,7 @@ class mTVGuide(xbmcgui.WindowXML):
             ADDON.setSetting('source', '1')
 
             txt = ADDON.getSetting('m-TVGuide')
-            if txt == '' or txt == 'http://' or txt == 'https://' or txt == 'http://mods-kodi.pl/':
+            if txt == '' or txt == 'http://' or txt == 'https://':
                 txt = 'http://'
 
             kb = xbmc.Keyboard(txt,'')
@@ -1327,7 +1327,7 @@ class mTVGuide(xbmcgui.WindowXML):
                     ADDON.setSetting('tutorial', 'false')
 
             if ADDON.getSetting('source') == '1':
-                if ADDON.getSetting('m-TVGuide') == 'http://mods-kodi.pl/' or ADDON.getSetting('m-TVGuide') == '':
+                if ADDON.getSetting('m-TVGuide') == 'http://' or ADDON.getSetting('m-TVGuide') == 'https://' or ADDON.getSetting('m-TVGuide') == '':
                     ADDON.setSetting('tutorial', 'true')
                 else:
                     ADDON.setSetting('tutorial', 'false')

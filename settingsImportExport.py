@@ -668,7 +668,7 @@ class SettingsImp:
                 else:
                     txt = xbmcgui.Dialog().input(strings(59945).format(strings(59941)), defaultt=str('http://'))
                  
-                if txt != '' or txt != 'http://' or txt != 'https://' or txt != 'http://mods-kodi.pl/':   
+                if txt != '' or txt != 'http://' or txt != 'https://':   
                     ADDON.setSetting(id='m-TVGuide', value=str(txt))
 
                     if ccList[select] != 'all':
@@ -705,7 +705,7 @@ class SettingsImp:
                 
                 txt = xbmcgui.Dialog().input(strings(59945).format(heading), defaultt=str(epg))
 
-                if txt != '' or txt != 'http://' or txt != 'https://' or txt != 'http://mods-kodi.pl/':
+                if txt != '' or txt != 'http://' or txt != 'https://':
                     if s == 0:
                         ADDON.setSetting(id='m-TVGuide', value=str(txt))
                         ADDON.setSetting(id='epg_{cc}'.format(cc=ccListCh[select]), value=str(''))

@@ -1,7 +1,7 @@
 # XBMC Media Center language file
 # Addon Name: m-TVGuide
 # Addon id: script.mtvguide
-# Addon Provider: mods-kodi
+# Addon Provider: m-TVGuide
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC Addons\n"
@@ -2169,8 +2169,8 @@ msgid "To purchase a premium right now go to:"
 msgstr "Aby wykupić Premium już teraz wejdź na stronę:"
 
 msgctxt "#57038"
-msgid "http://mods-kodi.pl/"
-msgstr "http://mods-kodi.pl/"
+msgid "https://github.com/Mariusz89B/script.mtvguide"
+msgstr "https://github.com/Mariusz89B/script.mtvguide"
 
 msgctxt "#57039"
 msgid "Content is not included in your service"
@@ -2205,8 +2205,8 @@ msgid "Rules are not accepted!"
 msgstr "Regulamin nie został zaakceptowany!"
 
 msgctxt "#57047"
-msgid "Go to http://mods-kodi.pl/ and accept it, to use service."
-msgstr "Wejdź na http://mods-kodi.pl/ i zaakceptuj go, aby korzystać z usługi."
+msgid "Go to https://github.com/Mariusz89B/script.mtvguide and accept it, to use service."
+msgstr "Wejdź na https://github.com/Mariusz89B/script.mtvguide i zaakceptuj go, aby korzystać z usługi."
 
 msgctxt "#57048"
 msgid "Login incorrect"

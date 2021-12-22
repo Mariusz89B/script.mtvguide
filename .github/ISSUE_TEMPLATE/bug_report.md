@@ -81,4 +81,4 @@ Used Operating system:
 <!--- End of this issue -->
 *note: Once the issue is made we require you to update it with new information or Kodi versions should that be required.
 
-Team mods-kodi will consider your problem report however, we will not make any promises the problem will be solved.*
+m-TVGuide administration will consider your problem report however, we will not make any promises the problem will be solved.*

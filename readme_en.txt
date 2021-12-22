@@ -78,12 +78,12 @@ Please see the LICENSE.txt file for details.
 
 Support
 
-Please report any legal questions or issues to support@m-tvguide.pl.
+Please report any legal questions or issues to Github.com
 
-Bug reports can be sent to mods-kodi administration on our website http://mods-kodi.pl/.
-Remember to include a full, non-cut off Kodi debug log. 
-See the Kodi wiki page for more detailed instructions on how to obtain the log file.
+Bug reports should be reported in issues section:
+https://github.com/Mariusz89B/script.mtvguide/issues/new/choose
 
-Additional support/discussion about the add-on can be found on our website http://mods-kodi.pl/.
+Remember to include a full, non-cut off Kodi debug log. See the Kodi wiki page for more detailed instructions on how to obtain the log file.
 
-This statement is also available in polish language on http://m-tvguide.pl/regulamin/.
+Additional support/discussion about the add-on can be found on our github:
+https://github.com/Mariusz89B/script.mtvguide/discussions
