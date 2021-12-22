@@ -7150,13 +7150,14 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
 
         else:
             if self.playable:
-                self.previousDirsId = None
+                self.previousDirsId = previousDirsId
+                self.playable = False
         
         try:
             response = json.loads(xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media":"files"}, "id": 100}' % self.previousDirsId))
             files = response["result"]["files"]
+            
             dirs = {}
-
             items = []
 
             item = xbmcgui.ListItem('[B]..[/B]')
@@ -7177,8 +7178,11 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
             listControl = self.getControl(StreamSetupDialog.C_STREAM_BROWSE_DIRS)
             listControl.reset()
             listControl.addItems(items)
+        
         except:
-            pass
+            self.previousDirsId = previousDirsId
+            if self.playable:
+                self.playable = False
 
     def close(self):
         super(StreamSetupDialog, self).close()
