@@ -845,10 +845,8 @@ class PlayService(xbmc.Player, BasePlayService):
                             except ImportError:
                                 from urllib import urlencode, quote_plus, quote, unquote
 
-                            licenseUrl = channelInfo.lic
+                            licenseUrl, licenseData = channelInfo.lic
                             strmUrl = channelInfo.strm
-
-                            licServ = 'https://b2c-www.redefine.pl/rpc/drm/'
 
                             PROTOCOL = 'mpd'
                             DRM = 'com.widevine.alpha'
@@ -869,7 +867,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                     ListItem.setProperty('inputstream.adaptive.stream_headers', 'Referer: https://polsatgo.pl')
                                     ListItem.setProperty('inputstream.adaptive.license_type', DRM)
                                     ListItem.setProperty('inputstream.adaptive.manifest_update_parameter', 'full')
-                                    ListItem.setProperty('inputstream.adaptive.license_key', licServ+'|Content-Type=application%2Fjson&Referer=https://polsatgo.pl/&User-Agent='+quote(UA)+'|'+licenseUrl+'|JBlicense')                      
+                                    ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl+'|Content-Type=application%2Fjson&Referer=https://polsatgo.pl/&User-Agent='+quote(UA)+'|'+licenseUrl+'|JBlicense')                      
                                     ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
                                     ListItem.setProperty('IsPlayable', 'true')
                             else:

@@ -449,6 +449,9 @@ class PolsatGoUpdater(baseServiceUpdater):
 
     def getChannelStream(self, chann):
         stream = None
+        
+        licenseUrl = None
+        licenseData = None
 
         id_ = self.channCid(chann.cid)
         cpid = 0
