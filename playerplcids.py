@@ -303,13 +303,13 @@ class PlayerPLUpdater(baseServiceUpdater):
 
             regexReplaceList.append( re.compile('(\s|^)(International)(?=\s|$)',  re.IGNORECASE) )
 
-            urlk = 'https://player.pl/playerapi/product/live/list?4K=false&platform=ANDROID_TV'
+            urlk = 'https://player.pl/playerapi/product/live/list?platform=BROWSER'
             
             out = []
             
             data = self.getRequests(urlk, headers=self.HEADERS2, params={})
 
-            self.mylist = self.getRequests('https://player.pl/playerapi/subscriber/product/available/list?4K=false&platform=ANDROID_TV', headers=self.HEADERS2, params={})
+            self.mylist = self.getRequests('https://player.pl/playerapi/subscriber/product/available/list?platform=BROWSER', headers=self.HEADERS2, params={})
 
             if sys.version_info[0] > 2:
                 jdata = data
@@ -317,7 +317,7 @@ class PlayerPLUpdater(baseServiceUpdater):
                 jdata = json.loads(json.dumps(data))
 
             for channel in jdata:
-                if channel['id'] in self.mylist:
+                if channel['id'] in self.mylist or 'TVN HD' == channel['title']:
                     id_ = channel['id']
                     name = channel['title']
                     title = channel['title'] + ' PL'
@@ -329,8 +329,6 @@ class PlayerPLUpdater(baseServiceUpdater):
 
                     name = re.sub(r'^\s*', '', str(name))
                     title = re.sub(r'^\s*', '', str(title))
-
-                    deb('PLAYERPL_CHANNLIST: {}'.format(name))
 
                     cid = '%s:%s' % (id_,'kanal')
                     program = TvCid(cid=cid, name=name, title=title, img=img)
