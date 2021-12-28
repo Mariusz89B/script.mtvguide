@@ -125,7 +125,10 @@ class KeyListener(xbmcgui.WindowXMLDialog):
         self.key = None
 
     def onInit(self):
-        icon = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('path')), 'icon.png')
+        try:
+            icon = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('path')), 'icon.png')
+        except:
+            icon = os.path.join(xbmcvfs.translatePath(ADDON.getAddonInfo('path')), 'icon.png')
 
         self.getControl(400).setImage(icon)
         try:

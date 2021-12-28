@@ -301,7 +301,7 @@ class PlayerPLUpdater(baseServiceUpdater):
         try:
             regexReplaceList = list()
 
-            regexReplaceList.append( re.compile('(\s|^)(International|FAKTY)(?=\s|$)',  re.IGNORECASE) )
+            regexReplaceList.append( re.compile('(\s|^)(International)(?=\s|$)',  re.IGNORECASE) )
 
             urlk = 'https://player.pl/playerapi/product/live/list?4K=true&platform=ANDROID_TV'
             
