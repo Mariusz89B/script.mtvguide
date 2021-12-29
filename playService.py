@@ -867,7 +867,8 @@ class PlayService(xbmc.Player, BasePlayService):
                                     ListItem.setProperty('inputstream.adaptive.stream_headers', 'Referer: https://polsatgo.pl')
                                     ListItem.setProperty('inputstream.adaptive.license_type', DRM)
                                     ListItem.setProperty('inputstream.adaptive.manifest_update_parameter', 'full')
-                                    ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl+'|Content-Type=application%2Fjson&Referer=https://polsatgo.pl/&User-Agent='+quote(UA)+'|'+licenseUrl+'|JBlicense')                      
+                                    ListItem.setProperty('inputstream.adaptive.stream_headers', 'Referer: {}'.format('https://polsatgo.pl'))
+                                    ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl+'|Content-Type=application%2Fjson&Referer=https://polsatgo.pl/&User-Agent='+quote(UA)+'|'+licenseData+'|JBlicense')                      
                                     ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
                                     ListItem.setProperty('IsPlayable', 'true')
                             else:
