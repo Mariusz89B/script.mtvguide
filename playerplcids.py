@@ -66,6 +66,8 @@ import json
 
 serviceName         = 'PlayerPL'
 
+UA = 'okhttp/3.3.1 Android'
+
 if sys.version_info[0] > 2:
     try:
         profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
@@ -105,7 +107,11 @@ class PlayerPLUpdater(baseServiceUpdater):
         
         self.PARAMS = {'4K': 'true','platform': 'ANDROID_TV'}
         
-        self.HEADERS3 = { 'Host': 'konto.tvn.pl','user-agent': 'okhttp/3.3.1 Android','content-type': 'application/x-www-form-urlencoded; charset=UTF-8'}
+        self.HEADERS3 = {
+            'Host': 'konto.tvn.pl',
+            'user-agent': UA,
+            'content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        }
         
         self.ACCESS_TOKEN = ADDON.getSetting('playerpl_access_token')
         self.USER_PUB = ADDON.getSetting('playerpl_user_pub')
@@ -121,19 +127,7 @@ class PlayerPLUpdater(baseServiceUpdater):
         self.ENABLE_SUBS = ADDON.getSetting('playerpl_subtitles')
         self.LOGGED = ADDON.getSetting('playerpl_logged')
 
-        self.HEADERS2 = {
-            'Authorization': 'Basic',
-            'API-DeviceInfo': '{};{};Android;9;{};1.0.38(62);'.format(self.USAGENT, self.USAGENTVER, self.MAKER),
-            'API-DeviceUid': self.DEVICE_ID,
-            'User-Agent': 'okhttp/3.3.1 Android',
-            'Host': 'player.pl',
-            'X-NewRelic-ID': 'VQEOV1JbABABV1ZaBgMDUFU='
-        }
-
-        self.HEADERS2['API-Authentication'] =  self.ACCESS_TOKEN
-        self.HEADERS2['API-SubscriberHash'] =  self.USER_HASH
-        self.HEADERS2['API-SubscriberPub'] =  self.USER_PUB
-        self.HEADERS2['API-ProfileUid'] =  self.SELECTED_PROFILE_ID  
+        self.update_headers2()
 
     def createDatas(self):
 
@@ -303,13 +297,13 @@ class PlayerPLUpdater(baseServiceUpdater):
 
             regexReplaceList.append( re.compile('(\s|^)(International)(?=\s|$)',  re.IGNORECASE) )
 
-            urlk = 'https://player.pl/playerapi/product/live/list?platform=BROWSER'
+            urlk = 'https://player.pl/playerapi/product/live/list?platform=ANDROID_TV'
             
             out = []
             
             data = self.getRequests(urlk, headers=self.HEADERS2, params={})
 
-            self.mylist = self.getRequests('https://player.pl/playerapi/subscriber/product/available/list?platform=BROWSER', headers=self.HEADERS2, params={})
+            self.mylist = self.getRequests('https://player.pl/playerapi/subscriber/product/available/list?platform=ANDROID_TV', headers=self.HEADERS2, params={})
 
             if sys.version_info[0] > 2:
                 jdata = data
@@ -351,6 +345,21 @@ class PlayerPLUpdater(baseServiceUpdater):
 
         return cid
 
+    def update_headers2(self):
+        self.HEADERS2 = {
+            'Authorization': 'Basic',
+            'API-DeviceInfo': '%s;%s;Android;9;%s;1.0.38(62);' % (
+                self.USAGENT, self.USAGENTVER, self.MAKER),
+            'API-DeviceUid': self.DEVICE_ID,
+            'User-Agent': UA,
+            'Host': 'player.pl',
+            'X-NewRelic-ID': 'VQEOV1JbABABV1ZaBgMDUFU=',
+            'API-Authentication': self.ACCESS_TOKEN,
+            'API-SubscriberHash': self.USER_HASH,
+            'API-SubscriberPub': self.USER_PUB,
+            'API-ProfileUid': self.SELECTED_PROFILE_ID,
+        }
+
     def refreshTokenTVN(self):
         POST_DATA = 'grant_type=refresh_token&refresh_token={}&client_id=Player_TV_Android_28d3dcc063672068'.format(self.REFRESH_TOKEN)
         data = self.getRequests(self.POSTTOKEN, data=POST_DATA, headers=self.HEADERS3)
@@ -367,6 +376,7 @@ class PlayerPLUpdater(baseServiceUpdater):
             ADDON.setSetting('playerpl_user_pub', self.USER_PUB )
             ADDON.setSetting('playerpl_user_hash', self.USER_HASH)
             ADDON.setSetting('playerpl_refresh_token', self.REFRESH_TOKEN)
+            self.update_headers2()
             return data
 
     def getTranslate(self, id_):

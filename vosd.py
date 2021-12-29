@@ -225,9 +225,9 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
 
         if action is not None:
             if action == ACTION_UP:
-                self.program = self.gu.getProgramUp(self.program)
-            elif action == ACTION_DOWN:
                 self.program = self.gu.getProgramDown(self.program)
+            elif action == ACTION_DOWN:
+                self.program = self.gu.getProgramUp(self.program)
             elif action == ACTION_LEFT:
                 self.showPreviousProgram()
             elif action == ACTION_RIGHT:
@@ -495,11 +495,11 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
             return #remaining are for keyboard
 
         elif (action.getId() == ACTION_UP):
-            self.program = self.gu.getProgramUp(self.program)
+            self.program = self.gu.getProgramDown(self.program)
             self.refreshControls()
 
         elif (action.getId() == ACTION_DOWN):
-            self.program = self.gu.getProgramDown(self.program)
+            self.program = self.gu.getProgramUp(self.program)
             self.refreshControls()
 
         elif (action.getId() == ACTION_LEFT) and self.keyRightLeftChangeProgram:
