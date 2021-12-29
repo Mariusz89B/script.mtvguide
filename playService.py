@@ -806,10 +806,10 @@ class PlayService(xbmc.Player, BasePlayService):
                         PROTOCOL = 'mpd'
                         DRM = 'com.widevine.alpha'
 
-                        UA = 'okhttp/3.3.1 Android'
+                        UApl = 'okhttp/3.3.1 Android'
 
                         HEADERSz = {
-                            'User-Agent': UA,
+                            'User-Agent': UApl,
                         }
                         
                         import inputstreamhelper
