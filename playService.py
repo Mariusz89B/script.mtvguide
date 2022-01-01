@@ -1097,9 +1097,10 @@ class PlayService(xbmc.Player, BasePlayService):
                                 from urllib import urlencode, quote_plus, quote, unquote
 
                             strmUrl = channelInfo.strm
-                            #adsUrl = channelInfo.lic
+                            licenseUrl = channelInfo.lic
 
                             PROTOCOL = ''
+                            DRM = 'com.widevine.alpha'
 
                             if '.m3u8' in strmUrl:
                                 mimeType = 'application/x-mpegURL'
@@ -1122,6 +1123,11 @@ class PlayService(xbmc.Player, BasePlayService):
                                     ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
                                 ListItem.setMimeType(mimeType)
                                 ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
+                                if licenseUrl != '':
+                                    ListItem.setProperty('inputstream.adaptive.license_type', DRM)
+                                    ListItem.setProperty('inputstream.adaptive.stream_headers', 'Referer: {}'.format('https://pilot.wp.pl/tv/'))
+                                    ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl) 
+                                    ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
                                 ListItem.setProperty('IsPlayable', 'true')
                             
                             self.strmUrl = strmUrl

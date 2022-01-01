@@ -204,10 +204,11 @@ class WpPilotUpdater(baseServiceUpdater):
                     title = channel['name'] + ' PL'
                     img  = channel['thumbnail_mobile']
                     geoblocked = channel['geoblocked']
+                    slug = channel['slug']
                     access = channel['access_status']
                     self.log('[UPD] %-10s %-35s %-15s %-20s %-35s' % (cid, name, geoblocked, access, img))
                     if geoblocked != True and access != 'unsubscribed':
-                        program = TvCid(cid=cid, name=name, title=title, img=img, lic=access)
+                        program = TvCid(cid=cid, name=name, title=title, img=img, lic=slug)
                         result.append(program)
 
             if len(result) <= 0:
@@ -259,15 +260,50 @@ class WpPilotUpdater(baseServiceUpdater):
                     else:
                         return
 
-            if 'hls@live:abr' in response[u'data'][u'stream_channel'][u'streams'][0][u'type']:
-                manifest = response[u'data'][u'stream_channel'][u'streams'][0][u'url'][0]
-            else:
-                manifest = response[u'data'][u'stream_channel'][u'streams'][1][u'url'][0]
+            headersx = {
+                'authority': 'pilot.wp.pl',
+                'device-memory': '8',
+                'dnt': '1',
+                'rtt': '100',
+                'user-agent': 'ExoMedia 4.3.0 (43000) / Android 8.0.0 / foster_e',
+                'dpr': '1',
+                'downlink': '10',
+                'ect': '4g',
+                'accept': '*/*',
+                'origin': 'https://pilot.wp.pl',
+                'referer': 'https://pilot.wp.pl/program/%s/' % chann.lic,
+                'accept-language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
+            }
 
-            data = manifest + '|user-agent=' + headers['user-agent']
+            headersx.update({'Cookie': cookies})
+
+            try:
+                from urllib.parse import urlencode, quote_plus, quote, unquote
+            except ImportError:
+                from urllib import urlencode, quote_plus, quote, unquote
+
+            LICENSE = ''
+            LICENSE_URL = 'https://pilot.wp.pl'
+
+            try:
+                manifest = response[u'data'][u'stream_channel'][u'streams'][0][u'url'][0]
+                widevine = response[u'data'][u'stream_channel']['drms']['widevine']
+                
+                LICENSE = LICENSE_URL + widevine + '|' + urlencode(headersx) +'|R{SSM}|'
+                
+                data = manifest + '|user-agent=' + headers['user-agent']
+
+            except:
+                if 'hls@live:abr' in response[u'data'][u'stream_channel'][u'streams'][0][u'type']:
+                    manifest = response[u'data'][u'stream_channel'][u'streams'][0][u'url'][0]
+                    data = manifest + '|user-agent=' + headers['user-agent']
+                else:
+                    manifest = response[u'data'][u'stream_channel'][u'streams'][1][u'url'][0]
+                    data = manifest + '|user-agent=' + headers['user-agent']
 
             if data is not None and data != "":
                 chann.strm = data
+                chann.lic = LICENSE
 
                 self.log('getChannelStream found matching channel: cid: {}, name: {}, rtmp:{}'.format(chann.cid, chann.name, chann.strm))
                 return chann
