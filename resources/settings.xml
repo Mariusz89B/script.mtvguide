@@ -198,11 +198,11 @@
 		<setting id="show_logo" label="30355" type="bool" default="true" visible="eq(-14,0) | eq(-14,1)"/>
 		<setting id="show_program_logo" label="30364" type="bool" default="true" visible="eq(-15,0) | eq(-15,1)"/>
 		<setting type="sep" visible="eq(-16,0) | eq(-16,1)"/>
-		<setting label="30101" type="lsep" visible="eq(-17,0) | eq(-17,1)"/>
-		<setting type="sep" visible="eq(-18,0) | eq(-18,1)"/>
-		<setting label="30111" type="lsep" visible="eq(-19,0) | eq(-19,1)"/>
-		<setting id="xmltv_file" label="30103" type="file" visible="eq(-20,0)"/>
-		<setting id="xmltv_logo_folder" label="30116" type="folder" visible="eq(-21,0)"/>
+		<setting label="30112" type="lsep" visible="eq(-17,0) | eq(-17,1)"/>
+		<setting id="xmltv_logo_folder" label="30116" type="folder" visible="eq(-18,0) | eq(-18,1)"/>
+		<setting type="sep" visible="eq(-19,0) | eq(-19,1)"/>
+		<setting label="30111" type="lsep" visible="eq(-20,0) | eq(-20,1)"/>
+		<setting id="xmltv_file" label="30103" type="file" visible="eq(-21,0)"/>
 		<setting id="m-TVGuide" label="30118" type="text" visible="eq(-22,1)" default="https://"/>
 		<setting id="m-TVGuide2" label="30119" type="text" visible="eq(-23,1)" default=""/>
 		<setting id="m-TVGuide3" label="30120" type="text" visible="eq(-24,1)" default=""/>

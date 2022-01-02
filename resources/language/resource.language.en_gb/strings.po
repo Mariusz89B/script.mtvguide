@@ -120,6 +120,10 @@ msgctxt "#30111"
 msgid "[COLOR]Enter the url address or provide a path to your EPG files[/COLOR]"
 msgstr ""
 
+msgctxt "#30112"
+msgid "Enter a path to your channel logos"
+msgstr ""
+
 msgctxt "#30116"
 msgid "Search for channel logos in"
 msgstr ""

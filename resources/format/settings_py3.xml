@@ -2569,7 +2569,19 @@
 					<control type="toggle"/>
 				</setting>
 			</group>
-			<group id="4"/>
+			<group id="4" label="30112">
+				<setting help="95033" id="xmltv_logo_folder" label="30116" type="path">
+					<level>2</level>
+					<default/>
+					<constraints>
+						<writable>false</writable>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control format="path" type="button">
+						<heading>30116</heading>
+					</control>
+				</setting>
+			</group>
 			<group id="5" label="30111">
 				<setting help="95032" id="xmltv_file" label="30103" type="path">
 					<level>0</level>
@@ -2585,22 +2597,6 @@
 					</dependencies>
 					<control format="file" type="button">
 						<heading>30103</heading>
-					</control>
-				</setting>
-				<setting help="95033" id="xmltv_logo_folder" label="30116" type="path">
-					<level>2</level>
-					<default/>
-					<constraints>
-						<writable>false</writable>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="is" setting="source">0</condition>
-						</dependency>
-					</dependencies>
-					<control format="path" type="button">
-						<heading>30116</heading>
 					</control>
 				</setting>
 				<setting help="95034" id="m-TVGuide" label="30118" type="string">
