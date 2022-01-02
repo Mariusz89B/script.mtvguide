@@ -376,7 +376,7 @@ class PlaylistUpdater(baseServiceUpdater):
             nativeList = []
             dotList = []
 
-            regexRemoveList.append( re.compile('(\s|^)(L\s*)?(24/7:?:?|19\d\d|20\d\d|S\s*\d{1,3}\s*E\s*\d{1,4})(?=\s|$)', re.IGNORECASE) )
+            regexRemoveList.append( re.compile('(\s|\W|^)(L\s*)?(24\/7:?:?|19\d\d|20\d\d|S\s*\d{1,3}\s*E\s*\d{1,4})(?=\s|$)', re.IGNORECASE) )
 
             APPEND = ADDON.getSetting('{}_append_country_code'.format(self.serviceName))
 
@@ -463,13 +463,14 @@ class PlaylistUpdater(baseServiceUpdater):
             regexUHD = re.compile('(\s|^)(4K|UHD)(?=\s|$)', re.IGNORECASE)
 
             regex_chann_name   =     re.compile('tvg-id="[^"]*"', re.IGNORECASE)
-            if ADDON.getSetting('VOD_EPG') == "":
-                regexCorrectStream =     re.compile('^(plugin|http|rtmp)(?!.*?[.]((\.)(mp4|mkv|avi|mov|wma)))', re.IGNORECASE)
+
+            if ADDON.getSetting('VOD_EPG') == "true":
+                regexCorrectStream = re.compile('^(plugin|http|rtmp)(?!.*?[.]((\.)(mp4|mkv|avi|mov|wma)))', re.IGNORECASE)
                 regexRemoveList.append( re.compile('(\s|^)?(L\s*)?((?i)Vod|VOD|On\sDemand)(?=\s|$)', re.IGNORECASE) )
             else:
-                regexCorrectStream =     re.compile('^plugin|http|^rtmp', re.IGNORECASE)
+                regexCorrectStream = re.compile('^plugin|http|^rtmp', re.IGNORECASE)
 
-            if ADDON.getSetting('XXX_EPG') == "":
+            if ADDON.getSetting('XXX_EPG') == "true":
                 regexRemoveList.append( re.compile('(\s|^)?(L\s*)?((?i)Adult|XXX)(?=\s|$)', re.IGNORECASE) )
 
             title = None
@@ -673,9 +674,17 @@ class PlaylistUpdater(baseServiceUpdater):
                                     tvg_title = ''                   
 
                     elif (title is not None or tvg_title is not None) and regexCorrectStream.match(stripLine):
-                        if (title != '' or tvg_title != ''):
+                        removeStream = True
+                        if ADDON.getSetting('VOD_EPG') == "false" or ADDON.getSetting('VOD_EPG') == "": 
+                            regexRemoveStream = re.compile('^(?!.*(\.)(mp4|mkv|avi|mov|wma)).*$')
                             try:
-                                catchupLine
+                                match = regexRemoveStream.match(stripLine)
+                            except:
+                                match = True
+
+                        if (title != '' or tvg_title != '') and match:
+                            try:
+                                catchupLine = catchupLine
                             except:
                                 catchupLine = ''
 

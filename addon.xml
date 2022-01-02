@@ -2,7 +2,7 @@
 <addon
     id="script.mtvguide"
     name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]"
-    version="9.8.6-beta.12"
+    version="9.8.6-beta.13"
     provider-name="Mods-kodi">
   <requires>
     <import addon="xbmc.addon" version="17.0.0"/>
@@ -41,7 +41,7 @@
     <forum>https://github.com/Mariusz89B/script.mtvguide/discussions</forum>
 	<website>https://github.com/Mariusz89B/script.mtvguide</website>
     <source>m-TVGuide © 2013 - 2021</source>
-    <news>v9.8.6 (2021-12-29)
+    <news>v9.8.6 (2022-01-02)
 - Fixed EPG table refresh on record completion.
 - Fixed service Polsat GO access groups.
 
