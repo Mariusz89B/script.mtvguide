@@ -2653,8 +2653,8 @@ class MTVGUIDESource(Source):
         self.MTVGUIDEUrl2      = ADDON.getSetting('m-TVGuide2').strip()
         self.MTVGUIDEUrl3      = ADDON.getSetting('m-TVGuide3').strip()
         self.epgBasedOnLastModDate = ADDON.getSetting('UpdateEPGOnModifiedDate')
+        self.logoFolder = ADDON.getSetting('xmltv_logo_folder')
         self.EPGSize    = None
-        self.logoFolder = None
         self.timer      = None
 
         if sys.version_info[0] > 2:
@@ -2720,7 +2720,7 @@ class MTVGUIDESource(Source):
 
         try:        
             if ADDON.getSetting('useCustomParser') == 'true':
-                return customParseXMLTV(xml.decode('utf-8'), progress_callback)
+                return customParseXMLTV(xml.decode('utf-8'), progress_callback, self.logoFolder)
 
             else:
                 iob = io.BytesIO(xml)
@@ -2876,7 +2876,7 @@ def TimeZone(dateString, AUTO_ZONE=None):
     else:
         return None
 
-def customParseXMLTV(xml, progress_callback):
+def customParseXMLTV(xml, progress_callback, logoFolder):
     deb("[EPG] Parsing EPG by custom parser")
     startTime = datetime.datetime.now()
 
@@ -2934,6 +2934,12 @@ def customParseXMLTV(xml, progress_callback):
             logo = channelIconRe.search(channel).group(1)
         except:
             logo = None
+
+        if logo is None:
+            if logoFolder:
+                logoFile = os.path.join(logoFolder, title.replace(' ', '_').lower() + '.png')
+                if xbmcvfs.exists(logoFile):
+                    logo = logoFile
 
         channel = None
         yield Channel(id, title, logo, titles)
@@ -3154,7 +3160,7 @@ def parseXMLTV(context, f, size, logoFolder, progress_callback):
                 logo = None
 
                 if logoFolder:
-                    logoFile = os.path.join(logoFolder, title + '.png')
+                    logoFile = os.path.join(logoFolder, title.replace(' ', '_').lower() + '.png')
                     if xbmcvfs.exists(logoFile):
                         logo = logoFile
                 if not logo:
