@@ -5922,6 +5922,8 @@ class mTVGuide(xbmcgui.WindowXML):
 
             if ADDON.getSetting('service_program_notifications_enabled') == 'true':
                 self.rssFeed = src.RssFeed(url=RSS_FILE, last_message=self.database.getLastRssDate(), update_date_call=self.database.updateRssDate)
+                if self.rssFeed == '' or self.rssFeed is None:
+                    self.rssFeed = src.RssFeed(url=RSS_FILE_BACKUP, last_message=self.database.getLastRssDate(), update_date_call=self.database.updateRssDate)
 
             if strings2.M_TVGUIDE_CLOSING == False:
 

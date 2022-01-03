@@ -86,7 +86,7 @@ class clearDB:
             self.database.initialize(self.onInitialized)
 
     def onDBCleared(self):
-        xbmcgui.Dialog().ok(strings(CLEAR_DB), strings(DONE_DB))
+        xbmcgui.Dialog().ok(strings(CLEAR_DB), strings(DONE_DB)+'.')
 
     def onInitialized(self, success):
         if success:

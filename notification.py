@@ -225,7 +225,7 @@ if __name__ == '__main__':
     database = src.Database()
 
     def onNotificationsCleared():
-        xbmcgui.Dialog().ok(strings(CLEAR_NOTIFICATIONS), strings(30971))
+        xbmcgui.Dialog().ok(strings(CLEAR_NOTIFICATIONS), strings(30971)+'.')
 
     def onInitialized(success):
         if success:

@@ -57,6 +57,9 @@ ADDON = xbmcaddon.Addon(id = ADDON_ID)
 onlineMapPathBase = M_TVGUIDE_SUPPORT + 'maps/'
 
 def ccDict():
+    # Online mapfile
+
+    """
     try:
         headers = {
             'Connection': 'keep-alive',
@@ -74,18 +77,22 @@ def ccDict():
         except:
             ccDict = requests.get(onlineMapFilename, headers=headers, timeout=10).json()
     except:
-        pathMapBase = os.path.join(ADDON.getAddonInfo('path'), 'resources')
-        path = os.path.join(pathMapBase, 'groups.json')
+    """
 
-        if sys.version_info[0] > 2:
-            with open(path, 'r', encoding='utf-8') as f:
-                data = f.read()
-        else:
-            import codecs
-            with codecs.open(path, 'r', encoding='utf-8') as f:
-                data = f.read()
+    # Offline
+    
+    pathMapBase = os.path.join(ADDON.getAddonInfo('path'), 'resources')
+    path = os.path.join(pathMapBase, 'groups.json')
 
-        ccDict = json.loads(data)
+    if sys.version_info[0] > 2:
+        with open(path, 'r', encoding='utf-8') as f:
+            data = f.read()
+    else:
+        import codecs
+        with codecs.open(path, 'r', encoding='utf-8') as f:
+            data = f.read()
+
+    ccDict = json.loads(data)
 
     sortedDict = {k : ccDict[k] for k in sorted(ccDict)}
 

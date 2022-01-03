@@ -2,7 +2,7 @@
 <addon
     id="script.mtvguide"
     name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]"
-    version="9.8.6-beta.15"
+    version="9.8.6"
     provider-name="Mods-kodi">
   <requires>
     <import addon="xbmc.addon" version="17.0.0"/>
@@ -41,9 +41,11 @@
     <forum>https://github.com/Mariusz89B/script.mtvguide/discussions</forum>
 	<website>https://github.com/Mariusz89B/script.mtvguide</website>
     <source>m-TVGuide © 2013 - 2021</source>
-    <news>v9.8.6 (2022-01-02)
+    <news>v9.8.6 (2022-01-04)
 - Fixed EPG table refresh on record completion.
 - Fixed service Polsat GO access groups.
+- Added WP Pilot DRM support.
+- Bug fixes.
 
 v9.8.5 (2021-12-12)
 - Added .xz file support.
