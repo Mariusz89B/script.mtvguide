@@ -544,84 +544,88 @@ class Database(object):
         return settingsChanged
 
     def _isCacheExpired(self, date, initializing):
-        if ADDON.getSetting('epg_interval') == '1' and initializing:
-            return True
-
-        if self.settingsChanged:
-            return True
-
-        # check if channel data is up-to-date in database
         try:
-            c = self.conn.cursor()
-            c.execute('SELECT channels_updated FROM sources WHERE id=?', [self.source.KEY])
-            row = c.fetchone()
-            if not row:
+            if ADDON.getSetting('epg_interval') == '1' and initializing:
                 return True
-            channelsLastUpdated = row[str('channels_updated')]
+
+            if self.settingsChanged:
+                return True
+
+            # check if channel data is up-to-date in database
+            try:
+                c = self.conn.cursor()
+                c.execute('SELECT channels_updated FROM sources WHERE id=?', [self.source.KEY])
+                row = c.fetchone()
+                if not row:
+                    return True
+                channelsLastUpdated = row[str('channels_updated')]
+                c.close()
+            except TypeError:
+                return True
+
+            # check if program data is up-to-date in database
+            c = self.conn.cursor()
+
+            if self.epgBasedOnLastModDate == 'false':
+                dateStr = date.strftime('%Y-%m-%d')
+                c.execute('SELECT programs_updated FROM updates WHERE source=? AND date=?', [self.source.KEY, dateStr])
+            else:
+                c.execute('SELECT programs_updated FROM updates WHERE source=?', [self.source.KEY])
+
+            row = c.fetchone()
+            if row:
+                programsLastUpdated = row[str('programs_updated')]
+            else:
+                programsLastUpdated = None
+
+            c.execute('SELECT epg_size FROM updates WHERE source=?', [self.source.KEY])
+            row = c.fetchone()
+            epgSize = 0
+            if row:
+                epgSize = row[str('epg_size')]
+                ADDON.setSetting('epg_size', str(epgSize))
             c.close()
-        except TypeError:
-            return True
 
-        # check if program data is up-to-date in database
-        c = self.conn.cursor()
+            set_time = 'auto'
 
-        if self.epgBasedOnLastModDate == 'false':
-            dateStr = date.strftime('%Y-%m-%d')
-            c.execute('SELECT programs_updated FROM updates WHERE source=? AND date=?', [self.source.KEY, dateStr])
-        else:
-            c.execute('SELECT programs_updated FROM updates WHERE source=?', [self.source.KEY])
+            if programsLastUpdated is not None:
+                interval = ADDON.getSetting('epg_interval')
 
-        row = c.fetchone()
-        if row:
-            programsLastUpdated = row[str('programs_updated')]
-        else:
-            programsLastUpdated = None
+                if interval == '0':
+                    set_time = 'auto'
+                elif interval == '1':
+                    set_time = 0
+                elif interval == '2':
+                    set_time = 43200
+                elif interval == '3':
+                    set_time = 86400
+                elif interval == '4':
+                    set_time = 172800
+                elif interval == '5':
+                    set_time = 604800
+                elif interval == '6':
+                    set_time = 1209600
 
-        c.execute('SELECT epg_size FROM updates WHERE source=?', [self.source.KEY])
-        row = c.fetchone()
-        epgSize = 0
-        if row:
-            epgSize = row[str('epg_size')]
-            ADDON.setSetting('epg_size', str(epgSize))
-        c.close()
+                if set_time != 'auto':
+                    try:
+                        epg_interval = datetime.datetime.timestamp(datetime.datetime.now()) - set_time
+                    except:
+                        epg_interval = time.mktime(datetime.datetime.now().timetuple()) - set_time
 
-        set_time = 'auto'
+                    try:
+                        last_update = datetime.datetime.timestamp(programsLastUpdated)
+                    except:
+                        last_update = time.mktime(programsLastUpdated.timetuple())
 
-        if programsLastUpdated is not None:
-            interval = ADDON.getSetting('epg_interval')
+                    if int(epg_interval) > int(last_update):
+                        self.source.isUpdated(channelsLastUpdated, programsLastUpdated, epgSize)
+                    else:
+                        return False
 
-            if interval == '0':
-                set_time = 'auto'
-            elif interval == '1':
-                set_time = 0
-            elif interval == '2':
-                set_time = 43200
-            elif interval == '3':
-                set_time = 86400
-            elif interval == '4':
-                set_time = 172800
-            elif interval == '5':
-                set_time = 604800
-            elif interval == '6':
-                set_time = 1209600
-
-            if set_time != 'auto':
-                try:
-                    epg_interval = datetime.datetime.timestamp(datetime.datetime.now()) - set_time
-                except:
-                    epg_interval = time.mktime(datetime.datetime.now().timetuple()) - set_time
-
-                try:
-                    last_update = datetime.datetime.timestamp(programsLastUpdated)
-                except:
-                    last_update = time.mktime(programsLastUpdated.timetuple())
-
-                if int(epg_interval) > int(last_update):
-                    self.source.isUpdated(channelsLastUpdated, programsLastUpdated, epgSize)
-                else:
-                    return False
-
-        return self.source.isUpdated(channelsLastUpdated, programsLastUpdated, epgSize)
+            return self.source.isUpdated(channelsLastUpdated, programsLastUpdated, epgSize)
+        except:
+            self.updateFailed = True
+            return
 
     def updateChannelAndProgramListCaches(self, callback, date = datetime.datetime.now(), progress_callback = None, initializing=False, clearExistingProgramList = True):
         self.eventQueue.append([self._updateChannelAndProgramListCaches, callback, date, progress_callback, initializing, clearExistingProgramList])
@@ -2247,14 +2251,18 @@ class Database(object):
         return self._invokeAndBlockForResult(self._getNotifications, daysLimit)
 
     def _getNotifications(self, daysLimit):
-        debug('_getNotifications')
-        start = datetime.datetime.now()
-        end = start + datetime.timedelta(days = daysLimit)
-        c = self.conn.cursor()
-        c.execute("SELECT DISTINCT c.title, p.title, p.start_date FROM notifications n, channels c, programs p WHERE n.channel = c.id AND p.channel = c.id AND n.program_title = p.title AND n.source=? AND p.start_date >= ? AND p.end_date <= ? AND (n.start_date IS NULL OR n.start_date = p.start_date)", [self.source.KEY, start, end])
-        programs = c.fetchall()
-        c.close()
-        return programs
+        try:
+            debug('_getNotifications')
+            start = datetime.datetime.now()
+            end = start + datetime.timedelta(days = daysLimit)
+            c = self.conn.cursor()
+            c.execute("SELECT DISTINCT c.title, p.title, p.start_date FROM notifications n, channels c, programs p WHERE n.channel = c.id AND p.channel = c.id AND n.program_title = p.title AND n.source=? AND p.start_date >= ? AND p.end_date <= ? AND (n.start_date IS NULL OR n.start_date = p.start_date)", [self.source.KEY, start, end])
+            programs = c.fetchall()
+            c.close()
+            return programs
+        except:
+            self.updateFailed = True
+            return
 
     def isNotificationRequiredForProgram(self, program):
         return self._invokeAndBlockForResult(self._isNotificationRequiredForProgram, program)

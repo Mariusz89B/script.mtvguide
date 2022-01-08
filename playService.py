@@ -92,6 +92,8 @@ import teliaplaycids
 import tvpcids
 import wppilotcids
 
+base_url = sys.argv[0]
+
 sess = cloudscraper.create_scraper()
 scraper = cloudscraper.CloudScraper()
 
@@ -1089,6 +1091,8 @@ class PlayService(xbmc.Player, BasePlayService):
                 if service == 'WP Pilot':
                     if self.archiveService == '' or self.archivePlaylist == '':
                         try:
+                            UAwp = 'ExoMedia 4.3.0 (43000) / Android 8.0.0 / foster_e'
+                            
                             self.playbackStopped = False
 
                             try:
@@ -1124,10 +1128,9 @@ class PlayService(xbmc.Player, BasePlayService):
                                 ListItem.setMimeType(mimeType)
                                 ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
                                 if licenseUrl != '':
+                                    ListItem.setProperty('inputstream.adaptive.stream_headers', 'Referer: https://pilot.wp.pl/&User-Agent=' + quote(UAwp))
                                     ListItem.setProperty('inputstream.adaptive.license_type', DRM)
-                                    ListItem.setProperty('inputstream.adaptive.stream_headers', 'Referer: {}'.format('https://pilot.wp.pl/tv/'))
                                     ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl) 
-                                    ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
                                 ListItem.setProperty('IsPlayable', 'true')
                             
                             self.strmUrl = strmUrl
