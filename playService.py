@@ -92,8 +92,6 @@ import teliaplaycids
 import tvpcids
 import wppilotcids
 
-base_url = sys.argv[0]
-
 sess = cloudscraper.create_scraper()
 scraper = cloudscraper.CloudScraper()
 

@@ -60,7 +60,13 @@ if sys.version_info[0] > 2:
     config = configparser.RawConfigParser()
 else:
     config = ConfigParser.RawConfigParser()
-config.read(os.path.join(Skin.getSkinPath(), 'settings.ini'))
+
+try:
+    config.read(os.path.join(Skin.getSkinPath(), 'settings.ini'))
+except:
+    Skin.deleteCustomSkins(show_dialog=False)
+    exit()
+
 try:
     skin_separate_category = config.getboolean("Skin", "program_category_separated")
 except:

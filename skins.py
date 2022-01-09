@@ -391,7 +391,7 @@ class Skin:
 
     @staticmethod
     def deleteCustomSkins(show_dialog):
-        ADDON.setSetting('Skin', 'skin.default')
+        ADDON.setSetting(id="Skin", value=str('skin.default'))
 
         if os.path.isdir(Skin.ADDON_CUSTOM_SKINS_RES):
             try:
