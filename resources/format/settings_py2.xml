@@ -367,6 +367,9 @@
 		<setting id="color_notifications" label="30943" type="select" default="0" lvalues="70017|70019|70020|70021"/>
 		<setting id="color_recordings" label="30944" type="select" default="0" lvalues="70018|70019|70020|70021"/>
 	</category>
+	<category label="59902">
+		<setting id="ia_settings" type="action" label="59903" action="RunScript($CWD/iaSettings.py, Settings)" enable="System.HasAddon(inputstream.adaptive)" option="close" />
+	</category>
 	<category label="30901">
 		<setting label="30902" type="action" action="UpdateAddonRepos"/>
 	</category>

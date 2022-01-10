@@ -251,9 +251,9 @@ HALF_HOUR = datetime.timedelta(minutes=30)
 AUTO_OSD = 666
 REFRESH_STREAMS_TIME = 14400
 
-CC_LIST = list()
 CC_DICT = ccDict()
 
+CC_LIST = []
 PREDEFINED_CATEGORIES = []
 
 for k, v in CC_DICT.items():
@@ -314,14 +314,12 @@ def replace_formatting(label):
     return label
 
 def timedelta_total_seconds(timedelta):
-    return (
-                   timedelta.microseconds + 0.0 +
-                   (timedelta.seconds + timedelta.days * 24 * 3600) * 10 ** 6) // 10 ** 6
+    return (timedelta.microseconds + 0.0 + (timedelta.seconds + timedelta.days * 24 * 3600) * 10 ** 6) // 10 ** 6
 
 
 def timebarAdjust():
     timebar_adjust = ADDON.getSetting('timebar_adjust')
-    if timebar_adjust == '':
+    if timebar_adjust == '' or timebar_adjust is None:
         timebar_adjust = 0
     return timebar_adjust
 
@@ -613,19 +611,18 @@ class mTVGuide(xbmcgui.WindowXML):
         self.channel_number_input = False
         self.channel_number = ADDON.getSetting('channel.arg')
         self.current_channel_id = None
-        self.controlAndProgramList = list()
-        self.ignoreMissingControlIds = list()
+        self.controlAndProgramList = []
+        self.ignoreMissingControlIds = []
         self.recordedFilesPlaylistPositions = {}
         self.streamingService = streaming.StreamsService()
         self.playService = playService.PlayService()
         self.recordService = RecordService(self)
-        self.getListLenght = list()
+        self.getListLenght = []
         self.catchupChannels = None
         self.context = False
 
         # find nearest half hour
-        self.viewStartDate = datetime.datetime.today() + datetime.timedelta(
-            minutes=int(timebarAdjust()))
+        self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(timebarAdjust()))
         self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
 
         self.start = 0
@@ -746,8 +743,8 @@ class mTVGuide(xbmcgui.WindowXML):
         progExec = False
         resExtra = False
 
-        langList = list()
-        ccList = list()
+        langList = []
+        ccList = []
 
         continent = xbmcgui.Dialog().select(strings(30725), [xbmc.getLocalizedString(593), strings(30727), strings(30728), strings(30729), strings(30730), strings(30731), strings(30732), '[COLOR red]' + strings(30726) + '[/COLOR]'])
         
@@ -2099,13 +2096,13 @@ class mTVGuide(xbmcgui.WindowXML):
         else:
             streams = streams.iteritems()
         
-        catchupList = dict()
+        catchupList = {}
 
         p = re.compile('service=.*_(TS|AR)_(.*?)(_.*)?$')
 
         for k,v in streams:
             v = list(v)
-            dayList = list()
+            dayList = []
 
             channel = k
             days = v
@@ -2200,8 +2197,7 @@ class mTVGuide(xbmcgui.WindowXML):
             pass
 
     def AutoPlayByNumber(self):
-        self.viewStartDate = datetime.datetime.today() + datetime.timedelta(
-            minutes=int(timebarAdjust()))
+        self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(timebarAdjust()))
         self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
         channelList = self.database.getChannelList(onlyVisible=True)
         self.channelIdx = int(ADDON.getSetting('autostart_channel_number')) - 1
@@ -2218,8 +2214,7 @@ class mTVGuide(xbmcgui.WindowXML):
         self.playChannel(program.channel)
 
     def AutoPlayLastChannel(self):
-        self.viewStartDate = datetime.datetime.today() + datetime.timedelta(
-            minutes=int(timebarAdjust()))
+        self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(timebarAdjust()))
         self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
         channelList = self.database.getChannelList(onlyVisible=True)
         idx, start, end, played = self.database.getLastChannel()
@@ -2477,7 +2472,7 @@ class mTVGuide(xbmcgui.WindowXML):
             self.sortCategory()
 
     def sortCategory(self):
-        categories = list()
+        categories = []
 
         values = dict(self.database.getCategoryMap())
 
@@ -2804,8 +2799,7 @@ class mTVGuide(xbmcgui.WindowXML):
             return
 
         if controlId == self.C_MAIN_MOUSEPANEL_HOME:
-            self.viewStartDate = datetime.datetime.today() + datetime.timedelta(
-                minutes=int(timebarAdjust()))
+            self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(timebarAdjust()))
             self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
             self.onRedrawEPG(self.channelIdx, self.viewStartDate)
             return
@@ -2835,8 +2829,7 @@ class mTVGuide(xbmcgui.WindowXML):
             return
         elif controlId == self.C_MAIN_MOUSEPANEL_SETTINGS:
             #xbmcaddon.Addon(id=ADDON_ID).openSettings()
-            self.viewStartDate = datetime.datetime.today() + datetime.timedelta(
-                minutes=int(timebarAdjust()))
+            self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(timebarAdjust()))
             self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
             self.onRedrawEPG(self.channelIdx, self.viewStartDate)
 
@@ -2975,10 +2968,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         pass
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
-                try:
-                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
-                except:
-                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(0))
+
+                self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
                 
                 self.onRedrawEPG(channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
@@ -3078,10 +3069,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         pass
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
-                try:
-                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
-                except:
-                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(0))
+
+                self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
                 
                 self.onRedrawEPG(channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
@@ -3179,10 +3168,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         pass
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
-                try:
-                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
-                except:
-                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(0))
+
+                self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
                 
                 self.onRedrawEPG(channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
@@ -3367,10 +3354,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         pass
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
-                try:
-                    self.viewStartDate = programList[index].startDate + datetime.timedelta(seconds=5, microseconds=000) + datetime.timedelta(minutes=int(timebarAdjust()))
-                except:
-                    self.viewStartDate = programList[index].startDate + datetime.timedelta(seconds=5, microseconds=000) + datetime.timedelta(minutes=int(0))
+
+                self.viewStartDate = programList[index].startDate + datetime.timedelta(seconds=5, microseconds=000) + datetime.timedelta(minutes=int(timebarAdjust()))
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
                 
                 self.onRedrawEPG(channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
@@ -3487,10 +3472,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         pass
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
-                try:
-                    self.viewStartDate = programList[index].startDate + datetime.timedelta(seconds=5, microseconds=000) + datetime.timedelta(minutes=int(timebarAdjust()))
-                except:
-                    self.viewStartDate = programList[index].startDate + datetime.timedelta(seconds=5, microseconds=000) + datetime.timedelta(minutes=int(0))
+
+                self.viewStartDate = programList[index].startDate + datetime.timedelta(seconds=5, microseconds=000) + datetime.timedelta(minutes=int(timebarAdjust()))
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
                 
                 self.onRedrawEPG(channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
@@ -3606,10 +3589,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         pass
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
-                try:
-                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
-                except:
-                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(0))
+
+                self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
                 
                 self.onRedrawEPG(channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
@@ -3701,10 +3682,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         pass
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
-                try:
-                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
-                except:
-                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(0))
+
+                self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
                 
                 self.onRedrawEPG(channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
@@ -3778,10 +3757,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         pass
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
-                try:
-                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
-                except:
-                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(0))
+
+                self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
                 
                 self.onRedrawEPG(channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
@@ -3863,10 +3840,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         pass
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
-                try:
-                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
-                except:
-                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(0))
+
+                self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
                 
                 self.onRedrawEPG(channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
@@ -3962,10 +3937,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         pass
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
-                try:
-                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
-                except:
-                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(0))
+
+                self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
                 
                 self.onRedrawEPG(channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
@@ -4061,10 +4034,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         pass
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
-                try:
-                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
-                except:
-                    self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(0))
+
+                self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
                 
                 self.onRedrawEPG(channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
@@ -4138,7 +4109,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 with open(os.path.join(self.profilePath, 'basemap_extra.xml'), 'wb') as f:
                     f.write(base.encode('utf-8'))
 
-                removeList = list()
+                removeList = []
 
                 for item in res:
                     removeList.append(channList[item])
@@ -4223,7 +4194,7 @@ class mTVGuide(xbmcgui.WindowXML):
                     self.channelsFromStream(epgChann=epgChann, newChannel=newChannel, logo=logo)
         
     def letterSort(self, channels):
-        epgList = list()
+        epgList = []
 
         v = ([channel.title.upper() for channel in self.database.getChannelList(customCategory=strings(30325)) if channel.title.upper()])
         n = ([channel.title.upper() for channel in self.database.getAllChannelList() if channel.title.upper()])
@@ -4694,12 +4665,10 @@ class mTVGuide(xbmcgui.WindowXML):
                     program = self.program
 
                 if self.program is not None:
-                    endDate = datetime.datetime.now()
-
                     try:
                         endDate = datetime.proxydt.strptime(str(self.program.endDate), '%Y-%m-%d %H:%M:%S')
                     except:
-                        endDate = self.program.endDate
+                        endDate = datetime.datetime.now()
 
                     if endDate < datetime.datetime.now():
                         program, idx = self.epg.getLastPlayingChannel()
@@ -5437,17 +5406,13 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def _showEPG(self):
         deb('_showEpg')
-        if self.end < self.played:
-            try:
+        try:
+            if self.end < self.played:
                 self.viewStartDate = self.program.startDate + datetime.timedelta(minutes=int(timebarAdjust()))
-            except:
-                self.viewStartDate = self.program.startDate + datetime.timedelta(minutes=int(0))
-
-        else:
-            try:
+            else:
                 self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(timebarAdjust()))
-            except:
-                self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(0))
+        except:
+            self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(timebarAdjust()))
 
         self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
         if self.currentChannel is not None:
@@ -5457,6 +5422,7 @@ class mTVGuide(xbmcgui.WindowXML):
         # przerysuj tylko wtedy gdy nie bylo epg! jak jest to nie przerysowuj - nie ustawi sie wtedy na aktualnej godzienie!
         if (self.mode == MODE_TV or self.redrawagain):
             self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus)  # przerysuj
+            
         if ADDON.getSetting('touch_panel') == 'true':
             self._showControl(self.C_MAIN_MOUSEPANEL_CONTROLS)
                     
@@ -5591,213 +5557,218 @@ class mTVGuide(xbmcgui.WindowXML):
         return
 
     def onRedrawEPG(self, channelStart, startTime, focusFunction=None, initializing=False):
-        deb('onRedrawEPG')
-        if self.redrawingEPG or (self.database is not None and self.database.updateInProgress) or self.isClosing or strings2.M_TVGUIDE_CLOSING:
-            deb('onRedrawEPG - already redrawing')
-            return  # ignore redraw request while redrawing
-        self.redrawingEPG = True
-        self.blockInputDueToRedrawing = True
-        self.redrawagain = False
-        self.mode = MODE_EPG
-
-        if self.onFocusTimer:
-            self.onFocusTimer.cancel()
-        if self.infoDialog is not None:
-            self.infoDialog.close()
-
-        self._showControl(self.C_MAIN_EPG)
-        self.updateTimebar(scheduleTimer=False)
-        
-        # remove existing controls
-        self._clearEpg()
-
         try:
-            self.channelIdx, channels, programs, cacheExpired = self.database.getEPGView(channelStart, startTime, self.onSourceProgressUpdate, initializing, clearExistingProgramList=True)
-        except src.SourceException:
-            self.blockInputDueToRedrawing = False
-            debug('onRedrawEPG onEPGLoadError')
-            self.onEPGLoadError()
-            return
+            deb('onRedrawEPG')
+            if self.redrawingEPG or (self.database is not None and self.database.updateInProgress) or self.isClosing or strings2.M_TVGUIDE_CLOSING:
+                deb('onRedrawEPG - already redrawing')
+                return  # ignore redraw request while redrawing
+            self.redrawingEPG = True
+            self.blockInputDueToRedrawing = True
+            self.redrawagain = False
+            self.mode = MODE_EPG
 
-        self.catchupChannels = channels
+            if self.onFocusTimer:
+                self.onFocusTimer.cancel()
+            if self.infoDialog is not None:
+                self.infoDialog.close()
 
-        if cacheExpired == True and ADDON.getSetting('program_notifications_enabled') == 'true':
-            # make sure notifications are scheduled for newly downloaded programs
-            self.notification.scheduleNotifications()
+            self._showControl(self.C_MAIN_EPG)
+            self.updateTimebar(scheduleTimer=False)
+            
+            # remove existing controls
+            self._clearEpg()
 
-        # date and time row
-        self.setControlLabel(self.C_MAIN_DATE, self.formatDate(self.viewStartDate))
-        for col in range(1, 5):
-            self.setControlLabel(4000 + col, self.formatTime(startTime))
-            startTime += HALF_HOUR
+            try:
+                self.channelIdx, channels, programs, cacheExpired = self.database.getEPGView(channelStart, startTime, self.onSourceProgressUpdate, initializing, clearExistingProgramList=True)
+            except src.SourceException:
+                self.blockInputDueToRedrawing = False
+                debug('onRedrawEPG onEPGLoadError')
+                self.onEPGLoadError()
+                return
 
-        if programs is None:
-            debug('onRedrawEPG onEPGLoadError2')
-            self.onEPGLoadError()
-            return
+            self.catchupChannels = channels
 
-        categories = self.getCategories()
-        catchupList = self.getStreamsCid(self.catchupChannels)
+            if cacheExpired == True and ADDON.getSetting('program_notifications_enabled') == 'true':
+                # make sure notifications are scheduled for newly downloaded programs
+                self.notification.scheduleNotifications()
 
-        for program in programs:
-            idx = channels.index(program.channel)
+            # date and time row
+            self.setControlLabel(self.C_MAIN_DATE, self.formatDate(self.viewStartDate))
+            for col in range(1, 5):
+                self.setControlLabel(4000 + col, self.formatTime(startTime))
+                startTime += HALF_HOUR
 
-            startDelta = program.startDate - self.viewStartDate
-            stopDelta = program.endDate - self.viewStartDate
+            if programs is None:
+                debug('onRedrawEPG onEPGLoadError2')
+                self.onEPGLoadError()
+                return
 
-            cellStart = self._secondsToXposition(startDelta.seconds)
-            if startDelta.days < 0:
-                cellStart = self.epgView.left
-            cellWidth = self._secondsToXposition(stopDelta.seconds) - cellStart
-            if cellStart + cellWidth > self.epgView.right:
-                cellWidth = self.epgView.right - cellStart
-            if cellWidth > 1:
+            categories = self.getCategories()
+            catchupList = self.getStreamsCid(self.catchupChannels)
 
-                noFocusTexture = self.backgroundTexture
+            for program in programs:
+                idx = channels.index(program.channel)
 
-                try:
-                    categoryA = program.categoryA.lower().split(' ')
-                except:
-                    categoryA = ''
+                startDelta = program.startDate - self.viewStartDate
+                stopDelta = program.endDate - self.viewStartDate
 
-                if any(x in categories['Movie'] for x in categoryA):
-                    noFocusTexture = self.moviesTexture
+                cellStart = self._secondsToXposition(startDelta.seconds)
+                if startDelta.days < 0:
+                    cellStart = self.epgView.left
+                cellWidth = self._secondsToXposition(stopDelta.seconds) - cellStart
+                if cellStart + cellWidth > self.epgView.right:
+                    cellWidth = self.epgView.right - cellStart
+                if cellWidth > 1:
 
-                elif any(x in categories['Series'] for x in categoryA):
-                    noFocusTexture = self.seriesTexture
-
-                elif any(x in categories['Information'] for x in categoryA):
-                    noFocusTexture = self.informationTexture
-
-                elif any(x in categories['Entertainment'] for x in categoryA):
-                    noFocusTexture = self.entertainmentTexture
-
-                elif any(x in categories['Document'] for x in categoryA):
-                    noFocusTexture = self.documentsTexture
-
-                elif any(x in categories['Kids'] for x in categoryA):
-                    noFocusTexture = self.kidsTexture
-
-                elif any(x in categories['Sport'] for x in categoryA):
-                    noFocusTexture = self.sportsTexture
-                
-                elif any(x in categories['Interactive Entertainment'] for x in categoryA):
-                    noFocusTexture = self.interactiveTexture
-                else:
                     noFocusTexture = self.backgroundTexture
 
-                if program.notificationScheduled:
-                    if ADDON.getSetting('color_notifications') != '':
-                        noFocusTexture = notifications_formatting(ADDON.getSetting('color_notifications'))
+                    try:
+                        categoryA = program.categoryA.lower().split(' ')
+                    except:
+                        categoryA = ''
+
+                    if any(x in categories['Movie'] for x in categoryA):
+                        noFocusTexture = self.moviesTexture
+
+                    elif any(x in categories['Series'] for x in categoryA):
+                        noFocusTexture = self.seriesTexture
+
+                    elif any(x in categories['Information'] for x in categoryA):
+                        noFocusTexture = self.informationTexture
+
+                    elif any(x in categories['Entertainment'] for x in categoryA):
+                        noFocusTexture = self.entertainmentTexture
+
+                    elif any(x in categories['Document'] for x in categoryA):
+                        noFocusTexture = self.documentsTexture
+
+                    elif any(x in categories['Kids'] for x in categoryA):
+                        noFocusTexture = self.kidsTexture
+
+                    elif any(x in categories['Sport'] for x in categoryA):
+                        noFocusTexture = self.sportsTexture
+                    
+                    elif any(x in categories['Interactive Entertainment'] for x in categoryA):
+                        noFocusTexture = self.interactiveTexture
                     else:
-                        ADDON.setSetting('color_notifications', '0')
+                        noFocusTexture = self.backgroundTexture
 
-                if program.recordingScheduled:
-                    if ADDON.getSetting('color_recordings') != '':
-                        noFocusTexture = recordings_formatting(ADDON.getSetting('color_recordings'))
+                    if program.notificationScheduled:
+                        if ADDON.getSetting('color_notifications') != '':
+                            noFocusTexture = notifications_formatting(ADDON.getSetting('color_notifications'))
+                        else:
+                            ADDON.setSetting('color_notifications', '0')
+
+                    if program.recordingScheduled:
+                        if ADDON.getSetting('color_recordings') != '':
+                            noFocusTexture = recordings_formatting(ADDON.getSetting('color_recordings'))
+                        else:
+                            ADDON.setSetting('color_recordings', '0')
+
+                    if cellWidth > 30 and cellWidth < 45:
+                        title = '...'  # Text will overflow outside the button if it is too narrow
+                    elif cellWidth < 30:
+                        title = ' '
                     else:
-                        ADDON.setSetting('color_recordings', '0')
+                        title = program.title
 
-                if cellWidth > 30 and cellWidth < 45:
-                    title = '...'  # Text will overflow outside the button if it is too narrow
-                elif cellWidth < 30:
-                    title = ' '
-                else:
-                    title = program.title
+                    archive = self.catchupEPG(program, cellWidth, catchupList)
 
-                archive = self.catchupEPG(program, cellWidth, catchupList)
+                    item = xbmcgui.ListItem(program.channel.title)
+                    if program.imageSmall is not None:
+                        item.setArt({'icon':program.imageSmall})
 
-                item = xbmcgui.ListItem(program.channel.title)
-                if program.imageSmall is not None:
-                    item.setArt({'icon':program.imageSmall})
+                    control = xbmcgui.ControlButton(
+                        cellStart,
+                        self.epgView.top + self.epgView.cellHeight * idx,
+                        cellWidth - (int(cell_width)),
+                        self.epgView.cellHeight - (int(cell_height)),
+                        archive + title,
+                        noFocusTexture = noFocusTexture,
+                        focusTexture = self.focusTexture,
+                        font = skin_font,
+                        textColor = skin_font_colour,
+                        focusedColor = skin_font_focused_colour)
 
-                control = xbmcgui.ControlButton(
-                    cellStart,
-                    self.epgView.top + self.epgView.cellHeight * idx,
-                    cellWidth - (int(cell_width)),
-                    self.epgView.cellHeight - (int(cell_height)),
-                    archive + title,
-                    noFocusTexture = noFocusTexture,
-                    focusTexture = self.focusTexture,
-                    font = skin_font,
-                    textColor = skin_font_colour,
-                    focusedColor = skin_font_focused_colour)
+                    self.controlAndProgramList.append(ControlAndProgram(control, program))
 
-                self.controlAndProgramList.append(ControlAndProgram(control, program))
+            # add program controls
+            if focusFunction is None:
+                focusFunction = self._findControlAt
+            focusControl = focusFunction(self.focusPoint)
+            if focusControl is None:
+                focusControl = self._findControlAt(self.focusPoint)
+            controls = [elem.control for elem in self.controlAndProgramList]
+            self.addControls(controls)
+            
+            if focusControl is not None:
+                self.setFocus(focusControl)
+            self.ignoreMissingControlIds.extend([elem.control.getId() for elem in self.controlAndProgramList])
+            if focusControl is None and len(self.controlAndProgramList) > 0:
+                self.setFocus(self.controlAndProgramList[0].control)
 
-        # add program controls
-        if focusFunction is None:
-            focusFunction = self._findControlAt
-        focusControl = focusFunction(self.focusPoint)
-        if focusControl is None:
-            focusControl = self._findControlAt(self.focusPoint)
-        controls = [elem.control for elem in self.controlAndProgramList]
-        self.addControls(controls)
-        
-        if focusControl is not None:
-            self.setFocus(focusControl)
-        self.ignoreMissingControlIds.extend([elem.control.getId() for elem in self.controlAndProgramList])
-        if focusControl is None and len(self.controlAndProgramList) > 0:
-            self.setFocus(self.controlAndProgramList[0].control)
+            self._showControl(self.C_MAIN_LOADING_BACKGROUND)
+            self._hideControl(self.C_MAIN_LOADING)
 
-        self._showControl(self.C_MAIN_LOADING_BACKGROUND)
-        self._hideControl(self.C_MAIN_LOADING)
+            self.blockInputDueToRedrawing = False
 
-        self.blockInputDueToRedrawing = False
-
-        if ADDON.getSetting('channel_shortcut') == 'true':
-            channel_index_format = "%%0%sd" % 1
-            show_channel_numbers = True
-            CHANNEL_LABEL = self.C_CHANNEL_LABEL_START_INDEX_SHORTCUT
-            CHANNEL_IMAGE = self.C_CHANNEL_IMAGE_START_INDEX_SHORTCUT
-        else:
-            show_channel_numbers = False
-            CHANNEL_LABEL = self.C_CHANNEL_LABEL_START_INDEX
-            CHANNEL_IMAGE = self.C_CHANNEL_IMAGE_START_INDEX
-
-        if ADDON.getSetting('show_logo') == 'true':
-            show_channel_logo = True
-        else:
-            show_channel_logo = False
-
-        # set channel logo or text
-        for idx in range(0, CHANNELS_PER_PAGE):
-            if idx % 2 == 0 and not self.dontBlockOnAction:
-                xbmc.sleep(20)  # Fix for ocasional gui freeze during quick scrolling
-
-            if idx >= len(channels):
-                # Clear remaining channels
-                self.setControlImage(CHANNEL_IMAGE + idx, ' ')
-                self.setControlLabel(CHANNEL_LABEL + idx, ' ')
-                if show_channel_numbers:
-                    self.setControlLabel(self.C_CHANNEL_NUMBER_START_INDEX_SHORTCUT + idx, ' ')
-
+            if ADDON.getSetting('channel_shortcut') == 'true':
+                channel_index_format = "%%0%sd" % 1
+                show_channel_numbers = True
+                CHANNEL_LABEL = self.C_CHANNEL_LABEL_START_INDEX_SHORTCUT
+                CHANNEL_IMAGE = self.C_CHANNEL_IMAGE_START_INDEX_SHORTCUT
             else:
-                channel = channels[idx]
-                self.setControlLabel(CHANNEL_LABEL + idx, channel.title)
+                show_channel_numbers = False
+                CHANNEL_LABEL = self.C_CHANNEL_LABEL_START_INDEX
+                CHANNEL_IMAGE = self.C_CHANNEL_IMAGE_START_INDEX
 
-                if show_channel_numbers:
-                    self.setControlLabel(self.C_CHANNEL_NUMBER_START_INDEX_SHORTCUT + idx, channel_index_format % (self.channelIdx + idx + 1))
+            if ADDON.getSetting('show_logo') == 'true':
+                show_channel_logo = True
+            else:
+                show_channel_logo = False
 
-                if show_channel_logo:
-                    if channel.logo is not None:
-                        self.setControlImage(CHANNEL_IMAGE + idx, channel.logo)
-                    else:
-                        self.setControlImage(CHANNEL_IMAGE + idx, ' ')
+            # set channel logo or text
+            for idx in range(0, CHANNELS_PER_PAGE):
+                if idx % 2 == 0 and not self.dontBlockOnAction:
+                    xbmc.sleep(20)  # Fix for ocasional gui freeze during quick scrolling
 
-                    self.a[idx] = channel
+                if idx >= len(channels):
+                    # Clear remaining channels
+                    self.setControlImage(CHANNEL_IMAGE + idx, ' ')
+                    self.setControlLabel(CHANNEL_LABEL + idx, ' ')
+                    if show_channel_numbers:
+                        self.setControlLabel(self.C_CHANNEL_NUMBER_START_INDEX_SHORTCUT + idx, ' ')
 
-        self.onTimebarEPG()
-        self.updateTimebar()
+                else:
+                    channel = channels[idx]
+                    self.setControlLabel(CHANNEL_LABEL + idx, channel.title)
 
-        self.redrawingEPG = False
-        if self.redrawagain:
-            debug('onRedrawEPG redrawing again')
-            self.redrawagain = False
-            self.onRedrawEPG(channelStart, self.viewStartDate, focusFunction)
-        debug('onRedrawEPG done')
+                    if show_channel_numbers:
+                        self.setControlLabel(self.C_CHANNEL_NUMBER_START_INDEX_SHORTCUT + idx, channel_index_format % (self.channelIdx + idx + 1))
 
-        return channels
+                    if show_channel_logo:
+                        if channel.logo is not None:
+                            self.setControlImage(CHANNEL_IMAGE + idx, channel.logo)
+                        else:
+                            self.setControlImage(CHANNEL_IMAGE + idx, ' ')
+
+                        self.a[idx] = channel
+
+            self.onTimebarEPG()
+            self.updateTimebar()
+
+            self.redrawingEPG = False
+            if self.redrawagain:
+                debug('onRedrawEPG redrawing again')
+                self.redrawagain = False
+                self.onRedrawEPG(channelStart, self.viewStartDate, focusFunction)
+            debug('onRedrawEPG done')
+
+            return channels
+
+        except Exception as ex:
+            deb('onRedrawEPG Exception: {}'.format(ex))
+            return self.catchupChannels
 
     def _clearEpg(self):
         deb('_clearEpg')
@@ -5838,7 +5809,7 @@ class mTVGuide(xbmcgui.WindowXML):
             listControl = self.getControl(self.C_MAIN_CATEGORY)
             listControl.reset()
         
-            items = list()
+            items = []
             
             categories = PREDEFINED_CATEGORIES + list(self.categories)
 
@@ -5947,7 +5918,7 @@ class mTVGuide(xbmcgui.WindowXML):
                         self._clearEpg()
                         self.onRedrawEPG(0, self.viewStartDate, initializing=False)
                         if not self.controlAndProgramList:
-                            playlists = list()
+                            playlists = []
                             for i in range(5):
                                 if ADDON.getSetting('playlist_{}_append_country_code'.format(i)) == '' and ADDON.getSetting('playlist_{}_enabled'.format(i)) == 'true':
                                     playlists.append(i)
@@ -6418,7 +6389,7 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
             listControl = self.getControl(self.C_POPUP_CATEGORY)
             listControl.reset()
 
-            items = list()
+            items = []
 
             categories = PREDEFINED_CATEGORIES + list(self.categories)
 
@@ -6571,7 +6542,7 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
                     categories = set(self.categories)
                     categories.add(cat)
                     self.categories = list(set(categories))
-                    items = list()
+                    items = []
                     categories = PREDEFINED_CATEGORIES + list(self.categories)
                     for label in categories:
                         item = xbmcgui.ListItem(label)
@@ -6826,7 +6797,7 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
         self.getControl(self.C_STREAM_VISIBILITY_MARKER).setLabel(self.VISIBLE_STRM)
 
         favourites = self.streamingService.loadFavourites()
-        items = list()
+        items = []
         for label, value in favourites:
             item = xbmcgui.ListItem(label)
             item.setProperty('stream', value)
@@ -6835,7 +6806,7 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
         listControl = self.getControl(StreamSetupDialog.C_STREAM_FAVOURITES)
         listControl.addItems(items)
 
-        items = list()
+        items = []
         for id in self.streamingService.getAddons():
             if sys.version_info[0] > 2:
                 try:
@@ -6860,7 +6831,7 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
 
         response = json.loads(xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Addons.GetAddons", "id":1}'))
         addons = response["result"]["addons"]
-        items = list()
+        items = []
         for id in addons:
             pattern = re.compile('^plugin')
             if pattern.match(str(id['addonid'])):
@@ -6886,7 +6857,7 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
         strmList = sorted(set(strmList))
         strmList = [x.strip() for x in strmList if x.strip()]
 
-        items = list()
+        items = []
         for i in strmList:
             playlist = i.split(', ')
             label = playlist[0]
@@ -7071,7 +7042,7 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
         self.getControl(self.C_STREAM_ADDONS_DESCRIPTION).setText(addon.getAddonInfo('description'))
 
         streams = self.streamingService.getAddonStreams(item.getProperty('addon_id'))
-        items = list()
+        items = []
         for (label, stream) in streams:
             if item.getProperty('addon_id') == "plugin.video.meta":
                 label = self.channel.title
@@ -7113,7 +7084,7 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
 
             dirs = dict([[f["label"], f["file"]] for f in files if f["filetype"] == "directory"])
 
-            items = list()
+            items = []
             item = xbmcgui.ListItem(addon.getAddonInfo('name'))
             item.setProperty('stream', path)
             items.append(item)
@@ -7201,7 +7172,7 @@ class ChooseStreamAddonDialog(xbmcgui.WindowXMLDialog):
         self.stream = None
 
     def onInit(self):
-        items = list()
+        items = []
         for id, label, url in self.addons:
             addon = xbmcaddon.Addon(id)
 
@@ -7250,7 +7221,7 @@ class InfoDialog(xbmcgui.WindowXMLDialog):
         self.onRedrawEPG = onRedrawEPG
         self.channelIdx = channelIdx
         self.viewStartDate = viewStartDate
-        self.ignoreMissingControlIds = list()
+        self.ignoreMissingControlIds = []
 
         self.ignoreMissingControlIds.append(self.C_INFO_PLAY)
         self.ignoreMissingControlIds.append(self.C_INFO_RECORD)
@@ -7483,7 +7454,7 @@ class Pla(xbmcgui.WindowXMLDialog):
         super(Pla, self).__init__()
         self.epg = epg
         self.database = database
-        self.controlAndProgramList = list()
+        self.controlAndProgramList = []
         self.ChannelChanged = 0
         self.mouseCount = 0
         self.isClosing = False
@@ -7545,12 +7516,10 @@ class Pla(xbmcgui.WindowXMLDialog):
                 program = self.program
 
             if self.program is not None:
-                endDate = datetime.datetime.now()
-                
                 try:
                     endDate = datetime.proxydt.strptime(str(self.program.endDate), '%Y-%m-%d %H:%M:%S')
                 except:
-                    endDate = self.program.endDate
+                    endDate = datetime.datetime.now()
 
                 if endDate < datetime.datetime.now():
                     program, idx = self.epg.getLastPlayingChannel()
@@ -7577,9 +7546,9 @@ class Pla(xbmcgui.WindowXMLDialog):
             currentSkin = xbmc.getSkinDir()
             chkSkinKodi = currentSkin
 
-            smallList = list()
-            mediumList = list()
-            largeList = list()
+            smallList = []
+            mediumList = []
+            largeList = []
 
             try:
                 # Check path
@@ -8133,7 +8102,7 @@ class ProgramListDialog(xbmcgui.WindowXMLDialog):
         control = self.getControl(ProgramListDialog.C_PROGRAM_LIST_TITLE)
         control.setLabel(self.title)
 
-        items = list()
+        items = []
         index = 0
 
         for program in self.programs:  # type: object

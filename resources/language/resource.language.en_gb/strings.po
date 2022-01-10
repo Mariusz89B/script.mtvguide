@@ -1064,6 +1064,18 @@ msgctxt "#30911"
 msgid "Timezone UTC (+00:00 GMT)"
 msgstr ""
 
+msgctxt "#59901"
+msgid "InputStream client for adaptive streams."
+msgstr ""
+
+msgctxt "#59902"
+msgid "InputStream Adaptive"
+msgstr ""
+
+msgctxt "#59903"
+msgid "InputStream Adaptive settings"
+msgstr ""
+
 msgctxt "#59904"
 msgid "Enable"
 msgstr ""
@@ -3518,6 +3530,10 @@ msgstr ""
 
 msgctxt "#95147"
 msgid "Restore current Kodi skin Font.xml file to it's original state and deletes all add-on skin fonts modifications."
+msgstr ""
+
+msgctxt "#95148"
+msgid "Settings related to InputStream client."
 msgstr ""
 
 msgctxt "#99994"

@@ -1064,6 +1064,10 @@ msgctxt "#30912"
 msgid "Press one more time to return to main screen"
 msgstr "Pritisnite još jednom za povratak na glavni zaslon"
 
+msgctxt "#59903"
+msgid "InputStream Adaptive settings"
+msgstr "InputStream Adaptive postavke"
+
 msgctxt "#59904"
 msgid "Enable"
 msgstr "Omogućeno"

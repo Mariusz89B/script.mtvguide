@@ -124,8 +124,8 @@ class Channel(object):
         self.streamUrl = streamUrl
         self.visible = visible
         self.weight = weight
-        self.channelList = list()
-        self.channelListAll = list()
+        self.channelList = []
+        self.channelListAll = []
 
     def isPlayable(self):
         return hasattr(self, 'streamUrl') and self.streamUrl
@@ -314,20 +314,20 @@ class Database(object):
 
     def __init__(self):
         self.conn = None
-        self.eventQueue = list()
+        self.eventQueue = []
         try:
             self.event = multiprocessing.Event()
         except:
             self.event = threading.Event()
 
-        self.eventResults = dict()
+        self.eventResults = {}
         self.source = instantiateSource()
         self.updateInProgress = False
         self.updateFailed = False
         self.skipUpdateRetries = False
         self.settingsChanged = None
-        self.channelList = list()
-        self.channelListAll = list()
+        self.channelList = []
+        self.channelListAll = []
         self.category = None
 
         if sys.version_info[0] > 2:
@@ -654,7 +654,7 @@ class Database(object):
         updateServices = self.services_updated == False and ADDON.getSetting('AutoUpdateCid') == 'true'
         if updateServices == True:
             deb('[UPD] Starting updating STRM')
-            serviceList = list()
+            serviceList = []
 
             self.deleteAllCustomStreams()
 
@@ -689,7 +689,7 @@ class Database(object):
                 for item in self.source.getDataFromExternal(date, progress_callback):
                     imported += 1
 
-                    channelList = list()
+                    channelList = []
 
                     p = re.compile('\s<channel id="(.*?)"', re.DOTALL)
 
@@ -847,7 +847,7 @@ class Database(object):
                     
                     self.storeCustomStreams(service, service.serviceName, service.serviceRegex)
 
-        serviceList = list()
+        serviceList = []
         self.printStreamsWithoutChannelEPG()
 
         self.services_updated = True
@@ -879,7 +879,7 @@ class Database(object):
 
 
     def epgChannels(self):
-        result = dict()
+        result = {}
 
         if ADDON.getSetting('epg_display_name') == 'true':
             DISPLAY = True
@@ -981,7 +981,7 @@ class Database(object):
         self._invokeAndBlockForResult(self._reloadServices)
 
     def _reloadServices(self):
-        serviceList = list()
+        serviceList = []
 
         epgChannels = self.epgChannels()
 
@@ -1199,7 +1199,7 @@ class Database(object):
                         category = self.category
 
                 c = self.conn.cursor()
-                channelList = list()
+                channelList = []
 
                 if self.ChannelsWithStream == 'true':
                     if onlyVisible:
@@ -1273,7 +1273,7 @@ class Database(object):
             if self.channelList:
                 channelList = self.channelList
             else:
-                channelList = list()
+                channelList = []
             return channelList
 
     def getAllChannelList(self, onlyVisible = True):
@@ -1284,7 +1284,7 @@ class Database(object):
         if not self.channelListAll:# or not onlyVisible:
 
             c = self.conn.cursor()
-            channelList = list()
+            channelList = []
 
             if onlyVisible:
                 c.execute('SELECT * FROM channels WHERE source=? AND visible=? ORDER BY weight', [self.source.KEY, True])
@@ -1321,7 +1321,7 @@ class Database(object):
 
     def getCategoryChannelList(self, category, channelList, excludeCurrentCategory):
         try:
-            newChannelList = list()
+            newChannelList = []
             predefined_category_re = re.compile(r'\w+: ([^\s]*)', re.IGNORECASE)
             predefined = predefined_category_re.search(category)
 
@@ -1364,7 +1364,7 @@ class Database(object):
             deb('getCategoryChannelList error: {}'.format(ex))
 
     def getCategoryMap(self):
-        categoryMap = list()
+        categoryMap = []
         try:
             f = xbmcvfs.File('special://profile/addon_data/script.mtvguide/categories.ini','rb')
             lines = f.read().splitlines()
@@ -1385,7 +1385,7 @@ class Database(object):
         self.channelList = None
         if custom:
             try:
-                newList = list()
+                newList = []
                 for channel, cat in categories:
                     line = "{}={}".format(channel, cat)
                     newList.append(line)
@@ -1417,7 +1417,7 @@ class Database(object):
 
     def getAllCategories(self):
         from collections import OrderedDict
-        categoryList = list()
+        categoryList = []
         for _, cat in self.getCategoryMap():
             categoryList.append(cat)
         categoryList = OrderedDict((k, None) for k in categoryList)
@@ -1541,7 +1541,7 @@ class Database(object):
         c = self.conn.cursor()
         channels = self._getChannelList(True)
         channelIds = [cc.id for cc in channels]
-        channelMap = dict()
+        channelMap = {}
         ids = []
         for cc in channels:
             if cc.id:
@@ -1569,7 +1569,7 @@ class Database(object):
         now = datetime.datetime.now()
         channels = self._getChannelList(True)
         channelIds = [c.id for c in channels]
-        channelMap = dict()
+        channelMap = {}
         for cc in channels:
             if cc.id:
                 channelMap[cc.id] = cc
@@ -1690,7 +1690,7 @@ class Database(object):
         return program
 
     def _getProgramList(self, channels, startTime):
-        programList = list()
+        programList = []
         try:
             """
             @param channels:
@@ -1702,7 +1702,7 @@ class Database(object):
             endTime = startTime + datetime.timedelta(hours = 2)
             channelsWithoutProg = list(channels)
 
-            channelMap = dict()
+            channelMap = {}
             for c in channels:
                 if c.id:
                     channelMap[c.id] = c
@@ -1779,7 +1779,7 @@ class Database(object):
         return self._invokeAndBlockForResult(self._getCustomStreamUrlList, channel)
 
     def _getCustomStreamUrlList(self, channel):
-        result = list()
+        result = []
         c = self.conn.cursor()
         c.execute("SELECT stream_url FROM custom_stream_url WHERE channel like ? OR channel like ?", [channel.id, channel.title])
         for row in c:
@@ -1792,7 +1792,7 @@ class Database(object):
         return self._invokeAndBlockForResult(self._getAllStreamUrlList)
 
     def _getAllStreamUrlList(self):
-        result = list()
+        result = []
         c = self.conn.cursor()
         c.execute("SELECT channel, stream_url FROM custom_stream_url")
         for row in c:
@@ -1806,9 +1806,9 @@ class Database(object):
         return self._invokeAndBlockForResult(self._getAllCatchupUrlList, channels)
 
     def _getAllCatchupUrlList(self, channels):
-        result = dict()
+        result = {}
 
-        channelList = list()
+        channelList = []
 
         for chann in channels:
             channelList.append(chann.id.upper())
@@ -1952,7 +1952,7 @@ class Database(object):
 
             if version < [3, 1, 0]:
                 c.execute("SELECT * FROM custom_stream_url")
-                channelList = list()
+                channelList = []
                 for row in c:
                     channel = [row[str('channel')], row[str('stream_url')]]
                     channelList.append(channel)
@@ -1984,8 +1984,8 @@ class Database(object):
 
             if version < [6, 2, 3]:
                 deb('DATABASE UPLIFT TO VERSION 6.2.3')
-                channelList = list()
-                notificationList = list()
+                channelList = []
+                notificationList = []
 
                 c.execute("SELECT * FROM channels ORDER BY VISIBLE DESC, WEIGHT ASC")
                 for row in c:
@@ -2229,7 +2229,7 @@ class Database(object):
     def _getFullNotifications(self, daysLimit):
         start = datetime.datetime.now()
         end = start + datetime.timedelta(days=daysLimit)
-        programList = list()
+        programList = []        
         c = self.conn.cursor()
         #once
         c.execute("SELECT DISTINCT c.id, c.title as channel_title,c.logo,c.stream_url,c.visible,c.weight, p.* FROM programs p, channels c, notifications a WHERE c.id = p.channel AND p.title = a.program_title AND p.start_date = p.start_date")
@@ -2328,7 +2328,7 @@ class Database(object):
     def _getFullRecordings(self, daysLimit):
         start = datetime.datetime.now()
         end = start + datetime.timedelta(days=daysLimit)
-        programList = list()
+        programList = []
         c = self.conn.cursor()
         #once
         c.execute("SELECT DISTINCT c.id, c.title as channel_title,c.logo,c.stream_url,c.visible,c.weight, p.* FROM programs p, channels c, recordings a WHERE c.id = p.channel AND p.title = a.program_title AND p.start_date = p.start_date")

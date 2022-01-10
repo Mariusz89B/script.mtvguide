@@ -4153,6 +4153,18 @@
 				</setting>
 			</group>
 		</category>
+		<category help="95148" id="ia" label="59902">
+			<group id="1">
+				<setting help="59901" id="ia_settings" label="59903" type="action">
+					<level>0</level>
+					<data>RunScript(special://home/addons/script.mtvguide/iaSettings.py,Settings)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control format="action" type="button"/>
+				</setting>
+			</group>
+		</category>
 		<category help="95127" id="update" label="30901">
 			<group id="1">
 				<setting help="95128" id="update_addon" label="30902" type="action">
