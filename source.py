@@ -2682,20 +2682,39 @@ class MTVGUIDESource(Source):
         parsedData.update({self.MTVGUIDEUrl:{'date': date}})
 
         try:
-            if self.MTVGUIDEUrl2 != "" and not strings2.M_TVGUIDE_CLOSING:
-                parsedData.update({self.MTVGUIDEUrl2:{'date': date}})
-            if self.MTVGUIDEUrl3 != "" and not strings2.M_TVGUIDE_CLOSING:
-                parsedData.update({self.MTVGUIDEUrl3:{'date': date}})
+            if ADDON.getSetting('useCustomParser') == 'true':
+                if self.MTVGUIDEUrl2 != "" and not strings2.M_TVGUIDE_CLOSING:
+                    parsedData.update({self.MTVGUIDEUrl2:{'date': date}})
+                if self.MTVGUIDEUrl3 != "" and not strings2.M_TVGUIDE_CLOSING:
+                    parsedData.update({self.MTVGUIDEUrl3:{'date': date}})
 
-            for k, v in CC_DICT.items():
-                epg = ADDON.getSetting('epg_{cc}'.format(cc=k)).strip()
-                if epg != '' and ADDON.getSetting('country_code_{cc}'.format(cc=k)) == 'true':
-                    if epg:
-                        parsedData.update({epg:{'date': date}})
-                    else:
-                        pass    
+                for k, v in CC_DICT.items():
+                    epg = ADDON.getSetting('epg_{cc}'.format(cc=k)).strip()
+                    if epg != '' and ADDON.getSetting('country_code_{cc}'.format(cc=k)) == 'true':
+                        if epg:
+                            parsedData.update({epg:{'date': date}})
+                        else:
+                            pass    
 
-            data = self._getDataFromExternal(parsedData, progress_callback)
+                data = self._getDataFromExternal(data=parsedData, progress_callback=progress_callback)
+            else:
+                data = self._getDataFromExternal(date=date, progress_callback=progress_callback, url=self.MTVGUIDEUrl)
+
+                if self.MTVGUIDEUrl2 != "" and not strings2.M_TVGUIDE_CLOSING:
+                    parsedData = self._getDataFromExternal(date=date, progress_callback=progress_callback, url=self.MTVGUIDEUrl2)
+                    data = chain(data, parsedData)
+                if self.MTVGUIDEUrl3 != "" and not strings2.M_TVGUIDE_CLOSING:
+                    parsedData = self._getDataFromExternal(date=date, progress_callback=progress_callback, url=self.MTVGUIDEUrl3)
+                    data = chain(data, parsedData)
+
+                for k, v in CC_DICT.items():
+                    epg = ADDON.getSetting('epg_{cc}'.format(cc=k)).strip()
+                    if epg != '' and ADDON.getSetting('country_code_{cc}'.format(cc=k)) == 'true':
+                        if epg:
+                            parsedData = self._getDataFromExternal(date=date, progress_callback=progress_callback, url=epg)
+                            data = chain(data, parsedData)
+                        else:
+                            pass
 
         except SourceFaultyEPGException as ex:
             deb("Failed to download custom EPG but addon should start!, EPG: {}".format(ex.epg))
@@ -2703,28 +2722,40 @@ class MTVGUIDESource(Source):
             
             parsedDataEx = {}
             parsedDataEx.update({self.MTVGUIDEUrl:{'date': date}})
-            data = self._getDataFromExternal(parsedDataEx, progress_callback)
+            data = self._getDataFromExternal(data=parsedDataEx, progress_callback=progress_callback)
 
         return data
 
-    def _getDataFromExternal(self, data, progress_callback):
+    def _getDataFromExternal(self, date=None, url=None, data=None, progress_callback=None):
         xml = b''
 
-        for url, v in data.items():
-            date = v['date']
+        if data:
+            for url, v in data.items():
+                date = v['date']
 
+                try:
+                    xml += bytearray(self._downloadUrl(url))
+
+                except SourceUpdateCanceledException as cancelException:
+                    raise cancelException
+
+                except Exception as ex:
+                    deb("Error downloading EPG: {}\n\nDetails:\n{}".format(url, getExceptionString()))
+                    raise SourceFaultyEPGException(url)
+
+        else:
             try:
-                xml += bytearray(self._downloadUrl(url))
+                xml = self._downloadUrl(url)
 
             except SourceUpdateCanceledException as cancelException:
-                raise cancelException
+                    raise cancelException
 
             except Exception as ex:
                 deb("Error downloading EPG: {}\n\nDetails:\n{}".format(url, getExceptionString()))
                 raise SourceFaultyEPGException(url)
 
-            if strings2.M_TVGUIDE_CLOSING:
-                raise SourceUpdateCanceledException()
+        if strings2.M_TVGUIDE_CLOSING:
+            raise SourceUpdateCanceledException()
 
         try:        
             if ADDON.getSetting('useCustomParser') == 'true':

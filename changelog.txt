@@ -1,5 +1,6 @@
-﻿wersja 9.8.7 - 2022-01-09
-- beta
+﻿wersja 9.8.7 - 2022-01-11
+- dodano skrót InputStream Adaptive w ustawieniach
+- zoptymalizowana wydajność
 
 wersja 9.8.6 - 2022-01-04
 - naprawiono odświeżanie tabeli EPG po zakończeniu nagrywania
