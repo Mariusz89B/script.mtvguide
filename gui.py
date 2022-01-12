@@ -4928,7 +4928,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 return True
 
     def updateCurrentChannel(self, channel, program=None):
-        deb('updateCurrentChannel: {}'.format(channel))
+        #deb('updateCurrentChannel: {}'.format(channel))
         self.lastChannel = self.currentChannel
         self.currentChannel = channel
 
@@ -7019,7 +7019,7 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
             self.getControl(self.C_STREAM_VISIBILITY_MARKER).setLabel(self.VISIBLE_PLAYLIST)
 
     def playChannel(self, stream):
-        debug('Pla playChannel: {}'.format(stream))
+        #debug('Pla playChannel: {}'.format(stream))
 
         channel = Channel(id='StreamSetupDialog', title='StreamSetupDialog', logo='', titles='', streamUrl=stream, visible='', weight='')
 
@@ -7990,7 +7990,7 @@ class Pla(xbmcgui.WindowXMLDialog):
         self.playChannel(channel)
 
     def playChannel(self, channel, program=None):
-        debug('Pla playChannel: {}'.format(program))
+        #debug('Pla playChannel: {}'.format(program))
         if channel.id != self.epg.currentChannel.id:
             self.ChannelChanged = 1
             if program is not None:

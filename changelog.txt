@@ -1,4 +1,4 @@
-﻿wersja 9.8.7 - 2022-01-11
+﻿wersja 9.8.7 - 2022-01-12
 - dodano skrót InputStream Adaptive w ustawieniach
 - zoptymalizowana wydajność
 
