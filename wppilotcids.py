@@ -73,10 +73,9 @@ video_url = 'https://pilot.wp.pl/api/v1/channel/'
 close_stream_url = 'https://pilot.wp.pl/api/v1/channels/close?device_type=android_tv'
 
 headers = {
-    'user-agent': 'ExoMedia 4.3.0 (43000) / Android 8.0.0 / foster_e',
-    'accept': 'application/json',
-    'x-version': 'pl.videostar|3.53.0-gms|Android|26|foster_e',
-    'content-type': 'application/json; charset=UTF-8'
+    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36 Edg/97.0.1072.55',
+    'content-type': 'application/json;charset=UTF-8',
+    'accept': 'application/json, text/plain, */*'
 }
 
 if sys.version_info[0] > 2:
@@ -225,6 +224,11 @@ class WpPilotUpdater(baseServiceUpdater):
         return result
 
     def getChannelStream(self, chann=None, vid=None, retry=False):
+        try:
+            from urllib.parse import urlencode, quote_plus, quote, unquote
+        except ImportError:
+            from urllib import urlencode, quote_plus, quote, unquote
+
         if not retry:
             video_id = chann.cid
         else:
@@ -270,30 +274,42 @@ class WpPilotUpdater(baseServiceUpdater):
 
             headersx = {
                 'authority': 'pilot.wp.pl',
+                'rtt': '50',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36 Edg/97.0.1072.55',
+                'dpr': '1',
+                'downlink': '10',
+                'ect': '4g',
+                'accept': '*/*',
                 'origin': 'https://pilot.wp.pl',
-                'user-agent': 'ExoMedia 4.3.0 (43000) / Android 8.0.0 / foster_e',
-                'accept': 'text/css,*/*;q=0.1',
                 'referer': 'https://pilot.wp.pl/tv/',
                 'accept-language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
                 }
 
             headersx.update({'Cookie': cookies})
 
-            try:
-                from urllib.parse import urlencode, quote_plus, quote, unquote
-            except ImportError:
-                from urllib import urlencode, quote_plus, quote, unquote
-
             LICENSE = ''
             LICENSE_URL = 'https://pilot.wp.pl'
+
+            headers_mpd = {}
 
             try:
                 manifest = response[u'data'][u'stream_channel'][u'streams'][0][u'url'][0]
                 widevine = response[u'data'][u'stream_channel']['drms']['widevine']
+
+                headers_mpd = {
+                    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36 Edg/97.0.1072.55',
+                    'x-qoe-cdn': manifest,
+                    'accept': '*/*',
+                    'origin': 'https://pilot.wp.pl',
+                    'referer': 'https://pilot.wp.pl/',
+                    'accept-language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
+                    }
+                
+                headers_mpd.update({'Cookie': cookies})
                 
                 LICENSE = LICENSE_URL + widevine + '|' + urlencode(headersx) +'|R{SSM}|'
 
-                stream = manifest + '|user-agent=' + quote(headers['user-agent'])
+                stream = manifest + '|' + urlencode(headers_mpd)
 
             except:
                 if 'hls@live:abr' in response[u'data'][u'stream_channel'][u'streams'][0][u'type']:
@@ -305,7 +321,7 @@ class WpPilotUpdater(baseServiceUpdater):
 
             if stream is not None and stream != "":
                 chann.strm = stream
-                chann.lic = LICENSE
+                chann.lic = LICENSE, urlencode(headers_mpd)
 
                 self.log('getChannelStream found matching channel: cid: {}, name: {}, rtmp:{}'.format(chann.cid, chann.name, chann.strm))
                 return chann

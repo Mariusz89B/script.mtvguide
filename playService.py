@@ -1089,8 +1089,6 @@ class PlayService(xbmc.Player, BasePlayService):
                 if service == 'WP Pilot':
                     if self.archiveService == '' or self.archivePlaylist == '':
                         try:
-                            UAwp = 'ExoMedia 4.3.0 (43000) / Android 8.0.0 / foster_e'
-                            
                             self.playbackStopped = False
 
                             try:
@@ -1099,7 +1097,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                 from urllib import urlencode, quote_plus, quote, unquote
 
                             strmUrl = channelInfo.strm
-                            licenseUrl = channelInfo.lic
+                            licenseUrl, headers = channelInfo.lic
 
                             PROTOCOL = ''
                             DRM = 'com.widevine.alpha'
@@ -1126,7 +1124,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                 ListItem.setMimeType(mimeType)
                                 ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
                                 if licenseUrl != '':
-                                    ListItem.setProperty('inputstream.adaptive.stream_headers', 'Referer: https://pilot.wp.pl/&User-Agent=' + quote(UAwp))
+                                    ListItem.setProperty('inputstream.adaptive.stream_headers', unquote(headers))
                                     ListItem.setProperty('inputstream.adaptive.license_type', DRM)
                                     ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl) 
                                 ListItem.setProperty('IsPlayable', 'true')
