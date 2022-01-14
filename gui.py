@@ -6304,14 +6304,14 @@ class mTVGuide(xbmcgui.WindowXML):
                 else:
                     diff = datetime.datetime.now() - self.lastKeystroke
                     diffSeconds = (diff.days * 86400) + diff.seconds
-                    if diffSeconds > 60:
+                    if diffSeconds > 30:
                         deb('refreshStreamsLoop refreshing all services')
                         self.database.reloadServices()
                         if not self.recordService.isRecordOngoing() and not xbmc.Player().isPlaying():
                             self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
                     else:
                         deb('refreshStreamsLoop services will be refreshed if no activity for 60s, currently no activity for {} seconds'.format(diffSeconds))
-                        refreshTime = 60
+                        refreshTime = 1
             else:
                 refreshTime = 600
                 deb('refreshStreamsLoop delaying service refresh for {} seconds due to playback or record'.format(refreshTime))
