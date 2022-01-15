@@ -1702,7 +1702,7 @@ class Database(object):
             endTime = startTime + datetime.timedelta(hours = 2)
             channelsWithoutProg = list(channels)
 
-            channelMap = dict{}
+            channelMap = dict()
             for c in channels:
                 if c.id:
                     channelMap[c.id] = c
