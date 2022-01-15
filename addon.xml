@@ -2,7 +2,7 @@
 <addon
     id="script.mtvguide"
     name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]"
-    version="9.8.8-beta.2"
+    version="9.8.8-beta.3"
     provider-name="Mods-kodi">
   <requires>
     <import addon="xbmc.addon" version="17.0.0"/>
@@ -41,7 +41,7 @@
     <forum>https://github.com/Mariusz89B/script.mtvguide/discussions</forum>
 	<website>https://github.com/Mariusz89B/script.mtvguide</website>
     <source>m-TVGuide © 2013 - 2022</source>
-    <news>v9.8.7 (2022-01-13)
+    <news>v9.8.8 (2022-01-13)
 - Beta testing.
 
 v9.8.7 (2022-01-12)

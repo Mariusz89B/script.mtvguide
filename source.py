@@ -320,7 +320,7 @@ class Database(object):
         except:
             self.event = threading.Event()
 
-        self.eventResults = {}
+        self.eventResults = dict()
         self.source = instantiateSource()
         self.updateInProgress = False
         self.updateFailed = False
@@ -1541,7 +1541,7 @@ class Database(object):
         c = self.conn.cursor()
         channels = self._getChannelList(True)
         channelIds = [cc.id for cc in channels]
-        channelMap = {}
+        channelMap = dict()
         ids = []
         for cc in channels:
             if cc.id:
@@ -1569,7 +1569,7 @@ class Database(object):
         now = datetime.datetime.now()
         channels = self._getChannelList(True)
         channelIds = [c.id for c in channels]
-        channelMap = {}
+        channelMap = dict()
         for cc in channels:
             if cc.id:
                 channelMap[cc.id] = cc
@@ -1702,7 +1702,7 @@ class Database(object):
             endTime = startTime + datetime.timedelta(hours = 2)
             channelsWithoutProg = list(channels)
 
-            channelMap = {}
+            channelMap = dict{}
             for c in channels:
                 if c.id:
                     channelMap[c.id] = c
