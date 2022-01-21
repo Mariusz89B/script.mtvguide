@@ -498,7 +498,7 @@ class MapString:
         if logCall:
             logCall('[UPD] %-35s %-50s %-35s' % ('-TITLE-' , '-REGEX-', '-STRM-'))
 
-        result = []
+        result = list()
 
         channelRe       = re.compile('(<channel.*?/>)', re.DOTALL)
         channelIdRe     = re.compile('<channel\sid="(.*?)"', re.DOTALL)
@@ -613,7 +613,7 @@ class baseServiceUpdater:
         self.thread = None
         self.serviceRegex = ''
         self.servicePriority = int(0)
-        self.traceList = []
+        self.traceList = list()
         self.rstrm = ''
         self.forcePrintintingLog = False
         self.printLogTimer = None
@@ -626,7 +626,7 @@ class baseServiceUpdater:
         self.adultMapFile     = 'adultmap.xml'
         self.vodMapFile       = 'vodmap.xml'
         self.extraMapFile     = 'basemap_extra.xml'
-        self.automap = []
+        self.automap = list()
         self.mapsLoaded  = False
         self.channelList = None
         self.channels    = None
@@ -662,7 +662,7 @@ class baseServiceUpdater:
             deb(trace)
         baseServiceUpdater.logLocker.release()
         del self.traceList[:]
-        self.traceList = []
+        self.traceList = list()
 
     def wrongService(self):
         self.log('wrong service selected: {}'.format(self.serviceName))
@@ -722,7 +722,7 @@ class baseServiceUpdater:
         pass
 
     def resetService(self):
-        self.automap = []
+        self.automap = list()
         self.channelList = None
         self.mapsLoaded = False
         self.refreshingStreams = True
@@ -738,7 +738,7 @@ class baseServiceUpdater:
 
         self.log('\n')
         if not baseServiceUpdater.baseMapContent:
-            baseServiceUpdater.baseMapContent = []
+            baseServiceUpdater.baseMapContent = list()
             baseServiceUpdater.categories = {}
 
             self.loadSingleBaseMap('base', self.baseMapFile)
@@ -866,7 +866,7 @@ class baseServiceUpdater:
         return self.serviceName
 
     def getBaseChannelList(self, silent=False, returnCopy=True):
-        result = []
+        result = list()
         try:
             if self.channelList and self.isChannelListStillValid():
                 self.log('getBaseChannelList return cached channel list')
@@ -916,10 +916,10 @@ class baseServiceUpdater:
             self.log('-------------------------------------------------------------------------------------')
             self.log('[UPD]     %-40s %-40s %-35s' % ('-TITLE-', '-ORIG NAME-', '-SERVICE-'))
 
-            channelList = []
+            channelList = list()
 
-            result = []
-            titles = []
+            result = list()
+            titles = list()
 
             for title, titles in epg_channels:
                 for dtitle in titles.split(', '):

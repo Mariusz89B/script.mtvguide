@@ -124,8 +124,8 @@ class Channel(object):
         self.streamUrl = streamUrl
         self.visible = visible
         self.weight = weight
-        self.channelList = []
-        self.channelListAll = []
+        self.channelList = list()
+        self.channelListAll = list()
 
     def isPlayable(self):
         return hasattr(self, 'streamUrl') and self.streamUrl
@@ -326,8 +326,8 @@ class Database(object):
         self.updateFailed = False
         self.skipUpdateRetries = False
         self.settingsChanged = None
-        self.channelList = []
-        self.channelListAll = []
+        self.channelList = list()
+        self.channelListAll = list()
         self.category = None
 
         if sys.version_info[0] > 2:
@@ -654,7 +654,7 @@ class Database(object):
         updateServices = self.services_updated == False and ADDON.getSetting('AutoUpdateCid') == 'true'
         if updateServices == True:
             deb('[UPD] Starting updating STRM')
-            serviceList = []
+            serviceList = list()
 
             self.deleteAllCustomStreams()
 
@@ -879,7 +879,7 @@ class Database(object):
 
 
     def epgChannels(self):
-        result = {}
+        result = dict()
 
         if ADDON.getSetting('epg_display_name') == 'true':
             DISPLAY = True
@@ -981,7 +981,7 @@ class Database(object):
         self._invokeAndBlockForResult(self._reloadServices)
 
     def _reloadServices(self):
-        serviceList = []
+        serviceList = list()
 
         epgChannels = self.epgChannels()
 
@@ -1199,7 +1199,7 @@ class Database(object):
                         category = self.category
 
                 c = self.conn.cursor()
-                channelList = []
+                channelList = list()
 
                 if self.ChannelsWithStream == 'true':
                     if onlyVisible:
@@ -1273,7 +1273,7 @@ class Database(object):
             if self.channelList:
                 channelList = self.channelList
             else:
-                channelList = []
+                channelList = list()
             return channelList
 
     def getAllChannelList(self, onlyVisible = True):
@@ -1284,7 +1284,7 @@ class Database(object):
         if not self.channelListAll:# or not onlyVisible:
 
             c = self.conn.cursor()
-            channelList = []
+            channelList = list()
 
             if onlyVisible:
                 c.execute('SELECT * FROM channels WHERE source=? AND visible=? ORDER BY weight', [self.source.KEY, True])
@@ -1321,7 +1321,7 @@ class Database(object):
 
     def getCategoryChannelList(self, category, channelList, excludeCurrentCategory):
         try:
-            newChannelList = []
+            newChannelList = list()
             predefined_category_re = re.compile(r'\w+: ([^\s]*)', re.IGNORECASE)
             predefined = predefined_category_re.search(category)
 
@@ -1364,7 +1364,7 @@ class Database(object):
             deb('getCategoryChannelList error: {}'.format(ex))
 
     def getCategoryMap(self):
-        categoryMap = []
+        categoryMap = list()
         try:
             f = xbmcvfs.File('special://profile/addon_data/script.mtvguide/categories.ini','rb')
             lines = f.read().splitlines()
@@ -1385,7 +1385,7 @@ class Database(object):
         self.channelList = None
         if custom:
             try:
-                newList = []
+                newList = list()
                 for channel, cat in categories:
                     line = "{}={}".format(channel, cat)
                     newList.append(line)
@@ -1417,7 +1417,7 @@ class Database(object):
 
     def getAllCategories(self):
         from collections import OrderedDict
-        categoryList = []
+        categoryList = list()
         for _, cat in self.getCategoryMap():
             categoryList.append(cat)
         categoryList = OrderedDict((k, None) for k in categoryList)
@@ -1690,7 +1690,7 @@ class Database(object):
         return program
 
     def _getProgramList(self, channels, startTime):
-        programList = []
+        programList = list()
         try:
             """
             @param channels:
@@ -1716,6 +1716,11 @@ class Database(object):
 
             if endTime == '' or endTime is None:
                 endTime = datetime.datetime.now()
+
+            try:
+                m = channelMap.keys()
+            except Exception as ex:
+                deb('TEST: {}'.format(ex))
 
             c.execute('SELECT p.*, (SELECT 1 FROM notifications n WHERE n.channel=p.channel AND n.program_title=p.title AND n.source=p.source AND (n.start_date IS NULL OR n.start_date = p.start_date)) AS notification_scheduled , (SELECT 1 FROM recordings r WHERE r.channel=p.channel AND r.program_title=p.title AND r.start_date=p.start_date AND r.source=p.source) AS recording_scheduled FROM programs p WHERE p.channel IN (\'' + ('\',\''.join(channelMap.keys())) + '\') AND p.source=? AND p.end_date > ? AND p.start_date < ?', [self.source.KEY, startTime.replace(microsecond=0), endTime.replace(microsecond=0)])
 
@@ -1779,7 +1784,7 @@ class Database(object):
         return self._invokeAndBlockForResult(self._getCustomStreamUrlList, channel)
 
     def _getCustomStreamUrlList(self, channel):
-        result = []
+        result = list()
         c = self.conn.cursor()
         c.execute("SELECT stream_url FROM custom_stream_url WHERE channel like ? OR channel like ?", [channel.id, channel.title])
         for row in c:
@@ -1792,7 +1797,7 @@ class Database(object):
         return self._invokeAndBlockForResult(self._getAllStreamUrlList)
 
     def _getAllStreamUrlList(self):
-        result = []
+        result = list()
         c = self.conn.cursor()
         c.execute("SELECT channel, stream_url FROM custom_stream_url")
         for row in c:
@@ -1806,9 +1811,9 @@ class Database(object):
         return self._invokeAndBlockForResult(self._getAllCatchupUrlList, channels)
 
     def _getAllCatchupUrlList(self, channels):
-        result = {}
+        result = dict()
 
-        channelList = []
+        channelList = list()
 
         for chann in channels:
             channelList.append(chann.id.upper())
@@ -1952,7 +1957,7 @@ class Database(object):
 
             if version < [3, 1, 0]:
                 c.execute("SELECT * FROM custom_stream_url")
-                channelList = []
+                channelList = list()
                 for row in c:
                     channel = [row[str('channel')], row[str('stream_url')]]
                     channelList.append(channel)
@@ -1984,8 +1989,8 @@ class Database(object):
 
             if version < [6, 2, 3]:
                 deb('DATABASE UPLIFT TO VERSION 6.2.3')
-                channelList = []
-                notificationList = []
+                channelList = list()
+                notificationList = list()
 
                 c.execute("SELECT * FROM channels ORDER BY VISIBLE DESC, WEIGHT ASC")
                 for row in c:
@@ -2229,7 +2234,7 @@ class Database(object):
     def _getFullNotifications(self, daysLimit):
         start = datetime.datetime.now()
         end = start + datetime.timedelta(days=daysLimit)
-        programList = []        
+        programList = list()       
         c = self.conn.cursor()
         #once
         c.execute("SELECT DISTINCT c.id, c.title as channel_title,c.logo,c.stream_url,c.visible,c.weight, p.* FROM programs p, channels c, notifications a WHERE c.id = p.channel AND p.title = a.program_title AND p.start_date = p.start_date")
@@ -2328,7 +2333,7 @@ class Database(object):
     def _getFullRecordings(self, daysLimit):
         start = datetime.datetime.now()
         end = start + datetime.timedelta(days=daysLimit)
-        programList = []
+        programList = list()
         c = self.conn.cursor()
         #once
         c.execute("SELECT DISTINCT c.id, c.title as channel_title,c.logo,c.stream_url,c.visible,c.weight, p.* FROM programs p, channels c, recordings a WHERE c.id = p.channel AND p.title = a.program_title AND p.start_date = p.start_date")
