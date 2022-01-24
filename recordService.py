@@ -593,8 +593,13 @@ class RecordService(BasePlayService):
 
         drmList = ['C More', 'Polsat GO', 'Polsat GO Box', 'Ipla', 'nc+ GO', 'PlayerPL', 'Telia Play']
 
-        p = re.compile('service=(.+?)&cid=.*')
-        service = p.findall(url)[0]
+        try:
+            p = re.compile('service=(.+?)&cid=.*')
+            service = p.findall(url)[0]
+        except:
+            threadData['nrOfReattempts'] += 1
+            return #go to next stream - this one seems to be locked
+
         if service in drmList:
             if self.showDialogOk:
                 xbmcgui.Dialog().ok('Digital rights management (DRM)', 'The selected stream from {url} is protected by Digital rights management (DRM) system, the digital content is restricted and cannot be recorded. m-TVGuide will continue on to try and record next available stream.'.format(url=service)) 
@@ -604,6 +609,9 @@ class RecordService(BasePlayService):
 
         cid, service = self.parseUrl(url)
         channelInfo = self.getChannelDownload(cid, service)
+
+        print(channelInfo.catchup)
+        print(channelInfo.strm)
         
         strmUrl_catchup = ''
         strmUrl = ''
@@ -715,6 +723,7 @@ class RecordService(BasePlayService):
                                     m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/' + 'timeshift_rel-' + str(offset) + '.m3u8' + str(fsUrlAppend)
                                     #m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/' + 'mono-timeshift_rel-' + str(offset) + '.m3u8' + str(fsUrlAppend)
 
+                            m_catchupSource = re.sub('None', '', m_catchupSource)
                             strmUrl = m_catchupSource
 
                         else:
@@ -748,12 +757,15 @@ class RecordService(BasePlayService):
                         putv = re.compile('(^.*)(\d{4}.\d{2}.\d{2}.*\d{2}.\d{2}.\d{2})(?=.*|$)')
                         mutv = putv.match(catchup)
 
-                        if mutc:
-                            m_catchupSource = strmUrl + catchup
+                        m_catchupSource = strmUrl + catchup
+                        m_catchupSource = re.sub('None', '', m_catchupSource)
+
+                        if mutc: 
                             strmUrl = m_catchupSource + '-' + str(int(duration)*60)
+
                         elif mutv:
-                            m_catchupSource = strmUrl + catchup
                             strmUrl = m_catchupSource + '?duration={duration}'.format(duration=str(int(duration)*60))
+
                         else:
                             deb('archive_type(1) wrong type')
                             self.epg.database.removeRecording(self.program)
@@ -786,6 +798,7 @@ class RecordService(BasePlayService):
                             except:
                                 m_catchupSource = xcHost + "/timeshift/" + xcUsername + "/" + xcPassword + "/"+timeshift+"/" + xcChannelId + '.m3u8'
 
+                            m_catchupSource = re.sub('None', '', m_catchupSource)
                             strmUrl = m_catchupSource
 
                         else:
@@ -805,7 +818,7 @@ class RecordService(BasePlayService):
                         else:
                             m_catchupSource = strmUrl + '?utc={utc}&lutc={lutc}-{duration}'.format(utc=utc, lutc=lutc, duration=duration)
                             strmUrl = m_catchupSource
-            
+
             try:
                 channelInfo.strm = strmUrl
             except:
@@ -1227,8 +1240,13 @@ class RecordService(BasePlayService):
 
         drmList = ['C More', 'Polsat GO', 'Polsat GO Box', 'Ipla', 'nc+ GO', 'PlayerPL', 'Telia Play']
 
-        p = re.compile('service=(.+?)&cid=.*')
-        service = p.findall(url)[0]
+        try:
+            p = re.compile('service=(.+?)&cid=.*')
+            service = p.findall(url)[0]
+        except:
+            threadData['nrOfReattempts'] += 1
+            return #go to next stream - this one seems to be locked
+
         if service in drmList:
             if self.showDialogOk:
                 xbmcgui.Dialog().ok('Digital rights management (DRM)', 'The selected stream from {url} is protected by Digital rights management (DRM) system, the digital content is restricted and cannot be recorded. m-TVGuide will continue on to try and record next available stream.'.format(url=service)) 

@@ -1247,6 +1247,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                                         m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/' + str(fsListType.replace('mono', 'video')) + '-timeshift_rel-' + str(offset) + '.m3u8' + str(fsUrlAppend)
                                                         catchup = True
 
+                                                m_catchupSource = re.sub('None', '', m_catchupSource)
                                                 strmUrl = m_catchupSource
 
                                             else:
@@ -1277,14 +1278,17 @@ class PlayService(xbmc.Player, BasePlayService):
                                             putv = re.compile('(^.*)(\d{4}.\d{2}.\d{2}.*\d{2}.\d{2}.\d{2})(?=.*|$)')
                                             mutv = putv.match(catchup)
 
+                                            m_catchupSource = strmUrl + catchup
+                                            m_catchupSource = re.sub('None', '', m_catchupSource)
+
                                             if mutc:
-                                                m_catchupSource = strmUrl + catchup
                                                 strmUrl = m_catchupSource + '-' + str(int(duration)*60)
                                                 catchup = True
+
                                             elif mutv:
-                                                m_catchupSource = strmUrl + catchup
                                                 strmUrl = m_catchupSource + '?duration={duration}'.format(duration=str(int(duration)*60))
                                                 catchup = True
+                                                
                                             else:
                                                 if p.match(url):
                                                     deb('archive_type(1) wrong type')
@@ -1314,6 +1318,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                                 except:
                                                     m_catchupSource = xcHost + "/timeshift/" + xcUsername + "/" + xcPassword + "/"+timeshift+"/" + xcChannelId + '.m3u8'
 
+                                                m_catchupSource = re.sub('None', '', m_catchupSource)
                                                 strmUrl = m_catchupSource
                                                 catchup = True
 
@@ -1327,10 +1332,12 @@ class PlayService(xbmc.Player, BasePlayService):
                                         if ADDON.getSetting('archive_type') == '3':
                                             if '?' in strmUrl:
                                                 m_catchupSource = strmUrl + '&utc={utc}&lutc={lutc}-{duration}'.format(utc=utc, lutc=lutc, duration=duration)
+                                                m_catchupSource = re.sub('None', '', m_catchupSource)
                                                 strmUrl = m_catchupSource
                                                 catchup = True
                                             else:
                                                 m_catchupSource = strmUrl + '?utc={utc}&lutc={lutc}-{duration}'.format(utc=utc, lutc=lutc, duration=duration)
+                                                m_catchupSource = re.sub('None', '', m_catchupSource)
                                                 strmUrl = m_catchupSource
                                                 catchup = True
 
