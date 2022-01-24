@@ -90,7 +90,7 @@ Please see the **`LICENSE.txt`** file for details.
 
 ## Support
 
-Please report any legal questions or issues to Github.com
+Please report any legal questions or issues to support@mods-kodi.pl
 
 Bug reports should be reported in issues section:<br>
 https://github.com/Mariusz89B/script.mtvguide/issues/new/choose
@@ -105,4 +105,4 @@ https://github.com/Mariusz89B/script.mtvguide/discussions
 
 ![](https://i.imgur.com/ipTGRvj.jpg)
 
-Copyright m-TVGuide © 2013 - 2021
+Copyright m-TVGuide © 2013 - 2022
