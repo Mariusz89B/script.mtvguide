@@ -700,7 +700,7 @@ class RecordService(BasePlayService):
 
                                     #if int(utc) > timestamp:
                                     new_url = strmUrl + '?utc={utc}&lutc={lutc}'.format(utc=utc, lutc=lutc)
-                                    response = requests.get(new_url, allow_redirects=False, verify=False, timeout=2)
+                                    response = requests.get(new_url, allow_redirects=False, verify=False, timeout=5)
                                     strmUrlNew = response.headers.get('Location', None) if 'Location' in response.headers else strmUrl
 
                                     if strmUrlNew:
@@ -723,7 +723,6 @@ class RecordService(BasePlayService):
                                     m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/' + 'timeshift_rel-' + str(offset) + '.m3u8' + str(fsUrlAppend)
                                     #m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/' + 'mono-timeshift_rel-' + str(offset) + '.m3u8' + str(fsUrlAppend)
 
-                            m_catchupSource = re.sub('None', '', m_catchupSource)
                             strmUrl = m_catchupSource
 
                         else:
@@ -758,7 +757,6 @@ class RecordService(BasePlayService):
                         mutv = putv.match(catchup)
 
                         m_catchupSource = strmUrl + catchup
-                        m_catchupSource = re.sub('None', '', m_catchupSource)
 
                         if mutc: 
                             strmUrl = m_catchupSource + '-' + str(int(duration)*60)
@@ -798,7 +796,6 @@ class RecordService(BasePlayService):
                             except:
                                 m_catchupSource = xcHost + "/timeshift/" + xcUsername + "/" + xcPassword + "/"+timeshift+"/" + xcChannelId + '.m3u8'
 
-                            m_catchupSource = re.sub('None', '', m_catchupSource)
                             strmUrl = m_catchupSource
 
                         else:
