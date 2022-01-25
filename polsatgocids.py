@@ -336,19 +336,28 @@ class PolsatGoUpdater(baseServiceUpdater):
 
                         myper = []
 
-                        m_pack = {'multiple_packet_tv' : 'sc:tv', 'multiple_packet_premium': 'sc:premium', 'multiple_packet_sport': 'sc:sport'}
+                        m_pack = {'multiple_packet_tv' : 'sc:tv', 'multiple_packet_premium': 'sc:premium', 'multiple_packet_sport': 'sc:sport', 'pos:multiple_packet_dzieci' : 'sc:kat_odzieci', 'news:true': 'sc:news'}
 
                         for i in data["result"]["accessGroups"]:
                             for k,v in m_pack.items():
                                 if k in i:
                                     myper.append(str(v))
-
+                            if 'sc:' in i:
+                                myper.append(str(i))
                             if 'oth:' in i:
+                                myper.append(str(i))
+                            if 'cpuser:true' in i:
+                                myper.append(str(i))
+                            if 'vip:true' in i:
+                                myper.append(str(i))
+                            if 'rodo:true' in i:
+                                myper.append(str(i))
+                            if 'plususer:true' in i:
                                 myper.append(str(i))
                             if 'cp_sub_ext:' in i:
                                 myper.append(str(i.replace('cp_sub_ext','sc')))
                             if 'cp_sub_base:' in i:
-                                myper.append(str(i.replace('cp_sub_base','sc')))  
+                                myper.append(str(i.replace('cp_sub_base','sc'))) 
 
                         w_myperm = ", ".join(myper)
 
@@ -482,6 +491,14 @@ class PolsatGoUpdater(baseServiceUpdater):
                 if 'sc:' in i:
                     myper.append(str(i))
                 if 'oth:' in i:
+                    myper.append(str(i))
+                if 'cpuser:true' in i:
+                    myper.append(str(i))
+                if 'vip:true' in i:
+                    myper.append(str(i))
+                if 'rodo:true' in i:
+                    myper.append(str(i))
+                if 'plususer:true' in i:
                     myper.append(str(i))
                 if 'cp_:' in i:
                     myper.append(str(i))
