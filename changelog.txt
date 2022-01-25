@@ -1,4 +1,7 @@
-﻿wersja 9.8.8 - 2022-01-24
+﻿wersja 9.8.9 - 2022-01-25
+- wersja testowa
+
+wersja 9.8.8 - 2022-01-24
 - poprawione błędy
 
 wersja 9.8.7 - 2022-01-12

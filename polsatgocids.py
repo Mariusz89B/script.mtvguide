@@ -221,6 +221,7 @@ class PolsatGoUpdater(baseServiceUpdater):
                             }
 
                     response = requests.post(self.auth, headers=headers, json=data, timeout=15, verify=False).json()
+
                     try:
                         error = response['error']
                         if error:
@@ -278,10 +279,6 @@ class PolsatGoUpdater(baseServiceUpdater):
                         ADDON.setSetting('polsatgo_sessexpir', str(sessexpir))
                         ADDON.setSetting('polsatgo_sesskey', sesskey)
 
-                        accesgroup = response['result']['accessGroups']
-
-                        ADDON.setSetting('polsatgo_accgroups', str(accesgroup))
-
                         dane = sesstoken+'|'+sessexpir+'|auth|getProfiles'
                         authdata = self.getHmac(dane)
                         
@@ -337,7 +334,26 @@ class PolsatGoUpdater(baseServiceUpdater):
 
                         accesgroup = response['result']['accessGroups']
 
-                        ADDON.setSetting('polsatgo_accgroups', str(accesgroup))
+                        myper = []
+
+                        m_pack = {'multiple_packet_tv' : 'sc:tv', 'multiple_packet_premium': 'sc:premium', 'multiple_packet_sport': 'sc:sport'}
+
+                        for i in data["result"]["accessGroups"]:
+                            for k,v in m_pack.items():
+                                if k in i:
+                                    myper.append(str(v))
+
+                            if 'oth:' in i:
+                                myper.append(str(i))
+                            if 'cp_sub_ext:' in i:
+                                myper.append(str(i.replace('cp_sub_ext','sc')))
+                            if 'cp_sub_base:' in i:
+                                myper.append(str(i.replace('cp_sub_base','sc')))  
+
+                        w_myperm = ", ".join(myper)
+
+                        ADDON.setSetting('polsatgo_myperm', str(w_myperm))
+                        self.myperms = myper
 
                         return True
                         
@@ -460,10 +476,15 @@ class PolsatGoUpdater(baseServiceUpdater):
 
             myper = []
 
-            self.myperms = ADDON.getSetting('pgobox_myperm')
+            self.myperms = ADDON.getSetting('polsatgo_myperm')
 
             for i in self.myperms.split(', '):
-                myper.append(str(i))
+                if 'sc:' in i:
+                    myper.append(str(i))
+                if 'oth:' in i:
+                    myper.append(str(i))
+                if 'cp_:' in i:
+                    myper.append(str(i))
 
             for i in channels:
                 channelperms = i['grantExpression'].split('*')

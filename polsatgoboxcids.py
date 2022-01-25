@@ -182,19 +182,20 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
 
                 else:
                     myper = []
+
+                    m_pack = {'multiple_packet_tv' : 'sc:tv', 'multiple_packet_premium': 'sc:premium', 'multiple_packet_sport': 'sc:sport'}
+
                     for i in data["result"]["accessGroups"]:
-                        if ':true' in i:
-                            myper.append(str(i))
-                        if 'sc:' in i:
-                            myper.append(str(i))
+                        for k,v in m_pack.items():
+                            if k in i:
+                                myper.append(str(v))
+
                         if 'oth:' in i:
-                            myper.append(str(i))
-                        if 'loc:' in i:
                             myper.append(str(i))
                         if 'cp_sub_ext:' in i:
                             myper.append(str(i.replace('cp_sub_ext','sc')))
                         if 'cp_sub_base:' in i:
-                            myper.append(str(i.replace('cp_sub_base','sc')))
+                            myper.append(str(i.replace('cp_sub_base','sc')))  
 
                     w_myperm = ", ".join(myper)
 
@@ -375,7 +376,12 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
             self.myperms = ADDON.getSetting('pgobox_myperm')
 
             for i in self.myperms.split(', '):
-                myper.append(str(i))
+                if 'sc:' in i:
+                    myper.append(str(i))
+                if 'oth:' in i:
+                    myper.append(str(i))
+                if 'cp_:' in i:
+                    myper.append(str(i))
 
             for i in channels:
                 channelperms = i['grantExpression'].split('*')

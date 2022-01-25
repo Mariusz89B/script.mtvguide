@@ -134,7 +134,7 @@
 					</control>
 				</setting>
 				<setting help="95012" id="priority_ipla" label="55009" type="integer" parent="ipla_enabled">
-					<level>0</level>
+					<level>1</level>
 					<default>6</default>
 					<constraints>
 						<options>
@@ -262,7 +262,7 @@
 					<control type="toggle"/>
 				</setting>
 				<setting help="95012" id="priority_playerpl" label="55009" type="integer" parent="playerpl_enabled">
-					<level>0</level>
+					<level>1</level>
 					<default>6</default>
 					<constraints>
 						<options>
@@ -289,7 +289,7 @@
 					<control format="string" type="spinner"/>
 				</setting>
 				<setting help="" id="playerpl_subtitles" label="30760" type="boolean" parent="playerpl_enabled">
-					<level>0</level>
+					<level>2</level>
 					<default>true</default>
 					<dependencies>
 						<dependency type="visible">
@@ -508,7 +508,7 @@
 					</control>
 				</setting>
 				<setting help="95144" id="polsatgo_drmcert" label="70138" type="boolean" parent="polsatgo_enabled">
-					<level>0</level>
+					<level>3</level>
 					<default>false</default>
 					<dependencies>
 						<dependency type="visible">
@@ -519,7 +519,7 @@
 					<control type="toggle"/>
 				</setting>
 				<setting help="95012" id="priority_polsatgo" label="55009" type="integer" parent="polsatgo_enabled">
-					<level>0</level>
+					<level>1</level>
 					<default>6</default>
 					<constraints>
 						<options>
@@ -622,7 +622,7 @@
 					</control>
 				</setting>
 				<setting help="95144" id="pgobox_drmcert" label="70138" type="boolean" parent="pgobox_enabled">
-					<level>0</level>
+					<level>3</level>
 					<default>false</default>
 					<dependencies>
 						<dependency type="visible">
@@ -633,7 +633,7 @@
 					<control type="toggle"/>
 				</setting>
 				<setting help="95012" id="priority_pgobox" label="55009" type="integer" parent="pgobox_enabled">
-					<level>0</level>
+					<level>1</level>
 					<default>6</default>
 					<constraints>
 						<options>
@@ -761,7 +761,7 @@
 					<control type="toggle"/>
 				</setting>
 				<setting help="95012" id="priority_tvp" label="55009" type="integer" parent="tvp_enabled">
-					<level>0</level>
+					<level>1</level>
 					<default>6</default>
 					<constraints>
 						<options>
@@ -831,7 +831,7 @@
 					</control>
 				</setting>
 				<setting help="" id="videostar_netviapisessid" label="69066" type="string" parent="videostar_enabled">
-					<level>0</level>
+					<level>3</level>
 					<default/>
 					<constraints>
 						<allowempty>true</allowempty>
@@ -847,7 +847,7 @@
 					</control>
 				</setting>
 				<setting help="" id="videostar_netviapisessval" label="69067" type="string" parent="videostar_enabled">
-					<level>0</level>
+					<level>3</level>
 					<default/>
 					<constraints>
 						<allowempty>true</allowempty>
@@ -863,7 +863,7 @@
 					</control>
 				</setting>
 				<setting help="" id="videostar_remote_cookies" label="69068" type="string" parent="videostar_enabled">
-					<level>0</level>
+					<level>3</level>
 					<default/>
 					<constraints>
 						<allowempty>true</allowempty>
@@ -879,7 +879,7 @@
 					</control>
 				</setting>
 				<setting help="95012" id="priority_videostar" label="55009" type="integer" parent="videostar_enabled">
-					<level>0</level>
+					<level>1</level>
 					<default>6</default>
 					<constraints>
 						<options>
@@ -986,7 +986,7 @@
 					</control>
 				</setting>
 				<setting help="95012" id="priority_cmore" label="55009" type="integer" parent="cmore_enabled">
-					<level>0</level>
+					<level>1</level>
 					<default>6</default>
 					<constraints>
 						<options>
@@ -1089,7 +1089,7 @@
 					</control>
 				</setting>
 				<setting help="95012" id="priority_teliaplay" label="55009" type="integer" parent="teliaplay_enabled">
-					<level>0</level>
+					<level>1</level>
 					<default>6</default>
 					<constraints>
 						<options>
@@ -1329,7 +1329,7 @@
 					</control>
 				</setting>
 				<setting help="95141" id="playlist_1_pattern" label="70128" type="integer" parent="playlist_1_enabled">
-					<level>0</level>
+					<level>3</level>
 					<default>1</default>
 					<constraints>
 						<options>
@@ -1354,7 +1354,7 @@
 					</control>
 				</setting>
 				<setting help="95136" id="playlist_1_append_country_code" label="30763" type="string" parent="playlist_1_enabled">
-					<level>0</level>
+					<level>3</level>
 					<default/>
 					<constraints>
 						<allowempty>true</allowempty>
@@ -1370,7 +1370,7 @@
 					</control>
 				</setting>
 				<setting help="95129" id="playlist_1_user_agent" label="55001" type="string" parent="playlist_1_enabled">
-					<level>0</level>
+					<level>3</level>
 					<default/>
 					<constraints>
 						<allowempty>true</allowempty>
@@ -1557,7 +1557,7 @@
 					</control>
 				</setting>
 				<setting help="95141" id="playlist_2_pattern" label="70128" type="integer" parent="playlist_2_enabled">
-					<level>0</level>
+					<level>3</level>
 					<default>1</default>
 					<constraints>
 						<options>
@@ -1582,7 +1582,7 @@
 					</control>
 				</setting>
 				<setting help="95136" id="playlist_2_append_country_code" label="30763" type="string" parent="playlist_2_enabled">
-					<level>0</level>
+					<level>3</level>
 					<default/>
 					<constraints>
 						<allowempty>true</allowempty>
@@ -1598,7 +1598,7 @@
 					</control>
 				</setting>
 				<setting help="95129" id="playlist_2_user_agent" label="55001" type="string" parent="playlist_2_enabled">
-					<level>0</level>
+					<level>3</level>
 					<default/>
 					<constraints>
 						<allowempty>true</allowempty>
@@ -1785,7 +1785,7 @@
 					</control>
 				</setting>
 				<setting help="95141" id="playlist_3_pattern" label="70128" type="integer" parent="playlist_3_enabled">
-					<level>0</level>
+					<level>3</level>
 					<default>1</default>
 					<constraints>
 						<options>
@@ -1810,7 +1810,7 @@
 					</control>
 				</setting>
 				<setting help="95136" id="playlist_3_append_country_code" label="30763" type="string" parent="playlist_3_enabled">
-					<level>0</level>
+					<level>3</level>
 					<default/>
 					<constraints>
 						<allowempty>true</allowempty>
@@ -1826,7 +1826,7 @@
 					</control>
 				</setting>
 				<setting help="95129" id="playlist_3_user_agent" label="55001" type="string" parent="playlist_3_enabled">
-					<level>0</level>
+					<level>3</level>
 					<default/>
 					<constraints>
 						<allowempty>true</allowempty>
@@ -2013,7 +2013,7 @@
 					</control>
 				</setting>
 				<setting help="95141" id="playlist_4_pattern" label="70128" type="integer" parent="playlist_4_enabled">
-					<level>0</level>
+					<level>3</level>
 					<default>1</default>
 					<constraints>
 						<options>
@@ -2038,7 +2038,7 @@
 					</control>
 				</setting>
 				<setting help="95136" id="playlist_4_append_country_code" label="30763" type="string" parent="playlist_4_enabled">
-					<level>0</level>
+					<level>3</level>
 					<default/>
 					<constraints>
 						<allowempty>true</allowempty>
@@ -2054,7 +2054,7 @@
 					</control>
 				</setting>
 				<setting help="95129" id="playlist_4_user_agent" label="55001" type="string" parent="playlist_4_enabled">
-					<level>0</level>
+					<level>3</level>
 					<default/>
 					<constraints>
 						<allowempty>true</allowempty>
@@ -2241,7 +2241,7 @@
 					</control>
 				</setting>
 				<setting help="95141" id="playlist_5_pattern" label="70128" type="integer" parent="playlist_5_enabled">
-					<level>0</level>
+					<level>3</level>
 					<default>1</default>
 					<constraints>
 						<options>
@@ -2266,7 +2266,7 @@
 					</control>
 				</setting>
 				<setting help="95136" id="playlist_5_append_country_code" label="30763" type="string" parent="playlist_5_enabled">
-					<level>0</level>
+					<level>3</level>
 					<default/>
 					<constraints>
 						<allowempty>true</allowempty>
@@ -2282,7 +2282,7 @@
 					</control>
 				</setting>
 				<setting help="95129" id="playlist_5_user_agent" label="55001" type="string" parent="playlist_5_enabled">
-					<level>0</level>
+					<level>3</level>
 					<default/>
 					<constraints>
 						<allowempty>true</allowempty>
@@ -3028,7 +3028,7 @@
 					<control type="toggle"/>
 				</setting>
 				<setting help="95146" id="program_notifications_enabled" label="30107" type="boolean">
-					<level>0</level>
+					<level>2</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
@@ -3592,7 +3592,7 @@
 			</group>
 			<group id="3" label="310015">
 				<setting help="95140" id="pragma_mode" label="70126" type="boolean">
-					<level>0</level>
+					<level>3</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
@@ -3608,7 +3608,7 @@
 					<control format="action" type="button"/>
 				</setting>
 				<setting help="95086" id="clear_all" label="30950" type="action">
-					<level>0</level>
+					<level>1</level>
 					<data>RunScript(special://home/addons/script.mtvguide/cleardb.py,clearAll)</data>
 					<constraints>
 						<allowempty>true</allowempty>
@@ -3616,7 +3616,7 @@
 					<control format="action" type="button"/>
 				</setting>
 				<setting help="95087" id="delete_db" label="30955" type="action">
-					<level>0</level>
+					<level>3</level>
 					<data>RunScript(special://home/addons/script.mtvguide/cleardb.py,deleteDb59908)</data>
 					<constraints>
 						<allowempty>true</allowempty>
@@ -3896,7 +3896,7 @@
 		<category help="95110" id="appearance" label="30702">
 			<group id="1">
 				<setting help="95111" id="Skin" type="string" label="30914">
-					<level>2</level>
+					<level>1</level>
 					<default>skin.default</default>
 					<constraints>
 						<allowempty>true</allowempty>
@@ -3906,7 +3906,7 @@
 					</control>
 				</setting>
 				<setting help="95112" id="skin_fontpack" label="70105" type="boolean">
-					<level>0</level>
+					<level>2</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
