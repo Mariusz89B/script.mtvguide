@@ -78,7 +78,7 @@ else:
     httplibBadStatusLine = httplib.BadStatusLine
     httplibIncompleteRead = httplib.IncompleteRead
 
-HOST        = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:85.0) Gecko/20100101 Firefox/85.0'
+HOST        = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36 Edg/97.0.1072.55'
 pathAddons  = os.path.join(ADDON.getAddonInfo('path'), 'resources', 'addons.ini')
 pathMapBase = os.path.join(ADDON.getAddonInfo('path'), 'resources')
 if sys.version_info[0] > 2:

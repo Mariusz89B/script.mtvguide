@@ -506,7 +506,13 @@ class PlaylistUpdater(baseServiceUpdater):
 
                         if catchup_regex.match(stripLine) and self.catchup:
                             catchup_source_regex = re.compile('catchup-source="(.*?)"')
-                            catchupLine = catchup_source_regex.search(stripLine).group(1)
+                            try:
+                                catchupLine = catchup_source_regex.search(stripLine).group(1)
+                            except:
+                                catchupLine = ''
+
+                        else:
+                            catchupLine = ''
 
                         if len(splitedLine) > 1:
                             try:
@@ -683,11 +689,6 @@ class PlaylistUpdater(baseServiceUpdater):
                                 match = True
 
                         if (title != '' or tvg_title != '') and match:
-                            try:
-                                catchupLine = catchupLine
-                            except:
-                                catchupLine = ''
-
                             channelCid = ''
 
                             catchupDaysList = ['catchup-days=', 'timeshift=']

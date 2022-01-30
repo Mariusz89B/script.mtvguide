@@ -1099,6 +1099,27 @@ class PlayService(xbmc.Player, BasePlayService):
                             strmUrl = channelInfo.strm
                             licenseUrl, headers = channelInfo.lic
 
+                            """
+                            headersx = {
+                                'authority': 'pilot.wp.pl',
+                                'rtt': '50',
+                                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36 Edg/97.0.1072.55',
+                                'dpr': '1',
+                                'downlink': '10',
+                                'ect': '4g',
+                                'accept': '*/*',
+                                'origin': 'https://pilot.wp.pl',
+                                'referer': 'https://pilot.wp.pl/tv/',
+                                'accept-language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
+                                }
+
+                            proxyport = ADDON.getSetting('proxyport_mtvguide')
+                            www = unquote(urlencode(headersx))
+                            ADDON.setSetting('hdk_mtvguide', str(www))
+
+                            prxy ='http://127.0.0.1:%s/wppilot='%(str(proxyport)    )
+                            """
+
                             PROTOCOL = ''
                             DRM = 'com.widevine.alpha'
 

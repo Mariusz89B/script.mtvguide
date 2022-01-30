@@ -543,8 +543,11 @@ class Database(object):
         deb('Settings changed: {}'.format(str(settingsChanged) ))
         return settingsChanged
 
-    def _isCacheExpired(self, date, initializing):
+    def _isCacheExpired(self, date, initializing, startup):
         try:
+            if startup:
+                return False
+
             if ADDON.getSetting('epg_interval') == '1' and initializing:
                 return True
 
@@ -627,11 +630,11 @@ class Database(object):
             self.updateFailed = True
             return
 
-    def updateChannelAndProgramListCaches(self, callback, date = datetime.datetime.now(), progress_callback = None, initializing=False, clearExistingProgramList = True):
-        self.eventQueue.append([self._updateChannelAndProgramListCaches, callback, date, progress_callback, initializing, clearExistingProgramList])
+    def updateChannelAndProgramListCaches(self, callback, date = datetime.datetime.now(), progress_callback = None, initializing=False, startup=False, clearExistingProgramList = True):
+        self.eventQueue.append([self._updateChannelAndProgramListCaches, callback, date, progress_callback, initializing, startup, clearExistingProgramList])
         self.event.set()
 
-    def _updateChannelAndProgramListCaches(self, date, progress_callback, initializing, clearExistingProgramList):
+    def _updateChannelAndProgramListCaches(self, date, progress_callback, initializing, startup, clearExistingProgramList):
         deb('_updateChannelAndProgramListCache')
         import sys
 
@@ -663,7 +666,7 @@ class Database(object):
                 if serviceHandler.serviceEnabled == 'true':
                     serviceList.append(serviceHandler)
 
-        cacheExpired = self._isCacheExpired(date, initializing)
+        cacheExpired = self._isCacheExpired(date, initializing, startup)
 
         if cacheExpired and not self.skipUpdateRetries:
             deb('_isCacheExpired')
@@ -842,7 +845,8 @@ class Database(object):
 
                 if priority == service.servicePriority:
                     service.startLoadingChannelList(epgChannels)
-                    progress_callback(100, "{}: {}".format(strings(59915), service.getDisplayName()) )
+                    if progress_callback:
+                        progress_callback(100, "{}: {}".format(strings(59915), service.getDisplayName()) )
                     service.waitUntilDone()
                     
                     self.storeCustomStreams(service, service.serviceName, service.serviceRegex)
@@ -1011,18 +1015,18 @@ class Database(object):
             
         self.channelList = None
 
-    def getEPGView(self, channelStart, date = datetime.datetime.now(), progress_callback = None, initializing = False, clearExistingProgramList = True):
-        result = self._invokeAndBlockForResult(self._getEPGView, channelStart, date, progress_callback, initializing, clearExistingProgramList)
+    def getEPGView(self, channelStart, date = datetime.datetime.now(), progress_callback = None, initializing = False, startup=False, clearExistingProgramList = True):
+        result = self._invokeAndBlockForResult(self._getEPGView, channelStart, date, progress_callback, initializing, startup, clearExistingProgramList)
         if self.updateFailed:
             raise SourceException('No channels or programs imported')
         return result
 
-    def _getEPGView(self, channelStart, date, progress_callback, initializing, clearExistingProgramList):
+    def _getEPGView(self, channelStart, date, progress_callback, initializing, startup, clearExistingProgramList):
         if strings2.M_TVGUIDE_CLOSING:
             self.updateFailed = True
             return
 
-        cacheExpired = self._updateChannelAndProgramListCaches(date, progress_callback, initializing, clearExistingProgramList)
+        cacheExpired = self._updateChannelAndProgramListCaches(date, progress_callback, initializing, startup, clearExistingProgramList)
         if strings2.M_TVGUIDE_CLOSING:
             self.updateFailed = True
             return

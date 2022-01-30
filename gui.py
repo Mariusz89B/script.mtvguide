@@ -2537,11 +2537,12 @@ class mTVGuide(xbmcgui.WindowXML):
             elif action.getButtonCode() != 0 or action.getId() == ACTION_SELECT_ITEM:
                 if ADDON.getSetting('exit') == '0' and not background:
                     # Ask to close
-                    ret = xbmcgui.Dialog().yesno(strings(30963), '{}?'.format(C_MAIN_EXIT_STR))
-                    if ret == False:
-                        return
-                    elif ret == True:
-                        self.close(background=background)
+                    if xbmc.getCondVisibility('!Window.IsVisible(10100)'): 
+                        ret = xbmcgui.Dialog().yesno(strings(30963), '{}?'.format(C_MAIN_EXIT_STR))
+                        if ret == False:
+                            return
+                        elif ret == True:
+                            self.close(background=background)
                 else:
                     # Close by two returns
                     if (datetime.datetime.now() - self.lastCloseKeystroke).seconds < 3:
@@ -2782,11 +2783,12 @@ class mTVGuide(xbmcgui.WindowXML):
 
             if ADDON.getSetting('exit') == '0' and not background:
                 # Ask to close
-                ret = xbmcgui.Dialog().yesno(strings(30963), '{}?'.format(C_MAIN_EXIT_STR))
-                if ret == False:
-                    return
-                elif ret == True:
-                    self.close(background=background)
+                if xbmc.getCondVisibility('!Window.IsVisible(10100)'): 
+                    ret = xbmcgui.Dialog().yesno(strings(30963), '{}?'.format(C_MAIN_EXIT_STR))
+                    if ret == False:
+                        return
+                    elif ret == True:
+                        self.close(background=background)
             else:
                 # Close by two returns
                 if (datetime.datetime.now() - self.lastCloseKeystroke).seconds < 3:
@@ -5530,7 +5532,7 @@ class mTVGuide(xbmcgui.WindowXML):
         timebars = [self.timebar, self.timebarBack]
         self.addControls(timebars)
 
-    def onRedrawEPGPlaying(self, channelStart, startTime, initializing=False):
+    def onRedrawEPGPlaying(self, channelStart, startTime, initializing=False, startup=False):
         deb('onRedrawEPGVideo')
         if self.redrawingEPG or (self.database is not None and self.database.updateInProgress) or self.isClosing or strings2.M_TVGUIDE_CLOSING:
             deb('onRedrawEPGPlaying - already redrawing')
@@ -5539,7 +5541,7 @@ class mTVGuide(xbmcgui.WindowXML):
         self.mode = MODE_TV
 
         try:
-            self.channelIdx, channels, programs, cacheExpired = self.database.getEPGView(channelStart, startTime, self.onSourceProgressUpdate, initializing, clearExistingProgramList=True)
+            self.channelIdx, channels, programs, cacheExpired = self.database.getEPGView(channelStart, startTime, self.onSourceProgressUpdate, initializing, startup, clearExistingProgramList=True)
         except src.SourceException:
             self.blockInputDueToRedrawing = False
             debug('onRedrawEPGPlaying onEPGLoadError')
@@ -5556,7 +5558,7 @@ class mTVGuide(xbmcgui.WindowXML):
         debug('onRedrawEPGPlaying done')
         return
 
-    def onRedrawEPG(self, channelStart, startTime, focusFunction=None, initializing=False):
+    def onRedrawEPG(self, channelStart, startTime, focusFunction=None, initializing=False, startup=False):
         try:
             deb('onRedrawEPG')
             if self.redrawingEPG or (self.database is not None and self.database.updateInProgress) or self.isClosing or strings2.M_TVGUIDE_CLOSING:
@@ -5579,7 +5581,7 @@ class mTVGuide(xbmcgui.WindowXML):
             self._clearEpg()
 
             try:
-                self.channelIdx, channels, programs, cacheExpired = self.database.getEPGView(channelStart, startTime, self.onSourceProgressUpdate, initializing, clearExistingProgramList=True)
+                self.channelIdx, channels, programs, cacheExpired = self.database.getEPGView(channelStart, startTime, self.onSourceProgressUpdate, initializing, startup, clearExistingProgramList=True)
             except src.SourceException:
                 self.blockInputDueToRedrawing = False
                 debug('onRedrawEPG onEPGLoadError')

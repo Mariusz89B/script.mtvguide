@@ -4,8 +4,7 @@
 #   GNU General Public License
 
 #   m-TVGuide KODI Addon
-#   Copyright (C) 2014 Krzysztof Cebulski
-#   Copyright (C) 2012 Tommy Winther
+#   Copyright (C) 2022 Mariusz89B
 
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -40,34 +39,61 @@
 #   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #   SOFTWARE.
 
-import xbmc, xbmcaddon
-import source
-from strings import *
+import sys
 
-class Service(object):
-    def __init__(self):
-        self.database = source.Database()
-        self.database.initialize(self.onInit)
+try:  # Python 3
+    from http.server import BaseHTTPRequestHandler
+except ImportError:  # Python 2
+    from BaseHTTPServer import BaseHTTPRequestHandler
 
-    def onInit(self, success):
-        if success:
-            self.database.updateChannelAndProgramListCaches(callback=self.onCachesUpdated, startup=True)
-        else:
-            self.database.close()
+try:  # Python 3
+    from socketserver import TCPServer
+except ImportError:  # Python 2
+    from SocketServer import TCPServer
 
-    def onCachesUpdated(self):
-        self.database.close(None)
+try:  # Python 3
+    from urllib.parse import parse_qsl, quote,unquote
+except ImportError:  # Python 2
+    from urlparse import parse_qsl
+    from urllib import urlencode,quote,unquote
 
+import re
+
+import xbmcaddon
+import socket
+from contextlib import closing
+
+ADDON = xbmcaddon.Addon(id='script.mtvguide')
+import requests
+import urllib3
+
+requests.packages.urllib3.disable_warnings()
+requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += ':HIGH:!DH:!aNULL'
+import ssl
 try:
-    global ADDON_AUTOSTART
-    ADDON = xbmcaddon.Addon(id = ADDON_ID)
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+else:
+    ssl._create_default_https_context = _create_unverified_https_context
 
-    if ADDON_AUTOSTART == False:
-        ADDON_AUTOSTART = True
-        if ADDON.getSetting('autostart_mtvguide') == 'true' and xbmc.getCondVisibility('System.HasAddon(%s)' % ADDON_ID):
-            xbmc.executebuiltin('RunAddon(%s)' % ADDON_ID)
+from service import Service
+run = Service()
 
-except source.SourceNotConfiguredException:
-    pass  # ignore
-except Exception as ex:
-    deb('[%s] Uncaugt exception in service.py: %s' % (ADDON_ID, getExceptionString()))
+class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
+    pass
+
+def find_free_port():
+    with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as s:
+        s.bind(('', 0))
+        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        ADDON.setSetting('proxyport_mtvguide',str(s.getsockname()[1]))
+        return s.getsockname()[1]
+
+address = '127.0.0.1'  # Localhost
+
+port = find_free_port()
+
+server_inst = TCPServer((address, port), SimpleHTTPRequestHandler)
+# The follow line is only for test purpose, you have to implement a way to stop the http service!
+server_inst.serve_forever()
