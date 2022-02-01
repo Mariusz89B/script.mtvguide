@@ -69,6 +69,7 @@ settingsFileName    = 'settings.xml'
 categoriesFileName  = 'categories.ini'
 WINDOWS_OS_NAME     = 'Windows'
 ANDROID_OS_NAME     = 'Android'
+MAC_OS_NAME         = 'MacOS'
 OPENELEC_OS_NAME    = 'OpenELEC'
 LINUX_OS_NAME       = 'Linux'
 OSMC_OS_NAME        = 'OSMC'
@@ -76,6 +77,7 @@ OTHER_OS_NAME       = 'Other'
 
 recordAppWindows    = M_TVGUIDE_SUPPORT + 'record_apps/recording_windows.zip'
 recordAppAndroid    = M_TVGUIDE_SUPPORT + 'record_apps/recording_android.zip'
+recordAppMacOS      = M_TVGUIDE_SUPPORT + 'record_apps/recording_macos.zip'
 
 CC_DICT = ccDict()
 
@@ -334,6 +336,7 @@ class SettingsImp:
                 systems.append(strings(30204).encode('utf-8', 'replace'))
             systems.append(WINDOWS_OS_NAME)
             systems.append(ANDROID_OS_NAME)
+            systems.append(MAC_OS_NAME)
             systems.append(OPENELEC_OS_NAME)
             systems.append(LINUX_OS_NAME)
             systems.append(OSMC_OS_NAME)
@@ -344,6 +347,8 @@ class SettingsImp:
                 deb('downloadRecordApp %s was choosen' % system)
                 if system == WINDOWS_OS_NAME:
                     recordApp = recordAppWindows
+                elif system == MAC_OS_NAME:
+                    recordApp = recordAppMacOS
                 elif system == ANDROID_OS_NAME:
                     recordApp = recordAppAndroid
                 elif system == OPENELEC_OS_NAME or system == LINUX_OS_NAME or system == OTHER_OS_NAME or system == OSMC_OS_NAME:
@@ -381,13 +386,15 @@ class SettingsImp:
 
                 failCounter = 0
                 content = None
+
                 while failCounter < 10:
                     if sys.version_info[0] > 2:
                         try:
                             reqUrl   = urllib.request.Request(recordApp)
-                            reqUrl.add_header('User-Agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:19.0) Gecko/20121213 Firefox/19.0')
+                            reqUrl.add_header('authority', 'raw.githubusercontent.com')
+                            reqUrl.add_header('upgrade-insecure-requests', '1')
+                            reqUrl.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36 Edg/97.0.1072.76')
                             reqUrl.add_header('Keep-Alive', 'timeout=20')
-                            reqUrl.add_header('ContentType', 'application/x-www-form-urlencoded')
                             reqUrl.add_header('Connection', 'Keep-Alive')
                             u = urllib.request.urlopen(reqUrl, timeout=5)
                             content = u.read()
@@ -401,9 +408,10 @@ class SettingsImp:
                     else:
                         try:
                             reqUrl   = urllib2.Request(recordApp)
+                            reqUrl.add_header('authority', 'raw.githubusercontent.com')
+                            reqUrl.add_header('upgrade-insecure-requests', '1')
                             reqUrl.add_header('User-Agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:19.0) Gecko/20121213 Firefox/19.0')
                             reqUrl.add_header('Keep-Alive', 'timeout=20')
-                            reqUrl.add_header('ContentType', 'application/x-www-form-urlencoded')
                             reqUrl.add_header('Connection', 'Keep-Alive')
                             u = urllib2.urlopen(reqUrl, timeout=5)
                             content = u.read()
