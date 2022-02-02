@@ -365,6 +365,7 @@ class PlaylistUpdater(baseServiceUpdater):
             regexReplaceList.append( re.compile('(\s|^)(FEED|FPS60|EUROPE|NORDIC|SCANDINAVIA|ADULT:|EXTRA:|VIP:|VIP|AUDIO|L1|B|BACKUP|MULTI|SUB|SUBTITLE(S)?|NAPISY|VIASAT:|XXX|XXX:|\d{1,2}\s*FPS|LIVE\s*DURING\s*EVENTS\s*ONLY)(?=\s|$)', re.IGNORECASE) )
             regexReplaceList.append( re.compile('(\s|^)(FULL|SD|LQ|HQ|RAW|LOW|HIGH|QUALITY)(?=\s|$)', re.IGNORECASE) )
 
+            defReplaceList = []
             langReplaceList = []
             prefixList = []
             regexRemoveList = []
@@ -461,6 +462,10 @@ class PlaylistUpdater(baseServiceUpdater):
 
             regexHD = re.compile('(\s|^)(720p|720|FHD|1080p|1080|HD\sHD|HD)(?=\s|$)', re.IGNORECASE)
             regexUHD = re.compile('(\s|^)(4K|UHD)(?=\s|$)', re.IGNORECASE)
+
+            defReplaceList.append({ 'regex' : re.compile('(\s|^)(SD:?|480:?|480p:?|576:?|576i:?|576p:?)(?=\s|$)|^(SD:?|480:?|480p:?|576:?|576i:?|576p:?)'), 'def' : 'SD'})
+            defReplaceList.append({ 'regex' : re.compile('(\s|^)(HD:?|720:?|720p:?|1080:?|1080i:?|1080p:?)(?=\s|$)|^(HD:?|720:?|720p:?|1080:?|1080i:?|1080p:?)'), 'def' : 'HD'})
+            defReplaceList.append({ 'regex' : re.compile('(\s|^)(UHD:?|UHDTV:?|4K:?|2160p:?)(?=\s|$)|^(UHD:?|UHDTV:?|4K:?|2160p:?)'), 'def' : 'HD'})
 
             regex_chann_name   =     re.compile('tvg-id="[^"]*"', re.IGNORECASE)
 
@@ -644,6 +649,13 @@ class PlaylistUpdater(baseServiceUpdater):
                                         if ccCh:
                                             string = ' ' + ccCh.upper()
                                             title = re.sub('$', string, title)
+
+                            for defReplaceMap in defReplaceList:
+                                title, match = defReplaceMap['regex'].subn('', title)
+                                if match > 0:
+                                    title += ' ' + defReplaceMap['def']
+                                    title = ' '.join(OrderedDict((w,w) for w in title.split()).keys())
+
 
                             for langReplaceMap in langReplaceList:
                                 title, match = langReplaceMap['regex'].subn('', title)
