@@ -78,7 +78,7 @@ else:
     httplibBadStatusLine = httplib.BadStatusLine
     httplibIncompleteRead = httplib.IncompleteRead
 
-HOST        = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36 Edg/97.0.1072.55'
+HOST        = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36 Edg/97.0.1072.76'
 pathAddons  = os.path.join(ADDON.getAddonInfo('path'), 'resources', 'addons.ini')
 pathMapBase = os.path.join(ADDON.getAddonInfo('path'), 'resources')
 if sys.version_info[0] > 2:
@@ -237,8 +237,8 @@ class ShowList:
                 headers = { 'User-Agent' : HOST }
                 headers['Keep-Alive'] = 'timeout=60'
                 headers['Connection'] = 'Keep-Alive'
-                headers['ContentType'] = 'application/x-www-form-urlencoded'
-                headers['Accept-Encoding'] = 'gzip'
+                headers['authority'] = 'raw.githubusercontent.com'
+                headers['upgrade-insecure-requests'] = '1'
 
             if json_dumps_post:
                 if sys.version_info[0] > 2:
@@ -339,9 +339,10 @@ class ShowList:
                 reqUrl   = urllib.request.Request(url)
             else:
                 reqUrl   = urllib2.Request(url)
-            reqUrl.add_header('User-Agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:19.0) Gecko/20121213 Firefox/19.0')
+            reqUrl.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36 Edg/97.0.1072.76')
             reqUrl.add_header('Keep-Alive', 'timeout=25')
-            reqUrl.add_header('ContentType', 'application/x-www-form-urlencoded')
+            reqUrl.add_header('authority', 'raw.githubusercontent.com')
+            reqUrl.add_header('upgrade-insecure-requests', '1')
             reqUrl.add_header('Connection', 'Keep-Alive')
             if sys.version_info[0] > 2: 
                 urlFile = urllib.request.urlopen(reqUrl, timeout=HTTP_ConnectionTimeout)
@@ -491,9 +492,9 @@ class MapString:
             logCall('-------------------------------------------------------------------------------------')
         
         if sys.version_info[0] > 2:
-            xmlstr = xmlstr.decode('utf-8')
+            xmlstr = xmlstr
         else:
-            xmlstr = xmlstr if isinstance(xmlstr, unicode) else xmlstr.decode('utf-8')
+            xmlstr = xmlstr if isinstance(xmlstr, unicode) else xmlstr
 
         if logCall:
             logCall('[UPD] %-35s %-50s %-35s' % ('-TITLE-' , '-REGEX-', '-STRM-'))
@@ -550,7 +551,7 @@ class MapString:
             logCall('[UPD] Loading basemap => mtvguide: %s' % path)
             logCall('\n')
             if sys.version_info[0] > 2: 
-                with open(path, 'rb') as content_file:
+                with open(path, 'r', encoding='utf-8') as content_file:
                     content = content_file.read()
             else:
                 import codecs
@@ -765,27 +766,23 @@ class baseServiceUpdater:
     def loadSingleBaseMap(self, lang, mapFilePath):
         self.log('Loading {} channel map'.format(lang))
         entries = None
+        map = ""
 
         localMapFilename      = os.path.join(pathMapBase, mapFilePath)
         onlineMapFilename     = onlineMapPathBase + mapFilePath
-        map                   = self.sl.getJsonFromExtendedAPI(onlineMapFilename, max_conn_time=9, http_timeout=5, verbose=False)
+        map                   = self.sl.getJsonFromExtendedAPI(onlineMapFilename, max_conn_time=9, http_timeout=5, verbose=False).decode('utf-8')
+
         if map:
             self.log('successfully downloaded online {} map file: {}'.format(lang, onlineMapFilename))
-        else:
-            if xbmcvfs.exists(localMapFilename):
-                map = MapString.loadFile(localMapFilename, self.log)
-            else:
-                map = MapString.loadFile(os.path.join(pathMapBase, 'basemap.xml'), self.log)
-
-            entries, _, seCat         = MapString.FastParse(map, None)
-            self.log('{} file download failed - using local map: {}'.format(lang, localMapFilename))
-
+            
         if xbmcvfs.exists(localMapFilename):
-            localmap = MapString.loadFile(localMapFilename, self.log)
-            if len(map) == len(localmap):
-                entries, _, seCat         = MapString.FastParse(map, None)
-            else:
-               entries, _, seCat         = MapString.FastParse(localmap, None)
+            map += MapString.loadFile(localMapFilename, self.log)
+
+        else:
+            map += MapString.loadFile(os.path.join(pathMapBase, 'basemap.xml'), self.log)
+            self.log('{} file download failed - using local map: {}'.format(lang, localMapFilename))
+        
+        entries, _, seCat         = MapString.FastParse(map, None)
 
         if entries is not None:
             baseServiceUpdater.baseMapContent.extend(entries)

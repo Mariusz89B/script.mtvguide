@@ -91,13 +91,15 @@
 	<channel id="EUROSPORT 2, EUROSPORT 2 PL" title="(?=(EURO\s*SPORT\s*2|EUTOSPORT\s*2)(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="EUROSPORT 3, EUROSPORT 3 PL" title="(?=(EURO\s*SPORT\s*3|EUTOSPORT\s*3)(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="EUROSPORT 4, EUROSPORT 4 PL" title="(?=(EURO\s*SPORT\s*4|EUTOSPORT\s*4)(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
-	<channel id="EUROSPORT 4K, EUROSPORT 4K PL" title="(?=(EURO\s*SPORT)(\s*1)?(\s*TV)?(\s*UHD)\s*PL$)" strm=""/>
+	<channel id="EUROSPORT 4K, EUROSPORT 4K PL" title="(?=(EURO\s*SPORT)(\s*TV)?\s*(UHD|4K)\s*PL$)" strm=""/>
 	<channel id="EUROSPORT 5, EUROSPORT 5 PL" title="(?=(EURO\s*SPORT\s*5|EUTOSPORT\s*5)(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="EUROSPORT, EUROSPORT PL" title="(?=EURO\s*SPORT(\s*1)?(\s*TV)?(\s*HD)?\s*PL$)" strm=""/>
 	<channel id="EXTREME SPORTS CHANNEL, EXTREME SPORTS CHANNEL PL" title="(?=(EXTREME|EXTREM)(\s*SPORT(S)?)?(\s*CHANNEL)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="EZO TV, EZO TV PL" title="(?=EZO(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
+	<channel id="FAKTY TVN, FAKTY TVN PL" title="(?=(FAKTY\s*TVN|TVN\s*FAKTY)(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="FANKLUB TV, FANKLUB TV PL" title="(?=FAN\s*KLUB(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="FASHION TV, FASHION TV PL" title="(?=FASHION(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
+	<channel id="FTV, FTV PL" title="(?=(FASHION|F)(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="FASHIONBOX, FASHIONBOX PL" title="(?=FASHION\s*BOX(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="FAST&amp;FUNBOX, FAST&amp;FUNBOX PL" title="(?=FAST\s*(BOX\s*)?(and|&amp;)?FUN(\s*BOX)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="FERIE Z TVP, FERIE Z TVP PL" title="(?=FERIE(\s*Z)?\s*TVP(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
@@ -158,7 +160,8 @@
 	<channel id="MUSEUM UHD, MUSEUM UHD PL" title="(?=MUSEUM(\s*TV)?(\s*(HD|UHD|4K))?(\s*ULTRA)?\s*PL$)" strm=""/>
 	<channel id="MUSIC BOX, MUSIC BOX PL" title="(?=MUSIC\s*BOX(\s*POLSKA)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="MYZEN.TV, MYZEN.TV PL" title="(?=MY\s*ZEN(\.)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
-	<channel id="NASA TV, NASA TV PL" title="(?=NASA(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
+	<channel id="NASA TV, NASA TV PL" title="(?=NASA(\s*TV)?(\s*HD)?\s*PL$)" strm=""/>
+	<channel id="NASA UHD, NASA UHD PL" title="(?=NASA(\s*TV)?(\s*(UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="NAT GEO PEOPLE, NAT GEO PEOPLE PL" title="(?=(NAT|NATIONAL)\s*(GEO|GEOGRAPHIC)\s*PEOPLE(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="NATIONAL GEOGRAPHIC CHANNEL, NATIONAL GEOGRAPHIC CHANNEL PL" title="(?=(NAT|NATIONAL)\s*(GEO|GEOGRAPHIC)(\s*CHANNEL)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="NATIONAL GEOGRAPHIC WILD, NATIONAL GEOGRAPHIC WILD PL" title="(?=(NAT|NATIONAL)\s*(GEO|GEOGRAPHIC)\s*WILD(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
@@ -192,17 +195,17 @@
 	<channel id="POLSAT, POLSAT PL" title="(?=POLSAT(\s*1)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="POLSAT PLAY, POLSAT PLAY PL" title="(?=POLSAT\s*PLAY(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="POLSAT RODZINA, POLSAT RODZINA PL" title="(?=POLSAT\s*RODZINA(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
-	<channel id="POLSAT SERIALE, POLSAT SERIALE PL" title="(?=POLSAT\s*(SERIALE|ROMANS)(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
+	<channel id="POLSAT SERIALE, POLSAT SERIALE PL" title="(?=POLSAT\s*(SERIAL(E)?|ROMANS)(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="POLSAT SPORT EXTRA, POLSAT SPORT EXTRA PL" title="(?=POLSAT\s*SPORT\s*EXTRA(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="POLSAT SPORT FIGHT, POLSAT SPORT FIGHT PL" title="(?=POLSAT\s*SPORT\s*FIGHT(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="POLSAT SPORT NEWS, POLSAT SPORT NEWS PL" title="(?=POLSAT\s*SPORT\s*NEWS(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="POLSAT SPORT, POLSAT SPORT PL" title="(?=POLSAT\s*SPORT(\s*1)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
-	<channel id="POLSAT SPORT PREMIUM 1, POLSAT SPORT PREMIUM 1 PL" title="(?=POLSAT\s*SPORT\s*(PREM|PREMIUM)(\s*1)?(\s*PPV)?(\s*1)?(\s*TV)?(\s*(HD|UHD|4K))?(\s*SPORTS)?\s*PL(\s*SPORTS)?$|PSPREMIUM1\s*PL|PPV(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
-	<channel id="POLSAT SPORT PREMIUM 2, POLSAT SPORT PREMIUM 2 PL" title="(?=POLSAT\s*SPORT\s*(PREM|PREMIUM)(\s*2\s*PPV|\s*PPV\s*2|\s*2)(\s*TV)?(\s*(HD|UHD|4K))?(\s*SPORTS)?\s*PL(\s*SPORTS)?$|PSPREMIUM2\s*PL$)" strm=""/>
-	<channel id="POLSAT SPORT PREMIUM 3, POLSAT SPORT PREMIUM 3 PL" title="(?=POLSAT\s*SPORT\s*(PREM|PREMIUM)(\s*3\s*PPV|\s*PPV\s*3|\s*3)(\s*TV)?(\s*(HD|UHD|4K))?(\s*SPORTS)?\s*PL(\s*SPORTS)?$|PSPREMIUM3\s*PL$)" strm=""/>
-	<channel id="POLSAT SPORT PREMIUM 4, POLSAT SPORT PREMIUM 4 PL" title="(?=POLSAT\s*SPORT\s*(PREM|PREMIUM)(\s*4\s*PPV|\s*PPV\s*4|\s*4)(\s*TV)?(\s*(HD|UHD|4K))?(\s*SPORTS)?\s*PL(\s*SPORTS)?$|PSPREMIUM4\s*PL$)" strm=""/>
-	<channel id="POLSAT SPORT PREMIUM 5, POLSAT SPORT PREMIUM 5 PL" title="(?=POLSAT\s*SPORT\s*(PREM|PREMIUM)(\s*5\s*PPV|\s*PPV\s*5|\s*5)(\s*TV)?(\s*(HD|UHD|4K))?(\s*SPORTS)?\s*PL(\s*SPORTS)?$|PSPREMIUM5\s*PL$)" strm=""/>
-	<channel id="POLSAT SPORT PREMIUM 6, POLSAT SPORT PREMIUM 6 PL" title="(?=POLSAT\s*SPORT\s*(PREM|PREMIUM)(\s*6\s*PPV|\s*PPV\s*6|\s*6)(\s*TV)?(\s*(HD|UHD|4K))?(\s*SPORTS)?\s*PL(\s*SPORTS)?$|PSPREMIUM6\s*PL$)" strm=""/>
+	<channel id="POLSAT SPORT PREMIUM 1, POLSAT SPORT PREMIUM 1 PL" title="(?=((POLSAT\s*SPORT\s*)(PREM(\.)?|PREMIUM)(\s*1)?(\s*TV)?(\s*(HD|UHD|4K))?(\s*SPORTS)?\s*PL$)|(PSPREMIUM1\s*PL$)|(PPV1(\s*(HD|UHD|4K))?\s*PL$))" strm=""/>
+	<channel id="POLSAT SPORT PREMIUM 2, POLSAT SPORT PREMIUM 2 PL" title="(?=((POLSAT\s*SPORT\s*)(PREM(\.)?|PREMIUM)\s*2(\s*TV)?(\s*(HD|UHD|4K))?(\s*SPORTS)?\s*PL$)|(PSPREMIUM2\s*PL$)|(PPV2(\s*(HD|UHD|4K))?\s*PL$))" strm=""/>
+	<channel id="POLSAT SPORT PREMIUM 3, POLSAT SPORT PREMIUM 3 PL" title="(?=((POLSAT\s*SPORT\s*)(PREM(\.)?|PREMIUM)\s*3(\s*TV)?(\s*(HD|UHD|4K))?(\s*SPORTS)?\s*PL$)|(PSPREMIUM3\s*PL$)|(PPV3(\s*(HD|UHD|4K))?\s*PL$))" strm=""/>
+	<channel id="POLSAT SPORT PREMIUM 4, POLSAT SPORT PREMIUM 4 PL" title="(?=((POLSAT\s*SPORT\s*)(PREM(\.)?|PREMIUM)\s*4(\s*TV)?(\s*(HD|UHD|4K))?(\s*SPORTS)?\s*PL$)|(PSPREMIUM4\s*PL$)|(PPV4(\s*(HD|UHD|4K))?\s*PL$))" strm=""/>
+	<channel id="POLSAT SPORT PREMIUM 5, POLSAT SPORT PREMIUM 5 PL" title="(?=((POLSAT\s*SPORT\s*)(PREM(\.)?|PREMIUM)\s*5(\s*TV)?(\s*(HD|UHD|4K))?(\s*SPORTS)?\s*PL$)|(PSPREMIUM5\s*PL$)|(PPV5(\s*(HD|UHD|4K))?\s*PL$))" strm=""/>
+	<channel id="POLSAT SPORT PREMIUM 6, POLSAT SPORT PREMIUM 6 PL" title="(?=((POLSAT\s*SPORT\s*)(PREM(\.)?|PREMIUM)\s*6(\s*TV)?(\s*(HD|UHD|4K))?(\s*SPORTS)?\s*PL$)|(PSPREMIUM6\s*PL$)|(PPV6(\s*(HD|UHD|4K))?\s*PL$))" strm=""/>
 	<channel id="POLSAT VIASAT EXPLORE, POLSAT VIASAT EXPLORE PL" title="(?=(POLSAT\s*)?VIASAT\s*EXPLORE(\s*POLSAT)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="POLSAT VIASAT HISTORY, POLSAT VIASAT HISTORY PL" title="(?=(POLSAT\s*)?VIASAT\s*HISTORY(\s*POLSAT)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="POLSAT VIASAT NATURE, POLSAT VIASAT NATURE PL" title="(?=(POLSAT\s*)?VIASAT\s*NATURE(\s*POLSAT)?(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
