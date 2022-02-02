@@ -919,8 +919,11 @@ class baseServiceUpdater:
             titles = list()
 
             for title, titles in epg_channels:
-                for dtitle in titles.split(', '):
-                    result.append(MapString(channelid=title, titleRegex='', strm='', src='', displayName=dtitle))
+                if titles:
+                    for dtitle in titles.split(', '):
+                        result.append(MapString(channelid=title, titleRegex='', strm='', src='', displayName=dtitle))
+                else:
+                    result.append(MapString(channelid=title, titleRegex='', strm='', src='', displayName=''))
 
             self.automap.extend(result)
 
