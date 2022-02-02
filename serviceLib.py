@@ -492,7 +492,7 @@ class MapString:
             logCall('-------------------------------------------------------------------------------------')
         
         if sys.version_info[0] > 2:
-            xmlstr = xmlstr
+            xmlstr = xmlstr.decode('utf-8')
         else:
             xmlstr = xmlstr if isinstance(xmlstr, unicode) else xmlstr
 
@@ -550,13 +550,9 @@ class MapString:
         try:
             logCall('[UPD] Loading basemap => mtvguide: %s' % path)
             logCall('\n')
-            if sys.version_info[0] > 2: 
-                with open(path, 'r', encoding='utf-8') as content_file:
-                    content = content_file.read()
-            else:
-                import codecs
-                with codecs.open(path, 'r', encoding='utf-8') as content_file:
-                    content = content_file.read()
+            with open(path, 'rb') as content_file:
+                content = content_file.read()
+
         except Exception as ex:
             logCall('loadFile exception: %s' % getExceptionString())
             content = ""
@@ -770,7 +766,7 @@ class baseServiceUpdater:
 
         localMapFilename      = os.path.join(pathMapBase, mapFilePath)
         onlineMapFilename     = onlineMapPathBase + mapFilePath
-        map                   = self.sl.getJsonFromExtendedAPI(onlineMapFilename, max_conn_time=9, http_timeout=5, verbose=False).decode('utf-8')
+        map                   = self.sl.getJsonFromExtendedAPI(onlineMapFilename, max_conn_time=9, http_timeout=5, verbose=False)
 
         if map:
             self.log('successfully downloaded online {} map file: {}'.format(lang, onlineMapFilename))
