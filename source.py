@@ -85,6 +85,8 @@ from groups import *
 
 CC_DICT = ccDict()
 
+ZONE = ADDON.getSetting('time_zone')
+
 ZONE_CONFIG = ADDON.getSetting('auto_time_zone')
 if ZONE_CONFIG == 'true':
     TIME_ZONE_AUTO = True
@@ -2889,8 +2891,6 @@ def parseXMLTVDate(dateString):
 
 
 def TimeZone(dateString, AUTO_ZONE=None):
-    ZONE = ADDON.getSetting('time_zone')
-
     if AUTO_ZONE and TIME_ZONE_AUTO:
         ZONE = AUTO_ZONE
     elif AUTO_ZONE is None and TIME_ZONE_AUTO:
