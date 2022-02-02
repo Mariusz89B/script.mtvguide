@@ -885,23 +885,16 @@ class Database(object):
     def epgChannels(self):
         result = dict()
 
-        if ADDON.getSetting('epg_display_name') == 'true':
-            DISPLAY = True
-        else:
-            DISPLAY = False
-
         with self.conn as conn:
             cur = conn.execute('SELECT id, titles FROM channels')
 
             for x in cur:
-                if DISPLAY:
+                if CH_DISP_NAME:
                     try:
                         titles = x[0].upper() + ', ' + x[1].upper()
                         result.update({x[0].upper(): titles})
                     except:
                         result.update({x[0].upper(): ''})
-                else:
-                    result.update({x[0].upper(): ''})
 
         return result.items()
 
@@ -2958,6 +2951,8 @@ def customParseXMLTV(xml, progress_callback, logoFolder):
         deb('Part of faulty EPG content without channels: {}'.format(str(xml[:15000])))
         raise SourceFaultyEPGException('')
 
+    titles = None
+
     for channel in channels:
         id = (channelIdRe.search(channel).group(1)).upper()
 
@@ -2975,8 +2970,6 @@ def customParseXMLTV(xml, progress_callback, logoFolder):
 
             except:
                 titles = title
-        else:
-            titles = title
 
         try:
             logo = channelIconRe.search(channel).group(1)
@@ -3122,6 +3115,8 @@ def parseXMLTV(context, f, size, logoFolder, progress_callback):
     elements_parsed = 0
     category_count = {}
 
+    titles = None
+
     for event, elem in context:
         if event == "end":
             result = None
@@ -3189,15 +3184,10 @@ def parseXMLTV(context, f, size, logoFolder, progress_callback):
             elif elem.tag == "channel":
                 id = elem.get("id").upper()
 
-                titles = None
-                
                 if CH_DISP_NAME:
                     titleList = elem.findall("display-name")
                     titles = ', '.join([x.text.upper() for x in titleList])
                     titles = re.sub('[^\d+a-zA-Z,\s]+', '', titles)
-
-                if not titles:
-                    titles = elem.get("id").upper()
 
                 title = elem.findtext("display-name")
                 title = re.sub('[^\d+a-zA-Z,\s]+', '', title)
