@@ -1336,7 +1336,7 @@ class Database(object):
         try:
             categories = []
 
-            for k, v in EPG_DICT.items():
+            for k, v in EPG_DICT:
                 if k.upper() == category.upper():                   
                     categories.append(k.upper())
                     categories.append('.'+k.lower())
