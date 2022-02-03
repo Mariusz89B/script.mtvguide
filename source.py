@@ -88,19 +88,38 @@ EPG_DICT = {}
 
 CC_DICT = ccDict()
 for k, v in CC_DICT.items():
+    epg = ADDON.getSetting('epg_{cc}'.format(cc=k)).strip()
+
     if ADDON.getSetting('country_code_{cc}'.format(cc=k)) == "true":
         EPG_DICT.update({k: v})
+        if epg != '':
+            if epg:
+                EPG_LIST.append(epg)
 
-    epg = ADDON.getSetting('epg_{cc}'.format(cc=k)).strip()
-    if epg != '' and ADDON.getSetting('country_code_{cc}'.format(cc=k)) == 'true':
-        if epg:
-            EPG_LIST.append(epg)
+# ADDON settings
+SOURCE = ADDON.getSetting('source')
+if SOURCE == '0':
+    GET_SOURCE = '0'
+else:
+    GET_SOURCE = '1'
+
+PARSER = ADDON.getSetting('useCustomParser')
+if PARSER == 'true':
+    CUSTOM_PARSER = True
+else:
+    CUSTOM_PARSER = False
 
 AUTO_CID = ADDON.getSetting('AutoUpdateCid')
 if AUTO_CID == 'true':
     UPDATE_CID = True
 else:
     UPDATE_CID = False
+
+PRAGMA_MODE = ADDON.getSetting("pragma_mode")
+if PRAGMA_MODE == 'true':
+    GET_PRAGMA_MODE = True
+else:
+    GET_PRAGMA_MODE = False
 
 ALT_CHANN = ADDON.getSetting('epg_display_name')
 if ALT_CHANN == 'true':
@@ -451,7 +470,7 @@ class Database(object):
                 self.conn.execute("PRAGMA foreign_keys = ON");
                 self.conn.execute("PRAGMA locking_mode = EXCLUSIVE");
                 self.conn.execute("PRAGMA encoding = 'UTF-8'");
-                if ADDON.getSetting("pragma_mode") == "true":
+                if GET_PRAGMA_MODE:
                     self.conn.execute("PRAGMA journal_mode = WAL");
                     self.conn.execute("PRAGMA temp_store = MEMORY");
                     self.conn.execute("PRAGMA synchronous = NORMAL");
@@ -835,7 +854,7 @@ class Database(object):
             except SourceFaultyEPGException:
                 deb('SourceFaultyEPGException unable to load main EPG, trying to continue despite of that')
                 self.skipUpdateRetries = True
-                if ADDON.getSetting('source') == '0':
+                if GET_SOURCE == '0':
                     xbmcgui.Dialog().ok(strings(LOAD_ERROR_TITLE), strings(LOAD_ERROR_LINE1) + '\n' + ADDON.getSetting('xmltv_file').strip() + '\n' + strings(LOAD_ERROR_LINE2))
                 else:
                     xbmcgui.Dialog().ok(strings(LOAD_ERROR_TITLE), strings(LOAD_ERROR_LINE1) + '\n' + ADDON.getSetting('m-TVGuide').strip() + '\n' + strings(LOAD_ERROR_LINE2))
@@ -1748,11 +1767,6 @@ class Database(object):
 
             if endTime == '' or endTime is None:
                 endTime = datetime.datetime.now()
-
-            try:
-                m = channelMap.keys()
-            except Exception as ex:
-                deb('TEST: {}'.format(ex))
 
             c.execute('SELECT p.*, (SELECT 1 FROM notifications n WHERE n.channel=p.channel AND n.program_title=p.title AND n.source=p.source AND (n.start_date IS NULL OR n.start_date = p.start_date)) AS notification_scheduled , (SELECT 1 FROM recordings r WHERE r.channel=p.channel AND r.program_title=p.title AND r.start_date=p.start_date AND r.source=p.source) AS recording_scheduled FROM programs p WHERE p.channel IN (\'' + ('\',\''.join(channelMap.keys())) + '\') AND p.source=? AND p.end_date > ? AND p.start_date < ?', [self.source.KEY, startTime.replace(microsecond=0), endTime.replace(microsecond=0)])
 
@@ -2718,7 +2732,7 @@ class MTVGUIDESource(Source):
         parsedData.update({self.MTVGUIDEUrl:{'date': date}})
 
         try:
-            if ADDON.getSetting('useCustomParser') == 'true':
+            if CUSTOM_PARSER:
                 if self.MTVGUIDEUrl2 != "" and not strings2.M_TVGUIDE_CLOSING:
                     parsedData.update({self.MTVGUIDEUrl2:{'date': date}})
                 if self.MTVGUIDEUrl3 != "" and not strings2.M_TVGUIDE_CLOSING:
@@ -2786,7 +2800,7 @@ class MTVGUIDESource(Source):
         tzone, autozone = getTimeZone()
 
         try:        
-            if ADDON.getSetting('useCustomParser') == 'true':
+            if CUSTOM_PARSER:
                 return customParseXMLTV(xml.decode('utf-8'), progress_callback, tzone, autozone, self.logoFolder)
 
             else:
@@ -3287,7 +3301,7 @@ def instantiateSource():
     }
 
     try:
-        activeSource = SOURCES[ADDON.getSetting('source')]
+        activeSource = SOURCES[GET_SOURCE]
     except KeyError:
         activeSource = SOURCES['1']
     return activeSource(ADDON)
