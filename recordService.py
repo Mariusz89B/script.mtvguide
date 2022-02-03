@@ -609,9 +609,6 @@ class RecordService(BasePlayService):
 
         cid, service = self.parseUrl(url)
         channelInfo = self.getChannelDownload(cid, service)
-
-        print(channelInfo.catchup)
-        print(channelInfo.strm)
         
         strmUrl_catchup = ''
         strmUrl = ''
@@ -721,6 +718,7 @@ class RecordService(BasePlayService):
 
                                 else:
                                     m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/' + 'timeshift_rel-' + str(offset) + '.m3u8' + str(fsUrlAppend)
+                                    #m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/' + str(fsListType.replace('mono', 'video')) + '-timeshift_rel-' + str(offset) + '.m3u8' + str(fsUrlAppend)
                                     #m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/' + 'mono-timeshift_rel-' + str(offset) + '.m3u8' + str(fsUrlAppend)
 
                             strmUrl = m_catchupSource

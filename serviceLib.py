@@ -81,6 +81,7 @@ else:
 HOST        = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36 Edg/97.0.1072.76'
 pathAddons  = os.path.join(ADDON.getAddonInfo('path'), 'resources', 'addons.ini')
 pathMapBase = os.path.join(ADDON.getAddonInfo('path'), 'resources')
+
 if sys.version_info[0] > 2:
     try:
         pathMapExtraBase  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
@@ -101,7 +102,26 @@ except:
 
 HTTP_ConnectionTimeout = 10
 
+BASE_LIST = []
+
 CC_DICT = ccDict()
+
+for k, v in CC_DICT.items():
+    cc = ADDON.getSetting('country_code_{}'.format(k.lower()))
+    if cc == 'true' and cc != '':
+        BASE_LIST.append(k)
+
+XXX = ADDON.getSetting('XXX_EPG')
+if XXX == 'true':
+    XXX_EPG = True
+else:
+    XXX_EPG = False
+
+VOD = ADDON.getSetting('VOD_EPG')
+if VOD == 'true':
+    VOD_EPG = True
+else:
+    VOD_EPG = False
 
 class ShowList:
     def __init__(self, logCall=deb):
@@ -740,16 +760,14 @@ class baseServiceUpdater:
 
             self.loadSingleBaseMap('base', self.baseMapFile)
 
-            if ADDON.getSetting('XXX_EPG') == "true":
+            if XXX_EPG:
                 self.loadSingleBaseMap('adult', self.adultMapFile)
 
-            if ADDON.getSetting('VOD_EPG') == "true":
+            if VOD_EPG:
                 self.loadSingleBaseMap('vod', self.vodMapFile)
 
-            for k, v in CC_DICT.items():
-                cc = ADDON.getSetting('country_code_{}'.format(k.lower()))
-                if cc == 'true' and cc != '':
-                    self.loadSingleBaseMap('base_' + k.lower(), 'basemap_{}.xml'.format(k.lower()))
+            for k in BASE_LIST:
+                self.loadSingleBaseMap('base_' + k.lower(), 'basemap_{}.xml'.format(k.lower()))
 
             self.loadExtraBaseMap('base_extra', self.extraMapFile)
 
@@ -1000,20 +1018,9 @@ class baseServiceUpdater:
             self.log('-------------------------------------------------------------------------------------')
             self.log('[UPD]     %-40s %-40s %-12s %-35s' % ('-TITLE-', '-ORIG NAME-', '-CID-', '-STRM-'))
 
-            if sys.version_info[0] > 2:
-                try:
-                    profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
-                except:
-                    profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
-            else:
-                try:
-                    profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile'))
-                except:
-                    profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
-
-            file_name = os.path.join(profilePath, 'custom_channels.list')
-            if not os.path.exists(profilePath):
-                os.makedirs(profilePath)
+            file_name = os.path.join(pathMapExtraBase, 'custom_channels.list')
+            if not os.path.exists(pathMapExtraBase):
+                os.makedirs(pathMapExtraBase)
 
             for y in self.channels:
                 if y.src == '' or y.src != self.serviceName:

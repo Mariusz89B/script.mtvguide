@@ -83,21 +83,54 @@ from random import uniform
 
 from groups import *
 
+EPG_LIST = []
+EPG_DICT = {}
+
 CC_DICT = ccDict()
+for k, v in CC_DICT.items():
+    if ADDON.getSetting('country_code_{cc}'.format(cc=k)) == "true":
+        EPG_DICT.update({k: v})
 
-ZONE = ADDON.getSetting('time_zone')
+    epg = ADDON.getSetting('epg_{cc}'.format(cc=k)).strip()
+    if epg != '' and ADDON.getSetting('country_code_{cc}'.format(cc=k)) == 'true':
+        if epg:
+            EPG_LIST.append(epg)
 
-ZONE_CONFIG = ADDON.getSetting('auto_time_zone')
-if ZONE_CONFIG == 'true':
-    TIME_ZONE_AUTO = True
+AUTO_CID = ADDON.getSetting('AutoUpdateCid')
+if AUTO_CID == 'true':
+    UPDATE_CID = True
 else:
-    TIME_ZONE_AUTO = False
+    UPDATE_CID = False
 
 ALT_CHANN = ADDON.getSetting('epg_display_name')
 if ALT_CHANN == 'true':
     CH_DISP_NAME = True
 else:
     CH_DISP_NAME = False
+
+EPG_INTERVAL = ADDON.getSetting('epg_interval')
+if EPG_INTERVAL == '0':
+    GET_EPG_INTERVAL = 0
+elif EPG_INTERVAL == '1':
+    GET_EPG_INTERVAL = 1
+elif EPG_INTERVAL == '2':
+    GET_EPG_INTERVAL = 2
+elif EPG_INTERVAL == '3':
+    GET_EPG_INTERVAL = 3
+elif EPG_INTERVAL == '4':
+    GET_EPG_INTERVAL = 4
+elif EPG_INTERVAL == '5':
+    GET_EPG_INTERVAL = 5
+else:
+    GET_EPG_INTERVAL = 6
+
+CHANNEL_FILTER = ADDON.getSetting('channel_filter_sort')
+if CHANNEL_FILTER == '0':
+    GET_CHANNEL_FILTER = 0
+elif CHANNEL_FILTER == '1':
+    GET_CHANNEL_FILTER = 1
+else:
+    GET_CHANNEL_FILTER = 2
 
 NUMBER_OF_SERVICE_PRIORITIES = 12
 SETTINGS_TO_CHECK = ['source', 'xmltv_file', 'xmltv_logo_folder',
@@ -522,8 +555,9 @@ class Database(object):
             key = row[str('key')]
             if SETTINGS_TO_CHECK.count(key):
                 count += 1
-                if row[str('value')] != addon.getSetting(key):
-                    deb('Settings changed for key: {}, value id DB: {}, in settings.xml: {}'.format(key, row[str('value')], addon.getSetting(key)) )
+                setting = addon.getSetting(key)
+                if row[str('value')] != setting:
+                    deb('Settings changed for key: {}, value id DB: {}, in settings.xml: {}'.format(key, row[str('value')], setting) )
                     settingsChanged = True
         if count != len(SETTINGS_TO_CHECK):
             deb('Settings changed - number of keys is different')
@@ -550,7 +584,7 @@ class Database(object):
             if startup:
                 return False
 
-            if ADDON.getSetting('epg_interval') == '1' and initializing:
+            if GET_EPG_INTERVAL == 1 and initializing:
                 return True
 
             if self.settingsChanged:
@@ -594,21 +628,21 @@ class Database(object):
             set_time = 'auto'
 
             if programsLastUpdated is not None:
-                interval = ADDON.getSetting('epg_interval')
+                interval = GET_EPG_INTERVAL
 
-                if interval == '0':
+                if interval == 0:
                     set_time = 'auto'
-                elif interval == '1':
+                elif interval == 1:
                     set_time = 0
-                elif interval == '2':
+                elif interval == 2:
                     set_time = 43200
-                elif interval == '3':
+                elif interval == 3:
                     set_time = 86400
-                elif interval == '4':
+                elif interval == 4:
                     set_time = 172800
-                elif interval == '5':
+                elif interval == 5:
                     set_time = 604800
-                elif interval == '6':
+                elif interval == 6:
                     set_time = 1209600
 
                 if set_time != 'auto':
@@ -656,7 +690,7 @@ class Database(object):
         sqlite3.register_converter(str('timestamp'), self.convert_datetime)
 
         # Start service threads
-        updateServices = self.services_updated == False and ADDON.getSetting('AutoUpdateCid') == 'true'
+        updateServices = self.services_updated == False and UPDATE_CID
         if updateServices == True:
             deb('[UPD] Starting updating STRM')
             serviceList = list()
@@ -828,7 +862,7 @@ class Database(object):
         #END self._isCacheExpired(date):
 
         #zabezpieczenie: is invoked again by XBMC after a video addon exits after being invoked by XBMC.RunPlugin(..)
-        deb('[UPD] AutoUpdateCid={} : services_updated={} : self.updateFailed={}'.format(ADDON.getSetting('AutoUpdateCid'), self.services_updated, self.updateFailed))
+        deb('[UPD] AutoUpdateCid={} : services_updated={} : self.updateFailed={}'.format(str(UPDATE_CID), self.services_updated, self.updateFailed))
         #jezeli nie udalo sie pobranie epg lub juz aktualizowalismy CIDy lub w opcjach nie mamy zaznaczonej automatycznek altualizacji
         if self.updateFailed or updateServices == False:
             return cacheExpired #to wychodzimy - nie robimy aktualizacji
@@ -1246,10 +1280,10 @@ class Database(object):
                                 filter.append(name)
                             seen.add(name)
 
-                if ADDON.getSetting('channel_filter_sort') == SORT:
+                if GET_CHANNEL_FILTER == SORT:
                     channelList = sorted(channelList, key=lambda channel: channel.title.lower())
 
-                elif ADDON.getSetting('channel_filter_sort') == CATEGORIES:
+                elif GET_CHANNEL_FILTER == CATEGORIES:
                     for filter_name in filter:
                         for channel in channelList:
                             if channel.title == filter_name:
@@ -1302,14 +1336,13 @@ class Database(object):
         try:
             categories = []
 
-            for k, v in CC_DICT.items():
-                if k.upper() == category.upper():
-                    if ADDON.getSetting('country_code_{cc}'.format(cc=k)) == "true":
-                        categories.append(k.upper())
-                        categories.append('.'+k.lower())
-                        categories.append(v['alpha-3'])
-                        categories.append(v['language'])
-                        categories.append(v['native'])
+            for k, v in EPG_DICT.items():
+                if k.upper() == category.upper():                   
+                    categories.append(k.upper())
+                    categories.append('.'+k.lower())
+                    categories.append(v['alpha-3'])
+                    categories.append(v['language'])
+                    categories.append(v['native'])
                 else:
                     categories.append(category)
 
@@ -2682,7 +2715,6 @@ class MTVGUIDESource(Source):
 
     def getDataFromExternal(self, date, progress_callback = None):
         parsedData = {}
-
         parsedData.update({self.MTVGUIDEUrl:{'date': date}})
 
         try:
@@ -2692,13 +2724,8 @@ class MTVGUIDESource(Source):
                 if self.MTVGUIDEUrl3 != "" and not strings2.M_TVGUIDE_CLOSING:
                     parsedData.update({self.MTVGUIDEUrl3:{'date': date}})
 
-                for k, v in CC_DICT.items():
-                    epg = ADDON.getSetting('epg_{cc}'.format(cc=k)).strip()
-                    if epg != '' and ADDON.getSetting('country_code_{cc}'.format(cc=k)) == 'true':
-                        if epg:
-                            parsedData.update({epg:{'date': date}})
-                        else:
-                            pass    
+                for epg in EPG_LIST:
+                    parsedData.update({epg:{'date': date}})    
 
                 data = self._getDataFromExternal(data=parsedData, progress_callback=progress_callback)
             else:
@@ -2711,14 +2738,9 @@ class MTVGUIDESource(Source):
                     parsedData = self._getDataFromExternal(date=date, progress_callback=progress_callback, url=self.MTVGUIDEUrl3)
                     data = chain(data, parsedData)
 
-                for k, v in CC_DICT.items():
-                    epg = ADDON.getSetting('epg_{cc}'.format(cc=k)).strip()
-                    if epg != '' and ADDON.getSetting('country_code_{cc}'.format(cc=k)) == 'true':
-                        if epg:
-                            parsedData = self._getDataFromExternal(date=date, progress_callback=progress_callback, url=epg)
-                            data = chain(data, parsedData)
-                        else:
-                            pass
+                for epg in EPG_LIST:
+                    parsedData = self._getDataFromExternal(date=date, progress_callback=progress_callback, url=epg)
+                    data = chain(data, parsedData)
 
         except SourceFaultyEPGException as ex:
             deb("Failed to download custom EPG but addon should start!, EPG: {}".format(ex.epg))
@@ -2761,15 +2783,17 @@ class MTVGUIDESource(Source):
         if strings2.M_TVGUIDE_CLOSING:
             raise SourceUpdateCanceledException()
 
+        tzone, autozone = getTimeZone()
+
         try:        
             if ADDON.getSetting('useCustomParser') == 'true':
-                return customParseXMLTV(xml.decode('utf-8'), progress_callback, self.logoFolder)
+                return customParseXMLTV(xml.decode('utf-8'), progress_callback, tzone, autozone, self.logoFolder)
 
             else:
                 iob = io.BytesIO(xml)
 
                 context = ElementTree.iterparse(iob, events=("start", "end"))
-                return parseXMLTV(context, iob, len(xml), self.logoFolder, progress_callback)
+                return parseXMLTV(context, iob, len(xml), progress_callback, tzone, autozone, self.logoFolder)
 
         except SourceUpdateCanceledException as cancelException:
             raise cancelException
@@ -2873,7 +2897,7 @@ def catList(category_count):
                 f.write('{}\n'.format(line))
 
 
-def parseXMLTVDate(dateString):
+def parseXMLTVDate(dateString, TIME_ZONE_AUTO):
     autoZone = None
     if dateString:
         if dateString.find(' ') != -1:
@@ -2889,9 +2913,19 @@ def parseXMLTVDate(dateString):
     else:
         return None
 
+def getTimeZone():
+    ZONE = ADDON.getSetting('time_zone')
 
-def TimeZone(dateString, AUTO_ZONE=None):
-    if AUTO_ZONE and TIME_ZONE_AUTO:
+    ZONE_CONFIG = ADDON.getSetting('auto_time_zone')
+    if ZONE_CONFIG == 'true':
+        TIME_ZONE_AUTO = True
+    else:
+        TIME_ZONE_AUTO = False
+
+    return ZONE, TIME_ZONE_AUTO
+
+def TimeZone(dateString, AUTO_ZONE, TIME_ZONE_AUTO):
+    if TIME_ZONE_AUTO:
         ZONE = AUTO_ZONE
     elif AUTO_ZONE is None and TIME_ZONE_AUTO:
         ZONE = '00:00'
@@ -2917,7 +2951,7 @@ def TimeZone(dateString, AUTO_ZONE=None):
     else:
         return None
 
-def customParseXMLTV(xml, progress_callback, logoFolder):
+def customParseXMLTV(xml, progress_callback, tzone, autozone, logoFolder):
     deb("[EPG] Parsing EPG by custom parser")
     startTime = datetime.datetime.now()
 
@@ -3007,12 +3041,14 @@ def customParseXMLTV(xml, progress_callback, logoFolder):
         except AttributeError:
             title = ''
         try:
-            start = TimeZone(parseXMLTVDate( programStartRe.search(program).group(1)))
-        except:
+            start = TimeZone(parseXMLTVDate( programStartRe.search(program).group(1), autozone), tzone, autozone)
+        except Exception as ex:
+            deb('TimeZone Exception: {}'.format(ex))
             start = ''
         try:
-            stop = TimeZone(parseXMLTVDate( programStopRe.search(program).group(1)))
-        except:
+            stop = TimeZone(parseXMLTVDate( programStopRe.search(program).group(1), autozone), tzone, autozone)
+        except Exception as ex:
+            deb('TimeZone Exception: {}'.format(ex))
             stop = ''
         category = programCategory.findall(program)
         
@@ -3104,7 +3140,7 @@ def customParseXMLTV(xml, progress_callback, logoFolder):
     thread = threading.Thread(name='catList', target = catList, args=[category_count])
     thread.start()
 
-def parseXMLTV(context, f, size, logoFolder, progress_callback):
+def parseXMLTV(context, f, size, progress_callback, tzone, autozone, logoFolder):
     deb("[EPG] Parsing EPG")
     start = datetime.datetime.now()
     context = iter(context)
@@ -3179,7 +3215,7 @@ def parseXMLTV(context, f, size, logoFolder, progress_callback):
                         icon = iconElementEx.get("src")
                 if not description:
                     description = strings(NO_DESCRIPTION)
-                result = Program(channel, elem.findtext('title'), TimeZone(parseXMLTVDate(elem.get('start'))),TimeZone( parseXMLTVDate(elem.get('stop'))), description, productionDate=date, director=director, actor=actor, episode=episode, imageLarge=live3, imageSmall=icon, categoryA=cata,categoryB=catb)
+                result = Program(channel, elem.findtext('title'), TimeZone(parseXMLTVDate(elem.get('start'), autozone), tzone, autozone),TimeZone(parseXMLTVDate(elem.get('stop'), autozone), tzone, autozone), description, productionDate=date, director=director, actor=actor, episode=episode, imageLarge=live3, imageSmall=icon, categoryA=cata,categoryB=catb)
 
             elif elem.tag == "channel":
                 id = elem.get("id").upper()
