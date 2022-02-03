@@ -681,16 +681,16 @@ class mTVGuide(xbmcgui.WindowXML):
         
         self.interval = 0
 
-def restartKodi(self):
-    osAndroid = xbmc.getCondVisibility('system.platform.android')
-    
-    if osAndroid:
-        xbmc.executebuiltin("Quit")
-    else:
-        if getDistro() == 'Kodi':
-            xbmc.executebuiltin("RestartApp")
+    def restartKodi(self):
+        osAndroid = xbmc.getCondVisibility('system.platform.android')
+        
+        if osAndroid:
+            xbmc.executebuiltin("Quit")
         else:
-            xbmc.executebuiltin("Reboot")
+            if getDistro() == 'Kodi':
+                xbmc.executebuiltin("RestartApp")
+            else:
+                xbmc.executebuiltin("Reboot")
 
     def exitAddon(self):
         exit()
