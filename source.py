@@ -2797,17 +2797,17 @@ class MTVGUIDESource(Source):
         if strings2.M_TVGUIDE_CLOSING:
             raise SourceUpdateCanceledException()
 
-        tzone, autozone = getTimeZone()
+        zone, autozone = getTimeZone()
 
         try:        
             if CUSTOM_PARSER:
-                return customParseXMLTV(xml.decode('utf-8'), progress_callback, tzone, autozone, self.logoFolder)
+                return customParseXMLTV(xml.decode('utf-8'), progress_callback, zone, autozone, self.logoFolder)
 
             else:
                 iob = io.BytesIO(xml)
 
                 context = ElementTree.iterparse(iob, events=("start", "end"))
-                return parseXMLTV(context, iob, len(xml), progress_callback, tzone, autozone, self.logoFolder)
+                return parseXMLTV(context, iob, len(xml), progress_callback, zone, autozone, self.logoFolder)
 
         except SourceUpdateCanceledException as cancelException:
             raise cancelException
@@ -2910,23 +2910,6 @@ def catList(category_count):
             for line in categoriesList:
                 f.write('{}\n'.format(line))
 
-
-def parseXMLTVDate(dateString, TIME_ZONE_AUTO):
-    autoZone = None
-    if dateString:
-        if dateString.find(' ') != -1:
-            timeZone = dateString[dateString.find(' '):]
-            autoZone = timeZone.replace(timeZone[-2:], ':' + timeZone[-2:]).replace(' ', '')
-            dateString = dateString[:dateString.find(' ')]
-
-        t = time.strptime(dateString, '%Y%m%d%H%M%S')
-        if TIME_ZONE_AUTO:
-            return datetime.datetime(t.tm_year, t.tm_mon, t.tm_mday, t.tm_hour, t.tm_min, t.tm_sec), autoZone
-        else:
-            return datetime.datetime(t.tm_year, t.tm_mon, t.tm_mday, t.tm_hour, t.tm_min, t.tm_sec), None
-    else:
-        return None
-
 def getTimeZone():
     ZONE = ADDON.getSetting('time_zone')
 
@@ -2938,32 +2921,60 @@ def getTimeZone():
 
     return ZONE, TIME_ZONE_AUTO
 
-def TimeZone(dateString, ZONE, TIME_ZONE_AUTO):
-    if TIME_ZONE_AUTO:
-        ZONE = '00:00'
+def parseXMLTVDate(dateString, zone, autozone):
+    format_str = True
 
-    zoneDiff = time.strptime(ZONE[1:],'%H:%M')
-    
-    if '+' in ZONE:
+    if dateString:
+        if zone and not autozone: # Manually selected
+            timeZone = zone
+            format_str = False
+
+        elif dateString.find(' ') != -1 and not autozone: # Parsed from EPG
+            timeZone = dateString[dateString.find(' '):]  
+            
+        else: # Auto
+            timeZone = '+0000'
+
+        if format_str:
+            timeZone = timeZone.replace(timeZone[-2:], ':' + timeZone[-2:]).replace(' ', '') 
+            if '+:' in timeZone:
+                timeZone = timeZone.replace('+:', '+')
+
+        dateString = dateString[:dateString.find(' ')] 
+
+        t = time.strptime(dateString, '%Y%m%d%H%M%S')
+
+    return datetime.datetime(t.tm_year, t.tm_mon, t.tm_mday, t.tm_hour, t.tm_min, t.tm_sec), timeZone
+
+def TimeZone(dateString):
+    time_string, zone = (dateString)
+
+    if '+' in zone:
         zoneInt = 1
-    elif '-' in ZONE:
+    elif '-' in zone:
         zoneInt = 2
     else:
         zoneInt = 0
 
-    if dateString:
+    zoneDiff = time.strptime(zone[1:],'%H:%M')
+
+    if time_string:
         if zoneInt == 2:
-            newDateString = dateString[0] - datetime.timedelta(hours=zoneDiff.tm_hour) - datetime.timedelta(minutes=zoneDiff.tm_min)
+            newDateString = time_string - datetime.timedelta(hours=zoneDiff.tm_hour) - datetime.timedelta(minutes=zoneDiff.tm_min) + datetime.timedelta(hours=time.localtime().tm_isdst)
         elif zoneInt == 1:
-            newDateString = dateString[0] + datetime.timedelta(hours=zoneDiff.tm_hour) + datetime.timedelta(minutes=zoneDiff.tm_min)
+            newDateString = time_string + datetime.timedelta(hours=zoneDiff.tm_hour) + datetime.timedelta(minutes=zoneDiff.tm_min) + datetime.timedelta(hours=time.localtime().tm_isdst)
         else:
-            newDateString = dateString[0]
+            newDateString = time_string + datetime.timedelta(hours=time.localtime().tm_isdst)
+
+        print('TEST5555555')
+        print(time.localtime().tm_isdst)
 
         return newDateString
+
     else:
         return None
 
-def customParseXMLTV(xml, progress_callback, tzone, autozone, logoFolder):
+def customParseXMLTV(xml, progress_callback, zone, autozone, logoFolder):
     deb("[EPG] Parsing EPG by custom parser")
     startTime = datetime.datetime.now()
 
@@ -3053,12 +3064,12 @@ def customParseXMLTV(xml, progress_callback, tzone, autozone, logoFolder):
         except AttributeError:
             title = ''
         try:
-            start = TimeZone(parseXMLTVDate( programStartRe.search(program).group(1), autozone), tzone, autozone)
+            start = TimeZone(parseXMLTVDate( programStartRe.search(program).group(1), zone, autozone) )
         except Exception as ex:
             deb('TimeZone Exception: {}'.format(ex))
             start = ''
         try:
-            stop = TimeZone(parseXMLTVDate( programStopRe.search(program).group(1), autozone), tzone, autozone)
+            stop = TimeZone(parseXMLTVDate( programStopRe.search(program).group(1), zone, autozone) )
         except Exception as ex:
             deb('TimeZone Exception: {}'.format(ex))
             stop = ''
@@ -3152,7 +3163,7 @@ def customParseXMLTV(xml, progress_callback, tzone, autozone, logoFolder):
     thread = threading.Thread(name='catList', target = catList, args=[category_count])
     thread.start()
 
-def parseXMLTV(context, f, size, progress_callback, tzone, autozone, logoFolder):
+def parseXMLTV(context, f, size, progress_callback, zone, autozone, logoFolder):
     deb("[EPG] Parsing EPG")
     start = datetime.datetime.now()
     context = iter(context)
@@ -3229,13 +3240,13 @@ def parseXMLTV(context, f, size, progress_callback, tzone, autozone, logoFolder)
                     description = strings(NO_DESCRIPTION)
 
                 try:
-                    start = TimeZone(parseXMLTVDate(elem.get('start'), autozone), tzone, autozone)
+                    start = TimeZone(parseXMLTVDate(elem.get('start'), zone, autozone) )
                 except Exception as ex:
                     deb('TimeZone Exception: {}'.format(ex))
                     start = ''
 
                 try:
-                    stop = TimeZone(parseXMLTVDate(elem.get('stop'), autozone), tzone, autozone)
+                    stop = TimeZone(parseXMLTVDate(elem.get('stop'), zone, autozone) )
                 except Exception as ex:
                     deb('TimeZone Exception: {}'.format(ex))
                     stop = ''
