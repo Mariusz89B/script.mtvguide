@@ -2938,10 +2938,8 @@ def getTimeZone():
 
     return ZONE, TIME_ZONE_AUTO
 
-def TimeZone(dateString, AUTO_ZONE, TIME_ZONE_AUTO):
+def TimeZone(dateString, ZONE, TIME_ZONE_AUTO):
     if TIME_ZONE_AUTO:
-        ZONE = AUTO_ZONE
-    elif AUTO_ZONE is None and TIME_ZONE_AUTO:
         ZONE = '00:00'
 
     zoneDiff = time.strptime(ZONE[1:],'%H:%M')
