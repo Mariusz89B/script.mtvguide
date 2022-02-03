@@ -684,6 +684,20 @@ class mTVGuide(xbmcgui.WindowXML):
         
         self.interval = 0
 
+    def restartKodi(self):
+        if osAndroid:
+            xbmc.executebuiltin("Quit")
+        elif osRpi:
+            xbmc.executebuiltin("Reboot")
+        else:
+            if getDistro() == 'Kodi':
+                xbmc.executebuiltin("RestartApp")
+            else:
+                xbmc.executebuiltin("Reboot")
+
+    def exitAddon(self):
+        exit()
+
     def tutorialGetEPG(self):
         res = xbmcgui.Dialog().select(strings(59940), [strings(59906), strings(59908)])
 
@@ -693,7 +707,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 ADDON.setSetting('m-TVGuide', 'http://')
                 ADDON.setSetting('xmltv_file', '')
                 ADDON.setSetting('tutorial', 'true')
-                exit()
+                self.exitAddon()
             else:
                 self.tutorialGetEPG()
 
@@ -756,7 +770,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
             else:
                 ADDON.setSetting('tutorial', 'true')
-                exit()
+                self.exitAddon()
 
         elif continent == 0:
             filtered_dict = dict((k, v) for k, v in CC_DICT.items() if int(v['continent']) != 7)
@@ -862,7 +876,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
             else:
                 ADDON.setSetting('tutorial', 'true')
-                exit()
+                self.exitAddon()
 
         for p in res:
             if p == 0:
@@ -876,7 +890,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
                     else:
                         ADDON.setSetting('tutorial', 'true')
-                        exit()
+                        self.exitAddon()
                 for s in res:
                     if s == 0:
                         label = 'C More'
@@ -1185,7 +1199,7 @@ class mTVGuide(xbmcgui.WindowXML):
                         ADDON.setSetting('playlist_1_enabled', 'false')
                         ADDON.setSetting('playlist_1_file', '')
                         ADDON.setSetting('tutorial', 'true')
-                        exit()
+                        self.exitAddon()
 
                 elif res == 0:
                     ADDON.setSetting('playlist_1_source', '0')
@@ -1275,44 +1289,20 @@ class mTVGuide(xbmcgui.WindowXML):
                     ADDON.setSetting('record_folder', '')
                     ADDON.setSetting('tutorial', 'false')
                     xbmcgui.Dialog().ok(strings(70100), strings(70102))
-                    if osAndroid:
-                        xbmc.executebuiltin("Quit")
-                    elif osRpi:
-                        xbmc.executebuiltin("Reboot")
-                    else:
-                        if getDistro() == 'Kodi':
-                            xbmc.executebuiltin("RestartApp")
-                        else:
-                            xbmc.executebuiltin("Reboot")
+                    self.restartKodi()
                     time.sleep(5)
                     
             else:
                 run = SettingsImp().downloadRecordApp()
                 ADDON.setSetting('tutorial', 'false')
                 xbmcgui.Dialog().ok(strings(70100), strings(70102))
-                if osAndroid:
-                    xbmc.executebuiltin("Quit")
-                elif osRpi:
-                    xbmc.executebuiltin("Reboot")
-                else:
-                    if getDistro() == 'Kodi':
-                        xbmc.executebuiltin("RestartApp")
-                    else:
-                        xbmc.executebuiltin("Reboot")
+                self.restartKodi()
                 time.sleep(5)
 
         else:
             ADDON.setSetting('tutorial', 'false')
             xbmcgui.Dialog().ok(strings(70100), strings(70102))
-            if osAndroid:
-                xbmc.executebuiltin("Quit")
-            elif osRpi:
-                xbmc.executebuiltin("Reboot")
-            else:
-                if getDistro() == 'Kodi':
-                    xbmc.executebuiltin("RestartApp")
-                else:
-                    xbmc.executebuiltin("Reboot")
+            self.restartKodi()
             time.sleep(5)
 
     def tutorialExec(self):
@@ -1333,19 +1323,20 @@ class mTVGuide(xbmcgui.WindowXML):
             res = xbmcgui.Dialog().yesno(strings(59924), strings(59959))
             if res == False:
                 ADDON.setSetting('tutorial', 'false')
-                exit()
+                self.exitAddon()
+                
             elif res == True:
                 res = xbmcgui.Dialog().ok(strings(59924), strings(59960))
                 if res == False:
                     xbmcgui.Dialog().ok(strings(59924), strings(59938))
                     ADDON.setSetting('tutorial', 'true')
-                    exit()
+                    self.exitAddon()
                 else:
                     self.tutorialGetEPG()
                         
             else:
                 ADDON.setSetting('tutorial', 'true')
-                exit()
+                self.exitAddon()
 
     def changeFonts(self):
         addonSkin = ADDON.getSetting('Skin')
@@ -1476,7 +1467,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 # Skin change or install font pack
                 res = xbmcgui.Dialog().contextmenu([strings(70105), strings(70104)])
                 if res < 0:
-                    exit()
+                    self.exitAddon()
 
                 if res == 0:
                     # Check non-writeable skins
@@ -1498,7 +1489,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
                             else:
                                 xbmcgui.Dialog().ok(strings(70105), strings(70103))
-                                exit()
+                                self.exitAddon()
 
                     if chkSkinKodi == 'skin.estouchy':
                         if xbmc.getSkinDir() == "skin.estouchy":
@@ -1519,7 +1510,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
                                 else:
                                     xbmcgui.Dialog().ok(strings(70105), strings(70103))
-                                    exit()
+                                    self.exitAddon()
 
                     path2 = 'xml'
                     path3 = 'xml'
@@ -1761,19 +1752,10 @@ class mTVGuide(xbmcgui.WindowXML):
                                 f3.close()
 
                         xbmcgui.Dialog().ok(strings(70100), strings(70102))
-                        if osAndroid:
-                            xbmc.executebuiltin("Quit")
-                        elif osRpi:
-                            xbmc.executebuiltin("Reboot")
-                        else:
-                            if getDistro() == 'Kodi':
-                                xbmc.executebuiltin("RestartApp")
-                            else:
-                                xbmc.executebuiltin("Reboot")
-                        exit()
+                        self.restartKodi()
                     else:
                         xbmcgui.Dialog().ok(strings(70105), strings(70103))
-                        exit()
+                        self.exitAddon()
 
                 elif res == 1:
                     if addonSkin in estuary:
@@ -1788,8 +1770,7 @@ class mTVGuide(xbmcgui.WindowXML):
                     currentSkinNew = xbmc.getSkinDir()
                     if addonSkin != currentSkinNew:
                         xbmcgui.Dialog().ok(strings(70100), strings(70107).format(str(addonSkin)))
-                        #xbmc.executebuiltin("Quit")
-                        exit()
+                        self.exitAddon()
 
 
     def loadSettings(self):
@@ -2266,7 +2247,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 None
             if res is True:
                 xbmcgui.Dialog().ok(strings(57051), strings(30979))
-                exit()
+                self.exitAddon()
 
         elif check == True:
             title = program.title

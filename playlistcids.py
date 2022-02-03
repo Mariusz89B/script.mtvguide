@@ -694,7 +694,7 @@ class PlaylistUpdater(baseServiceUpdater):
                     elif (title is not None or tvg_title is not None) and regexCorrectStream.match(stripLine):
                         removeStream = True
                         if ADDON.getSetting('VOD_EPG') == "false" or ADDON.getSetting('VOD_EPG') == "": 
-                            regexRemoveStream = re.compile('^(?!.*(\.)(mp4|mkv|avi|mov|wma)).*$')
+                            regexRemoveStream = re.compile('^(?!.*(\.)(mkv|avi|mov|wma)).*$')
                             try:
                                 match = regexRemoveStream.match(stripLine)
                             except:

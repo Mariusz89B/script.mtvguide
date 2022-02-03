@@ -3227,7 +3227,20 @@ def parseXMLTV(context, f, size, progress_callback, tzone, autozone, logoFolder)
                         icon = iconElementEx.get("src")
                 if not description:
                     description = strings(NO_DESCRIPTION)
-                result = Program(channel, elem.findtext('title'), TimeZone(parseXMLTVDate(elem.get('start'), autozone), tzone, autozone),TimeZone(parseXMLTVDate(elem.get('stop'), autozone), tzone, autozone), description, productionDate=date, director=director, actor=actor, episode=episode, imageLarge=live3, imageSmall=icon, categoryA=cata,categoryB=catb)
+
+                try:
+                    start = TimeZone(parseXMLTVDate(elem.get('start'), autozone), tzone, autozone)
+                except Exception as ex:
+                    deb('TimeZone Exception: {}'.format(ex))
+                    start = ''
+
+                try:
+                    stop = TimeZone(parseXMLTVDate(elem.get('stop'), autozone), tzone, autozone)
+                except Exception as ex:
+                    deb('TimeZone Exception: {}'.format(ex))
+                    stop = ''
+
+                result = Program(channel, elem.findtext('title'), start, stop, description, productionDate=date, director=director, actor=actor, episode=episode, imageLarge=live3, imageSmall=icon, categoryA=cata, categoryB=catb)
 
             elif elem.tag == "channel":
                 id = elem.get("id").upper()
