@@ -450,6 +450,10 @@ class PlayService(xbmc.Player, BasePlayService):
 
 
     def catchupTeliaPlay(self, channelInfo, utc, lutc):
+        deb('catchupTeliaPlay')
+        import hashlib
+        h = hashlib.new('sha256')
+
         try:
             base = ['https://teliatv.dk', 'https://www.teliaplay.se']
             classic = ['https://teliatv.dk', 'https://classic.teliaplay.se']
@@ -486,29 +490,31 @@ class PlayService(xbmc.Player, BasePlayService):
                 timestamp = tday
 
             headers = {
-                'Authority': 'graphql-telia.t6a.net',
+                'authority': 'graphql-telia.t6a.net',
+                'accept': '*/*',
                 'tv-client-name': 'web',
                 'tv-client-boot-id': tv_client_boot_id,
-                'DNT': '1',
                 'Authorization': 'Bearer '+ beartoken,
-                'tv-client-tz': 'Europe/Stockholm',
-                'Content-Type': 'application/json',
-                'X-Country': cc[country],
-                'User-Agent': UA,
-                'tv-client-version': '1.16.6',
-                'Accept': '*/*',
+                'access-control-request-method': 'GET',
+                'access-control-request-headers': 'authorization,content-type,tv-client-boot-id,tv-client-name,tv-client-tz,tv-client-version,x-country',
+                'user-agent': UA,
                 'Origin': base[country],
                 'Referer': base[country]+'/',
-                'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
+                'accept-language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6,fr;q=0.5',
             }
+
+            h.update(bytes(timestamp, "utf8")) # ????
+            print(h.hexdigest())
 
             params = (
                 ('operationName', 'getTvChannel'),
                 ('variables', '{"timestamp":'+timestamp+',"offset":0,"id":"'+str(self.channCid(channelInfo.cid))+'"}'),
-                ('extensions', '{"persistedQuery":{"version":1,"sha256Hash":"05f9356e33be31cb36938442b37776097b304241072bf1bc31af53f65dfaf417"}}'),
+                ('extensions', '{"persistedQuery":{"version":1,"sha256Hash":"de9b6b8f45d8698cf5f6572d56ed387aa564a32ba8c617349221505c8222f77f"}}'),
+                #('extensions', '{"persistedQuery":{"version":1,"sha256Hash":"'+h.hexdigest()+'"}}'),
             )
 
             response = requests.get('https://graphql-telia.t6a.net/graphql', headers=headers, params=params, cookies=sess.cookies, verify=False).json()
+
             if response.get('errors', ''):
                 return None, None
 
