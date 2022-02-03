@@ -80,9 +80,6 @@ import collections
 
 from contextlib import contextmanager
 
-osAndroid = xbmc.getCondVisibility('system.platform.android')
-osRpi = xbmc.getCondVisibility('system.platform.linux.raspberrypi')
-
 MODE_EPG = 'EPG'
 MODE_TV = 'TV'
 
@@ -684,16 +681,16 @@ class mTVGuide(xbmcgui.WindowXML):
         
         self.interval = 0
 
-    def restartKodi(self):
-        if osAndroid:
-            xbmc.executebuiltin("Quit")
-        elif osRpi:
-            xbmc.executebuiltin("Reboot")
+def restartKodi(self):
+    osAndroid = xbmc.getCondVisibility('system.platform.android')
+    
+    if osAndroid:
+        xbmc.executebuiltin("Quit")
+    else:
+        if getDistro() == 'Kodi':
+            xbmc.executebuiltin("RestartApp")
         else:
-            if getDistro() == 'Kodi':
-                xbmc.executebuiltin("RestartApp")
-            else:
-                xbmc.executebuiltin("Reboot")
+            xbmc.executebuiltin("Reboot")
 
     def exitAddon(self):
         exit()
