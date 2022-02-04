@@ -1,1154 +1,381 @@
-﻿wersja 9.8.9 - 2022-02-04
-- wersja testowa
+﻿v9.8.9 (2022-02-04)
+- Added option to adjust to local time, for universal timezone. 
+- Add channel to group shortcut.
+- Optimized performance.
 
-wersja 9.8.8 - 2022-01-24
-- poprawione błędy
+v9.8.8 (2022-01-24)
+- Bug fixes.
 
-wersja 9.8.7 - 2022-01-12
-- dodano skrót InputStream Adaptive w ustawieniach
-- zoptymalizowana wydajność
-
-wersja 9.8.6 - 2022-01-04
-- naprawiono odświeżanie tabeli EPG po zakończeniu nagrywania
-- naprawiono grupy dostępu Polsat GO
-- dodano obsługę DRM dla serwisu WP Pilot
-- poprawione błędy
-
-wersja 9.8.5 - 2021-12-12
-- dodane wsparcie dla plików .xz
-- poprawione błędy
-
-wersja 9.8.4 - 2021-12-07
-- poprawka błędu przy dodawaniem kanału
-
-wersja 9.8.3 - 2021-12-06
-- poprawka archiwum dla serwisu Telia Play
-- poprawione błędy
-
-wersja 9.8.2 - 2021-11-28
-- dodano wbudowaną przeglądarkę dodatków
-- poprawione błędy
-
-wersja 9.8.1 - 2021-11-16
-- poprawki serwisów Polsat GO i Polsat GO Box
-
-wersja 9.8.0 - 2021-11-12
-- poprawki
-
-wersja 9.7.9 - 2021-11-10
-- poprawka cachowania playlist
-
-wersja 9.7.8 - 2021-11-09
-- aktualizacja parsowania EPG
-- naprawiono błąd powiadomienia o pobieraniu
-- poprawiono ogólne dopasowanie kanałów
-- optymalizacje
-
-wersja 9.7.7 - 2021-11-04
-- zaktualizowano domyślny User-Agent
-- zaktualizowano dopasowanie kanałów za pomocą wyrażeń regularnych
-- dodano możliwość modyfikowania lokalnej mapy bazowej
-- poprawione błędy
-
-wersja 9.7.6 - 2021-11-03
-- porawki
-
-wersja 9.7.5 - 2021-11-02
-- poprawione błędy
-
-wersja 9.7.4 - 2021-11-01
-- dodane ustawienie sortowania listy EPG
-- poprawka tvg-id
-
-wersja 9.7.3 - 2021-11-01
-- aktualizacja map bazowych
-
-wersja 9.7.2 - 2021-10-29
-- aktualizacja tłumaczeń
-
-wersja 9.7.1 - 2021-10-29
-- aktualizacja map bazowych
-
-wersja 9.7.0 - 2021-10-28
-- naprawiono problemy z kodowaniem Python 2.7
-- poprawione błędy
-
-wersja 9.6.9 - 2021-10-27
-- dodana opcja wymiany kodu krajowego
-- poprawka cachowania playlist
-
-wersja 9.6.8 - 2021-10-26
-- naprawiono problemy z bazą Python 2.7
-
-wersja 9.6.7 - 2021-10-25
-- dodano nagłówki Content-Type do rozpoznawania typ plików EPG.
-
-wersja 9.6.6 - 2021-10-25
-- dodano ustawienie rejestrowania z wyprzedzeniem w bazie danych (WAL)
-- ulepszone parsowanie kanałów
-- poprawiona wydajność
-- naprawiono przekierowanie strumienia playlisty odtwarzania
-
-wersja 9.6.5 - 2021-10-19
-- dodano moduł urllib3.
-- przebudowany menu przy wybóru EPG i przerobione kategorie grup
-- poprawiona wydajność
-
-wersja 9.6.4 - 2021-10-10
-- poprawki
-
-wersja 9.6.3 - 2021-10-08
-- ulepszone rozpoznawanie prefiksów kraji dla kategorii grup
-- dodano okno dialogowe z informacją o maksymalnej liczbie urządzeń dla serwisu Polsat GO
-- usunięte błędy
-
-wersja 9.6.2 - 2021-10-03
-- dodano rozpoznawanie strumienia z kanałów EPG
-- dodano opcje zmiany interwału aktualizacji EPG
-- poprawka serwisu Telewizja Polska
-- poprawka logowania do serwisu PlayerPL, Polsat GO, Polsat GO Box
-- usunięte błędy
-
-wersja 9.6.1 - 2021-09-17
-- poprawka przewodnika konfiguracji
-- poprawka logowania do Polsat GO na Kodi v18.9
-
-wersja 9.6.0 - 2021-09-15
-- poprawka dla serwisu PlayerPL
-- poprawka odtwarzania w serwisie Nc+ GO
-- naprawiono problemy z kodowaniem Python 2.7
-
-wersja 9.5.9 - 2021-09-15
-- naprawiono błąd utkniecia w pętli przy aktualizacji skórek
-- poprawka logowania do serwisu Polsat GO
-- poprawka prośby o odnowienie logowania do PlayerPL
-
-wersja 9.5.8 - 2021-09-13
-- zmiany w opcjach serwisach tv oraz playlist
-- naprawiono błąd utkniecia w pętli przy aktualizacji skórek
-
-wersja 9.5.7 - 2021-09-12
-- naprawiono problemy z kodowaniem Python 2.7
-
-wersja 9.5.6 - 2021-09-11
-- ulepszone rozpoznawanie kanałów
-
-wersja 9.5.5 - 2021-09-10
-- naprawiono problemy z kodowaniem Python 2.7
-- naprawiono przyciski sterujące
-
-wersja 9.5.4 - 2021-09-08
-- naprawiono logowanie Polsat GO Box
-- ulepszone gesty dotykowe
-
-wersja 9.5.3 - 2021-09-06
-- dodany serwis Polsat GO Box
-- dodano gesty dotykowe
-- naprawiono usuwanie kontrolek, które powodowały awarię Kodi
-
-wersja 9.5.2 - 2021-09-04
-- poprawka paly timeshift buffer
-- usunięte błędy
-
-wersja 9.5.1 - 2021-09-03
-- naprawiono znikający pasek czasu
-- poprawka dla serwisu WP Pilot
-- aktualizacja serwisu Telia Play
-
-wersja 9.5.0 - 2021-09-02
-- naprawiono błąd kategorii skórek
-
-wersja 9.4.9 - 2021-09-01
-- dodany serwis Polsat GO
-- poprawiono wydajność działania
-
-wersja 9.4.8 - 2021-08-22
-- poprawka wideoOSD
-- usunięte błędy
-
-wersja 9.4.7 - 2021-08-16
-- poprawka migotania paska czasu
-- poprawka logowania w serwisie WP Pilot
-
-wersja 9.4.6 - 2021-08-10
-- poprawka logowania w serwisie WP Pilot
-- dodano zapytanie do przewodnika dotyczące ustawień archiwum
-- dodano poprawkę funkcji clearEpg
-
-wersja 9.4.5 - 2021-08-03
-- poprawka logowania w serwisie WP Pilot
-- dodano ustawienie umożliwiające wczytywanie tylko wstępnie zdefiniowanych grup kanałów, zmniejsza czas wczytywania dużych playlist
-- poprawka paska postepu czasu
-
-wersja 9.4.4 - 2021-07-31
-- poprawka paska postepu czasu
-- dodany nowy serwis Telewizja Polska
-
-wersja 9.4.3 - 2021-07-20
-- zaktualizowana opcja wybierania klawiszy
-- usunięte błędy
-
-wersja 9.4.2 - 2021-07-08
-- zaktualizowane menu kontekstowe i menu boczne
-- zaktualizowana opcja wybierania skórek
-
-wersja 9.4.1 - 2021-07-06
-- zaktualizowano rozpoznawanie kanałów z archiwum
-
-wersja 9.4.0 - 2021-06-27
-- naprawiono migotanie paska czasu
-- zaktualizowane tłumaczenia
-
-wersja 9.3.9 - 2021-06-21
-- dodano ulepszone rozpoznawanie kanałów
-- aktualizacja bazy mapowej
-
-wersja 9.3.8 - 2021-06-09
-- dodana opcja wykrywania alternatywnych nazw kanałów
-
-wersja 9.3.7 - 2021-06-04
-- poprawka odpalenia protokołu .mpd w inputstream helper
-
-wersja 9.3.6 - 2021-06-03
-- dodano ikonę nadzoru rodzicielskiego w vosd
-- poprawiono wydajność działania
-- usunięte błędy
-
-wersja 9.3.5 - 2021-05-31
-- zaktualizowany algorytm kategorii programu
-- usunięte błędy
-
-wersja 9.3.4 - 2021-05-23
-- poprawka działania archiwum
-
-wersja 9.3.3 - 2021-05-22
-- optymalizacje
-- usunięte błędy
-
-wersja 9.3.2 - 2021-05-19
-- poprawka memoryerror przy szybkim parsowaniu epg
-- poprawiono wydajność działania
-- usunięte błędy
-
-wersja 9.3.1 - 2021-05-12
-- dodana opcja wprowadzenia kanałów bez epg 
-- poprawka błędu parsowania
-- dodana opcja nagrywaj i oglądaj
-- dodano ustawienie aby kontynuować odtwarzanie, nagrywanie i
-pobieranie usług w tle po zakonczeniu wtyczki
-
-wersja 9.3.0 - 2021-04-13
-- poprawka nagrywania z serwisu WP Pilot
-- dodana funkcja timeshift do serwisu Telia Play
-- poprawka błędu szyfrowania
-- naprawiono przycisk resetowania w menu pobierania
-- dodano wskaźnik prędkości pobierania
-- usunięte błędy
-
-wersja 9.2.9 - 2021-04-05
-- poprawiono wydajność działania
-- poprawka zanikajacych ikon
-- dodane nowe menu pobierania
-- dodana opcja cachowania playlisty
-- usunięte błędy
-
-wersja 9.2.8 - 2021-02-27
-- poprawka serwisu Telia Play
-- poprawiony kod statusu odpowiedzi
-
-wersja 9.2.7 - 2021-02-26
-- poprawka serwisu Cyfrowy Polsat GO
-- poprawka serwisu Nc+ GO
-
-wersja 9.2.6 - 2021-02-24
-- poprawka format ciągu timeshift
-- dodano Cloudflare bypasser
-
-wersja 9.2.5 - 2021-02-22
-- optymalizacje
-- poprawione tłumaczenia
-
-wersja 9.2.4 - 2021-02-02
-- dodano możliwość planowania wielu pobrań
-- naprawiono ustawienie przesunięcia czasu pobierania
-- poprawka dotycząca pobierania części programu
-- przerobione ustawienia epg, basemap przy dodawaniu kanałów z innych kraji
-- dodano automatyczne dodawanie country code do strumieni m3u
-- poprawka dla User-Agent
-- dodano okno powiadomienia z informacją powodu niedziałających strumieni
-- naprawiono tłumaczenie Pythona 3, które powodowało uszkodzenie bazy
-
-wersja 9.2.3 - 2021-01-25
-- poprawka checkLogin w serwisie Telia Play
-
-wersja 9.2.2 - 2021-01-21
-- dodany nowy serwis PlayerPL
-- dodano ustawienie wyboru User-Agent dla playlist
-- poprawka serwisu Ipla
-- poprawka timestamp z odświeżania tokena dla usługi Telia Play
-- naprawiono migające tło paska czasu
-- inne ulepszenia
-
-wersja 9.2.1 - 2021-01-14
-- poprawka serwisu WP Pilot
-- dodano możliwość ręcznego wprowadzania ciasteczek dla usługi WP Pilot
-- loadExtraBaseMap niekonieczne by odpalic wtyczke
-
-wersja 9.2.0 - 2020-12-31
-- poprawka serwisu Ipla, dodane brakujące kanały
-- poprawka szyfrowania utf-8
-
-wersja 9.1.9 - 2020-10-31
-- poprawka timestamp z odświeżania tokena dla usługi Telia Play
-
-wersja 9.1.8 - 2020-10-26
-- poprawka serwisu Cyfrowy Polsat GO
-- poprawka serwisu Telia Play
-- dodano timestamp z odświeżania tokena dla usługi Telia Play
-- zmiany w API Pythona, dodano xbmc.LOGINFO
-
-wersja 9.1.7 - 2020-08-30
-- poprawka pobierania programów na systemach Android
-
-wersja 9.1.6 - 2020-08-08
-- poprawka wyświetlanie czasu podczas odtwarzania
-- poprawki
-
-wersja 9.1.5 - 2020-08-04
-- poprawki
-
-wersja 9.1.4 - 2020-07-29
-- przebudowana funkcja timeshift
-- dodano powiadomienie o postępie i rozmiarze plików do pobrania
-- poprawka serwisu C More
-- poprawki
-
-wersja 9.1.3 - 2020-07-09
-- poprawki
-
-wersja 9.1.2 - 2020-07-07
-- dodano opcję wyłączenia instalacji czcionek
-- zmiany w parsowaniu obrazów programu
-
-wersja 9.1.1 - 2020-07-05
-- poprawki
-
-wersja 9.1.0 - 2020-07-04
-- dodany przycisk wstrzymaj / wznów w wideo OSD
-- dodany refresh token do serwisu Telia Play
-- poprawka błędów w kodzie
-- dodany backup domyślnych czcionek skórki Kodi
-
-wersja 9.0.10 - 2020-07-02
-- poprawka instalacji czcionek
-
-wersja 9.0.9 - 2020-07-01
-- poprawka instalacji czcionek
-- poprawka szyfrowania przypomnien
-- dodane prawidłowe szyfrowanie epg formatu .gz
-- dodana licencja skórek
-
-wersja 9.0.8 - 2020-06-29
-- poprawka dodawania kanałów
-
-wersja 9.0.7 - 2020-06-28
-- małe poprawki
-
-wersja 9.0.6 - 2020-06-28
-- poprawka serwisu Cyfrowy Polsat GO
-
-wersja 9.0.5 - 2020-06-28
-- małe poprawki
-
-wersja 9.0.4 - 2020-06-27
-- poprawka logowania w serwisie WP Pilot
-- poprawka timeshift
-
-wersja 9.0.3 - 2020-06-26
-- przerobione logowanie w serwisie WP Pilot
-- dodany certyfikat dla serwisu Telia Play
-
-wersja 9.0.2 - 2020-06-25
-- poprawka dodawania kanałów
-- poprawka szyfrowania lokalizacji
-
-wersja 9.0.0 - 2020-06-21
-- obsługa archiwum
-- opcja pobierania programów zakonczońych
-- instalacja pakietu czcionek
-- dodaj strumień do kanału dostępnego w EPG
-
-wersja 8.2.0 - 2020-04-11
-- migracja do Python 3 (Kodi Matrix)
-- wprowadzony nowy system tlumaczen dla (Kodi Matrix)
-- nowe serwisy TV
-- dodany przewodnik konfiguracji
-- dynamiczne tlo i kolory
-- nowy pasek postepu czasu
-- nowa skorka Estuary mod v2
-- nowe kontrolki wyswietlajace informacje czasowe
-- nowe menu ulubionych kanalow z innych wtyczek
-- wbudowana funkcja wyszukiwania tytulu programu w Youtube
-- wybor ulubionej grupy w glownym EPG
-- wsparcie dla kanalow 4K/UHD
-
-wersja 8.1.1 - 2019-05-05
-- fix po utworzeniu ulubionej grupy, nazwa jest pokazana poniżej w kontrolce wyboru
-- nowe kontrolki dla następnego programu, pozostały czas i ile czasu mineło
-- dodane wsparcie dla epg czeskiego i amerykańskiego
-- fix nazw w wyszukiwaniu listy kategorii
-
-wersja 8.1.0 - 2019-04-17
-- dodano możliwość tworzenia ulubionych list kanałów
-- fix exportowania ustawień na systemach Androida
-- fix wyłączenia wtyczki podczas startu
-- grupowanie kanałów zagranicznych według grup
-- poprawiona obsługa playlist
-- fix serwisu WP Pilot poza granicą
-- dział pomocy w menu kontekstowym
-
-wersja 8.0.3 - 2019-03-01
-- fix automatycznego odtwarzania po uruchomieniu m-TVGuide
-- porządki w obsłudze wyświetlania kontrolek z numerami kanałów
-
-wersja 8.0.2 - 2019-02-20
-- fix zawieszającej się wtyczki / Kodi podczas uruchamiania streamu
-- playlisty przeniesione do nowej kategori w ustawieniach
-- poprawka wczytywania streamów franqie
-
-wersja 8.0.1 - 2019-02-10
-- fix rozwalającego się EPG
-- nie ładowanie strumieni VOD z playlisty jeśli opcja VOD jest wyłączona.
-- nowy warunek zamykania wtyczki.
-- zatrzymywany timer w vosd.py
-- ulepszenia w kodzie.
-
-wersja 8.0.0 - 2018-12-10
-- poprawiono stabilność działania
-- usunięto źle wyświetlany kod na liście programów
-- fokus na wybrany kanał w liscie programów
-- naprawiono błąd Value error
-- naprawiono szukanie listy programów
-- opóźniony automatyczny start kanału
-- naprawiono brak tekstury fokusa po powrocie z lokalizacji nagrań
-- ukryj OSD i odtwarzanie w tle zostało naprawione
-- dodano dwie opcje wyjścia z wtyczki w ustawieniach
-
-wersja 7.6.0 - 2018-12-01
-- kolejność kanałów wg numeru
-- wybór kanału wg numeru
-- dodane nowe informacje do działu pomocy
-- autostart odtwarzania kanału
-- informacja o aktualnie odtwarzanym programie w tle
-- nowa skórka Default
-- przerobione wszystkie skórki
-- usunięto bugi
-- rozszerzone informacje o programie
-- przerobione ustawienie kolory kategorii, dodano tłumaczenia
-- przygotowana wersja dla Kodi v18
-
-wersja 7.5.0 - 2018-10-11
-- lista w m-TVGuide
-- wyszukiwarka
-- opcja widoku listy
-- uruchomienie liste klawiszem
-- opcja włączenia kanałów radiowych (radio.xml)
-- poprawki dla playlist
-- poprawki skórek
-- dodany dział pomocny, wyjaśniając wszystkie ustawienia w m-TVGuide
-
-wersja 7.4.6 - 2018-08-24
-- dodana możliwość włączenia kanałów VOD i PPV (vod.xml)
-
-wersja 7.4.5 - 2018-08-18
-- dodane wsparcie dla EPG Benelux
-- dodany język Holenderski
-
-wersja 7.4.4 - 2018-08-13
-- poprawki tłumaczeń
-
-wersja 7.4.3 - 2018-06-17
-- poprawka OSD
-
-wersja 7.4.2 - 2018-06-17
-- dodana możliwość wyboru serwera GoldVOD
-- dodany komunikat o braku premium w serwisie GoldVod
-- poprawki błędów w obsłudze Video OSD oraz GUI
-
-wersja 7.4.1 - 2018-06-11
-- poprawki aktualizacji
-
-wersja 7.4.0 - 2018-06-11
-- naprawiony serwis goldvod
-- dodano ponownie wsparcie dla zewnętrzych źródeł EPG
-
-wersja 7.3.0 - 2018-06-04
-- wideo OSD dodana możliwość zmiany języka i napisów
-- wideo OSD zmiana teraz, następny program
-- poprawka adult channels (xxx.xml)
-- poprawki w skórkach
-
-wersja 7.2.8 - 2018-05-19
-- poprawki
-
-wersja 7.2.7 - 2018-05-19
-- poprawki
-
-wersja 7.2.6 - 2018-05-18
-- poprawki
-
-wersja 7.2.5 - 2018-05-17
-- poprawki
-
-wersja 7.2.4 - 2018-05-15
-- epg safeguard
-- przerobione menu dla zagranicznych kanałów 
-- poprawki językowe
-
-wersja 7.2.3 - 2018-05-09
-- poprawki językowe
-- przerobione ustawienie dla kanałów zagranicznych
-- poprawki w skórkach
-- poprawiony panel nawigacyjny dla myszy lub przycisku dotykowego
-
-wersja 7.2.2 - 2018-05-08
-- otwieranie menu kontekstowe za pomocą dotyku
-- przerobiona nawigacja dla urządzeń dotykowych
-- przestawienie pozycji usuń stream w context menu
-- dodane wsparcie dla epg norweskiego
-- dodany język norweski
-- dodane wsparcie dla epg serbskiego
-- poprawki w skórkach
-- poprawiona kategoria
-- wyłączony serwis pierwsza tv
-
-wersja 7.2.1 - 2018-03-26
-- naprawiony serwis WP Pilot
-- zablokowana możliwość jednoczesnego uruchomienia kilkukrotnie m-TVGuide
-- dodane wsparcie dla EPG chorwackiego
-- dodany język chorwacki
-- dodane okno ładowania podczas wczytywania ponownie EPG 
-- przerobione animacje skórek
-
-wersja 7.2.0 - 2018-03-26
-- naprawa obsługi plików epg w systemie android
-- naprawa opcji wysyłania logów bezpośrednio z ustawień wtyczki
-- przywrócenie poprawek z v7.1.1
-
-wersja 7.1.2 - 2018-03-23
-- cofnięcie zmian z wersji 7.1.1
-
-wersja 7.1.1 - 2018-03-23
-- poprawka wysyłania logu
-- dodana informacja o braku kategorii
-- poprawka języków
-
-wersja 7.1.0 - 2018-03-14
-- dodano okno ładowania wtyczki
-- aktualizacja skórek
-- dodana opcja nagrywaj do context menu
-- dodana opcja program info do context menu
-- dodane nowe okienka podstawowe dla skorek
-- dodany język niemiecki
-- dodane wsparcie dla epg niemieckiego
-- dodana informacja o brakującej kategori
-- poprawki błędu ze strefą czasu
-- poprawki epg
-
-wersja 7.0.1 - 2018-02-25
-- poprawka języków
-- poprawka wsparcia dla EPG
-
-wersja 7.0.0 - 2018-02-22
-- poprawka extractAllowedAge i extractActors
-- poprawki wydajności
-- aktualizacja EPG
-- dodana nowa skórka Bello
-- poprawki regexów, szybkie wczytywanie EPG
-- poprawki
-- aktualizacja skorek
-- zmiana pozycji paska czasu (timebar) umieszczono nad kolorami kategorii
-- zaktualizowane epg, poprawki i jednakowy rex
-- poprawki mapy francuskiej
-- dodany język francuski
-- poprawki
-- dodane epg i mapy francuskie
-- poprawki w skórce default
-- poprawka source.py
-- aktualizacja map
-- poprawka source.py
-- aktualizacja map
-- poprawka w playlistcids.py
-- aktualizacja map
-- dodany język duński
-
-wersja 6.7.5 - 2018-01-14
-- przywrócony serwis pierwsza.tv
-
-wersja 6.7.4 - 2018-01-12
-- playlista zostanie poprawnie wczytana nawet gdy wpisany link zawiera spację na początku lub końcu
-- mapa szwedzka i adult mogą być pobierane ze strony mods-kodi
-- dodana opcja umożliwiająca automatyczne zatrzymanie odtwarzania podczas rozpoczęcia nagrywania dzięki czemu dostępne są najlepsze streamy do nagrywania
-- drobne poprawki
-- zwiększona liczba priorytetów do 12
-- wyłączony serwis yoy.tv
-- wyłączony serwis pierwsza.tv
-
-wersja 6.7.3 - 2017-10-27
-- dodana możliwość konfiguracji przesunięcia rozpoczęcia i zakończenia nagrywania
-- dodana możliwość ustawiania własnych nazw dla playlist
-- zwiększoszona ilość obsługiwanych playlist do 5
-- dodana opcja wyboru ilości używanych playlist, ukrywająca nieaktywne playlisty
-- dodane parsowanie ikony "live" dla programów na żywo do szybszego parsera
-- poprawka problemów z nagrywaniem na systemie OSMC
-- zmieniony wygląd okna wyboru skórki
-
-wersja 6.7.2 - 2017-09-08
-- usunięte niedziałające serwisy iHolandia iTiVi i tele-wizja
-- poprawki drobnych błędów
-- usunięta obsługa niepotrzebnych formatów nagrywania - jednyny możliwy to mpeg (działa na wszystkich urządzenia i pozwala nagrywać wszystkie serwisy)
-- dodane automatyczne blokowanie serwisu Weeb.tv na 10 minut w przypadku wykorzystania darmowego transferu
-- zaktualizowana mapa XXX
-- poprawiony sposób obsługi playlisty
-- dodane wyraźne komunikaty o niepoprawnych danych logowania do wszystkich obsługiwanych serwisów
-- nowy parser EPG nie jest już oznaczony jako niestabilny i jest ustawiony jako domyślny parser EPG
-- dodana możliwość skonfigurowania maksymalnego czasu oczekiwania na uruchomienie streamu (użyteczne jeśli uruchamianie streamów na obciążonym serwisie trwa długo)
-- aktualizacja obsługi serwisu yoy.tv
-- aktualizacja obsługi serwisu Videostar/zmieniona nazwa na WP Pilot
-- dodana możliwość minimalizacji okna video do EPG bez włączonej animacji okna odtwarzania
-
-wersja 6.7.1 - 2017-06-29
-- naprawiony problem rozrastajacej sie bazy i zduplikowanych programów
-
-wersja 6.7.0 - 2017-06-22
-- ponownie włączona obsługa serwisu yoy.tv
-- poprawiona obsługa OSD
-- aktualizacja obsługi Weeb.tv poprawiająca niedziałające kanały HD
-
-wersja 6.6.9 - 2017-06-16
-- wyłączono obsługę serwisu yoy.tv
-
-wersja 6.6.8 - 2017-04-26
-- poprawka serwisu wizja dla użytkowników którym wygasa sesja po pewnym czasie
-- lista kanałów służąca do edycji ich kolejności przewijana jest automatycznie do kanału aktualnie zaznaczonego w EPG
-- w przypadku podania niepoprawnego dodatkowego EPG wtyczka pokaże komunikat o niepoprawnym EPG i mimo to się uruchomi
-- kanały XXX są zabezpieczone hasłem (parental control) - dostępnym na stronie mods-kodi
-- podczas uruchamiania wtyczki wyświetlany jest komunikat informujący który z serwisów się wczytuje
-- dodana możliwość przełączania pomiędzy dwoma ostatnimi kanałami poprzez konfigurowalny przycisk
-
-wersja 6.6.7 - 2017-04-25
-- dodana obsługa serwisu waaatch.tv
-- obsługa playlist została rozdzielona - mają osobne priorytety
-- poprawka dla serwisu tele-wizja
-
-wersja 6.6.5 - 2017-03-27
-- poprawka serwisu tele-wizja
-- obsługa nagłówków http przez FFMPEG podczas nagrywania
-
-wersja 6.6.4 - 2017-02-09
-- poprawka dla serwisu wizja nie działającego na Kodi 17
-- aktualizacja obsługi yoy.tv
-- aktualizacja sposobu logowania tak aby były one domyślnie widoczne na kodi 17
-
-wersja 6.6.3 - 2017-01-22
-- aktualizacja obsługi playlist - możliwość wyboru pierwszeństwa HD lub SD oraz zatrzymywania odtwarzania podczas przełączania streamu
-
-wersja 6.6.2 - 2016-12-20
-- poprawka serwisu tele-wizja
-- ustawienie domyślnego formatu nagrywania na mpegts
-
-wersja 6.6.1 - 2016-12-19
-- poprawka błędu aktualizacji
-
-wersja 6.6.0 - 2016-12-19
-- dodany serwis Ipla
-- dodany serwis VideoStar
-- zmieniony sposób uruchamiania streamów przypisanych przez ulubione z zewnętrnych wtyczek, powinno poprawić niektóre niestartujące streamy.
-- w przypadku włączonej animacji okna odtwarzania streamy przypisane z zewnętrznych wtyczek również powinny się maksymalizować/minimalizować
-- wyświetlanie nazwy odtwarzanego serwisu jest opcjonalne (w ustawieniach Video)
-- streamy HD w playliście mają wyższy priorytet
-- dodany menadżer skinów
-- dodany opcjonalny dwukrotnie szybszy parser EPG
-- poprawka serwisu yoy.tv
-- zwiększona liczba dostępnych priorytetów dla serwisów
-- dodany nowy format nagrywania mpegts
-
-wersja 6.5.1 - 2016-11-04
-- poprawiona obsługa konta premium w serwisie yoy.tv
-- przyśpieszone ładowanie serwisu tele-wizja
-- bajdziej przejrzysty komunikat o niepoprawnym linku EPG
-
-wersja 6.5.0 - 2016-10-27
-- dodana opcja uploadowania logów kodi przez ustawienia wtyczki Baza->Wyślij log kodi
-- dodanie opcji używania darmowego konta w serwisie wizja.tv
-- dodana możliwość korzystania z dwóch playlist jednocześnie
-- playlista od teraz korzysta z map do dopasowywania kanału
-- optymalizacja wydajności przeładowywania EPG
-- usunięty serwis moje-filmy
-- automatyczne odświerzanie serwisów co 2 godziny
-- dodana jedna duża bazowa mapa - dedykowane mapy dla serwisów będą zawierać jedynie niestandardowe nazwy kanałów
-
-wersja 6.4.4 - 2016-09-23
-- dodany serwis iTiVi
-
-wersja 6.4.3 - 2016-09-12
-- aktualizacja strings
-
-wersja 6.4.2 - 2016-09-12
-- poprawka błędu dla pól EPG
-
-wersja 6.4.1 - 2016-09-11
-- poprawka serwisu yoy.tv
-- wielowątkowe parsowanie serwisu yoy.tv
-- usprawniona funkcjonalność reconnecta
-- zmiana sposobu informowania o braku premium w serwisie weeb.tv
-
-wersja 6.4.0 - 2016-08-29
-- dodany serwis WizjaTV
-- dodany serwis YoyTV
-- dodany scrolltime do skórek (Estuary, Confluence v2, Arctic Zephyr i Aeon Nox)
-- dodane C_MAIN_CHANNAME do vosd.py
-- dodane C_MAIN_CHANNAME (id="4919")
-- dodane aktorzy w InfoDialog.xml
-- zmiana DATA PRODUKCJI/PRODUCTION DATE na ROK/YEAR
-- poprawka skórek (Estuary, Confluence v2, Arctic Zephyr i Aeon Nox)
-- usunięcie znanych błędów
-- wykrywanie braku/uszkodzonej skórki
-
-wersja 6.3.1 - 2016-08-08
-- poprawka aktualizacji
-
-wersja 6.3.0 - 2016-08-08
-- dwukrotnie klawisz wstecz kiedy nie odtwarza by zamknąć wtyczke, a jesli odtwarza to jeden klawisz wstecz zatrzymuje i nadal trzeba 2 razy kliknąć wstecz.
-- wtyczka przygotowana do nowego generowanego EPG
-- dodana mozliwosc zmiany koloru textu i czcionek listy EPG
-- dodane nowe koloru textu i czcionki w skórkach (Estuary, Confluence v2, Arctic Zephyr i Aeon Nox)
-- poprawka skórek (Estuary, Confluence v2, Arctic Zephyr i Aeon Nox)
-- poprawka w tłumaczeniach
-- poprawka wyświetlanie osobno kategorii
-- nowy plik addons.ini (Zaktualizowane streamy EskaGO oraz dodana lista ITIVI)
-- wyświetlanie osobno kategorii
-- oprawki skórek (Estuary, Confluence v2, Arctic Zephyr i Aeon Nox)
-- poprawka nowego parsera
-- poprawka Settings.xml
-- dodane gatunki pod listą EPG i w InfoDialog.xml (Estuary, Confluence v2, Arctic Zephyr i Aeon Nox)
-- doprawka konstrukcji skórki (Confluence v2)
-- poprawka nowego parsera
-- dodana obsługa klawisza info w momencie kiedy jest VideoOSD włączone
-- usunięte thumbs.db
-- poprawki w skórkach Arctic Zephyr (script-tvguide-main.xml)
-- zwiększąna szerokość pola z tytułem programu (Confluence v2)
-- poprawki w skórkach Arctic Zephyr (VideoOSD.xml)
-- poprawki w skórkach Arctic Zephyr (script-tvguide-main.xml)
-- poprawki w skórkach Confluence v2 i Arctic Zephyr
-- fix w skórkach Arctic Zephyr
-- nowa skórka Arctic Zephyr - From Ashes zastepuje skórke Arctic Zephyr - Dark
-- przerobiona skórka Arctic Zephyr - Default
-- nowe DialogInfo.xml, DialogSetKey.xml, script-tvguide-channels.xml, script-tvguide-streamsetup.xml, VidOSD.xml w skórce Confluence v2
-- nowy pasek postępu Confluence v2
-- dodana nowa skórka Aeon Nox
-- dodany nowy parser z polsatu
-- dodana nowa skorka Aeon Nox
-- dodane kolory kategorii dla parsera Polsat
-- dodane nowe tłumaczenia kategorie nowego parsera
-- usunięte pogrubienie textu C_MAIN_TITLE i C_MAIN_TIME
-- optymalizowane grafiki
-- naprawione w skorkach Estuary, Confluence v2, Arctic Zephyr i Aeon Nox panel sterowania myszka (jest tez mozliwosc włączenia i wyłączenia tej opcji w ustawieniach)
-- nowe animacje skórek Estuary, Confluence v2, Arctic Zephyr i Aeon Nox
-- dodane informacje o Aspect ratio, Audio channels, Audio codec, Resolution, Video, Video codec (VideoOSD.xml)
-- dodane tłumaczenia "55015" Uruchamianie i "55016" Teraz odtwarzane
-- optymalizacja wyswietlenia przewijaniu listy EPG dla skórek Estuary, Confluence v2, Arctic Zephyr i Aeon Nox
-- nowe Vid.xml i VideoOSD.xml dla skorek Estuary i Confluence v2
-- dodane tłumaczenia dla usunięcie bazy oraz wyczyszczanie streamów
-- dodane obliczanie czasu ładowania EPG
-
-wersja 6.2.6 - 2016-07-08
-- poprawka grafiki Live.png w DialogInfo.xml w skórce Default
-- poprawka sterowania w script-tvguide-streamsetup.xml w skórce Confluence v2
-- zmiana animacji przy odpalaniu wtyczki, dotyczy skórki Estuary, Confluence v2 i Arctic: Zephyr
-- poprawka w tłumaczeniach polskich <string id="30965"> "Aktualnie nadawany serwis"
-- poprawka dla skórki XX
-
-wersja 6.2.5 - 2016-07-06
-Wszystkie zmiany w tej weersji dotyczą skórek Estuary, Confluence v2 i Arctic: Zephyr
-- poprawione OSD
-- naprawa dodania ulubionych streamów
-- zaktualizowane grafiki
-- dodane nowe animacje
-- ogólne poprawki i usunięcie błędów
-
-wersja 6.2.4 - 2016-06-29
-- zatrzymanie odtwarzania po jednorazowym wciśnięciu przycisku wstecz podczas odtwarzania w EPG
-- panel myszy wyświetla się automatycznie po urchomieniu wtyczki/zatrzymaniu odtwarzania (gdy włączony)
-- aktualizacja skórek Estuary, Estuary - Curial oraz Confluence v2 autorstwa @Mariusz89B
-
-wersja 6.2.3 - 2016-06-16
-- dodana obsługa powiadomień
-- poprawione sortowanie wg jakości streamów w serwisie moje-filmy
-- usprawniona obsługa playlist
-- poprawione importowanie binarek do nagrywana na Android 6.0
-- zmiana sposobu zapisywania nazw kanałów na case insensitive - zmiana nazwy programu w EPG nie spowoduje pojawiania się zduplikowanych programów
-- dodana nowa skórka Confluence v2 autorstwa Mariusz89B
-- komunikat o braku premium w serwisie weeb.tv wyświetla się tylko raz
-- wyłączony serwis Telewizjada
-- zmiana sposobu wyłączania wtyczki na podwójne kliknięcie klawisza wstecz
-
-wersja 6.2.2 - 2016-05-XX
-- dodana obsługa serwisu Pierwsza.tv
-- wyświetlanie aktualnie wykorzystywanego serwisu oraz jakości streamu podczas odtwarzania
-- dodana możliwość przypisywania równocześnie streamów high/low quality dla weeb.tv
-- przywrócona możliwość przypisywania streamów high/low dla goldvod.tv
-- dodana funkcja reconnecta w przypadku zerwania połączenia
-- rozbudowana obsługa playlist o inne formaty zapisi programów
-- dodanie możliwości korzystania z mapy dla programów z playlisty
-- optymalizacja skórek Estuary
-
-wersja 6.2.1 - 2016-05-17
-- dodana skórka Estuary 
-- poprawki tłumaczeń
-
-wersja 6.2.0 - 2016-05-03
-- dodane Video OSD dostępne pod klawiszami z klawiatury/pilota
-- dodana obsługa EPG w formacie .zip
-- poprawki błedów powodujących zwisy m-TVGuide oraz Kodi
-- dodane wsparcie dla kodi v17
-- dodana opcja multisesji dla weeb.tv
-- dodana opcja do serwisów: maksymalny czas oczekiwania na połączenie
-- zmiana obsługi mojefilmy: należy podać link do playlisty
-- rozbudowana możliwość wyświetlania danych o programie w EPG oraz Info OSD (zależne od skórki), możliwość wyświetlania w osonych miejscach takich danych z opsiu: Dozwolony wiek, Reżyser, Aktorzy, Rok produkcji, Kategoria, Nr odcinka
-- samoczynne przeładowywanie EPG gdy pasek czasu dojdzie do końca EPG (w przypadku braku aktowyności)
-
-wersja 6.1.4 - 2016-03-20
-- dodana obsługa serwisu moje-filmy
-- wprowadzona możliwość pytania/automatycznego usuwania nagrania po jego obejrzeniu
-- poprawione dwukrotne ładowanie EPG po zatrzymaniu odtwarzania przy wyłączonej opcji "Animacja maksymalizacji okna odtwarzania"
-
-wersja 6.1.3 - 2016-03-08
-- poprawka dla serwisu goldvod dla urządzeń z wersją pythona starszą niż 2.7
-
-wersja 6.1.2 - 2016-03-05
-- palylista obsługuje wiele streamów dla pojedyńczych kanałów
-- przywrócona opcja automatycznego wykrywania nowego EPG na serwerze (zaktualizowana)
-- panel sterowania myszką nie znika przy wyłaczonej opcji "Animacja maksymalizacji okna odtwarzania"
-- dodana opcja przypisywania backup streamów/low quality dla goldvod
-- aktualizacja map
-- zmieniony odstęp czasu między aktualizacjami paska czasu z 1s na 20s
-- wsparcie nagrywania wszystkiego (włącznie z playlistą)
-- zaktualizowana obsługa serwisu telewizjada
-
-wersja 6.1.1 - 2016-02-24
-- dodana opcja automatycznego importu aplikacji do nagrywania
-- dodana mozliwość ustawienia maksymalnej ilości prób wznowienia nagrywania w przypadku niepowodzeń
-- pytanie czy uruchomić nagrany program działa również w przypadku wyłączonego Video OSD
-
-wersja 6.1.0 - 2016-02-21
-- obsługa nagrywania serwisów goldvod weeb.tv oraz telewizjada
-- rozbudowane menu przypisywania klawiszy o przyciski context, nagrywania oraz resetowania ustawień
-- dodana opcja "Debug" do menu ustawień zwiększająca ilość generowanych logów
-- dodana obsługa Playlist m3u
-- obsługa serwisów została wrzucona w wątki które pracują równolegle, dzięki temu wtyczka powinna uruchamiać się szybciej.
-- usprawniona obsługa błędów serwisu telewizjada
-- naprawiony błąd w m-TVGuide który mógł powodować sporadyczne całkowite zwisy wtyczki
-- aktualzacja addons.ini (usunięcie zbędnych kanałów z nieaktywnej wtyczki Telewizja Polska od Novak, dodanie popularnych streamów z EskaGO i regionalnej telewizji)
-- dodanie wyświetlania aktualnego czasu w oknie informacji o nadawanym programie
-- aktualizacja grafiki m-TVGuide dla skórek części skórek
-- dodanie przycisku ustawień do paska sterowania myszką dla skórek Default, Default_Dark, Anomaly, Anomaly_blue
-- usunięcie zbędnych grafiki w skórce Default_dark (rozmiar wtyczki mniejszy o 10%)
-
-wersja 6.0.0 - 2016-01-26
-- dodana obsługa wielu streamów, m-TVGuide zapisze w bazie wszystkie streamy z aktywnych serwisów
-- wykrywanie uszkodzonych streamów, w takim wypadku wtyczka automatycznie uruchomi kolejny stream z listy (jeśli jest ich więcej)
-- dodana możliwość przełączania serwisów dla aktualnie oglądanego kanału przyciskiem context (default klawisz "c") zgodnie z kolejnością ustawionych priorytetów serwisów - działa z OSD/bez OSD
-- streamy przypisane ręcznie używając opcji "Wybierz plik STRM" nie znikają po restarcie m-TVGuide i zawsze mają najwyższy priorytet
-- dodana możliwość wyłączenia animacji maksymalizacji okna odtwarzania podczas uruchamiania kanału - na słabych urządzeniach z androidem rozwiązuje problem przycinającego odtwarzania
-- naprawione przypomnienia
-- dla rozpoczynających się programów z ustawionym przypomnieniem pojawi się okno z pytaniem czy uruchomić dany program - tak jak na TV, w przypadku kilku zaprogramowanych kanałów pojawi się okno wyboru
-- dodana obsługa przycisku "wstecz" przy włączonym OSD oraz nowa opcja w ustawieniach sterująca jego zachowaniem
-- dodana możliwość eksportu/importu ustawień i bazy m-TVGuide
-- poprawiony kanał Filmbox Extra w mapie weeb.tv
-- mapy serwisów są automatycznie pobierane ze strony mods-kodi podczas uruchomienia m-TVGuide - od tej wersji każdy będzie miał zawsze aktualną wersje map
-- aktualizacja obsługi serwisu telewizjada.net
-- nowa ikona programu
-
-wersja 5.5.3 - 2016-01-05
-- dodana możliwość włączenia/wyłączenia animacji maksymalizacji okna wideo
-- aktualizacja obsługi serwisu telewizjada.net - niedziałające kanały nie są przypisywane
-- dodanie informacji po wykryciu nie działającej / uszkodzonej bazy
-
-wersja 5.5.2 - 2016-01-02
-- aktualizacja strm w pliku addons.ini
-- kosmetyczne poprawki
-
-wersja 5.5.1 - 2015-12-28
-- dodana opcja dla kolejnego EPG
-
-wersja 5.5.0 - 2015-12-27
-- dodana obsługa serwisu telewizjada i możliwość jego włączania w ustawieniach
-- dodana opcja ustalania priorytetów przypisywania streamów (ich kolejność)
-- automatyczne usuwania streamów z serwisów które nie są włączone
-- automatyczne ukrywanie pól konfigurujących użytkownika/hasło/priorytet dla wyłączonych serwisów
-- aktualizacja pliku mapy
-- dodana nowa zakładka ustawień bazy danych z dodanymi opcjami usuwania custom streamów i fizycznego usunięcia pliku bazy z dysku
-
-wersja 5.4.3 - 2015-12-22
-- optymalizacja skórek Bello, Bello with gradient, Default_dark
-- poprawka dla starszej wersji pythona
-
-wersja 5.4.2 - 2015-12-20
-- dodano możliwość podpięcia dodatkowego EPG, można dodać plik dla dodatkowych kanałów z weebtv 24h (dostępny w mods-kodi.pl)
-- aktualizacja weebtvmaps
-- dodano skórki Bello, Bello with gradient
-- kosmetyczne zmiany
-
-wersja 5.4.1 - 2015-12-16
-- dodana opcja sposobu aktualizacji EPG
-
-wersja 5.4.0 - 2015-12-14
-- dodane wsparcie dla GoldVOD - mleczan
-
-wersja 5.3.0 - 2015-12-06
-- dodany sleep timer
-- usprawniona obsługa awarii weeb.tv (nie znikają kanały)
-- usunięty problem duplikowania się kanałów w przypadku przypisania kilku custom streamów
-- poprawka skórki Default_dark
- 
-wersja 5.2.0 - 2015-12-01
-- dodanie możliwości wyboru kanału gdy brakuje epg
-- dodano nową skórkę Default_dark
-- aktualizacja weebtvmap
-
-wersja 5.1.4 - 2015-11-21
-- poprawka wersji wtyczki
-
-wersja 5.1.3 - 2015-11-21
-- aktualizacja weebtv maps
-
-wersja 5.1.2 - 2015-11-12
-- aktualizacja weebtv maps
-
-wersja 5.1.1 - 2015-11-12
-- dodano autamatyczne ładowanie programów tylko dla weebtv w EPG (opcja) - autor mleczan
-- aktualizacja weebtv maps
-
-wersja 5.1.0 - 2015-11-05
-- zmiany w EPG, uprawnienia dostępu online tylko dla grupy Premium Member w mods-kodi.pl
-- poprawki związane z nowymi ustawieniami
-
-wersja 5.0.5 - 2015-05-13
-- fanart z nowym logo Mods-Kodi
-- optymalizacja grafik
-- aktualizacja weebtv maps
-
-wersja 5.0.4 - 2014-12-26
-- optymalizacje i poprawki skórek
-- poprawki nazewnictwa i serwerów KODI
-
-wersja 5.0.3 - 2014-11-30
-- optymalizacja ikony i grafik skórek
-- aktualizacja strm
-
-wersja 5.0.2 - 2014-08-27
-- optymalizacje grafik
-- poprawki dotyczące aktualizacji wtyczki, zmiana serwera repo
-
-wersja 5.0.1 - 2014-06-21
-- porządki i aktualizacja addons.ini (m.in. usunięcie oznaczeń kanałów HD i duplikatów z tym związanych)
-- usunięcie zbędnych plików w skórkach
-- dodatkowe informacje w opisie wtyczki 
-
-wersja 5.0.0 - 2014-06-17
-- poprawienie obsługi ulubionych strumieni (Stacje TV) z wtyczki Telewizja Polska
-- aktualizacja addons.ini (m.in. dodanie linków z wtyczki E-Screen.tv)
-- nowe skórki Anomaly, Anomalny_blue, ncplus, Cyfrowy Polsat, Color_Infinity, Confluance, XX, iEPG v2
-- zmiana sposobu wyboru skórki w ustawieniach oraz automatyczne pobieranie listy skórek z katalogu wtyczki
-- klikalne loga stacji
-- druga paczka ikon stacji (EPG - white)
-- znaczące skrócenie czasu pobierania EPG poprzez kompresję pliku
-- możliwość automatycznego przypisania streamów z Weeb.TV
-- rozbudowa panelu sterowania myszką (obecnie dla niektórych skórek) - W TRAKCIE PRAC
-- rozbudowa menu bocznego (dla klawisza C) - W TRAKCIE PRAC
-- nowe i rozbudowane Video OSD (obecnie dla niektórych skórek) - W TRAKCIE PRAC
-- wtyczka dodana również do kategorii Wideo w XBMC
-- redukcja rozmiaru grafik, użycie wspólnych grafik tła dla części skórek
-- nowa odświeżona ikona, nowy fanart
-- poprawki i optymalizacja
-
-wersja 4.4.3 - 2014-05-14
-- poprawienie różowego tła w XBMC 13
-
-wersja 4.3.12 - 2014-02-17
-- dodana opcja automatycznego uruchamiania mtvguide po starcie XBMC
-
-wersja 4.3.11 - 2014-02-15
-- aktualizacja strm
-[I]"od tej wersji nie wspieramy oficjalnej wtyczki weebtv"[/I]
-
-wersja 4.3.10 - 2014-02-05
-- powrót do poprzedniej wersji pythona
-
-wersja 4.3.9 - 2014-02-04
-- poprawki
-
-wersja 4.3.8 - 2014-02-03
-- aktualizacja strm
-- zmiana wersji pythona
-
-wersja 4.3.7 - 2014-01-16
-- poprawki w skórce iEPG_default
-- poprawki w pliku językowym
-- poprawki w addons.xml
-- zmiana miejsca wyświetlania napisu "na żywo" w dodatkowym oknie informującym o programie
-- kosmetyczne poprawki
-
-wersja 4.3.6 - 2014-01-06
-- zmiana wersji pythona
-
-wersja 4.3.5 - 2014-01-02
-- aktualizacja strm
-
-wersja 4.3.4 - 2014-01-02
-- aktualizacja strm
-
-wersja 4.3.3 - 2013-12-31
-- aktualizacja strm
-
-wersja 4.3.2 - 2013-12-18
-- poprawka pliku graficznego odpowiedzialnego za czarne podkreślenie
-
-wersja 4.3.1 - 2013-12-15
-- poprawki dla v4.3
-
-wersja 4.3.0 - 2013-12-12
-- nowe ikony EPG
-- dopasowanie skórek graficznych dla nowych ikon EPG (ikony oraz wszystkie modyfikacje skinów wykonał Michał Morawski - moras86 - dziękujemy!)
-- poprawki plików graficznych
-- zmiany w kodowaniu skórek
-
-wersja 4.2.2 - 2013-11-25
-- aktualizacja strm
-
-wersja 4.2.1 - 2013-11-16
-- poprawki
-
-wersja 4.2.0 - 2013-11-04
-- zoptymalizowane grafiki (przygotował grafik sd-team Michał Morawski - dziękujemy za pomoc!)
-- nowa ikona wtyczki (wykonał Michał Morawski - dziękujemy!)
-- nowa skórka '12_blue'
-- aktualizacja strm
-- poprawki
-
-wersja 4.1.14 - 2013-10-31
-- poprawki
-
-wersja 4.1.13 - 2013-10-29
-- poprawki
-
-wersja 4.1.12 - 2013-10-24
-- aktualizacja strm
-
-wersja 4.1.11 - 2013-10-22
-- aktualizacja strm
-
-wersja 4.1.10 - 2013-10-17
-- poprawki w skórce iEPG
-- dodano skórkę iEPG w wersji standardowej 'iEPG_default'
-
-wersja 4.1.9 - 2013-10-12
-- dodano nową skórkę autorstwa maly95 'iEPG' szczegóły w serwisie mods-xbmc.pl
-
-wersja 4.1.8 - 2013-10-08
-- aktualizacja strm
-
-wersja 4.1.7 - 2013-09-28
-- poprawki
-
-wersja 4.1.6 - 2013-09-22
-- aktualizacja strm
-
-wersja 4.1.5 - 2013-09-20
-- aktualizacja strm
-
-wersja 4.1.4 - 2013-09-20
-- aktualizacja strm
-
-wersja 4.1.3 - 2013-08-21
-- aktualizacja strm
-
-wersja 4.1.2 - 2013-07-21
-- poprawki literówek w tekście
-
-wersja 4.1.1 - 2013-06-21
-- poprawiono błąd związany z ikonką na żywo w skórce '12'
-
-wersja 4.1.0 - 2013-06-21
-- dodano ikonkę informującą czy program jest na żywo
-
-wersja 4.0.0 - 2013-06-13
-- jeden nowy wygląd EPG - 12 kanałów na stronie
-- standardowy wygląd odświeżony - zmiana z 9 na 11 kanałów na stronie
-- możliwość programowania dodatkowych przycisków w ustawieniach
-Przyciski:
- # INFO - przycisk aktywuje okienko z informacją o wybranym lub aktualnie odtwarzanym programie*
- # STOP - przycisk zatrzymujący odtwarzanie programu*
- # P+ - przycisk umożliwiający przeskoczenie programu o jeden do góry podczas oglądania kanału*
- # P- - przycisk umożliwiający przeskoczenie programu o jeden w dół podczas oglądania kanału*
- # HOME - przycisk pozwalający na odświeżenie EPG dla aktualnej godziny
- (* - opcje dostępne tylko po wybraniu opcji VIDEO OSD w ustawieniach)
-- VIDEO OSD aktywujący zaawansowane funkcje w trakcie przeglądania kanału, takie jak: Program +, Program -, okienko z informacjami o aktualnym programie.
-- poprawione błędy
-
-wersja 3.0.2 - 2013-06-12
-- zaktualizowano strm
-
-wersja 3.0.1 - 2013-06-05
-- poprawiono błąd związany z zacinaniem się EPG przy szybkim przewijaniu
-
-wersja 3.0.0 - 2013-05-28
-- poprawki z oryginalnej wtyczki 2.0.4
-- poprawionych zostało dużo błędów
-- przebudowane menu ustawień
-- dodany wewnętrzny player serwisu weeb.tv - w ustawieniach należy wpisać login i hasło do serwisu weeb.tv
-- kolorowanie tematyczne - ustawienia kolorów w ustawieniach
-- zmodyfikowane EPG - teraz rozmiar EPG jest o wiele mniejszy co znacząco wpływa na wydajność ściągania/dodawania na słabszych komputerach: RPI, itp.
-- zoptymalizowane połączenie z bazą
-- pojedyncze EPG dla wszystkich stref czasowych - ustawienie strefy czasowej w ustawieniach 
-- możliwość ukrycia panelu sterowania myszka w ustawieniach
-- możliwość zmiany skórki w ustawieniach oraz poprawione skórki
-- poprawiony błąd zawieszania się XBMC
-- dodano możliwość wyczyszczenia bazy danych z poziomu ustawień (podczas czyszczenia nie są usuwane ustawienia kanałów - kolejność, strm)
-- poprawiony plik addons.ini
-
-wersja 2.0.1 - 2013-05-15
-- dodano zegarek
-- zmodyfikowano wybór stref czasowych, zamista pełnych adresów url pozostały tylko nazwy
-- użytkownicy mający inną strefę czasową niż POLSKA proszeni są o zmianę na inną strefę czasową oraz powrót do podstawowej w celu uaktualnienia bazy wtyczki
-
-wersja 2.0 - 2013-05-13
-- dodano funkcje automatycznego aktualizowania repozytorium
-- poprawka dotycząca nakładania się tabel
-- automatyczne odświeżanie programu
-- dodano strefę czasową USA_PST
-- poprawka dotycząca prędkości przewijanego opisu programu (theme default)
-- opcja sprawdzenia aktualizacji w ustawieniach 
-- nowe EPG wzbogacone o obrazy aktualnie nadawanego programu w miejscu loga
-- poprawka EPG dotycząca błędu przy wyświetlaniu aktorów
-- aktualizacja strm'ów
-- poprawiono błędy w gui.py
-- nowe logo
-
-wersja 1.1 - 2013-04-06
-- kosmetyczne poprawy wyglądu
-- nowe logo wtyczki
-- nowy fanart wtyczki
-- dodano strefę czasową w EPG USA_EST
-- poprawki w EPG
-- wsparcie strm dla pluginów:
- *[plugin.video.polishtv.live]
- *[plugin.video.mrknow]
- *[plugin.video.weeb.tv]
-
-wersja 1.0 - 2013-03-30
-- zmieniony plik gui.py dzięki któremu nie pojawia się napis 'otwieram strumień'
-- dodano funkcje automatycznego pobierania EPG tworzonego przez serwis mods-xbmc.pl wraz z ikonami stacji
-- nowy, lepszy wygląd
-- nowe logo wtyczki
+v9.8.7 (2022-01-12)
+- Added InputStream Adaptive shortcut in settings.
+- Optimized performance.
+
+v9.8.6 (2022-01-04)
+- Fixed EPG table refresh on record completion.
+- Fixed service Polsat GO access groups.
+- Added WP Pilot DRM support.
+- Bug fixes.
+
+v9.8.5 (2021-12-12)
+- Added .xz file support.
+- Bug fixes.
+
+v9.8.4 (2021-12-07)
+- Fixed add channel error.
+
+v9.8.3 (2021-12-06)
+- Fixed service Telia Play catchup.
+- Bug fixes.
+
+v9.8.2 (2021-11-28)
+- Added built-in addon browser.
+- Bug fixes.
+
+v9.8.1 (2021-11-16)
+- Fixed service Polsat GO and Polsat GO Box.
+
+v9.8.0 (2021-11-12)
+- Hotfix.
+
+v9.7.9 (2021-11-10)
+- Fixed caching playlists.
+
+v9.7.8 (2021-11-09)
+- Updated EPG parsing.
+- Fixed download notification error.
+- Improved overall channel matching.
+- Optimizations.
+
+v9.7.7 (2021-11-04)
+- Updated default User-Agent request header.
+- Updated regex channel matching.
+- Added possibility to modify local basemap.
+- Bug fixes.
+
+v9.7.6 (2021-11-03)
+- Hotfix.
+
+v9.7.5 (2021-11-02)
+- Bug fixes.
+
+v9.7.4 (2021-11-01)
+- Added setting for EPG list sorting.
+- Fixed tvg-id recognition.
+
+v9.7.3 (2021-11-01)
+- Updated basemaps.
+
+v9.7.2 (2021-10-29)
+- Updated language files.
+
+v9.7.1 (2021-10-29)
+- Updated basemaps.
+
+v9.7.0 (2021-10-28)
+- Fixed encoding issues Python 2.7.
+- Bug fixes.
+
+v9.6.9 (2021-10-27)
+- Added replace country code setting.
+- Fixed caching playlists.
+
+v9.6.8 (2021-10-26)
+- Fixed database issues Python 2.7.
+
+v9.6.7 (2021-10-25)
+- Added Content-Type headers for EPG filetype recognition.
+
+v9.6.6 (2021-10-25)
+- Added database Write-Ahead Logging (WAL) setting.
+- Improved channel parsing.
+- Improved performance.
+- Fixed playlist stream redirect.
+
+v9.6.5 (2021-10-19)
+- Added urllib3 module.
+- Rebuilded EPG menu selection and group categories.
+- Improved performance.
+
+v9.6.4 (2021-10-10)
+- Hotfix.
+
+v9.6.3 (2021-10-08)
+- Improved country prefix recognition for group categories.
+- Added max number of devices information dialog for Polsat GO services.
+- Bug fixes.
+
+v9.6.2 (2021-10-03)
+- Added EPG channel stream recognition.
+- Added setting for EPG interval update.
+- Fixed service Telewizja Polska.
+- Fixed login to service PlayerPL, Polsat GO, Polsat GO Box.
+- Bug fixes.
+
+v9.6.1 (2021-09-17)
+- Fixed configuration tutorial.
+- Fixed login to Polsat GO on Kodi v18.9.
+
+v9.6.0 (2021-09-15)
+- Fixed service PlayerPL.
+- Fixed playback error in service Nc+ GO.
+- Fixed encoding issues Python 2.7.
+
+v9.5.9 (2021-09-15)
+- Fixed skin update loop error.
+- Fixed Polsat GO login error.
+- Fixed PlayerPL login renewal request.
+
+v9.5.8 (2021-09-13)
+- Changes to the tv service and playlist menus.
+- Fixed skin update loop error.
+
+v9.5.7 (2021-09-12)
+- Fixed encoding issues Python 2.7.
+
+v9.5.6 (2021-09-11)
+- Improved channel recognition.
+
+v9.5.5 (2021-09-10)
+- Fixed encoding issues Python 2.7.
+- Fixed control buttons.
+
+v9.5.4 (2021-09-08)
+- Fixed login Polsat GO Box.
+- Improved touch gestures.
+
+v9.5.3 (2021-09-06)
+- Added service Polsat GO Box.
+- Added touch gestures.
+- Fixed removing controls, that caused Kodi to crash.
+
+v9.5.2 (2021-09-04)
+- Fixed play timeshift buffer.
+- Bug fixes.
+
+v9.5.1 (2021-09-03)
+- Fixed disappearing timebar.
+- Fixed service WP Pilot.
+- Updated serivce Telia Play.
+
+v9.5.0 (2021-09-02)
+- Fixed skin category error.
+
+v9.4.9 (2021-09-01)
+- Added service Polsat GO.
+- Performance improvements.
+
+v9.4.8 (2021-08-22)
+- Fixed VideoOSD.
+- Bug fixes.
+
+v9.4.7 (2021-08-16)
+- Fixed timebar flickering.
+- Fixed login for service WP Pilot.
+
+v9.4.6 (2021-08-10)
+- Fixed login for service WP Pilot.
+- Added tutorial query for catchup setting.
+- Added clearEpg function fix.
+
+v9.4.5 (2021-08-03)
+- Fixed login for service WP Pilot.
+- Added setting to only load pre-defined channel groups, reduced loading for large playlists.
+- Timebar fixes.
+
+v9.4.4 (2021-07-31)
+- Timebar fixes.
+- Added service Telewizja Polska.
+
+v9.4.3 (2021-07-20)
+- Updated set keys setting.
+- Bug fixes.
+
+v9.4.2 (2021-07-08)
+- Updated contextmenu and sidemenu.
+- Updated skin selection setting.
+
+v9.4.1 (2021-07-06)
+- Updated catchup channel recognition.
+
+v9.4.0 (2021-06-27)
+- Fixed timebar flickering.
+- Updated translations.
+
+v9.3.9 (2021-06-21)
+- Added improved channel recognition.
+- Updated basemap.
+
+v9.3.8 (2021-06-09)
+- Added option to detect alternative channel names.
+
+v9.3.7 (2021-06-04)
+- Fixed running .mpd protocol with inputstream helper. 
+
+v9.3.6 (2021-06-03)
+- Added parental guidance icon in vosd
+- Performance improvements.
+- Bug fixes.
+
+v9.3.5 (2021-05-31)
+- Updated program category algorithm.
+- Bug fixes.
+
+v9.3.4 (2021-05-23)
+- Fixed catchup function.
+
+v9.3.3 (2021-05-22)
+- Optimizations.
+- Bug fixes.
+
+v9.3.2 (2021-05-19)
+- Fixed memoryerror while using fast epg parser.
+- Performance improvements.
+- Bug fixes.
+
+v9.3.1 (2021-05-12)
+- Added option to append channel without epg to list.
+- Fixed parsing issue.
+- Added record and play function.
+- Added setting to keep running playback, recording and 
+download services in background on add-on exit.
+
+v9.3.0 (2021-04-13)
+- Fixed recording service WP Pilot.
+- Added timeshift function for service Telia Play.
+- Fixed decoding issue.
+- Fixed reset button in download menu.
+- Added download speed indicator.
+- Bug fixes.
+
+v9.2.9 (2021-04-05)
+- Performance improvements.
+- Fixed fading icons.
+- Added new download menu.
+- Added option to cache playlist.
+- Bug fixes.
+
+v9.2.8 (2021-02-27)
+- Fix for service Telia Play.
+- Response status code corrected.
+
+v9.2.7 (2021-02-26)
+- Fix for service Cyfrowy Polsat GO.
+- Fix for service Nc+ GO.
+
+v9.2.6 (2021-02-24)
+- Query format string fixes.
+- Added Cloudflare bypasser.
+
+v9.2.5 (2021-02-22)
+- Optimizations.
+- Fixed translations.
+
+v9.2.4 (2021-02-02)
+- Added possibility to schedule multiple downloads.
+- Fix for download time offset setting.
+- Fix for downloading program parts.
+- Added new region catagory select option.
+- Added automatic recognition for M3U streams missing a country code. 
+- Fix for User-Agent setting.
+- Added a notification window with information about reason for broken streams.
+- Fixed Python 3 translation error that was corrupting the database.
+
+v9.2.3 (2021-01-25)
+- Adjusted checkLogin in Telia Play service.
+
+v9.2.2 (2021-01-21)
+- Added service PlayerPL.
+- Added User-Agent setting for playlists.
+- Fix for service Ipla.
+- Fixed timestamp with refresh token for service Telia Play.
+- Fixed flickering timebar background.
+- Other improvements.
+
+v9.2.1 (2021-01-14)
+- Fix for service WP Pilot.
+- Added the ability to manually enter cookies for the WP Pilot service.
+- LoadExtraBaseMap not necessary to start the add-on.
+
+v9.2.0 (2020-12-31)
+- Fix for service Ipla, added missing channels.
+- Fix encoding utf-8.
+
+v9.1.9 (2020-10-31)
+- Fixed timestamp with refresh token for service Telia Play.
+
+v9.1.8 (2020-10-26)
+- Fix for service Cyfrowy Polsat GO.
+- Fix for service Telia Play.
+- Added a timestamp with refresh token for service Telia Play.
+- Changes to python API, added xbmc.LOGINFO.
+
+v9.1.7 (2020-08-10)
+- Fix downloading programmes on Android systems. 
+
+v9.1.6 (2020-08-08)
+- Fixed system time during playback.
+- Bug fixes.
+
+v9.1.5 (2020-08-04)
+- Bug fixes.
+
+v9.1.4 (2020-07-29)
+- Rebuilded timeshift function.
+- Added progress and file size notification for downloads.
+- Fix for service C More.
+- Bug fixes.
+
+v9.1.3 (2020-07-09)
+- Bug fixes.
+
+v9.1.2 (2020-07-07)
+- Added option to disable font installation.
+- Changes in parsing program images.
+
+v9.1.1 (2020-07-05)
+- Bug fixes.
+
+v9.1.0 (2020-07-04)
+- Added Pause / Resume button for video OSD.
+- Added refresh token for Telia Play service.
+- Bug fixes.
+- Added backup for Kodi skin fonts.
+
+v9.0.10 (2020-07-02)
+- Font install fix.
+
+v9.0.9 (2020-07-01)
+- Font install fix.
+- Reminders encryption fix.
+- Added correct encryption for epg .gz file format.
+- Skins license added.
+
+v9.0.8 (2020-06-29)
+- Fix adding channels.
+
+v9.0.7 (2020-06-28)
+- Small fixes.
+
+v9.0.6 (2020-06-28)
+- Fix for service Cyforwy Polsat GO.
+
+v9.0.5 (2020-06-28)
+- Small fixes.
+
+v9.0.4 (2020-06-27)
+- Login fix for WP Pilot serivce.
+- Timeshift fix.
+
+v9.0.3 (2020-06-26)
+- Login fix for WP Pilot serivce.
+- Add certificate for Telia Play service.
+
+v9.0.2 (2020-06-25)
+- Fix adding channels.
+- Fix decoding paths.
+
+v9.0.0 (2020-06-21)
+- Archive support.
+- Download finished archive programs.
+- Font pack installation.
+- Add stream to a channel available in EPG.

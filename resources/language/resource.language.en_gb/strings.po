@@ -1964,6 +1964,22 @@ msgctxt "#31021"
 msgid "Missing add-on: {}"
 msgstr ""
 
+msgctxt "#31022"
+msgid "Add channel to group"
+msgstr ""
+
+msgctxt "#31023"
+msgid "Select group"
+msgstr ""
+
+msgctxt "#31024"
+msgid "Channel already exists in selected group."
+msgstr ""
+
+msgctxt "#31025"
+msgid "Channel added to group {]."
+msgstr ""
+
 msgctxt "#310010"
 msgid ""
 msgstr ""

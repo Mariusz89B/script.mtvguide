@@ -701,7 +701,7 @@ class mTVGuide(xbmcgui.WindowXML):
         if res < 0:
             res = xbmcgui.Dialog().yesno(strings(59924), strings(59938))
             if res:
-                ADDON.setSetting('m-TVGuide', 'http://')
+                ADDON.setSetting('m-TVGuide', 'https://')
                 ADDON.setSetting('xmltv_file', '')
                 ADDON.setSetting('tutorial', 'true')
                 self.exitAddon()
@@ -713,7 +713,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
             txt = ADDON.getSetting('m-TVGuide')
             if txt == '' or txt == 'http://' or txt == 'https://':
-                txt = 'http://'
+                txt = 'https://'
 
             kb = xbmc.Keyboard(txt,'')
             kb.setHeading(strings(59941))
@@ -830,7 +830,7 @@ class mTVGuide(xbmcgui.WindowXML):
                             else:
                                 txt = ADDON.getSetting('m-TVGuide')
                             if txt == '':
-                                txt = 'http://'
+                                txt = 'https://'
 
                             kb = xbmc.Keyboard(txt,'')
                             kb.setHeading(strings(59945).format(label))
@@ -1202,7 +1202,7 @@ class mTVGuide(xbmcgui.WindowXML):
                     ADDON.setSetting('playlist_1_source', '0')
                     txt = ADDON.getSetting('playlist_1_url')
                     if txt == 'http://' or txt == 'https://' or txt == '':
-                        txt = 'http://'
+                        txt = 'https://'
                     kb = xbmc.Keyboard(txt,'')
                     kb.setHeading(strings(59955))
                     kb.setHiddenInput(False)
@@ -4396,7 +4396,7 @@ class mTVGuide(xbmcgui.WindowXML):
         else:
             chooseStrmControl = (strings(CHOOSE_STRM_FILE))
         
-        ret = xbmcgui.Dialog().contextmenu([strings(30346), strings(58000), strings(30356), remindControl, programRecordControl, strings(30337), strings(30377), strings(30309), strings(68005), strings(30913), strings(30602), chooseStrmControl, strings(30308)])
+        ret = xbmcgui.Dialog().contextmenu([strings(30346), strings(58000), strings(30356), remindControl, programRecordControl, strings(30337), strings(30377), strings(31022), strings(30309), strings(68005), strings(30913), strings(30602), chooseStrmControl, strings(30308)])
 
         if ret == 0:
             if ADDON.getSetting('channel_shortcut') == 'false':
@@ -4469,42 +4469,79 @@ class mTVGuide(xbmcgui.WindowXML):
             self.onRedrawEPG(self.channelIdx, self.viewStartDate)
 
         elif ret == 7:
-            d = xbmcgui.Dialog()
-            list = d.select(strings(30309), [strings(30315), strings(30310), strings(30311), strings(30312), strings(30336), strings(30337)])
+            categories = {}
+            new_category = None
 
-            if list < 0:
+            lst = list(self.categories)
+
+            if not lst:
+                new_category = xbmcgui.Dialog().input(strings(30984), type=xbmcgui.INPUT_ALPHANUM)
+                if new_category:
+                    cats = set(self.categories)
+                    cats.add(new_category)
+                    self.categories = list(set(cats))
+                    lst.append(new_category)
+
+            res = xbmcgui.Dialog().select(strings(31023), lst)
+            cat = lst[res]
+            categories[cat] = []
+
+            for name, cat in self.database.getCategoryMap():
+
+                if cat not in categories:
+                    categories[cat] = []
+                categories[cat].append(name)
+
+            channel = program.channel.title
+            if channel not in categories[cat]:
+                categories[cat].append(channel)
+
+                self.database.saveCategoryMap(categories)
+                self.categories = [category for category in categories if category]
+                self._clearEpg()
                 self.onRedrawEPG(self.channelIdx, self.viewStartDate)
-            elif list == 0:
+                xbmcgui.Dialog().ok('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(31025).format(cat))
+
+            else:
+                xbmcgui.Dialog().ok('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(31024))
+
+        elif ret == 8:
+            d = xbmcgui.Dialog()
+            lst = d.select(strings(30309), [strings(30315), strings(30310), strings(30311), strings(30312), strings(30336), strings(30337)])
+
+            if lst < 0:
+                self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+            elif lst == 0:
                 self.programSearchSelect(program.channel)
-            elif list == 1:
+            elif lst == 1:
                 self.showListing(program.channel)
-            elif list == 2:
+            elif lst == 2:
                 self.showNow(program.channel)
-            elif list == 3:
+            elif lst == 3:
                 self.showNext(program.channel)
-            elif list == 4:
+            elif lst == 4:
                 self.showFullReminders(program.channel)
-            elif list == 5:
+            elif lst == 5:
                 self.showFullRecordings(program.channel)
             return
 
-        elif ret == 8:
+        elif ret == 9:
             self.popupMenu(program)
 
-        elif ret == 9:
+        elif ret == 10:
             xbmcaddon.Addon(id=ADDON_ID).openSettings()
 
-        elif ret == 10:
+        elif ret == 11:
             xbmc.executebuiltin("ActivateWindow(10134)")
 
-        elif ret == 11:
+        elif ret == 12:
             if removeStrm:
                 self.database.deleteCustomStreamUrl(program.channel)
             d = StreamSetupDialog(self.database, program.channel, self)
             d.doModal()
             del d
 
-        elif ret == 12:
+        elif ret == 13:
             self.close()
 
 
@@ -4546,6 +4583,7 @@ class mTVGuide(xbmcgui.WindowXML):
             deb('RemoveChannel')
             self.channelsRemove()
             self.popupMenu(program)
+
 
     def setFocusId(self, controlId):
         debug('setFocusId')
@@ -6450,13 +6488,16 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
 
             categories = {}
             categories[self.category] = []
+
             for name, cat in self.database.getCategoryMap():
+
                 if cat not in categories:
                     categories[cat] = []
                 categories[cat].append(name)
 
             if ret == 0:
-                channelList = sorted([channel.title for channel in self.database.getChannelList(onlyVisible=True, customCategory=self.category, excludeCurrentCategory=True)])
+                channelList = sorted([channel.title for channel in self.database.getChannelList(onlyVisible=True, customCategory=None, excludeCurrentCategory=True)])
+
                 try:
                     string = strings(30989).format(self.category)
                 except:
