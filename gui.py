@@ -4483,6 +4483,8 @@ class mTVGuide(xbmcgui.WindowXML):
                     lst.append(new_category)
 
             res = xbmcgui.Dialog().select(strings(31023), lst)
+            xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
+            
             cat = lst[res]
             categories[cat] = []
 
@@ -4500,9 +4502,11 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.categories = [category for category in categories if category]
                 self._clearEpg()
                 self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+                xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
                 xbmcgui.Dialog().ok('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(31025).format(cat))
 
             else:
+                xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
                 xbmcgui.Dialog().ok('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(31024))
 
         elif ret == 8:
