@@ -4481,8 +4481,13 @@ class mTVGuide(xbmcgui.WindowXML):
                     cats.add(new_category)
                     self.categories = list(set(cats))
                     lst.append(new_category)
+                else:
+                    return
 
             res = xbmcgui.Dialog().select(strings(31023), lst)
+            if res < 0:
+                return
+                
             xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
             
             cat = lst[res]

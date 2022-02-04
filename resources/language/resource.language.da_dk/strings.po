@@ -1965,7 +1965,7 @@ msgid "Channel already exists in selected group."
 msgstr "Kanal er allerede i den valgte gruppe."
 
 msgctxt "#31025"
-msgid "Channel added to group {]."
+msgid "Channel added to group {}."
 msgstr "Kanal tilføjet til gruppen {}."
 
 msgctxt "#310010"
