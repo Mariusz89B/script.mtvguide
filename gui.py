@@ -6889,12 +6889,13 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
 
         items = []
         for i in strmList:
-            playlist = i.split(', ')
-            label = playlist[0]
-            stream = playlist[-1]
-            item = xbmcgui.ListItem(label)
-            item.setProperty('stream', stream)
-            items.append(item)
+            playlist = i.split(',')
+            if playlist:
+                label = playlist[0]
+                stream = playlist[-1]
+                item = xbmcgui.ListItem(label)
+                item.setProperty('stream', stream)
+                items.append(item)
 
         listControl = self.getControl(StreamSetupDialog.C_STREAM_PLAYLIST_STREAMS)
         listControl.addItems(items)
