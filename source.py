@@ -2797,17 +2797,17 @@ class MTVGUIDESource(Source):
         if strings2.M_TVGUIDE_CLOSING:
             raise SourceUpdateCanceledException()
 
-        zone, autozone = getTimeZone()
+        zone, autozone, local = getTimeZone()
 
         try:        
             if CUSTOM_PARSER:
-                return customParseXMLTV(xml.decode('utf-8'), progress_callback, zone, autozone, self.logoFolder)
+                return customParseXMLTV(xml.decode('utf-8'), progress_callback, zone, autozone, local, self.logoFolder)
 
             else:
                 iob = io.BytesIO(xml)
 
                 context = ElementTree.iterparse(iob, events=("start", "end"))
-                return parseXMLTV(context, iob, len(xml), progress_callback, zone, autozone, self.logoFolder)
+                return parseXMLTV(context, iob, len(xml), progress_callback, zone, autozone, local, self.logoFolder)
 
         except SourceUpdateCanceledException as cancelException:
             raise cancelException
@@ -2913,15 +2913,21 @@ def catList(category_count):
 def getTimeZone():
     ZONE = ADDON.getSetting('time_zone')
 
+    ADJUST_LOCAL_TIME = ADDON.getSetting('adjust_local_time')
+    if ADJUST_LOCAL_TIME == 'true':
+        LOCAL_TIME = True
+    else:
+        LOCAL_TIME = False
+
     ZONE_CONFIG = ADDON.getSetting('auto_time_zone')
     if ZONE_CONFIG == 'true':
         TIME_ZONE_AUTO = True
     else:
         TIME_ZONE_AUTO = False
 
-    return ZONE, TIME_ZONE_AUTO
+    return ZONE, TIME_ZONE_AUTO, LOCAL_TIME
 
-def parseXMLTVDate(dateString, zone, autozone):
+def parseXMLTVDate(dateString, zone, autozone, local):
     format_str = True
 
     if dateString:
@@ -2929,8 +2935,15 @@ def parseXMLTVDate(dateString, zone, autozone):
             timeZone = zone
             format_str = False
 
-        elif dateString.find(' ') != -1 and not autozone: # Parsed from EPG
+        elif dateString.find(' ') != -1 and not autozone: # Parsed from EPG w/o Auto
             timeZone = dateString[dateString.find(' '):]  
+
+        elif dateString.find(' ') != -1 and autozone: # Parsed from EPG with Auto
+            timeZone = dateString[dateString.find(' '):]
+            if timeZone == ' +0000' and local:
+                local_time = datetime.datetime.now(datetime.timezone(datetime.timedelta(0))).astimezone()
+                local_timezone = local_time.strftime("%z")
+                timeZone = local_timezone
             
         else: # Auto
             timeZone = '+0000'
@@ -2966,15 +2979,12 @@ def TimeZone(dateString):
         else:
             newDateString = time_string + datetime.timedelta(hours=time.localtime().tm_isdst)
 
-        print('TEST5555555')
-        print(time.localtime().tm_isdst)
-
         return newDateString
 
     else:
         return None
 
-def customParseXMLTV(xml, progress_callback, zone, autozone, logoFolder):
+def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
     deb("[EPG] Parsing EPG by custom parser")
     startTime = datetime.datetime.now()
 
@@ -3064,12 +3074,12 @@ def customParseXMLTV(xml, progress_callback, zone, autozone, logoFolder):
         except AttributeError:
             title = ''
         try:
-            start = TimeZone(parseXMLTVDate( programStartRe.search(program).group(1), zone, autozone) )
+            start = TimeZone(parseXMLTVDate( programStartRe.search(program).group(1), zone, autozone, local) )
         except Exception as ex:
             deb('TimeZone Exception: {}'.format(ex))
             start = ''
         try:
-            stop = TimeZone(parseXMLTVDate( programStopRe.search(program).group(1), zone, autozone) )
+            stop = TimeZone(parseXMLTVDate( programStopRe.search(program).group(1), zone, autozone, local) )
         except Exception as ex:
             deb('TimeZone Exception: {}'.format(ex))
             stop = ''
@@ -3163,7 +3173,7 @@ def customParseXMLTV(xml, progress_callback, zone, autozone, logoFolder):
     thread = threading.Thread(name='catList', target = catList, args=[category_count])
     thread.start()
 
-def parseXMLTV(context, f, size, progress_callback, zone, autozone, logoFolder):
+def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoFolder):
     deb("[EPG] Parsing EPG")
     start = datetime.datetime.now()
     context = iter(context)
@@ -3240,13 +3250,13 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, logoFolder):
                     description = strings(NO_DESCRIPTION)
 
                 try:
-                    start = TimeZone(parseXMLTVDate(elem.get('start'), zone, autozone) )
+                    start = TimeZone(parseXMLTVDate(elem.get('start'), zone, autozone, local) )
                 except Exception as ex:
                     deb('TimeZone Exception: {}'.format(ex))
                     start = ''
 
                 try:
-                    stop = TimeZone(parseXMLTVDate(elem.get('stop'), zone, autozone) )
+                    stop = TimeZone(parseXMLTVDate(elem.get('stop'), zone, autozone, local) )
                 except Exception as ex:
                     deb('TimeZone Exception: {}'.format(ex))
                     stop = ''

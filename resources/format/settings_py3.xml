@@ -2682,6 +2682,16 @@
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
+				<setting help="95149" id="adjust_local_time" label="30379" type="boolean">
+					<level>1</level>
+					<default>true</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="auto_time_zone">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
 				<setting help="95041" id="time_zone" label="30911" type="string">
 					<level>1</level>
 					<default>+01:00</default>

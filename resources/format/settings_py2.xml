@@ -216,7 +216,8 @@
 		<setting type="sep" visible="lt(-32,2)"/>
 		<setting label="30365" type="lsep" visible="lt(-33,2)"/>
 		<setting id="auto_time_zone" label="30378" type="bool" default="true" visible="lt(-34,2)"/>
-		<setting id="time_zone" label="30911" type="labelenum" default="+01:00" values="-12:00|-11:00|-10:00|-09:30|-09:00|-08:00|-07:00|-06:00|-05:00|-04:30|-04:00|-03:30|-03:00|-02:00|-01:00|00:00|+01:00|+02:00|+03:00|+03:30|+04:00|+04:30|+05:00|+05:30|+05:45|+06:00|+06:30|+07:00|+08:00|+09:00|+09:30|+10:00|+10:30|+11:00|+11:30|+12:00|+12:45|+13:00|+14:00|" visible="lt(-35,2) + eq(-1,false)"/>
+		<setting id="adjust_local_time" label="30379" type="bool" default="true" visible="lt(-35,2) + eq(-1,true)"/>
+		<setting id="time_zone" label="30911" type="labelenum" default="+01:00" values="-12:00|-11:00|-10:00|-09:30|-09:00|-08:00|-07:00|-06:00|-05:00|-04:30|-04:00|-03:30|-03:00|-02:00|-01:00|00:00|+01:00|+02:00|+03:00|+03:30|+04:00|+04:30|+05:00|+05:30|+05:45|+06:00|+06:30|+07:00|+08:00|+09:00|+09:30|+10:00|+10:30|+11:00|+11:30|+12:00|+12:45|+13:00|+14:00|" visible="lt(-36,2) + eq(-2,false)"/>
 		<setting id="country_code_be" default="false" visible="false"/>
 		<setting id="country_code_cz" default="false" visible="false"/>
 		<setting id="country_code_de" default="false" visible="false"/>

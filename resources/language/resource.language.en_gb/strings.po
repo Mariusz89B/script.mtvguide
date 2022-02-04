@@ -572,6 +572,10 @@ msgctxt "#30378"
 msgid "Auto timezone"
 msgstr ""
 
+msgctxt "#30379"
+msgid "Adjust to local timezone"
+msgstr ""
+
 msgctxt "#30500"
 msgid "Edit channel order and visibility"
 msgstr ""
@@ -3534,6 +3538,10 @@ msgstr ""
 
 msgctxt "#95148"
 msgid "Settings related to InputStream client."
+msgstr ""
+
+msgctxt "#95149"
+msgid "Adjust parsed EPG date to local timezone."
 msgstr ""
 
 msgctxt "#99994"

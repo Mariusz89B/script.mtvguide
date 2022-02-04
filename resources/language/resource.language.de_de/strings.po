@@ -572,6 +572,10 @@ msgctxt "#30378"
 msgid "Auto timezone"
 msgstr "Auto Zeitzone"
 
+msgctxt "#30379"
+msgid "Adjust to local timezone"
+msgstr "An lokale Zeitzone anpassen"
+
 msgctxt "#30500"
 msgid "Edit channel order and visibility"
 msgstr "Kanalreihenfolge und sichtbarkeit ändern"
