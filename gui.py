@@ -6891,7 +6891,7 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
         for i in strmList:
             playlist = i.split(', ')
             label = playlist[0]
-            stream = playlist[1]
+            stream = playlist[-1]
             item = xbmcgui.ListItem(label)
             item.setProperty('stream', stream)
             items.append(item)
