@@ -80,8 +80,22 @@ import strings as strings2
 from itertools import chain
 from skins import Skin
 from random import uniform
+from unidecode import unidecode
 
 from groups import *
+
+UA = xbmc.getUserAgent()
+
+if sys.version_info[0] > 2:
+    try:
+        PROFILE_PATH = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
+    except:
+        PROFILE_PATH = xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
+else:
+    try:
+        PROFILE_PATH = xbmc.translatePath(ADDON.getAddonInfo('profile'))
+    except:
+        PROFILE_PATH = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
 
 EPG_LIST = []
 EPG_DICT = {}
@@ -92,9 +106,8 @@ for k, v in CC_DICT.items():
 
     if ADDON.getSetting('country_code_{cc}'.format(cc=k)) == "true":
         EPG_DICT.update({k: v})
-        if epg != '':
-            if epg:
-                EPG_LIST.append(epg)
+        if epg and epg != '':
+            EPG_LIST.append(epg)
 
 # ADDON settings
 SOURCE = ADDON.getSetting('source')
@@ -386,18 +399,18 @@ class Database(object):
 
         if sys.version_info[0] > 2:
             try:
-                profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
+                self.profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
             except:
-                profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
+                self.profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
         else:
             try:
-                profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile'))
+                self.profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile'))
             except:
-                profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
+                self.profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
 
-        if not os.path.exists(profilePath):
-            os.makedirs(profilePath)
-        self.databasePath = os.path.join(profilePath, Database.SOURCE_DB)
+        if not os.path.exists(self.profilePath):
+            os.makedirs(self.profilePath)
+        self.databasePath = os.path.join(self.profilePath, Database.SOURCE_DB)
         self.ChannelsWithStream = ADDON.getSetting('OnlyChannelsWithStream')
         self.epgBasedOnLastModDate = ADDON.getSetting('UpdateEPGOnModifiedDate')
         self.lock = threading.Lock()
@@ -693,17 +706,6 @@ class Database(object):
         deb('_updateChannelAndProgramListCache')
         import sys
 
-        if sys.version_info[0] > 2:
-            try:
-                profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
-            except:
-                profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
-        else:
-            try:
-                profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile'))
-            except:
-                profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
-
         # todo workaround service.py 'forgets' the adapter and convert set in _initialize.. wtf?!
         sqlite3.register_adapter(datetime.datetime, self.adapt_datetime)
         sqlite3.register_converter(str('timestamp'), self.convert_datetime)
@@ -741,7 +743,7 @@ class Database(object):
                 imported = 0
                 nrOfFailures = 0
 
-                xbmcvfs.delete(os.path.join(profilePath, 'category_count.list'))
+                xbmcvfs.delete(os.path.join(self.profilePath, 'category_count.list'))
 
                 startTime = datetime.datetime.now()
                 for item in self.source.getDataFromExternal(date, progress_callback):
@@ -751,13 +753,13 @@ class Database(object):
 
                     p = re.compile('\s<channel id="(.*?)"', re.DOTALL)
 
-                    if not xbmcvfs.exists(os.path.join(profilePath, 'basemap_extra.xml')):
+                    if not xbmcvfs.exists(os.path.join(self.profilePath, 'basemap_extra.xml')):
                         try:
-                            shutil.copyfile(os.path.join(ADDON.getAddonInfo('path'), 'resources', 'basemap_extra.xml'), os.path.join(profilePath, 'basemap_extra.xml'))
+                            shutil.copyfile(os.path.join(ADDON.getAddonInfo('path'), 'resources', 'basemap_extra.xml'), os.path.join(self.profilePath, 'basemap_extra.xml'))
                         except:
                             pass
 
-                    with open(os.path.join(profilePath, 'basemap_extra.xml'), 'rb') as f:
+                    with open(os.path.join(self.profilePath, 'basemap_extra.xml'), 'rb') as f:
                         if sys.version_info[0] > 2:
                             base = str(f.read(), 'utf-8')
                         else:
@@ -886,7 +888,7 @@ class Database(object):
         if self.updateFailed or updateServices == False:
             return cacheExpired #to wychodzimy - nie robimy aktualizacji
 
-        xbmcvfs.delete(os.path.join(profilePath, 'custom_channels.list'))
+        xbmcvfs.delete(os.path.join(self.profilePath, 'custom_channels.list'))
 
         epgChannels = self.epgChannels()
 
@@ -1004,7 +1006,6 @@ class Database(object):
             deb('[UPD] Error updating streams: {}'.format(getExceptionString()))
 
     def printStreamsWithoutChannelEPG(self):
-        from unidecode import unidecode
         try:
             c = self.conn.cursor()
             c.execute("SELECT custom.channel, custom.stream_url FROM custom_stream_url as custom LEFT JOIN channels as chann ON (UPPER(custom.channel)) = (UPPER(chann.id) OR UPPER(custom.channel)) = (UPPER(chann.title)) WHERE chann.id IS NULL")
@@ -1782,7 +1783,7 @@ class Database(object):
                 programList.append(program)
             c.close()
         except Exception as ex:
-            deb('Error in _getProgramList!!!!!! Code: {}'.format(getExceptionString()))
+            deb('_getProgramList Exception: {}'.format(getExceptionString()))
             xbmcgui.Dialog().ok(ADDON.getAddonInfo('name'), strings(DATABASE_SCHEMA_ERROR_1) + '\n' + strings(DATABASE_SCHEMA_ERROR_2) + ' ' + strings(DATABASE_SCHEMA_ERROR_3))
         return programList
 
@@ -2411,19 +2412,8 @@ class Database(object):
         self._invokeAndBlockForResult(self._clearDB)
 
     def _clearDB(self):
-        if sys.version_info[0] > 2:
-            try:
-                profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
-            except:
-                profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
-        else:
-            try:
-                profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile'))
-            except:
-                profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
-        
         try:
-            shutil.copyfile(os.path.join(ADDON.getAddonInfo('path'), 'resources', 'basemap_extra.xml'), os.path.join(profilePath, 'basemap_extra.xml'))
+            shutil.copyfile(os.path.join(ADDON.getAddonInfo('path'), 'resources', 'basemap_extra.xml'), os.path.join(self.profilePath, 'basemap_extra.xml'))
         except:
             pass
 
@@ -2453,16 +2443,6 @@ class Database(object):
         self._invokeAndBlockForResult(self._deleteDbFile)
 
     def _deleteDbFile(self):
-        if sys.version_info[0] > 2:
-            try:
-                self.profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
-            except:
-                self.profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
-        else:
-            try:
-                self.profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile'))
-            except:
-                self.profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
         try:
             os.remove(self.databasePath)
             os.remove(self.databasePath + '-journal')
@@ -2471,7 +2451,7 @@ class Database(object):
             pass
 
         try:
-            shutil.copyfile(os.path.join(ADDON.getAddonInfo('path'), 'resources', 'basemap_extra.xml'), os.path.join(profilePath, 'basemap_extra.xml'))
+            shutil.copyfile(os.path.join(ADDON.getAddonInfo('path'), 'resources', 'basemap_extra.xml'), os.path.join(self.profilePath, 'basemap_extra.xml'))
         except:
             pass
 
@@ -2524,7 +2504,7 @@ class Source(object):
                     contentType = ''
                     
                     headers = {
-                        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:19.0) Gecko/20121213 Firefox/19.0',
+                        'User-Agent': UA,
                         'Keep-Alive': 'timeout=20',
                         'Content-Type': 'application/x-www-form-urlencoded',
                         'Connection': 'Keep-Alive',
@@ -2640,6 +2620,7 @@ class XMLTVSource(Source):
 
         if not self.xmltvFile or not xbmcvfs.exists(self.xmltvFile):
             raise SourceNotConfiguredException()
+
     def getDataFromExternal(self, date, progress_callback = None):
         start = datetime.datetime.now()
 
@@ -2835,11 +2816,11 @@ class MTVGUIDESource(Source):
             return 0
         if self.EPGSize is not None and forceCheck == False:
             return self.EPGSize
-        epgRecheckTimeout = 1800
+        epgRecheckTimeout = 900
         failedCounter = 0
         while failedCounter < 3:
             try:
-                headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36 Edg/94.0.992.31',
+                headers = {'User-Agent': UA,
                             'Keep-Alive': 'timeout=20',
                             'ContentType': 'application/x-www-form-urlencoded',
                             'Connection': 'Keep-Alive',
@@ -2870,7 +2851,7 @@ class MTVGUIDESource(Source):
 
         if self.EPGSize == 0:
             self.EPGSize = defaultSize
-            epgRecheckTimeout = 900 #recheck in 15 min
+            epgRecheckTimeout = 600 #recheck in 10 min
         #This will force checking for updates every 1h
         self.timer = threading.Timer(epgRecheckTimeout, self.resetEpgSize)
         self.timer.start()
@@ -2883,7 +2864,6 @@ class MTVGUIDESource(Source):
     def close(self):
         if self.timer and self.timer.is_alive():
             self.timer.cancel()
-
 
 def catList(category_count):
     cleanup_regex = re.compile('[!"”#$%&’()*+,-.\/:;<>?@\[\]^_`{|}~]|ADDON.*|^\s', re.IGNORECASE)
@@ -2900,12 +2880,12 @@ def catList(category_count):
                 categoriesList.append(s.strip())
 
     if sys.version_info[0] > 2:
-        file_name = os.path.join(xbmcvfs.translatePath(ADDON.getAddonInfo('profile')), 'category_count.list')
+        file_name = os.path.join(PROFILE_PATH, 'category_count.list')
         with open(file_name, 'w+', encoding='utf-8') as f:
             for line in categoriesList:
                 f.write('{}\n'.format(line))
     else:
-        file_name = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('profile')), 'category_count.list')
+        file_name = os.path.join(PROFILE_PATH, 'category_count.list')
         with codecs.open(file_name, 'w+', encoding='utf-8') as f:
             for line in categoriesList:
                 f.write('{}\n'.format(line))
@@ -3043,7 +3023,7 @@ def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
         except:
             logo = None
 
-        if logo is None:
+        if not logo:
             if logoFolder:
                 logoFile = os.path.join(logoFolder, title.replace(' ', '_').lower() + '.png')
                 if xbmcvfs.exists(logoFile):
@@ -3086,8 +3066,7 @@ def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
         category = programCategory.findall(program)
         
         category_list = []
-        for c in category:
-            txt = c
+        for txt in category:
             if txt:
                 if txt in category_count:
                     category_count[txt] = category_count[txt] + 1
@@ -3218,10 +3197,10 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
 
                 live3 = ''
                 live = elem.findtext("video")
-                if live is not None:
+                if live:
                     for ele in elem:
                         live2 = ele.findtext("aspect")
-                        if live2 is not None:
+                        if live2:
                             live3 = live2
                         pass
                 try:
@@ -3240,11 +3219,11 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
                     pass
     
                 icon = None
-                if iconElement is not None:
+                if iconElement:
                     icon = iconElement
                 else:
                     iconElementEx = elem.find("icon")
-                    if iconElementEx is not None:
+                    if iconElementEx:
                         icon = iconElementEx.get("src")
                 if not description:
                     description = strings(NO_DESCRIPTION)
@@ -3285,7 +3264,7 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
                         logo = logoFile
                 if not logo:
                     iconElement = elem.find("icon")
-                    if iconElement is not None:
+                    if iconElement:
                         logo = iconElement.get("src")
 
                 result = Channel(id, title, logo, titles)

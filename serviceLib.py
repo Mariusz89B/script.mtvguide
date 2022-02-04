@@ -153,11 +153,12 @@ class ShowList:
             else:
                 data     = urllib.urlencode(post)
                 reqUrl   = urllib2.Request(url, data)
-            reqUrl.add_header('User-Agent', 'Python-urllib/2.1')
+
+            reqUrl.add_header('User-Agent', HOST)
             reqUrl.add_header('Keep-Alive', 'timeout=60')
             reqUrl.add_header('Connection', 'Keep-Alive')
-            reqUrl.add_header('ContentType', 'application/x-www-form-urlencoded')
-            reqUrl.add_header('Accept-Encoding', 'gzip')
+            reqUrl.add_header('authority', 'raw.githubusercontent.com')
+            reqUrl.add_header('upgrade-insecure-requests', '1')
 
             startTime = datetime.datetime.now()
             while (datetime.datetime.now() - startTime).seconds < MAX_CONNECTION_TIME and strings2.M_TVGUIDE_CLOSING == False:
@@ -359,17 +360,21 @@ class ShowList:
                 reqUrl   = urllib.request.Request(url)
             else:
                 reqUrl   = urllib2.Request(url)
-            reqUrl.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36 Edg/97.0.1072.76')
+
+            reqUrl.add_header('User-Agent', HOST)
             reqUrl.add_header('Keep-Alive', 'timeout=25')
             reqUrl.add_header('authority', 'raw.githubusercontent.com')
             reqUrl.add_header('upgrade-insecure-requests', '1')
             reqUrl.add_header('Connection', 'Keep-Alive')
+
             if sys.version_info[0] > 2: 
                 urlFile = urllib.request.urlopen(reqUrl, timeout=HTTP_ConnectionTimeout)
             else:
                 urlFile = urllib2.urlopen(reqUrl, timeout=HTTP_ConnectionTimeout)
+
             fileContent = urlFile.read()
             urlFile.close()
+
         except Exception as ex:
             self.logCall('File download error, exception: %s, url: %s' % (str(ex), url))
             fileContent = None
@@ -482,7 +487,7 @@ class ShowList:
         return ret_lst
 
 class TvCid:
-    def __init__(self, cid, name, title, strm = "", catchup="", lic="", img = ""):
+    def __init__(self, cid, name, title, strm="", catchup="", lic="", img=""):
         self.cid = cid
         self.name = name
         self.title = title
@@ -927,10 +932,10 @@ class baseServiceUpdater:
             self.log('-------------------------------------------------------------------------------------')
             self.log('[UPD]     %-40s %-40s %-35s' % ('-TITLE-', '-ORIG NAME-', '-SERVICE-'))
 
-            channelList = list()
+            channelList = []
 
-            result = list()
-            titles = list()
+            result = []
+            titles = []
 
             for title, titles in epg_channels:
                 if titles:
