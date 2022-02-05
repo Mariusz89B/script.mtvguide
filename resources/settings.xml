@@ -299,7 +299,6 @@
 		<setting id="show_time_size" label="69054" type="slider" default="1" range="1,3" option="int" visible="eq(-2,true)"/>
 	</category>
 	<category label="30916">
-		<setting label="69035" type="action" action="RunScript($CWD/logUploader.py, primary)"/>
 		<setting label="30108" type="action" action="RunScript($CWD/notification.py)"/>
 		<setting label="30109" type="action" action="RunScript($CWD/cleardb.py, clearRecordings)"/>
 		<setting type="sep"/>
@@ -370,6 +369,10 @@
 	</category>
 	<category label="59902">
 		<setting id="ia_settings" type="action" label="59903" action="RunScript($CWD/iaSettings.py, Settings)" enable="System.HasAddon(inputstream.adaptive)" option="close" />
+	</category>
+	<category label="69070">
+		<setting label="69035" type="action" action="RunScript($CWD/logUploader.py, primary)"/>
+		<setting id="debug" label="69071" type="bool" default="false" />
 	</category>
 	<category label="30901">
 		<setting label="30902" type="action" action="UpdateAddonRepos"/>

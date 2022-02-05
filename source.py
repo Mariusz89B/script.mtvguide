@@ -611,8 +611,11 @@ class Database(object):
         deb('Settings changed: {}'.format(str(settingsChanged) ))
         return settingsChanged
 
-    def _isCacheExpired(self, date, initializing, startup):
+    def _isCacheExpired(self, date, initializing, startup, force):
         try:
+            if force:
+                return True
+
             if startup:
                 return False
 
@@ -698,11 +701,11 @@ class Database(object):
             self.updateFailed = True
             return
 
-    def updateChannelAndProgramListCaches(self, callback, date = datetime.datetime.now(), progress_callback = None, initializing=False, startup=False, clearExistingProgramList = True):
-        self.eventQueue.append([self._updateChannelAndProgramListCaches, callback, date, progress_callback, initializing, startup, clearExistingProgramList])
+    def updateChannelAndProgramListCaches(self, callback, date = datetime.datetime.now(), progress_callback = None, initializing=False, startup=False, force=False, clearExistingProgramList = True):
+        self.eventQueue.append([self._updateChannelAndProgramListCaches, callback, date, progress_callback, initializing, startup, force, clearExistingProgramList])
         self.event.set()
 
-    def _updateChannelAndProgramListCaches(self, date, progress_callback, initializing, startup, clearExistingProgramList):
+    def _updateChannelAndProgramListCaches(self, date, progress_callback, initializing, startup, force, clearExistingProgramList):
         deb('_updateChannelAndProgramListCache')
         import sys
 
@@ -723,7 +726,7 @@ class Database(object):
                 if serviceHandler.serviceEnabled == 'true':
                     serviceList.append(serviceHandler)
 
-        cacheExpired = self._isCacheExpired(date, initializing, startup)
+        cacheExpired = self._isCacheExpired(date, initializing, startup, force)
 
         if cacheExpired and not self.skipUpdateRetries:
             deb('_isCacheExpired')
@@ -1064,18 +1067,18 @@ class Database(object):
             
         self.channelList = None
 
-    def getEPGView(self, channelStart, date = datetime.datetime.now(), progress_callback = None, initializing = False, startup=False, clearExistingProgramList = True):
-        result = self._invokeAndBlockForResult(self._getEPGView, channelStart, date, progress_callback, initializing, startup, clearExistingProgramList)
+    def getEPGView(self, channelStart, date = datetime.datetime.now(), progress_callback = None, initializing = False, startup = False, force = False, clearExistingProgramList = True):
+        result = self._invokeAndBlockForResult(self._getEPGView, channelStart, date, progress_callback, initializing, startup, force, clearExistingProgramList)
         if self.updateFailed:
             raise SourceException('No channels or programs imported')
         return result
 
-    def _getEPGView(self, channelStart, date, progress_callback, initializing, startup, clearExistingProgramList):
+    def _getEPGView(self, channelStart, date, progress_callback, initializing, startup, force, clearExistingProgramList):
         if strings2.M_TVGUIDE_CLOSING:
             self.updateFailed = True
             return
 
-        cacheExpired = self._updateChannelAndProgramListCaches(date, progress_callback, initializing, startup, clearExistingProgramList)
+        cacheExpired = self._updateChannelAndProgramListCaches(date, progress_callback, initializing, startup, force, clearExistingProgramList)
         if strings2.M_TVGUIDE_CLOSING:
             self.updateFailed = True
             return
@@ -1096,6 +1099,7 @@ class Database(object):
             channelsOnPage = channels[channelStart : channelEnd]
 
             programs = self._getProgramList(channelsOnPage, date)
+
             return [channelStart, channelsOnPage, programs, cacheExpired]
             
         except Exception as ex:
@@ -2407,6 +2411,18 @@ class Database(object):
         programs = c.fetchall()
         c.close()
         return programs
+
+    def getDbEPGSize(self):
+        return self._invokeAndBlockForResult(self._getDbEPGSize)
+
+    def _getDbEPGSize(self):
+        c = self.conn.cursor()
+        c.execute('SELECT * FROM updates WHERE source=?', [self.source.KEY])
+        for row in c:
+            size = row[str('epg_size')]
+            updated = row[str('programs_updated')]
+        c.close()
+        return size, updated
 
     def clearDB(self):
         self._invokeAndBlockForResult(self._clearDB)

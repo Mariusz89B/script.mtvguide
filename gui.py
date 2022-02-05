@@ -330,6 +330,13 @@ def getDistro():
     else:
         return "Kodi"
 
+def formatFileSize(size):
+    for x in ['bytes', 'KB', 'MB', 'GB', 'TB']:
+        if size < 1024.0:
+            return "%3.1f %s" % (size, x)
+        size /= 1024.0
+
+    return size
 
 class proxydt(datetime.datetime):
     @staticmethod
@@ -616,6 +623,7 @@ class mTVGuide(xbmcgui.WindowXML):
         self.recordService = RecordService(self)
         self.getListLenght = []
         self.catchupChannels = None
+        self.force = None
         self.context = False
 
         # find nearest half hour
@@ -2040,7 +2048,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
         ADDON.setSetting('epg_size', '0')
 
-        self.interval = 3600
+        self.interval = 900
         self.updateEpgTimer = epgTimer(self.interval, self.updateEpg)
 
         self.getListLenght = self.getChannelListLenght()
@@ -4395,8 +4403,56 @@ class mTVGuide(xbmcgui.WindowXML):
             removeStrm = True
         else:
             chooseStrmControl = (strings(CHOOSE_STRM_FILE))
+
+        if ADDON.getSetting('debug') == 'true':
+            debug = True
+        else:
+            debug = False
+
+        menu = [strings(30346), strings(58000), strings(30356), remindControl, programRecordControl, strings(30337), strings(30377), strings(31022), strings(30309), strings(68005), strings(30913), strings(30602), chooseStrmControl, strings(30308)]
+        if debug:
+            menu.insert(0, 'Debug')
         
-        ret = xbmcgui.Dialog().contextmenu([strings(30346), strings(58000), strings(30356), remindControl, programRecordControl, strings(30337), strings(30377), strings(31022), strings(30309), strings(68005), strings(30913), strings(30602), chooseStrmControl, strings(30308)])
+        ret = xbmcgui.Dialog().contextmenu(menu)
+
+        if debug:
+            ret = int(ret) - 1
+
+        if ret == -1 and debug:
+            deb('Debug')
+            res = xbmcgui.Dialog().contextmenu(['Reload guide', 'Upload log file', 'Guide information', 'Response status', 'Python version'])
+
+            if res == 0:
+                deb('Reload EPG')
+                epgDbSize = self.database.source.getEpgSize()
+                self.onRedrawEPG(self.channelIdx, self.viewStartDate, force=True)
+                ADDON.setSetting('epg_size', str(epgDbSize))
+                return
+            
+            elif res == 1:
+                import logUploader
+                return
+
+            elif res == 2:
+                size, updated = self.database.getDbEPGSize()
+
+                xbmcgui.Dialog().ok('m-TVGuide [COLOR gold]EPG[/COLOR]', 'Downloaded guide size is: ' + str(formatFileSize(int( size ) )) + '[CR]Updated on: ' + str(updated.strftime("%Y-%m-%d %H:%M")))
+                return
+
+            elif res == 3:
+                UA = xbmc.getUserAgent()
+
+                headers = {
+                    'User-Agent': UA,
+                }
+
+                response = requests.get('https://www.google.com', headers=headers)
+                xbmcgui.Dialog().ok('m-TVGuide [COLOR gold]EPG[/COLOR]', 'HTTP/S Status: ' + str(response.status_code))
+                return
+
+            elif res == 4:
+                xbmcgui.Dialog().ok('m-TVGuide [COLOR gold]EPG[/COLOR]', 'Python ' + str(sys.version))
+                return
 
         if ret == 0:
             if ADDON.getSetting('channel_shortcut') == 'false':
@@ -4552,7 +4608,6 @@ class mTVGuide(xbmcgui.WindowXML):
 
         elif ret == 13:
             self.close()
-
 
     def popupMenu(self, program):
         d = PopupMenu(self.database, program)
@@ -5583,14 +5638,37 @@ class mTVGuide(xbmcgui.WindowXML):
         debug('onRedrawEPGPlaying done')
         return
 
-    def onRedrawEPG(self, channelStart, startTime, focusFunction=None, initializing=False, startup=False):
+
+    def updateEPG(self, channelStart, startTime, initializing, startup, force):
+        with self.busyDialog():
+            try:
+                self.channelIdx, channels, programs, cacheExpired = self.database.getEPGView(channelStart, startTime, self.onSourceProgressUpdate, initializing, startup, force, clearExistingProgramList=True)
+            except src.SourceException:
+                self.blockInputDueToRedrawing = False
+                debug('onRedrawEPG onEPGLoadError')
+                self.onEPGLoadError()
+                return
+
+            self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
+
+
+    def onRedrawEPG(self, channelStart, startTime, focusFunction=None, initializing=False, startup=False, force=False):
         try:
             deb('onRedrawEPG')
+            self.force = force
+            if force:
+                thread = threading.Thread(name='updateEPG', target = self.updateEPG, args=[channelStart, startTime, initializing, startup, force])
+                thread.start()
+                #self.updateEPG(channelStart, startTime, initializing, startup, debug)
+                return
+
             if self.redrawingEPG or (self.database is not None and self.database.updateInProgress) or self.isClosing or strings2.M_TVGUIDE_CLOSING:
                 deb('onRedrawEPG - already redrawing')
                 return  # ignore redraw request while redrawing
+            
             self.redrawingEPG = True
             self.blockInputDueToRedrawing = True
+
             self.redrawagain = False
             self.mode = MODE_EPG
 
@@ -5601,12 +5679,13 @@ class mTVGuide(xbmcgui.WindowXML):
 
             self._showControl(self.C_MAIN_EPG)
             self.updateTimebar(scheduleTimer=False)
-            
-            # remove existing controls
+
+             # remove existing controls
             self._clearEpg()
 
             try:
-                self.channelIdx, channels, programs, cacheExpired = self.database.getEPGView(channelStart, startTime, self.onSourceProgressUpdate, initializing, startup, clearExistingProgramList=True)
+                self.channelIdx, channels, programs, cacheExpired = self.database.getEPGView(channelStart, startTime, self.onSourceProgressUpdate, initializing, startup, force, clearExistingProgramList=True)
+            
             except src.SourceException:
                 self.blockInputDueToRedrawing = False
                 debug('onRedrawEPG onEPGLoadError')
@@ -5627,7 +5706,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
             if programs is None:
                 debug('onRedrawEPG onEPGLoadError2')
-                self.onEPGLoadError()
+                #self.onEPGLoadError()
                 return
 
             categories = self.getCategories()
@@ -5988,6 +6067,11 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.AutoPlayByNumber()
 
     def onSourceProgressUpdate(self, percentageComplete, additionalMessage=""):
+        force = self.force
+
+        if force:
+            xbmcgui.Dialog().notification('Debug', 'Redrawing guide')
+
         if additionalMessage != "":
             self.setControlLabel(self.C_MAIN_LOADING_TIME_LEFT, additionalMessage)
             return not strings2.M_TVGUIDE_CLOSING and not self.isClosing
@@ -6000,10 +6084,12 @@ class mTVGuide(xbmcgui.WindowXML):
             self.progressStartTime = datetime.datetime.now()
             self.progressPreviousPercentage = percentageComplete
 
-            # show Loading screen
-            self.setControlLabel(self.C_MAIN_LOADING_TIME_LEFT, strings(CALCULATING_REMAINING_TIME))
+            # show Loading screen 
             self._showControl(self.C_MAIN_LOADING)
+            if force:
+                self._hideControl(self.C_MAIN_LOADING)
             self.setFocusId(self.C_MAIN_LOADING_CANCEL)
+            self.setControlLabel(self.C_MAIN_LOADING_TIME_LEFT, strings(CALCULATING_REMAINING_TIME))
 
         elif percentageComplete >= 100:
             if control:
@@ -6018,6 +6104,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
             if percentageComplete < 15:
                 self.setControlLabel(self.C_MAIN_LOADING_TIME_LEFT, strings(CALCULATING_REMAINING_TIME))
+            
             else:
                 secondsLeft = int(delta.seconds) / float(percentageComplete) * (100.0 - percentageComplete)
                 if secondsLeft > 30:

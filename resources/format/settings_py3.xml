@@ -3555,14 +3555,6 @@
 		</category>
 		<category help="95079" id="database" label="30916">
 			<group id="1">
-				<setting help="95080" id="log_uploader" label="69035" type="action">
-					<level>0</level>
-					<data>RunScript(special://home/addons/script.mtvguide/logUploader.py,primary)</data>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<control format="action" type="button"/>
-				</setting>
 				<setting help="95081" id="notification" label="30108" type="action">
 					<level>1</level>
 					<data>RunScript(special://home/addons/script.mtvguide/notification.py)</data>
@@ -4172,6 +4164,23 @@
 						<allowempty>true</allowempty>
 					</constraints>
 					<control format="action" type="button"/>
+				</setting>
+			</group>
+		</category>
+		<category help="95150" id="debug_menu" label="69070">
+			<group id="1">
+				<setting help="95080" id="log_uploader" label="69035" type="action">
+					<level>0</level>
+					<data>RunScript(special://home/addons/script.mtvguide/logUploader.py,primary)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control format="action" type="button"/>
+				</setting>
+				<setting help="95151" id="debug" label="69071" type="boolean">
+					<level>3</level>
+					<default>false</default>
+					<control type="toggle"/>
 				</setting>
 			</group>
 		</category>

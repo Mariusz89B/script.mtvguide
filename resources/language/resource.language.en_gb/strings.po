@@ -2648,6 +2648,14 @@ msgctxt "#69069"
 msgid "Could not initialize EPG, file is wrong XMLTV format."
 msgstr ""
 
+msgctxt "#69070"
+msgid "Debug"
+msgstr ""
+
+msgctxt "#69071"
+msgid "Enable debug mode"
+msgstr ""
+
 msgctxt "#70000"
 msgid "Program title"
 msgstr ""
@@ -3558,6 +3566,14 @@ msgstr ""
 
 msgctxt "#95149"
 msgid "Adjust parsed EPG date to local timezone."
+msgstr ""
+
+msgctxt "#95150"
+msgid "Settings related to debugging and development."
+msgstr ""
+
+msgctxt "#95151"
+msgid "If enabled debugging mode will be turned on and a Debug menu will be visible in add-on context options."
 msgstr ""
 
 msgctxt "#99994"
