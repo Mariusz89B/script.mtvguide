@@ -2620,6 +2620,14 @@ msgctxt "#69069"
 msgid "Could not initialize EPG, file is wrong XMLTV format."
 msgstr "Błąd zainicjowania EPG, plik ma niewłaściwy format XMLTV."
 
+msgctxt "#69070"
+msgid "Debugging"
+msgstr "Debugowanie"
+
+msgctxt "#69071"
+msgid "Enable debug mode"
+msgstr "Włącz tryb debugowania"
+
 msgctxt "#70000"
 msgid "Program title"
 msgstr "Tytuł programu"

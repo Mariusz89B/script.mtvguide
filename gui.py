@@ -4420,7 +4420,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
         if ret == -1 and debug:
             deb('Debug')
-            res = xbmcgui.Dialog().contextmenu(['Reload guide', 'Upload log file', 'Guide information', 'Response status', 'Python version'])
+            res = xbmcgui.Dialog().contextmenu(['Reinitialize guide', 'Upload log file', 'Guide information', 'Response status', 'Python version'])
 
             if res == 0:
                 deb('Reload EPG')
@@ -4436,7 +4436,7 @@ class mTVGuide(xbmcgui.WindowXML):
             elif res == 2:
                 size, updated = self.database.getDbEPGSize()
 
-                xbmcgui.Dialog().ok('m-TVGuide [COLOR gold]EPG[/COLOR]', 'Downloaded guide size is: ' + str(formatFileSize(int( size ) )) + '[CR]Updated on: ' + str(updated.strftime("%Y-%m-%d %H:%M")))
+                xbmcgui.Dialog().ok('m-TVGuide [COLOR gold]EPG[/COLOR]', 'Content-Size: ' + str(formatFileSize(int( size ) )) + '[CR]Updated on: ' + str(updated.strftime("%Y-%m-%d %H:%M")))
                 return
 
             elif res == 3:
@@ -6070,7 +6070,7 @@ class mTVGuide(xbmcgui.WindowXML):
         force = self.force
 
         if force:
-            xbmcgui.Dialog().notification('Debug', 'Redrawing guide')
+            xbmcgui.Dialog().notification('Debug', 'Reinitializing guide')
 
         if additionalMessage != "":
             self.setControlLabel(self.C_MAIN_LOADING_TIME_LEFT, additionalMessage)
