@@ -53,4 +53,4 @@ if which == "commands":
 f = xbmcvfs.File(path,"rb")
 data = f.read()
 dialog = xbmcgui.Dialog()
-dialog.textviewer(strings(90006), data)
+dialog.textviewer(strings(90006) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', data, True)

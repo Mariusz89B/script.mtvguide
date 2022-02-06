@@ -1429,8 +1429,8 @@ msgid "Add stream to selected channel"
 msgstr "Dodaj stream u odabrani kanal"
 
 msgctxt "#59993"
-msgid "Added channel [B]{}[/B]."
-msgstr "Dodan kanal [B]{}[/B]."
+msgid "Added channel [B]{}[/B]"
+msgstr "Dodan kanal [B]{}[/B]"
 
 msgctxt "#59994"
 msgid "Select which channels to display"
@@ -1961,12 +1961,12 @@ msgid "Select group"
 msgstr "Odaberi grupu"
 
 msgctxt "#31024"
-msgid "Channel already exists in selected group."
-msgstr "Kanal je već u odabranoj grupi."
+msgid "Channel already exists in selected group"
+msgstr "Kanal je već u odabranoj grupi"
 
 msgctxt "#31025"
-msgid "Channel added to group {}."
-msgstr "Kanal dodan grupi {}."
+msgid "Channel added to group {}"
+msgstr "Kanal dodan grupi {}"
 
 msgctxt "#310010"
 msgid ""

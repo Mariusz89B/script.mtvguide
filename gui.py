@@ -2251,7 +2251,7 @@ class mTVGuide(xbmcgui.WindowXML):
             except:
                 None
             if res is True:
-                xbmcgui.Dialog().ok(strings(57051), strings(30979))
+                xbmcgui.Dialog().ok('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30979))
                 self.exitAddon()
 
         elif check == True:
@@ -4270,7 +4270,7 @@ class mTVGuide(xbmcgui.WindowXML):
             epgChann = epgList[res]
             self.channelsFromStream(epgChann=epgChann, epgList=epgList, channels=channels)
 
-    def channelsFromStream(self, epgChann="", epgList="", channels="", newChannel=""):
+    def channelsFromStream(self, epgChann="", epgList="", channels="", newChannel="", logo=""):
         file = xbmcvfs.File(os.path.join(self.profilePath, 'custom_channels.list'), 'r')
         strmList = file.read().splitlines()
 
@@ -4373,8 +4373,110 @@ class mTVGuide(xbmcgui.WindowXML):
             f.seek(0)
             f.write(new_str.encode('utf-8'))
             f.close()
-            xbmcgui.Dialog().ok(strings(57051), strings(59993).format(epgChann.upper()))
+            xbmcgui.Dialog().notification('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(59993).format(epgChann.upper()))
             self.reloadList(add=True)
+
+    def getLog(self, filename):
+        import codecs
+        if os.path.isfile(filename):
+            content = None
+            if sys.version_info[0] > 2:
+                with open(filename, 'r', encoding='utf-8') as content_file:
+                    content = content_file.read()
+            else:
+                with codecs.open(filename, 'r', encoding='utf-8') as content_file:
+                    content = content_file.read()
+
+            if content is None:
+                deb('LogUploader upload ERROR could not get content of log file')
+            return content
+        return None
+
+    def _debugMenu(self, program):
+        deb('Debug')
+        res = xbmcgui.Dialog().contextmenu(['Reinitialize guide', 'Upload log file', 'Read log', 'Guide information', 'Response status', 'Python version'])
+
+        if res < 0:
+            self._showContextMenu(program)
+
+        if res == 0:
+            deb('Reload EPG')
+            epgDbSize = self.database.source.getEpgSize()
+            self.onRedrawEPG(self.channelIdx, self.viewStartDate, force=True)
+            ADDON.setSetting('epg_size', str(epgDbSize))
+            self._debugMenu(program)
+        
+        elif res == 1:
+            import logUploader
+            self._debugMenu(program)
+
+        elif res == 2:
+            if sys.version_info[0] > 2:
+                LOGPATH  = xbmcvfs.translatePath('special://logpath')
+            else:
+                LOGPATH  = xbmc.translatePath('special://logpath')
+
+            LOGFILE  = os.path.join(LOGPATH, 'kodi.log')
+            LOGFILE2 = os.path.join(LOGPATH, 'spmc.log')
+            LOGFILE3 = os.path.join(LOGPATH, 'xbmc.log')
+
+            if os.path.isfile(LOGFILE):
+                logContent = self.getLog(LOGFILE)
+            elif os.path.isfile(LOGFILE2):
+                logContent = self.getLog(LOGFILE2)
+            elif os.path.isfile(LOGFILE3):
+                logContent = self.getLog(LOGFILE3)
+            else:
+                xbmcgui.Dialog().ok(strings(30150),"\n" + "Unable to find kodi log file")
+                self._debugMenu(program)
+
+            xbmcgui.Dialog().textviewer('Log - m-TVGuide [COLOR gold]EPG[/COLOR]', logContent, True)
+            self._debugMenu(program)
+
+        elif res == 3:
+            size, updated = self.database.getDbEPGSize()
+
+            xbmcgui.Dialog().textviewer('Guide information - m-TVGuide [COLOR gold]EPG[/COLOR]', 'Content-Size: ' + str(formatFileSize(int( size ) )) + '[CR]Updated on: ' + str(updated.strftime("%Y-%m-%d %H:%M")), True)
+            self._debugMenu(program)
+
+        elif res == 4:
+            UA = xbmc.getUserAgent()
+
+            headers = {
+                'User-Agent': UA,
+            }
+
+            # Internet connection
+            response = requests.get('https://www.google.com', headers=headers)
+
+            if response.status_code < 400:
+                conn = '[COLOR green][B]Online[/B][/COLOR]'
+            else:
+                conn = '[COLOR green][B]Offline[/B][/COLOR]'
+
+            headers_r = {
+                'authority': 'raw.githubusercontent.com',
+                'upgrade-insecure-requests': '1',
+                'user-agent': UA,
+                'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+                'referer': 'https://github.com/Mariusz89B/mods-kodi/blob/master/mods-kodi-addons.xml',
+                'accept-language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6,fr;q=0.5',
+            }
+
+            # Repository connection
+            response_repo = requests.get('https://raw.githubusercontent.com/Mariusz89B/mods-kodi/master/mods-kodi-addons.xml', headers=headers_r)
+
+            if response_repo.status_code < 400:
+                conn_r = '[COLOR green][B]Online[/B][/COLOR]'
+            else:
+                conn_r = '[COLOR green][B]Offline[/B][/COLOR]'
+
+            xbmcgui.Dialog().textviewer('Response status - m-TVGuide [COLOR gold]EPG[/COLOR]', 'HTTP/S Status: ' + str(response.status_code) + '[CR]Internet status: ' + conn + '[CR]Repository status: ' + conn_r, True)
+            self._debugMenu(program)
+
+        elif res == 5:
+            xbmcgui.Dialog().textviewer('Python version - m-TVGuide [COLOR gold]EPG[/COLOR]', 'Python ' + str(sys.version), True)
+            self._debugMenu(program)
 
     def _showContextMenu(self, program):
         deb('_showContextMenu')
@@ -4419,40 +4521,7 @@ class mTVGuide(xbmcgui.WindowXML):
             ret = int(ret) - 1
 
         if ret == -1 and debug:
-            deb('Debug')
-            res = xbmcgui.Dialog().contextmenu(['Reinitialize guide', 'Upload log file', 'Guide information', 'Response status', 'Python version'])
-
-            if res == 0:
-                deb('Reload EPG')
-                epgDbSize = self.database.source.getEpgSize()
-                self.onRedrawEPG(self.channelIdx, self.viewStartDate, force=True)
-                ADDON.setSetting('epg_size', str(epgDbSize))
-                return
-            
-            elif res == 1:
-                import logUploader
-                return
-
-            elif res == 2:
-                size, updated = self.database.getDbEPGSize()
-
-                xbmcgui.Dialog().ok('m-TVGuide [COLOR gold]EPG[/COLOR]', 'Content-Size: ' + str(formatFileSize(int( size ) )) + '[CR]Updated on: ' + str(updated.strftime("%Y-%m-%d %H:%M")))
-                return
-
-            elif res == 3:
-                UA = xbmc.getUserAgent()
-
-                headers = {
-                    'User-Agent': UA,
-                }
-
-                response = requests.get('https://www.google.com', headers=headers)
-                xbmcgui.Dialog().ok('m-TVGuide [COLOR gold]EPG[/COLOR]', 'HTTP/S Status: ' + str(response.status_code))
-                return
-
-            elif res == 4:
-                xbmcgui.Dialog().ok('m-TVGuide [COLOR gold]EPG[/COLOR]', 'Python ' + str(sys.version))
-                return
+            self._debugMenu(program)
 
         if ret == 0:
             if ADDON.getSetting('channel_shortcut') == 'false':
@@ -4466,6 +4535,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         if self.timer and self.timer.is_alive():
                             self.timer.cancel()
                         self.playShortcut()
+                    else:
+                        self._showContextMenu(program)
 
         elif ret == 1:
             deb('Info')
@@ -4473,6 +4544,7 @@ class mTVGuide(xbmcgui.WindowXML):
                                          self.ExtendedInfo, self.onRedrawEPG, self.channelIdx, self.viewStartDate)
             self.infoDialog.setChannel(program)
             self.infoDialog.doModal()
+            
             del self.infoDialog
             self.infoDialog = None
 
@@ -4521,8 +4593,10 @@ class mTVGuide(xbmcgui.WindowXML):
         elif ret == 6:
             d = ChannelsMenu(self.database, program.channel)
             d.doModal()
+
             del d
             self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+
 
         elif ret == 7:
             categories = {}
@@ -4564,11 +4638,11 @@ class mTVGuide(xbmcgui.WindowXML):
                 self._clearEpg()
                 self.onRedrawEPG(self.channelIdx, self.viewStartDate)
                 xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
-                xbmcgui.Dialog().ok('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(31025).format(cat))
+                xbmcgui.Dialog().notification('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(31025).format(cat))
 
             else:
                 xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
-                xbmcgui.Dialog().ok('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(31024))
+                xbmcgui.Dialog().notification('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(31024))
 
         elif ret == 8:
             d = xbmcgui.Dialog()
@@ -4588,7 +4662,8 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.showFullReminders(program.channel)
             elif lst == 5:
                 self.showFullRecordings(program.channel)
-            return
+            else:
+                return
 
         elif ret == 9:
             self.popupMenu(program)

@@ -53,4 +53,4 @@ if which == "quickstart":
 f = xbmcvfs.File(path,"rb")
 data = f.read()
 dialog = xbmcgui.Dialog()
-dialog.textviewer(strings(90005), data)
+dialog.textviewer(strings(90005) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', data, True)

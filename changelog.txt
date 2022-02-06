@@ -1,5 +1,6 @@
 ﻿v9.8.9 (2022-02-04)
 - Added option to adjust to local time, for universal timezone. 
+- Added debug mode.
 - Add channel to group shortcut.
 - Optimized performance.
 

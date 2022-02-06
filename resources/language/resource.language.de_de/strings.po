@@ -1429,8 +1429,8 @@ msgid "Add stream to selected channel"
 msgstr "Stream zum ausgewählten Kanal hinzufügen"
 
 msgctxt "#59993"
-msgid "Added channel [B]{}[/B]."
-msgstr "Kanal [B]{}[/B] hinzugefügt."
+msgid "Added channel [B]{}[/B]"
+msgstr "Kanal [B]{}[/B] hinzugefügt"
 
 msgctxt "#59994"
 msgid "Select which channels to display"
@@ -1961,12 +1961,12 @@ msgid "Select group"
 msgstr "Gruppe auswählen"
 
 msgctxt "#31024"
-msgid "Channel already exists in selected group."
-msgstr "Kanal bereits in ausgewählter Gruppe."
+msgid "Channel already exists in selected group"
+msgstr "Kanal bereits in ausgewählter Gruppe"
 
 msgctxt "#31025"
-msgid "Channel added to group {}."
-msgstr "Kanal zu Gruppe {} hinzugefügt."
+msgid "Channel added to group {}"
+msgstr "Kanal zu Gruppe {} hinzugefügt"
 
 msgctxt "#310010"
 msgid ""
