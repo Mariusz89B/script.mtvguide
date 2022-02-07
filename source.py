@@ -3174,6 +3174,93 @@ def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
     thread.start()
 
 def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoFolder):
+    def progress(result):
+        elements_parsed[0] += 1
+        if elements_parsed[0] % 500 == 0:
+            if strings2.M_TVGUIDE_CLOSING:
+                raise SourceUpdateCanceledException()
+            if progress_callback:
+                if not progress_callback(100.0 / size * f.tell()):
+                    raise SourceUpdateCanceledException()
+        return result
+
+    def process_prog(elem, cat=None):
+        channel = elem.get("channel", "").upper()
+        description = elem.findtext("desc")
+        date = elem.findtext("date")
+        director = elem.findtext("director")
+        actor = elem.findtext("actor")
+        episode = elem.findtext("episode-num")
+        iconElement = elem.findtext("sub-title")
+        cat = [] if cat is None else [cat]
+        cat += elem.findall("category")
+        category_list = []
+        try:
+            c = cat[0].text
+        except:
+            c = None
+
+        txt = c
+        if txt:
+            if txt in category_count:
+                category_count[txt] = category_count[txt] + 1
+            else:
+                category_count[txt] = 1
+            category_list.append(txt)
+
+        live3 = ''
+        live = elem.findtext("video")
+        if live:
+            for ele in elem:
+                live2 = ele.findtext("aspect")
+                if live2:
+                    live3 = live2
+                else:
+                    live3 = elem.findtext("live")
+
+        try:
+            cata = cat[0].text
+        except:
+            cata = ""
+        try:
+            catb = cat[1].text
+        except:
+            catb = ""
+
+        try:
+            p = re.compile('([*S|E]((S)?(\d{1,3})?\s*((E)?\d{1,5}(\/\d{1,5})?)))')
+            episode = p.search(episode).group(1)
+        except:
+            pass
+
+        icon = None
+
+        if iconElement is not None:
+            icon = iconElement
+        else:
+            iconElementEx = elem.find("icon")
+            if iconElementEx is not None:
+                icon = iconElementEx.get("src")
+
+        if not description:
+            description = strings(NO_DESCRIPTION)
+
+        try:
+            start = TimeZone(parseXMLTVDate(elem.get('start'), zone, autozone, local) )
+        except Exception as ex:
+            deb('TimeZone Exception: {}'.format(ex))
+            start = ''
+
+        try:
+            stop = TimeZone(parseXMLTVDate(elem.get('stop'), zone, autozone, local) )
+        except Exception as ex:
+            deb('TimeZone Exception: {}'.format(ex))
+            stop = ''
+
+        return Program(channel, elem.findtext('title'), start, stop, description, productionDate=date,
+                       director=director, actor=actor, episode=episode, imageLarge=live3, imageSmall=icon,
+                       categoryA=cata, categoryB=catb)
+
     deb("[EPG] Parsing EPG")
     start = datetime.datetime.now()
     #context = iter(context)
@@ -3181,92 +3268,22 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
         event, root = next(context)
     else:
         event, root = context.next()
-    elements_parsed = 0
+    elements_parsed = [0]
     category_count = {}
 
     titles = None
 
     for event, elem in context:
         if event == "end":
-            result = None
             if elem.tag in ("programme", "prog"):
-                try:
-                    channel = elem.get("channel").upper()
-                except:
-                    channel = ''
-                description = elem.findtext("desc")
-                date = elem.findtext("date")
-                director = elem.findtext("director")
-                actor = elem.findtext("actor")
-                episode = elem.findtext("episode-num")
-                iconElement = elem.findtext("sub-title")
-                cat = elem.findall("category")
-                category_list = []
-                try:
-                    c = cat[0].text
-                except:
-                    c = None
-
-                txt = c
-                if txt:
-                    if txt in category_count:
-                        category_count[txt] = category_count[txt] + 1
-                    else:
-                        category_count[txt] = 1
-                    category_list.append(txt)
-                categories = ', '.join(category_list)
-
-                live3 = ''
-                live = elem.findtext("video")
-                if live:
-                    for ele in elem:
-                        live2 = ele.findtext("aspect")
-                        if live2:
-                            live3 = live2
-                        else:
-                            live3 = elem.findtext("live")
-
-                try:
-                    cata = cat[0].text
-                except:
-                    cata = ""
-                try:
-                    catb = cat[1].text
-                except:
-                    catb = ""
-
-                try:
-                    p = re.compile('([*S|E]((S)?(\d{1,3})?\s*((E)?\d{1,5}(\/\d{1,5})?)))')
-                    episode = p.search(episode).group(1)
-                except:
-                    pass
-    
-                icon = None
-
-                if iconElement is not None:
-                    icon = iconElement
-                else:
-                    iconElementEx = elem.find("icon")
-                    if iconElementEx is not None:
-                        icon = iconElementEx.get("src")
-
-                if not description:
-                    description = strings(NO_DESCRIPTION)
-
-                try:
-                    start = TimeZone(parseXMLTVDate(elem.get('start'), zone, autozone, local) )
-                except Exception as ex:
-                    deb('TimeZone Exception: {}'.format(ex))
-                    start = ''
-
-                try:
-                    stop = TimeZone(parseXMLTVDate(elem.get('stop'), zone, autozone, local) )
-                except Exception as ex:
-                    deb('TimeZone Exception: {}'.format(ex))
-                    stop = ''
-
-                result = Program(channel, elem.findtext('title'), start, stop, description, productionDate=date, director=director, actor=actor, episode=episode, imageLarge=live3, imageSmall=icon, categoryA=cata, categoryB=catb)
-
+                # single <programme/>
+                yield progress(process_prog(elem))
+            elif elem.tag == "category":
+                category = elem.get('category')
+                for node in elem:
+                    if elem.tag in ("programme", "prog"):
+                        # <programme/> in <category/>
+                        yield progress(process_prog(elem, category))
             elif elem.tag == "channel":
                 id = elem.get("id").upper()
 
@@ -3275,9 +3292,9 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
                     titles = ', '.join([x.text.upper() for x in titleList])
                     titles = re.sub('[^\d+a-zA-Z,\s]+', '', titles)
 
-                title = elem.findtext("display-name") or elem.findtext("name") or ''
+                title = elem.findtext("name") or elem.findtext("display-name") or ''
                 title = re.sub('[^\d+a-zA-Z,\s]+', '', title)
-                
+
                 if title == "":
                     title = id
 
@@ -3287,23 +3304,14 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
                     logoFile = os.path.join(logoFolder, title.replace(' ', '_').lower() + '.png')
                     if xbmcvfs.exists(logoFile):
                         logo = logoFile
-                        
+
                 if not logo:
                     iconElement = elem.find("icon")
                     if iconElement is not None:
                         logo = iconElement.get("src")
 
-                result = Channel(id, title, logo, titles)
+                yield progress(Channel(id, title, logo, titles))
 
-            if result:
-                elements_parsed += 1
-                if elements_parsed % 500 == 0:
-                    if strings2.M_TVGUIDE_CLOSING:
-                        raise SourceUpdateCanceledException()
-                    if progress_callback:
-                        if not progress_callback(100.0 / size * f.tell()):
-                            raise SourceUpdateCanceledException()
-                yield result
         root.clear()
     f.close()
 
