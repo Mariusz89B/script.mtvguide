@@ -451,8 +451,6 @@ class PlayService(xbmc.Player, BasePlayService):
 
     def catchupTeliaPlay(self, channelInfo, utc, lutc):
         deb('catchupTeliaPlay')
-        import hashlib
-        h = hashlib.new('sha256')
 
         try:
             base = ['https://teliatv.dk', 'https://www.teliaplay.se']
@@ -503,15 +501,19 @@ class PlayService(xbmc.Player, BasePlayService):
                 'accept-language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6,fr;q=0.5',
             }
 
-            h.update(bytes(timestamp, "utf8")) # ????
-            print(h.hexdigest())
-
             params = (
                 ('operationName', 'getTvChannel'),
                 ('variables', '{"timestamp":'+timestamp+',"offset":0,"id":"'+str(self.channCid(channelInfo.cid))+'"}'),
-                ('extensions', '{"persistedQuery":{"version":1,"sha256Hash":"de9b6b8f45d8698cf5f6572d56ed387aa564a32ba8c617349221505c8222f77f"}}'),
-                #('extensions', '{"persistedQuery":{"version":1,"sha256Hash":"'+h.hexdigest()+'"}}'),
-            )
+                ('query', "\n query getTvChannel($timestamp: Timestamp!, $limit: Int, $offset: Int!, $id: String!) {\n"
+                  "channel(id: $id) {\n id\n  name\n  icons {\n    dark {\n      source\n    }\n }\n  playback {\n play "
+                  "{\n playbackSpec {\n videoId\n videoIdType\n watchMode\n accessControl\n      }\n    }\n  }"
+                  "recordAndWatch\n       programs(timestamp: $timestamp, limit: $limit, offset: $offset) {\n  id\n"
+                  "programItems {\n id \n title\n startTime{timestamp}\n endTime{timestamp}\n live\n rerun\n __typename\n"
+                  "media{\n ...sport \n ...movie \n ...episode}    }\n}}}\n"
+                  "\nfragment sport on SportEvent{id\n title\n descriptionLong\n images{\nshowcard2x3{\nsource}}\n playback\n{\nplay{\nsubscription {\nitem{\nid \nvalidFrom{\ntimestamp} \nvalidTo{\ntimestamp} \nplaybackSpec{\nvideoId \nvideoIdType \nwatchMode \naccessControl \n__typename}\n__typename }} }}\n genre\n mediaType\n __typename\n} "
+                  "\nfragment movie on Movie{id\n title\n descriptionLong\n images{\nshowcard2x3{\nsource}}\n playback\n{\nplay{\nsubscription {\nitem{\nid \nvalidFrom{\ntimestamp} \nvalidTo{\ntimestamp} \nplaybackSpec{\nvideoId \nvideoIdType \nwatchMode \naccessControl \n__typename}\n__typename }} }}\n genre\n mediaType\n __typename\n} "
+                  "\nfragment episode on Episode{id\n title\n descriptionLong\n images{\nshowcard2x3{\nsource}}\n  playback\n{\nplay{\nsubscription {\nitem{\nid \nvalidFrom{\ntimestamp} \nvalidTo{\ntimestamp} \nplaybackSpec{\nvideoId \nvideoIdType \nwatchMode \naccessControl \n__typename}\n__typename }} }}\n genre\n mediaType\n __typename\n} ")
+                )
 
             response = requests.get('https://graphql-telia.t6a.net/graphql', headers=headers, params=params, cookies=sess.cookies, verify=False).json()
 
@@ -542,12 +544,7 @@ class PlayService(xbmc.Player, BasePlayService):
                         streamType = 'MEDIA'
 
                     else:
-                        res = xbmcgui.Dialog().yesno(strings(30998), strings(59980))
-                        if res:
-                            media_id = self.channCid(channelInfo.cid)
-                            streamType = 'CHANNEL'
-                        else:
-                            return None, None
+                        return None, None
 
             catchupType = 'ONDEMAND'
             if int(end_time) > int(now):
@@ -1002,7 +999,7 @@ class PlayService(xbmc.Player, BasePlayService):
 
                                 strmUrlx, licenseUrlx = self.catchupTeliaPlay(channelInfo, utc, lutc)
 
-                                if not strmUrlx:
+                                if strmUrlx is None:
                                     res = xbmcgui.Dialog().yesno(strings(30998), strings(59980))
                                     if res:
                                         strmUrl = strmUrl

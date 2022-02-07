@@ -2645,10 +2645,12 @@ class XMLTVSource(Source):
 
         filename = self.xmltvFile
 
+        zone, autozone, local = getTimeZone()
+
         if self.xmltvFile.lower().endswith('.xml'):
             f = FileWrapper(filename)
             context = ElementTree.iterparse(f, events=("start", "end"))
-            return parseXMLTV(context, f, f.size, self.logoFolder, progress_callback)
+            return parseXMLTV(context=context, f=f, size=f.size, progress_callback=progress_callback, zone=zone, autozone=autozone, local=local, logoFolder=self.logoFolder)
 
         else:
             with open(filename, 'rb') as file:
@@ -2696,7 +2698,7 @@ class XMLTVSource(Source):
 
                 iob = io.BytesIO(content)
                 context = ElementTree.iterparse(iob, events=("start", "end"))
-                return parseXMLTV(context, iob, len(content), self.logoFolder, progress_callback)
+                return parseXMLTV(context=context, f=iob, size=len(content), progress_callback=progress_callback, zone=zone, autozone=autozone, local=local, logoFolder=self.logoFolder)
             
     def isUpdated(self, channelsLastUpdated, programLastUpdate, epgSize):
         if channelsLastUpdated is None or not xbmcvfs.exists(self.xmltvFile):
@@ -2801,13 +2803,13 @@ class MTVGUIDESource(Source):
 
         try:        
             if CUSTOM_PARSER:
-                return customParseXMLTV(xml.decode('utf-8'), progress_callback, zone, autozone, local, self.logoFolder)
+                return customParseXMLTV(xml=xml.decode('utf-8'), progress_callback=progress_callback, zone=zone, autozone=autozone, local=local, logoFolder=self.logoFolder)
 
             else:
                 iob = io.BytesIO(xml)
 
                 context = ElementTree.iterparse(iob, events=("start", "end"))
-                return parseXMLTV(context, iob, len(xml), progress_callback, zone, autozone, local, self.logoFolder)
+                return parseXMLTV(context=context, f=iob, size=len(xml), progress_callback=progress_callback, zone=zone, autozone=autozone, local=local, logoFolder=self.logoFolder)
 
         except SourceUpdateCanceledException as cancelException:
             raise cancelException
@@ -2990,11 +2992,11 @@ def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
     #regex for channel
     channelRe        = re.compile('(<channel.*?</channel>)',                re.DOTALL)
     channelIdRe      = re.compile('<channel\s*id="(.*?)">',                 re.DOTALL)
-    channelTitleRe   = re.compile('<display-name.*?>(.*?)</display-name>',  re.DOTALL)
+    channelTitleRe   = re.compile('<(?:display-)?name.*?>(.*?)</(?:display-)?name>',  re.DOTALL)
     channelIconRe    = re.compile('<icon\s*src="(.*?)"',                    re.DOTALL)
 
     #regex for program
-    programRe        = re.compile('(<programme.*?</programme>)',            re.DOTALL)
+    programRe        = re.compile('<(programme|prog)(.*?)</\1>',            re.DOTALL)
     programChannelRe = re.compile('channel="(.*?)"',                        re.DOTALL)
     programTitleRe   = re.compile('<title.*?>(.*?)</title>',                re.DOTALL)
     programStartRe   = re.compile('start="(.*?)"',                          re.DOTALL)
@@ -3187,7 +3189,7 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
     for event, elem in context:
         if event == "end":
             result = None
-            if elem.tag == "programme":
+            if elem.tag in ("programme", "prog"):
                 try:
                     channel = elem.get("channel").upper()
                 except:
@@ -3221,7 +3223,9 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
                         live2 = ele.findtext("aspect")
                         if live2:
                             live3 = live2
-                        pass
+                        else:
+                            live3 = elem.findtext("live")
+
                 try:
                     cata = cat[0].text
                 except:
@@ -3267,11 +3271,11 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
                 id = elem.get("id").upper()
 
                 if CH_DISP_NAME:
-                    titleList = elem.findall("display-name")
+                    titleList = chain(elem.findall("display-name"), elem.findall("name"))
                     titles = ', '.join([x.text.upper() for x in titleList])
                     titles = re.sub('[^\d+a-zA-Z,\s]+', '', titles)
 
-                title = elem.findtext("display-name")
+                title = elem.findtext("display-name") or elem.findtext("name") or ''
                 title = re.sub('[^\d+a-zA-Z,\s]+', '', title)
                 
                 if title == "":
