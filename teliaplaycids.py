@@ -195,7 +195,8 @@ class TeliaPlayUpdater(baseServiceUpdater):
         ADDON.setSetting('teliaplay_sess_id', str(self.sessionid))
 
 
-    def loginData(self, reconnect):
+    def loginData(self, reconnect, retry=0):
+
         try:
             url = 'https://log.tvoip.telia.com:6003/logstash'
                 
@@ -267,8 +268,9 @@ class TeliaPlayUpdater(baseServiceUpdater):
             
             response = self.sendRequest(url, post=True, headers=headers, data=json.dumps(data), verify=True, timeout=timeouts)
             if not response:
-                if reconnect:
-                    self.loginData(reconnect=True)
+                if reconnect and retry < 3:
+                    retry += 1
+                    self.loginData(reconnect=True, retry=retry)
                 else:
                     self.connErrorMessage()
                     return False

@@ -33,7 +33,7 @@ msgid "Approximately {} seconds left..."
 msgstr ""
 
 msgctxt "#30004"
-msgid "Loading of data already in progress..."
+msgid "Loading of data in progress..."
 msgstr ""
 
 msgctxt "#30005"
@@ -3597,5 +3597,5 @@ msgid "[COLOR gold][B]m-TVGuide settings[/B][/COLOR]\n\nInformation about all se
 msgstr ""
 
 msgctxt "#99999"
-msgid "[COLOR gold][B]m-TVGuide project[/B][/COLOR]\n\nWe created this project in 2013 trying to provide people with an even greater experiance watching TV. The project consisted in the modification of the TV-Guide plugin which was created by Twinther.\n \nm-TVGuide grew among the public being one of the most popular television guides for Kodi. We are continuing our work on improving the smallest details of our plugin and we hope that you will enjoy it as much as we do. Thank you for your support.\n\n[COLOR dimgrey]Copyright m-TVGuide © 2013 - 2021[/COLOR]"
+msgid "[COLOR gold][B]m-TVGuide project[/B][/COLOR]\n\nWe created this project in 2013 trying to provide people with an even greater experiance watching TV. The project consisted in the modification of the TV-Guide plugin which was created by Twinther.\n \nm-TVGuide grew among the public being one of the most popular television guides for Kodi. We are continuing our work on improving the smallest details of our plugin and we hope that you will enjoy it as much as we do. Thank you for your support.\n\n[COLOR dimgrey]Copyright m-TVGuide © 2013 - 2022[/COLOR]"
 msgstr ""

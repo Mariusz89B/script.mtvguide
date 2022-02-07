@@ -43,6 +43,7 @@
 import xbmc, xbmcaddon
 import source
 from strings import *
+from settings import Settings
 
 class Service(object):
     def __init__(self):
@@ -50,6 +51,8 @@ class Service(object):
         self.database.initialize(self.onInit)
 
     def onInit(self, success):
+        Settings.formatter()
+        
         if success:
             self.database.updateChannelAndProgramListCaches(callback=self.onCachesUpdated, startup=True)
         else:

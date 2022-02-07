@@ -33,7 +33,7 @@ msgid "Approximately {} seconds left..."
 msgstr "Ca {} sekunder tilbage..."
 
 msgctxt "#30004"
-msgid "Loading of data already in progress..."
+msgid "Loading of data in progress..."
 msgstr "Indlæsning af data i gang..."
 
 msgctxt "#30005"

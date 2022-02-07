@@ -33,8 +33,8 @@ msgid "Approximately {} seconds left..."
 msgstr "Otprilike {} sekundi..."
 
 msgctxt "#30004"
-msgid "Loading of data already in progress..."
-msgstr "Učitavanje podataka koji su već u tijeku..."
+msgid "Loading of data in progress..."
+msgstr "Učitavanje podataka u tijeku..."
 
 msgctxt "#30005"
 msgid "Mouse control"

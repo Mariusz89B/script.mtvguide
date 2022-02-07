@@ -33,8 +33,8 @@ msgid "Approximately {} seconds left..."
 msgstr "Ungefähr {} sekunden übrig..."
 
 msgctxt "#30004"
-msgid "Loading of data already in progress..."
-msgstr "Laden von daten bereits in progress..."
+msgid "Loading of data in progress..."
+msgstr "Daten werden geladen..."
 
 msgctxt "#30005"
 msgid "Mouse control"

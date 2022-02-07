@@ -50,7 +50,7 @@ import gui
 import time
 from strings import *
 from skins import Skin
-from settings import Settings
+
 Skin.fixSkinIfNeeded()
 
 class Start:
@@ -59,7 +59,6 @@ class Start:
 
     def Run(self):
         try:
-            Settings.formatter()
             w = gui.mTVGuide()
             w.doModal()
             w.close()

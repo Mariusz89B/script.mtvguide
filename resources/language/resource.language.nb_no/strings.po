@@ -33,8 +33,8 @@ msgid "Approximately {} seconds left..."
 msgstr "Omtrent {} sekunder igjen..."
 
 msgctxt "#30004"
-msgid "Loading of data already in progress..."
-msgstr "Lasting av data som allerede er i gang..."
+msgid "Loading of data in progress..."
+msgstr "Laster inn data pågår..."
 
 msgctxt "#30005"
 msgid "Mouse control"

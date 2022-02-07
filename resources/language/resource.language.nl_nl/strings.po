@@ -33,8 +33,8 @@ msgid "Approximately {} seconds left..."
 msgstr "Ongeveer {} seconden over..."
 
 msgctxt "#30004"
-msgid "Loading of data already in progress..."
-msgstr "Bezig met laden van gegevens die al in uitvoering zijn..."
+msgid "Loading of data in progress..."
+msgstr "Bezig met laden van gegevens..."
 
 msgctxt "#30005"
 msgid "Mouse control"

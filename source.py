@@ -740,29 +740,31 @@ class Database(object):
 
             try:
                 deb('[{}] Updating caches...'.format(ADDON_ID))
+
+                profilePath = self.profilePath
+
                 if progress_callback:
                     progress_callback(0)
 
                 imported = 0
                 nrOfFailures = 0
 
-                xbmcvfs.delete(os.path.join(self.profilePath, 'category_count.list'))
-
                 startTime = datetime.datetime.now()
                 for item in self.source.getDataFromExternal(date, progress_callback):
                     imported += 1
 
+                    xbmcvfs.delete(os.path.join(profilePath, 'custom_channels.list'))
+
                     channelList = []
 
-                    p = re.compile('\s<channel id="(.*?)"', re.DOTALL)
-
-                    if not xbmcvfs.exists(os.path.join(self.profilePath, 'basemap_extra.xml')):
+                    if not xbmcvfs.exists(os.path.join(profilePath, 'basemap_extra.xml')):
                         try:
-                            shutil.copyfile(os.path.join(ADDON.getAddonInfo('path'), 'resources', 'basemap_extra.xml'), os.path.join(self.profilePath, 'basemap_extra.xml'))
+                            shutil.copyfile(os.path.join(ADDON.getAddonInfo('path'), 'resources', 'basemap_extra.xml'), os.path.join(profilePath, 'basemap_extra.xml'))
                         except:
                             pass
 
-                    with open(os.path.join(self.profilePath, 'basemap_extra.xml'), 'rb') as f:
+                    p = re.compile('\s<channel id="(.*?)"', re.DOTALL)
+                    with open(os.path.join(profilePath, 'basemap_extra.xml'), 'rb') as f:
                         if sys.version_info[0] > 2:
                             base = str(f.read(), 'utf-8')
                         else:
@@ -773,7 +775,7 @@ class Database(object):
 
                         for chann in intList:
                             ch = Channel(channList[chann], channList[chann])
-                            channelList.append(ch)
+                            channelList.append(ch)                    
 
                     # Clear program list only when there is at lease one valid row available
                     if not dbChannelsUpdated:
@@ -800,7 +802,6 @@ class Database(object):
 
                         self.conn.commit()
                         updatesId = c.lastrowid
-
 
                     if imported % 10000 == 0:
                         try:
@@ -883,19 +884,17 @@ class Database(object):
             finally:
                 self.updateInProgress = False
                 c.close()
-        #END self._isCacheExpired(date):
+        # END self._isCacheExpired(date):
 
-        #zabezpieczenie: is invoked again by XBMC after a video addon exits after being invoked by XBMC.RunPlugin(..)
+        # zabezpieczenie: is invoked again by XBMC after a video addon exits after being invoked by XBMC.RunPlugin(..)
         deb('[UPD] AutoUpdateCid={} : services_updated={} : self.updateFailed={}'.format(str(UPDATE_CID), self.services_updated, self.updateFailed))
-        #jezeli nie udalo sie pobranie epg lub juz aktualizowalismy CIDy lub w opcjach nie mamy zaznaczonej automatycznek altualizacji
+        # jezeli nie udalo sie pobranie epg lub juz aktualizowalismy CIDy lub w opcjach nie mamy zaznaczonej automatycznej aktualizacji
         if self.updateFailed or updateServices == False:
             return cacheExpired #to wychodzimy - nie robimy aktualizacji
 
-        xbmcvfs.delete(os.path.join(self.profilePath, 'custom_channels.list'))
-
         epgChannels = self.epgChannels()
 
-        #Waiting for all services
+        # Waiting for all services
         deb('[UPD] Waiting for loading STRM')
         for priority in reversed(list(range(self.number_of_service_priorites))):
             for service in serviceList:
@@ -927,6 +926,7 @@ class Database(object):
             self.conn.commit()
             c.close()
             self.channelList = None
+
         except Exception as ex:
             deb('[UPD] Error deleteAllCustomStreams exception: {}'.format(getExceptionString()))
 
@@ -938,6 +938,7 @@ class Database(object):
             self.conn.commit()
             c.close()
             self.channelList = None
+
         except Exception as ex:
             deb('[UPD] Error deleting streams: {}'.format(getExceptionString()))
 
@@ -955,6 +956,8 @@ class Database(object):
                         result.update({x[0].upper(): titles})
                     except:
                         result.update({x[0].upper(): ''})
+                else:
+                    result.update({x[0].upper(): ''})
 
         return result.items()
 
@@ -3171,7 +3174,7 @@ def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
 def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoFolder):
     deb("[EPG] Parsing EPG")
     start = datetime.datetime.now()
-    context = iter(context)
+    #context = iter(context)
     if sys.version_info[0] > 2:
         event, root = next(context)
     else:
@@ -3235,12 +3238,14 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
                     pass
     
                 icon = None
-                if iconElement:
+
+                if iconElement is not None:
                     icon = iconElement
                 else:
                     iconElementEx = elem.find("icon")
-                    if iconElementEx:
+                    if iconElementEx is not None:
                         icon = iconElementEx.get("src")
+
                 if not description:
                     description = strings(NO_DESCRIPTION)
 
@@ -3278,9 +3283,10 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
                     logoFile = os.path.join(logoFolder, title.replace(' ', '_').lower() + '.png')
                     if xbmcvfs.exists(logoFile):
                         logo = logoFile
+                        
                 if not logo:
                     iconElement = elem.find("icon")
-                    if iconElement:
+                    if iconElement is not None:
                         logo = iconElement.get("src")
 
                 result = Channel(id, title, logo, titles)

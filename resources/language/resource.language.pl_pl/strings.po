@@ -22,7 +22,7 @@ msgstr "Wybrany kanał nie posiada danych epg."
 
 msgctxt "#30001"
 msgid "[B]Loading...[/B]"
-msgstr "[B]Trwa ładowanie danych...[/B]"
+msgstr "[B]Wczytywanie danych...[/B]"
 
 msgctxt "#30002"
 msgid "Downloading data..."
@@ -33,8 +33,8 @@ msgid "Approximately {} seconds left..."
 msgstr "Pozostało ok. {} sekund..."
 
 msgctxt "#30004"
-msgid "Loading of data already in progress..."
-msgstr "Ładowanie danych już jest w toku..."
+msgid "Loading of data in progress..."
+msgstr "Trwa ładowanie danych..."
 
 msgctxt "#30005"
 msgid "Mouse control"

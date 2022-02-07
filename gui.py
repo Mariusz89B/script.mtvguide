@@ -2250,8 +2250,9 @@ class mTVGuide(xbmcgui.WindowXML):
                     xbmcgui.Dialog().ok(strings(69062), strings(31021).format('script.extendedinfo')+'.')
             except:
                 None
+
             if res is True:
-                xbmcgui.Dialog().ok('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30979))
+                xbmcgui.Dialog().ok('[B]m-TVGuide [COLOR gold]EPG[/COLOR][/B]', strings(30979))
                 self.exitAddon()
 
         elif check == True:
@@ -4373,7 +4374,7 @@ class mTVGuide(xbmcgui.WindowXML):
             f.seek(0)
             f.write(new_str.encode('utf-8'))
             f.close()
-            xbmcgui.Dialog().notification('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(59993).format(epgChann.upper()))
+            xbmcgui.Dialog().notification('[B]m-TVGuide [COLOR gold]EPG[/COLOR][/B]', strings(59993).format(epgChann.upper()))
             self.reloadList(add=True)
 
     def getLog(self, filename):
@@ -4430,13 +4431,13 @@ class mTVGuide(xbmcgui.WindowXML):
                 xbmcgui.Dialog().ok(strings(30150),"\n" + "Unable to find kodi log file")
                 self._debugMenu(program)
 
-            xbmcgui.Dialog().textviewer('Log - m-TVGuide [COLOR gold]EPG[/COLOR]', logContent, True)
+            xbmcgui.Dialog().textviewer('Log - [B]m-TVGuide [COLOR gold]EPG[/COLOR][/B]', logContent, True)
             self._debugMenu(program)
 
         elif res == 3:
             size, updated = self.database.getDbEPGSize()
 
-            xbmcgui.Dialog().textviewer('Guide information - m-TVGuide [COLOR gold]EPG[/COLOR]', 'Content-Size: ' + str(formatFileSize(int( size ) )) + '[CR]Updated on: ' + str(updated.strftime("%Y-%m-%d %H:%M")), True)
+            xbmcgui.Dialog().textviewer('Guide information - [B]m-TVGuide [COLOR gold]EPG[/COLOR][/B]', 'Content-Size: ' + str(formatFileSize(int( size ) )) + '[CR]Updated on: ' + str(updated.strftime("%Y-%m-%d %H:%M")), True)
             self._debugMenu(program)
 
         elif res == 4:
@@ -4471,11 +4472,11 @@ class mTVGuide(xbmcgui.WindowXML):
             else:
                 conn_r = '[COLOR green][B]Offline[/B][/COLOR]'
 
-            xbmcgui.Dialog().textviewer('Response status - m-TVGuide [COLOR gold]EPG[/COLOR]', 'HTTP/S Status: ' + str(response.status_code) + '[CR]Internet status: ' + conn + '[CR]Repository status: ' + conn_r, True)
+            xbmcgui.Dialog().textviewer('Response status - [B]m-TVGuide [COLOR gold]EPG[/COLOR][/B]', 'HTTP/S Status: ' + str(response.status_code) + '[CR]Internet connection: ' + conn + '[CR]Repository connection: ' + conn_r, True)
             self._debugMenu(program)
 
         elif res == 5:
-            xbmcgui.Dialog().textviewer('Python version - m-TVGuide [COLOR gold]EPG[/COLOR]', 'Python ' + str(sys.version), True)
+            xbmcgui.Dialog().textviewer('Python version - [B]m-TVGuide [COLOR gold]EPG[/COLOR][/B]', 'Python ' + str(sys.version), True)
             self._debugMenu(program)
 
     def _showContextMenu(self, program):
@@ -4568,7 +4569,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.recordProgram(program)
 
             else:
-                res = xbmcgui.Dialog().select(strings(70006) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', [strings(30622), strings(30623)])
+                res = xbmcgui.Dialog().select(strings(70006) + ' - [B]m-TVGuide [COLOR gold]EPG[/COLOR][/B]', [strings(30622), strings(30623)])
                 if res < 0:
                     return
 
@@ -4638,11 +4639,11 @@ class mTVGuide(xbmcgui.WindowXML):
                 self._clearEpg()
                 self.onRedrawEPG(self.channelIdx, self.viewStartDate)
                 xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
-                xbmcgui.Dialog().notification('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(31025).format(cat))
+                xbmcgui.Dialog().notification('[B]m-TVGuide [COLOR gold]EPG[/COLOR][/B]', strings(31025).format(cat))
 
             else:
                 xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
-                xbmcgui.Dialog().notification('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(31024))
+                xbmcgui.Dialog().notification('[B]m-TVGuide [COLOR gold]EPG[/COLOR][/B]', strings(31024))
 
         elif ret == 8:
             d = xbmcgui.Dialog()
@@ -4703,7 +4704,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 xbmc.executebuiltin(b'ActivateWindow(Videos,{record_folder},return)'.format(record_folder=record_folder))
 
         elif buttonClicked == PopupMenu.C_POPUP_FAQ:
-            xbmcgui.Dialog().textviewer(strings(30994), strings(99996))
+            xbmcgui.Dialog().textviewer(strings(30994), strings(99996), True)
             self.popupMenu(program)
 
         elif buttonClicked == PopupMenu.C_POPUP_CATEGORY:
@@ -6106,19 +6107,19 @@ class mTVGuide(xbmcgui.WindowXML):
 
                             if xbmc.getCondVisibility('!Window.IsVisible(notification)'):
                                 if ADDON.getSetting('epg_display_name') == 'false':
-                                    info = xbmcgui.Dialog().ok('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30166))
+                                    info = xbmcgui.Dialog().ok('[B]m-TVGuide [COLOR gold]EPG[/COLOR][/B]', strings(30166))
 
                                 elif playlists:
-                                    info = xbmcgui.Dialog().ok('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30167))
+                                    info = xbmcgui.Dialog().ok('[B]m-TVGuide [COLOR gold]EPG[/COLOR][/B]', strings(30167))
 
                                 else:
-                                    info = xbmcgui.Dialog().ok('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30168))
+                                    info = xbmcgui.Dialog().ok('[B]m-TVGuide [COLOR gold]EPG[/COLOR][/B]', strings(30168))
 
-                                res = xbmcgui.Dialog().yesno('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30165))
+                                res = xbmcgui.Dialog().yesno('[B]m-TVGuide [COLOR gold]EPG[/COLOR][/B]', strings(30165))
                                 if res:
                                     super(mTVGuide, self).close()
                             else:
-                                res = xbmcgui.Dialog().yesno('m-TVGuide [COLOR gold]EPG[/COLOR]', strings(30169))
+                                res = xbmcgui.Dialog().yesno('[B]m-TVGuide [COLOR gold]EPG[/COLOR][/B]', strings(30169))
                                 if res:
                                     super(mTVGuide, self).close()
      
