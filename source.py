@@ -2748,15 +2748,15 @@ class MTVGUIDESource(Source):
                 data = self._getDataFromExternal(date=date, progress_callback=progress_callback, url=self.MTVGUIDEUrl)
 
                 if self.MTVGUIDEUrl2 != "" and not strings2.M_TVGUIDE_CLOSING:
-                    parsedData = self._getDataFromExternal(date=date, progress_callback=progress_callback, url=self.MTVGUIDEUrl2)
-                    data = chain(data, parsedData)
+                    parsedData_etree = self._getDataFromExternal(date=date, progress_callback=progress_callback, url=self.MTVGUIDEUrl2)
+                    data = chain(data, parsedData_etree)
                 if self.MTVGUIDEUrl3 != "" and not strings2.M_TVGUIDE_CLOSING:
-                    parsedData = self._getDataFromExternal(date=date, progress_callback=progress_callback, url=self.MTVGUIDEUrl3)
-                    data = chain(data, parsedData)
+                    parsedData_etree = self._getDataFromExternal(date=date, progress_callback=progress_callback, url=self.MTVGUIDEUrl3)
+                    data = chain(data, parsedData_etree)
 
                 for epg in EPG_LIST:
-                    parsedData = self._getDataFromExternal(date=date, progress_callback=progress_callback, url=epg)
-                    data = chain(data, parsedData)
+                    parsedData_etree = self._getDataFromExternal(date=date, progress_callback=progress_callback, url=epg)
+                    data = chain(data, parsedData_etree)
 
         except SourceFaultyEPGException as ex:
             deb("Failed to download custom EPG but addon should start!, EPG: {}".format(ex.epg))
@@ -2996,7 +2996,7 @@ def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
     channelIconRe    = re.compile('<icon\s*src="(.*?)"',                    re.DOTALL)
 
     #regex for program
-    programRe        = re.compile('<(programme|prog)(.*?)</\1>',            re.DOTALL)
+    programRe        = re.compile('(<programme.*?</programme>)',            re.DOTALL)
     programChannelRe = re.compile('channel="(.*?)"',                        re.DOTALL)
     programTitleRe   = re.compile('<title.*?>(.*?)</title>',                re.DOTALL)
     programStartRe   = re.compile('start="(.*?)"',                          re.DOTALL)
@@ -3086,15 +3086,12 @@ def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
             stop = ''
         category = programCategory.findall(program)
         
-        category_list = []
         for txt in category:
             if txt:
                 if txt in category_count:
                     category_count[txt] = category_count[txt] + 1
                 else:
                     category_count[txt] = 1
-                category_list.append(txt)
-        categories = ', '.join(category_list)
 
         try:
             desc  = programDesc.search(program).group(1)
@@ -3194,7 +3191,6 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
         iconElement = elem.findtext("sub-title")
         cat = [] if cat is None else [cat]
         cat += elem.findall("category")
-        category_list = []
         try:
             c = cat[0].text
         except:
@@ -3206,7 +3202,6 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
                 category_count[txt] = category_count[txt] + 1
             else:
                 category_count[txt] = 1
-            category_list.append(txt)
 
         live3 = ''
         live = elem.findtext("video")
