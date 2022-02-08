@@ -3048,19 +3048,6 @@ def parseTvDate(dateString, zone, autozone, local, zones={}):
 
 
 def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
-    def retext(text, regex, group=1, default=''):
-        try:
-            return regex.search(text).group(group) or ''
-        except (AttributeError, IndexError):
-            return default
-
-    def retimezone(text, regex, group=1, default=''):
-        try:
-            return parseTvDate(regex.search(text).group(group), *tzargs)
-        except Exception as ex:
-            deb('TimeZone Exception: {}'.format(ex))
-            return default
-
     def progress(result):
         elements_parsed[0] += 1
         if elements_parsed[0] % 500 == 0:
@@ -3072,28 +3059,43 @@ def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
         return result
 
     def process_prog(program, category=None):
-        channel = retext(program, programChannelRe).upper()
-        title = retext(program, programTitleRe)
-        start = retimezone(program, programStartRe)
-        stop = retimezone(program, programStopRe)
+        r = programChannelRe.search(program)
+        channel = r.group(1).upper() if r else ''
+        r = programTitleRe.search(program)
+        title = r.group(1) if r else ''
+        try:
+            start = parseTvDate(programStartRe.search(program).group(1), *tzargs)
+        except Exception as ex:
+            deb('TimeZone Exception: {}'.format(ex))
+            start = ''
+        try:
+            stop = parseTvDate(programStopRe.search(program).group(1), *tzargs)
+        except Exception as ex:
+            deb('TimeZone Exception: {}'.format(ex))
+            stop = ''
         categories = programCategory.findall(program)
         if category is not None:
             categories.insert(0, category)
         category_count.update(categories)
         categoryA, categoryB = (categories + ['', ''])[:2]
-        desc = retext(program, programDesc)
-        icon = retext(program, programIcon, default=None)
-        date = retext(program, programProdDate)
-        director = retext(program, programDirector)
-        actor = retext(program, programActor)
-        episode = retext(program, programEpisode)
-        try:
-            episode = progEpisodeNumRe.search(episode).group(1)
-        except (IndexError, AttributeError):
-            pass
-        live = retext(program, programLive)
+        r = programDesc.search(program)
+        desc = r.group(1) if r else ''
+        r = programIcon.search(program)
+        icon = r.group(1) if r else None
+        r = programProdDate.search(program)
+        date = r.group(1) if r else ''
+        r = programDirector.search(program)
+        director = r.group(1) if r else ''
+        r = programActor.search(program)
+        actor = r.group(1) if r else ''
+        r = programEpisode.search(program)
+        episode = r.group(1) if r else ''
+        r = progEpisodeNumRe.search(episode)
+        if r:
+            episode = r.group(1)
+        r = programLive.search(program)
+        live = r.group(1) if r else ''
 
-        program = None
         return Program(channel=channel, title=title, startDate=start, endDate=stop, description=desc,
                        productionDate=date, director=director, actor=actor, episode=episode,
                        imageLarge=live, imageSmall=icon, categoryA=categoryA, categoryB=categoryB)
