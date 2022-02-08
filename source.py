@@ -4,8 +4,7 @@
 #   GNU General Public License
 
 #   m-TVGuide KODI Addon
-#   Copyright (C) 2022 Mariusz89B
-#   Copyright (C) 2022 rysson
+#   Copyright (C) 2020 Mariusz89B
 #   Copyright (C) 2016 Andrzej Mleczko
 #   Copyright (C) 2014 Krzysztof Cebulski
 #   Copyright (C) 2013 Szakalit
@@ -67,7 +66,8 @@ from collections import Counter
 import threading
 import requests
 import urllib3
-import os, re, time, datetime, io, zipfile
+import os, re, time, io, zipfile
+from datetime import datetime, timedelta, timezone
 import xbmc, xbmcgui, xbmcvfs, xbmcaddon
 import shutil
 import playService
@@ -183,6 +183,16 @@ SETTINGS_TO_CHECK = ['source', 'xmltv_file', 'xmltv_logo_folder',
                      'country_code_se', 'epg_se',
                      'country_code_us', 'epg_us',
                      'country_code_radio', 'epg_radio']
+
+
+class Progress(object):
+    """Simple class to keep progrees."""
+
+    def __init__(self, total, callback=None):
+        self.n = 0
+        self.total = total
+        self.callback = callback
+
 
 class Channel(object):
     def __init__(self, id, title, logo = None, titles = None, streamUrl = None, visible = True, weight = -1):
@@ -470,7 +480,7 @@ class Database(object):
         self.event.set()
 
     def _initialize(self, cancel_requested_callback):
-        sqlite3.register_adapter(datetime.datetime, self.adapt_datetime)
+        sqlite3.register_adapter(datetime, self.adapt_datetime)
         sqlite3.register_converter(str('timestamp'), self.convert_datetime)
 
         self.alreadyTriedUnlinking = False
@@ -684,12 +694,12 @@ class Database(object):
 
                 if set_time != 'auto':
                     try:
-                        epg_interval = datetime.datetime.timestamp(datetime.datetime.now()) - set_time
+                        epg_interval = datetime.timestamp(datetime.now()) - set_time
                     except:
-                        epg_interval = time.mktime(datetime.datetime.now().timetuple()) - set_time
+                        epg_interval = time.mktime(datetime.now().timetuple()) - set_time
 
                     try:
-                        last_update = datetime.datetime.timestamp(programsLastUpdated)
+                        last_update = datetime.timestamp(programsLastUpdated)
                     except:
                         last_update = time.mktime(programsLastUpdated.timetuple())
 
@@ -703,7 +713,7 @@ class Database(object):
             self.updateFailed = True
             return
 
-    def updateChannelAndProgramListCaches(self, callback, date = datetime.datetime.now(), progress_callback = None, initializing=False, startup=False, force=False, clearExistingProgramList = True):
+    def updateChannelAndProgramListCaches(self, callback, date = datetime.now(), progress_callback = None, initializing=False, startup=False, force=False, clearExistingProgramList = True):
         self.eventQueue.append([self._updateChannelAndProgramListCaches, callback, date, progress_callback, initializing, startup, force, clearExistingProgramList])
         self.event.set()
 
@@ -712,7 +722,7 @@ class Database(object):
         import sys
 
         # todo workaround service.py 'forgets' the adapter and convert set in _initialize.. wtf?!
-        sqlite3.register_adapter(datetime.datetime, self.adapt_datetime)
+        sqlite3.register_adapter(datetime, self.adapt_datetime)
         sqlite3.register_converter(str('timestamp'), self.convert_datetime)
 
         # Start service threads
@@ -751,7 +761,7 @@ class Database(object):
                 imported = 0
                 nrOfFailures = 0
 
-                startTime = datetime.datetime.now()
+                startTime = datetime.now()
                 for item in self.source.getDataFromExternal(date, progress_callback):
                     imported += 1
 
@@ -846,7 +856,7 @@ class Database(object):
                     c.execute("UPDATE sources SET channels_updated=? WHERE id=?", [self.source.getNewUpdateTime(), self.source.KEY])
                     c.execute("UPDATE updates SET date=?, programs_updated=?, epg_size=? WHERE source=?", [dateStr, self.source.getNewUpdateTime(), self.source.getEpgSize(), self.source.KEY])
                 self.conn.commit()
-                deb('_updateChannelAndProgramListCaches parsing EPG and database update took {} seconds, nr of imports: {}, failures: {}'.format((datetime.datetime.now() - startTime).seconds, imported, nrOfFailures))
+                deb('_updateChannelAndProgramListCaches parsing EPG and database update took {} seconds, nr of imports: {}, failures: {}'.format((datetime.now() - startTime).seconds, imported, nrOfFailures))
                 self.channelList = None
                 if imported == 0:
                     self.updateFailed = True
@@ -1072,7 +1082,7 @@ class Database(object):
             
         self.channelList = None
 
-    def getEPGView(self, channelStart, date = datetime.datetime.now(), progress_callback = None, initializing = False, startup = False, force = False, clearExistingProgramList = True):
+    def getEPGView(self, channelStart, date = datetime.now(), progress_callback = None, initializing = False, startup = False, force = False, clearExistingProgramList = True):
         result = self._invokeAndBlockForResult(self._getEPGView, channelStart, date, progress_callback, initializing, startup, force, clearExistingProgramList)
         if self.updateFailed:
             raise SourceException('No channels or programs imported')
@@ -1149,12 +1159,12 @@ class Database(object):
         try:
             c.execute("INSERT INTO lastplayed(idx, start_date, end_date, played_date) VALUES(?, ?, ?, ?)", [idx, start, end, played])
         except:
-            now = datetime.datetime.now()
+            now = datetime.now()
             if sys.version_info[0] > 2:
-                start = datetime.datetime.timestamp(now)
+                start = datetime.timestamp(now)
             else:
                 from time import mktime
-                now = datetime.datetime.now()
+                now = datetime.now()
                 start = str(int(time.mktime(now.timetuple())))
             c.execute("INSERT INTO lastplayed(idx, start_date, end_date, played_date) VALUES(?, ?, ?, ?)", [idx, start, end, played])
         self.conn.commit()
@@ -1167,7 +1177,7 @@ class Database(object):
         from time import mktime
         c = self.conn.cursor()
 
-        now = datetime.datetime.now()
+        now = datetime.now()
 
         c.execute("SELECT idx, start_date, end_date, played_date FROM lastplayed")
         row = c.fetchone()
@@ -1181,21 +1191,21 @@ class Database(object):
             start = row[str('start_date')]
         except:
             if sys.version_info[0] > 2:
-                start = str(datetime.datetime.timestamp(now))
+                start = str(datetime.timestamp(now))
             else:
                 start = str(int(time.mktime(now.timetuple())))
         try:
             end = row[str('end_date')]
         except:
             if sys.version_info[0] > 2:
-                end = str(datetime.datetime.timestamp(now))
+                end = str(datetime.timestamp(now))
             else:
                  end = str(int(time.mktime(now.timetuple())))
         try:
             played = row[str('played_date')]
         except:
             if sys.version_info[0] > 2:
-                played = str(datetime.datetime.timestamp(now))
+                played = str(datetime.timestamp(now))
             else:
                 played = str(int(time.mktime(now.timetuple())))
         c.close()
@@ -1489,11 +1499,11 @@ class Database(object):
 
     def _programSearch(self, search):
         programList = []
-        now = datetime.datetime.now()
+        now = datetime.now()
         pre_days = int(ADDON.getSetting('listing_pre_days'))
         days = int(ADDON.getSetting('listing_days'))
-        startTime = now - datetime.timedelta(days=pre_days)
-        endTime = now + datetime.timedelta(days=days)
+        startTime = now - timedelta(days=pre_days)
+        endTime = now + timedelta(days=days)
         c = self.conn.cursor()
         channelList = self._getChannelList(True)
         if sys.version_info[0] > 2:
@@ -1522,11 +1532,11 @@ class Database(object):
 
     def _descriptionSearch(self, search):
         programList = []
-        now = datetime.datetime.now()
+        now = datetime.now()
         pre_days = int(ADDON.getSetting('listing_pre_days'))
         days = int(ADDON.getSetting('listing_days'))
-        startTime = now - datetime.timedelta(days=pre_days)
-        endTime = now + datetime.timedelta(days=days)
+        startTime = now - timedelta(days=pre_days)
+        endTime = now + timedelta(days=days)
         c = self.conn.cursor()
         channelList = self._getChannelList(True)
         if sys.version_info[0] > 2:
@@ -1550,11 +1560,11 @@ class Database(object):
 
     def _programCategorySearch(self, search):
         programList = []
-        now = datetime.datetime.now()
+        now = datetime.now()
         pre_days = int(ADDON.getSetting('listing_pre_days'))
         days = int(ADDON.getSetting('listing_days'))
-        startTime = now - datetime.timedelta(days=pre_days)
-        endTime = now + datetime.timedelta(days=days)
+        startTime = now - timedelta(days=pre_days)
+        endTime = now + timedelta(days=days)
         c = self.conn.cursor()
         channelList = self._getChannelList(True)
         if sys.version_info[0] > 2:
@@ -1577,9 +1587,9 @@ class Database(object):
         return self._invokeAndBlockForResult(self._getChannelListing, channel)
 
     def _getChannelListing(self, channel):
-        now = datetime.datetime.now()
+        now = datetime.now()
         days = int(ADDON.getSetting('listing_days'))
-        endTime = now + datetime.timedelta(days=days)
+        endTime = now + timedelta(days=days)
         programList = []
         c = self.conn.cursor()
 
@@ -1598,7 +1608,7 @@ class Database(object):
 
     def _channelSearch(self, search):
         programList = []
-        now = datetime.datetime.now()
+        now = datetime.now()
         c = self.conn.cursor()
         channels = self._getChannelList(True)
         channelIds = [cc.id for cc in channels]
@@ -1627,7 +1637,7 @@ class Database(object):
 
     def _getNowList(self, channel):
         programList = []
-        now = datetime.datetime.now()
+        now = datetime.now()
         channels = self._getChannelList(True)
         channelIds = [c.id for c in channels]
         channelMap = dict()
@@ -1653,7 +1663,7 @@ class Database(object):
 
     def _getNextList(self, channel):
         programList = []
-        now = datetime.datetime.now()
+        now = datetime.now()
         c = self.conn.cursor()
         channelList = self._getChannelList(True)
         for channel in channelList:
@@ -1671,7 +1681,7 @@ class Database(object):
         return self._invokeAndBlockForResult(self._getCurrentProgram, channel)
 
     def _getCurrentProgram(self, channel):
-        sqlite3.register_adapter(datetime.datetime, self.adapt_datetime)
+        sqlite3.register_adapter(datetime, self.adapt_datetime)
         sqlite3.register_converter(str('timestamp'), self.convert_datetime)
 
         program = None
@@ -1680,9 +1690,9 @@ class Database(object):
             return None
 
         try:
-            now = datetime.datetime.now() + datetime.timedelta(minutes=int(ADDON.getSetting('timebar_adjust')))
+            now = datetime.now() + timedelta(minutes=int(ADDON.getSetting('timebar_adjust')))
         except:
-            now = datetime.datetime.now()
+            now = datetime.now()
 
         c = self.conn.cursor()
         c.execute('SELECT * FROM programs WHERE channel=? AND source=? AND start_date <= ? AND end_date >= ?', [channel.id, self.source.KEY, now, now])
@@ -1690,7 +1700,7 @@ class Database(object):
         if row:
             program = Program(channel, row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')])
         else:
-            program = Program(channel, channel.title, datetime.datetime.now(), datetime.datetime.now(), '', channel.logo, 'tvguide-logo-epg.png', '', '', '')
+            program = Program(channel, channel.title, datetime.now(), datetime.now(), '', channel.logo, 'tvguide-logo-epg.png', '', '', '')
         c.close()
             
         return program
@@ -1757,10 +1767,10 @@ class Database(object):
             @param channels:
             @type channels: list of source.Channel
             @param startTime:
-            @type startTime: datetime.datetime
+            @type startTime: datetime
             @return:
             """
-            endTime = startTime + datetime.timedelta(hours = 2)
+            endTime = startTime + timedelta(hours = 2)
             channelsWithoutProg = list(channels)
 
             channelMap = dict()
@@ -1773,10 +1783,10 @@ class Database(object):
             c = self.conn.cursor()
 
             if startTime == '' or startTime is None:
-                startTime = datetime.datetime.now()
+                startTime = datetime.now()
 
             if endTime == '' or endTime is None:
-                endTime = datetime.datetime.now()
+                endTime = datetime.now()
 
             c.execute('SELECT p.*, (SELECT 1 FROM notifications n WHERE n.channel=p.channel AND n.program_title=p.title AND n.source=p.source AND (n.start_date IS NULL OR n.start_date = p.start_date)) AS notification_scheduled , (SELECT 1 FROM recordings r WHERE r.channel=p.channel AND r.program_title=p.title AND r.start_date=p.start_date AND r.source=p.source) AS recording_scheduled FROM programs p WHERE p.channel IN (\'' + ('\',\''.join(channelMap.keys())) + '\') AND p.source=? AND p.end_date > ? AND p.start_date < ?', [self.source.KEY, startTime.replace(microsecond=0), endTime.replace(microsecond=0)])
 
@@ -1796,13 +1806,13 @@ class Database(object):
             xbmcgui.Dialog().ok(ADDON.getAddonInfo('name'), strings(DATABASE_SCHEMA_ERROR_1) + '\n' + strings(DATABASE_SCHEMA_ERROR_2) + ' ' + strings(DATABASE_SCHEMA_ERROR_3))
         return programList
 
-    def _isProgramListCacheExpired(self, date = datetime.datetime.now()):
+    def _isProgramListCacheExpired(self, date = datetime.now()):
         # check if data is up-to-date in database
         dateStr = date.strftime('%Y-%m-%d')
         c = self.conn.cursor()
         c.execute('SELECT programs_updated FROM updates WHERE source=? AND date=?', [self.source.KEY, dateStr])
         row = c.fetchone()
-        today = datetime.datetime.now()
+        today = datetime.now()
         expired = row is None or row[str('programs_updated')].day != today.day
         c.close()
         return expired
@@ -1929,7 +1939,7 @@ class Database(object):
 
     def adapt_datetime(self, ts):
         if ts == '' or ts is None:
-            ts = datetime.datetime.now()
+            ts = datetime.now()
 
         try:
             adapt_datetime = time.mktime(ts.timetuple())
@@ -1940,7 +1950,7 @@ class Database(object):
 
     def convert_datetime(self, ts):
         try:
-            return datetime.datetime.fromtimestamp(float(ts))
+            return datetime.fromtimestamp(float(ts))
         except ValueError:
             return None
 
@@ -2219,9 +2229,9 @@ class Database(object):
         try:
             c.execute("INSERT INTO rss_messages(last_message) VALUES(?)", [date])
         except:
-            now = datetime.datetime.now()
+            now = datetime.now()
             if sys.version_info[0] > 2:
-                date = datetime.datetime.timestamp(now)
+                date = datetime.timestamp(now)
             else:
                 from time import time
                 date = str(time()).split('.')[0]
@@ -2280,7 +2290,7 @@ class Database(object):
     def _removeOldNotifications(self):
         debug('_removeOldNotifications')
         c = self.conn.cursor()
-        c.execute("DELETE FROM notifications WHERE start_date IS NOT NULL AND start_date <= ? AND source=?", [datetime.datetime.now() - datetime.timedelta(days=1), self.source.KEY])
+        c.execute("DELETE FROM notifications WHERE start_date IS NOT NULL AND start_date <= ? AND source=?", [datetime.now() - timedelta(days=1), self.source.KEY])
         self.conn.commit()
         c.close()
 
@@ -2288,8 +2298,8 @@ class Database(object):
         return self._invokeAndBlockForResult(self._getFullNotifications, daysLimit)
 
     def _getFullNotifications(self, daysLimit):
-        start = datetime.datetime.now()
-        end = start + datetime.timedelta(days=daysLimit)
+        start = datetime.now()
+        end = start + timedelta(days=daysLimit)
         programList = list()       
         c = self.conn.cursor()
         #once
@@ -2314,8 +2324,8 @@ class Database(object):
     def _getNotifications(self, daysLimit):
         try:
             debug('_getNotifications')
-            start = datetime.datetime.now()
-            end = start + datetime.timedelta(days = daysLimit)
+            start = datetime.now()
+            end = start + timedelta(days = daysLimit)
             c = self.conn.cursor()
             c.execute("SELECT DISTINCT c.title, p.title, p.start_date FROM notifications n, channels c, programs p WHERE n.channel = c.id AND p.channel = c.id AND n.program_title = p.title AND n.source=? AND p.start_date >= ? AND p.end_date <= ? AND (n.start_date IS NULL OR n.start_date = p.start_date)", [self.source.KEY, start, end])
             programs = c.fetchall()
@@ -2369,7 +2379,7 @@ class Database(object):
     def _removeOldRecordings(self):
         debug('_removeOldRecordings')
         c = self.conn.cursor()
-        c.execute("DELETE FROM recordings WHERE end_date <= ? AND source=?", [datetime.datetime.now() - datetime.timedelta(days=1), self.source.KEY])
+        c.execute("DELETE FROM recordings WHERE end_date <= ? AND source=?", [datetime.now() - timedelta(days=1), self.source.KEY])
         self.conn.commit()
         c.close()
 
@@ -2387,8 +2397,8 @@ class Database(object):
         return self._invokeAndBlockForResult(self._getFullRecordings, daysLimit)
 
     def _getFullRecordings(self, daysLimit):
-        start = datetime.datetime.now()
-        end = start + datetime.timedelta(days=daysLimit)
+        start = datetime.now()
+        end = start + timedelta(days=daysLimit)
         programList = list()
         c = self.conn.cursor()
         #once
@@ -2493,10 +2503,10 @@ class Source(object):
         return None
 
     def getNewUpdateTime(self):
-        return datetime.datetime.now()
+        return datetime.now()
 
     def isUpdated(self, channelsLastUpdated, programsLastUpdated, epgSize):
-        today = datetime.datetime.now()
+        today = datetime.now()
         if channelsLastUpdated is None or channelsLastUpdated.day != today.day or channelsLastUpdated.year != today.year:
             return True
         if programsLastUpdated is None or programsLastUpdated.day != today.day or programsLastUpdated.year != today.year:
@@ -2514,7 +2524,7 @@ class Source(object):
         try:
             remoteFilename = ''
             deb("[EPG] Downloading epg: {}".format(url))
-            start = datetime.datetime.now()
+            start = datetime.now()
             failCounter = 0
 
             while True:
@@ -2566,7 +2576,7 @@ class Source(object):
                 pass
 
             if url.lower().endswith('.zip') or remoteFilename.lower().endswith('.zip') or '.zip' in filename or 'zip' in contentType:
-                tnow = datetime.datetime.now()
+                tnow = datetime.now()
                 deb("[EPG] Type: .zip, Unpacking epg: {} [{} sek.]".format(url, str((tnow-start).seconds)))
                 memfile = io.BytesIO(content)
                 unziped = zipfile.ZipFile(memfile)
@@ -2575,7 +2585,7 @@ class Source(object):
                 memfile.close()
 
             if url.lower().endswith('.gz') or remoteFilename.lower().endswith('.gz') or '.gz' in filename or 'gzip' in contentType:
-                tnow = datetime.datetime.now()
+                tnow = datetime.now()
                 deb("[EPG] Type: .gz, Unpacking epg: {} [{} sek.]".format(url, str((tnow-start).seconds)))
                 import gzip
                 memfile = io.BytesIO(content)
@@ -2585,7 +2595,7 @@ class Source(object):
                 memfile.close()
 
             if url.lower().endswith('.xz') or remoteFilename.lower().endswith('.xz') or '.xz' in filename or 'xz' in contentType:
-                tnow = datetime.datetime.now()
+                tnow = datetime.now()
                 deb("[EPG] Type: .xz, Unpacking epg: {} [{} sek.]".format(url, str((tnow-start).seconds)))
                 try:
                     import lzma
@@ -2598,7 +2608,7 @@ class Source(object):
                 memfile.close()
 
             if url.lower().endswith('.bz2') or remoteFilename.lower().endswith('.bz2') or '.bz2' in filename:
-                tnow = datetime.datetime.now()
+                tnow = datetime.now()
                 deb("[EPG] Type: .bz2, Unpacking epg: {} [{} sek.]".format(url, str((tnow-start).seconds)))
                 import bz2
                 memfile = io.BytesIO(content)
@@ -2608,7 +2618,7 @@ class Source(object):
                 memfile.close()
 
             u.close()
-            tnow = datetime.datetime.now()
+            tnow = datetime.now()
             deb("[EPG] Downloading done [{} sek.]".format(str((tnow-start).seconds)))
 
 
@@ -2629,7 +2639,7 @@ class Source(object):
             raise cancelException
 
         except Exception as ex:
-            tnow = datetime.datetime.now()
+            tnow = datetime.now()
             deb("[EPG] Downloading error [{} sek.]".format(str((tnow-start).seconds)))
             raise Exception ('Error in _downloadUrl: \n{}'.format(getExceptionString()))
 
@@ -2643,7 +2653,7 @@ class XMLTVSource(Source):
             raise SourceNotConfiguredException()
 
     def getDataFromExternal(self, date, progress_callback = None):
-        start = datetime.datetime.now()
+        start = datetime.now()
 
         filename = self.xmltvFile
 
@@ -2657,7 +2667,7 @@ class XMLTVSource(Source):
         else:
             with open(filename, 'rb') as file:
                 if filename.lower().endswith('.zip') or '.zip' in filename:
-                    tnow = datetime.datetime.now()
+                    tnow = datetime.now()
                     deb("[EPG] Type: .zip, Unpacking epg: {} [{} sek.]".format(filename, str((tnow-start).seconds)))
                     memfile = io.BytesIO(file.read())
                     unziped = zipfile.ZipFile(memfile)
@@ -2666,7 +2676,7 @@ class XMLTVSource(Source):
                     memfile.close()
 
                 if filename.lower().endswith('.gz') or '.gz' in filename:
-                    tnow = datetime.datetime.now()
+                    tnow = datetime.now()
                     deb("[EPG] Type: .gz, Unpacking epg: {} [{} sek.]".format(filename, str((tnow-start).seconds)))
                     import gzip
                     memfile = io.BytesIO(file.read())
@@ -2676,7 +2686,7 @@ class XMLTVSource(Source):
                     memfile.close()
 
                 if filename.lower().endswith('.xz') or '.xz' in filename:
-                    tnow = datetime.datetime.now()
+                    tnow = datetime.now()
                     deb("[EPG] Type: .xz, Unpacking epg: {} [{} sek.]".format(url, str((tnow-start).seconds)))
                     try:
                         import lzma
@@ -2689,7 +2699,7 @@ class XMLTVSource(Source):
                     memfile.close()
 
                 if filename.lower().endswith('.bz2') or '.bz2' in filename:
-                    tnow = datetime.datetime.now()
+                    tnow = datetime.now()
                     deb("[EPG] Type: .bz2, Unpacking epg: {} [{} sek.]".format(filename, str((tnow-start).seconds)))
                     import bz2
                     memfile = io.BytesIO(file.read())
@@ -2706,7 +2716,7 @@ class XMLTVSource(Source):
         if channelsLastUpdated is None or not xbmcvfs.exists(self.xmltvFile):
             return True
         stat = xbmcvfs.Stat(self.xmltvFile)
-        fileUpdated = datetime.datetime.fromtimestamp(stat.st_mtime())
+        fileUpdated = datetime.fromtimestamp(stat.st_mtime())
         return fileUpdated > channelsLastUpdated
 
 class MTVGUIDESource(Source):
@@ -2930,62 +2940,53 @@ def getTimeZone():
 
     return ZONE, TIME_ZONE_AUTO, LOCAL_TIME
 
-def parseXMLTVDate(dateString, zone, autozone, local):
-    format_str = True
+def prepareTimeZone(zone, autozone, local):
+    """
+    Prepare timezone data to avoid do it in every loop step.
 
-    if dateString:
-        if zone and not autozone: # Manually selected
-            timeZone = zone
-            format_str = False
-
-        elif dateString.find(' ') != -1 and not autozone: # Parsed from EPG w/o Auto
-            timeZone = dateString[dateString.find(' '):]  
-
-        elif dateString.find(' ') != -1 and autozone: # Parsed from EPG with Auto
-            timeZone = dateString[dateString.find(' '):]
-            if timeZone == ' +0000' and local:
-                local_time = datetime.datetime.now(datetime.timezone(datetime.timedelta(0))).astimezone()
-                local_timezone = local_time.strftime("%z")
-                timeZone = local_timezone
-            
-        else: # Auto
-            timeZone = '+0000'
-
-        if format_str:
-            timeZone = timeZone.replace(timeZone[-2:], ':' + timeZone[-2:]).replace(' ', '') 
-            if '+:' in timeZone:
-                timeZone = timeZone.replace('+:', '+')
-
-        dateString = dateString[:dateString.find(' ')] 
-
-        t = time.strptime(dateString, '%Y%m%d%H%M%S')
-
-    return datetime.datetime(t.tm_year, t.tm_mon, t.tm_mday, t.tm_hour, t.tm_min, t.tm_sec), timeZone
-
-def TimeZone(dateString):
-    time_string, zone = (dateString)
-
-    if '+' in zone:
-        zoneInt = 1
-    elif '-' in zone:
-        zoneInt = 2
-    else:
-        zoneInt = 0
-
-    zoneDiff = time.strptime(zone[1:],'%H:%M')
-
-    if time_string:
-        if zoneInt == 2:
-            newDateString = time_string - datetime.timedelta(hours=zoneDiff.tm_hour) - datetime.timedelta(minutes=zoneDiff.tm_min) + datetime.timedelta(hours=time.localtime().tm_isdst)
-        elif zoneInt == 1:
-            newDateString = time_string + datetime.timedelta(hours=zoneDiff.tm_hour) + datetime.timedelta(minutes=zoneDiff.tm_min) + datetime.timedelta(hours=time.localtime().tm_isdst)
+    `zone`     - EPG timezone, used if not `autozone`
+    `autozone` - parse timezone from EPG if true
+    `local`    – force local timezone for UTC, used if not `autozone`
+    """
+    if autozone:
+        if local:
+            local = datetime.now(timezone.utc).astimezone().tzinfo
         else:
-            newDateString = time_string + datetime.timedelta(hours=time.localtime().tm_isdst)
+            local = None
+        zone = None
+    elif zone:
+        zone = datetime.strptime(zone, '%z').tzinfo
 
-        return newDateString
+    # tzinfo for all zones (-12:00, -1200 ...)
+    zones = {z: datetime.strptime(z, '%z').tzinfo for h in range(-12, 13) for z in ('%+03d00' % h, '%+03d:00' % h)}
+    return zone, autozone, local, zones
 
+
+def parseTvDate(dateString, zone, autozone, local, zones={}):
+    """
+    Parse date-time. Options must be prepared by prepareTimeZone().
+
+    `zone`     - EPG timezone, used if not `autozone`
+    `autozone` - parse timezone from EPG if true
+    `local`    – local timezone to force for UTC, used if `autozone`
+    `zones`    - from -12:00 to +12:00 zones DB
+    """
+    dateString, _, zoneString = dateString.partition(' ')
+    if zoneString:
+        epg_zone = zones.get(zoneString)
+        if epg_zone is None:
+            epg_zone = datetime.strptime(zoneString, '%z').tzinfo
     else:
-        return None
+        epg_zone = None
+    dt = datetime(*(int(dateString[i:i+2 if i else i+4]) for i in (0, 4, 6, 8, 10, 12)), tzinfo=epg_zone)
+    if zone:
+        dt = dt.replace(tzinfo=zone)
+    elif local and dt.tzinfo == timezone.utc:
+        dt = dt.replace(tzinfo=local)
+    if dt.tzinfo:
+        # normlalize, move time by TZ offset and remove TZ
+        dt = (dt + dt.utcoffset()).replace(tzinfo=None)
+    return dt
 
 
 def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
@@ -2997,7 +2998,7 @@ def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
 
     def retimezone(text, regex, group=1, default=''):
         try:
-            return TimeZone(parseXMLTVDate(regex.search(text).group(group), zone, autozone, local))
+            return parseTvDate(regex.search(text).group(group), *tzargs)
         except Exception as ex:
             deb('TimeZone Exception: {}'.format(ex))
             return default
@@ -3008,31 +3009,50 @@ def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
             if strings2.M_TVGUIDE_CLOSING:
                 raise SourceUpdateCanceledException()
             if progress_callback:
-                if not progress_callback( (elements_parsed[0] / float(totalElement)) * 100.0):
+                if not progress_callback((elements_parsed[0] / float(totalElement)) * 100.0):
                     raise SourceUpdateCanceledException()
         return result
 
     def process_prog(program, category=None):
-        channel = retext(program, programChannelRe).upper()
-        title = retext(program, programTitleRe)
-        start = retimezone(program, programStartRe)
-        stop = retimezone(program, programStopRe)
+        r = programChannelRe.search(program)
+        channel = r.group(1).upper() if r else ''
+
+        r = programTitleRe.search(program)
+        title = r.group(1) if r else ''
+
         categories = programCategory.findall(program)
         if category is not None:
             categories.insert(0, category)
+
         category_count.update(categories)
         categoryA, categoryB = (categories + ['', ''])[:2]
-        desc = retext(program, programDesc)
-        icon = retext(program, programIcon, default=None)
-        date = retext(program, programProdDate)
-        director = retext(program, programDirector)
-        actor = retext(program, programActor)
-        episode = retext(program, programEpisode)
-        try:
-            episode = progEpisodeNumRe.search(episode).group(1)
-        except (IndexError, AttributeError):
-            pass
-        live = retext(program, programLive)
+
+        start = retimezone(program, programStartRe)
+        stop = retimezone(program, programStopRe)
+
+        r = programDesc.search(program)
+        desc = r.group(1) if r else '' 
+
+        r = programProdDate.search(program)
+        date = r.group(1) if r else ''
+
+        r = programDirector.search(program)
+        director = r.group(1) if r else ''
+
+        r = programActor.search(program)
+        actor = r.group(1) if r else ''
+
+        r = programIcon.search(program)
+        icon = r.group(1) if r else None
+
+        r = programEpisode.search(program)
+        episode = r.group(1) if r else ''
+        if episode != '':
+            r = progEpisodeNumRe.search(episode)
+            episode = r.group(1) if r else ''
+
+        r = programLive.search(program)
+        live = r.group(1) if r else ''
 
         program = None
         return Program(channel=channel, title=title, startDate=start, endDate=stop, description=desc,
@@ -3040,7 +3060,8 @@ def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
                        imageLarge=live, imageSmall=icon, categoryA=categoryA, categoryB=categoryB)
 
     deb("[EPG] Parsing EPG by custom parser")
-    startTime = datetime.datetime.now()
+    startTime = datetime.now()
+    tzargs = prepareTimeZone(zone, autozone, local)
 
     #regex for channel
     channelRe        = re.compile(r'(<channel.*?</channel>)',                re.DOTALL)
@@ -3049,7 +3070,7 @@ def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
     channelIconRe    = re.compile(r'<icon\s*src="(.*?)"',                    re.DOTALL)
 
     #regex for program
-    programPattern   = r'<(?P<program_outer>(?:programme|prog).*?</(?:programme|prog>))>'
+    programPattern   = r'(?P<program_outer><(?:programme|prog).*?</(?:programme|prog>)>)'
     mainNodeRe       = re.compile(r'<category[^>]*?(:?category="(?P<category>[^"]*)")?.*?>(?P<category_inner>.*?)</category>|%s' % programPattern, re.DOTALL)
     programRe        = re.compile(programPattern,                            re.DOTALL)
     programChannelRe = re.compile(r'channel="(.*?)"',                        re.DOTALL)
@@ -3064,7 +3085,7 @@ def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
     programActor     = re.compile(r'<actor.*?>(.*?)</actor>',                re.DOTALL)
     programEpisode   = re.compile(r'<episode-num.*?>(.*?)</episode-num>',    re.DOTALL)
     programLive      = re.compile(r'<video>\s*<aspect>(.*?)</aspect>\s*</video>', re.DOTALL | re.MULTILINE)
-    progEpisodeNumRe = re.compile(r'([*S|E]((S)?(\d{1,3})?\s*((E)?\d{1,5}(\/\d{1,5})?)))')
+    progEpisodeNumRe = re.compile(r'([*S|E]((S)?(\d{1,3})?\s*((E)?\d{1,5}(\/\d{1,5})?)))')  # XXX ?????????????????
 
     #replace &amp; with & and Carriage Return (CR) in xml
     xml = xml.replace('&amp;', '&').replace('&lt;', '<').replace('&gt;', '>').replace('\r', '')
@@ -3130,7 +3151,7 @@ def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
     for program, category in programs:
         yield progress(process_prog(program, category=category))
 
-    tnow = datetime.datetime.now()
+    tnow = datetime.now()
     deb("[EPG] Parsing EPG by custom parser is done [{} sek.]".format(str((tnow-startTime).seconds)))
 
     thread = threading.Thread(name='catList', target=catList, args=[category_count])
@@ -3171,11 +3192,11 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
                 else:
                     live3 = elem.findtext("live")
 
-        try:
-            progEpisodeNumRe = re.compile('([*S|E]((S)?(\d{1,3})?\s*((E)?\d{1,5}(\/\d{1,5})?)))')
-            episode = progEpisodeNumRe.search(episode).group(1)
-        except:
-            pass
+        progEpisodeNumRe = re.compile('([*S|E]((S)?(\d{1,3})?\s*((E)?\d{1,5}(\/\d{1,5})?)))')
+        
+        if episode:
+            r = progEpisodeNumRe.search(episode)
+            episode = r.group(1) if r else ''
 
         icon = None
 
@@ -3190,13 +3211,13 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
             description = strings(NO_DESCRIPTION)
 
         try:
-            start = TimeZone(parseXMLTVDate(elem.get('start'), zone, autozone, local) )
+            start = parseTvDate(elem.get('start'), *tzargs)
         except Exception as ex:
             deb('TimeZone Exception: {}'.format(ex))
             start = ''
 
         try:
-            stop = TimeZone(parseXMLTVDate(elem.get('stop'), zone, autozone, local) )
+            stop = parseTvDate(elem.get('stop'), *tzargs)
         except Exception as ex:
             deb('TimeZone Exception: {}'.format(ex))
             stop = ''
@@ -3206,8 +3227,9 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
                        categoryA=categoryA, categoryB=categoryB)
 
     deb("[EPG] Parsing EPG")
-    start = datetime.datetime.now()
-    #context = iter(context)
+    start = datetime.now()
+    tzargs = prepareTimeZone(zone, autozone, local)
+
     if sys.version_info[0] > 2:
         event, root = next(context)
     else:
@@ -3261,7 +3283,7 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
 
     del context
 
-    tnow = datetime.datetime.now()
+    tnow = datetime.now()
     deb("[EPG] Parsing EPG is done [{} sek.]".format(str((tnow-start).seconds)))
 
     thread = threading.Thread(name='catList', target = catList, args=[category_count])
@@ -3325,9 +3347,9 @@ class RssFeed(object):
                     dateStr = message.group(1).strip()
                     messageStr = message.group(2).strip()
                     t = time.strptime(dateStr, self.dateFormat)
-                    messageDate = datetime.datetime(t.tm_year, t.tm_mon, t.tm_mday, t.tm_hour, t.tm_min, t.tm_sec)
+                    messageDate = datetime(t.tm_year, t.tm_mon, t.tm_mday, t.tm_hour, t.tm_min, t.tm_sec)
 
-                    if (not self.lastPrintedMessageInDB or messageDate > self.lastPrintedMessageInDB) and len(messageStr) > 0 and messageDate < datetime.datetime.now() + datetime.timedelta(days=1):
+                    if (not self.lastPrintedMessageInDB or messageDate > self.lastPrintedMessageInDB) and len(messageStr) > 0 and messageDate < datetime.now() + timedelta(days=1):
                         deb('RssFeed News: {}'.format(messageStr))
                         xbmcgui.Dialog().ok(strings(RSS_MESSAGE), "\n" + messageStr )
                         self.lastPrintedMessageInDB = messageDate
