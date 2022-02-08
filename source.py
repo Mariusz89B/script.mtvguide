@@ -2990,12 +2990,6 @@ def parseTvDate(dateString, zone, autozone, local, zones={}):
 
 
 def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
-    def retext(text, regex, group=1, default=''):
-        try:
-            return regex.search(text).group(group) or ''
-        except (AttributeError, IndexError):
-            return default
-
     def retimezone(text, regex, group=1, default=''):
         try:
             return parseTvDate(regex.search(text).group(group), *tzargs)
@@ -3099,27 +3093,26 @@ def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
     titles = None
 
     for channel in channels:
-        id = (channelIdRe.search(channel).group(1)).upper()
+        r = channelIdRe.search(channel)
+        id = r.group(1).upper() if r else ''
 
-        try:
-            title = channelTitleRe.search(channel).group(1)
+        r = channelTitleRe.search(channel)
+        title = r.group(1) if r else ''
+        if title != '':
             title = re.sub('[^\d+a-zA-Z,\s]+', '', title)
-        except:
+        else:
             title = id
 
         if CH_DISP_NAME:
-            try:
-                titleList = channelTitleRe.findall(channel)
-                titles = ', '.join([elem.upper() for elem in titleList])
+            titleList = channelTitleRe.findall(channel)
+            titles = ', '.join([elem.upper() for elem in titleList])
+            if titles != '':
                 titles = re.sub('[^\d+a-zA-Z,\s]+', '', titles)
-
-            except:
+            else:
                 titles = title
 
-        try:
-            logo = channelIconRe.search(channel).group(1)
-        except:
-            logo = None
+        r = channelIconRe.search(channel)
+        logo = r.group(1) if r else None
 
         if not logo:
             if logoFolder:
