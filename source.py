@@ -62,6 +62,7 @@ try:
 except ImportError:
     pass
 
+from collections import Counter
 import threading
 import requests
 import urllib3
@@ -2985,30 +2986,84 @@ def TimeZone(dateString):
     else:
         return None
 
+
 def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
+    def retext(text, regex, group=1, default=''):
+        try:
+            return regex.search(text).group(group) or ''
+        except (AttributeError, IndexError):
+            return default
+
+    def retimezone(text, regex, group=1, default=''):
+        try:
+            return TimeZone(parseXMLTVDate(regex.search(text).group(group), zone, autozone, local))
+        except Exception as ex:
+            deb('TimeZone Exception: {}'.format(ex))
+            return default
+
+    def progress(result):
+        elements_parsed[0] += 1
+        if elements_parsed[0] % 500 == 0:
+            if strings2.M_TVGUIDE_CLOSING:
+                raise SourceUpdateCanceledException()
+            if progress_callback:
+                if not progress_callback( (elements_parsed / float(totalElement)) * 100.0):
+                    raise SourceUpdateCanceledException()
+        return result
+
+    def process_prog(program, category=None):
+        channel = retext(program, programChannelRe).upper()
+        title = retext(program, programTitleRe)
+        start = retimezone(program, programStartRe)
+        stop = retimezone(program, programStopRe)
+        categories = programCategory.findall(program)
+        if category is not None:
+            categories.insert(0, category)
+        category_count.update(categories)
+        categoryA, categoryB = (categories + ['', ''])[:2]
+        desc = retext(program, programDesc)
+        icon = retext(program, programIcon, default=None)
+        date = retext(program, programProdDate)
+        director = retext(program, programDirector)
+        actor = retext(program, programActor)
+        episode = retext(program, programEpisode)
+        try:
+            episode = progEpisodeNumRe.search(episode).group(1)
+        except (IndexError, AttributeError):
+            pass
+        live = retext(program, programLive)
+
+        program = None
+        return Program(channel=channel, title=title, startDate=start, endDate=stop, description=desc,
+                       productionDate=date, director=director, actor=actor, episode=episode,
+                       imageLarge=live, imageSmall=icon, categoryA=categoryA, categoryB=categoryB)
+
     deb("[EPG] Parsing EPG by custom parser")
     startTime = datetime.datetime.now()
 
     #regex for channel
-    channelRe        = re.compile('(<channel.*?</channel>)',                re.DOTALL)
-    channelIdRe      = re.compile('<channel\s*id="(.*?)">',                 re.DOTALL)
-    channelTitleRe   = re.compile('<(?:display-)?name.*?>(.*?)</(?:display-)?name>',  re.DOTALL)
-    channelIconRe    = re.compile('<icon\s*src="(.*?)"',                    re.DOTALL)
+    channelRe        = re.compile(r'(<channel.*?</channel>)',                re.DOTALL)
+    channelIdRe      = re.compile(r'<channel\s*id="(.*?)">',                 re.DOTALL)
+    channelTitleRe   = re.compile(r'<(?:display-)?name.*?>(.*?)</(?:display-)?name>',  re.DOTALL)
+    channelIconRe    = re.compile(r'<icon\s*src="(.*?)"',                    re.DOTALL)
 
     #regex for program
-    programRe        = re.compile('(<programme.*?</programme>)',            re.DOTALL)
-    programChannelRe = re.compile('channel="(.*?)"',                        re.DOTALL)
-    programTitleRe   = re.compile('<title.*?>(.*?)</title>',                re.DOTALL)
-    programStartRe   = re.compile('start="(.*?)"',                          re.DOTALL)
-    programStopRe    = re.compile('stop="(.*?)"',                           re.DOTALL)
-    programDesc      = re.compile('<desc.*?>(.*?)</desc>',                  re.DOTALL)
-    programIcon      = re.compile('<icon\s*src="(.*?)"',                    re.DOTALL)
-    programCategory  = re.compile('<category.*?>(.*?)</category>',          re.DOTALL)
-    programProdDate  = re.compile('<date.*?>(.*?)</date>',                  re.DOTALL)
-    programDirector  = re.compile('<director.*?>(.*?)</director>',          re.DOTALL)
-    programActor     = re.compile('<actor.*?>(.*?)</actor>',                re.DOTALL)
-    programEpisode   = re.compile('<episode-num.*?>(.*?)</episode-num>',    re.DOTALL)
-    programLive      = re.compile('<video>\s*<aspect>(.*?)</aspect>\s*</video>', re.DOTALL | re.MULTILINE)
+    programPattern   = r'<(?:programme|prog).*?>(?P<program_inner>.*?)</(?:programme|prog>)>'
+    mainNodeRe       = re.compile(r'<category[^>]*?(:?category="(?P<category>[^"]*)")?.*?>(?P<category_inner>.*?)</category>|%s' % programPattern, re.DOTALL)
+    programRe        = re.compile(programPattern,                            re.DOTALL)
+    programChannelRe = re.compile(r'channel="(.*?)"',                        re.DOTALL)
+    programTitleRe   = re.compile(r'<title.*?>(.*?)</title>',                re.DOTALL)
+    programStartRe   = re.compile(r'start="(.*?)"',                          re.DOTALL)
+    programStopRe    = re.compile(r'stop="(.*?)"',                           re.DOTALL)
+    programDesc      = re.compile(r'<desc.*?>(.*?)</desc>',                  re.DOTALL)
+    programIcon      = re.compile(r'<icon\s*src="(.*?)"',                    re.DOTALL)
+    programCategory  = re.compile(r'<category.*?>(.*?)</category>',          re.DOTALL)
+    programProdDate  = re.compile(r'<date.*?>(.*?)</date>',                  re.DOTALL)
+    programDirector  = re.compile(r'<director.*?>(.*?)</director>',          re.DOTALL)
+    programActor     = re.compile(r'<actor.*?>(.*?)</actor>',                re.DOTALL)
+    programEpisode   = re.compile(r'<episode-num.*?>(.*?)</episode-num>',    re.DOTALL)
+    programLive      = re.compile(r'<video>\s*<aspect>(.*?)</aspect>\s*</video>', re.DOTALL | re.MULTILINE)
+    progEpisodeNumRe = re.compile(r'([*S|E]((S)?(\d{1,3})?\s*((E)?\d{1,5}(\/\d{1,5})?)))')  # XXX ?????????????????
 
     #replace &amp; with & and Carriage Return (CR) in xml
     xml = xml.replace('&amp;', '&').replace('&lt;', '<').replace('&gt;', '>').replace('\r', '')
@@ -3058,117 +3113,28 @@ def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
 
     del channels[:]
     elements_parsed = 0
-    category_count = {}
-    programs = programRe.findall(xml)
-    
+    category_count = Counter()
+    programs = []  # (program_inner_text, category_name)
+    for node in mainNodeRe.finditer(xml):
+        category_inner = node.group('category_inner')
+        if category_inner is not None:
+            for subnode in programRe.finditer(category_inner):
+                programs.append((subnode, node.group('category')))
+        program_inner = node.group('program_inner')
+        if program_inner is not None:
+            programs.append((node, None))
+
     del xml
-    xml = None
     totalElement = len(programs)
-
-    for program in programs:
-        try:
-            channel = (programChannelRe.search(program).group(1)).upper()
-        except:
-            channel = ''
-        try:
-            title = programTitleRe.search(program).group(1)
-        except AttributeError:
-            title = ''
-        try:
-            start = TimeZone(parseXMLTVDate( programStartRe.search(program).group(1), zone, autozone, local) )
-        except Exception as ex:
-            deb('TimeZone Exception: {}'.format(ex))
-            start = ''
-        try:
-            stop = TimeZone(parseXMLTVDate( programStopRe.search(program).group(1), zone, autozone, local) )
-        except Exception as ex:
-            deb('TimeZone Exception: {}'.format(ex))
-            stop = ''
-        category = programCategory.findall(program)
-        
-        for txt in category:
-            if txt:
-                if txt in category_count:
-                    category_count[txt] = category_count[txt] + 1
-                else:
-                    category_count[txt] = 1
-
-        try:
-            desc  = programDesc.search(program).group(1)
-        except:
-            desc = ''
-
-        try:
-            icon  = programIcon.search(program).group(1)
-        except:
-            icon = None
-
-        try:
-            date  = programProdDate.search(program).group(1)
-        except:
-            date = ''
-
-        try:
-            director  = programDirector.search(program).group(1)
-        except:
-            director = ''
-
-        try:
-            actor  = programActor.search(program).group(1)
-        except:
-            actor = ''
-
-        try:
-            episode  = programEpisode.search(program).group(1)
-
-            try:
-                p = re.compile('([*S|E]((S)?(\d{1,3})?\s*((E)?\d{1,5}(\/\d{1,5})?)))')
-                episode = p.search(episode).group(1)
-            except:
-                pass
-
-        except:
-            episode = ''
-
-        try:
-            category = programCategory.findall(program)
-            catlength = len(category)
-            if catlength > 0:
-                categoryA = category[0]
-                if catlength > 1:
-                    categoryB = category[1]
-                else:
-                    categoryB = ''
-            else:
-                categoryA = ''
-                categoryB = ''
-        except:
-            categoryA = ''
-            categoryB = ''
-
-        try:
-            live = programLive.search(program).group(1)
-        except:
-            live = ''
-
-        program = None
-        yield Program(channel=channel, title=title, startDate=start, endDate=stop, description=desc, productionDate=date, director=director, actor=actor, episode=episode, imageLarge=live, imageSmall=icon, categoryA=categoryA, categoryB=categoryB)
-
-        elements_parsed +=1
-        if elements_parsed % 500 == 0:
-            if strings2.M_TVGUIDE_CLOSING:
-                raise SourceUpdateCanceledException()
-            if progress_callback:
-                if not progress_callback( (elements_parsed / float(totalElement)) * 100.0):
-                    raise SourceUpdateCanceledException()
-
-    del programs[:]
+    for program, category in programs:
+        yield progress(process_prog(program, category=category))
 
     tnow = datetime.datetime.now()
     deb("[EPG] Parsing EPG by custom parser is done [{} sek.]".format(str((tnow-startTime).seconds)))
 
-    thread = threading.Thread(name='catList', target = catList, args=[category_count])
+    thread = threading.Thread(name='catList', target=catList, args=[category_count])
     thread.start()
+
 
 def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoFolder):
     def progress(result):
@@ -3181,7 +3147,7 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
                     raise SourceUpdateCanceledException()
         return result
 
-    def process_prog(elem, cat=None):
+    def process_prog(elem, category=None):
         channel = elem.get("channel", "").upper()
         description = elem.findtext("desc")
         date = elem.findtext("date")
@@ -3189,20 +3155,10 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
         actor = elem.findtext("actor")
         episode = elem.findtext("episode-num")
         iconElement = elem.findtext("sub-title")
-        cat = [] if cat is None else [cat]
-        cat += elem.findall("category")
-        try:
-            c = cat[0].text
-        except:
-            c = None
-
-        txt = c
-        if txt:
-            if txt in category_count:
-                category_count[txt] = category_count[txt] + 1
-            else:
-                category_count[txt] = 1
-
+        categories = [node.text for node in elem.findall("category")]
+        if category is not None:
+            categories.insert(0, category)
+        category_count.update(categories)
         live3 = ''
         live = elem.findtext("video")
         if live:
@@ -3264,7 +3220,7 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
     else:
         event, root = context.next()
     elements_parsed = [0]
-    category_count = {}
+    category_count = Counter()
 
     titles = None
 
