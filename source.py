@@ -183,6 +183,16 @@ SETTINGS_TO_CHECK = ['source', 'xmltv_file', 'xmltv_logo_folder',
                      'country_code_us', 'epg_us',
                      'country_code_radio', 'epg_radio']
 
+
+class Progress(object):
+    """Simple class to keep progrees."""
+
+    def __init__(self, total, callback=None):
+        self.n = 0
+        self.total = total
+        self.callback = callback
+
+
 class Channel(object):
     def __init__(self, id, title, logo = None, titles = None, streamUrl = None, visible = True, weight = -1):
         self.id = id
@@ -3007,7 +3017,7 @@ def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
             if strings2.M_TVGUIDE_CLOSING:
                 raise SourceUpdateCanceledException()
             if progress_callback:
-                if not progress_callback( (elements_parsed / float(totalElement)) * 100.0):
+                if not progress_callback((elements_parsed[0] / float(totalElement)) * 100.0):
                     raise SourceUpdateCanceledException()
         return result
 
@@ -3048,7 +3058,7 @@ def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
     channelIconRe    = re.compile(r'<icon\s*src="(.*?)"',                    re.DOTALL)
 
     #regex for program
-    programPattern   = r'<(?:programme|prog).*?>(?P<program_inner>.*?)</(?:programme|prog>)>'
+    programPattern   = r'(?P<program_outer><(?:programme|prog).*?</(?:programme|prog>)>)'
     mainNodeRe       = re.compile(r'<category[^>]*?(:?category="(?P<category>[^"]*)")?.*?>(?P<category_inner>.*?)</category>|%s' % programPattern, re.DOTALL)
     programRe        = re.compile(programPattern,                            re.DOTALL)
     programChannelRe = re.compile(r'channel="(.*?)"',                        re.DOTALL)
@@ -3112,17 +3122,17 @@ def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
         raise SourceUpdateCanceledException()
 
     del channels[:]
-    elements_parsed = 0
+    elements_parsed = [0]
     category_count = Counter()
-    programs = []  # (program_inner_text, category_name)
+    programs = []  # (program_outer, category_name)
     for node in mainNodeRe.finditer(xml):
         category_inner = node.group('category_inner')
         if category_inner is not None:
             for subnode in programRe.finditer(category_inner):
-                programs.append((subnode, node.group('category')))
-        program_inner = node.group('program_inner')
-        if program_inner is not None:
-            programs.append((node, None))
+                programs.append((subnode.group('program_outer'), node.group('category')))
+        program_outer = node.group('program_outer')
+        if program_outer is not None:
+            programs.append((program_outer, None))
 
     del xml
     totalElement = len(programs)
@@ -3159,6 +3169,7 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
         if category is not None:
             categories.insert(0, category)
         category_count.update(categories)
+        categoryA, categoryB = (categories + ['', ''])[:2]
         live3 = ''
         live = elem.findtext("video")
         if live:
@@ -3168,15 +3179,6 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
                     live3 = live2
                 else:
                     live3 = elem.findtext("live")
-
-        try:
-            cata = cat[0].text
-        except:
-            cata = ""
-        try:
-            catb = cat[1].text
-        except:
-            catb = ""
 
         try:
             p = re.compile('([*S|E]((S)?(\d{1,3})?\s*((E)?\d{1,5}(\/\d{1,5})?)))')
@@ -3210,7 +3212,7 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
 
         return Program(channel, elem.findtext('title'), start, stop, description, productionDate=date,
                        director=director, actor=actor, episode=episode, imageLarge=live3, imageSmall=icon,
-                       categoryA=cata, categoryB=catb)
+                       categoryA=categoryA, categoryB=categoryB)
 
     deb("[EPG] Parsing EPG")
     start = datetime.datetime.now()
