@@ -3017,7 +3017,8 @@ def prepareTimeZone(zone, autozone, local):
     elif zone:
         zone = datetime.strptime(zone, '%z').tzinfo
 
-    zones = {z: datetime.strptime(z, '%z').tzinfo for h in range(-12, 13) for z in ('%+03d:00' % h,)}
+    # tzinfo for all zones (-12:00, -1200 ...)
+    zones = {z: datetime.strptime(z, '%z').tzinfo for h in range(-12, 13) for z in ('%+03d00' % h, '%+03d:00' % h)}
     return zone, autozone, local, zones
 
 
@@ -3027,7 +3028,8 @@ def parseTvDate(dateString, zone, autozone, local, zones={}):
 
     `zone`     - EPG timezone, used if not `autozone`
     `autozone` - parse timezone from EPG if true
-    `local`    – local timezone to force for UTC, used if not `autozone`
+    `local`    – local timezone to force for UTC, used if `autozone`
+    `zones`    - from -12:00 to +12:00 zones DB
     """
     dateString, _, zoneString = dateString.partition(' ')
     if zoneString:
@@ -3038,9 +3040,9 @@ def parseTvDate(dateString, zone, autozone, local, zones={}):
         epg_zone = None
     dt = datetime(*(int(dateString[i:i+2 if i else i+4]) for i in (0, 4, 6, 8, 10, 12)), tzinfo=epg_zone)
     if zone:
-        dt.replace(tzinfo=zone)
-    elif local and dt.tzinfo is None or dt.tzinfo == timezone.utc:
-        dt.replace(tzinfo=local)
+        dt = dt.replace(tzinfo=zone)
+    elif local and dt.tzinfo == timezone.utc:
+        dt = dt.replace(tzinfo=local)
     if dt.tzinfo:
         # normlalize, move time by TZ offset and remove TZ
         dt = (dt + dt.utcoffset()).replace(tzinfo=None)
