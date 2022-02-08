@@ -98,7 +98,7 @@ class CmoreUpdater(baseServiceUpdater):
         self.servicePriority    = int(ADDON.getSetting('priority_cmore'))
         self.addDuplicatesToList = True
         self.locale = locale
-        self.locale_suffix = self.locale.split('_')[1].lower()
+        self.locale_suffix = self.locale.partition('_')[2].lower()
         self.http_session = requests.Session()
         if sys.version_info[0] > 2:
             try:
