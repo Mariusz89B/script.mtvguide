@@ -3041,6 +3041,9 @@ def parseTvDate(dateString, zone, autozone, local, zones={}):
         dt.replace(tzinfo=zone)
     elif local and dt.tzinfo is None or dt.tzinfo == timezone.utc:
         dt.replace(tzinfo=local)
+    if dt.tzinfo:
+        # normlalize, move time by TZ offset and remove TZ
+        dt = (dt + dt.utcoffset()).replace(tzinfo=None)
     return dt
 
 
