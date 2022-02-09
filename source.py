@@ -184,6 +184,17 @@ SETTINGS_TO_CHECK = ['source', 'xmltv_file', 'xmltv_logo_folder',
                      'country_code_us', 'epg_us',
                      'country_code_radio', 'epg_radio']
 
+class proxydt(datetime):
+    @staticmethod
+    def strptime(date_string, format):
+        import time
+        try:
+            res = datetime.strptime(date_string, format)
+        except:
+            res = datetime(*(time.strptime(date_string, format)[0:6]))
+        return res
+
+proxydt = proxydt
 
 class Progress(object):
     """Simple class to keep progrees."""
@@ -2948,17 +2959,18 @@ def prepareTimeZone(zone, autozone, local):
     `autozone` - parse timezone from EPG if true
     `local`    – force local timezone for UTC, used if not `autozone`
     """
+    
     if autozone:
         if local:
-            local = datetime.now(timezone.utc).astimezone().tzinfo
+            local = proxydt.now(timezone.utc).astimezone().tzinfo
         else:
             local = None
         zone = None
     elif zone:
-        zone = datetime.strptime(zone, '%z').tzinfo
+        zone = proxydt.strptime(zone, '%z').tzinfo
 
     # tzinfo for all zones (-12:00, -1200 ...)
-    zones = {z: datetime.strptime(z, '%z').tzinfo for h in range(-12, 13) for z in ('%+03d00' % h, '%+03d:00' % h)}
+    zones = {z: proxydt.strptime(z, '%z').tzinfo for h in range(-12, 13) for z in ('%+03d00' % h, '%+03d:00' % h)}
     return zone, autozone, local, zones
 
 
@@ -3078,8 +3090,8 @@ def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
     programDirector  = re.compile(r'<director.*?>(.*?)</director>',          re.DOTALL)
     programActor     = re.compile(r'<actor.*?>(.*?)</actor>',                re.DOTALL)
     programEpisode   = re.compile(r'<episode-num.*?>(.*?)</episode-num>',    re.DOTALL)
-    programLive      = re.compile(r'<video>\s*<aspect>(.*?)</aspect>\s*</video>', re.DOTALL | re.MULTILINE)
-    progEpisodeNumRe = re.compile(r'([*S|E]((S)?(\d{1,3})?\s*((E)?\d{1,5}(\/\d{1,5})?)))')  # XXX ?????????????????
+    programLive      = re.compile(r'<date>live</date>',                      re.DOTALL)
+    progEpisodeNumRe = re.compile(r'([*S|E]((S)?(\d{1,3})?\s*((E)?\d{1,5}(\/\d{1,5})?)))')
 
     #replace &amp; with & and Carriage Return (CR) in xml
     xml = xml.replace('&amp;', '&').replace('&lt;', '<').replace('&gt;', '>').replace('\r', '')
@@ -3175,15 +3187,8 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
             categories.insert(0, category)
         category_count.update(categories)
         categoryA, categoryB = (categories + ['', ''])[:2]
-        live3 = ''
-        live = elem.findtext("video")
-        if live:
-            for ele in elem:
-                live2 = ele.findtext("aspect")
-                if live2:
-                    live3 = live2
-                else:
-                    live3 = elem.findtext("live")
+        
+        live = date == 'live'
 
         progEpisodeNumRe = re.compile('([*S|E]((S)?(\d{1,3})?\s*((E)?\d{1,5}(\/\d{1,5})?)))')
         
@@ -3216,7 +3221,7 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
             stop = ''
 
         return Program(channel, elem.findtext('title'), start, stop, description, productionDate=date,
-                       director=director, actor=actor, episode=episode, imageLarge=live3, imageSmall=icon,
+                       director=director, actor=actor, episode=episode, imageLarge=live, imageSmall=icon,
                        categoryA=categoryA, categoryB=categoryB)
 
     deb("[EPG] Parsing EPG")
