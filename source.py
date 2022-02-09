@@ -2959,7 +2959,7 @@ def prepareTimeZone(zone, autozone, local):
     `autozone` - parse timezone from EPG if true
     `local`    – force local timezone for UTC, used if not `autozone`
     """
-    
+
     if autozone:
         if local:
             local = proxydt.now(timezone.utc).astimezone().tzinfo
@@ -2987,7 +2987,7 @@ def parseTvDate(dateString, zone, autozone, local, zones={}):
     if zoneString:
         epg_zone = zones.get(zoneString)
         if epg_zone is None:
-            epg_zone = datetime.strptime(zoneString, '%z').tzinfo
+            epg_zone = proxydt.strptime(zoneString, '%z').tzinfo
     else:
         epg_zone = None
     dt = datetime(*(int(dateString[i:i+2 if i else i+4]) for i in (0, 4, 6, 8, 10, 12)), tzinfo=epg_zone)
@@ -3040,7 +3040,8 @@ def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
         desc = r.group(1) if r else '' 
 
         r = programProdDate.search(program)
-        date = r.group(1) if r else ''
+        live = r and r.group(1) or ''
+        date = r and r.group(2) or ''
 
         r = programDirector.search(program)
         director = r.group(1) if r else ''
@@ -3056,9 +3057,6 @@ def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
         if episode != '':
             r = progEpisodeNumRe.search(episode)
             episode = r.group(1) if r else ''
-
-        r = programLive.search(program)
-        live = r.group(1) if r else ''
 
         program = None
         return Program(channel=channel, title=title, startDate=start, endDate=stop, description=desc,
@@ -3086,11 +3084,11 @@ def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
     programDesc      = re.compile(r'<desc.*?>(.*?)</desc>',                  re.DOTALL)
     programIcon      = re.compile(r'<icon\s*src="(.*?)"',                    re.DOTALL)
     programCategory  = re.compile(r'<category.*?>(.*?)</category>',          re.DOTALL)
-    programProdDate  = re.compile(r'<date.*?>(.*?)</date>',                  re.DOTALL)
+    programProdDate  = re.compile(r'<date.*?>(?:(live)|(.*?))</date>',       re.DOTALL)
     programDirector  = re.compile(r'<director.*?>(.*?)</director>',          re.DOTALL)
     programActor     = re.compile(r'<actor.*?>(.*?)</actor>',                re.DOTALL)
     programEpisode   = re.compile(r'<episode-num.*?>(.*?)</episode-num>',    re.DOTALL)
-    programLive      = re.compile(r'<date>live</date>',                      re.DOTALL)
+    programLive      = re.compile(r'<date.*?>(live)</date>',                   re.DOTALL | re.MULTILINE)
     progEpisodeNumRe = re.compile(r'([*S|E]((S)?(\d{1,3})?\s*((E)?\d{1,5}(\/\d{1,5})?)))')
 
     #replace &amp; with & and Carriage Return (CR) in xml
@@ -3188,7 +3186,9 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
         category_count.update(categories)
         categoryA, categoryB = (categories + ['', ''])[:2]
         
-        live = date == 'live'
+        live = ''
+        if date == 'live':
+            live = date
 
         progEpisodeNumRe = re.compile('([*S|E]((S)?(\d{1,3})?\s*((E)?\d{1,5}(\/\d{1,5})?)))')
         
