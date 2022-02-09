@@ -314,10 +314,10 @@ class WpPilotUpdater(baseServiceUpdater):
             except:
                 if 'hls@live:abr' in response[u'data'][u'stream_channel'][u'streams'][0][u'type']:
                     manifest = response[u'data'][u'stream_channel'][u'streams'][0][u'url'][0]
-                    stream = manifest + '|user-agent=' + quote(headers['user-agent'])
+                    stream = response['data']['stream_channel']['streams'][0]['url'][0] + '|user-agent=' + headers['user-agent'] + '&cookie=' + cookies
                 else:
                     manifest = response[u'data'][u'stream_channel'][u'streams'][1][u'url'][0]
-                    stream = manifest + '|user-agent=' + quote(headers['user-agent'])
+                    stream = response['data']['stream_channel']['streams'][1]['url'][0] + '|user-agent=' + headers['user-agent'] + '&cookie=' + cookies
 
             if stream is not None and stream != "":
                 chann.strm = stream

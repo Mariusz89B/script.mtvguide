@@ -1003,7 +1003,7 @@ class RecordService(BasePlayService):
             for header in headers:
                 #deb('Got: {}'.format(header))
                 if 'user-agent' in header:
-                    p = re.compile('user-agent=(.*?)$')
+                    p = re.compile('user-agent=(.*?)$', re.IGNORECASE)
 
                     if p.match(header):
                         UA = p.search(header).group(1)
@@ -1011,7 +1011,7 @@ class RecordService(BasePlayService):
                     newHeader = newHeader + "User-Agent: {}\r\n".format(UA)
 
                 elif 'cookie' in header:
-                    p = re.compile('cookie=(.*?)$')
+                    p = re.compile('cookie=(.*?)$', re.IGNORECASE)
 
                     if p.match(header):
                         cookie = p.search(header).group(1)
@@ -1020,6 +1020,9 @@ class RecordService(BasePlayService):
 
                 else:
                     newHeader = newHeader + "{}\r\n".format(header)
+
+                UA
+                newHeader = newHeader + quote(UA)
 
             recordCommand.append("-headers")
             recordCommand.append(newHeader)
@@ -1420,7 +1423,7 @@ class RecordService(BasePlayService):
                 for header in headers:
                     #deb('Got: {}'.format(header))
                     if 'user-agent' in header:
-                        p = re.compile('user-agent=(.*?)$')
+                        p = re.compile('user-agent=(.*?)$', re.IGNORECASE)
 
                         if p.match(header):
                             UA = p.search(header).group(1)
@@ -1428,7 +1431,7 @@ class RecordService(BasePlayService):
                         newHeader = newHeader + "User-Agent: {}\r\n".format(UA)
 
                     elif 'cookie' in header:
-                        p = re.compile('cookie=(.*?)$')
+                        p = re.compile('cookie=(.*?)$', re.IGNORECASE)
 
                         if p.match(header):
                             cookie = p.search(header).group(1)
