@@ -42,10 +42,15 @@
 
 import sys
 
+if sys.version_info[0] > 2:
+    PY3 = True
+else:
+    PY3 = False
+
 import requests
 import urllib3
 
-if sys.version_info[0] > 2:
+if PY3:
     from requests.exceptions import HTTPError, ConnectionError, Timeout, RequestException
     import urllib.request as Request
     from urllib.error import HTTPError, URLError
@@ -90,7 +95,7 @@ class PlaylistUpdater(baseServiceUpdater):
         self.addDuplicatesToList = True
         self.useOnlineMap       = False
 
-        if sys.version_info[0] > 2:
+        if PY3:
             try:
                 self.profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
             except:
@@ -109,7 +114,7 @@ class PlaylistUpdater(baseServiceUpdater):
         if self.source == '0':
             self.url = ADDON.getSetting('{}_url'.format(self.serviceName))
         else:
-            if sys.version_info[0] > 2:
+            if PY3:
                 self.url = xbmcvfs.translatePath(ADDON.getSetting('{}_file'.format(self.serviceName)))
             else:
                 self.url = xbmc.translatePath(ADDON.getSetting('{}_file'.format(self.serviceName)))
@@ -172,7 +177,7 @@ class PlaylistUpdater(baseServiceUpdater):
         n = datetime.datetime.now()
         d = datetime.timedelta(days=int(ADDON.getSetting('{playlist}_refr_days'.format(playlist=self.serviceName))))
 
-        if sys.version_info[0] > 2:
+        if PY3:
             tnow = datetime.datetime.timestamp(n)
         else:
             from time import time
@@ -196,7 +201,7 @@ class PlaylistUpdater(baseServiceUpdater):
         
         urlpath = os.path.join(self.profilePath, 'playlists', '{playlist}.url'.format(playlist=self.serviceName))
         if os.path.exists(urlpath):
-            if sys.version_info[0] > 2:
+            if PY3:
                 with open(urlpath, 'r', encoding='utf-8') as f:
                     url = [line.strip() for line in f]
             else:
@@ -219,14 +224,14 @@ class PlaylistUpdater(baseServiceUpdater):
                     if self.serviceName in filename:
                         os.remove(os.path.join(path, f))
 
-                if sys.version_info[0] > 2:
+                if PY3:
                     with open(filepath, 'w', encoding='utf-8') as f:
                         f.write("\n".join(content))
                 else:
                     with codecs.open(filepath, 'w', encoding='utf-8') as f:
                         f.write('\n'.join(content))
 
-                if sys.version_info[0] > 2:
+                if PY3:
                     with open(urlpath, 'w', encoding='utf-8') as f2:
                         f2.write(url_setting)
                 else:
@@ -236,7 +241,7 @@ class PlaylistUpdater(baseServiceUpdater):
         else:
             deb('[UPD] Cache playlist: Read')
             try:  
-                if sys.version_info[0] > 2:
+                if PY3:
                     with open(filepath, 'r', encoding='utf-8') as f:
                         content = [line.strip() for line in f]
                 else:
@@ -314,7 +319,7 @@ class PlaylistUpdater(baseServiceUpdater):
                     raise Exception
             else:
                 try:
-                    if sys.version_info[0] > 2:
+                    if PY3:
                         with open(path, 'r', encoding='utf-8') as f:
                             tmpcontent = [line.strip() for line in f]
                     else:
@@ -341,7 +346,7 @@ class PlaylistUpdater(baseServiceUpdater):
 
         except:
             self.log('getPlaylistContent opening Error {}, type: {}, url: {}'.format(getExceptionString(), urltype, path) )
-            if sys.version_info[0] > 2:
+            if PY3:
                 xbmcgui.Dialog().notification(strings(59905), strings(57049) + ' ' + self.serviceName + ' (' + self.getDisplayName() + ') ' + strings(57050), time=10000, sound=False)
             else:
                 xbmcgui.Dialog().notification(strings(59905).encode('utf-8'), strings(57049).encode('utf-8') + ' ' + self.serviceName + ' (' + self.getDisplayName() + ') ' + strings(57050).encode('utf-8'), time=10000, sound=False)
@@ -612,7 +617,7 @@ class PlaylistUpdater(baseServiceUpdater):
 
                                     pattern = re.compile('((?:^|[^a-zA-Z])({n})(?:[^a-zA-Z]|$)|({e}))'.format(n=non_escaped, e=escaped))
 
-                                    if sys.version_info[0] > 2:
+                                    if PY3:
                                         try:
                                             group = pattern.search(str(splitedLine[0])).group(1).strip()
                                         except:

@@ -45,6 +45,11 @@ from __future__ import unicode_literals
 import sys
 
 if sys.version_info[0] > 2:
+    PY3 = True
+else:
+    PY3 = False
+
+if PY3:
     import configparser
 else:
     import ConfigParser
@@ -56,7 +61,7 @@ from skins import Skin
 import source as src
 from source import Program, Channel
 
-if sys.version_info[0] > 2:
+if PY3:
     config = configparser.RawConfigParser()
 else:
     config = ConfigParser.RawConfigParser()

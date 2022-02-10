@@ -44,7 +44,12 @@ from __future__ import unicode_literals
 
 import sys
 
-if sys.version_info[0] > 2: 
+if sys.version_info[0] > 2:
+    PY3 = True
+else:
+    PY3 = False
+
+if PY3: 
     import urllib.request, urllib.error, urllib.parse, http.client, http.cookiejar
 else:
     import StringIO
@@ -67,7 +72,7 @@ try:
 except:
     pass
 
-if sys.version_info[0] > 2:
+if PY3:
     urllibURLError = urllib.error.URLError
     urllibHTTPError = urllib.error.HTTPError
     httplibBadStatusLine = http.client.BadStatusLine
@@ -82,7 +87,7 @@ HOST        = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHT
 pathAddons  = os.path.join(ADDON.getAddonInfo('path'), 'resources', 'addons.ini')
 pathMapBase = os.path.join(ADDON.getAddonInfo('path'), 'resources')
 
-if sys.version_info[0] > 2:
+if PY3:
     try:
         pathMapExtraBase  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
     except:
@@ -147,7 +152,7 @@ class ShowList:
         raw_json = None
 
         try:
-            if sys.version_info[0] > 2:
+            if PY3:
                 data     = urllib.parse.urlencode(post).encode("utf-8")
                 reqUrl   = urllib.request.Request(url, data)
             else:
@@ -163,7 +168,7 @@ class ShowList:
             startTime = datetime.datetime.now()
             while (datetime.datetime.now() - startTime).seconds < MAX_CONNECTION_TIME and strings2.M_TVGUIDE_CLOSING == False:
                 try:
-                    if sys.version_info[0] > 2:
+                    if PY3:
                         raw_json = urllib.request.urlopen(reqUrl, timeout = HTTP_ConnectionTimeout)
                     else:
                         raw_json = urllib2.urlopen(reqUrl, timeout = HTTP_ConnectionTimeout)
@@ -209,7 +214,7 @@ class ShowList:
         result_json = None
         raw_json = None
         customOpeners = []
-        if sys.version_info[0] > 2:
+        if PY3:
             cj = http.cookiejar.LWPCookieJar()
         else:
             cj = cookielib.LWPCookieJar()
@@ -221,20 +226,20 @@ class ShowList:
                 ctx = ssl.create_default_context()
                 ctx.check_hostname = False
                 ctx.verify_mode = ssl.CERT_NONE
-                if sys.version_info[0] > 2:
+                if PY3:
                     customOpeners += [urllib.request.HTTPSHandler(context=ctx)]
                 else:
                     customOpeners += [urllib2.HTTPSHandler(context=ctx)]
 
             if len(customOpeners) > 0:
-                if sys.version_info[0] > 2:
+                if PY3:
                     opener = urllib.request.build_opener( *customOpeners )
                 else:
                     opener = urllib2.build_opener( *customOpeners )
                 response = opener.open(req, timeout = http_timeout)
             else:
                 try:
-                    if sys.version_info[0] > 2:
+                    if PY3:
                         response = urllib.request.urlopen(req, timeout = http_timeout)
                     else:
                         response = urllib2.urlopen(req, timeout = http_timeout)
@@ -245,7 +250,7 @@ class ShowList:
 
         try:
             if cookieFile is not None:
-                if sys.version_info[0] > 2:
+                if PY3:
                     customOpeners.append( urllib.request.HTTPCookieProcessor(cj) )
                 else:
                     customOpeners.append( urllib2.HTTPCookieProcessor(cj) )
@@ -262,19 +267,19 @@ class ShowList:
                 headers['upgrade-insecure-requests'] = '1'
 
             if json_dumps_post:
-                if sys.version_info[0] > 2:
+                if PY3:
                     data = json.dumps(post_data).encode("utf-8")
                 else:
                     data = json.dumps(post_data)
             elif post_data:
-                if sys.version_info[0] > 2:
+                if PY3:
                     data = urllib.parse.urlencode(post_data).encode("utf-8")
                 else:
                     data = urllib.urlencode(post_data)
             else:
                 data = None
 
-            if sys.version_info[0] > 2:
+            if PY3:
                 reqUrl = urllib.request.Request(url=url, data=data, headers=headers)
             else:
                 reqUrl = urllib2.Request(url=url, data=data, headers=headers)
@@ -341,7 +346,7 @@ class ShowList:
     def getCookieItem(self, cookiefile, item = None):
         ret = ''
         if os.path.isfile(cookiefile):
-            if sys.version_info[0] > 2:
+            if PY3:
                 cj = http.cookiejar.LWPCookieJar()
             else:
                 cj = cookielib.LWPCookieJar()
@@ -356,7 +361,7 @@ class ShowList:
     def downloadUrl(self, url, retryFailed = True):
         fileContent = None
         try:
-            if sys.version_info[0] > 2: 
+            if PY3: 
                 reqUrl   = urllib.request.Request(url)
             else:
                 reqUrl   = urllib2.Request(url)
@@ -367,7 +372,7 @@ class ShowList:
             reqUrl.add_header('upgrade-insecure-requests', '1')
             reqUrl.add_header('Connection', 'Keep-Alive')
 
-            if sys.version_info[0] > 2: 
+            if PY3: 
                 urlFile = urllib.request.urlopen(reqUrl, timeout=HTTP_ConnectionTimeout)
             else:
                 urlFile = urllib2.urlopen(reqUrl, timeout=HTTP_ConnectionTimeout)
@@ -516,7 +521,7 @@ class MapString:
             logCall('[UPD] Parsing basemap file')
             logCall('-------------------------------------------------------------------------------------')
         
-        if sys.version_info[0] > 2:
+        if PY3:
             xmlstr = xmlstr.decode('utf-8')
         else:
             xmlstr = xmlstr if isinstance(xmlstr, unicode) else xmlstr
@@ -1047,7 +1052,7 @@ class baseServiceUpdater:
 
             channelList = list(dict.fromkeys(channelList))
 
-            if sys.version_info[0] > 2:
+            if PY3:
                 with open(file_name, 'ab+') as f:
                     f.seek(0)
                     data = f.read()

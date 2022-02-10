@@ -49,10 +49,15 @@ from __future__ import unicode_literals
 
 import sys
 
+if sys.version_info[0] > 2:
+    PY3 = True
+else:
+    PY3 = False
+
 if sys.version_info[0] < 3:
     from future.utils import bytes_to_native_str as native
 
-if sys.version_info[0] > 2:
+if PY3:
     import configparser
 else:
     import ConfigParser
@@ -116,7 +121,7 @@ KEY_END = 160
 
 KEY_CODEC_INFO = 0
 
-if sys.version_info[0] > 2:
+if PY3:
     config = configparser.RawConfigParser()
 else:
     config = ConfigParser.RawConfigParser()
@@ -652,7 +657,7 @@ class mTVGuide(xbmcgui.WindowXML):
         self.ignoreMissingControlIds.append(self.C_MAIN_CATEGORY)
         self.ignoreMissingControlIds.append(self.C_DYNAMIC_COLORS)
 
-        if sys.version_info[0] > 2:
+        if PY3:
             try:
                 self.profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
             except:
@@ -663,7 +668,7 @@ class mTVGuide(xbmcgui.WindowXML):
             except:
                 self.profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
 
-        if sys.version_info[0] > 2:
+        if PY3:
             self.kodiPath = xbmcvfs.translatePath("special://home/")
             self.kodiPathMain = xbmcvfs.translatePath("special://xbmc/")
             self.kodiSkinPath = xbmcvfs.translatePath("special://skin/")
@@ -1364,7 +1369,7 @@ class mTVGuide(xbmcgui.WindowXML):
         checkDirProfile = xbmcvfs.listdir(os.path.join(self.profilePath, 'resources', 'skins', addonSkin, 'fonts'))
         for item in checkDirProfile:
             r = re.compile('(.*?).ttf')
-            if sys.version_info[0] > 2:
+            if PY3:
                 checkProfileFonts = list(filter(r.match, item))
             else:
                 checkProfileFonts = filter(r.match, item)
@@ -1372,7 +1377,7 @@ class mTVGuide(xbmcgui.WindowXML):
         checkDirKodi = xbmcvfs.listdir(os.path.join(self.kodiSkinPath, 'fonts', addonSkin))
         for item in checkDirKodi:
             r = re.compile('(.*?).ttf')
-            if sys.version_info[0] > 2:
+            if PY3:
                 checkKodiFonts = list(filter(r.match, item))
             else:
                 checkKodiFonts = filter(r.match, item)
@@ -1450,7 +1455,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
         # Final check
         if chkSkinProfile != chkSkinKodi:
-            if sys.version_info[0] > 2:
+            if PY3:
                 import functools 
                 check = functools.reduce(lambda i, j : i and j, map(lambda m, k: m == k, checkProfileFonts, checkKodiFonts), True)
             else:
@@ -1482,7 +1487,7 @@ class mTVGuide(xbmcgui.WindowXML):
                             skinpath = sk.getAddonInfo("path")
 
                             if xbmcgui.Dialog().yesno(strings(70105), strings(70118).format(chkSkinKodi)):
-                                if sys.version_info[0] > 2:
+                                if PY3:
                                     dest = xbmcvfs.translatePath("special://home/")
                                 else:
                                     dest = xbmc.translatePath("special://home/")
@@ -1503,7 +1508,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
                             if xbmcvfs.listdir(os.path.join(self.kodiPath, 'addons', 'skin.estouchy')) == False:
                                 if xbmcgui.Dialog().yesno(strings(70105), strings(70118).format(chkSkinKodi)):
-                                    if sys.version_info[0] > 2:
+                                    if PY3:
                                         dest = xbmcvfs.translatePath("special://home/")
                                     else:
                                         dest = xbmc.translatePath("special://home/")
@@ -2077,7 +2082,7 @@ class mTVGuide(xbmcgui.WindowXML):
         streams = self.database.getAllCatchupUrlList(channels)
         #deb('getAllCatchupUrlList: {}'.format(streams))
 
-        if sys.version_info[0] > 2:
+        if PY3:
             streams = streams.items()
         else:
             streams = streams.iteritems()
@@ -2227,7 +2232,7 @@ class mTVGuide(xbmcgui.WindowXML):
         self.infoDialog = None
 
     def scriptChkExtendedInfo(self):
-        if sys.version_info[0] > 2:
+        if PY3:
             return xbmc.getCondVisibility('System.AddonIsEnabled({id})'.format(id='script.extendedinfo'))
         else:
             return xbmc.getCondVisibility('System.HasAddon({id})'.format(id='script.extendedinfo'))
@@ -2274,7 +2279,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
             key = '4d7b67222e47d5d8a6176fcacbfe9240'
 
-            if sys.version_info[0] > 2:
+            if PY3:
                 url = 'https://api.themoviedb.org/3/search/{where}?query={query}&api_key={key}&include_adult=false&page=1'.format(where=where[selection], query=title, key=key).encode()
             else:
                 url = 'https://api.themoviedb.org/3/search/{where}?query={query}&api_key={key}&include_adult=false&page=1'.format(where=where[selection], query=title, key=key)
@@ -3294,7 +3299,7 @@ class mTVGuide(xbmcgui.WindowXML):
         if action == 0:
             search = d.input(strings(30322), title)
         else:
-            if sys.version_info[0] > 2:
+            if PY3:
                 search = title
             else:
                 search = title.encode('utf-8')
@@ -3411,7 +3416,7 @@ class mTVGuide(xbmcgui.WindowXML):
         if action == 0:
             search = d.input(strings(30323), title)
         else:
-            if sys.version_info[0] > 2:
+            if PY3:
                 search = title
             else:
                 search = title.encode('utf-8')
@@ -3529,7 +3534,7 @@ class mTVGuide(xbmcgui.WindowXML):
         if action == 0:
             search = d.input(strings(30344), title)
         else:
-            if sys.version_info[0] > 2:
+            if PY3:
                 search = title
             else:
                 search = title.encode('utf-8')
@@ -3627,7 +3632,7 @@ class mTVGuide(xbmcgui.WindowXML):
             else:
                 s = x[0]
                 
-            if sys.version_info[0] > 2:
+            if PY3:
                 categories.append(s)
             else:
                 categories.append(s.decode("utf-8"))
@@ -4082,7 +4087,7 @@ class mTVGuide(xbmcgui.WindowXML):
         p = re.compile('\s<channel id="(.*?)"', re.DOTALL)
 
         with open(os.path.join(self.profilePath, 'basemap_extra.xml'), 'rb') as f:
-            if sys.version_info[0] > 2:
+            if PY3:
                 base = str(f.read(), 'utf-8')
             else:
                 base = f.read().decode('utf-8')
@@ -4129,7 +4134,7 @@ class mTVGuide(xbmcgui.WindowXML):
             kb.setHiddenInput(False)
             kb.doModal()
             c = kb.getText() if kb.isConfirmed() else None
-            if sys.version_info[0] > 2:
+            if PY3:
                 c = c
             else:
                 c = c.decode('utf-8')
@@ -4157,7 +4162,7 @@ class mTVGuide(xbmcgui.WindowXML):
                         kb.setHiddenInput(False)
                         kb.doModal()
                         c = kb.getText() if kb.isConfirmed() else None
-                        if sys.version_info[0] > 2:
+                        if PY3:
                             c = c
                         else:
                             c = c.decode('utf-8')
@@ -4343,7 +4348,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def channelRegex(self, epgChann, regChann, newChannel="", logo=""):
         # regex format
-        if sys.version_info[0] > 2:
+        if PY3:
             regChann = unidecode(regChann)
         else:
             regChann = unidecode(regChann.decode('utf-8'))
@@ -4381,7 +4386,7 @@ class mTVGuide(xbmcgui.WindowXML):
         import codecs
         if os.path.isfile(filename):
             content = None
-            if sys.version_info[0] > 2:
+            if PY3:
                 with open(filename, 'r', encoding='utf-8') as content_file:
                     content = content_file.read()
             else:
@@ -4412,7 +4417,7 @@ class mTVGuide(xbmcgui.WindowXML):
             self._debugMenu(program)
 
         elif res == 2:
-            if sys.version_info[0] > 2:
+            if PY3:
                 LOGPATH  = xbmcvfs.translatePath('special://logpath')
             else:
                 LOGPATH  = xbmc.translatePath('special://logpath')
@@ -4584,7 +4589,7 @@ class mTVGuide(xbmcgui.WindowXML):
                     self.recordProgram(program)
 
         elif ret == 5:
-            if sys.version_info[0] > 2:
+            if PY3:
                 record_folder = ADDON.getSetting('record_folder')
                 xbmc.executebuiltin('ActivateWindow(Videos,{record_folder},return)'.format(record_folder=record_folder))
             else:
@@ -4696,7 +4701,7 @@ class mTVGuide(xbmcgui.WindowXML):
             self.playChannel(program.channel)
 
         elif buttonClicked == PopupMenu.C_POPUP_RECORDINGS:
-            if sys.version_info[0] > 2:
+            if PY3:
                 record_folder = ADDON.getSetting('record_folder')
                 xbmc.executebuiltin('ActivateWindow(Videos,{record_folder},return)'.format(record_folder=record_folder))
             else:
@@ -4880,7 +4885,7 @@ class mTVGuide(xbmcgui.WindowXML):
             if skin_separate_allowed_age_icon:
                 icon, age = descriptionParser.extractAllowedAge()
                 if icon == '':
-                    if sys.version_info[0] > 2:
+                    if PY3:
                         addonPath = xbmcvfs.translatePath(ADDON.getAddonInfo('path'))
                     else:
                         addonPath = xbmc.translatePath(ADDON.getAddonInfo('path'))
@@ -5234,7 +5239,7 @@ class mTVGuide(xbmcgui.WindowXML):
                                     offset = str(offsetCalc)
 
                                     # UTC/LUTC
-                                    if sys.version_info[0] > 2:
+                                    if PY3:
                                         utc = str(int(datetime.datetime.timestamp(t)))
                                         lutc = str(int(datetime.datetime.timestamp(e)))
                                     else:
@@ -5274,7 +5279,7 @@ class mTVGuide(xbmcgui.WindowXML):
                                     offset = str(offsetCalc)
 
                                     # UTC/LUTC
-                                    if sys.version_info[0] > 2:
+                                    if PY3:
                                         utc = str(int(datetime.datetime.timestamp(t)))
                                         lutc = str(int(datetime.datetime.timestamp(e)))
                                     else:
@@ -5452,7 +5457,7 @@ class mTVGuide(xbmcgui.WindowXML):
                                     offset = str(offsetCalc)
 
                                     # UTC/LUTC
-                                    if sys.version_info[0] > 2:
+                                    if PY3:
                                         utc = str(int(datetime.datetime.timestamp(t)))
                                         lutc = str(int(datetime.datetime.timestamp(e)))
                                     else:
@@ -5489,7 +5494,7 @@ class mTVGuide(xbmcgui.WindowXML):
                                     offset = str(offsetCalc)
 
                                     # UTC/LUTC
-                                    if sys.version_info[0] > 2:
+                                    if PY3:
                                         utc = str(int(datetime.datetime.timestamp(t)))
                                         lutc = str(int(datetime.datetime.timestamp(e)))
                                     else:
@@ -6530,7 +6535,7 @@ class mTVGuide(xbmcgui.WindowXML):
             self.refreshStreamsTimer = None
 
     def checkUrl(slef, url='http://www.google.com'):
-        if sys.version_info[0] > 2:
+        if PY3:
             try:
                 import urllib.request, urllib.error, urllib.parse
                 open = urllib.request.urlopen(url, timeout=3)
@@ -6989,7 +6994,7 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
         self.strmFile = None
         self.streamingService = streaming.StreamsService()
 
-        if sys.version_info[0] > 2:
+        if PY3:
             try:
                 self.profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
             except:
@@ -7018,7 +7023,7 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
 
         items = []
         for id in self.streamingService.getAddons():
-            if sys.version_info[0] > 2:
+            if PY3:
                 try:
                     addon = xbmcaddon.Addon(id)  # raises Exception if addon is not installed
                     item = xbmcgui.ListItem(addon.getAddonInfo('name'))
@@ -7553,7 +7558,7 @@ class InfoDialog(xbmcgui.WindowXMLDialog):
                     ageImageControl = self.getControl(C_PROGRAM_AGE_ICON)
                     icon = descriptionParser.extractAllowedAge()
                     if icon == '':
-                        if sys.version_info[0] > 2:
+                        if PY3:
                             addonPath = xbmcvfs.translatePath(ADDON.getAddonInfo('path'))
                         else:
                             addonPath = xbmc.translatePath(ADDON.getAddonInfo('path'))
@@ -7702,7 +7707,7 @@ class Pla(xbmcgui.WindowXMLDialog):
         self.archiveService = archiveService
         self.archivePlaylist = archivePlaylist
 
-        if sys.version_info[0] > 2:
+        if PY3:
             self.kodiPath = xbmcvfs.translatePath("special://home/")
             self.kodiPathMain = xbmcvfs.translatePath("special://xbmc/")
             self.kodiSkinPath = xbmcvfs.translatePath("special://skin/")

@@ -46,6 +46,11 @@ from __future__ import unicode_literals
 import sys
 
 if sys.version_info[0] > 2:
+    PY3 = True
+else:
+    PY3 = False
+
+if PY3:
     import urllib.request, urllib.parse, urllib.error
     from urllib.parse import urlencode, quote_plus, quote, unquote, parse_qsl
     import http.cookiejar
@@ -82,18 +87,18 @@ ORIGIN = 'https://polsatgo.pl'
 REFERER = 'https://polsatgo.pl'
 
 try:
-    if sys.version_info[0] > 2:
+    if PY3:
         COOKIEFILE = os.path.join(xbmcvfs.translatePath(ADDON.getAddonInfo('profile')), 'polsatgo.cookie')
     else:
         COOKIEFILE = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('profile')), 'polsatgo.cookie')
 except:
-    if sys.version_info[0] > 2:
+    if PY3:
         COOKIEFILE = os.path.join(xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8'), 'polsatgo.cookie')
     else:
         COOKIEFILE = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8'), 'polsatgo.cookie')
 
 sess = requests.Session()
-if sys.version_info[0] > 2:
+if PY3:
     sess.cookies = http.cookiejar.LWPCookieJar(COOKIEFILE)
 else:
     sess.cookies = cookielib.LWPCookieJar(COOKIEFILE)

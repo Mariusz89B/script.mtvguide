@@ -44,9 +44,15 @@
 #   This add-on is unoffical and is not endorsed or supported by Telia Company AB in any way. Any trademarks used belong to their owning companies and organisations.
 
 import sys
-import xbmc
 
 if sys.version_info[0] > 2:
+    PY3 = True
+else:
+    PY3 = False
+    
+import xbmc
+
+if PY3:
     import urllib.request, urllib.parse, urllib.error
     import http.cookiejar as cookielib
     from requests.exceptions import HTTPError, ConnectionError, Timeout, RequestException
@@ -80,7 +86,7 @@ ca = ['DK', 'SE']
 
 UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36 Edg/89.0.774.63'
 
-if sys.version_info[0] > 2:
+if PY3:
     try:
         profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
     except:
@@ -411,7 +417,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                     msg = re.sub('   ', '[CR]', msg)
 
                     msg = msg[75:]
-                    if sys.version_info[0] > 2:
+                    if PY3:
                         xbmcgui.Dialog().ok('Telia Play', str(msg))
                     else:
                         xbmcgui.Dialog().ok('Telia Play', str(msg.encode('utf-8')))
@@ -679,7 +685,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 hea = 'Content-Type=&x-dt-auth-token=' + headr.get('x-dt-auth-token', self.dashjs)
 
             else:
-                if sys.version_info[0] > 2:
+                if PY3:
                     hea = urllib.parse.urlencode(headr)
                 else:
                     hea = urllib.urlencode(headr)

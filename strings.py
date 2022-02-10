@@ -45,6 +45,11 @@
 import xbmcaddon, xbmc
 import traceback, sys
 
+if sys.version_info[0] > 2:
+    PY3 = True
+else:
+    PY3 = False
+
 ADDON_ID            = 'script.mtvguide'
 RSS_FILE            = 'http://mods-kodi.pl/infusions/kodi_info/kodi_info.txt' 
 RSS_FILE_BACKUP     = 'https://raw.githubusercontent.com/Mariusz89B/script.mtvguide-support/main/kodi_info.txt'
@@ -187,7 +192,7 @@ def getStateLabel(control, label_idx, default=0):
     return default
 
 def deb(s):
-    if sys.version_info[0] > 2:
+    if PY3:
         try:
             xbmc.log("MTVGUIDE @ " + str(s), xbmc.LOGINFO)
         except:
@@ -199,7 +204,7 @@ def deb(s):
             xbmc.log("MTVGUIDE @ " + str(s.encode('ascii', 'ignore')), xbmc.LOGNOTICE)
 
 def debug(s):
-    if sys.version_info[0] > 2:
+    if PY3:
         try:
             try:
                 xbmc.log("Debug @ " + str(s), xbmc.LOGINFO)

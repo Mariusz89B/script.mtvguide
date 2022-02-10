@@ -44,6 +44,11 @@ from __future__ import unicode_literals
 import sys
 
 if sys.version_info[0] > 2:
+    PY3 = True
+else:
+    PY3 = False
+
+if PY3:
     import urllib.request, urllib.parse, urllib.error
 else:
     import urllib
@@ -67,7 +72,7 @@ class Cloudflare:
         response['succes'] = True
 
         self.timeout = 8
-        if sys.version_info[0] > 2:
+        if PY3:
             self.domain = urllib.parse.urlparse(response["url"])[1]
             self.protocol = urllib.parse.urlparse(response["url"])[0]
         else:
@@ -180,7 +185,7 @@ class Cloudflare:
 		
             self.js_data["params"]["jschl_answer"] = answer
 
-            if sys.version_info[0] > 2:
+            if PY3:
                 response = "%s://%s%s?%s" % (
                     self.protocol, self.domain, self.js_data["auth_url"], urllib.parse.urlencode(self.js_data["params"]))
             else:
@@ -193,7 +198,7 @@ class Cloudflare:
 
         # Metodo #2 (headers)
         if self.header_data.get("wait", 0):
-            if sys.version_info[0] > 2:
+            if PY3:
                 response = "%s://%s%s?%s" % (
                     self.protocol, self.domain, self.header_data["auth_url"], urllib.parse.urlencode(self.header_data["params"]))
             else:

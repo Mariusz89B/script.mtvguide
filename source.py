@@ -51,6 +51,11 @@ from __future__ import unicode_literals
 import sys
 
 if sys.version_info[0] > 2:
+    PY3 = True
+else:
+    PY3 = False
+
+if PY3:
     import urllib.request, urllib.error, urllib.parse
     import configparser
 else:
@@ -68,7 +73,13 @@ import threading
 import requests
 import urllib3
 import os, re, time, io, zipfile
-from datetime import datetime, timedelta, timezone
+
+try:
+    from datetime import datetime, timedelta, timezone
+except ImportError:
+    from datetime import datetime, timedelta
+    import pytz
+
 import xbmc, xbmcgui, xbmcvfs, xbmcaddon
 import shutil
 import playService
@@ -89,7 +100,7 @@ from groups import *
 
 UA = xbmc.getUserAgent()
 
-if sys.version_info[0] > 2:
+if PY3:
     try:
         PROFILE_PATH = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
     except:
@@ -323,7 +334,7 @@ class ProgramDescriptionParser(object):
         return episode
 
     def extractAllowedAge(self):
-        if sys.version_info[0] > 2:
+        if PY3:
             addonPath = xbmcvfs.translatePath(ADDON.getAddonInfo('path'))
         else:
             addonPath = xbmc.translatePath(ADDON.getAddonInfo('path'))
@@ -393,7 +404,7 @@ class DatabaseSchemaException(sqlite3.DatabaseError):
 
 class Database(object):
     SOURCE_DB = 'source.db'
-    if sys.version_info[0] > 2:
+    if PY3:
         config = configparser.RawConfigParser()
     else:
         config = ConfigParser.RawConfigParser()
@@ -422,7 +433,7 @@ class Database(object):
         self.channelListAll = list()
         self.category = None
 
-        if sys.version_info[0] > 2:
+        if PY3:
             try:
                 self.profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
             except:
@@ -790,7 +801,7 @@ class Database(object):
 
                     p = re.compile('\s<channel id="(.*?)"', re.DOTALL)
                     with open(os.path.join(profilePath, 'basemap_extra.xml'), 'rb') as f:
-                        if sys.version_info[0] > 2:
+                        if PY3:
                             base = str(f.read(), 'utf-8')
                         else:
                             base = f.read().decode('utf-8')
@@ -853,7 +864,7 @@ class Database(object):
                             if nrOfFailures <= 10:
                                 deb('_updateChannelAndProgramListCache ERROR while inserting program to DB for {} time, faulty row will follow, exception: {}'.format(nrOfFailures, getExceptionString()))
                                 try:
-                                    if sys.version_info[0] > 2:
+                                    if PY3:
                                         deb('Row: {}'.format(str(item)))
                                     else:
                                         deb('Row: {}'.format(unicode(item)))
@@ -1173,7 +1184,7 @@ class Database(object):
             c.execute("INSERT INTO lastplayed(idx, start_date, end_date, played_date) VALUES(?, ?, ?, ?)", [idx, start, end, played])
         except:
             now = datetime.now()
-            if sys.version_info[0] > 2:
+            if PY3:
                 start = datetime.timestamp(now)
             else:
                 from time import mktime
@@ -1203,21 +1214,21 @@ class Database(object):
         try:
             start = row[str('start_date')]
         except:
-            if sys.version_info[0] > 2:
+            if PY3:
                 start = str(datetime.timestamp(now))
             else:
                 start = str(int(time.mktime(now.timetuple())))
         try:
             end = row[str('end_date')]
         except:
-            if sys.version_info[0] > 2:
+            if PY3:
                 end = str(datetime.timestamp(now))
             else:
                  end = str(int(time.mktime(now.timetuple())))
         try:
             played = row[str('played_date')]
         except:
-            if sys.version_info[0] > 2:
+            if PY3:
                 played = str(datetime.timestamp(now))
             else:
                 played = str(int(time.mktime(now.timetuple())))
@@ -1316,14 +1327,14 @@ class Database(object):
                     filter = []
                     seen = set()
                     for line in lines:
-                        if sys.version_info[0] > 2:
+                        if PY3:
                             if "=" not in line:
                                 continue
                         else:
                             if b"=" not in line:
                                 continue
 
-                        if sys.version_info[0] > 2:
+                        if PY3:
                             name,cat = line.split('=')
                         else:
                             name,cat = line.split(b'=')
@@ -1519,7 +1530,7 @@ class Database(object):
         endTime = now + timedelta(days=days)
         c = self.conn.cursor()
         channelList = self._getChannelList(True)
-        if sys.version_info[0] > 2:
+        if PY3:
             search = '%%{}%%'.format(search)
         else:
             search = '%%{}%%'.format(search.decode('utf-8'))
@@ -1552,7 +1563,7 @@ class Database(object):
         endTime = now + timedelta(days=days)
         c = self.conn.cursor()
         channelList = self._getChannelList(True)
-        if sys.version_info[0] > 2:
+        if PY3:
             search = '%%{}%%'.format(search)
         else:
             search = '%%{}%%'.format(search.decode('utf-8'))
@@ -1580,7 +1591,7 @@ class Database(object):
         endTime = now + timedelta(days=days)
         c = self.conn.cursor()
         channelList = self._getChannelList(True)
-        if sys.version_info[0] > 2:
+        if PY3:
             search = '%%{}%%'.format(search)
         else:
             search = '%%{}%%'.format(search.decode('utf-8'))
@@ -2130,7 +2141,7 @@ class Database(object):
             if version < [6, 7, 2]:
                 ADDON.setSetting(id="ffmpeg_format", value=("mpegts"))
                 ADDON.setSetting(id="ffmpeg_dis_cop_un", value=("false"))
-                if sys.version_info[0] > 2:
+                if PY3:
                     xbmcRootDir = xbmcvfs.translatePath('special://xbmc')
                 else:
                     xbmcRootDir = xbmc.translatePath('special://xbmc')
@@ -2250,7 +2261,7 @@ class Database(object):
             c.execute("INSERT INTO rss_messages(last_message) VALUES(?)", [date])
         except:
             now = datetime.now()
-            if sys.version_info[0] > 2:
+            if PY3:
                 date = datetime.timestamp(now)
             else:
                 from time import time
@@ -2748,7 +2759,7 @@ class MTVGUIDESource(Source):
         self.EPGSize    = None
         self.timer      = None
 
-        if sys.version_info[0] > 2:
+        if PY3:
             try:
                 self.profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
             except:
@@ -2930,7 +2941,7 @@ def catList(category_count):
             if s.strip() != '':
                 categoriesList.append(s.strip())
 
-    if sys.version_info[0] > 2:
+    if PY3:
         file_name = os.path.join(PROFILE_PATH, 'category_count.list')
         with open(file_name, 'w+', encoding='utf-8') as f:
             for line in categoriesList:
@@ -2969,15 +2980,25 @@ def prepareTimeZone(zone, autozone, local):
 
     if autozone:
         if local:
-            local = proxydt.now(timezone.utc).astimezone().tzinfo
+            if PY3:
+                local = proxydt.now(timezone.utc).astimezone().tzinfo
+            else:
+                local = proxydt.now(pytz.utc).astimezone().tzname()
         else:
             local = None
         zone = None
     elif zone:
-        zone = proxydt.strptime(zone, '%z').tzinfo
+        if PY3:
+            zone = proxydt.strptime(zone, '%z').tzinfo
+        else:
+            zone = proxydt.strptime(zone, '%z').tzname()
 
     # tzinfo for all zones (-12:00, -1200 ...)
-    zones = {z: proxydt.strptime(z, '%z').tzinfo for h in range(-12, 13) for z in ('%+03d00' % h, '%+03d:00' % h)}
+    if PY3:
+        zones = {z: proxydt.strptime(z, '%z').tzinfo for h in range(-12, 13) for z in ('%+03d00' % h, '%+03d:00' % h)}
+    else:
+        zones = {z: proxydt.strptime(z, '%z').tzname() for h in range(-12, 13) for z in ('%+03d00' % h, '%+03d:00' % h)}
+    
     return zone, autozone, local, zones
 
 
@@ -3247,7 +3268,7 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
     start = datetime.now()
     tzargs = prepareTimeZone(zone, autozone, local)
 
-    if sys.version_info[0] > 2:
+    if PY3:
         event, root = next(context)
     else:
         event, root = context.next()
@@ -3315,7 +3336,7 @@ class FileWrapper(object):
         self.vfsfile.close()
     def read(self, bytes):
         self.bytesRead += bytes
-        if sys.version_info[0] > 2: 
+        if PY3:
             return self.vfsfile.read()
         else:
             return self.vfsfile.read(bytes)

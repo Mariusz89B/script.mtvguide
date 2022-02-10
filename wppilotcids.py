@@ -48,6 +48,11 @@ from __future__ import unicode_literals
 
 import sys
 
+if sys.version_info[0] > 2:
+    PY3 = True
+else:
+    PY3 = False
+
 import os, copy, re
 import xbmc, xbmcvfs
 from strings import *
@@ -62,7 +67,7 @@ try:
 except ImportError:
     from urllib import urlencode, quote_plus, quote, unquote
 
-if sys.version_info[0] > 2:
+if PY3:
     import urllib3
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -78,7 +83,7 @@ headers = {
     'accept': 'application/json, text/plain, */*'
 }
 
-if sys.version_info[0] > 2:
+if PY3:
     try:
         profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
     except:

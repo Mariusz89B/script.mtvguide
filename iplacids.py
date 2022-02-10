@@ -51,6 +51,11 @@ from __future__ import unicode_literals
 import sys
 
 if sys.version_info[0] > 2:
+    PY3 = True
+else:
+    PY3 = False
+
+if PY3:
     import urllib.request, urllib.parse, urllib.error
     from urllib.parse import urlencode, quote_plus, quote, unquote, parse_qsl
     import http.cookiejar
@@ -73,18 +78,18 @@ UAIPLA = "www_iplatv/12345 (Mozilla/5.0 Windows NT 6.1; Win64; x64; rv:84.0 Geck
 OSINFO = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:84.0) Gecko/20100101 Firefox/84.0"
 
 try:
-    if sys.version_info[0] > 2:
+    if PY3:
         COOKIEFILE = os.path.join(xbmcvfs.translatePath(ADDON.getAddonInfo('profile')), 'ipla.cookie')
     else:
         COOKIEFILE = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('profile')), 'ipla.cookie')
 except:
-    if sys.version_info[0] > 2:
+    if PY3:
         COOKIEFILE = os.path.join(xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8'), 'ipla.cookie')
     else:
         COOKIEFILE = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8'), 'ipla.cookie')
 
 sess = requests.Session()
-if sys.version_info[0] > 2:
+if PY3:
     sess.cookies = http.cookiejar.LWPCookieJar(COOKIEFILE)
 else:
     sess.cookies = cookielib.LWPCookieJar(COOKIEFILE)
@@ -138,7 +143,7 @@ class IplaUpdater(baseServiceUpdater):
 
         self.dane = self.sesstoken+'|'+self.sessexpir+'|{0}|{1}'
         
-        if sys.version_info[0] > 2:
+        if PY3:
             try:
                 self.profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
             except:

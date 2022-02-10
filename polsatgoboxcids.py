@@ -51,6 +51,11 @@ from __future__ import unicode_literals
 import sys
 
 if sys.version_info[0] > 2:
+    PY3 = True
+else:
+    PY3 = False
+
+if PY3:
     import urllib.request, urllib.parse, urllib.error
     from urllib.parse import urlencode, quote_plus, quote, unquote, parse_qsl
     import http.cookiejar
@@ -81,18 +86,18 @@ OSINFO = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:91.0) Gecko/20100101 Firef
 UAIPLA = "pg_pc_windows_firefox_html/1 (Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0)"
 
 try:
-    if sys.version_info[0] > 2:
+    if PY3:
         COOKIEFILE = os.path.join(xbmcvfs.translatePath(ADDON.getAddonInfo('profile')), 'pgobox.cookie')
     else:
         COOKIEFILE = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('profile')), 'pgobox.cookie')
 except:
-    if sys.version_info[0] > 2:
+    if PY3:
         COOKIEFILE = os.path.join(xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8'), 'pgobox.cookie')
     else:
         COOKIEFILE = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8'), 'pgobox.cookie')
 
 sess = requests.Session()
-if sys.version_info[0] > 2:
+if PY3:
     sess.cookies = http.cookiejar.LWPCookieJar(COOKIEFILE)
 else:
     sess.cookies = cookielib.LWPCookieJar(COOKIEFILE)

@@ -44,6 +44,11 @@ from __future__ import unicode_literals
 import sys
 
 if sys.version_info[0] > 2:
+    PY3 = True
+else:
+    PY3 = False
+
+if PY3:
     import io
 else:
     import StringIO
@@ -72,7 +77,7 @@ class SkinObject:
         return self.name == other.name
 
 class Skin:
-    if sys.version_info[0] > 2:
+    if PY3:
         try:
             PROFILE_PATH  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
         except:
@@ -203,7 +208,7 @@ class Skin:
         downloader = ShowList()
         skin_zip = downloader.getJsonFromExtendedAPI(skin_to_download)
         if skin_zip:
-            if sys.version_info[0] > 2:
+            if PY3:
                 skin_zip = io.BytesIO(skin_zip)
             else:
                 skin_zip = StringIO.StringIO(skin_zip)
@@ -321,7 +326,7 @@ class Skin:
 
     @staticmethod
     def restoreFont(show_dialog):
-        if sys.version_info[0] > 2:
+        if PY3:
             try:
                 PROFILE_PATH  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
             except:
@@ -334,7 +339,7 @@ class Skin:
 
         currentSkin = xbmc.getSkinDir()
 
-        if sys.version_info[0] > 2:
+        if PY3:
             kodiPath = xbmcvfs.translatePath("special://home/")
             kodiPathMain = xbmcvfs.translatePath("special://xbmc/")
             kodiSkinPath = xbmcvfs.translatePath("special://skin/")
@@ -352,7 +357,7 @@ class Skin:
         elif xbmcvfs.exists(os.path.join(kodiSkinPath, '16x9/')):
             path1 = '16x9'
 
-        if sys.version_info[0] > 2:
+        if PY3:
             addons = xbmcvfs.translatePath(os.path.join('special://', 'home', 'addons', currentSkin, path1, 'Font.xml'))
             skins = xbmcvfs.translatePath(os.path.join('special://','skin', currentSkin, path1, 'Font.xml'))
             backup_addons = xbmcvfs.translatePath(os.path.join('special://', 'home', 'addons', currentSkin, path1, 'Font.backup'))
@@ -379,7 +384,7 @@ class Skin:
 
         try:
             file = os.path.join(PROFILE_PATH, 'fonts.list')
-            if sys.version_info[0] > 2:
+            if PY3:
                 with open(file, 'w+', encoding='utf-8') as f:
                     f.write('')
             else:
@@ -409,7 +414,7 @@ class Skin:
 
 
 class SkinPicker():
-    if sys.version_info[0] > 2:
+    if PY3:
         try:
             PROFILE_PATH  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
         except:
@@ -502,7 +507,7 @@ if len(sys.argv) > 1 and sys.argv[1] == 'SelectSkin':
     #Skin._checkForUpdates()
     Skin.selectSkin()
 
-    if sys.version_info[0] > 2:
+    if PY3:
         try:
             PROFILE_PATH  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
         except:

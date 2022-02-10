@@ -48,6 +48,11 @@
 import sys
 
 if sys.version_info[0] > 2:
+    PY3 = True
+else:
+    PY3 = False
+
+if PY3:
     import urllib.request, urllib.parse, urllib.error
 else:
     import urllib
@@ -100,7 +105,7 @@ class CmoreUpdater(baseServiceUpdater):
         self.locale = locale
         self.locale_suffix = self.locale.split('_')[1].lower()
         self.http_session = requests.Session()
-        if sys.version_info[0] > 2:
+        if PY3:
             try:
                 self.profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
             except:

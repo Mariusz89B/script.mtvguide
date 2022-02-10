@@ -41,12 +41,17 @@
 
 import sys
 
+if sys.version_info[0] > 2:
+    PY3 = True
+else:
+    PY3 = False
+    
 import os
 import xbmc, xbmcaddon, xbmcvfs, xbmcgui
 from strings import *
 
 class Settings:
-    if sys.version_info[0] > 2:
+    if PY3:
         try:
             addonPath = xbmcvfs.translatePath(xbmcaddon.Addon().getAddonInfo('path'))
         except:
@@ -59,7 +64,7 @@ class Settings:
 
     @staticmethod
     def formatter():
-        if sys.version_info[0] > 2:
+        if PY3:
             copy = os.path.join(Settings.addonPath, 'resources', 'format', 'settings_py3.xml')
             dest = os.path.join(Settings.addonPath, 'resources', 'settings.xml')
 

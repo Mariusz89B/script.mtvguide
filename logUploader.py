@@ -44,6 +44,11 @@ from __future__ import unicode_literals
 
 import sys
 
+if sys.version_info[0] > 2:
+    PY3 = True
+else:
+    PY3 = False
+
 import requests
 import codecs
 
@@ -52,7 +57,7 @@ import xbmc, xbmcaddon, xbmcgui, xbmcplugin, xbmcvfs
 from strings import *
 
 URL      = 'https://paste.ubuntu.com/'
-if sys.version_info[0] > 2:
+if PY3:
     LOGPATH  = xbmcvfs.translatePath('special://logpath')
 else:
     LOGPATH  = xbmc.translatePath('special://logpath')
@@ -88,7 +93,7 @@ class LogUploader:
         if os.path.isfile(filename):
             content = None
             try:
-                if sys.version_info[0] > 2:
+                if PY3:
                     with open(filename, 'r', encoding='utf-8') as content_file:
                         content = content_file.read()
                 else:

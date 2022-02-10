@@ -46,9 +46,15 @@
 from __future__ import unicode_literals
 
 import sys
-import xbmc, xbmcvfs
 
 if sys.version_info[0] > 2:
+    PY3 = True
+else:
+    PY3 = False
+    
+import xbmc, xbmcvfs
+
+if PY3:
     import urllib.request, urllib.parse, urllib.error
     import http.cookiejar as cookielib
 else:
@@ -68,7 +74,7 @@ serviceName         = 'PlayerPL'
 
 UA = 'okhttp/3.3.1 Android'
 
-if sys.version_info[0] > 2:
+if PY3:
     try:
         profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
     except:
@@ -305,7 +311,7 @@ class PlayerPLUpdater(baseServiceUpdater):
 
             self.mylist = self.getRequests('https://player.pl/playerapi/subscriber/product/available/list?platform=ANDROID_TV', headers=self.HEADERS2, params={})
 
-            if sys.version_info[0] > 2:
+            if PY3:
                 jdata = data
             else:
                 jdata = json.loads(json.dumps(data))

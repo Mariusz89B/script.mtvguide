@@ -45,6 +45,11 @@ from __future__ import unicode_literals
 import sys
 
 if sys.version_info[0] > 2:
+    PY3 = True
+else:
+    PY3 = False
+
+if PY3:
     import urllib.request, urllib.parse, urllib.error
     import urllib.request as Request
     from urllib.error import HTTPError, URLError
@@ -58,7 +63,7 @@ try:
 except ImportError:
     from urllib import urlencode, quote_plus, quote, unquote
 
-if sys.version_info[0] > 2:
+if PY3:
     from requests.exceptions import HTTPError, ConnectionError, Timeout, RequestException
 else:
     from requests import HTTPError, ConnectionError, Timeout, RequestException
@@ -475,7 +480,7 @@ class PlayService(xbmc.Player, BasePlayService):
             n = datetime.datetime.now()
             now = int(time.mktime(n.timetuple())) * 1000
 
-            if sys.version_info[0] > 2:
+            if PY3:
                 tday = str(((int(time.time() // 86400)) * 86400) * 1000)
                 yday = str(((int(time.time() // 86400)) * 86400 - 86400 ) * 1000)
             else:
@@ -533,7 +538,7 @@ class PlayService(xbmc.Player, BasePlayService):
                     media_id = item['media']['id']
                     title = item['media']['title']
 
-                    if sys.version_info[0] > 2:
+                    if PY3:
                         p = re.compile('\WwatchMode\W:\s*\W(.*?)\W,', re.M)
                     else:
                         p = re.compile('\WwatchMode\W:\s*\W(.*?)\W},', re.M)
@@ -614,7 +619,7 @@ class PlayService(xbmc.Player, BasePlayService):
                 hea = 'Content-Type=&x-dt-auth-token=' + headr.get('x-dt-auth-token', dashjs)
 
             else:
-                if sys.version_info[0] > 2:
+                if PY3:
                     hea = urllib.parse.urlencode(headr)
                 else:
                     hea = urllib.urlencode(headr)
@@ -720,7 +725,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                 ListItem = xbmcgui.ListItem(path=strmUrl)
                                 ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
                                 ListItem.setContentLookup(False)
-                                if sys.version_info[0] > 2:
+                                if PY3:
                                     ListItem.setProperty('inputstream', is_helper.inputstream_addon)
                                 else:
                                     ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
@@ -771,7 +776,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                 ListItem = xbmcgui.ListItem(path=strmUrl)
                                 ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
                                 ListItem.setContentLookup(False)
-                                if sys.version_info[0] > 2:
+                                if PY3:
                                     ListItem.setProperty('inputstream', is_helper.inputstream_addon)
                                 else:
                                     ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
@@ -821,7 +826,7 @@ class PlayService(xbmc.Player, BasePlayService):
                             ListItem = xbmcgui.ListItem(path=strmUrl)
                             ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
                             ListItem.setContentLookup(False)
-                            if sys.version_info[0] > 2:
+                            if PY3:
                                 ListItem.setProperty('inputstream', is_helper.inputstream_addon)
                             else:
                                 ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
@@ -878,7 +883,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                     ListItem = xbmcgui.ListItem(path=strmUrl)
                                     ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
                                     ListItem.setContentLookup(False)
-                                    if sys.version_info[0] > 2:
+                                    if PY3:
                                         ListItem.setProperty('inputstream', is_helper.inputstream_addon)
                                     else:
                                         ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
@@ -942,7 +947,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                     ListItem = xbmcgui.ListItem(path=strmUrl)
                                     ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
                                     ListItem.setContentLookup(False)
-                                    if sys.version_info[0] > 2:
+                                    if PY3:
                                         ListItem.setProperty('inputstream', is_helper.inputstream_addon)
                                     else:
                                         ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
@@ -1018,7 +1023,7 @@ class PlayService(xbmc.Player, BasePlayService):
                             ListItem = xbmcgui.ListItem(path=strmUrl)
                             ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
                             ListItem.setContentLookup(False)
-                            if sys.version_info[0] > 2:
+                            if PY3:
                                 ListItem.setProperty('inputstream', is_helper.inputstream_addon)
                             else:
                                 ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
@@ -1067,7 +1072,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                 ListItem = xbmcgui.ListItem(path=strmUrl)
                                 ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
                                 ListItem.setContentLookup(False)
-                                if sys.version_info[0] > 2:
+                                if PY3:
                                     ListItem.setProperty('inputstream', is_helper.inputstream_addon)
                                 else:
                                     ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
@@ -1141,7 +1146,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                 ListItem = xbmcgui.ListItem(path=strmUrl)
                                 ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
                                 ListItem.setContentLookup(False)
-                                if sys.version_info[0] > 2:
+                                if PY3:
                                     ListItem.setProperty('inputstream', is_helper.inputstream_addon)
                                 else:
                                     ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
@@ -1398,7 +1403,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                     if is_helper.check_inputstream():
                                         ListItem.setContentLookup(False)
 
-                                        if sys.version_info[0] > 2:
+                                        if PY3:
                                             ListItem.setProperty('inputstream', is_helper.inputstream_addon)
                                         else:
                                             ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
@@ -1625,13 +1630,13 @@ class PlayService(xbmc.Player, BasePlayService):
             return status
 
     def CheckInputstreamInstalledAndEnabled(self):
-        if sys.version_info[0] > 2:
+        if PY3:
             return xbmc.getCondVisibility('System.AddonIsEnabled({id})'.format(id='inputstream.adaptive'))
         else:
             return xbmc.getCondVisibility('System.HasAddon({id})'.format(id='inputstream.adaptive'))
 
     def CheckFFmpegDirectInstalledAndEnabled(self):
-        if sys.version_info[0] > 2:
+        if PY3:
             return xbmc.getCondVisibility('System.AddonIsEnabled({id})'.format(id='inputstream.ffmpegdirect'))
         else:
             return xbmc.getCondVisibility('System.HasAddon({id})'.format(id='inputstream.ffmpegdirect'))

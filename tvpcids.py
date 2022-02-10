@@ -44,11 +44,16 @@
 
 import sys
 
+if sys.version_info[0] > 2:
+    PY3 = True
+else:
+    PY3 = False
+
 import os
 import xbmc, xbmcvfs
 import requests
 
-if sys.version_info[0] > 2:
+if PY3:
     from requests.exceptions import HTTPError, ConnectionError, Timeout, RequestException
 else:
     from requests import HTTPError, ConnectionError, Timeout, RequestException
@@ -66,7 +71,7 @@ headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 Edg/91.0.864.67'
 }
 
-if sys.version_info[0] > 2:
+if PY3:
     try:
         profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
     except:

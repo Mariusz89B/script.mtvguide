@@ -42,6 +42,12 @@
 from __future__ import unicode_literals
 
 import sys
+
+if sys.version_info[0] > 2:
+    PY3 = True
+else:
+    PY3 = False
+    
 import os
 
 import xbmc, xbmcgui, xbmcvfs, xbmcaddon
@@ -84,7 +90,7 @@ def ccDict():
     pathMapBase = os.path.join(ADDON.getAddonInfo('path'), 'resources')
     path = os.path.join(pathMapBase, 'groups.json')
 
-    if sys.version_info[0] > 2:
+    if PY3:
         with open(path, 'r', encoding='utf-8') as f:
             data = f.read()
     else:

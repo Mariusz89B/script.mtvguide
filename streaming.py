@@ -42,6 +42,11 @@
 import sys
 
 if sys.version_info[0] > 2:
+    PY3 = True
+else:
+    PY3 = False
+
+if PY3:
     import configparser
 else:
     import ConfigParser
@@ -55,7 +60,7 @@ from strings import *
 class StreamsService(object):
     def __init__(self):
         path = os.path.join(ADDON_PATH, 'resources', 'addons.ini')
-        if sys.version_info[0] > 2:
+        if PY3:
             self.addonsParser = configparser.ConfigParser(dict_type=OrderedDict)
         else:
             self.addonsParser = ConfigParser.ConfigParser(dict_type=OrderedDict)
@@ -67,7 +72,7 @@ class StreamsService(object):
 
     def loadFavourites(self):
         entries = list() 
-        if sys.version_info[0] > 2:
+        if PY3:
             path = xbmcvfs.translatePath('special://userdata/favourites.xml')
             if os.path.exists(path):
                 with open(path, 'r', encoding='utf-8') as f:

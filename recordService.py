@@ -43,6 +43,11 @@
 import sys
 
 if sys.version_info[0] > 2:
+    PY3 = True
+else:
+    PY3 = False
+
+if PY3:
     import configparser
 else:
     import ConfigParser
@@ -56,7 +61,7 @@ from contextlib import contextmanager
 import serviceLib
 from skins import Skin
 
-if sys.version_info[0] > 2:
+if PY3:
     import urllib.request, urllib.parse, urllib.error
 else:
     import urllib
@@ -87,7 +92,7 @@ KEY_NAV_BACK = 92
 sess = requests.Session()
 
 try:
-    if sys.version_info[0] > 2:
+    if PY3:
         config = configparser.RawConfigParser()
     else:
         config = ConfigParser.RawConfigParser()
@@ -153,7 +158,7 @@ class DownloadTimer:
 class RecordService(BasePlayService):
     def __init__(self, epg):
         BasePlayService.__init__(self)
-        if sys.version_info[0] > 2:
+        if PY3:
             self.rtmpdumpExe        = xbmcvfs.translatePath(ADDON.getSetting('rtmpdumpExe'))
             self.ffmpegdumpExe      = xbmcvfs.translatePath(ADDON.getSetting('ffmpegExe'))
             self.icon               = os.path.join(xbmcvfs.translatePath(ADDON.getAddonInfo('path')), recordIcon)
@@ -208,7 +213,7 @@ class RecordService(BasePlayService):
         else:
             self.recordingStopsPlayback = False
 
-        if sys.version_info[0] > 2:
+        if PY3:
             try:
                 self.profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
             except:
@@ -269,7 +274,7 @@ class RecordService(BasePlayService):
                                 updateDB = True
 
                         elif program.recordingScheduled != 1:
-                            if sys.version_info[0] > 2:
+                            if PY3:
                                 res = xbmcgui.Dialog().yesno(strings(70006) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', strings(31000).format(program.title) )
                             else:
                                 res = xbmcgui.Dialog().yesno(strings(70006) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', strings(31000).format(program.title.encode('utf-8').decode('utf-8')) )
@@ -339,7 +344,7 @@ class RecordService(BasePlayService):
     def scheduleDownload(self, program, startOffset, endOffset, delayRecording = 0):
         program = copy.deepcopy(program)
 
-        if sys.version_info[0] > 2:
+        if PY3:
             deb('DownloadService scheduling download for program {}, starting at {}, start offset {}'.format(program.title, program.startDate, startOffset))
         else:
             deb('DownloadService scheduling download for program {}, starting at {}, start offset {}'.format(program.title.encode('utf-8'), program.startDate, startOffset))
@@ -496,7 +501,7 @@ class RecordService(BasePlayService):
                     break
                 time.sleep(1)
 
-        if sys.version_info[0] > 2:
+        if PY3:
             deb('DownloadService - end of download program: {}'.format(threadData['program'].title))
         else:
             deb('DownloadService - end of download program: {}'.format(threadData['program'].title.encode('utf-8')))
@@ -549,7 +554,7 @@ class RecordService(BasePlayService):
         offset = str(offsetCalc)
 
         # UTC/LUTC
-        if sys.version_info[0] > 2:
+        if PY3:
             utc = str(int(datetime.datetime.timestamp(t)))
             lutc = str(int(datetime.datetime.timestamp(e)))
         else:
@@ -567,7 +572,7 @@ class RecordService(BasePlayService):
         archivePlaylist = '{duration}, {offset}, {utc}, {lutc}, {y}, {m}, {d}, {h}, {min}, {s}'.format(
             duration=duration, offset=offset, utc=utc, lutc=lutc, y=year, m=month, d=day, h=hour, min=minute, s=second)
 
-        if sys.version_info[0] > 2:
+        if PY3:
             mktime_duration = int(datetime.datetime.timestamp(e) - datetime.datetime.timestamp(t))
         else:
             mktime_duration = int(time.mktime(e.timetuple())) - int(time.mktime(t.timetuple()))
@@ -690,7 +695,7 @@ class RecordService(BasePlayService):
                                     # Temporary fix for PlusX service
                                     #day = datetime.datetime.now() - datetime.timedelta(days=1)
 
-                                    #if sys.version_info[0] > 2:
+                                    #if PY3:
                                         #timestamp = int(datetime.datetime.timestamp(day))
                                     #else:
                                         #timestamp = int(time.mktime(day.timetuple()))
@@ -926,13 +931,13 @@ class RecordService(BasePlayService):
         recordedSecs = (threadData['program'].endDate - threadData['downloadStartTime']).seconds
 
         if(int(threadData['downloadDuration']) - int(recordedSecs) < 60):
-            if sys.version_info[0] > 2:
+            if PY3:
                 deb('DownloadService downloadLoop successfully recored program: {}, started at: {}, ended at: {}, duration {}, now: {}'.format(threadData['program'].title, threadData['program'].startDate, threadData['program'].endDate, threadData['downloadDuration'], datetime.datetime.now()))
             else:
                 deb('DownloadService downloadLoop successfully recored program: {}, started at: {}, ended at: {}, duration {}, now: {}'.format(threadData['program'].title.encode('utf-8'), threadData['program'].startDate, threadData['program'].endDate, threadData['downloadDuration'], datetime.datetime.now()))
             threadData['success'] = True
         else:
-            if sys.version_info[0] > 2:
+            if PY3:
                 deb('DownloadService downloadLoop ERROR: too short recording, got: {} sec, should be: {}, program: {}, start at: {}, end at: {}, nrOfReattempts: {}, max: {}'.format(recordedSecs, threadData['downloadDuration'], threadData['program'].title, threadData['program'].startDate, threadData['program'].endDate, threadData['nrOfReattempts'], maxNrOfReattempts))
             else:
                 deb('DownloadService downloadLoop ERROR: too short recording, got: {} sec, should be: {}, program: {}, start at: {}, end at: {}, nrOfReattempts: {}, max: {}'.format(recordedSecs, threadData['downloadDuration'], threadData['program'].title.encode('utf-8'), threadData['program'].startDate, threadData['program'].endDate, threadData['nrOfReattempts'], maxNrOfReattempts))
@@ -1076,7 +1081,7 @@ class RecordService(BasePlayService):
 
     def showStartDownloadNotification(self, threadData):
         if threadData['notificationDisplayed'] == False:
-            if sys.version_info[0] > 2:
+            if PY3:
                 xbmc.executebuiltin('Notification({},{},10000,{})'.format(downloadNotificationName, self.normalizeString(threadData['program'].title), self.dwicon))
             else:
                 xbmc.executebuiltin('Notification({},{},10000,{})'.format(downloadNotificationName.encode('utf-8', 'replace'), self.normalizeString(threadData['program'].title), self.dwicon))
@@ -1086,13 +1091,13 @@ class RecordService(BasePlayService):
     def showEndDownloadNotification(self, threadData="", program="", notificationDisplayed=False):
         if not notificationDisplayed:
             if threadData['notificationDisplayed'] == True:
-                if sys.version_info[0] > 2:
+                if PY3:
                     xbmc.executebuiltin('Notification({},{},10000,{})'.format(finishedDownloadNotificationName, self.normalizeString(threadData['program'].title), self.dwicon))
                 else:
                     xbmc.executebuiltin('Notification({},{},10000,{})'.format(finishedDownloadNotificationName.encode('utf-8', 'replace'), self.normalizeString(threadData['program'].title), self.dwicon))
 
         else:
-            if sys.version_info[0] > 2:
+            if PY3:
                 xbmc.executebuiltin('Notification({},{},10000,{})'.format(finishedDownloadNotificationName, self.normalizeString(program.title), self.dwicon))
             else:
                 xbmc.executebuiltin('Notification({},{},10000,{})'.format(finishedDownloadNotificationName.encode('utf-8', 'replace'), self.normalizeString(program.title), self.dwicon))
@@ -1128,13 +1133,13 @@ class RecordService(BasePlayService):
         
         secToFinishRecording = self.calculateTimeDifference(program.endDate, timeOffset = -5 )  #stop 5 sec earlier to release stream and allow recording of next program on that channel
         if secToFinishRecording <= 0:
-            if sys.version_info[0] > 2:
+            if PY3:
                 deb('RecordService not scheduling record for program {}, starting at {}, ending at {}, since it already finished'.format(program.title, program.startDate, program.endDate))
             else:
                 deb('RecordService not scheduling record for program {}, starting at {}, ending at {}, since it already finished'.format(program.title.encode('utf-8'), program.startDate, program.endDate))
             return False
         else:
-            if sys.version_info[0] > 2:
+            if PY3:
                 deb('RecordService scheduling record for program {}, starting at {}, startOffset {}'.format(program.title, program.startDate, startOffset))
             else:
                 deb('RecordService scheduling record for program {}, starting at {}, startOffset {}'.format(program.title.encode('utf-8'), program.startDate, startOffset))
@@ -1208,7 +1213,7 @@ class RecordService(BasePlayService):
                     break
                 time.sleep(1) 
 
-        if sys.version_info[0] > 2:
+        if PY3:
             deb('RecordService - end of recording program: {}'.format(threadData['program'].title))
         else:
             deb('RecordService - end of recording program: {}'.format(threadData['program'].title.encode('utf-8')))
@@ -1322,13 +1327,13 @@ class RecordService(BasePlayService):
         self.analyzeRecordOutput(recordOutput, threadData['recordOptions'])
         recordedSecs = (datetime.datetime.now() - threadData['recordStartTime']).seconds
         if(threadData['recordDuration'] - recordedSecs < 60):
-            if sys.version_info[0] > 2:
+            if PY3:
                 deb('RecordService recordLoop successfully recored program: {}, started at: {}, ended at: {}, duration {}, now: {}'.format(threadData['program'].title, threadData['program'].startDate, threadData['program'].endDate, threadData['recordDuration'], datetime.datetime.now()))
             else:
                 deb('RecordService recordLoop successfully recored program: {}, started at: {}, ended at: {}, duration {}, now: {}'.format(threadData['program'].title.encode('utf-8'), threadData['program'].startDate, threadData['program'].endDate, threadData['recordDuration'], datetime.datetime.now()))
             threadData['success'] = True
         else:
-            if sys.version_info[0] > 2:
+            if PY3:
                 deb('RecordService recordLoop ERROR: too short recording, got: {} sec, should be: {}, program: {}, start at: {}, end at: {}, nrOfReattempts: {}, max: {}'.format(recordedSecs, threadData['recordDuration'], threadData['program'].title, threadData['program'].startDate, threadData['program'].endDate, threadData['nrOfReattempts'], maxNrOfReattempts))
             else:
                 deb('RecordService recordLoop ERROR: too short recording, got: {} sec, should be: {}, program: {}, start at: {}, end at: {}, nrOfReattempts: {}, max: {}'.format(recordedSecs, threadData['recordDuration'], threadData['program'].title.encode('utf-8'), threadData['program'].startDate, threadData['program'].endDate, threadData['nrOfReattempts'], maxNrOfReattempts))
@@ -1486,7 +1491,7 @@ class RecordService(BasePlayService):
 
     def showStartRecordNotification(self, threadData):
         if threadData['notificationDisplayed'] == False:
-            if sys.version_info[0] > 2:
+            if PY3:
                 xbmc.executebuiltin('Notification({},{},10000,{})'.format(recordNotificationName, self.normalizeString(threadData['program'].title), self.icon))
             else:
                 xbmc.executebuiltin('Notification({},{},10000,{})'.format(recordNotificationName.encode('utf-8', 'replace'), self.normalizeString(threadData['program'].title), self.icon))
@@ -1496,7 +1501,7 @@ class RecordService(BasePlayService):
 
     def showEndRecordNotification(self, threadData):
         if threadData['notificationDisplayed'] == True:
-            if sys.version_info[0] > 2:
+            if PY3:
                 xbmc.executebuiltin('Notification({},{},10000,{})'.format(finishedRecordNotificationName, self.normalizeString(threadData['program'].title), self.icon))
             else:
                 xbmc.executebuiltin('Notification({},{},10000,{})'.format(finishedRecordNotificationName.encode('utf-8', 'replace'), self.normalizeString(threadData['program'].title), self.icon))
@@ -1563,7 +1568,7 @@ class RecordService(BasePlayService):
 
     def normalizeString(self, text):
         import sys
-        if sys.version_info[0] > 2:
+        if PY3:
             nkfd_form = unicodedata.normalize('NFKD', str(text))
             text = ("".join([c for c in nkfd_form if not unicodedata.combining(c)]))
         else:
@@ -1600,7 +1605,7 @@ class RecordService(BasePlayService):
 
 
     def isProgramRecorded(self, program):
-        #if sys.version_info[0] > 2:
+        #if PY3:
             #debug('RecordService isProgramRecorded program: %s' % program.title)
         #else:
             #debug('RecordService isProgramRecorded program: %s' % program.title.encode('utf-8'))
@@ -1700,7 +1705,7 @@ class RecordService(BasePlayService):
                         if len(programList) == 0:
                             element.timer.cancel()
                             self.timers.remove(element)
-                        if sys.version_info[0] > 2:
+                        if PY3:
                             deb('RecordService canceled scheduled recording of: {}'.format(program.title))
                         else:
                             deb('RecordService canceled scheduled recording of: {}'.format(program.title.encode('utf-8')))
@@ -1716,7 +1721,7 @@ class RecordService(BasePlayService):
             if program.channel == prog.channel and program.startDate == prog.startDate:
                 threadData['terminateThread'] = True
                 self.stopRecord(threadData)
-                if sys.version_info[0] > 2:
+                if PY3:
                     deb('RecordService canceled ongoing recording of: {}'.format(program.title))
                 else:
                     deb('RecordService canceled ongoing recording of: {}'.format(program.title.encode('utf-8')))
@@ -1768,7 +1773,7 @@ class RecordService(BasePlayService):
                         if len(programList) == 0:
                             element.timer.cancel()
                             self.timersdw.remove(element)
-                        if sys.version_info[0] > 2:
+                        if PY3:
                             deb('DownloadService canceled scheduled downloading of: {}'.format(program.title))
                         else:
                             deb('DownloadService canceled scheduled downloading of: {}'.format(program.title.encode('utf-8')))
@@ -1784,7 +1789,7 @@ class RecordService(BasePlayService):
             if program.channel == prog.channel and program.startDate == prog.startDate:
                 threadData['terminateDownloadThread'] = True
                 self.stopDownload(threadData)
-                if sys.version_info[0] > 2:
+                if PY3:
                     deb('DownloadService canceled ongoing downloading of: {}'.format(program.title))
                 else:
                     deb('DownloadService canceled ongoing downloading of: {}'.format(program.title.encode('utf-8')))
@@ -1925,7 +1930,7 @@ class DownloadMenu(xbmcgui.WindowXMLDialog):
 
         self.downloadDuration = self.getControl(self.downloadDurationId)
 
-        if sys.version_info[0] > 2:
+        if PY3:
             channel = self.program.channel.title
             title = self.program.title
         else:
@@ -2128,7 +2133,7 @@ class RecordMenu(xbmcgui.WindowXMLDialog):
         self.startHour = self.getControl(self.startHourId)
         self.recordDuration = self.getControl(self.recordDurationId)
 
-        if sys.version_info[0] > 2:
+        if PY3:
             self.getControl(self.programTitleId).setLabel('{}'.format(self.program.title))
             self.getControl(self.channelId).setLabel('{}'.format(self.program.channel.title))
         else:

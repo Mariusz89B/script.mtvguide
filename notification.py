@@ -44,6 +44,11 @@
 
 import sys
 
+if sys.version_info[0] > 2:
+    PY3 = True
+else:
+    PY3 = False
+
 import datetime
 import os
 import xbmc, xbmcaddon, xbmcgui, xbmcplugin, xbmcvfs
@@ -75,7 +80,7 @@ class Notification(object):
         debug('Scheduling notification completed!')
 
     def _scheduleNotification(self, channelTitle, programTitle, startTime):
-        if sys.version_info[0] > 2:
+        if PY3:
             debug('Notification _scheduleNotification program: {}, startTime {}'.format(programTitle, startTime))
         else:
             debug('Notification _scheduleNotification program: {}, startTime {}'.format(programTitle.encode('utf-8'), startTime))
@@ -88,7 +93,7 @@ class Notification(object):
         name = self.createAlarmClockName(programTitle, startTime)
 
         description = strings(NOTIFICATION_5_MINS, channelTitle)
-        if sys.version_info[0] > 2:
+        if PY3:
             xbmc.executebuiltin('CancelAlarm({}-5mins,True)'.format(name))
             xbmc.executebuiltin('AlarmClock({}-5mins,Notification({},{},10000,{}),{},True)'.format(name, programTitle, description, self.icon, timeToNotification - 5))
 
@@ -98,7 +103,7 @@ class Notification(object):
 
 
         description = strings(NOTIFICATION_NOW, channelTitle)
-        if sys.version_info[0] > 2:
+        if PY3:
             xbmc.executebuiltin('CancelAlarm({}-now,True)'.format(name))
             xbmc.executebuiltin('AlarmClock({}-now,Notification({},{},10000,{}),{},True)'.format(name, programTitle, description, self.icon, timeToNotification))
         else:
@@ -124,7 +129,7 @@ class Notification(object):
     def _unscheduleNotification(self, programTitle, startTime):
         debug('_unscheduleNotification program %s' % (programTitle))
         name = self.createAlarmClockName(programTitle, startTime)
-        if sys.version_info[0] > 2:
+        if PY3:
             xbmc.executebuiltin('CancelAlarm({}-5mins,True)'.format(name))
             xbmc.executebuiltin('CancelAlarm({}-now,True)'.format(name))
         else:
@@ -167,7 +172,7 @@ class Notification(object):
             program = programList[0]
             if self.epg.currentChannel is not None and program.channel.id == self.epg.currentChannel.id:# and xbmc.Player().isPlaying():
                 return
-            if sys.version_info[0] > 2:
+            if PY3:
                 ret = xbmcgui.Dialog().yesno(strings(NOTIFICATION_POPUP_NAME), '{} {}?'.format(strings(NOTIFICATION_POPUP_QUESTION), program.title))
             else:
                 ret = xbmcgui.Dialog().yesno(strings(NOTIFICATION_POPUP_NAME).encode('utf-8', 'replace'), '{} {}?'.format(strings(NOTIFICATION_POPUP_QUESTION).encode('utf-8', 'replace'), program.title.encode('utf-8', 'replace')))
@@ -175,16 +180,16 @@ class Notification(object):
                 programToPlay = program
         else:
             programs = list()
-            if sys.version_info[0] > 2:
+            if PY3:
                 programs.append(strings(NOTIFICATION_CANCEL))
             else:
                 programs.append(strings(NOTIFICATION_CANCEL).encode('utf-8', 'replace'))
             for prog in programList:
-                if sys.version_info[0] > 2:
+                if PY3:
                     programs.append(prog.title)
                 else:
                     programs.append(prog.title.encode('utf-8', 'replace'))
-            if sys.version_info[0] > 2:
+            if PY3:
                 ret = xbmcgui.Dialog().select(strings(NOTIFICATION_POPUP_NAME), programs)
             else:
                 ret = xbmcgui.Dialog().select(strings(NOTIFICATION_POPUP_NAME).encode('utf-8', 'replace'), programs)

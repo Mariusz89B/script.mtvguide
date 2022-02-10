@@ -45,6 +45,11 @@ from __future__ import unicode_literals
 import sys
 
 if sys.version_info[0] > 2:
+    PY3 = True
+else:
+    PY3 = False
+
+if PY3:
     import urllib.request, urllib.parse, urllib.error,  http.client
 else:
     import urllib, urllib2, httplib
@@ -231,7 +236,7 @@ class SettingsImp:
     def importRecordApp(self, filename):
         try:
             binaryFinalPath = None
-            if sys.version_info[0] > 2:
+            if PY3:
                 xbmcRootDir = xbmcvfs.translatePath('special://xbmc')
             else:
                 xbmcRootDir = xbmc.translatePath('special://xbmc')
@@ -388,7 +393,7 @@ class SettingsImp:
                 content = None
 
                 while failCounter < 10:
-                    if sys.version_info[0] > 2:
+                    if PY3:
                         try:
                             reqUrl   = urllib.request.Request(recordApp)
                             reqUrl.add_header('authority', 'raw.githubusercontent.com')
@@ -440,7 +445,7 @@ class SettingsImp:
                 deb('downloadRecordApp exception: %s!' % getExceptionString() )
                 raise
 
-        if sys.version_info[0] > 2:
+        if PY3:
             settingsImportScript = os.path.join(xbmcvfs.translatePath(ADDON.getAddonInfo('path')), 'settingsImportExport.py')
         else:
             settingsImportScript = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('path')), 'settingsImportExport.py')
