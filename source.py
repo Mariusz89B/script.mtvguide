@@ -4,7 +4,8 @@
 #   GNU General Public License
 
 #   m-TVGuide KODI Addon
-#   Copyright (C) 2020 Mariusz89B
+#   Copyright (C) 2022 Mariusz89B
+#   Copyright (C) 2022 rysson
 #   Copyright (C) 2016 Andrzej Mleczko
 #   Copyright (C) 2014 Krzysztof Cebulski
 #   Copyright (C) 2013 Szakalit
@@ -228,7 +229,7 @@ class Channel(object):
                .format(self.id, self.title, self.logo, self.titles, self.streamUrl)
 
 class Program(object):
-    def __init__(self, channel, title, startDate, endDate, description, productionDate = None, director = None, actor = None, episode = None, imageLarge = None, imageSmall=None, categoryA=None, categoryB=None, notificationScheduled = None, recordingScheduled = None):
+    def __init__(self, channel, title, startDate, endDate, description, productionDate = None, director = None, actor = None, episode = None, rating = None, imageLarge = None, imageSmall = None, categoryA = None, categoryB = None, notificationScheduled = None, recordingScheduled = None):
         """
         @param channel:
         @type channel: source.Channel
@@ -248,6 +249,7 @@ class Program(object):
         self.director = director
         self.actor = actor
         self.episode = episode
+        self.rating = rating
         self.imageLarge = imageLarge
         self.imageSmall = imageSmall
         self.categoryA = categoryA
@@ -256,8 +258,8 @@ class Program(object):
         self.recordingScheduled = recordingScheduled
 
     def __repr__(self):
-        return 'Program(channel={}, title={}, startDate={}, endDate={}, description={}, productionDate={}, director={}, actor={}, episode{}, imageLarge={}, imageSmall={}, categoryA={}, categoryB={})' \
-            .format(self.channel, self.title, self.startDate, self.endDate, self.description, self.productionDate, self.director, self.actor, self.episode, self.imageLarge, self.imageSmall, self.categoryA, self.categoryB)
+        return 'Program(channel={}, title={}, startDate={}, endDate={}, description={}, productionDate={}, director={}, actor={}, episode{}, rating{}, imageLarge={}, imageSmall={}, categoryA={}, categoryB={})' \
+            .format(self.channel, self.title, self.startDate, self.endDate, self.description, self.productionDate, self.director, self.actor, self.episode, self.rating, self.imageLarge, self.imageSmall, self.categoryA, self.categoryB)
 
 
 class ProgramDescriptionParser(object):
@@ -842,8 +844,8 @@ class Database(object):
 
                     elif isinstance(item, Program):
                         try:
-                            c.execute('INSERT OR REPLACE INTO programs(channel, title, start_date, end_date, description, productionDate, director, actor, episode, image_large, image_small, categoryA, categoryB, source, updates_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                                [item.channel, item.title, item.startDate, item.endDate, item.description, item.productionDate, item.director, item.actor, item.episode, item.imageLarge, item.imageSmall, item.categoryA, item.categoryB, self.source.KEY, updatesId])
+                            c.execute('INSERT OR REPLACE INTO programs(channel, title, start_date, end_date, description, productionDate, director, actor, episode, rating, image_large, image_small, categoryA, categoryB, source, updates_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                                [item.channel, item.title, item.startDate, item.endDate, item.description, item.productionDate, item.director, item.actor, item.episode, item.rating, item.imageLarge, item.imageSmall, item.categoryA, item.categoryB, self.source.KEY, updatesId])
 
                         except (sqlite3.InterfaceError) as ex:
                             nrOfFailures += 1
@@ -1533,7 +1535,7 @@ class Database(object):
                           [channel.id, self.source.KEY, startTime, endTime, search, channel.id, self.source.KEY, now, now, search])
                 except: return
             for row in c:
-                program = Program(channel, row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')])
+                program = Program(channel, row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('rating')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')])
                 programList.append(program)
         c.close()
         return programList
@@ -1561,7 +1563,7 @@ class Database(object):
                       [channel.id, self.source.KEY, search, startTime, endTime, channel.id, self.source.KEY, search, now, now])
             except: return
             for row in c:
-                program = Program(channel, row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')])
+                program = Program(channel, row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('rating')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')])
                 programList.append(program)
         c.close()
         return programList
@@ -1589,7 +1591,7 @@ class Database(object):
                       [channel.id, self.source.KEY, search, search, startTime, endTime, channel.id, self.source.KEY, search, search, now, now])
             except: return
             for row in c:
-                program = Program(channel, row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')])
+                program = Program(channel, row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('rating')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')])
                 programList.append(program)
         c.close()
         return programList
@@ -1608,7 +1610,7 @@ class Database(object):
                   [channel.id, now, endTime])
         except: return
         for row in c:
-            program = Program(channel, row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')])
+            program = Program(channel, row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('rating')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')])
             programList.append(program)
         c.close()
 
@@ -1638,7 +1640,7 @@ class Database(object):
                   [self.source.KEY, now, now])
         for row in c:
             program = Program(channelMap[row[str('channel')]], title=row[str('title')], startDate=row[str('start_date')], endDate=row[str('end_date')],
-                  description=row[str('description')], episode=row[str('episode')], imageLarge=row[str('image_large')], imageSmall=row[str('image_small')], categoryA=row[str('categoryA')], categoryB=row[str('categoryB')])
+                  description=row[str('description')], episode=row[str('episode')], rating=row[str('rating')], imageLarge=row[str('image_large')], imageSmall=row[str('image_small')], categoryA=row[str('categoryA')], categoryB=row[str('categoryB')])
             programList.append(program)
         c.close()
         return programList
@@ -1663,7 +1665,7 @@ class Database(object):
             notification_scheduled = ''
             recording_scheduled = ''
             program = Program(channelMap[row[str('channel')]], title=row[str('title')], startDate=row[str('start_date')], endDate=row[str('end_date')],
-                  description=row[str('description')], episode=row[str('episode')], imageLarge=row[str('image_large')], imageSmall=row[str('image_small')], categoryA=row[str('categoryA')], categoryB=row[str('categoryB')],
+                  description=row[str('description')], episode=row[str('episode')], rating=row[str('rating')], imageLarge=row[str('image_large')], imageSmall=row[str('image_small')], categoryA=row[str('categoryA')], categoryB=row[str('categoryB')],
                   notificationScheduled=str(notification_scheduled), recordingScheduled=str(recording_scheduled))
             programList.append(program)
         c.close()
@@ -1683,7 +1685,7 @@ class Database(object):
             except: return
             row = c.fetchone()
             if row:
-                program = Program(channel, row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')])
+                program = Program(channel, row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('rating')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')])
                 programList.append(program)
         c.close()
         return programList
@@ -1709,7 +1711,7 @@ class Database(object):
         c.execute('SELECT * FROM programs WHERE channel=? AND source=? AND start_date <= ? AND end_date >= ?', [channel.id, self.source.KEY, now, now])
         row = c.fetchone()
         if row:
-            program = Program(channel, row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')])
+            program = Program(channel, row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('rating')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')])
         else:
             program = Program(channel, channel.title, datetime.now(), datetime.now(), '', channel.logo, 'tvguide-logo-epg.png', '', '', '')
         c.close()
@@ -1725,7 +1727,7 @@ class Database(object):
         c.execute('SELECT * FROM programs WHERE channel=? AND source=? AND start_date >= ? ORDER BY start_date ASC LIMIT 1', [program.channel.id, self.source.KEY, program.endDate])
         row = c.fetchone()
         if row:
-            nextProgram = Program(program.channel, row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')])
+            nextProgram = Program(program.channel, row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('rating')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')])
         c.close()
         return nextProgram
 
@@ -1738,7 +1740,7 @@ class Database(object):
         c.execute('SELECT * FROM programs WHERE channel=? AND source=? AND end_date <= ? ORDER BY start_date DESC LIMIT 1', [program.channel.id, self.source.KEY, program.startDate])
         row = c.fetchone()
         if row:
-            previousProgram = Program(program.channel, row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')])
+            previousProgram = Program(program.channel, row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('rating')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')])
         c.close()
         return previousProgram
 
@@ -1751,7 +1753,7 @@ class Database(object):
         c = self.conn.cursor()
         c.execute('SELECT * FROM programs WHERE channel = ? AND source = ?  AND ( (end_date > ?) AND (start_date < ? ) )', [channel.id, self.source.KEY, startTime, endTime])
         for row in c:
-            program = Program(channel, row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')])
+            program = Program(channel, row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('rating')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')])
             if program.title == _program.title:
                 result = program
 
@@ -1767,7 +1769,7 @@ class Database(object):
         c.execute('SELECT * FROM programs WHERE channel=? AND source=? AND start_date >= ? AND end_date >= ?', [channel.id, self.source.KEY, startTime, startTime])
         row = c.fetchone()
         if row:
-            program = Program(channel, row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')])
+            program = Program(channel, row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('rating')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')])
         c.close()
         return program
 
@@ -1802,7 +1804,7 @@ class Database(object):
             c.execute('SELECT p.*, (SELECT 1 FROM notifications n WHERE n.channel=p.channel AND n.program_title=p.title AND n.source=p.source AND (n.start_date IS NULL OR n.start_date = p.start_date)) AS notification_scheduled , (SELECT 1 FROM recordings r WHERE r.channel=p.channel AND r.program_title=p.title AND r.start_date=p.start_date AND r.source=p.source) AS recording_scheduled FROM programs p WHERE p.channel IN (\'' + ('\',\''.join(channelMap.keys())) + '\') AND p.source=? AND p.end_date > ? AND p.start_date < ?', [self.source.KEY, startTime.replace(microsecond=0), endTime.replace(microsecond=0)])
 
             for row in c:
-                program = Program(channelMap[row[str('channel')]], row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')], row[str('notification_scheduled')], row[str('recording_scheduled')])
+                program = Program(channelMap[row[str('channel')]], row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('rating')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')], row[str('notification_scheduled')], row[str('recording_scheduled')])
                 programList.append(program)
                 try:
                     channelsWithoutProg.remove(channelMap[row[str('channel')]])
@@ -2221,6 +2223,13 @@ class Database(object):
                     deb('Required m-TVGuide restart')
                     raise RestartRequired()
 
+            if version < [6, 7, 4]:
+                c.execute('ALTER TABLE programs ADD COLUMN rating TEXT')
+                c.execute('UPDATE version SET major=6, minor=7, patch=5')
+                neededRestart = False
+
+                self.conn.commit()
+
             # make sure we have a record in sources for this Source
             c.execute("INSERT OR IGNORE INTO sources(id, channels_updated) VALUES(?, ?)", [self.source.KEY, 0])
             c.execute('CREATE TABLE IF NOT EXISTS lastplayed(idx INTEGER, start_date TEXT, end_date TEXT, played_date TEXT)')
@@ -2317,14 +2326,14 @@ class Database(object):
         c.execute("SELECT DISTINCT c.id, c.title as channel_title,c.logo,c.stream_url,c.visible,c.weight, p.* FROM programs p, channels c, notifications a WHERE c.id = p.channel AND p.title = a.program_title AND p.start_date = p.start_date")
         for row in c:
             channel = Channel(row[str("id")], row[str("channel_title")], row[str("logo")], row[str("stream_url")], row[str("visible")], row[str("weight")])
-            program = Program(channel, row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')], notificationScheduled=True)
+            program = Program(channel, row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('rating')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')], notificationScheduled=True)
             programList.append(program)
         #always
         c.execute("SELECT DISTINCT c.id, c.title as channel_title,c.logo,c.stream_url,c.visible,c.weight, p.* FROM programs p, channels c, notifications a WHERE c.id = p.channel AND p.title = a.program_title AND p.start_date >= ? AND p.end_date <= ?", [start,end])
         #c.execute("SELECT DISTINCT c.id, c.title as channel_title,c.logo,c.stream_url,c.visible,c.weight, p.* FROM programs p, channels c, notifications a WHERE c.id = p.channel AND a.type = 1 AND p.title = a.program_title")
         for row in c:
             channel = Channel(row[str("id")], row[str("channel_title")], row[str("logo")], row[str("stream_url")], row[str("visible")], row[str("weight")])
-            program = Program(channel, row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')], notificationScheduled=True)
+            program = Program(channel, row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('rating')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')], notificationScheduled=True)
             programList.append(program)
         c.close()
         return programList
@@ -2416,14 +2425,14 @@ class Database(object):
         c.execute("SELECT DISTINCT c.id, c.title as channel_title,c.logo,c.stream_url,c.visible,c.weight, p.* FROM programs p, channels c, recordings a WHERE c.id = p.channel AND p.title = a.program_title AND p.start_date = p.start_date")
         for row in c:
             channel = Channel(row[str("id")], row[str("channel_title")], row[str("logo")], row[str("stream_url")], row[str("visible")], row[str("weight")])
-            program = Program(channel, row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')], recordingScheduled=True)
+            program = Program(channel, row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('rating')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')], recordingScheduled=True)
             programList.append(program)
         #always
         c.execute("SELECT DISTINCT c.id, c.title as channel_title,c.logo,c.stream_url,c.visible,c.weight, p.* FROM programs p, channels c, recordings a WHERE c.id = p.channel AND p.title = a.program_title AND p.start_date >= ? AND p.end_date <= ?", [start,end])
         #c.execute("SELECT DISTINCT c.id, c.title as channel_title,c.logo,c.stream_url,c.visible,c.weight, p.* FROM programs p, channels c, notifications a WHERE c.id = p.channel AND a.type = 1 AND p.title = a.program_title")
         for row in c:
             channel = Channel(row[str("id")], row[str("channel_title")], row[str("logo")], row[str("stream_url")], row[str("visible")], row[str("weight")])
-            program = Program(channel, row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')], recordingScheduled=True)
+            program = Program(channel, row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('rating')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')], recordingScheduled=True)
             programList.append(program)
         c.close()
         return programList
@@ -2561,16 +2570,14 @@ class Source(object):
                         u = requests.get(url, headers=headers, verify=False, timeout=20)
                         content = u.content
 
-                    try:
-                        c_disposition = u.headers['Content-Disposition']
-                        filename = re.search('filename="(.+?)"', c_disposition).group(1)
-                    except:
-                        filename = url
-                        
-                    try:
-                        contentType = u.headers['Content-Type']
-                    except:
-                        pass
+                    content_type = u.headers.get('Content-Type', '')
+                    c_disposition = u.headers.get('Content-Disposition', '')
+
+                    filename_regex = re.compile('filename="(.+?)"')
+
+                    r = filename_regex.search(c_disposition)
+                    filename = r.group(1) if r else url
+
                     break
 
                 except Exception as ex:
@@ -2586,26 +2593,7 @@ class Source(object):
             except:
                 pass
 
-            if url.lower().endswith('.zip') or remoteFilename.lower().endswith('.zip') or '.zip' in filename or 'zip' in contentType:
-                tnow = datetime.now()
-                deb("[EPG] Type: .zip, Unpacking epg: {} [{} sek.]".format(url, str((tnow-start).seconds)))
-                memfile = io.BytesIO(content)
-                unziped = zipfile.ZipFile(memfile)
-                content = unziped.read(unziped.namelist()[0])
-                unziped.close()
-                memfile.close()
-
-            if url.lower().endswith('.gz') or remoteFilename.lower().endswith('.gz') or '.gz' in filename or 'gzip' in contentType:
-                tnow = datetime.now()
-                deb("[EPG] Type: .gz, Unpacking epg: {} [{} sek.]".format(url, str((tnow-start).seconds)))
-                import gzip
-                memfile = io.BytesIO(content)
-                unziped = gzip.GzipFile(fileobj=memfile)
-                content = unziped.read()
-                unziped.close()
-                memfile.close()
-
-            if url.lower().endswith('.xz') or remoteFilename.lower().endswith('.xz') or '.xz' in filename or 'xz' in contentType:
+            if url.lower().endswith('.xz') or remoteFilename.lower().endswith('.xz') or '.xz' in filename or 'xz' in content_type:
                 tnow = datetime.now()
                 deb("[EPG] Type: .xz, Unpacking epg: {} [{} sek.]".format(url, str((tnow-start).seconds)))
                 try:
@@ -2618,7 +2606,26 @@ class Source(object):
                 unziped.close()
                 memfile.close()
 
-            if url.lower().endswith('.bz2') or remoteFilename.lower().endswith('.bz2') or '.bz2' in filename:
+            elif url.lower().endswith('.gz') or remoteFilename.lower().endswith('.gz') or '.gz' in filename or 'application/x-gzip' in content_type:
+                tnow = datetime.now()
+                deb("[EPG] Type: .gz, Unpacking epg: {} [{} sek.]".format(url, str((tnow-start).seconds)))
+                import gzip
+                memfile = io.BytesIO(content)
+                unziped = gzip.GzipFile(fileobj=memfile)
+                content = unziped.read()
+                unziped.close()
+                memfile.close()
+
+            elif url.lower().endswith('.zip') or remoteFilename.lower().endswith('.zip') or '.zip' in filename:
+                tnow = datetime.now()
+                deb("[EPG] Type: .zip, Unpacking epg: {} [{} sek.]".format(url, str((tnow-start).seconds)))
+                memfile = io.BytesIO(content)
+                unziped = zipfile.ZipFile(memfile)
+                content = unziped.read(unziped.namelist()[0])
+                unziped.close()
+                memfile.close()
+
+            elif url.lower().endswith('.bz2') or remoteFilename.lower().endswith('.bz2') or '.bz2' in filename:
                 tnow = datetime.now()
                 deb("[EPG] Type: .bz2, Unpacking epg: {} [{} sek.]".format(url, str((tnow-start).seconds)))
                 import bz2
@@ -2677,25 +2684,6 @@ class XMLTVSource(Source):
 
         else:
             with open(filename, 'rb') as file:
-                if filename.lower().endswith('.zip') or '.zip' in filename:
-                    tnow = datetime.now()
-                    deb("[EPG] Type: .zip, Unpacking epg: {} [{} sek.]".format(filename, str((tnow-start).seconds)))
-                    memfile = io.BytesIO(file.read())
-                    unziped = zipfile.ZipFile(memfile)
-                    content = unziped.read(unziped.namelist()[0])
-                    unziped.close()
-                    memfile.close()
-
-                if filename.lower().endswith('.gz') or '.gz' in filename:
-                    tnow = datetime.now()
-                    deb("[EPG] Type: .gz, Unpacking epg: {} [{} sek.]".format(filename, str((tnow-start).seconds)))
-                    import gzip
-                    memfile = io.BytesIO(file.read())
-                    unziped = gzip.GzipFile(fileobj=memfile)
-                    content = unziped.read()
-                    unziped.close()
-                    memfile.close()
-
                 if filename.lower().endswith('.xz') or '.xz' in filename:
                     tnow = datetime.now()
                     deb("[EPG] Type: .xz, Unpacking epg: {} [{} sek.]".format(url, str((tnow-start).seconds)))
@@ -2709,7 +2697,26 @@ class XMLTVSource(Source):
                     unziped.close()
                     memfile.close()
 
-                if filename.lower().endswith('.bz2') or '.bz2' in filename:
+                elif filename.lower().endswith('.gz') or '.gz' in filename:
+                    tnow = datetime.now()
+                    deb("[EPG] Type: .gz, Unpacking epg: {} [{} sek.]".format(filename, str((tnow-start).seconds)))
+                    import gzip
+                    memfile = io.BytesIO(file.read())
+                    unziped = gzip.GzipFile(fileobj=memfile)
+                    content = unziped.read()
+                    unziped.close()
+                    memfile.close()
+
+                elif filename.lower().endswith('.zip') or '.zip' in filename:
+                    tnow = datetime.now()
+                    deb("[EPG] Type: .zip, Unpacking epg: {} [{} sek.]".format(filename, str((tnow-start).seconds)))
+                    memfile = io.BytesIO(file.read())
+                    unziped = zipfile.ZipFile(memfile)
+                    content = unziped.read(unziped.namelist()[0])
+                    unziped.close()
+                    memfile.close()
+
+                elif filename.lower().endswith('.bz2') or '.bz2' in filename:
                     tnow = datetime.now()
                     deb("[EPG] Type: .bz2, Unpacking epg: {} [{} sek.]".format(filename, str((tnow-start).seconds)))
                     import bz2
@@ -3058,9 +3065,14 @@ def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
             r = progEpisodeNumRe.search(episode)
             episode = r.group(1) if r else ''
 
+        r = programRating.search(program)
+        rating = r.group(1) if r else ''
+
+        deb(rating)
+
         program = None
         return Program(channel=channel, title=title, startDate=start, endDate=stop, description=desc,
-                       productionDate=date, director=director, actor=actor, episode=episode,
+                       productionDate=date, director=director, actor=actor, episode=episode, rating=rating,
                        imageLarge=live, imageSmall=icon, categoryA=categoryA, categoryB=categoryB)
 
     deb("[EPG] Parsing EPG by custom parser")
@@ -3088,7 +3100,8 @@ def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
     programDirector  = re.compile(r'<director.*?>(.*?)</director>',          re.DOTALL)
     programActor     = re.compile(r'<actor.*?>(.*?)</actor>',                re.DOTALL)
     programEpisode   = re.compile(r'<episode-num.*?>(.*?)</episode-num>',    re.DOTALL)
-    programLive      = re.compile(r'<date.*?>(live)</date>',                   re.DOTALL | re.MULTILINE)
+    programRating    = re.compile(r'<rating.*?>\s*<value>(.*?)<\/value>\s*<\/rating>', re.DOTALL | re.MULTILINE)
+    programLive      = re.compile(r'<date.*?>(live)</date>',                 re.DOTALL)
     progEpisodeNumRe = re.compile(r'([*S|E]((S)?(\d{1,3})?\s*((E)?\d{1,5}(\/\d{1,5})?)))')
 
     #replace &amp; with & and Carriage Return (CR) in xml
@@ -3185,6 +3198,12 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
             categories.insert(0, category)
         category_count.update(categories)
         categoryA, categoryB = (categories + ['', ''])[:2]
+
+        rating = elem.findtext("rating")
+        value = ''
+        if rating:
+            for ele in elem:
+                value = ele.findtext("value")
         
         live = ''
         if date == 'live':
@@ -3221,7 +3240,7 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
             stop = ''
 
         return Program(channel, elem.findtext('title'), start, stop, description, productionDate=date,
-                       director=director, actor=actor, episode=episode, imageLarge=live, imageSmall=icon,
+                       director=director, actor=actor, episode=episode, rating=value, imageLarge=live, imageSmall=icon,
                        categoryA=categoryA, categoryB=categoryB)
 
     deb("[EPG] Parsing EPG")

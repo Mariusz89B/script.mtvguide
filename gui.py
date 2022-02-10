@@ -4879,6 +4879,21 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.setControlText(C_PROGRAM_EPISODE, episode)
             if skin_separate_allowed_age_icon:
                 icon, age = descriptionParser.extractAllowedAge()
+                if icon == '':
+                    if sys.version_info[0] > 2:
+                        addonPath = xbmcvfs.translatePath(ADDON.getAddonInfo('path'))
+                    else:
+                        addonPath = xbmc.translatePath(ADDON.getAddonInfo('path'))
+
+                    number_regex = re.compile('(\d+)')
+
+                    r = number_regex.search(program.rating)
+                    age = r.group(1) if r else ''
+
+                    if age == '3':
+                        age = '0'
+                    
+                    icon = os.path.join(addonPath, 'icons', 'age_rating', 'icon_{}.png'.format(age))
                 self.setControlImage(C_PROGRAM_AGE_ICON, icon)
             if skin_separate_program_actors:
                 actors = descriptionParser.extractActors()
@@ -4887,6 +4902,8 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.setControlText(C_PROGRAM_ACTORS, actors)
             if skin_separate_rating:
                 rating = descriptionParser.extractRating()
+                if rating == '':
+                    rating = program.rating
                 self.setControlText(C_PROGRAM_RATING, rating)
             if skin_separate_program_progress:
                 try:
@@ -7535,6 +7552,22 @@ class InfoDialog(xbmcgui.WindowXMLDialog):
                 try:
                     ageImageControl = self.getControl(C_PROGRAM_AGE_ICON)
                     icon = descriptionParser.extractAllowedAge()
+                    if icon == '':
+                        if sys.version_info[0] > 2:
+                            addonPath = xbmcvfs.translatePath(ADDON.getAddonInfo('path'))
+                        else:
+                            addonPath = xbmc.translatePath(ADDON.getAddonInfo('path'))
+
+                        number_regex = re.compile('(\d+)')
+
+                        r = number_regex.search(self.program.rating)
+                        age = r.group(1) if r else ''
+
+                        if age == '3':
+                            age = '0'
+                        
+                        icon = os.path.join(addonPath, 'icons', 'age_rating', 'icon_{}.png'.format(age))
+                    
                     ageImageControl.setImage(icon)
                 except:
                     pass
@@ -7553,6 +7586,8 @@ class InfoDialog(xbmcgui.WindowXMLDialog):
                 try:
                     ratingControl = self.getControl(C_PROGRAM_RATING)
                     rating = descriptionParser.extractRating()
+                    if rating == '':
+                        rating = self.program.rating
                     ratingControl.setText(rating)
                 except:
                     pass
