@@ -3220,11 +3220,13 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
         category_count.update(categories)
         categoryA, categoryB = (categories + ['', ''])[:2]
 
-        rating = elem.findtext("rating")
         value = ''
-        if rating:
+        rating = elem.findtext("rating")
+        if rating is not None:
             for ele in elem:
-                value = ele.findtext("value")
+                get_value = ele.findtext("value")
+                if get_value is not None:
+                    value = get_value
         
         live = ''
         if date == 'live':
