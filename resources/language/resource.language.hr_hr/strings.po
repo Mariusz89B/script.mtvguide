@@ -2249,8 +2249,8 @@ msgid "URL is incorrect!"
 msgstr "URL nije točan!"
 
 msgctxt "#57051"
-msgid "m-TVGuide"
-msgstr "m-TVGuide"
+msgid "m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]"
+msgstr "m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]"
 
 msgctxt "#57052"
 msgid "Addon is already running - can't be started again"
@@ -2895,6 +2895,10 @@ msgstr "Provjerite certifikat poslužitelja licenci"
 msgctxt "#70139"
 msgid "Login incorrect, ICOK clients please select proper service"
 msgstr "Netočna prijava, ICOK klijenti traže se da odaberu odgovarajuću uslugu"
+
+msgctxt "#70140"
+msgid "EPG file format {} only supported for Kodi >19. Please change format and try agian."
+msgstr "Format EPG datoteke {} podržan samo za Kodi >19. Molimo promijenite format i pokušajte ponovno."
 
 msgctxt "#80005"
 msgid "[COLOR]WP Pilot[/COLOR]"
