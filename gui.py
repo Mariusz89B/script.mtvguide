@@ -695,10 +695,14 @@ class mTVGuide(xbmcgui.WindowXML):
         self.interval = 0
 
     def restartKodi(self):
-        osAndroid = xbmc.getCondVisibility('system.platform.android')
+        androidOS = xbmc.getCondVisibility('system.platform.android') 
+        iOS = xbmc.getCondVisibility('system.platform.ios')
+        macOS = xbmc.getCondVisibility('system.platform.osx')
+        atvOS = xbmc.getCondVisibility('system.platform.atv2')
         
-        if osAndroid:
+        if androidOS:
             xbmc.executebuiltin("Quit")
+
         else:
             if getDistro() == 'Kodi':
                 xbmc.executebuiltin("RestartApp")
