@@ -47,19 +47,20 @@ from settings import Settings
 
 class Service(object):
     def __init__(self):
-        self.database = source.Database()
-        self.database.initialize(self.onInit)
+        pass
+        #self.database = source.Database()
+        #self.database.initialize(self.onInit)
 
     def onInit(self, success):
         Settings.formatter()
         
-        if success:
-            self.database.updateChannelAndProgramListCaches(callback=self.onCachesUpdated, startup=True)
-        else:
-            self.database.close()
+        #if success:
+            #self.database.updateChannelAndProgramListCaches(callback=self.onCachesUpdated, startup=True)
+        #else:
+            #self.database.close()
 
-    def onCachesUpdated(self):
-        self.database.close(None)
+    #def onCachesUpdated(self):
+        #self.database.close(None)
 
 try:
     global ADDON_AUTOSTART
@@ -72,5 +73,6 @@ try:
 
 except source.SourceNotConfiguredException:
     pass  # ignore
+    
 except Exception as ex:
     deb('[%s] Uncaugt exception in service.py: %s' % (ADDON_ID, getExceptionString()))
