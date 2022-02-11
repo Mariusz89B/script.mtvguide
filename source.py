@@ -3359,30 +3359,43 @@ class RssFeed(object):
 
     def checkForUpdates(self):
         debug('RssFeed checkForUpdates')
-        try:
-            rssData = self.downloader.getJsonFromExtendedAPI(self.rssUrl).decode('utf-8')
-        except:
-            rssData = self.downloader.getJsonFromExtendedAPI(self.rssUrl)
-        if rssData is not None:
-            for line in reversed(rssData.split('\n')):
-                strippedLine = line.strip()
-                if len(strippedLine) == 0:
-                    continue
-                try:
-                    #strippedLine = strippedLine.decode('iso-8859-2')
-                    message = re.search(".*?([_.0-9:]*)(.*)", strippedLine)
-                    dateStr = message.group(1).strip()
-                    messageStr = message.group(2).strip()
-                    t = time.strptime(dateStr, self.dateFormat)
-                    messageDate = datetime(t.tm_year, t.tm_mon, t.tm_mday, t.tm_hour, t.tm_min, t.tm_sec)
 
-                    if (not self.lastPrintedMessageInDB or messageDate > self.lastPrintedMessageInDB) and len(messageStr) > 0 and messageDate < datetime.now() + timedelta(days=1):
-                        deb('RssFeed News: {}'.format(messageStr))
-                        xbmcgui.Dialog().ok(strings(RSS_MESSAGE), "\n" + messageStr )
-                        self.lastPrintedMessageInDB = messageDate
-                        self.updateDbCall(self.lastPrintedMessageInDB)
-                except Exception as ex:
-                    deb('RssFeed checkForUpdates Error: {}'.format(getExceptionString()))
+        UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36 Edg/98.0.1108.43'
+        customHeaders = {
+            'User-Agent' : UA, 
+            'Connection' : 'keep-alive',
+            'Upgrade-Insecure-Requests': '1',
+        }
+
+        for url in self.rssUrl:
+            if 'mods-kodi.pl' in url:
+                rssData = self.downloader.getJsonFromExtendedAPI(url, customHeaders=customHeaders)
+            else:
+                rssData = self.downloader.getJsonFromExtendedAPI(url)
+
+            if PY3:
+                rssData = rssData.decode('utf-8')
+
+            if rssData is not None:
+                for line in reversed(rssData.split('\n')):
+                    strippedLine = line.strip()
+                    if len(strippedLine) == 0:
+                        continue
+                    try:
+                        #strippedLine = strippedLine.decode('iso-8859-2')
+                        message = re.search(".*?([_.0-9:]*)(.*)", strippedLine)
+                        dateStr = message.group(1).strip()
+                        messageStr = message.group(2).strip()
+                        t = time.strptime(dateStr, self.dateFormat)
+                        messageDate = datetime(t.tm_year, t.tm_mon, t.tm_mday, t.tm_hour, t.tm_min, t.tm_sec)
+
+                        if (not self.lastPrintedMessageInDB or messageDate > self.lastPrintedMessageInDB) and len(messageStr) > 0 and messageDate < datetime.now() + timedelta(days=1):
+                            deb('RssFeed News: {}'.format(messageStr))
+                            xbmcgui.Dialog().ok(strings(RSS_MESSAGE), "\n" + messageStr )
+                            self.lastPrintedMessageInDB = messageDate
+                            self.updateDbCall(self.lastPrintedMessageInDB)
+                    except Exception as ex:
+                        deb('RssFeed checkForUpdates Error: {}'.format(getExceptionString()))
 
         if not self.closing:
             self.timer = threading.Timer(self.updateInterval, self.checkForUpdates)

@@ -1,4 +1,7 @@
-﻿v9.8.9 (2022-02-11)
+﻿v9.9.0 (2022-02-12)
+- Fixed RSS feed.
+
+v9.8.9 (2022-02-11)
 - Added option to adjust to local time, for universal timezone. 
 - Added debug mode.
 - Add channel to group shortcut.

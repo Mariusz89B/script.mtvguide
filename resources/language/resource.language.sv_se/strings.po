@@ -574,7 +574,7 @@ msgstr "Automatisk tidszon"
 
 msgctxt "#30379"
 msgid "Adjust to local timezone"
-msgstr "Justera till lokal tidszons"
+msgstr "Justera till lokal tidszon"
 
 msgctxt "#30500"
 msgid "Edit channel order and visibility"
