@@ -63,11 +63,6 @@ else:
     import urllib2
     import ConfigParser
 
-try:
-    import multiprocessing
-except ImportError:
-    pass
-
 from collections import Counter
 import threading
 import requests
