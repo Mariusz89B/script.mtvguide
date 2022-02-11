@@ -73,13 +73,11 @@ import threading
 import requests
 import urllib3
 import os, re, time, io, zipfile
-
+from datetime import datetime, timedelta
 try:
-    from datetime import datetime, timedelta, timezone
+    from datetime import timezone
 except ImportError:
-    from datetime import datetime, timedelta
     import pytz
-
 import xbmc, xbmcgui, xbmcvfs, xbmcaddon
 import shutil
 import playService
@@ -2969,6 +2967,7 @@ def getTimeZone():
 
     return ZONE, TIME_ZONE_AUTO, LOCAL_TIME
 
+
 def prepareTimeZone(zone, autozone, local):
     """
     Prepare timezone data to avoid do it in every loop step.
@@ -2977,56 +2976,43 @@ def prepareTimeZone(zone, autozone, local):
     `autozone` - parse timezone from EPG if true
     `local`    – force local timezone for UTC, used if not `autozone`
     """
-
     if autozone:
         if local:
-            if PY3:
-                local = proxydt.now(timezone.utc).astimezone().tzinfo
-            else:
-                local = proxydt.now(pytz.utc).astimezone().tzname()
+            t = 86400  # one day (to avoid negative TZ at timestamo 0)
+            local = datetime.fromtimestamp(t) - datetime.utcfromtimestamp(t)
         else:
             local = None
         zone = None
     elif zone:
-        if PY3:
-            zone = proxydt.strptime(zone, '%z').tzinfo
-        else:
-            zone = proxydt.strptime(zone, '%z').tzname()
+        zone = timedelta(minutes=int(zone[:3]) * 60 + int(zone[-2:]))
 
-    # tzinfo for all zones (-12:00, -1200 ...)
-    if PY3:
-        zones = {z: proxydt.strptime(z, '%z').tzinfo for h in range(-12, 13) for z in ('%+03d00' % h, '%+03d:00' % h)}
-    else:
-        zones = {z: proxydt.strptime(z, '%z').tzname() for h in range(-12, 13) for z in ('%+03d00' % h, '%+03d:00' % h)}
-    
-    return zone, autozone, local, zones
+    return zone, autozone, local
 
 
-def parseTvDate(dateString, zone, autozone, local, zones={}):
+def parseTvDate(dateString, zone, autozone, local):
     """
     Parse date-time. Options must be prepared by prepareTimeZone().
 
     `zone`     - EPG timezone, used if not `autozone`
     `autozone` - parse timezone from EPG if true
     `local`    – local timezone to force for UTC, used if `autozone`
-    `zones`    - from -12:00 to +12:00 zones DB
     """
     dateString, _, zoneString = dateString.partition(' ')
     if zoneString:
-        epg_zone = zones.get(zoneString)
-        if epg_zone is None:
-            epg_zone = proxydt.strptime(zoneString, '%z').tzinfo
+        offset = timedelta(minutes=int(zoneString[:3]) * 60 + int(zoneString[-2:]))
     else:
-        epg_zone = None
-    dt = datetime(*(int(dateString[i:i+2 if i else i+4]) for i in (0, 4, 6, 8, 10, 12)), tzinfo=epg_zone)
+        offset = None
+    dt = datetime(*(int(dateString[i:i+2 if i else i+4]) for i in (0, 4, 6, 8, 10, 12)))
     if zone:
-        dt = dt.replace(tzinfo=zone)
-    elif local and dt.tzinfo == timezone.utc:
-        dt = dt.replace(tzinfo=local)
-    if dt.tzinfo:
-        # normlalize, move time by TZ offset and remove TZ
-        dt = (dt + dt.utcoffset()).replace(tzinfo=None)
+        offset = zone
+    elif local and offset == parseTvDate.utc:
+        offset = local
+    if offset:
+        dt += offset  # apply timezone offset
     return dt
+
+
+parseTvDate.utc = timedelta()
 
 
 def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
