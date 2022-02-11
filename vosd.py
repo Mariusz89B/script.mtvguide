@@ -55,7 +55,7 @@ else:
     import ConfigParser
 
 import datetime, time, re, os, threading
-import xbmc, xbmcgui
+import xbmc, xbmcgui, xbmcvfs
 from strings import *
 from skins import Skin
 import source as src
