@@ -469,8 +469,10 @@ class PlaylistUpdater(baseServiceUpdater):
             regexUHD = re.compile('(\s|^)(4K|UHD)(?=\s|$)', re.IGNORECASE)
 
             defReplaceList.append({ 'regex' : re.compile('(\s|^)(SD:?|480:?|480p:?|576:?|576i:?|576p:?)(?=\s|$)|^(SD:?|480:?|480p:?|576:?|576i:?|576p:?)'), 'def' : 'SD'})
-            defReplaceList.append({ 'regex' : re.compile('(\s|^)(HD:?|720:?|720p:?|1080:?|1080i:?|1080p:?)(?=\s|$)|^(HD:?|720:?|720p:?|1080:?|1080i:?|1080p:?)'), 'def' : 'HD'})
-            defReplaceList.append({ 'regex' : re.compile('(\s|^)(UHD:?|UHDTV:?|4K:?|2160p:?)(?=\s|$)|^(UHD:?|UHDTV:?|4K:?|2160p:?)'), 'def' : 'HD'})
+            if 'SD' not in defReplaceList:
+                defReplaceList.append({ 'regex' : re.compile('(\s|^)(HD:?|720:?|720p:?|1080:?|1080i:?|1080p:?)(?=\s|$)|^(HD:?|720:?|720p:?|1080:?|1080i:?|1080p:?)'), 'def' : 'HD'})
+            if 'HD' not in defReplaceList:
+                defReplaceList.append({ 'regex' : re.compile('(\s|^)(UHD:?|UHDTV:?|4K:?|2160p:?)(?=\s|$)|^(UHD:?|UHDTV:?|4K:?|2160p:?)'), 'def' : 'UHD'})
 
             regex_chann_name   =     re.compile('tvg-id="[^"]*"', re.IGNORECASE)
 

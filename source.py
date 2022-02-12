@@ -167,11 +167,11 @@ else:
 
 CHANNEL_FILTER = ADDON.getSetting('channel_filter_sort')
 if CHANNEL_FILTER == '0':
-    GET_CHANNEL_FILTER = 0
+    GET_CHANNEL_FILTER = "0"
 elif CHANNEL_FILTER == '1':
-    GET_CHANNEL_FILTER = 1
+    GET_CHANNEL_FILTER = "1"
 else:
-    GET_CHANNEL_FILTER = 2
+    GET_CHANNEL_FILTER = "2"
 
 NUMBER_OF_SERVICE_PRIORITIES = 12
 SETTINGS_TO_CHECK = ['source', 'xmltv_file', 'xmltv_logo_folder',

@@ -376,25 +376,29 @@ class RecordService(BasePlayService):
 
     def downloadChannel(self, startTime, startOffset):
         deb('DownloadService downloadChannel startTime {}, startOffset {}'.format(startTime, startOffset))
-        for element in self.getScheduledDownloadingsForThisTime(startTime):
-            if element.startOffset == startOffset:
-                programList = element.programList
-                self.timersdw.remove(element)
-                for program in programList:
-                    urlList = self.epg.database.getStreamUrlList(program.channel)
-                    threadData = {'urlDownloadList' : urlList, 'program' : program, 'downloadHandle' : None, 'stopDownloadTimer' : None, 'terminateDownloadThread' : False}
-                    thread = threading.Thread(name='downloadLoop', target = self.downloadLoop, args=[threadData])
-                    self.threadDownloadList.append([thread, threadData])
+        try:
+            for element in self.getScheduledDownloadingsForThisTime(startTime):
+                if element.startOffset == startOffset:
+                    programList = element.programList
+                    self.timersdw.remove(element)
+                    for program in programList:
+                        urlList = self.epg.database.getStreamUrlList(program.channel)
+                        threadData = {'urlDownloadList' : urlList, 'program' : program, 'downloadHandle' : None, 'stopDownloadTimer' : None, 'terminateDownloadThread' : False}
+                        thread = threading.Thread(name='downloadLoop', target = self.downloadLoop, args=[threadData])
+                        self.threadDownloadList.append([thread, threadData])
 
-                for thread, threadData in self.threadDownloadList: 
-                    try:
-                        thread.start()
-                    except:
-                        thread.join()
-                        thread.start()
-                    if not self.downloading:
-                        self.processIsCanceled = False
-                        self.startDownload(threadData)
+                    for thread, threadData in self.threadDownloadList: 
+                        try:
+                            thread.start()
+                        except:
+                            thread.join()
+                            thread.start()
+                        if not self.downloading:
+                            self.processIsCanceled = False
+                            self.startDownload(threadData)
+
+        except Exception as ex:
+            deb('downloadChannel Exception: {}'.format(ex))
 
 
     def startDownload(self, threadData):
@@ -1026,7 +1030,6 @@ class RecordService(BasePlayService):
                 else:
                     newHeader = newHeader + "{}\r\n".format(header)
 
-                UA
                 newHeader = newHeader + quote(UA)
 
             recordCommand.append("-headers")
@@ -1175,16 +1178,20 @@ class RecordService(BasePlayService):
 
     def recordChannel(self, startTime, startOffset):
         deb('RecordService recordChannel startTime {}, startOffset {}'.format(startTime, startOffset))
-        for element in self.getScheduledRecordingsForThisTime(startTime):
-            if element.startOffset == startOffset:
-                programList = element.programList
-                self.timers.remove(element)
-                for program in programList:
-                    urlList = self.epg.database.getStreamUrlList(program.channel)
-                    threadData = {'urlList' : urlList, 'program' : program, 'recordHandle' : None, 'stopRecordTimer' : None, 'terminateThread' : False}
-                    thread = threading.Thread(name='recordLoop', target = self.recordLoop, args=[threadData])
-                    self.threadList.append([thread, threadData])
-                    thread.start()      
+        try:
+            for element in self.getScheduledRecordingsForThisTime(startTime):
+                if element.startOffset == startOffset:
+                    programList = element.programList
+                    self.timers.remove(element)
+                    for program in programList:
+                        urlList = self.epg.database.getStreamUrlList(program.channel)
+                        threadData = {'urlList' : urlList, 'program' : program, 'recordHandle' : None, 'stopRecordTimer' : None, 'terminateThread' : False}
+                        thread = threading.Thread(name='recordLoop', target = self.recordLoop, args=[threadData])
+                        self.threadList.append([thread, threadData])
+                        thread.start()
+
+        except Exception as ex:
+            deb('recordChannel Exception: {}'.format(ex))
 
     def recordLoop(self, threadData):
         threadData['success']               = False
@@ -1293,20 +1300,26 @@ class RecordService(BasePlayService):
         if os.name == 'nt':
             si = subprocess.STARTUPINFO()
             si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+
         recordEnviron = os.environ.copy()
         oldLdPath = recordEnviron.get("LD_LIBRARY_PATH", '')
         recordEnviron["LD_LIBRARY_PATH"] = os.path.join(os.path.dirname(recordCommand[0]), 'lib') + ':/lib:/usr/lib:/usr/local/lib'
         if oldLdPath != '':
             recordEnviron["LD_LIBRARY_PATH"] = recordEnviron["LD_LIBRARY_PATH"] + ":" + oldLdPath
+        
         try:
             threadData['stopRecordTimer'] = threading.Timer(threadData['recordDuration'] + 5, self.stopRecord, [threadData])
             threadData['stopRecordTimer'].start()
-            threadData['recordHandle'] = subprocess.Popen(recordCommand, shell=False, stdin=None, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, startupinfo=si, env=recordEnviron)
+
+            threadData['recordHandle'] = subprocess.Popen(recordCommand, shell=False, stdin=None, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True, startupinfo=si, env=recordEnviron)
+            
             output = threadData['recordHandle'].communicate()[0]
             returnCode = threadData['recordHandle'].returncode
             threadData['stopRecordTimer'].cancel()
             threadData['recordHandle'] = None
+
             deb('RecordService record finished, \noutput: {}, \nstatus: {}, Command: {}'.format(output, returnCode, str(recordCommand)))
+        
         except Exception as ex:
             deb('RecordService record exception: {}'.format(getExceptionString()))
 

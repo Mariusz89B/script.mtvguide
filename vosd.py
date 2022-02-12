@@ -901,7 +901,7 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
 
                         number_regex = re.compile('(\d+)')
 
-                        r = number_regex.search(self.program.rating)
+                        r = number_regex.search(str(self.program.rating))
                         age = r.group(1) if r else ''
 
                         if age == '3':
