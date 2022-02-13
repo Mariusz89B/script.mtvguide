@@ -1234,11 +1234,20 @@ class PlayService(xbmc.Player, BasePlayService):
                                             catchupList = ['hls-custom', 'mono']
 
                                             if matches.match(strmUrl):
-                                                fsHost = matches.search(strmUrl).group(1)
-                                                fsChannelId = matches.search(strmUrl).group(2)
-                                                fsListType = matches.search(strmUrl).group(3)
-                                                fsStreamType = matches.search(strmUrl).group(4)
-                                                fsUrlAppend = matches.search(strmUrl).group(5)
+                                                r = matches.search(strmUrl)
+                                                fsHost = r.group(1) if r else ''
+
+                                                r = matches.search(strmUrl)
+                                                fsChannelId = r.group(2) if r else ''
+
+                                                r = matches.search(strmUrl)
+                                                fsListType = r.group(3) if r else ''
+
+                                                r = matches.search(strmUrl)
+                                                fsStreamType = r.group(4) if r else ''
+
+                                                r = matches.search(strmUrl)
+                                                fsUrlAppend = r.group(5) if r else ''
 
                                                 if fsStreamType == 'mpegts':
                                                     m_catchupSource = str(fsHost) + "/" + str(fsChannelId) + '/timeshift_abs-$' + str(utc) + '.ts' + str(fsUrlAppend)
@@ -1261,11 +1270,20 @@ class PlayService(xbmc.Player, BasePlayService):
                                                         else:
                                                             strmUrlNew = strmUrl
 
-                                                        fsHost = matches.search(strmUrlNew).group(1)
-                                                        fsChannelId = matches.search(strmUrlNew).group(2)
-                                                        fsListType = matches.search(strmUrlNew).group(3)
-                                                        fsStreamType = matches.search(strmUrlNew).group(4)
-                                                        fsUrlAppend = matches.search(strmUrlNew).group(5)
+                                                        r = matches.search(strmUrlNew)
+                                                        fsHost = r.group(1) if r else ''
+
+                                                        r = matches.search(strmUrlNew)
+                                                        fsChannelId = r.group(2) if r else ''
+
+                                                        r = matches.search(strmUrlNew)
+                                                        fsListType = r.group(3) if r else ''
+
+                                                        r = matches.search(strmUrlNew)
+                                                        fsStreamType = r.group(4) if r else ''
+
+                                                        r = matches.search(strmUrlNew)
+                                                        fsUrlAppend = r.group(5) if r else ''
                                                         
                                                         fsUrlAppend = re.sub('&.*$', '', str(fsUrlAppend))
                                                         fsListType = 'video'

@@ -63,10 +63,19 @@ from skins import Skin
 
 if PY3:
     import urllib.request, urllib.parse, urllib.error
+    import urllib.request as Request
+    from urllib.error import HTTPError, URLError
 else:
     import urllib
+    import urllib2 as Request
+    from urllib2 import HTTPError, URLError 
 
 import requests
+
+if PY3:
+    from requests.exceptions import HTTPError, ConnectionError, Timeout, RequestException
+else:
+    from requests import HTTPError, ConnectionError, Timeout, RequestException
 
 recordIcon = 'recordIcon.png'
 downloadIcon = 'downloadIcon.png'
@@ -90,6 +99,8 @@ ACTION_PREVIOUS_MENU = 10
 KEY_NAV_BACK = 92
 
 sess = requests.Session()
+
+UA = xbmc.getUserAgent()
 
 try:
     if PY3:
@@ -678,11 +689,20 @@ class RecordService(BasePlayService):
                         catchupList = ['hls-custom', 'mono']
 
                         if matches.match(strmUrl):
-                            fsHost = matches.search(strmUrl).group(1)
-                            fsChannelId = matches.search(strmUrl).group(2)
-                            fsListType = matches.search(strmUrl).group(3)
-                            fsStreamType = matches.search(strmUrl).group(4)
-                            fsUrlAppend = matches.search(strmUrl).group(5)
+                            r = matches.search(strmUrl)
+                            fsHost = r.group(1) if r else ''
+
+                            r = matches.search(strmUrl)
+                            fsChannelId = r.group(2) if r else ''
+
+                            r = matches.search(strmUrl)
+                            fsListType = r.group(3) if r else ''
+
+                            r = matches.search(strmUrl)
+                            fsStreamType = r.group(4) if r else ''
+
+                            r = matches.search(strmUrl)
+                            fsUrlAppend = r.group(5) if r else ''
 
                             if fsStreamType == 'mpegts':
                                 m_catchupSource = str(fsHost) + "/" + str(fsChannelId) + '/timeshift_abs-$' + str(utc) + '.ts' + str(fsUrlAppend)
@@ -714,11 +734,20 @@ class RecordService(BasePlayService):
                                     else:
                                         strmUrlNew = strmUrl
 
-                                    fsHost = matches.search(strmUrlNew).group(1)
-                                    fsChannelId = matches.search(strmUrlNew).group(2)
-                                    fsListType = matches.search(strmUrlNew).group(3)
-                                    fsStreamType = matches.search(strmUrlNew).group(4)
-                                    fsUrlAppend = matches.search(strmUrlNew).group(5)
+                                    r = matches.search(strmUrlNew)
+                                    fsHost = r.group(1) if r else ''
+
+                                    r = matches.search(strmUrlNew)
+                                    fsChannelId = r.group(2) if r else ''
+
+                                    r = matches.search(strmUrlNew)
+                                    fsListType = r.group(3) if r else ''
+
+                                    r = matches.search(strmUrlNew)
+                                    fsStreamType = r.group(4) if r else ''
+
+                                    r = matches.search(strmUrlNew)
+                                    fsUrlAppend = r.group(5) if r else ''
                                     
                                     fsUrlAppend = re.sub('&.*$', '', str(fsUrlAppend))
                                     fsListType = 'video'
@@ -822,6 +851,8 @@ class RecordService(BasePlayService):
                         else:
                             m_catchupSource = strmUrl + '?utc={utc}&lutc={lutc}-{duration}'.format(utc=utc, lutc=lutc, duration=duration)
                             strmUrl = m_catchupSource
+
+            self.checkConnection(strmUrl)
 
             try:
                 channelInfo.strm = strmUrl
@@ -1908,6 +1939,74 @@ class RecordService(BasePlayService):
 
     def showDialog(self, dialogName, dialogMessage):
         xbmcgui.Dialog().ok(dialogName, dialogMessage)
+
+    def checkConnection(self, strmUrl):
+        import ssl
+        import socket
+        import cloudscraper 
+
+        sess = cloudscraper.create_scraper()
+        scraper = cloudscraper.CloudScraper()
+
+        if strmUrl is not None:
+            ctx = ssl.create_default_context()
+            ctx.check_hostname = False
+            ctx.verify_mode = ssl.CERT_NONE
+
+            status = 0
+            timeout = 2.0
+
+            try:
+                req = Request.Request(strmUrl)
+                req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0')
+                req.add_header('Accept', 'application/json, text/javascript, */*; q=0.01')
+                req.add_header('Accept-Language', 'pl,en-US;q=0.7,en;q=0.3')
+                req.add_header('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
+                response = Request.urlopen(req, context=ctx, timeout=timeout)
+                status = response.code
+
+                if status == 200:
+                    headers = {
+                        'User-Agent': UA,
+                        'Accept': 'application/json, text/javascript, */*; q=0.01',
+                        'Accept-Language': 'pl,en-US;q=0.7,en;q=0.3',
+                        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                    }
+
+                    conn_timeout = int(ADDON.getSetting('max_wait_for_playback'))
+                    read_timeout = int(ADDON.getSetting('max_wait_for_playback'))
+                    timeouts = (conn_timeout, read_timeout)
+                    
+                    response = scraper.get(strmUrl, headers=headers, allow_redirects=False, stream=True, timeout=timeouts)
+                    status = response.status_code
+
+                    base = response.content
+
+            except HTTPError as e:
+                deb('chkConn HTTPError: {}'.format(e.reason))
+                status = e.code
+
+            except URLError as e:
+                deb('chkConn URLError: {}'.format(e.reason))
+                status = 404
+
+            except socket.timeout as e:
+                deb('chkConn Timeout: {}, open stream in xbmc.Player'.format('408'))
+                status = 408
+
+            except:
+                deb('chkConn RequestException')
+                status = 400
+            
+            time.sleep(1)
+
+            if status >= 400 and xbmc.getCondVisibility('!Player.HasMedia'):
+                xbmcgui.Dialog().notification(strings(57018) + ' Error: ' + str(status), strings(31019), xbmcgui.NOTIFICATION_ERROR)
+
+            elif status >= 300 and status < 400:
+                xbmcgui.Dialog().notification(strings(57058) + ' Status: ' + str(status), strings(31019), xbmcgui.NOTIFICATION_WARNING)
+
+            return status
 
 
 class DownloadMenu(xbmcgui.WindowXMLDialog):

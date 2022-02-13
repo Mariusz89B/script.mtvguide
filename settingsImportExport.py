@@ -83,6 +83,7 @@ OTHER_OS_NAME       = 'Other'
 recordAppWindows    = M_TVGUIDE_SUPPORT + 'record_apps/recording_windows.zip'
 recordAppAndroid    = M_TVGUIDE_SUPPORT + 'record_apps/recording_android.zip'
 recordAppMacOS      = M_TVGUIDE_SUPPORT + 'record_apps/recording_macos.zip'
+recordAppOpenELEC   = M_TVGUIDE_SUPPORT + 'record_apps/recording_openelec.zip'
 
 CC_DICT = ccDict()
 
@@ -356,7 +357,9 @@ class SettingsImp:
                     recordApp = recordAppMacOS
                 elif system == ANDROID_OS_NAME:
                     recordApp = recordAppAndroid
-                elif system == OPENELEC_OS_NAME or system == LINUX_OS_NAME or system == OTHER_OS_NAME or system == OSMC_OS_NAME:
+                elif system == OPENELEC_OS_NAME:
+                    recordApp = recordAppOpenELEC
+                elif system == LINUX_OS_NAME or system == OTHER_OS_NAME or system == OSMC_OS_NAME:
                     possibleAppDirs = ['/bin', '/usr/local/bin', '/usr/bin']
                     defaultRtmpdumpExe = 'rtmpdump'
                     defaultFFmpegExe1 = 'ffmpeg'
