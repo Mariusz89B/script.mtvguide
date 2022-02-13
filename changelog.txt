@@ -1,5 +1,6 @@
-﻿v9.9.1 (2022-02-12)
-- Hotfix.
+﻿v9.9.1 (2022-02-13)
+- Fixed crash while downloading on CoreELEC and LibreELEC OS.
+- Other improvements.
 
 v9.9.0 (2022-02-12)
 - Fixed RSS feed.
