@@ -279,7 +279,7 @@ class RecordService(BasePlayService):
                         self.isDownload = True
                         if self.isProgramDownloadScheduled(program):
                             ret = xbmcgui.Dialog().yesno(strings(69064), strings(69063))
-                            if ret == True:
+                            if ret:
                                 self.epg.database.removeRecording(program)
                                 self.cancelProgramDownload(program)
                                 updateDB = True
@@ -289,12 +289,12 @@ class RecordService(BasePlayService):
                                 res = xbmcgui.Dialog().yesno(strings(70006) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', strings(31000).format(program.title) )
                             else:
                                 res = xbmcgui.Dialog().yesno(strings(70006) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', strings(31000).format(program.title.encode('utf-8').decode('utf-8')) )
-                            if res == True:
+                            if res:
                                 downloadMenu = DownloadMenu(program)
                                 downloadMenu.doModal()
                                 saveRecording, chkdate, self.startOffsetDownload, self.endOffsetDownload = downloadMenu.getOffsets()
 
-                                if saveRecording == True:
+                                if saveRecording:
                                     self.startOffsetDownload *= 60
                                     self.endOffsetDownload *= 60
                                     _program = self.epg.database.getPrograms(program.channel, program, self.program.startDate, self.program.endDate)
@@ -303,7 +303,7 @@ class RecordService(BasePlayService):
                                     if self.scheduleDownload(_program, _program.startDate, _program.endDate):
                                         self.epg.database.addRecording(_program, _program.startDate, _program.endDate)
                                         updateDB = True
-                                elif chkdate == False:
+                                elif not chkdate:
                                     xbmcgui.Dialog().ok(failedDownloadDialogName, strings(59998))
 
                         else:
@@ -317,7 +317,7 @@ class RecordService(BasePlayService):
 
                 if program.endDate > datetime.datetime.now() and self.isProgramRecordScheduled(program):
                     ret = xbmcgui.Dialog().yesno(strings(69000), strings(69009))
-                    if ret == True:
+                    if ret:
                         self.epg.database.removeRecording(program)
                         self.cancelProgramRecord(program)
                         updateDB = True
@@ -2010,37 +2010,34 @@ class RecordService(BasePlayService):
 
 
 class DownloadMenu(xbmcgui.WindowXMLDialog):
+    START_DATE_ID = 401
+    END_DATE_ID = 402
+    START_TIME_ID = 403
+    END_TIME_ID = 404
+    SAVE_CONTROL_ID = 301
+    CANCEL_CONTROL_ID = 302
+    RESET_CONTROL_ID = 303
+    PROGRAM_TITLE_ID = 201
+    CHANNEL_ID = 202
+    DOWNLOAD_DURATION_ID = 204
+
     def __new__(cls, program):
         return super(DownloadMenu, cls).__new__(cls, 'script-tvguide-download.xml', Skin.getSkinBasePath(), Skin.getSkinName(), skin_resolution)
 
     def __init__(self, program):
-        self.startDateId = 401
-        self.endDateId = 402
-
-        self.startTimeId = 403
-        self.endTimeId = 404
-
-        self.saveControlId = 301
-        self.cancelControlId = 302
-        self.resetControlId = 303
-
-        self.programTitleId = 201
-        self.channelId = 202
-
-        self.downloadDurationId = 204
-
         self.dwnl = False
         self.chkdate = True
         self.program = program
 
         self.calculatedStartDate = self.program.startDate
         self.calculatedEndDate = self.program.endDate
+
         super(DownloadMenu, self).__init__()
 
     def onInit(self): 
         self.orgTitle = self.program.title
 
-        self.downloadDuration = self.getControl(self.downloadDurationId)
+        self.downloadDuration = self.getControl(self.DOWNLOAD_DURATION_ID)
 
         if PY3:
             channel = self.program.channel.title
@@ -2048,44 +2045,45 @@ class DownloadMenu(xbmcgui.WindowXMLDialog):
         else:
             channel = self.program.channel.title.encode('utf-8')
             title = self.program.title.encode('utf-8')
+        
+        self.programTitle = self.getControl(self.PROGRAM_TITLE_ID)
+        self.programTitle = self.programTitle.setLabel(channel)
 
-        self.getControl(self.programTitleId).setLabel(channel)
+        self.channelId = self.getControl(self.CHANNEL_ID)
 
-        self.channelId = self.getControl(self.channelId)
         self.channelId.setLabel(strings(70000))
-        self.channelId.setText(title)
+        self.channelId.setText(str(title))
 
         startDate = str(self.program.startDate).split(' ')[0]
         endDate = str(self.program.endDate).split(' ')[0]
-
-        startTime = str(self.program.startDate).split(' ')[1]
-        endTime = str(self.program.endDate).split(' ')[1]
+        startTime = str(self.program.startDate).split(' ')[-1]
+        endTime = str(self.program.endDate).split(' ')[-1]
 
         self.orgStartDate = startDate
         self.orgEndDate = endDate
         self.orgStartTime = startTime
         self.orgEndTime = endTime
 
-        self.startDate = self.getControl(self.startDateId)
+        self.startDate = self.getControl(self.START_DATE_ID)
         self.startDate.setType(xbmcgui.INPUT_TYPE_DATE, strings(70024))
         self.startDate.setLabel(strings(70024))
         self.startDate.setText(str(startDate))
 
-        self.endDate = self.getControl(self.endDateId)
+        self.endDate = self.getControl(self.END_DATE_ID)
         self.endDate.setType(xbmcgui.INPUT_TYPE_DATE, strings(70025))
         self.endDate.setLabel(strings(70025))
         self.endDate.setText(str(endDate))
 
-        self.startTime = self.getControl(self.startTimeId)
+        self.startTime = self.getControl(self.START_TIME_ID)
         self.startTime.setType(xbmcgui.INPUT_TYPE_SECONDS, strings(70002))
         self.startTime.setLabel(strings(70002))
         self.startTime.setText(str(startTime))
 
-        self.endTime = self.getControl(self.endTimeId)
+        self.endTime = self.getControl(self.END_TIME_ID)
         self.endTime.setType(xbmcgui.INPUT_TYPE_SECONDS, strings(70023))
         self.endTime.setLabel(strings(70023))
         self.endTime.setText(str(endTime))
-
+        
         self.updateLabels()
 
     def updateLabels(self):
@@ -2170,34 +2168,34 @@ class DownloadMenu(xbmcgui.WindowXMLDialog):
             self.program.title = self.channelId.getText()
             self.updateLabels()
 
-        elif controlId == self.startDateId :
+        elif controlId == self.START_DATE_ID :
             startDate = self.startDate.getText()
             self.getStartDate(startDate, None)
             self.updateLabels()
 
-        elif controlId == self.startTimeId:
+        elif controlId == self.START_TIME_ID:
             startTime = self.startTime.getText()
             self.getStartDate(None, startTime)
             self.updateLabels()
 
-        elif controlId == self.endDateId:
+        elif controlId == self.END_DATE_ID:
             endDate = self.endDate.getText()
             self.getEndDate(endDate, None)
             self.updateLabels()
 
-        elif controlId == self.endTimeId:
+        elif controlId == self.END_TIME_ID:
             endTime = self.endTime.getText()
             self.getEndDate(None, endTime)
             self.updateLabels()
 
-        elif controlId == self.cancelControlId:
+        elif controlId == self.CANCEL_CONTROL_ID:
             self.close()
 
-        elif controlId == self.resetControlId:
+        elif controlId == self.RESET_CONTROL_ID:
             self.resetSettings()
             self.updateLabels()
 
-        elif controlId == self.saveControlId:
+        elif controlId == self.SAVE_CONTROL_ID:
             self.dwnl = True
             self.chkdate = True
             self.close()
@@ -2206,27 +2204,24 @@ class DownloadMenu(xbmcgui.WindowXMLDialog):
             self.updateLabels()
 
 class RecordMenu(xbmcgui.WindowXMLDialog):
+    START_OFFSET_LABEL_ID = 501
+    END_OFFSET_LABEL_ID = 502
+    START_OFFSET_SLIDER_ID = 401
+    END_OFFSET_SLIDER_ID = 402
+    SAVE_CONTROL_ID = 301
+    CANCEL_CONTROL_ID = 302
+    RESET_CONTROL_ID = 303
+    PROGRAM_TITLE_ID = 201
+    CHANNEL_ID = 202
+    START_HOUR_ID = 203
+    RECORD_DURATION_ID = 204
+
     def __new__(cls, program):
         return super(RecordMenu, cls).__new__(cls, 'script-tvguide-record.xml', Skin.getSkinBasePath(), Skin.getSkinName(), skin_resolution)
 
     def __init__(self, program):
-        self.startOffsetLabelId = 501
-        self.endOffsetLabelId = 502
-
-        self.startOffsetSliderId = 401
-        self.endOffsetSliderId = 402
-
-        self.saveControlId = 301
-        self.cancelControlId = 302
-        self.resetControlId = 303
-
         self.startOffsetValue = 0
         self.endOffsetValue = 0
-
-        self.programTitleId = 201
-        self.channelId = 202
-        self.startHourId = 203
-        self.recordDurationId = 204
 
         self.record = False
         self.program = program
@@ -2236,21 +2231,21 @@ class RecordMenu(xbmcgui.WindowXMLDialog):
         super(RecordMenu, self).__init__()
 
     def onInit(self): 
-        self.startOffsetLabel = self.getControl(self.startOffsetLabelId)
-        self.endOffsetLabel = self.getControl(self.endOffsetLabelId)
+        self.startOffsetLabel = self.getControl(self.START_OFFSET_LABEL_ID)
+        self.endOffsetLabel = self.getControl(self.END_OFFSET_LABEL_ID)
 
-        self.startOffsetSlider = self.getControl(self.startOffsetSliderId)
-        self.endOffsetSlider = self.getControl(self.endOffsetSliderId)
+        self.startOffsetSlider = self.getControl(self.START_OFFSET_SLIDER_ID)
+        self.endOffsetSlider = self.getControl(self.END_OFFSET_SLIDER_ID)
 
-        self.startHour = self.getControl(self.startHourId)
-        self.recordDuration = self.getControl(self.recordDurationId)
+        self.startHour = self.getControl(self.START_HOUR_ID)
+        self.recordDuration = self.getControl(self.RECORD_DURATION_ID)
 
         if PY3:
-            self.getControl(self.programTitleId).setLabel('{}'.format(self.program.title))
-            self.getControl(self.channelId).setLabel('{}'.format(self.program.channel.title))
+            self.getControl(self.PROGRAM_TITLE_ID).setLabel('{}'.format(self.program.title))
+            self.getControl(self.CHANNEL_ID).setLabel('{}'.format(self.program.channel.title))
         else:
-            self.getControl(self.programTitleId).setLabel('{}'.format(self.program.title.encode('utf-8')))
-            self.getControl(self.channelId).setLabel('{}'.format(self.program.channel.title.encode('utf-8')))
+            self.getControl(self.PROGRAM_TITLE_ID).setLabel('{}'.format(self.program.title.encode('utf-8')))
+            self.getControl(self.CHANNEL_ID).setLabel('{}'.format(self.program.channel.title.encode('utf-8')))
 
         self.resetSliders()
 
@@ -2289,11 +2284,11 @@ class RecordMenu(xbmcgui.WindowXMLDialog):
             self.updateLabels()
 
     def onClick(self, controlId):
-        if controlId == self.cancelControlId:
+        if controlId == self.CANCEL_CONTROL_ID:
             self.close()
-        elif controlId == self.resetControlId:
+        elif controlId == self.RESET_CONTROL_ID:
             self.resetSliders()
-        elif controlId == self.saveControlId:
+        elif controlId == self.SAVE_CONTROL_ID:
             self.record = True
             self.close()
         
