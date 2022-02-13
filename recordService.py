@@ -235,6 +235,16 @@ class RecordService(BasePlayService):
             except:
                 self.profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
 
+    def getDistro(self):
+        if xbmc.getCondVisibility('System.HasAddon(service.coreelec.settings)'):
+            return "CoreElec"
+        elif xbmc.getCondVisibility('System.HasAddon(service.libreelec.settings)'):
+            return "LibreElec"
+        elif xbmc.getCondVisibility('System.HasAddon(service.osmc.settings)'):
+            return "OSMC"
+        else:
+            return "Kodi"
+
     def convertTimedelta(self, duration):
         days, seconds = duration.days, duration.seconds
         hours = seconds // 3600
@@ -263,6 +273,55 @@ class RecordService(BasePlayService):
         return self.progress
 
 
+    def downloadMenuCoreELEC(self, program):
+        self.dwnl = False
+        self.chkdate = True
+
+        self.program.startDate = self.startInputDialog(program.startDate)
+        if self.program.startDate is None:
+            return
+
+        self.program.endDate = self.endInputDialog(program.endDate)
+        if self.program.endDate is None:
+            return
+
+        self.calculatedStartDate = self.program.startDate
+        self.calculatedEndDate = self.program.endDate
+
+        self.dwnl = True
+        self.chkdate = True
+
+        if self.calculatedStartDate > self.calculatedEndDate:
+            self.dwnl = False
+        elif self.calculatedEndDate > datetime.datetime.now():
+            self.dwnl = False
+            self.chkdate = False
+
+        return [self.dwnl, self.chkdate, 0, 0]
+
+
+    def startInputDialog(self, startDate):
+        input_date = xbmcgui.Dialog().input(strings(70024), defaultt=str(startDate) , type=xbmcgui.INPUT_ALPHANUM)
+        if input_date:
+            try:
+                start = proxydt.strptime(str(input_date), '%Y-%m-%d %H:%M:%S')
+                return start
+            except:
+                xbmcgui.Dialog().notification(strings(57051), strings(60015), xbmcgui.NOTIFICATION_WARNING, sound=True)
+                self.startInputDialog(startDate)
+
+
+    def endInputDialog(self, endDate):
+        input_date = xbmcgui.Dialog().input(strings(70025), defaultt=str(endDate), type=xbmcgui.INPUT_ALPHANUM)
+        if input_date:
+            try:
+                end = proxydt.strptime(str(input_date), '%Y-%m-%d %H:%M:%S')
+                return end
+            except:
+                xbmcgui.Dialog().notification(strings(57051), strings(60015), xbmcgui.NOTIFICATION_WARNING, sound=True)
+                self.endInputDialog(endDate)
+
+
     def recordProgramGui(self, program, catchupList, watch='', length=''):
         self.program = program
         self.showDialogOk = True
@@ -286,13 +345,19 @@ class RecordService(BasePlayService):
 
                         elif program.recordingScheduled != 1:
                             if PY3:
-                                res = xbmcgui.Dialog().yesno(strings(70006) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', strings(31000).format(program.title) )
+                                res = xbmcgui.Dialog().yesno(strings(70006) + ' - ' + strings(57051), strings(31000).format(program.title) )
                             else:
-                                res = xbmcgui.Dialog().yesno(strings(70006) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', strings(31000).format(program.title.encode('utf-8').decode('utf-8')) )
+                                res = xbmcgui.Dialog().yesno(strings(70006) + ' - ' + strings(57051), strings(31000).format(program.title.encode('utf-8').decode('utf-8')) )
                             if res:
-                                downloadMenu = DownloadMenu(program)
-                                downloadMenu.doModal()
-                                saveRecording, chkdate, self.startOffsetDownload, self.endOffsetDownload = downloadMenu.getOffsets()
+                                if self.getDistro() != 'Kodi':
+                                    try:
+                                        saveRecording, chkdate, self.startOffsetDownload, self.endOffsetDownload = self.downloadMenuCoreELEC(program)
+                                    except:
+                                        return
+                                else:
+                                    downloadMenu = DownloadMenu(program)
+                                    downloadMenu.doModal()
+                                    saveRecording, chkdate, self.startOffsetDownload, self.endOffsetDownload = downloadMenu.getOffsets()
 
                                 if saveRecording:
                                     self.startOffsetDownload *= 60
@@ -312,7 +377,7 @@ class RecordService(BasePlayService):
                             updateDB = True
 
                     else:
-                        xbmcgui.Dialog().ok(strings(70006) + ' - m-TVGuide [COLOR gold]EPG[/COLOR]', strings(59987) )
+                        xbmcgui.Dialog().ok(strings(70006) + ' - ' + strings(57051), strings(59987) )
                         return
 
                 if program.endDate > datetime.datetime.now() and self.isProgramRecordScheduled(program):

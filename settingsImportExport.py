@@ -75,7 +75,7 @@ categoriesFileName  = 'categories.ini'
 WINDOWS_OS_NAME     = 'Windows'
 ANDROID_OS_NAME     = 'Android'
 MAC_OS_NAME         = 'MacOS'
-OPENELEC_OS_NAME    = 'OpenELEC'
+COREELEC_OS_NAME    = 'CoreELEC / LibreELEC'
 LINUX_OS_NAME       = 'Linux'
 OSMC_OS_NAME        = 'OSMC'
 OTHER_OS_NAME       = 'Other'
@@ -83,7 +83,6 @@ OTHER_OS_NAME       = 'Other'
 recordAppWindows    = M_TVGUIDE_SUPPORT + 'record_apps/recording_windows.zip'
 recordAppAndroid    = M_TVGUIDE_SUPPORT + 'record_apps/recording_android.zip'
 recordAppMacOS      = M_TVGUIDE_SUPPORT + 'record_apps/recording_macos.zip'
-recordAppOpenELEC   = M_TVGUIDE_SUPPORT + 'record_apps/recording_openelec.zip'
 
 CC_DICT = ccDict()
 
@@ -343,7 +342,7 @@ class SettingsImp:
             systems.append(WINDOWS_OS_NAME)
             systems.append(ANDROID_OS_NAME)
             systems.append(MAC_OS_NAME)
-            systems.append(OPENELEC_OS_NAME)
+            systems.append(COREELEC_OS_NAME)
             systems.append(LINUX_OS_NAME)
             systems.append(OSMC_OS_NAME)
             systems.append(OTHER_OS_NAME)
@@ -357,9 +356,7 @@ class SettingsImp:
                     recordApp = recordAppMacOS
                 elif system == ANDROID_OS_NAME:
                     recordApp = recordAppAndroid
-                elif system == OPENELEC_OS_NAME:
-                    recordApp = recordAppOpenELEC
-                elif system == LINUX_OS_NAME or system == OTHER_OS_NAME or system == OSMC_OS_NAME:
+                elif system == COREELEC_OS_NAME or system == LINUX_OS_NAME or system == OTHER_OS_NAME or system == OSMC_OS_NAME:
                     possibleAppDirs = ['/bin', '/usr/local/bin', '/usr/bin']
                     defaultRtmpdumpExe = 'rtmpdump'
                     defaultFFmpegExe1 = 'ffmpeg'

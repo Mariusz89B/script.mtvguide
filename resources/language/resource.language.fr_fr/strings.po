@@ -1516,6 +1516,10 @@ msgctxt "#60014"
 msgid "Select country"
 msgstr "Sélectionner le pays"
 
+msgctxt "#60015"
+msgid "Wrong date format"
+msgstr "Format de date incorrect"
+
 msgctxt "#30913"
 msgid "Settings"
 msgstr "Paramètres"

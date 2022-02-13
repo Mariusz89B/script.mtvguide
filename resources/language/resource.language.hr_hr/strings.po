@@ -1516,6 +1516,10 @@ msgctxt "#60014"
 msgid "Select country"
 msgstr "Odaberi državu"
 
+msgctxt "#60015"
+msgid "Wrong date format"
+msgstr "Pogrešan format datuma"
+
 msgctxt "#30913"
 msgid "Settings"
 msgstr "Postavke"

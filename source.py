@@ -289,11 +289,11 @@ class ProgramDescriptionParser(object):
 
     def extractProductionDate(self):
         try:
-            productionDate = re.search("((R:|Rok produkcji:|Producerat .?r:|Production date:|Produktions dato:|Date de production:|Produktionsdatum:|Godina proizvodnje:|Datum proizvodnje:|Produksjonsdato:|Productie datum:|Datum v.?roby:|Anno prodotto:)\s*(\[B\])?(\d{2,4})(\[\/B\])?(\.)?)", self.description).group(4)
+            productionDate = re.search("((R:|Rok produkcji:|Producerat .?r:|Production date:|Produktions dato:|Date de production:|Produktionsdatum:|Godina proizvodnje:|Datum proizvodnje:|Produksjonsdato:|Productie datum:|Datum v.?roby:|Anno prodotto:)\s*(\[B\])?(\d{2,4}|live)(\[\/B\])?(\.)?)", self.description).group(4)
             productionDate = ProgramDescriptionParser.DECORATE_REGEX.sub("", productionDate)
             productionDate = re.sub("R:|Rok produkcji:|Producerat .?r:|Production date:|Produktions dato:|Date de production:|Produktionsdatum:|Godina proizvodnje:|Datum proizvodnje:|Produksjonsdato:|Productie datum:|Datum v.?roby:|Anno prodotto:", "", productionDate).strip()
 
-            self.description = re.sub("((R:|Rok produkcji:|Producerat .?r:|Production date:|Produktions dato:|Date de production:|Produktionsdatum:|Godina proizvodnje:|Datum proizvodnje:|Produksjonsdato:|Productie datum:|Datum v.?roby:|Anno prodotto:)\s*(\[B\])?(\d{2,4})(\[\/B\])?(\.)?)", "", self.description).strip()
+            self.description = re.sub("((R:|Rok produkcji:|Producerat .?r:|Production date:|Produktions dato:|Date de production:|Produktionsdatum:|Godina proizvodnje:|Datum proizvodnje:|Produksjonsdato:|Productie datum:|Datum v.?roby:|Anno prodotto:)\s*(\[B\])?(\d{2,4}|live)(\[\/B\])?(\.)?)", "", self.description).strip()
         except:
             productionDate = ''
 

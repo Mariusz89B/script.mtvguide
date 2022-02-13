@@ -1524,6 +1524,10 @@ msgctxt "#60014"
 msgid "Select country"
 msgstr ""
 
+msgctxt "#60015"
+msgid "Wrong date format"
+msgstr ""
+
 msgctxt "#30912"
 msgid "Press one more time to return to main screen"
 msgstr ""
