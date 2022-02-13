@@ -357,7 +357,7 @@ class SettingsImp:
                 elif system == ANDROID_OS_NAME:
                     recordApp = recordAppAndroid
                 elif system == COREELEC_OS_NAME or system == LINUX_OS_NAME or system == OTHER_OS_NAME or system == OSMC_OS_NAME:
-                    possibleAppDirs = ['/bin', '/usr/local/bin', '/usr/bin']
+                    possibleAppDirs = ['/bin', '/usr/local/bin', '/usr/bin', '/storage/.kodi/addons/tools.ffmpeg-tools/bin']
                     defaultRtmpdumpExe = 'rtmpdump'
                     defaultFFmpegExe1 = 'ffmpeg'
                     defaultFFmpegExe2 = 'avconv'
