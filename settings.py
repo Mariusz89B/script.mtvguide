@@ -47,8 +47,7 @@ else:
     PY3 = False
     
 import os
-import xbmc, xbmcaddon, xbmcvfs, xbmcgui
-from strings import *
+import xbmc, xbmcaddon, xbmcvfs
 
 class Settings:
     if PY3:

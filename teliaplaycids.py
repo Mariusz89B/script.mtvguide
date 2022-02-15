@@ -84,7 +84,7 @@ host = ['www.teliatv.dk', 'www.teliaplay.se']
 cc = ['dk', 'se']
 ca = ['DK', 'SE']
 
-UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36 Edg/89.0.774.63'
+UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36 Edg/98.0.1108.50'
 
 if PY3:
     try:

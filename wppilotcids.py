@@ -77,8 +77,10 @@ main_url = 'https://pilot.wp.pl/api/v1/channels/list?device_type=android_tv'
 video_url = 'https://pilot.wp.pl/api/v1/channel/'
 close_stream_url = 'https://pilot.wp.pl/api/v1/channels/close?device_type=android_tv'
 
+UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36 Edg/98.0.1108.50'
+
 headers = {
-    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36 Edg/97.0.1072.55',
+    'user-agent': UA,
     'content-type': 'application/json;charset=UTF-8',
     'accept': 'application/json, text/plain, */*'
 }
@@ -280,7 +282,7 @@ class WpPilotUpdater(baseServiceUpdater):
             headersx = {
                 'authority': 'pilot.wp.pl',
                 'rtt': '50',
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36 Edg/97.0.1072.55',
+                'user-agent': UA,
                 'dpr': '1',
                 'downlink': '10',
                 'ect': '4g',
@@ -302,7 +304,7 @@ class WpPilotUpdater(baseServiceUpdater):
                 widevine = response[u'data'][u'stream_channel']['drms']['widevine']
 
                 headers_mpd = {
-                    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36 Edg/97.0.1072.55',
+                    'user-agent': UA,
                     'x-qoe-cdn': manifest,
                     'accept': '*/*',
                     'origin': 'https://pilot.wp.pl',

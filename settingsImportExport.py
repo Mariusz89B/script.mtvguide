@@ -398,7 +398,7 @@ class SettingsImp:
                             reqUrl   = urllib.request.Request(recordApp)
                             reqUrl.add_header('authority', 'raw.githubusercontent.com')
                             reqUrl.add_header('upgrade-insecure-requests', '1')
-                            reqUrl.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36 Edg/97.0.1072.76')
+                            reqUrl.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36 Edg/98.0.1108.50')
                             reqUrl.add_header('Keep-Alive', 'timeout=20')
                             reqUrl.add_header('Connection', 'Keep-Alive')
                             u = urllib.request.urlopen(reqUrl, timeout=5)

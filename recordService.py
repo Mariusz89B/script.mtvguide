@@ -2023,7 +2023,7 @@ class RecordService(BasePlayService):
 
             try:
                 req = Request.Request(strmUrl)
-                req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0')
+                req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36 Edg/98.0.1108.50')
                 req.add_header('Accept', 'application/json, text/javascript, */*; q=0.01')
                 req.add_header('Accept-Language', 'pl,en-US;q=0.7,en;q=0.3')
                 req.add_header('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')

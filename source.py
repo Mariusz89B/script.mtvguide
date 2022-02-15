@@ -3360,7 +3360,7 @@ class RssFeed(object):
     def checkForUpdates(self):
         debug('RssFeed checkForUpdates')
 
-        UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36 Edg/98.0.1108.43'
+        UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36 Edg/98.0.1108.50'
         customHeaders = {
             'User-Agent' : UA, 
             'Connection' : 'keep-alive',

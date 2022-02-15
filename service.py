@@ -47,9 +47,9 @@ from settings import Settings
 
 class Service(object):
     def __init__(self):
-        pass
+        self.formatter = self.formatter()
 
-    def onInit(self, success):
+    def formatter(self):
         Settings.formatter()
 
 try:
