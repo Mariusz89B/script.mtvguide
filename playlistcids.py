@@ -149,6 +149,18 @@ class PlaylistUpdater(baseServiceUpdater):
         else:
             self.filtered = False
 
+        if ADDON.getSetting('VOD_EPG') == "true":
+            self.vod = True
+        else:
+            self.vod = False
+
+        self.vod_epg = ADDON.getSetting('VOD_EPG')
+
+        if ADDON.getSetting('XXX_EPG') == "true":
+            self.xxx = True
+        else:
+            self.xxx = False
+
     def requestUrl(self, path):
         headers = { 'User-Agent' : UA }
         headers['Keep-Alive'] = 'timeout=5'
@@ -290,26 +302,6 @@ class PlaylistUpdater(baseServiceUpdater):
     def getPlaylistContent(self, path, urltype):
         content = ''
 
-        fpath = os.path.join(self.profilePath, 'playlists')
-        filepath = os.path.join(self.profilePath, 'playlists', '{playlist}.m3u'.format(playlist=self.serviceName))
-
-        try:
-            playlists.remove(self.serviceName)
-
-            try:
-                for playlist in playlists:
-                    try:
-                        os.remove(os.path.join(fpath, '{playlist}.m3u'.format(playlist=playlist)))
-                        os.remove(os.path.join(fpath, '{playlist}.url'.format(playlist=playlist)))
-                    except:
-                        pass
-
-            except Exception as ex:
-                deb('getPlaylistContent Exception: {}'.format(ex))
-                pass
-        except:
-            pass
-
         try:
             self.log('getPlaylistContent opening playlist: %s, urltype: %s' % (path, urltype))
             if urltype == '0':
@@ -357,6 +349,12 @@ class PlaylistUpdater(baseServiceUpdater):
         try:
             regexReplaceList = []
 
+            ccList = []
+            a3List = []
+            langList = []
+            nativeList = []
+            dotList = []
+
             sdList = []
             hdList = []
             uhdList = []
@@ -375,12 +373,6 @@ class PlaylistUpdater(baseServiceUpdater):
             prefixList = []
             regexRemoveList = []
             regexAddList = []
-
-            ccList = []
-            a3List = []
-            langList = []
-            nativeList = []
-            dotList = []
 
             regexRemoveList.append( re.compile('(\s|\W|^)(L\s*)?(24\/7:?:?|19\d\d|20\d\d|S\s*\d{1,3}\s*E\s*\d{1,4})(?=\s|$)', re.IGNORECASE) )
 
@@ -439,20 +431,44 @@ class PlaylistUpdater(baseServiceUpdater):
                     alpha_2 = value['language']
                     alpha_3 = value['alpha-3']
                     alpha_4 = value.get('alpha-4', value['alpha-3'])
+
+                    ccList.append(cc.upper())
+                    a3List.append(alpha_3.upper())
+                    langList.append(alpha_2)
+                    nativeList.append(alpha_1)
+                    dotList.append('.' + cc.lower())
+
+                    langA = '|'.join(ccList)
+                    langB = '|'.join(a3List)
+                    langC = '|'.join(langList)
+                    langD = '|'.join(nativeList)
+                    langE = '|'.join(dotList)
+
                     try:
                         langReplaceList.append({ 'regex' : re.compile('(\s|^)(\s*'+cc.upper()+'$|'+alpha_4+':?|'+alpha_3+':?|'+alpha_2+':?|'+alpha_1+':?)(?=\s|$)|^('+alpha_4+':|'+alpha_3+':|'+alpha_2+':|'+alpha_1+':)', re.IGNORECASE), 'lang' : cc_pattern})
                     except:
                         langReplaceList.append({ 'regex' : re.compile('(\s|^)(\s*'+cc.upper()+'$|'+alpha_4+':?|'+alpha_3+':?|'+alpha_2+':?|'+alpha_1.encode('utf-8')+':?)(?=\s|$)|^('+alpha_4+':|'+alpha_3+':|'+alpha_2+':|'+alpha_1.encode('utf-8')+':)', re.IGNORECASE), 'lang' : cc_pattern})
 
-                    langReplaceList.append({ 'regex' : re.compile('(\s|^)('+cc.upper()+':?)(?=\s|$)|^('+cc.upper()+':)'), 'lang' : cc_pattern})
+                    langReplaceList.append({ 'regex' : re.compile('(\s|^)('+cc.upper()+':?)(?=\s|$)|^('+cc.upper()+':?)'), 'lang' : cc_pattern})
                     prefixList.append(cc_pattern_regex + ':?')
 
-                    # ccLists
+                elif not self.filtered:
+                    alpha_1 = value['native']
+                    alpha_2 = value['language']
+                    alpha_3 = value['alpha-3']
+                    alpha_4 = value.get('alpha-4', value['alpha-3'])
+
                     ccList.append(cc.upper())
-                    a3List.append(value['alpha-3'].upper())
-                    langList.append(value['language'])
-                    nativeList.append(value['native']) 
+                    a3List.append(alpha_3.upper())
+                    langList.append(alpha_2)
+                    nativeList.append(alpha_1)
                     dotList.append('.' + cc.lower())
+
+                    langA = '|'.join(ccList)
+                    langB = '|'.join(a3List)
+                    langC = '|'.join(langList)
+                    langD = '|'.join(nativeList)
+                    langE = '|'.join(dotList)
 
             if not prefixList:
                 prefixList.append(' ')
@@ -476,13 +492,13 @@ class PlaylistUpdater(baseServiceUpdater):
 
             regex_chann_name   =     re.compile('tvg-id="[^"]*"', re.IGNORECASE)
 
-            if ADDON.getSetting('VOD_EPG') == "true":
+            if self.vod:
                 regexCorrectStream = re.compile('^(plugin|http|rtmp)(?!.*?[.]((\.)(mp4|mkv|avi|mov|wma)))', re.IGNORECASE)
                 regexRemoveList.append( re.compile('(\s|^)?(L\s*)?((?i)Vod|VOD|On\sDemand)(?=\s|$)', re.IGNORECASE) )
             else:
                 regexCorrectStream = re.compile('^plugin|http|^rtmp', re.IGNORECASE)
 
-            if ADDON.getSetting('XXX_EPG') == "true":
+            if self.xxx:
                 regexRemoveList.append( re.compile('(\s|^)?(L\s*)?((?i)Adult|XXX)(?=\s|$)', re.IGNORECASE) )
 
             title = None
@@ -518,10 +534,9 @@ class PlaylistUpdater(baseServiceUpdater):
 
                         if catchup_regex.match(stripLine) and self.catchup:
                             catchup_source_regex = re.compile('catchup-source="(.*?)"')
-                            try:
-                                catchupLine = catchup_source_regex.search(stripLine).group(1)
-                            except:
-                                catchupLine = ''
+                            
+                            r = catchup_source_regex.search(stripLine)
+                            catchupLine = r.group(1) if r else ''
 
                         else:
                             catchupLine = ''
@@ -560,15 +575,6 @@ class PlaylistUpdater(baseServiceUpdater):
                             title = ' '.join(OrderedDict((w,w) for w in title.split()).keys())
 
                             name = title
-
-                            langA = '|'.join(ccList)
-                            langB = '|'.join(a3List)
-                            langC = '|'.join(langList)
-                            langD = '|'.join(nativeList)
-                            langE = '|'.join(dotList)
-
-                            non_escaped = langA + '|' + langB + '|' + langC + '|' + langD
-                            escaped = re.sub(r'\.', r'\\.', langE)
 
                             if PATTERN == 0:
                                 lang = langA + '|' + langB + '|' + langC + '|' + langD + '|' + langE 
@@ -617,18 +623,18 @@ class PlaylistUpdater(baseServiceUpdater):
                                 if match is None:
                                     ccListInt = len(ccList)
 
+                                    non_escaped = langA + '|' + langB + '|' + langC + '|' + langD
+                                    escaped = re.sub(r'\.', r'\\.', langE)
+
                                     pattern = re.compile('((?:^|[^a-zA-Z])({n})(?:[^a-zA-Z]|$)|({e}))'.format(n=non_escaped, e=escaped))
 
                                     if PY3:
-                                        try:
-                                            group = pattern.search(str(splitedLine[0])).group(1).strip()
-                                        except:
-                                            group = ''
+                                        r = pattern.search(str(splitedLine[0]))
+                                        group = r.group(1).strip() if r else ''
+
                                     else:
-                                        try:
-                                            group = pattern.search(str(splitedLine[0]).encode('utf-8')).group(1).strip()
-                                        except:
-                                            group = ''
+                                        r = pattern.search(str(splitedLine[0]).encode('utf-8'))
+                                        group = r.group(1).strip() if r else ''
 
                                     if group:
                                         ccCh = ''
@@ -700,7 +706,7 @@ class PlaylistUpdater(baseServiceUpdater):
 
                     elif (title is not None or tvg_title is not None) and regexCorrectStream.match(stripLine):
                         removeStream = True
-                        if ADDON.getSetting('VOD_EPG') == "false" or ADDON.getSetting('VOD_EPG') == "": 
+                        if not self.vod or self.vod_epg == "": 
                             regexRemoveStream = re.compile('^(?!.*(\.)(mkv|avi|mov|wma)).*$')
                             try:
                                 match = regexRemoveStream.match(stripLine)

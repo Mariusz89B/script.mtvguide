@@ -1,4 +1,7 @@
-﻿v9.9.2 (2022-02-16)
+﻿v9.9.3 (2022-02-17)
+- Optimized performance.
+
+v9.9.2 (2022-02-16)
 - Updated service TVP GO.
 - Updated headers.
 - Bug fixes.
