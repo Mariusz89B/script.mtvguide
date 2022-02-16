@@ -99,6 +99,7 @@ class TvpUpdater(baseServiceUpdater):
         if response == 200:
             return True
         else:
+            self.connErrorMessage() 
             return False
 
     def getChannelList(self, silent):
@@ -120,12 +121,13 @@ class TvpUpdater(baseServiceUpdater):
             if response:
                 channels = json.loads(response.text)['data']['getStationsForMainpage']['items']
                 for c in channels:
-                    cid = c['id'] + '|' + c['code']
-                    name = c['name']
-                    title = c['name'] + ' PL'
+                    cid = c['id']
+                    lic = c['code']
+                    name = c['name'].replace('EPG - ', '').replace('TVP3', 'TVP 3')
+                    title = name + ' PL'
                     img = c['image_square']['url'].replace('{width}','140').replace('{height}','140')
 
-                    program = TvCid(cid=cid, name=name, title=title, img=img)
+                    program = TvCid(cid=cid, lic=lic, name=name, title=title, img=img)
                     result.append(program)
 
             if len(result) <= 0:
@@ -138,7 +140,8 @@ class TvpUpdater(baseServiceUpdater):
     def getChannelStream(self, chann):
         data = None
 
-        id, code = chann.cid.split('|')
+        code = chann.lic
+        id = chann.cid
 
         streams = []
 
@@ -148,16 +151,19 @@ class TvpUpdater(baseServiceUpdater):
             response = requests.post('https://hbb-prod.tvp.pl/apps/manager/api/hub/graphql', json=data)
 
             if json.loads(response.text)['data']['currentProgramAsLive'] is not None:
-                streams=json.loads(response.text)['data']['currentProgramAsLive']['formats']
+                streams = json.loads(response.text)['data']['currentProgramAsLive']['formats']
 
             else:
-                xbmcgui.Dialog().notification('TVPGO', 'Przerwa w emisji', xbmcgui.NOTIFICATION_INFO)
+                xbmcgui.Dialog().notification('TVP GO', 'Przerwa w emisji', xbmcgui.NOTIFICATION_INFO)
 
         else:
             jsdata = '{"operationName":null,"variables":{"liveId":"'+id+'"},"extensions":{"persistedQuery":{"version":1,"sha256Hash":"f2fd34978dc0aea320ba2567f96aa72a184ca2d1e55b2a16dc0915bd03b54fb3"}},"query":"query ($liveId: String!) {\\n  getLive(liveId: $liveId) {\\n    error\\n    data {\\n      type\\n      title\\n      subtitle\\n      lead\\n      label {\\n        type\\n        text\\n        __typename\\n      }\\n      src\\n      vast_url\\n      duration_min\\n      subtitles {\\n        src\\n        autoDesc\\n        lang\\n        text\\n        __typename\\n      }\\n      is_live\\n      formats {\\n        mimeType\\n        totalBitrate\\n        videoBitrate\\n        audioBitrate\\n        adaptive\\n        url\\n        downloadable\\n        __typename\\n      }\\n      web_url\\n      __typename\\n    }\\n    __typename\\n  }\\n}"}'
             data = json.loads(jsdata)
             response = requests.post('https://hbb-prod.tvp.pl/apps/manager/api/hub/graphql', json=data)
-            streams = json.loads(response.text)['data']['getLive']['data'][0]['formats']
+            if json.loads(response.text)['data']['getLive'] is not None:
+                streams = json.loads(response.text)['data']['getLive']['data'][0]['formats']
+            else:
+                xbmcgui.Dialog().notification('TVP GO', 'Przerwa w emisji', xbmcgui.NOTIFICATION_INFO)
 
         data = streams
 

@@ -231,8 +231,7 @@ class PlayService(xbmc.Player, BasePlayService):
         self.reconnectFailedStreams = ADDON.getSetting('reconnect_stream')
         self.maxStreamStartupTime   = int(ADDON.getSetting('max_wait_for_playback')) * 10
         self.strmUrl                = None
-        self.service                = None
-        
+        self.service                = None        
 
     def playUrlList(self, urlList, archiveService, archivePlaylist, resetReconnectCounter=False):
         self.archiveService = archiveService
@@ -1075,6 +1074,10 @@ class PlayService(xbmc.Player, BasePlayService):
                                     mimeType = 'video/mp2t'
 
                                 break
+
+                            if 'material_niedostepny' in strmUrl:
+                                xbmcgui.Dialog().notification(service, strings(SERVICE_NO_CONTENT), sound=False)
+                                return None
 
                             import inputstreamhelper
                             is_helper = inputstreamhelper.Helper(PROTOCOL)
