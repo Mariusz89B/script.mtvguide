@@ -11,7 +11,7 @@ PlayerPL - TVN S.A.
 Polsat GO - Telewizja Polsat Sp. Z.o.o.
 Polsat GO Box - Cyfrowy Polsat S.A.
 Telia Play - Telia Company AB
-Telewizja Polska - Telewizja Polska S.A.
+TVP GO - Telewizja Polska S.A.
 WP Pilot - Wirtualna Polska Media S.A.
 
 
@@ -34,7 +34,7 @@ PlayerPL - https://player.pl/regulamin.pdf
 Polsat GO - https://redirector.redefine.pl/versions/regulamin_polsat_go.pdf
 Polsat GO Box - https://polsatboxgo.pl/panel/regulaminy
 Telia Play - https://www.telia.se/privat/om/villkor/villkor-mitt-telia/
-Telewizja Polska - https://vod.tvp.pl/page/regulamin,1653650/
+TVP GO - https://vod.tvp.pl/page/regulamin,1653650/
 WP Pilot - https://pilot.wp.pl/pomoc/
 
 Account registration takes place on the television provider website.
@@ -45,7 +45,7 @@ PlayerPL - https://player.pl/
 Polsat GO - https://polsatgo.pl/zarejestruj/
 Polsat GO Box - https://polsatboxgo.pl/zarejestruj
 Telia Play - https://www.telia.se/privat/mitt-telia/logga-in/
-Telewizja Polska - https://www.tvp.pl/sess/user-2.0/register.php?ref=aHR0cHM6Ly9jZW50cnVtaW5mb3JtYWNqaS50dnAucGwv
+TVP GO - https://www.tvp.pl/sess/user-2.0/register.php?ref=aHR0cHM6Ly9jZW50cnVtaW5mb3JtYWNqaS50dnAucGwv
 WP Pilot - https://pilot.wp.pl/register/
 
 Subscription fees are made on the television providers website and are not linked to the add-on.
@@ -78,7 +78,7 @@ Please see the LICENSE.txt file for details.
 
 Support
 
-Please report any legal questions or issues to Github.com
+Please report any legal questions or issues to github.com
 
 Bug reports should be reported in issues section:
 https://github.com/Mariusz89B/script.mtvguide/issues/new/choose

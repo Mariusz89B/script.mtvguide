@@ -879,18 +879,24 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
                         category = self.program.categoryA
                         if category == '':
                             category = strings(NO_CATEGORY)
+
                 if skin_separate_year_of_production:
                     year = descriptionParser.extractProductionDate()
                     if year == '':
                         year = self.program.productionDate
+
                 if skin_separate_director:
                     director = descriptionParser.extractDirector()
                     if director == '':
                         director = self.program.director
+
                 if skin_separate_episode:
                     episode = descriptionParser.extractEpisode()
                     if episode == '':
                         episode = self.program.episode
+
+                    self.setControlLabel(C_MAIN_EPISODE, episode)
+
                 if skin_separate_allowed_age_icon:
                     icon, age = descriptionParser.extractAllowedAge()
                     if icon == '':
@@ -909,10 +915,12 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
                         
                         icon = os.path.join(addonPath, 'icons', 'age_rating', 'icon_{}.png'.format(age))
                     self.setControlImage(C_MAIN_AGE_ICON, icon)
+
                 if skin_separate_program_actors:
                     actors = descriptionParser.extractActors()
                     if actors == '':
                         actors = self.program.actor
+
                 if skin_separate_rating:
                     rating = descriptionParser.extractRating()
                     if rating == '':
@@ -1024,6 +1032,11 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
     def formatTime(self, timestamp):
         format = xbmc.getRegion('time').replace(':%S', '').replace('%H%H', '%H')
         return timestamp.strftime(format)
+
+    def setControlLabel(self, controlId, text):
+        control = self.getControl(controlId)
+        if control:
+            control.setLabel(text)
 
     def setControlText(self, controlId, text):
         control = self.getControl(controlId)

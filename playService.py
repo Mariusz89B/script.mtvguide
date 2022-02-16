@@ -1046,7 +1046,7 @@ class PlayService(xbmc.Player, BasePlayService):
                         self.unlockCurrentlyPlayedService()
                         xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
 
-                if service == 'Telewizja Polska':
+                if service == 'TVP GO':
                     if self.archiveService == '' or self.archivePlaylist == '':
                         try:
                             self.playbackStopped = False
@@ -1056,18 +1056,28 @@ class PlayService(xbmc.Player, BasePlayService):
                             except ImportError:
                                 from urllib import urlencode, quote_plus, quote, unquote
 
-                            strmUrl = channelInfo.strm
+                            streams = channelInfo.strm
 
-                            PROTOCOL = ''
-                            DRM = 'com.widevine.alpha'
+                            PROTOCOL = 'hls'
+                            mimeType = 'application/x-mpegURL'
 
-                            if '.m3u8' in strmUrl:
-                                mimeType = 'application/x-mpegURL'
-                                #mimeType = 'application/vnd.apple.mpegstream_url'
-                                PROTOCOL = 'hls'
+                            for s in streams:
+                                if (s['mimeType']=='application/dash+xml'):
+                                    strmUrl = s['url']
+                                    PROTOCOL = 'mpd'
+                                    mimeType = 'application/xml+dash'
+
+                                elif (s['mimeType']=='application/x-mpegurl' and not ('mobile' in s['url'])):
+                                    strmUrl = s['url']
+
+                                else:
+                                    strmUrl = s['url']
+                                    mimeType = 'video/mp2t'
+
+                                break
 
                             import inputstreamhelper
-                            is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
+                            is_helper = inputstreamhelper.Helper(PROTOCOL)
                             if is_helper.check_inputstream():  
                                 ListItem = xbmcgui.ListItem(path=strmUrl)
                                 ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
@@ -1079,9 +1089,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                 ListItem.setMimeType(mimeType)
                                 ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
                                 ListItem.setProperty('inputstream.adaptive.stream_headers', 'Referer: https://tvpstream.vod.tvp.pl/&User-Agent='+quote(UA))
-                                #ListItem.setProperty('inputstream.adaptive.license_type', DRM)
-                                #ListItem.setProperty('inputstream.adaptive.license_key','')
-                                #ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
+                                ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
                                 ListItem.setProperty('IsPlayable', 'true')
                             
                             self.strmUrl = strmUrl
@@ -1170,7 +1178,7 @@ class PlayService(xbmc.Player, BasePlayService):
                             xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
 
                 if pl.match(service) or channelInfo.title == 'StreamSetupDialog':
-                    playbackServices = ['C More', 'Polsat GO', 'Polsat GO Box', 'Ipla', 'PlayerPL', 'Telia Play', 'Telewizja Polska', 'WP Pilot']
+                    playbackServices = ['C More', 'Polsat GO', 'Polsat GO Box', 'Ipla', 'PlayerPL', 'Telia Play', 'TVP GO', 'WP Pilot']
                     if self.currentlyPlayedService['service'] not in playbackServices:
                         catchup = False
 

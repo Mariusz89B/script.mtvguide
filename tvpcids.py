@@ -63,7 +63,7 @@ from serviceLib import *
 import json, re, random
 import time
 
-serviceName         = 'Telewizja Polska'
+serviceName         = 'TVP GO'
 
 url = 'https://tvpstream.vod.tvp.pl/'
 
@@ -94,44 +94,8 @@ class TvpUpdater(baseServiceUpdater):
         self.servicePriority    = int(ADDON.getSetting('priority_tvp'))
         self.url = url
 
-    def sendRequest(self, url, post=False, json=False, headers=None, data=None, params=None, cookies=None, verify=False, allow_redirects=False, timeout=None):
-        try:
-            if post:
-                response = sess.post(url, headers=headers, data=data, params=params, cookies=cookies, verify=verify, allow_redirects=allow_redirects, timeout=timeout)
-            else:
-                response = sess.get(url, headers=headers, data=data, params=params, cookies=cookies, verify=verify, allow_redirects=allow_redirects, timeout=timeout)
-
-        except HTTPError as e:
-            deb('HTTPError: {}'.format(str(e)))
-            self.connErrorMessage()
-            response = False
-
-        except ConnectionError as e:
-            deb('ConnectionError: {}'.format(str(e)))
-            self.connErrorMessage()
-            response = False
-
-        except Timeout as e:
-            deb('Timeout: {}'.format(str(e))) 
-            self.connErrorMessage()
-            response = False
-
-        except RequestException as e:
-            deb('RequestException: {}'.format(str(e))) 
-            self.connErrorMessage()
-            response = False
-
-        except:
-            self.connErrorMessage()
-            response = False
-
-        if json:
-            return response.json()
-        else:
-            return response
-
     def loginService(self):
-        response = self.sendRequest(url, headers=headers).status_code
+        response = requests.get(url, headers=headers).status_code
         if response == 200:
             return True
         else:
@@ -148,37 +112,18 @@ class TvpUpdater(baseServiceUpdater):
         self.log('[UPD] %-10s %-35s %-15s %-20s %-35s' % ( '-CID-', '-NAME-', '-GEOBLOCK-', '-ACCESS STATUS-', '-IMG-'))
 
         try:
-            response = self.sendRequest(url, headers=headers)
+            jsdata = '{"operationName":null,"variables":{"categoryId":null},"extensions":{"persistedQuery":{"version":1,"sha256Hash":"5c29325c442c94a4004432d70f94e336b8c258801fe16946875a873e818c8aca"}},"query":"query ($categoryId: String) {\\n  getLandingPageVideos(categoryId: $categoryId) {\\n    type\\n    title\\n    elements {\\n      id\\n      title\\n      subtitle\\n      type\\n      img {\\n        hbbtv\\n        image\\n        website_holder_16x9\\n        video_holder_16x9\\n        __typename\\n      }\\n      broadcast_start_ts\\n      broadcast_end_ts\\n      sportType\\n      label {\\n        type\\n        text\\n        __typename\\n      }\\n      stats {\\n        video_count\\n        __typename\\n      }\\n      __typename\\n    }\\n    __typename\\n  }\\n  getStationsForMainpage {\\n    items {\\n      id\\n      name\\n      code\\n      image_square {\\n        url\\n        __typename\\n      }\\n      background_color\\n      isNativeChanel\\n      __typename\\n    }\\n    __typename\\n  }\\n}"}'
+            data = json.loads(jsdata)
+            url = 'https://hbb-prod.tvp.pl/apps/manager/api/hub/graphql'
+            
+            response = requests.post('https://hbb-prod.tvp.pl/apps/manager/api/hub/graphql', json=data)
             if response:
-                channels  = re.findall('data-channel-id="(\d+)".*data-video-id="(\d+)".*data-stationname="(.*?)"', response.text)
-                for item in channels:
-                    if item[2] != '':
-                        cid = item[1]                        
-                        name = item[2]
-                        title = item[2] + ' PL'
-                        img = item[1]
-                        
-                    else:
-                        if item[0] == '52451253':
-                            cid = item[1]
-                            name = 'TVP Historia 2'
-                            title = 'TVP Historia 2 PL'                            
-                            img = item[1]   
-
-                        elif item[0] == '51121199':
-                            cid = item[1]
-                            name = 'TVP Kultura 2'
-                            title = 'TVP Kultura 2 PL'                            
-                            img = item[1]  
-
-                        elif item[0] == '51656487':
-                            cid = item[1]
-                            name = 'PolandIn'
-                            title = 'PolandIn PL'
-                            img = item[1]
-
-                    name = name.replace('TVP3', 'TVP 3')
-                    title = title.replace('TVP3', 'TVP 3')
+                channels = json.loads(response.text)['data']['getStationsForMainpage']['items']
+                for c in channels:
+                    cid = c['id'] + '|' + c['code']
+                    name = c['name']
+                    title = c['name'] + ' PL'
+                    img = c['image_square']['url'].replace('{width}','140').replace('{height}','140')
 
                     program = TvCid(cid=cid, name=name, title=title, img=img)
                     result.append(program)
@@ -193,29 +138,28 @@ class TvpUpdater(baseServiceUpdater):
     def getChannelStream(self, chann):
         data = None
 
-        timestamp = int(time.time() * 1000)
+        id, code = chann.cid.split('|')
 
-        callback = random.randint(1000, 9999)
-        response = self.sendRequest('https://tvpstream.vod.tvp.pl/sess/TVPlayer2/api.php?id={cid}&@method=getTvpConfig&@callback=__tp2JSONP{callback}T{time}'.format(cid=chann.cid, callback=callback, time=timestamp), headers=headers)
-        if response:
-            response_json = response.text
+        streams = []
 
-            txt = re.sub('\"use strict\";', '', response_json)
-            txt = re.sub('_.*\({', '{', txt)
-            txt = re.sub('}\);', '}', txt)
+        if code != '':
+            jsdata = '{"operationName":null,"variables":{"stationCode":"'+code+'"},"extensions":{"persistedQuery":{"version":1,"sha256Hash":"0b9649840619e548b01c33ae4bba6027f86eac5c48279adc04e9ac2533781e6b"}},"query":"query ($stationCode: String!) {\\n  currentProgramAsLive(stationCode: $stationCode) {\\n    id\\n    title\\n    subtitle\\n    date_start\\n    date_end\\n    date_current\\n    description\\n    description_long\\n    description_akpa_long\\n    description_akpa_medium\\n    description_akpa\\n    plrating\\n    npvr\\n    formats {\\n      mimeType\\n      url\\n      __typename\\n    }\\n    __typename\\n  }\\n}"}'
+            data = json.loads(jsdata)
+            response = requests.post('https://hbb-prod.tvp.pl/apps/manager/api/hub/graphql', json=data)
 
-            jstring = json.loads(txt)
+            if json.loads(response.text)['data']['currentProgramAsLive'] is not None:
+                streams=json.loads(response.text)['data']['currentProgramAsLive']['formats']
 
-            l = jstring['content']['files']
+            else:
+                xbmcgui.Dialog().notification('TVPGO', 'Przerwa w emisji', xbmcgui.NOTIFICATION_INFO)
 
-            for i in range(len(l)):
-                stream = jstring['content']['files'][i]['url']
-                if '.m3u8' in stream: 
-                    data = stream
+        else:
+            jsdata = '{"operationName":null,"variables":{"liveId":"'+id+'"},"extensions":{"persistedQuery":{"version":1,"sha256Hash":"f2fd34978dc0aea320ba2567f96aa72a184ca2d1e55b2a16dc0915bd03b54fb3"}},"query":"query ($liveId: String!) {\\n  getLive(liveId: $liveId) {\\n    error\\n    data {\\n      type\\n      title\\n      subtitle\\n      lead\\n      label {\\n        type\\n        text\\n        __typename\\n      }\\n      src\\n      vast_url\\n      duration_min\\n      subtitles {\\n        src\\n        autoDesc\\n        lang\\n        text\\n        __typename\\n      }\\n      is_live\\n      formats {\\n        mimeType\\n        totalBitrate\\n        videoBitrate\\n        audioBitrate\\n        adaptive\\n        url\\n        downloadable\\n        __typename\\n      }\\n      web_url\\n      __typename\\n    }\\n    __typename\\n  }\\n}"}'
+            data = json.loads(jsdata)
+            response = requests.post('https://hbb-prod.tvp.pl/apps/manager/api/hub/graphql', json=data)
+            streams = json.loads(response.text)['data']['getLive']['data'][0]['formats']
 
-        if data is None or data == '' or 'material_niedostepny' in data:
-            xbmcgui.Dialog().notification(serviceName, xbmc.getLocalizedString(15012), xbmcgui.NOTIFICATION_WARNING)
-            data = None
+        data = streams
 
         try:
             if data is not None and data != "":
