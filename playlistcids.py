@@ -61,6 +61,7 @@ else:
 
 import copy, re
 import xbmc, xbmcgui, xbmcvfs, xbmcaddon
+from xml.etree import ElementTree
 from strings import *
 from groups import *
 from serviceLib import *
@@ -149,14 +150,12 @@ class PlaylistUpdater(baseServiceUpdater):
         else:
             self.filtered = False
 
-        if ADDON.getSetting('VOD_EPG') == "true":
+        if ADDON.getSetting('VOD_EPG') == 'true':
             self.vod = True
         else:
             self.vod = False
 
-        self.vod_epg = ADDON.getSetting('VOD_EPG')
-
-        if ADDON.getSetting('XXX_EPG') == "true":
+        if ADDON.getSetting('XXX_EPG') == 'true':
             self.xxx = True
         else:
             self.xxx = False
@@ -376,6 +375,14 @@ class PlaylistUpdater(baseServiceUpdater):
 
             regexRemoveList.append( re.compile('(\s|\W|^)(L\s*)?(24\/7:?:?|19\d\d|20\d\d|S\s*\d{1,3}\s*E\s*\d{1,4})(?=\s|$)', re.IGNORECASE) )
 
+            settings_file = os.path.join(self.profilePath, 'settings.xml')
+
+            with open(settings_file, 'rb') as f:
+                tree = ElementTree.parse(f)
+            root = tree.getroot()
+
+            cc_settings = [i.attrib['id'].replace('country_code_', '') for i in root if 'country_code_' in i.attrib['id'] and i.text == 'true']
+
             APPEND = ADDON.getSetting('{}_append_country_code'.format(self.serviceName))
 
             PATTERN = -1
@@ -426,7 +433,7 @@ class PlaylistUpdater(baseServiceUpdater):
                 elif PATTERN == 5:
                     cc_pattern_regex = cc.upper() + ':?|' + value['alpha-3'] + ':?|' + re.escape('.' + cc.lower()) + ':?|' + value['language']
 
-                if ADDON.getSetting('country_code_{}'.format(cc)) == 'true':
+                if cc in cc_settings:
                     alpha_1 = value['native']
                     alpha_2 = value['language']
                     alpha_3 = value['alpha-3']
@@ -663,12 +670,18 @@ class PlaylistUpdater(baseServiceUpdater):
                                             string = ' ' + ccCh.upper()
                                             title = re.sub('$', string, title)
 
+                            for regexRemove in regexRemoveList:
+                                if( regexRemove.findall(title) ):
+                                    title = ''
+                                if tvg_id:
+                                    if( regexRemove.findall(tvg_title) ):
+                                        tvg_title = ''
+
                             for defReplaceMap in defReplaceList:
                                 title, match = defReplaceMap['regex'].subn('', title)
                                 if match > 0:
                                     title += ' ' + defReplaceMap['def']
                                     title = ' '.join(OrderedDict((w,w) for w in title.split()).keys())
-
 
                             for langReplaceMap in langReplaceList:
                                 title, match = langReplaceMap['regex'].subn('', title)
@@ -679,13 +692,6 @@ class PlaylistUpdater(baseServiceUpdater):
                                         title = re.sub(langReplaceMap['lang'], '', title)
                                     else:
                                         title += ' ' + langReplaceMap['lang']
-
-                            for regexRemove in regexRemoveList:
-                                if( regexRemove.findall(title) ):
-                                    title = ''
-                                if tvg_id:
-                                    if( regexRemove.findall(tvg_title) ):
-                                        tvg_title = ''
 
                             if self.filtered and PATTERN != 5:
                                 for regexAdd in regexAddList:
@@ -706,7 +712,7 @@ class PlaylistUpdater(baseServiceUpdater):
 
                     elif (title is not None or tvg_title is not None) and regexCorrectStream.match(stripLine):
                         removeStream = True
-                        if not self.vod or self.vod_epg == "": 
+                        if not self.vod: 
                             regexRemoveStream = re.compile('^(?!.*(\.)(mkv|avi|mov|wma)).*$')
                             try:
                                 match = regexRemoveStream.match(stripLine)
