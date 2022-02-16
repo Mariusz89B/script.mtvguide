@@ -139,7 +139,7 @@
 	<channel id="KINO POLSKA MUZYKA, KINO POLSKA MUZYKA PL" title="(?=KINO(\s*POLSKA)?\s*MUZYKA(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="KINO POLSKA, KINO POLSKA PL" title="(?=KINO(\s*POLSKA)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="KINO TV, KINO TV PL" title="(?=(FILMBOX|KINO)(\s*TV)?(\s*\(FILMBOX\))?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
-	<channel id="KULTURA 2, KULTURA 2 PL" title="(?=(TVP\s*)?(KULTURA\s*2)(\s*TV)?(\s*(HD|UHD|4K))?(\s*PL$))" strm=""/>
+	<channel id="KULTURA 2, KULTURA 2 PL" title="(?=(TVP\s*)?(KULTURA\s*2)(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="KSW, KSW PL" title="(.*KSW.*\s*PL$)" strm=""/>
 	<channel id="LIFETIME, LIFETIME PL" title="(?=LIFETIME(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>
 	<channel id="LOVE, LOVE PL" title="(?=LOVE(\s*TV)?(\s*(HD|UHD|4K))?\s*PL$)" strm=""/>

@@ -1,5 +1,7 @@
 ﻿v9.9.2 (2022-02-16)
-- Beta testing.
+- Updated service TVP GO.
+- Updated headers.
+- Bug fixes.
 
 v9.9.1 (2022-02-13)
 - Fixed crash while downloading on CoreELEC and LibreELEC OS.

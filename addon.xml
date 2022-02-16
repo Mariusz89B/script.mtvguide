@@ -2,7 +2,7 @@
 <addon
     id="script.mtvguide"
     name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]"
-    version="9.9.2-beta.3"
+    version="9.9.2"
     provider-name="Mods-kodi">
   <requires>
     <import addon="xbmc.addon" version="17.0.0"/>
@@ -42,7 +42,9 @@
 	<website>https://github.com/Mariusz89B/script.mtvguide</website>
     <source>m-TVGuide © 2013 - 2022</source>
     <news>v9.9.2 (2022-02-16)
-- Beta testing.
+- Updated service TVP GO.
+- Updated headers.
+- Bug fixes.
 
 v9.9.1 (2022-02-13)
 - Fixed crash while downloading on CoreELEC and LibreELEC OS.
