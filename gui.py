@@ -4865,55 +4865,76 @@ class mTVGuide(xbmcgui.WindowXML):
             # This mean we'll need to parse program description
             descriptionParser = src.ProgramDescriptionParser(description)
             if skin_separate_category:
-                category = descriptionParser.extractCategory()
-                if category == '':
-                    category = program.categoryA
+                try:
+                    category = descriptionParser.extractCategory()
                     if category == '':
-                        category = strings(NO_CATEGORY)
-                self.setControlText(C_PROGRAM_CATEGORY, category)
+                        category = program.categoryA
+                        if category == '':
+                            category = strings(NO_CATEGORY)
+                    self.setControlText(C_PROGRAM_CATEGORY, category)
+                except:
+                    pass
             if skin_separate_year_of_production:
-                year = descriptionParser.extractProductionDate()
-                if year == '':
-                    year = program.productionDate
-                self.setControlText(C_PROGRAM_PRODUCTION_DATE, year)
+                try:
+                    year = descriptionParser.extractProductionDate()
+                    if year == '':
+                        year = program.productionDate
+                    self.setControlText(C_PROGRAM_PRODUCTION_DATE, year)
+                except:
+                    pass
             if skin_separate_director:
-                director = descriptionParser.extractDirector()
-                if director == '':
-                    director = program.director
-                self.setControlText(C_PROGRAM_DIRECTOR, director)
+                try:
+                    director = descriptionParser.extractDirector()
+                    if director == '':
+                        director = program.director
+                    self.setControlText(C_PROGRAM_DIRECTOR, director)
+                except:
+                    pass
             if skin_separate_episode:
-                episode = descriptionParser.extractEpisode()
-                if episode == '':
-                    episode = program.episode
-                self.setControlText(C_PROGRAM_EPISODE, episode)
+                try:
+                    episode = descriptionParser.extractEpisode()
+                    if episode == '':
+                        episode = program.episode
+                    self.setControlText(C_PROGRAM_EPISODE, episode)
+                except:
+                    pass
             if skin_separate_allowed_age_icon:
-                icon, age = descriptionParser.extractAllowedAge()
-                if icon == '':
-                    if PY3:
-                        addonPath = xbmcvfs.translatePath(ADDON.getAddonInfo('path'))
-                    else:
-                        addonPath = xbmc.translatePath(ADDON.getAddonInfo('path'))
+                try:
+                    icon, age = descriptionParser.extractAllowedAge()
+                    if icon == '':
+                        if PY3:
+                            addonPath = xbmcvfs.translatePath(ADDON.getAddonInfo('path'))
+                        else:
+                            addonPath = xbmc.translatePath(ADDON.getAddonInfo('path'))
 
-                    number_regex = re.compile('(\d+)')
+                        number_regex = re.compile('(\d+)')
 
-                    r = number_regex.search(program.rating)
-                    age = r.group(1) if r else ''
+                        r = number_regex.search(str(program.rating))
+                        age = r.group(1) if r else ''
 
-                    if age == '3':
-                        age = '0'
-                    
-                    icon = os.path.join(addonPath, 'icons', 'age_rating', 'icon_{}.png'.format(age))
-                self.setControlImage(C_PROGRAM_AGE_ICON, icon)
+                        if age == '3':
+                            age = '0'
+                        
+                        icon = os.path.join(addonPath, 'icons', 'age_rating', 'icon_{}.png'.format(age))
+                    self.setControlImage(C_PROGRAM_AGE_ICON, icon)
+                except:
+                    pass
             if skin_separate_program_actors:
-                actors = descriptionParser.extractActors()
-                if actors == '':
-                    actors = program.actor
-                self.setControlText(C_PROGRAM_ACTORS, actors)
+                try:
+                    actors = descriptionParser.extractActors()
+                    if actors == '':
+                        actors = program.actor
+                    self.setControlText(C_PROGRAM_ACTORS, actors)
+                except:
+                    pass
             if skin_separate_rating:
-                rating = descriptionParser.extractRating()
-                if rating == '':
-                    rating = program.rating
-                self.setControlText(C_PROGRAM_RATING, rating)
+                try:
+                    rating = descriptionParser.extractRating()
+                    if rating == '':
+                        rating = program.rating
+                    self.setControlText(C_PROGRAM_RATING, rating)
+                except:
+                    pass
             if skin_separate_program_progress:
                 try:
                     programProgressControl = self.getControl(C_MAIN_PROGRAM_PROGRESS)
@@ -7568,7 +7589,7 @@ class InfoDialog(xbmcgui.WindowXMLDialog):
 
                         number_regex = re.compile('(\d+)')
 
-                        r = number_regex.search(self.program.rating)
+                        r = number_regex.search(str(self.program.rating))
                         age = r.group(1) if r else ''
 
                         if age == '3':
