@@ -3373,8 +3373,8 @@ class RssFeed(object):
             else:
                 rssData = self.downloader.getJsonFromExtendedAPI(url)
 
-            if PY3:
-                rssData = rssData.decode('utf-8')
+            #if PY3:
+            rssData = rssData.decode('utf-8')
 
             if rssData is not None:
                 for line in reversed(rssData.split('\n')):

@@ -59,6 +59,11 @@ else:
     import urllib2 as Request
     from urllib2 import HTTPError, URLError
 
+try:
+    from urllib.parse import urlencode, quote_plus, quote, unquote
+except ImportError:
+    from urllib import urlencode, quote_plus, quote, unquote
+
 import copy, re
 import xbmc, xbmcgui, xbmcvfs, xbmcaddon
 from xml.etree import ElementTree
@@ -161,25 +166,26 @@ class PlaylistUpdater(baseServiceUpdater):
             self.xxx = False
 
     def requestUrl(self, path):
-        headers = { 'User-Agent' : UA }
+        headers = { 'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36' }
         headers['Keep-Alive'] = 'timeout=5'
         headers['Connection'] = 'Keep-Alive'
         headers['ContentType'] = 'application/x-www-form-urlencoded'
         headers['Accept-Encoding'] = 'gzip'
 
         try:
-            http = urllib3.PoolManager()
-            response = http.request('GET', path, headers=headers, timeout=5)
-            content = response.data.decode('utf-8')
+            content = requests.get(path, headers=headers, allow_redirects=False, verify=False, timeout=5).content.decode('utf-8')
 
-        except:
+        except Exception as ex:
+            deb('requestUrl urlib3 Exception: {}'.format(ex))
             try:
                 content = scraper.get(path, headers=headers, allow_redirects=False, verify=False, timeout=5).content.decode('utf-8')
 
-            except:
+            except Exception as ex:
+                deb('requestUrl requests Exception: {}'.format(ex))
                 try:
                     content = self.sl.getJsonFromExtendedAPI(path).decode('utf-8')
-                except:
+                except Exception as ex:
+                    deb('requestUrl json Exception: {}'.format(ex))
                     content = ''
         
         return content.splitlines()
@@ -214,17 +220,17 @@ class PlaylistUpdater(baseServiceUpdater):
         if os.path.exists(urlpath):
             if PY3:
                 with open(urlpath, 'r', encoding='utf-8') as f:
-                    url = [line.strip() for line in f]
+                    url = [line.strip() for line in f][0]
             else:
                 with codecs.open(urlpath, 'r', encoding='utf-8') as f:
-                    url = [line.strip() for line in f]
+                    url = [line.strip() for line in f][0]
 
         else:
             url = url_setting
 
         cachedate = int(timestamp) + int(tdel)
 
-        if int(tnow) >= int(cachedate) or (not os.path.exists(filepath) or os.stat(filepath).st_size <= 0 or url[0] != url_setting):
+        if int(tnow) >= int(cachedate) or (not os.path.exists(filepath) or os.stat(filepath).st_size <= 0 or url != url_setting):
             deb('[UPD] Cache playlist: Write, expiration date: {}'.format(datetime.datetime.fromtimestamp(int(cachedate))))
             content = self.requestUrl(upath)
             if content:
@@ -640,7 +646,7 @@ class PlaylistUpdater(baseServiceUpdater):
                                         group = r.group(1).strip() if r else ''
 
                                     else:
-                                        r = pattern.search(str(splitedLine[0]).encode('utf-8'))
+                                        r = pattern.search(str(splitedLine[0].encode('utf-8')))
                                         group = r.group(1).strip() if r else ''
 
                                     if group:
