@@ -1363,6 +1363,8 @@ class RecordService(BasePlayService):
         cid, service = self.parseUrl(url)
         channelInfo = self.getChannel(cid, service)
 
+        self.checkConnection(strmUrl)
+
         if channelInfo is None:
             threadData['nrOfReattempts'] += 1
             deb('RecordService recordUrl - locked service {} - trying next, nrOfReattempts: {}, max: {}'.format(service, threadData['nrOfReattempts'], maxNrOfReattempts))
@@ -2013,7 +2015,7 @@ class RecordService(BasePlayService):
         sess = cloudscraper.create_scraper()
         scraper = cloudscraper.CloudScraper()
 
-        if strmUrl is not None:
+        if strmUrl != '' or strmUrl is not None and (strmUrl != 'plugin'):
             ctx = ssl.create_default_context()
             ctx.check_hostname = False
             ctx.verify_mode = ssl.CERT_NONE
