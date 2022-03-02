@@ -639,7 +639,10 @@ class PlaylistUpdater(baseServiceUpdater):
                                     non_escaped = langA + '|' + langB + '|' + langC + '|' + langD
                                     escaped = re.sub(r'\.', r'\\.', langE)
 
-                                    pattern = re.compile('((?:^|[^a-zA-Z])({n})(?:[^a-zA-Z]|$)|({e}))'.format(n=non_escaped, e=escaped))
+                                    try:
+                                        pattern = re.compile('((?:^|[^a-zA-Z])({n})(?:[^a-zA-Z]|$)|({e}))'.format(n=non_escaped, e=escaped))
+                                    except:
+                                        pattern = re.compile('((?:^|[^a-zA-Z])({n})(?:[^a-zA-Z]|$)|({e}))'.format(n=non_escaped.encode('utf-8'), e=escaped))
 
                                     if PY3:
                                         r = pattern.search(str(splitedLine[0]))
@@ -688,6 +691,8 @@ class PlaylistUpdater(baseServiceUpdater):
                                 if match > 0:
                                     title += ' ' + defReplaceMap['def']
                                     title = ' '.join(OrderedDict((w,w) for w in title.split()).keys())
+                                    if PATTERN == 5:
+                                        title = re.sub(defReplaceMap['def'], '', title)
 
                             for langReplaceMap in langReplaceList:
                                 title, match = langReplaceMap['regex'].subn('', title)
@@ -714,7 +719,7 @@ class PlaylistUpdater(baseServiceUpdater):
 
                             if tvg_id:
                                 if tvg_title == title:
-                                    tvg_title = ''                   
+                                    tvg_title = ''              
 
                     elif (title is not None or tvg_title is not None) and regexCorrectStream.match(stripLine):
                         removeStream = True
