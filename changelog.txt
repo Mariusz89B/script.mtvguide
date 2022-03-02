@@ -1,5 +1,6 @@
 ﻿v9.9.4 (2022-03-02)
-- Beta testing.
+- Fixed error while using record services.
+- Fixed encoding issues Python 2.7.
 
 v9.9.3 (2022-02-27)
 - Optimized performance.
