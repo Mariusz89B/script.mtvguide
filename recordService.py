@@ -1363,7 +1363,7 @@ class RecordService(BasePlayService):
         cid, service = self.parseUrl(url)
         channelInfo = self.getChannel(cid, service)
 
-        self.checkConnection(strmUrl)
+        self.checkConnection(url)
 
         if channelInfo is None:
             threadData['nrOfReattempts'] += 1
