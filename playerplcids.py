@@ -317,22 +317,30 @@ class PlayerPLUpdater(baseServiceUpdater):
                 jdata = json.loads(json.dumps(data))
 
             for channel in jdata:
-                if channel['id'] in self.mylist or 'TVN HD' == channel['title']:
-                    id_ = channel['id']
-                    name = channel['title']
-                    title = channel['title'] + ' PL'
-                    img = channel['images']['pc'][0]['mainUrl']
+                id_ = channel.get('id', '')
+                name = channel.get('title', '')
+                img = ''
 
-                    for regexReplace in regexReplaceList:
-                        name = regexReplace.sub('', name)
-                        title = regexReplace.sub('', title)
+                if id_ != '':
+                    if id_ in self.mylist or 'TVN HD' == name:
+                        if name != '': 
+                            title = name + ' PL'
+                            for regexReplace in regexReplaceList:
+                                name = regexReplace.sub('', name)
+                                title = regexReplace.sub('', title)
 
-                    name = re.sub(r'^\s*', '', str(name))
-                    title = re.sub(r'^\s*', '', str(title))
+                            name = re.sub(r'^\s*', '', str(name))
+                            title = re.sub(r'^\s*', '', str(title))
 
-                    cid = '%s:%s' % (id_,'kanal')
-                    program = TvCid(cid=cid, name=name, title=title, img=img)
-                    result.append(program)
+                            images = channel.get('images', '')
+                            if images != '':
+                                op = images.get('pc', '')
+                                if op != '':
+                                    img = op[0].get('mainUrl', '')
+
+                            cid = '%s:%s' % (id_,'kanal')
+                            program = TvCid(cid=cid, name=name, title=title, img=img)
+                            result.append(program)
 
                 if len(result) <= 0:
                     self.loginErrorMessage()

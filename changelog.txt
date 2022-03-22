@@ -1,4 +1,7 @@
-﻿v9.9.4 (2022-03-02)
+﻿v9.9.5 (2022-03-22)
+- Fixed PlayerPL parsing error.
+
+v9.9.4 (2022-03-02)
 - Fixed error while using record services.
 - Fixed encoding issues Python 2.7.
 
