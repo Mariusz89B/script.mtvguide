@@ -402,7 +402,7 @@ class PlayService(xbmc.Player, BasePlayService):
 
         if UAx:
             headers.update({'User-Agent': UAx})
-        
+
             conn_timeout = int(ADDON.getSetting('max_wait_for_playback'))
             read_timeout = int(ADDON.getSetting('max_wait_for_playback'))
             timeouts = (conn_timeout, read_timeout)
@@ -410,7 +410,7 @@ class PlayService(xbmc.Player, BasePlayService):
             try:
                 response = scraper.get(strmUrl, headers=headers, allow_redirects=False, stream=True, timeout=timeouts)
                 if 'Location' in response.headers and '_TS' not in cid:
-                    strmUrl = response.headers.get('Location', None) 
+                    strmUrl = response.headers.get('Location', None)
 
                 else:
                     strmUrl = response.url
@@ -427,11 +427,11 @@ class PlayService(xbmc.Player, BasePlayService):
 
             except Timeout as e:
                 status = 400
-                deb('Timeout: {}'.format(str(e))) 
+                deb('Timeout: {}'.format(str(e)))
 
             except RequestException as e:
                 status = 400
-                deb('RequestException: {}'.format(str(e))) 
+                deb('RequestException: {}'.format(str(e)))
 
         if status >= 400 and not retry:
             retry = True

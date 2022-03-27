@@ -88,6 +88,10 @@ class PlaylistUpdater(baseServiceUpdater):
         self.addDuplicatesToList = True
         self.useOnlineMap = False
 
+        self.UA = ADDON.getSetting('{}_user_agent'.format(self.serviceName))
+        if self.UA == '':
+            self.UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36 Edg/99.0.1150.46'
+
         if PY3:
             try:
                 self.profilePath = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
@@ -155,22 +159,18 @@ class PlaylistUpdater(baseServiceUpdater):
         self.append_cc = ADDON.getSetting('{}_append_country_code'.format(self.serviceName))
 
     def requestUrl(self, path):
-        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36'}
-        headers['Keep-Alive'] = 'timeout=5'
-        headers['Connection'] = 'Keep-Alive'
-        headers['ContentType'] = 'application/x-www-form-urlencoded'
-        headers['Accept-Encoding'] = 'gzip'
+        headers = {'User-Agent': self.UA}
 
         try:
             content = requests.get(path, headers=headers, allow_redirects=False, verify=False, timeout=5).content.decode('utf-8')
 
         except Exception as ex:
-            deb('requestUrl urlib3 Exception: {}'.format(ex))
+            deb('requestUrl requests Exception: {}'.format(ex))
             try:
                 content = scraper.get(path, headers=headers, allow_redirects=False, verify=False, timeout=5).content.decode('utf-8')
 
             except Exception as ex:
-                deb('requestUrl requests Exception: {}'.format(ex))
+                deb('requestUrl scraper Exception: {}'.format(ex))
                 try:
                     content = self.sl.getJsonFromExtendedAPI(path).decode('utf-8')
                 except Exception as ex:
