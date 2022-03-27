@@ -97,7 +97,7 @@ else:
         pathMapExtraBase  = xbmc.translatePath(ADDON.getAddonInfo('profile'))
     except:
         pathMapExtraBase  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
-    
+
 onlineMapPathBase = M_TVGUIDE_SUPPORT + 'maps/'
 
 try:
@@ -245,7 +245,7 @@ class ShowList:
                         response = urllib2.urlopen(req, timeout = http_timeout)
                 except:
                     response = None
-                    
+
             return response
 
         try:
@@ -513,48 +513,69 @@ class MapString:
         self.displayName = displayName
 
     @staticmethod
-    def FastParse(xmlstr, logCall=deb):
+    def FastParse(xmlstr, epg_channels=None, logCall=deb):
         rstrm = ''
         categories = {}
         if logCall:
             logCall('\n\n')
             logCall('[UPD] Parsing basemap file')
             logCall('-------------------------------------------------------------------------------------')
-        
+
         if PY3:
             xmlstr = xmlstr.decode('utf-8')
         else:
             xmlstr = xmlstr if isinstance(xmlstr, unicode) else xmlstr.decode('utf-8')
 
         if logCall:
-            logCall('[UPD] %-35s %-50s %-35s' % ('-TITLE-' , '-REGEX-', '-STRM-'))
+            logCall('[UPD] %-35s %-50s %-35s' % ('-TITLE-', '-REGEX-', '-STRM-'))
 
         result = list()
+        added = set()
+
+        if epg_channels is not None:
+            for title, titles in epg_channels:
+                string_xml = '\n<channel id="{}" title="" strm=""/>'.format(title)
+                xmlstr += string_xml
+
+                if titles:
+                    for p_title in titles.split(', '):
+                        string_xml = '\n<channel id="{}" title="" strm=""/>'.format(p_title)
+                        xmlstr += string_xml
 
         channelRe       = re.compile('(<channel.*?/>)', re.DOTALL)
         channelIdRe     = re.compile('<channel\sid="(.*?)"', re.DOTALL)
         channelTitleRe  = re.compile('title="(.*?)"', re.DOTALL)
         channelStrmRe   = re.compile('strm="(.*?)"/>', re.DOTALL)
-           
+
         channels = channelRe.findall(xmlstr)
 
-        try:
-            for channel in channels:
-                aid = channelIdRe.search(channel).group(1)
-                for achannel in aid.split(', '):
-                    atitle = channelTitleRe.search(channel).group(1)
-                    astrm = channelStrmRe.search(channel).group(1)
+        for channel in channels:
+            r = channelIdRe.search(channel)
+            aid = r.group(1) if r else ''
 
+            for achannel in aid.split(', '):
+
+                r = channelTitleRe.search(channel)
+                atitle = r.group(1) if r else ''
+
+                r = channelStrmRe.search(channel)
+                astrm = r.group(1) if r else ''
+
+                if achannel not in added:
                     if logCall:
                         try:
-                            logCall('[UPD] %-35s %-50s %-35s' % (unidecode(achannel), atitle, astrm))
+                            logCall('[UPD] %-35s %-50s %-35s' % (achannel, atitle, astrm))
                         except:
-                            logCall('[UPD] %-35s %-50s %-35s' % (unidecode(achannel.decode('utf-8')), atitle, astrm))
+                            logCall('[UPD] %-35s %-50s %-35s' % (achannel.decode('utf-8'), atitle, astrm))
 
-                    result.append(MapString(channelid=achannel, titleRegex=atitle, strm=astrm, src='', displayName=''))
+                    if atitle != '':
+                        result.append(MapString(channelid=achannel, titleRegex=atitle, strm=astrm, src='', displayName=''))
+                        added.add(achannel)
+                    else:
+                        result.append(MapString(channelid=achannel, titleRegex=atitle, strm=astrm, src='', displayName=achannel))
+                        added.add(achannel)
+
                     rstrm = astrm
-        except:
-            pass
 
         categoriesRe    = re.compile('(<category name=".*?".*tags=".*?"/>)')
         categoryRe      = re.compile('<category name="(.*?)"', re.DOTALL)
@@ -798,14 +819,14 @@ class baseServiceUpdater:
 
         if map:
             self.log('successfully downloaded online {} map file: {}'.format(lang, onlineMapFilename))
-            
+
         if xbmcvfs.exists(localMapFilename):
             map += MapString.loadFile(localMapFilename, self.log)
 
         else:
             map += MapString.loadFile(os.path.join(pathMapBase, 'basemap.xml'), self.log)
             self.log('{} file download failed - using local map: {}'.format(lang, localMapFilename))
-        
+
         entries, _, seCat         = MapString.FastParse(map, None)
 
         if entries is not None:
@@ -831,7 +852,7 @@ class baseServiceUpdater:
                 baseServiceUpdater.categories[id] = seCat[id]
 
 
-    def loadMapFile(self):
+    def loadMapFile(self, epg_channels=None):
         try:
             if not self.mapsLoaded:
                 self.automap = self.getBaseMap()
@@ -855,10 +876,10 @@ class baseServiceUpdater:
 
                 if dedicatedMapfile:
                     if not self.refreshingStreams:
-                        dedicatedMap, rstrm, _ = MapString.FastParse(dedicatedMapfile, self.log)
+                        dedicatedMap, rstrm, _ = MapString.FastParse(dedicatedMapfile, epg_channels, self.log)
                     else:
                         #Avoid printing content of map to log on every refresh
-                        dedicatedMap, rstrm, _ = MapString.FastParse(dedicatedMapfile, None)
+                        dedicatedMap, rstrm, _ = MapString.FastParse(dedicatedMapfile, epg_channels, None)
                     for dedicatedEntry in dedicatedMap:
                         for baseEntry in self.automap:
                             if dedicatedEntry.channelid == baseEntry.channelid:
@@ -870,8 +891,6 @@ class baseServiceUpdater:
                         self.rstrm = rstrm
 
                 self.mapsLoaded = True
-
-
 
         except Exception as ex:
             self.log('loadMapFile: Error %s' % getExceptionString())
@@ -909,7 +928,7 @@ class baseServiceUpdater:
     def decodeString(self, s):
         if sys.version_info[0] < 3:
             s = s if isinstance(s, unicode) else s.decode('utf-8')
-        
+
         return s
 
     def loadChannelList(self, epg_channels=None):
@@ -929,7 +948,7 @@ class baseServiceUpdater:
                 return
 
             self.log('Loading channel list took: %s seconds' % (datetime.datetime.now() - startTime).seconds)
-            self.loadMapFile()
+            self.loadMapFile(epg_channels)
             self.log('Loading channels and map took: %s seconds' % (datetime.datetime.now() - startTime).seconds)
 
             self.log('\n\n')
@@ -938,19 +957,6 @@ class baseServiceUpdater:
             self.log('[UPD]     %-40s %-40s %-35s' % ('-TITLE-', '-ORIG NAME-', '-SERVICE-'))
 
             channelList = []
-
-            result = []
-            titles = []
-
-            for title, titles in epg_channels:
-                if titles:
-                    for dtitle in titles.split(', '):
-                        result.append(MapString(channelid=title, titleRegex='', strm='', src='', displayName=dtitle))
-                else:
-                    result.append(MapString(channelid=title, titleRegex='', strm='', src='', displayName=''))
-
-            self.automap.extend(result)
-
             filtered_channels = []
 
             for x in self.automap[:]:
@@ -969,7 +975,7 @@ class baseServiceUpdater:
                         filtered_channels = [z for z in self.channels if match(x.titleRegex, z.title, re.IGNORECASE)]
                         if x.displayName != '':
                             filtered_channels = [z for z in self.channels if match(x.titleRegex, z.name, re.IGNORECASE)]
-                        
+
                     elif x.displayName:
                         try:
                             filtered_channels = [z for z in self.channels if unidecode(x.displayName.upper()) == (unidecode(z.title.upper()) or unidecode(z.name.upper()))]
@@ -983,7 +989,7 @@ class baseServiceUpdater:
                             filtered_channels = [z for z in self.channels if unidecode(x.channelid.upper()) == unidecode(self.decodeString(z.title).upper())]
 
                     for y in filtered_channels:
-                        if x.strm != '' and self.addDuplicatesToList == True:
+                        if x.strm != '' and self.addDuplicatesToList:
                             newMapElement = copy.deepcopy(x)
                             newMapElement.strm = self.rstrm % y.cid
 
@@ -994,7 +1000,7 @@ class baseServiceUpdater:
                                 self.log('[UPD] [B] %-40s %-40s %-35s ' % (unidecode(newMapElement.channelid), unidecode(y.title), newMapElement.strm))
                             except:
                                 self.log('[UPD] [B] %-40s %-40s %-35s ' % (unidecode(newMapElement.channelid), unidecode(self.decodeString(y.title)), newMapElement.strm))
-                            if self.addDuplicatesAtBeginningOfList == False:
+                            if not self.addDuplicatesAtBeginningOfList:
                                 self.automap.append(newMapElement)
                             else:
                                 self.automap.insert(0, newMapElement)

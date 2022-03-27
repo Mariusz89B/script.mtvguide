@@ -920,7 +920,7 @@ class Database(object):
         # zabezpieczenie: is invoked again by XBMC after a video addon exits after being invoked by XBMC.RunPlugin(..)
         deb('[UPD] AutoUpdateCid={} : services_updated={} : self.updateFailed={}'.format(str(UPDATE_CID), self.services_updated, self.updateFailed))
         # jezeli nie udalo sie pobranie epg lub juz aktualizowalismy CIDy lub w opcjach nie mamy zaznaczonej automatycznej aktualizacji
-        if self.updateFailed or updateServices == False:
+        if self.updateFailed or not updateServices:
             return cacheExpired #to wychodzimy - nie robimy aktualizacji
 
         epgChannels = self.epgChannels()
@@ -938,7 +938,7 @@ class Database(object):
                     if progress_callback:
                         progress_callback(100, "{}: {}".format(strings(59915), service.getDisplayName()) )
                     service.waitUntilDone()
-                    
+
                     self.storeCustomStreams(service, service.serviceName, service.serviceRegex)
 
         serviceList = []
@@ -983,8 +983,7 @@ class Database(object):
             for x in cur:
                 if CH_DISP_NAME:
                     try:
-                        titles = x[0].upper() + ', ' + x[1].upper()
-                        result.update({x[0].upper(): titles})
+                        result.update({x[0].upper(): x[1].upper()})
                     except:
                         result.update({x[0].upper(): ''})
                 else:
@@ -1013,13 +1012,13 @@ class Database(object):
                             channelid = re.sub(r"([0-9]+(\.[0-9]+)?)",r" \1", x.channelid).strip()
 
                         try:
-                            c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid, x.strm])
+                            c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid, x.strm])
                             if channelid:
-                                c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [channelid, x.strm])
+                                c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [channelid, x.strm])
                         except:
-                            c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid.decode('utf-8'), x.strm])
+                            c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid.decode('utf-8'), x.strm])
                             if channelid:
-                                c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [channelid.decode('utf-8'), x.strm])
+                                c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [channelid.decode('utf-8'), x.strm])
 
                         if channelid:
                             nrOfChannelsUpdated += 2
@@ -1031,14 +1030,14 @@ class Database(object):
             self.conn.commit()
             c.close()
             #deb('[UPD] Finished updating database, stored: {} streams from service: {}'.format(nrOfChannelsUpdated, streamSource))
-        
+
         except Exception as ex:
             deb('[UPD] Error updating streams: {}'.format(getExceptionString()))
 
             self.conn.commit()
             c.close()
             #deb('[UPD] Finished updating database, stored: {} streams from service: {}'.format(nrOfChannelsUpdated, streamSource))
-        
+
         except Exception as ex:
             deb('[UPD] Error updating streams: {}'.format(getExceptionString()))
 
@@ -1046,7 +1045,7 @@ class Database(object):
         try:
             c = self.conn.cursor()
             c.execute("SELECT custom.channel, custom.stream_url FROM custom_stream_url as custom LEFT JOIN channels as chann ON (UPPER(custom.channel)) = (UPPER(chann.id) OR UPPER(custom.channel)) = (UPPER(chann.title)) WHERE chann.id IS NULL")
-            
+
             if c.rowcount:
                 deb('\n\n')
                 deb('List of streams having stream URL assigned but no EPG is available - fix it!')
@@ -1098,7 +1097,7 @@ class Database(object):
 
         if self.category != category:
             self.category = category
-            
+
         self.channelList = None
 
     def getEPGView(self, channelStart, date = datetime.now(), progress_callback = None, initializing = False, startup = False, force = False, clearExistingProgramList = True):
@@ -3054,7 +3053,7 @@ def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
         stop = retimezone(program, programStopRe)
 
         r = programDesc.search(program)
-        desc = r.group(1) if r else '' 
+        desc = r.group(1) if r else ''
 
         r = programProdDate.search(program)
         live = r and r.group(1) or ''
@@ -3130,7 +3129,7 @@ def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
         r = channelTitleRe.search(channel)
         title = r.group(1) if r else ''
         if title != '':
-            title = re.sub('[^\d+a-zA-Z,\s]+', '', title)
+            title = re.sub('[^\d+a-zA-ZÀ-ȕ0-9+,\s]+', '', title)
         else:
             title = id
 
@@ -3138,7 +3137,7 @@ def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
             titleList = channelTitleRe.findall(channel)
             titles = ', '.join([elem.upper() for elem in titleList])
             if titles != '':
-                titles = re.sub('[^\d+a-zA-Z,\s]+', '', titles)
+                titles = re.sub('[^\d+a-zA-ZÀ-ȕ0-9+,\s]+', '', titles)
             else:
                 titles = title
 
@@ -3214,13 +3213,13 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
                 get_value = ele.findtext("value")
                 if get_value is not None:
                     value = get_value
-        
+
         live = ''
         if date == 'live':
             live = date
 
         progEpisodeNumRe = re.compile('([*S|E]((S)?(\d{1,3})?\s*((E)?\d{1,5}(\/\d{1,5})?)))')
-        
+
         if episode:
             r = progEpisodeNumRe.search(episode)
             episode = r.group(1) if r else ''
@@ -3283,10 +3282,10 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
                 if CH_DISP_NAME:
                     titleList = chain(elem.findall("display-name"), elem.findall("name"))
                     titles = ', '.join([x.text.upper() for x in titleList])
-                    titles = re.sub('[^\d+a-zA-Z,\s]+', '', titles)
+                    titles = re.sub('[^\d+a-zA-ZÀ-ȕ0-9+,\s]+', '', titles)
 
                 title = elem.findtext("name") or elem.findtext("display-name") or ''
-                title = re.sub('[^\d+a-zA-Z,\s]+', '', title)
+                title = re.sub('[^\d+a-zA-ZÀ-ȕ0-9+,\s]+', '', title)
 
                 if title == "":
                     title = id

@@ -48,31 +48,17 @@ else:
     PY3 = False
 
 import requests
-import urllib3
 
-if PY3:
-    from requests.exceptions import HTTPError, ConnectionError, Timeout, RequestException
-    import urllib.request as Request
-    from urllib.error import HTTPError, URLError
-else:
-    from requests import HTTPError, ConnectionError, Timeout, RequestException
-    import urllib2 as Request
-    from urllib2 import HTTPError, URLError
-
-try:
-    from urllib.parse import urlencode, quote_plus, quote, unquote
-except ImportError:
-    from urllib import urlencode, quote_plus, quote, unquote
-
-import copy, re
-import xbmc, xbmcgui, xbmcvfs, xbmcaddon
+import re
+import xbmc
+import xbmcgui
+import xbmcvfs
 from xml.etree import ElementTree
 from strings import *
 from groups import *
 from serviceLib import *
-import cloudscraper 
+import cloudscraper
 
-from contextlib import contextmanager
 from unidecode import unidecode
 from collections import OrderedDict
 
@@ -85,32 +71,33 @@ UA = xbmc.getUserAgent()
 
 CC_DICT = ccDict()
 
-serviceName   = 'playlist'
+serviceName = 'playlist'
 
 playlists = ['playlist_1', 'playlist_2', 'playlist_3', 'playlist_4', 'playlist_5']
 
+
 class PlaylistUpdater(baseServiceUpdater):
     def __init__(self, instance_number):
-        self.serviceName        = serviceName + "_{}".format(instance_number)
-        self.instance_number    = str(instance_number)
-        self.localMapFile       = 'playlistmap.xml'
+        self.serviceName = serviceName + "_{}".format(instance_number)
+        self.instance_number = str(instance_number)
+        self.localMapFile = 'playlistmap.xml'
         baseServiceUpdater.__init__(self)
-        self.servicePriority    = int(ADDON.getSetting('{}_priority'.format(self.serviceName)))
+        self.servicePriority = int(ADDON.getSetting('{}_priority'.format(self.serviceName)))
         self.serviceDisplayName = ADDON.getSetting('{}_display_name'.format(self.serviceName))
-        self.source             = ADDON.getSetting('{}_source'.format(self.serviceName))
+        self.source = ADDON.getSetting('{}_source'.format(self.serviceName))
         self.addDuplicatesToList = True
-        self.useOnlineMap       = False
+        self.useOnlineMap = False
 
         if PY3:
             try:
-                self.profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
+                self.profilePath = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
             except:
-                self.profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
+                self.profilePath = xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
         else:
             try:
-                self.profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile'))
+                self.profilePath = xbmc.translatePath(ADDON.getAddonInfo('profile'))
             except:
-                self.profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
+                self.profilePath = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
 
         if int(instance_number) <= int(ADDON.getSetting('nr_of_playlists')):
             self.serviceEnabled  = ADDON.getSetting('{}_enabled'.format(self.serviceName))
@@ -165,8 +152,10 @@ class PlaylistUpdater(baseServiceUpdater):
         else:
             self.xxx = False
 
+        self.append_cc = ADDON.getSetting('{}_append_country_code'.format(self.serviceName))
+
     def requestUrl(self, path):
-        headers = { 'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36' }
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36'}
         headers['Keep-Alive'] = 'timeout=5'
         headers['Connection'] = 'Keep-Alive'
         headers['ContentType'] = 'application/x-www-form-urlencoded'
@@ -187,7 +176,7 @@ class PlaylistUpdater(baseServiceUpdater):
                 except Exception as ex:
                     deb('requestUrl json Exception: {}'.format(ex))
                     content = ''
-        
+
         return content.splitlines()
 
     def cachePlaylist(self, upath):
@@ -204,7 +193,7 @@ class PlaylistUpdater(baseServiceUpdater):
 
         path = os.path.join(self.profilePath, 'playlists')
         filepath = os.path.join(self.profilePath, 'playlists', '{playlist}.m3u'.format(playlist=self.serviceName))
-        
+
         try:
             filename = os.path.basename(filepath)
             timestamp = str(os.path.getmtime(filepath)).split('.')[0]
@@ -215,7 +204,7 @@ class PlaylistUpdater(baseServiceUpdater):
             os.makedirs(path)
 
         url_setting = ADDON.getSetting('{playlist}_url'.format(playlist=self.serviceName))
-        
+
         urlpath = os.path.join(self.profilePath, 'playlists', '{playlist}.url'.format(playlist=self.serviceName))
         if os.path.exists(urlpath):
             if PY3:
@@ -257,7 +246,7 @@ class PlaylistUpdater(baseServiceUpdater):
 
         else:
             deb('[UPD] Cache playlist: Read')
-            try:  
+            try:
                 if PY3:
                     with open(filepath, 'r', encoding='utf-8') as f:
                         content = [line.strip() for line in f]
@@ -268,12 +257,12 @@ class PlaylistUpdater(baseServiceUpdater):
                     except:
                         with codecs.open(filepath.decode('utf-8'), 'r', encoding='utf-8') as f:
                             content = [line.strip() for line in f]
-                
+
                 if not content:
                     raise Exception
 
             except:
-                self.log('getPlaylistContent opening normally Error %s, type: %s, url: %s' % (getExceptionString(), urlpath, path) )
+                self.log('getPlaylistContent opening normally Error {}, type: {}, url: {}'.format(getExceptionString(), urlpath, path))
                 self.log('getPlaylistContent trying to open file using xbmcvfs')
                 lf = xbmcvfs.File(filepath)
                 content = lf.read().splitlines()
@@ -294,7 +283,7 @@ class PlaylistUpdater(baseServiceUpdater):
                 else:
                     content = self.requestUrl(path)
 
-            except Exception as ex:
+            except:
                 self.log('downloadPlaylist Error {}'.format(getExceptionString()))
 
             if not content and (datetime.datetime.now() - start_time).seconds < 10:
@@ -303,12 +292,11 @@ class PlaylistUpdater(baseServiceUpdater):
 
         return content
 
-
     def getPlaylistContent(self, path, urltype):
         content = ''
 
         try:
-            self.log('getPlaylistContent opening playlist: %s, urltype: %s' % (path, urltype))
+            self.log('getPlaylistContent opening playlist: {}, urltype: {}'.format(path, urltype))
             if urltype == '0':
                 tmpcontent = self.downloadPlaylist(path)
 
@@ -326,19 +314,19 @@ class PlaylistUpdater(baseServiceUpdater):
                         except:
                             with codecs.open(path.decode('utf-8'), 'r', encoding='utf-8') as f:
                                 tmpcontent = [line.strip() for line in f]
-                    
+
                     if not tmpcontent:
                         raise Exception
-                        
+
                 except:
-                    self.log('getPlaylistContent opening normally Error %s, type: %s, url: %s' % (getExceptionString(), urltype, path) )
+                    self.log('getPlaylistContent opening normally Error {}, type: {}, url: {}'.format(getExceptionString(), urltype, path) )
                     self.log('getPlaylistContent trying to open file using xbmcvfs')
                     lf = xbmcvfs.File(path)
                     tmpcontent = lf.read().splitlines()
                     lf.close()
                     if not tmpcontent:
                         raise Exception
-                
+
             content = tmpcontent
 
         except:
@@ -368,10 +356,8 @@ class PlaylistUpdater(baseServiceUpdater):
 
             #regexReplaceList.append( re.compile('[^A-Za-z0-9+/:]+', re.IGNORECASE) )
             regexReplaceList.append( re.compile('[^A-Za-zÀ-ȕ0-9+\/:\.]+', re.IGNORECASE) )
-
             regexReplaceList.append( re.compile('\sL\s', re.IGNORECASE) )
-            regexReplaceList.append( re.compile('(\s|^)(FEED|FPS60|EUROPE|NORDIC|SCANDINAVIA|ADULT:|EXTRA:|VIP:|VIP|AUDIO|L1|B|BACKUP|MULTI|SUB|SUBTITLE(S)?|NAPISY|VIASAT:|XXX|XXX:|\d{1,2}\s*FPS|LIVE\s*DURING\s*EVENTS\s*ONLY)(?=\s|$)', re.IGNORECASE) )
-            regexReplaceList.append( re.compile('(\s|^)(FULL|SD|LQ|HQ|RAW|LOW|HIGH|QUALITY)(?=\s|$)', re.IGNORECASE) )
+            regexReplaceList.append( re.compile('(\s|^)(FULL|SD|LQ|HQ|RAW|LOW|HIGH|QUALITY|FEED|FPS60|EUROPE|NORDIC|SCANDINAVIA|ADULT:|EXTRA:|VIP:|VIP|AUDIO|L1|B|BACKUP|MULTI|SUB|SUBTITLE(S)?|NAPISY|VIASAT:|XXX|XXX:|\d{1,2}\s*FPS|LIVE\s*DURING\s*EVENTS\s*ONLY)(?=\s|$)', re.IGNORECASE) )
 
             defReplaceList = []
             langReplaceList = []
@@ -388,8 +374,6 @@ class PlaylistUpdater(baseServiceUpdater):
             root = tree.getroot()
 
             cc_settings = [i.attrib['id'].replace('country_code_', '') for i in root if 'country_code_' in i.attrib['id'] and i.text == 'true']
-
-            APPEND = ADDON.getSetting('{}_append_country_code'.format(self.serviceName))
 
             PATTERN = -1
 
@@ -425,7 +409,7 @@ class PlaylistUpdater(baseServiceUpdater):
                 # Alpha-3
                 elif PATTERN == 2:
                     cc_pattern = value['alpha-3']
-                    
+
                 # ccTLD
                 elif PATTERN == 3:
                     cc_pattern = '.' + cc.lower()
@@ -439,7 +423,7 @@ class PlaylistUpdater(baseServiceUpdater):
                 elif PATTERN == 5:
                     cc_pattern_regex = cc.upper() + ':?|' + value['alpha-3'] + ':?|' + re.escape('.' + cc.lower()) + ':?|' + value['language']
 
-                if cc in cc_settings:
+                if cc in cc_settings or not self.filtered:
                     alpha_1 = value['native']
                     alpha_2 = value['language']
                     alpha_3 = value['alpha-3']
@@ -451,37 +435,37 @@ class PlaylistUpdater(baseServiceUpdater):
                     nativeList.append(alpha_1)
                     dotList.append('.' + cc.lower())
 
-                    langA = '|'.join(ccList)
-                    langB = '|'.join(a3List)
-                    langC = '|'.join(langList)
-                    langD = '|'.join(nativeList)
-                    langE = '|'.join(dotList)
+                    if self.filtered:
+                        try:
+                            langReplaceList.append({ 'regex': re.compile('(\s|^)(\s*'+cc.upper()+'$|'+alpha_4+':?|'+alpha_3+':?|'+alpha_2+':?|'+alpha_1+':?)(?=\s|$)|^('+alpha_4+':|'+alpha_3+':|'+alpha_2+':|'+alpha_1+':)', re.IGNORECASE), 'lang': cc_pattern})
+                        except:
+                            langReplaceList.append({ 'regex': re.compile('(\s|^)(\s*'+cc.upper()+'$|'+alpha_4+':?|'+alpha_3+':?|'+alpha_2+':?|'+alpha_1.encode('utf-8')+':?)(?=\s|$)|^('+alpha_4+':|'+alpha_3+':|'+alpha_2+':|'+alpha_1.encode('utf-8')+':)', re.IGNORECASE), 'lang': cc_pattern})
 
-                    try:
-                        langReplaceList.append({ 'regex' : re.compile('(\s|^)(\s*'+cc.upper()+'$|'+alpha_4+':?|'+alpha_3+':?|'+alpha_2+':?|'+alpha_1+':?)(?=\s|$)|^('+alpha_4+':|'+alpha_3+':|'+alpha_2+':|'+alpha_1+':)', re.IGNORECASE), 'lang' : cc_pattern})
-                    except:
-                        langReplaceList.append({ 'regex' : re.compile('(\s|^)(\s*'+cc.upper()+'$|'+alpha_4+':?|'+alpha_3+':?|'+alpha_2+':?|'+alpha_1.encode('utf-8')+':?)(?=\s|$)|^('+alpha_4+':|'+alpha_3+':|'+alpha_2+':|'+alpha_1.encode('utf-8')+':)', re.IGNORECASE), 'lang' : cc_pattern})
+                        langReplaceList.append({ 'regex': re.compile('(\s|^)('+cc.upper()+':?)(?=\s|$)|^('+cc.upper()+':?)'), 'lang': cc_pattern})
+                        prefixList.append(cc_pattern_regex + ':?')
 
-                    langReplaceList.append({ 'regex' : re.compile('(\s|^)('+cc.upper()+':?)(?=\s|$)|^('+cc.upper()+':?)'), 'lang' : cc_pattern})
-                    prefixList.append(cc_pattern_regex + ':?')
+            if PATTERN == 0:
+                grouplist = ccList + a3List + langList + nativeList + dotList
 
-                elif not self.filtered:
-                    alpha_1 = value['native']
-                    alpha_2 = value['language']
-                    alpha_3 = value['alpha-3']
-                    alpha_4 = value.get('alpha-4', value['alpha-3'])
+            elif PATTERN == 1:
+                grouplist = ccList
 
-                    ccList.append(cc.upper())
-                    a3List.append(alpha_3.upper())
-                    langList.append(alpha_2)
-                    nativeList.append(alpha_1)
-                    dotList.append('.' + cc.lower())
+            elif PATTERN == 2:
+                grouplist = a3List
 
-                    langA = '|'.join(ccList)
-                    langB = '|'.join(a3List)
-                    langC = '|'.join(langList)
-                    langD = '|'.join(nativeList)
-                    langE = '|'.join(dotList)
+            elif PATTERN == 3:
+                grouplist = dotList
+
+            elif PATTERN == 4:
+                grouplist = langList + nativeList
+
+            else:
+                grouplist = []
+
+            lang = '|'.join(grouplist)
+
+            non_escaped = '|'.join(ccList + a3List + langList + nativeList)
+            escaped = re.sub(r'\.', r'\\.', '|'.join(dotList))
 
             if not prefixList:
                 prefixList.append(' ')
@@ -497,13 +481,13 @@ class PlaylistUpdater(baseServiceUpdater):
             regexHD = re.compile('(\s|^)(720p|720|FHD|1080p|1080|HD\sHD|HD)(?=\s|$)', re.IGNORECASE)
             regexUHD = re.compile('(\s|^)(4K|UHD)(?=\s|$)', re.IGNORECASE)
 
-            defReplaceList.append({ 'regex' : re.compile('(\s|^)(SD:?|480:?|480p:?|576:?|576i:?|576p:?)(?=\s|$)|^(SD:?|480:?|480p:?|576:?|576i:?|576p:?)'), 'def' : 'SD'})
+            defReplaceList.append({ 'regex': re.compile('(\s|^)(SD:?|480:?|480p:?|576:?|576i:?|576p:?)(?=\s|$)|^(SD:?|480:?|480p:?|576:?|576i:?|576p:?)'), 'def': 'SD'})
             if 'SD' not in defReplaceList:
-                defReplaceList.append({ 'regex' : re.compile('(\s|^)(HD:?|720:?|720p:?|1080:?|1080i:?|1080p:?)(?=\s|$)|^(HD:?|720:?|720p:?|1080:?|1080i:?|1080p:?)'), 'def' : 'HD'})
+                defReplaceList.append({ 'regex': re.compile('(\s|^)(HD:?|720:?|720p:?|1080:?|1080i:?|1080p:?)(?=\s|$)|^(HD:?|720:?|720p:?|1080:?|1080i:?|1080p:?)'), 'def': 'HD'})
             if 'HD' not in defReplaceList:
-                defReplaceList.append({ 'regex' : re.compile('(\s|^)(UHD:?|UHDTV:?|4K:?|2160p:?)(?=\s|$)|^(UHD:?|UHDTV:?|4K:?|2160p:?)'), 'def' : 'UHD'})
+                defReplaceList.append({ 'regex': re.compile('(\s|^)(UHD:?|UHDTV:?|4K:?|2160p:?)(?=\s|$)|^(UHD:?|UHDTV:?|4K:?|2160p:?)'), 'def': 'UHD'})
 
-            regex_chann_name   =     re.compile('tvg-id="[^"]*"', re.IGNORECASE)
+            regex_chann_name = re.compile('tvg-id="[^"]*"', re.IGNORECASE)
 
             if self.vod:
                 regexCorrectStream = re.compile('^(plugin|http|rtmp)(?!.*?[.]((\.)(mp4|mkv|avi|mov|wma)))', re.IGNORECASE)
@@ -516,9 +500,9 @@ class PlaylistUpdater(baseServiceUpdater):
 
             title = None
             tvg_title = None
-            
+
             nextFreeCid = 0
-            
+
             try:
                 channelsArray = self.getPlaylistContent(self.url.strip(), self.source)
             except Exception as ex:
@@ -528,7 +512,7 @@ class PlaylistUpdater(baseServiceUpdater):
             self.log('\n\n')
             self.log('[UPD] Downloading a list of available channels for {}'.format(self.serviceName))
             self.log('-------------------------------------------------------------------------------------')
-            self.log('[UPD]     %-40s %-12s %-35s' % ( '-ORIG NAME-', '-CID-', '-STRM-'))
+            self.log('[UPD]     %-40s %-12s %-35s' % ('-ORIG NAME-', '-CID-', '-STRM-'))
 
             if channelsArray and len(channelsArray) > 0:
                 for line in channelsArray:
@@ -547,7 +531,7 @@ class PlaylistUpdater(baseServiceUpdater):
 
                         if catchup_regex.match(stripLine) and self.catchup:
                             catchup_source_regex = re.compile('catchup-source="(.*?)"')
-                            
+
                             r = catchup_source_regex.search(stripLine)
                             catchupLine = r.group(1) if r else ''
 
@@ -564,9 +548,8 @@ class PlaylistUpdater(baseServiceUpdater):
 
                         match = regex_chann_name.findall(stripLine)
                         if len(match) > 0 and self.tvg:
-                            tvg_title = match[0].replace("tvg-id=","").replace('"','').strip()
+                            tvg_title = match[0].replace('tvg-id=', '').replace('"', '').strip()
                             tvg_id = True
-
 
                         if tmpTitle is not None and tmpTitle != '':
                             title = tmpTitle
@@ -576,7 +559,7 @@ class PlaylistUpdater(baseServiceUpdater):
 
                             for regexReplace in regexReplaceList:
                                 title = regexReplace.sub(' ', title)
-                            
+
                             title, match = regexHD.subn(' HD ', title)
                             if match > 0:
                                 HDStream = True
@@ -585,27 +568,9 @@ class PlaylistUpdater(baseServiceUpdater):
                             if match > 0:
                                 UHDStream = True
 
-                            title = ' '.join(OrderedDict((w,w) for w in title.split()).keys())
+                            title = ' '.join(OrderedDict((w, w) for w in title.split()).keys())
 
                             name = title
-
-                            if PATTERN == 0:
-                                lang = langA + '|' + langB + '|' + langC + '|' + langD + '|' + langE 
-                                
-                            elif PATTERN == 1:
-                                lang = langA
-                                
-                            elif PATTERN == 2:
-                                lang = langB
-
-                            elif PATTERN == 3:
-                                lang = langE
-
-                            elif PATTERN == 4:
-                                lang = langC + '|' + langD
-
-                            else:
-                                lang = ''
 
                             if PATTERN <= 2:
                                 try:
@@ -618,26 +583,21 @@ class PlaylistUpdater(baseServiceUpdater):
                                     regex_match = re.compile('((?i){lang})'.format(lang=lang.lower()))
                                 except:
                                     regex_match = re.compile('((?i){lang})'.format(lang=lang.lower().encode('utf-8')))
-                            
-                            elif PATTERN > 4: 
+
+                            elif PATTERN > 4:
                                 try:
                                     regex_match = re.compile('(^|(\s))(L\s*)?({lang})((:|\s)|$)'.format(lang=lang), re.IGNORECASE)
                                 except:
                                     regex_match = re.compile('(^|(\s))(L\s*)?({lang})((:|\s)|$)'.format(lang=lang.encode('utf-8')), re.IGNORECASE)
 
-                            
-                            if APPEND != '' and self.serviceEnabled == 'true':
+                            if self.append_cc != '' and self.serviceEnabled == 'true':
                                 match = regex_match.match(title)
                                 if match is None:
-                                    title = title + ' ' + APPEND
+                                    title = title + ' ' + self.append_cc
 
                             elif self.serviceEnabled == 'true':
                                 match = regex_match.match(title)
                                 if match is None:
-                                    ccListInt = len(ccList)
-
-                                    non_escaped = langA + '|' + langB + '|' + langC + '|' + langD
-                                    escaped = re.sub(r'\.', r'\\.', langE)
 
                                     try:
                                         pattern = re.compile('((?:^|[^a-zA-Z])({n})(?:[^a-zA-Z]|$)|({e}))'.format(n=non_escaped, e=escaped))
@@ -653,31 +613,11 @@ class PlaylistUpdater(baseServiceUpdater):
                                         group = r.group(1).strip() if r else ''
 
                                     if group:
-                                        ccCh = ''
-                                        for item in range(ccListInt):
-                                            if group == ccList[item].upper():
-                                                subsLangA = {ccList[item]: ccList[item]}
-                                                ccCh = ccList[subsLangA.get(item, item)]
+                                        ccCh = [c for c in grouplist if group == c]
+                                        cc = ccCh[0] if ccCh else ''
 
-                                            elif group == a3List[item].upper():  
-                                                subsLangB = {a3List[item]: ccList[item]}
-                                                ccCh = ccList[subsLangB.get(item, item)]
-                                            
-                                            elif group.upper() == langList[item].upper():
-                                                subsLangC = {langList[item]: ccList[item]}
-                                                ccCh = ccList[subsLangC.get(item, item)]
-
-                                            elif group.upper() == nativeList[item].upper():
-                                                subsLangD = {nativeList[item]: ccList[item]}
-                                                ccCh = ccList[subsLangD.get(item, item)]
-
-                                            elif group.lower() == dotList[item]:
-                                                subsLangE = {dotList[item]: ccList[item]}
-                                                ccCh = ccList[subsLangE.get(item, item)]
-
-                                        if ccCh:
-                                            string = ' ' + ccCh.upper()
-                                            title = re.sub('$', string, title)
+                                        string = ' ' + cc.upper()
+                                        title = re.sub('$', string, title)
 
                             for regexRemove in regexRemoveList:
                                 if( regexRemove.findall(title) ):
@@ -690,7 +630,7 @@ class PlaylistUpdater(baseServiceUpdater):
                                 title, match = defReplaceMap['regex'].subn('', title)
                                 if match > 0:
                                     title += ' ' + defReplaceMap['def']
-                                    title = ' '.join(OrderedDict((w,w) for w in title.split()).keys())
+                                    title = ' '.join(OrderedDict((w, w) for w in title.split()).keys())
                                     if PATTERN == 5:
                                         title = re.sub(defReplaceMap['def'], '', title)
 
@@ -707,10 +647,10 @@ class PlaylistUpdater(baseServiceUpdater):
                             if self.filtered and PATTERN != 5:
                                 for regexAdd in regexAddList:
                                     if not ( regexAdd.findall(title) ):
-                                        title = '' 
+                                        title = ''
                                     if tvg_id:
                                         if not ( regexAdd.findall(tvg_title) ):
-                                            tvg_title = ''       
+                                            tvg_title = ''
 
                             title = re.sub('  ', ' ', title).strip()
 
@@ -719,11 +659,11 @@ class PlaylistUpdater(baseServiceUpdater):
 
                             if tvg_id:
                                 if tvg_title == title:
-                                    tvg_title = ''              
+                                    tvg_title = ''
 
                     elif (title is not None or tvg_title is not None) and regexCorrectStream.match(stripLine):
-                        removeStream = True
-                        if not self.vod: 
+
+                        if not self.vod:
                             regexRemoveStream = re.compile('^(?!.*(\.)(mkv|avi|mov|wma)).*$')
                             try:
                                 match = regexRemoveStream.match(stripLine)
@@ -734,15 +674,14 @@ class PlaylistUpdater(baseServiceUpdater):
                             channelCid = ''
 
                             catchupDaysList = ['catchup-days=', 'timeshift=']
+                            catchupList = ['catchup', 'timeshift']
 
                             if any(x in splitedLine[0] for x in catchupDaysList) and self.catchup:
                                 pdays = re.compile('.*(timeshift=|catchup-days=)"(.*?)".*')
-                                
+
                                 days = pdays.search(splitedLine[0]).group(2)
                             else:
                                 days = '1'
-
-                            catchupList = ['catchup', 'timeshift']
 
                             if any(x in splitedLine[0] for x in catchupList) and self.catchup:
                                 channelCid = str(nextFreeCid) + '_AR' + '_' + days
@@ -768,10 +707,9 @@ class PlaylistUpdater(baseServiceUpdater):
                             if tvg_id and tvg_title != '':
                                 self.log('[TVG]     %-40s %-12s %-35s' % (tvg_title, channelCid, stripLine))
                             nextFreeCid = nextFreeCid + 1
-                    
+
                         #else:
                             #self.log('[UPD] %-10s %-35s %-35s' % ('-', 'No title!', stripLine))
-
 
             if self.hdStreamFirst:
                 result = uhdList
@@ -784,8 +722,8 @@ class PlaylistUpdater(baseServiceUpdater):
 
             self.log('-------------------------------------------------------------------------------------')
 
-        except Exception as ex:
-            self.log('getChannelList Error %s' % getExceptionString())
+        except Exception:
+            self.log('getChannelList Error {}'.format(getExceptionString()))
         return result
 
     def getChannelStream(self, chann):
@@ -802,7 +740,7 @@ class PlaylistUpdater(baseServiceUpdater):
         return None
 
     def log(self, message):
-        if self.thread is not None and self.thread.is_alive() and self.forcePrintintingLog == False:
+        if self.thread is not None and self.thread.is_alive() and not self.forcePrintintingLog:
             self.traceList.append(self.__class__.__name__ + '_' + self.instance_number + ' ' + message)
         else:
             deb(self.__class__.__name__ + '_' + self.instance_number + ' ' + message)
