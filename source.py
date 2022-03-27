@@ -426,6 +426,7 @@ class Database(object):
         self.settingsChanged = None
         self.channelList = list()
         self.channelListAll = list()
+        self.servicePlayist = dict()
         self.category = None
 
         if PY3:
@@ -732,6 +733,68 @@ class Database(object):
             self.updateFailed = True
             return
 
+    def playlistCache(self):
+        for k, v in self.servicePlayist.items():
+            n = datetime.now()
+            d = timedelta(days=int(ADDON.getSetting('{playlist}_refr_days'.format(playlist=k))))
+
+            if PY3:
+                tnow = datetime.timestamp(n)
+            else:
+                from time import time
+                tnow = str(time()).split('.')[0]
+
+            tdel = d.total_seconds()
+
+            path = os.path.join(PROFILE_PATH, 'playlists')
+            filepath = os.path.join(PROFILE_PATH, 'playlists', '{playlist}.m3u'.format(playlist=k))
+
+            try:
+                filename = os.path.basename(filepath)
+                timestamp = str(os.path.getmtime(filepath)).split('.')[0]
+            except:
+                timestamp = tnow
+
+            if not os.path.exists(path):
+                os.makedirs(path)
+
+            url_setting = ADDON.getSetting('{playlist}_url'.format(playlist=k))
+
+            urlpath = os.path.join(PROFILE_PATH, 'playlists', '{playlist}.url'.format(playlist=k))
+            if os.path.exists(urlpath):
+                if PY3:
+                    with open(urlpath, 'r', encoding='utf-8') as f:
+                        url = [line.strip() for line in f][0]
+                else:
+                    with codecs.open(urlpath, 'r', encoding='utf-8') as f:
+                        url = [line.strip() for line in f][0]
+
+            cachedate = int(timestamp) + int(tdel)
+
+            file_name = os.path.join(PROFILE_PATH, 'service_cache.list')
+
+            if int(tnow) >= int(cachedate) or (not os.path.exists(filepath) or os.stat(filepath).st_size <= 0 or url != url_setting):
+                deb('[UPD] Cache playlist: Write, expiration date: {}'.format(datetime.fromtimestamp(int(cachedate))))
+                with open(file_name, 'r', encoding='utf-8') as r:
+                    services = r.read().splitlines()
+
+                with open(file_name, 'w', encoding='utf-8') as f:
+                    for service in services:
+                        if service != k:
+                            f.write(service)
+
+            else:
+                with open(file_name, 'w', encoding='utf-8') as f:
+                    f.write(k)
+
+            with open(file_name, 'r', encoding='utf-8') as r:
+                services = r.read().splitlines()
+                for service in services:
+                    if k == service:
+                        self.servicePlayist.update({k: [v[0], True]})
+                    else:
+                        self.servicePlayist.update({k: [v[0], False]})
+
     def updateChannelAndProgramListCaches(self, callback, date = datetime.now(), progress_callback = None, initializing=False, startup=False, force=False, clearExistingProgramList = True):
         self.eventQueue.append([self._updateChannelAndProgramListCaches, callback, date, progress_callback, initializing, startup, force, clearExistingProgramList])
         self.event.set()
@@ -746,16 +809,27 @@ class Database(object):
 
         # Start service threads
         updateServices = self.services_updated == False and UPDATE_CID
-        if updateServices == True:
+        if updateServices:
             deb('[UPD] Starting updating STRM')
             serviceList = list()
-
-            self.deleteAllCustomStreams()
+            services = list()
 
             for serviceName in playService.SERVICES:
                 serviceHandler = playService.SERVICES[serviceName]
+                services.append(serviceHandler.serviceName)
                 if serviceHandler.serviceEnabled == 'true':
                     serviceList.append(serviceHandler)
+                    if 'playlist_' in serviceHandler.serviceName:
+                        self.servicePlayist.update({serviceHandler.serviceName: [serviceHandler.serviceRegex, False]})
+                        services.remove(serviceHandler.serviceName)
+
+            self.playlistCache()
+
+            deleteList = {k:v for k, v in self.servicePlayist.items() if k not in services}
+
+            for k, v in deleteList.items():
+                if not v[1]:
+                    self.deleteCustomStreams(k, v[0])
 
         cacheExpired = self._isCacheExpired(date, initializing, startup, force)
 
@@ -806,7 +880,7 @@ class Database(object):
 
                         for chann in intList:
                             ch = Channel(channList[chann], channList[chann])
-                            channelList.append(ch)                    
+                            channelList.append(ch)
 
                     # Clear program list only when there is at lease one valid row available
                     if not dbChannelsUpdated:
@@ -819,7 +893,7 @@ class Database(object):
                                 c.execute('INSERT OR IGNORE INTO channels(id, title, logo, titles, stream_url, visible, weight, source) VALUES(?, ?, ?, ?, ?, ?, (CASE ? WHEN -1 THEN (SELECT COALESCE(MAX(weight)+1, 0) FROM channels WHERE source=?) ELSE ? END), ?)', [channel.id, channel.title, channel.logo, channel.titles, channel.streamUrl, channel.visible, channel.weight, self.source.KEY, channel.weight, self.source.KEY])
                                 if not c.rowcount:
                                     c.execute('UPDATE channels SET title=?, logo=?, titles=?, stream_url=?, visible=?, weight=(CASE ? WHEN -1 THEN weight ELSE ? END) WHERE id=? AND source=?', [channel.title, channel.logo, channel.titles, channel.streamUrl, channel.visible, channel.weight, channel.weight, channel.id, self.source.KEY])
-                               
+
                         self.settingsChanged = False # only want to update once due to changed settings
 
                         if clearExistingProgramList:
@@ -924,6 +998,11 @@ class Database(object):
             return cacheExpired #to wychodzimy - nie robimy aktualizacji
 
         epgChannels = self.epgChannels()
+
+        for k, v in self.servicePlayist.items():
+            if ADDON.getSetting('{}_refr'.format(k)) == 'true':
+                if v[1]:
+                    serviceList.remove(playService.SERVICES[k])
 
         # Waiting for all services
         deb('[UPD] Waiting for loading STRM')

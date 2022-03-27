@@ -2,6 +2,7 @@
 - Fixed PlayerPL parsing error.
 - Fixed encodings.
 - Optimized performance.
+- Added playlist caching.
 - Bug fixes.
 
 v9.9.4 (2022-03-02)
