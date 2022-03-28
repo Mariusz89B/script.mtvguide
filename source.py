@@ -793,6 +793,7 @@ class Database(object):
                             for service in services:
                                 if service != k:
                                     f.write(service)
+                                    self.servicePlayist.update({k: [v, False]})
 
                 except:
                     if PY3:
@@ -804,21 +805,30 @@ class Database(object):
 
             else:
                 if PY3:
-                    with open(file_name, 'r', encoding='utf-8') as r:
-                        services = r.read().splitlines()
+                    try:
+                        with open(file_name, 'r', encoding='utf-8') as r:
+                            services = r.read().splitlines()
+                    except:
+                        with open(file_name, 'w', encoding='utf-8') as f:
+                            f.write('')
+                            services = []
 
                     with open(file_name, 'a+', encoding='utf-8') as f:
                         if k not in services:
-                            f.write(k)
-                            f.write('\n')
+                            f.write(k+'\n')
                 else:
-                    with codecs.open(file_name, 'r', encoding='utf-8') as r:
-                        services = r.read().splitlines()
+                    try:
+                        with codecs.open(file_name, 'r', encoding='utf-8') as r:
+                            services = r.read().splitlines()
+
+                    except:
+                        with codecs.open(file_name, 'w', encoding='utf-8') as f:
+                            f.write('')
+                            services = []
 
                     with codecs.open(file_name, 'a+', encoding='utf-8') as f:
                         if k not in services:
-                            f.write(k)
-                            f.write('\n')
+                            f.write(k+'\n')
 
             if PY3:
                 with open(file_name, 'r', encoding='utf-8') as r:
@@ -826,16 +836,12 @@ class Database(object):
                     for service in services:
                         if k == service:
                             self.servicePlayist.update({k: [v, True]})
-                        else:
-                            self.servicePlayist.update({k: [v, False]})
             else:
                 with codecs.open(file_name, 'r', encoding='utf-8') as r:
                     services = r.read().splitlines()
                     for service in services:
                         if k == service:
                             self.servicePlayist.update({k: [v, True]})
-                        else:
-                            self.servicePlayist.update({k: [v, False]})
 
 
     def updateChannelAndProgramListCaches(self, callback, date = datetime.now(), progress_callback = None, initializing=False, startup=False, force=False, clearExistingProgramList = True):
@@ -864,6 +870,9 @@ class Database(object):
                     serviceList.append(serviceHandler)
                     self.cachedServices(serviceHandler.serviceName, serviceHandler.serviceRegex)
                     services.remove(serviceHandler.serviceName)
+
+            deb('TEST3')
+            deb(self.servicePlayist)
 
             deleteList = {k:v for k, v in self.servicePlayist.items() if k not in services}
 
@@ -1049,9 +1058,8 @@ class Database(object):
 
         # Waiting for all services
         deb('[UPD] Waiting for loading STRM')
-        for priority in reversed(list(range(self.number_of_service_priorites))): ## need fix priority issue??
+        for priority in reversed(list(range(self.number_of_service_priorites))):
             for service in serviceList:
-
                 if strings2.M_TVGUIDE_CLOSING:
                     break
 
@@ -1060,7 +1068,10 @@ class Database(object):
                         service.startLoadingChannelList(epgChannels)
 
                     if progress_callback:
-                        progress_callback(100, "{}: {}".format(strings(59915), service.getDisplayName()) )
+                        if service not in cachedList:
+                            progress_callback(100, "{}: {}".format(strings(59915), service.getDisplayName()) )
+                        else:
+                            progress_callback(100, "{}: {}".format(strings(59915), 'Cached playlists') )
 
                     service.waitUntilDone()
 
