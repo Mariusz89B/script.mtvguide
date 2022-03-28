@@ -733,8 +733,11 @@ class Database(object):
             self.updateFailed = True
             return
 
-    def playlistCache(self):
-        for k, v in self.servicePlayist.items():
+
+    def cachedServices(self, k, v):
+        file_name = os.path.join(PROFILE_PATH, 'service_cache.list')
+
+        if 'playlist_' in k:
             n = datetime.now()
             d = timedelta(days=int(ADDON.getSetting('{playlist}_refr_days'.format(playlist=k))))
 
@@ -771,29 +774,69 @@ class Database(object):
 
             cachedate = int(timestamp) + int(tdel)
 
-            file_name = os.path.join(PROFILE_PATH, 'service_cache.list')
-
             if int(tnow) >= int(cachedate) or (not os.path.exists(filepath) or os.stat(filepath).st_size <= 0 or url != url_setting):
                 deb('[UPD] Cache playlist: Write, expiration date: {}'.format(datetime.fromtimestamp(int(cachedate))))
-                with open(file_name, 'r', encoding='utf-8') as r:
-                    services = r.read().splitlines()
+                try:
+                    if PY3:
+                        with open(file_name, 'r', encoding='utf-8') as r:
+                            services = r.read().splitlines()
 
-                with open(file_name, 'w', encoding='utf-8') as f:
-                    for service in services:
-                        if service != k:
-                            f.write(service)
+                        with open(file_name, 'w', encoding='utf-8') as f:
+                            for service in services:
+                                if service != k:
+                                    f.write(service)
+                    else:
+                        with codecs.open(file_name, 'r', encoding='utf-8') as r:
+                            services = r.read().splitlines()
+
+                        with codecs.open(file_name, 'w', encoding='utf-8') as f:
+                            for service in services:
+                                if service != k:
+                                    f.write(service)
+
+                except:
+                    if PY3:
+                        with open(file_name, 'w', encoding='utf-8') as f:
+                            f.write('')
+                    else:
+                        with codecs.open(file_name, 'w', encoding='utf-8') as f:
+                            f.write('')
 
             else:
-                with open(file_name, 'w', encoding='utf-8') as f:
-                    f.write(k)
+                if PY3:
+                    with open(file_name, 'r', encoding='utf-8') as r:
+                        services = r.read().splitlines()
 
-            with open(file_name, 'r', encoding='utf-8') as r:
-                services = r.read().splitlines()
-                for service in services:
-                    if k == service:
-                        self.servicePlayist.update({k: [v[0], True]})
-                    else:
-                        self.servicePlayist.update({k: [v[0], False]})
+                    with open(file_name, 'a+', encoding='utf-8') as f:
+                        if k not in services:
+                            f.write(k)
+                            f.write('\n')
+                else:
+                    with codecs.open(file_name, 'r', encoding='utf-8') as r:
+                        services = r.read().splitlines()
+
+                    with codecs.open(file_name, 'a+', encoding='utf-8') as f:
+                        if k not in services:
+                            f.write(k)
+                            f.write('\n')
+
+            if PY3:
+                with open(file_name, 'r', encoding='utf-8') as r:
+                    services = r.read().splitlines()
+                    for service in services:
+                        if k == service:
+                            self.servicePlayist.update({k: [v, True]})
+                        else:
+                            self.servicePlayist.update({k: [v, False]})
+            else:
+                with codecs.open(file_name, 'r', encoding='utf-8') as r:
+                    services = r.read().splitlines()
+                    for service in services:
+                        if k == service:
+                            self.servicePlayist.update({k: [v, True]})
+                        else:
+                            self.servicePlayist.update({k: [v, False]})
+
 
     def updateChannelAndProgramListCaches(self, callback, date = datetime.now(), progress_callback = None, initializing=False, startup=False, force=False, clearExistingProgramList = True):
         self.eventQueue.append([self._updateChannelAndProgramListCaches, callback, date, progress_callback, initializing, startup, force, clearExistingProgramList])
@@ -819,17 +862,15 @@ class Database(object):
                 services.append(serviceHandler.serviceName)
                 if serviceHandler.serviceEnabled == 'true':
                     serviceList.append(serviceHandler)
-                    if 'playlist_' in serviceHandler.serviceName:
-                        self.servicePlayist.update({serviceHandler.serviceName: [serviceHandler.serviceRegex, False]})
-                        services.remove(serviceHandler.serviceName)
-
-            self.playlistCache()
+                    self.cachedServices(serviceHandler.serviceName, serviceHandler.serviceRegex)
+                    services.remove(serviceHandler.serviceName)
 
             deleteList = {k:v for k, v in self.servicePlayist.items() if k not in services}
 
             for k, v in deleteList.items():
-                if not v[1]:
-                    self.deleteCustomStreams(k, v[0])
+                if ADDON.getSetting('{}_refr'.format(k)) == 'true':
+                    if not v[1]:
+                        self.deleteCustomStreams(k, v[0])
 
         cacheExpired = self._isCacheExpired(date, initializing, startup, force)
 
@@ -999,26 +1040,32 @@ class Database(object):
 
         epgChannels = self.epgChannels()
 
+        cachedList = []
+
         for k, v in self.servicePlayist.items():
             if ADDON.getSetting('{}_refr'.format(k)) == 'true':
                 if v[1]:
-                    serviceList.remove(playService.SERVICES[k])
+                    cachedList.append(playService.SERVICES[k])
 
         # Waiting for all services
         deb('[UPD] Waiting for loading STRM')
-        for priority in reversed(list(range(self.number_of_service_priorites))):
+        for priority in reversed(list(range(self.number_of_service_priorites))): ## need fix priority issue??
             for service in serviceList:
 
                 if strings2.M_TVGUIDE_CLOSING:
                     break
 
                 if priority == service.servicePriority:
-                    service.startLoadingChannelList(epgChannels)
+                    if service not in cachedList:
+                        service.startLoadingChannelList(epgChannels)
+
                     if progress_callback:
                         progress_callback(100, "{}: {}".format(strings(59915), service.getDisplayName()) )
+
                     service.waitUntilDone()
 
-                    self.storeCustomStreams(service, service.serviceName, service.serviceRegex)
+                    if not cachedList and 'playlist_' in service.serviceName:
+                        self.storeCustomStreams(service, service.serviceName, service.serviceRegex)
 
         serviceList = []
         self.printStreamsWithoutChannelEPG()
