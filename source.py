@@ -1065,7 +1065,7 @@ class Database(object):
 
                     service.waitUntilDone()
 
-                    if service.serviceName not in cacheList:
+                    if not cacheList:
                         self.storeCustomStreams(service, service.serviceName, service.serviceRegex)
 
         serviceList = []
