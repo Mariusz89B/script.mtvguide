@@ -978,15 +978,26 @@ class baseServiceUpdater:
 
                     elif x.displayName:
                         try:
-                            filtered_channels = [z for z in self.channels if unidecode(x.displayName.upper()) == (unidecode(z.title.upper()) or unidecode(z.name.upper()))]
+                            filtered_channels = [z for z in self.channels if unidecode(x.displayName.upper()) == unidecode(z.title.upper())]
                         except:
-                            filtered_channels = [z for z in self.channels if unidecode(x.displayName.upper()) == (unidecode(self.decodeString(z.title).upper()) or unidecode(self.decodeString(z.name).upper()))]
+                            filtered_channels = [z for z in self.channels if unidecode(x.displayName.upper()) == unidecode(self.decodeString(z.title).upper())]
+                        if not filtered_channels:
+                            try:
+                                filtered_channels = [z for z in self.channels if unidecode(x.displayName.upper()) == unidecode(z.name.upper())]
+                            except:
+                                filtered_channels = [z for z in self.channels if unidecode(x.displayName.upper()) == unidecode(self.decodeString(z.name).upper())]
+
 
                     elif x.displayName == '':
                         try:
                             filtered_channels = [z for z in self.channels if unidecode(x.channelid.upper()) == unidecode(z.title.upper())]
                         except:
                             filtered_channels = [z for z in self.channels if unidecode(x.channelid.upper()) == unidecode(self.decodeString(z.title).upper())]
+                        if not filtered_channels:
+                            try:
+                                filtered_channels = [z for z in self.channels if unidecode(x.channelid.upper()) == unidecode(z.name.upper())]
+                            except:
+                                filtered_channels = [z for z in self.channels if unidecode(x.channelid.upper()) == unidecode(self.decodeString(z.name).upper())]
 
                     for y in filtered_channels:
                         if x.strm != '' and self.addDuplicatesToList:
