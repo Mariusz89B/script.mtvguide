@@ -861,6 +861,26 @@ class Database(object):
                     if os.path.exists(urlpath):
                         os.remove(urlpath)
 
+                    playlist_cache = os.path.join(PROFILE_PATH, 'playlist_cache.list')
+                    if PY3:
+                        if os.path.exists(playlist_cache):
+                            with open(playlist_cache, 'r', encoding='utf-8') as r:
+                                services = r.read().splitlines()
+
+                            with open(playlist_cache, 'w', encoding='utf-8') as f:
+                                for service in services:
+                                    if service != 'playlist_{0}'.format(playlist):
+                                        f.write(service+'\n')
+                    else:
+                        if os.path.exists(playlist_cache):
+                            with codecs.open(playlist_cache, 'r', encoding='utf-8') as r:
+                                services = r.read().splitlines()
+
+                            with codecs.open(playlist_cache, 'w', encoding='utf-8') as f:
+                                for service in services:
+                                    if service != 'playlist_{0}'.format(playlist):
+                                        f.write(service+'\n')
+
             playlist_cache = os.path.join(PROFILE_PATH, 'playlist_cache.list')
 
             playlists = [playlist for playlist in services if 'playlist_' in playlist]
