@@ -530,7 +530,6 @@ class MapString:
             logCall('[UPD] %-35s %-50s %-35s' % ('-TITLE-', '-REGEX-', '-STRM-'))
 
         result = list()
-        added = set()
 
         if epg_channels is not None:
             for title, titles in epg_channels:
@@ -538,13 +537,13 @@ class MapString:
                 xmlstr += string_xml
 
                 if titles:
-                    for p_title in titles.split(', '):
-                        string_xml = '\n<channel id="{}" title="" strm=""/>'.format(p_title)
-                        xmlstr += string_xml
+                    string_xml = '\n<channel id="{0}" title="" titles="{1}" strm=""/>'.format(title, titles)
+                    xmlstr += string_xml
 
         channelRe       = re.compile('(<channel.*?/>)', re.DOTALL)
         channelIdRe     = re.compile('<channel\sid="(.*?)"', re.DOTALL)
         channelTitleRe  = re.compile('title="(.*?)"', re.DOTALL)
+        channelTitlesRe = re.compile('titles="(.*?)"', re.DOTALL)
         channelStrmRe   = re.compile('strm="(.*?)"/>', re.DOTALL)
 
         channels = channelRe.findall(xmlstr)
@@ -558,24 +557,25 @@ class MapString:
                 r = channelTitleRe.search(channel)
                 atitle = r.group(1) if r else ''
 
+                r = channelTitlesRe.search(channel)
+                atitles = r.group(1) if r else ''
+
                 r = channelStrmRe.search(channel)
                 astrm = r.group(1) if r else ''
 
-                if achannel not in added:
-                    if logCall:
-                        try:
-                            logCall('[UPD] %-35s %-50s %-35s' % (achannel, atitle, astrm))
-                        except:
-                            logCall('[UPD] %-35s %-50s %-35s' % (achannel.decode('utf-8'), atitle, astrm))
+                if logCall:
+                    try:
+                        logCall('[UPD] %-35s %-50s %-35s' % (achannel, atitle, astrm))
+                    except:
+                        logCall('[UPD] %-35s %-50s %-35s' % (achannel.decode('utf-8'), atitle, astrm))
 
-                    if atitle != '':
-                        result.append(MapString(channelid=achannel, titleRegex=atitle, strm=astrm, src='', displayName=''))
-                        added.add(achannel)
-                    else:
-                        result.append(MapString(channelid=achannel, titleRegex=atitle, strm=astrm, src='', displayName=achannel))
-                        added.add(achannel)
+                if atitles == '':
+                    result.append(MapString(channelid=achannel, titleRegex=atitle, strm=astrm, src='', displayName=''))
+                else:
+                    for dtitle in atitles.split(', '):
+                        result.append(MapString(channelid=achannel, titleRegex=atitle, strm=astrm, src='', displayName=dtitle))
 
-                    rstrm = astrm
+                rstrm = astrm
 
         categoriesRe    = re.compile('(<category name=".*?".*tags=".*?"/>)')
         categoryRe      = re.compile('<category name="(.*?)"', re.DOTALL)
