@@ -853,7 +853,7 @@ class Database(object):
                         self.cachePlaylist(serviceName)
 
             for playlist in range(1,6):
-                if 'playlist_{}'.format(playlist) not in services:
+                if (ADDON.getSetting('playlist_{}_enabled'.format(playlist)) == 'false' or ADDON.getSetting('playlist_{}_refr'.format(playlist)) == 'false'):
                     filepath = os.path.join(PROFILE_PATH, 'playlists', 'playlist_{playlist}.m3u'.format(playlist=playlist))
                     urlpath = os.path.join(PROFILE_PATH, 'playlists', 'playlist_{playlist}.url'.format(playlist=playlist))
                     if os.path.exists(filepath):
@@ -865,19 +865,19 @@ class Database(object):
                     if PY3:
                         if os.path.exists(playlist_cache):
                             with open(playlist_cache, 'r', encoding='utf-8') as r:
-                                services = r.read().splitlines()
+                                r_services = r.read().splitlines()
 
                             with open(playlist_cache, 'w', encoding='utf-8') as f:
-                                for service in services:
+                                for service in r_services:
                                     if service != 'playlist_{0}'.format(playlist):
                                         f.write(service+'\n')
                     else:
                         if os.path.exists(playlist_cache):
                             with codecs.open(playlist_cache, 'r', encoding='utf-8') as r:
-                                services = r.read().splitlines()
+                                r_services = r.read().splitlines()
 
                             with codecs.open(playlist_cache, 'w', encoding='utf-8') as f:
-                                for service in services:
+                                for service in r_services:
                                     if service != 'playlist_{0}'.format(playlist):
                                         f.write(service+'\n')
 
