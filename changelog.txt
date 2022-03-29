@@ -3,6 +3,7 @@
 - Fixed encodings.
 - Optimized performance.
 - Added playlist caching.
+- Fixed local timezone.
 - Bug fixes.
 
 v9.9.4 (2022-03-02)
