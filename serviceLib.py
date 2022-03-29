@@ -494,8 +494,8 @@ class ShowList:
 class TvCid:
     def __init__(self, cid, name, title, strm="", catchup="", lic="", img=""):
         self.cid = cid
-        self.name = name
-        self.title = title
+        self.name = unidecode(name)
+        self.title = unidecode(title)
         self.strm = strm
         self.catchup = catchup
         self.lic = lic
