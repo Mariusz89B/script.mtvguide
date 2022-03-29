@@ -346,7 +346,7 @@ class ProgramDescriptionParser(object):
                 age = re.search('(W:|Od lat:|.?r:|Rating:|Pendant des ann.?es:|.?ber die Jahre:|Godinama:|Jaar:|Rok:|Anni:).*?(\[B\])?(\w+)(\[\/B\])?(\.)?', self.description).group(3)
 
             age = ProgramDescriptionParser.DECORATE_REGEX.sub("", age)
-            
+
             self.description = re.sub("(W:|Od lat:|.?r:|Rating:|Pendant des ann.?es:|.?ber die Jahre:|Godinama:|Jaar:|Rok:|Anni:).*?(\[B\])?({Age}|.*)\s*(\+)?(\[\/B\])?(\.)?".format(Age=age), "", self.description).strip()
         except:
             icon = ''
@@ -1138,13 +1138,13 @@ class Database(object):
                             channelid = re.sub(r"([0-9]+(\.[0-9]+)?)",r" \1", x.channelid).strip()
 
                         try:
-                            c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid, x.strm])
+                            c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid, x.strm])
                             if channelid:
-                                c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [channelid, x.strm])
+                                c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [channelid, x.strm])
                         except:
-                            c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid.decode('utf-8'), x.strm])
+                            c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid.decode('utf-8'), x.strm])
                             if channelid:
-                                c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [channelid.decode('utf-8'), x.strm])
+                                c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [channelid.decode('utf-8'), x.strm])
 
                         if channelid:
                             nrOfChannelsUpdated += 2
@@ -3254,17 +3254,13 @@ def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
 
         r = channelTitleRe.search(channel)
         title = r.group(1) if r else ''
-        if title != '':
-            title = re.sub('[^\d+a-zA-ZÀ-ȕ0-9+,\s]+', '', title)
-        else:
+        if title == '':
             title = id
 
         if CH_DISP_NAME:
             titleList = channelTitleRe.findall(channel)
             titles = ', '.join([elem.upper() for elem in titleList])
-            if titles != '':
-                titles = re.sub('[^\d+a-zA-ZÀ-ȕ0-9+,\s]+', '', titles)
-            else:
+            if titles == '':
                 titles = title
 
         r = channelIconRe.search(channel)
@@ -3408,10 +3404,8 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
                 if CH_DISP_NAME:
                     titleList = chain(elem.findall("display-name"), elem.findall("name"))
                     titles = ', '.join([x.text.upper() for x in titleList])
-                    titles = re.sub('[^\d+a-zA-ZÀ-ȕ0-9+,\s]+', '', titles)
 
                 title = elem.findtext("name") or elem.findtext("display-name") or ''
-                title = re.sub('[^\d+a-zA-ZÀ-ȕ0-9+,\s]+', '', title)
 
                 if title == "":
                     title = id

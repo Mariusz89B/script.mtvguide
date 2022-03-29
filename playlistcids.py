@@ -180,47 +180,18 @@ class PlaylistUpdater(baseServiceUpdater):
         return content.splitlines()
 
     def cachePlaylist(self, upath):
-        n = datetime.datetime.now()
-        d = datetime.timedelta(days=int(ADDON.getSetting('{playlist}_refr_days'.format(playlist=self.serviceName))))
+        playlist_cache = os.path.join(self.profilePath, 'playlist_cache.list')
 
-        if PY3:
-            tnow = datetime.datetime.timestamp(n)
-        else:
-            from time import time
-            tnow = str(time()).split('.')[0]
+        services = []
 
-        tdel = d.total_seconds()
+        if os.path.exists(playlist_cache):
+            with open(playlist_cache, 'r', encoding='utf-8') as r:
+                services = r.read().splitlines()
 
         path = os.path.join(self.profilePath, 'playlists')
         filepath = os.path.join(self.profilePath, 'playlists', '{playlist}.m3u'.format(playlist=self.serviceName))
 
-        try:
-            filename = os.path.basename(filepath)
-            timestamp = str(os.path.getmtime(filepath)).split('.')[0]
-        except:
-            timestamp = tnow
-
-        if not os.path.exists(path):
-            os.makedirs(path)
-
-        url_setting = ADDON.getSetting('{playlist}_url'.format(playlist=self.serviceName))
-
-        urlpath = os.path.join(self.profilePath, 'playlists', '{playlist}.url'.format(playlist=self.serviceName))
-        if os.path.exists(urlpath):
-            if PY3:
-                with open(urlpath, 'r', encoding='utf-8') as f:
-                    url = [line.strip() for line in f][0]
-            else:
-                with codecs.open(urlpath, 'r', encoding='utf-8') as f:
-                    url = [line.strip() for line in f][0]
-
-        else:
-            url = url_setting
-
-        cachedate = int(timestamp) + int(tdel)
-
-        if int(tnow) >= int(cachedate) or (not os.path.exists(filepath) or os.stat(filepath).st_size <= 0 or url != url_setting):
-            deb('[UPD] Cache playlist: Write, expiration date: {}'.format(datetime.datetime.fromtimestamp(int(cachedate))))
+        if self.serviceName not in services:
             content = self.requestUrl(upath)
             if content:
                 for f in os.listdir(path):
@@ -237,6 +208,9 @@ class PlaylistUpdater(baseServiceUpdater):
                     with codecs.open(filepath, 'w', encoding='utf-8') as f:
                         f.write('\n'.join(content))
 
+                url_setting = ADDON.getSetting('{playlist}_url'.format(playlist=self.serviceName))
+
+                urlpath = os.path.join(self.profilePath, 'playlists', '{playlist}.url'.format(playlist=self.serviceName))
                 if PY3:
                     with open(urlpath, 'w', encoding='utf-8') as f2:
                         f2.write(url_setting)
@@ -245,7 +219,6 @@ class PlaylistUpdater(baseServiceUpdater):
                         f2.write(url_setting)
 
         else:
-            deb('[UPD] Cache playlist: Read')
             try:
                 if PY3:
                     with open(filepath, 'r', encoding='utf-8') as f:
@@ -355,7 +328,7 @@ class PlaylistUpdater(baseServiceUpdater):
             cleanup_regex = re.compile("\[COLOR\s*\w*\]|\[/COLOR\]|\[B\]|\[/B\]|\[I\]|\[/I\]|^\s*|\s*$", re.IGNORECASE)
 
             #regexReplaceList.append( re.compile('[^A-Za-z0-9+/:]+', re.IGNORECASE) )
-            regexReplaceList.append( re.compile('[^A-Za-zÀ-ȕ0-9+\/:\.]+', re.IGNORECASE) )
+            regexReplaceList.append( re.compile('[^A-Za-zÀ-ȕ0-9+\/:]+', re.IGNORECASE) )
             regexReplaceList.append( re.compile('\sL\s', re.IGNORECASE) )
             regexReplaceList.append( re.compile('(\s|^)(FULL|SD|LQ|HQ|RAW|LOW|HIGH|QUALITY|FEED|FPS60|EUROPE|NORDIC|SCANDINAVIA|ADULT:|EXTRA:|VIP:|VIP|AUDIO|L1|B|BACKUP|MULTI|SUB|SUBTITLE(S)?|NAPISY|VIASAT:|XXX|XXX:|\d{1,2}\s*FPS|LIVE\s*DURING\s*EVENTS\s*ONLY)(?=\s|$)', re.IGNORECASE) )
 
@@ -616,8 +589,12 @@ class PlaylistUpdater(baseServiceUpdater):
                                         ccCh = [c for c in grouplist if group == c]
                                         cc = ccCh[0] if ccCh else ''
 
-                                        string = ' ' + cc.upper()
-                                        title = re.sub('$', string, title)
+                                        if PATTERN > 0:
+                                            if '.' in cc:
+                                                cc.replace('.', '')
+
+                                            string = ' ' + cc.upper()
+                                            title = re.sub('$', string, title)
 
                             for regexRemove in regexRemoveList:
                                 if( regexRemove.findall(title) ):

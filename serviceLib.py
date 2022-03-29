@@ -781,7 +781,7 @@ class baseServiceUpdater:
             self.getBaseMap()
         return baseServiceUpdater.categories
 
-    def getBaseMap(self):
+    def getBaseMap(self, epg_channels=None):
         baseServiceUpdater.locker.acquire()
 
         self.log('\n')
@@ -789,7 +789,7 @@ class baseServiceUpdater:
             baseServiceUpdater.baseMapContent = list()
             baseServiceUpdater.categories = {}
 
-            self.loadSingleBaseMap('base', self.baseMapFile)
+            self.loadSingleBaseMap('base', self.baseMapFile, epg_channels)
 
             if XXX_EPG:
                 self.loadSingleBaseMap('adult', self.adultMapFile)
@@ -808,7 +808,7 @@ class baseServiceUpdater:
         baseServiceUpdater.locker.release()
         return copy.deepcopy(baseServiceUpdater.baseMapContent)
 
-    def loadSingleBaseMap(self, lang, mapFilePath):
+    def loadSingleBaseMap(self, lang, mapFilePath, epg_channels=None):
         self.log('Loading {} channel map'.format(lang))
         entries = None
         map = ""
@@ -827,7 +827,7 @@ class baseServiceUpdater:
             map += MapString.loadFile(os.path.join(pathMapBase, 'basemap.xml'), self.log)
             self.log('{} file download failed - using local map: {}'.format(lang, localMapFilename))
 
-        entries, _, seCat         = MapString.FastParse(map, None)
+        entries, _, seCat         = MapString.FastParse(map, epg_channels, None)
 
         if entries is not None:
             baseServiceUpdater.baseMapContent.extend(entries)
@@ -843,7 +843,7 @@ class baseServiceUpdater:
             xbmcvfs.copy(os.path.join(pathMapBase, mapFilePath), os.path.join(pathMapExtraBase, mapFilePath))
         localMapFilename      = os.path.join(pathMapExtraBase, mapFilePath)
         map                   = MapString.loadFile(localMapFilename, self.log)
-        entries, _, seCat         = MapString.FastParse(map, None)
+        entries, _, seCat         = MapString.FastParse(map, None, None)
         baseServiceUpdater.baseMapContent.extend(entries)
         for id in seCat:
             if id in baseServiceUpdater.categories:
@@ -855,7 +855,7 @@ class baseServiceUpdater:
     def loadMapFile(self, epg_channels=None):
         try:
             if not self.mapsLoaded:
-                self.automap = self.getBaseMap()
+                self.automap = self.getBaseMap(epg_channels)
 
                 if self.useOnlineMap:
                     dedicatedMapfile = self.sl.getJsonFromExtendedAPI(self.onlineMapFile, max_conn_time=6, verbose=False)
@@ -876,10 +876,10 @@ class baseServiceUpdater:
 
                 if dedicatedMapfile:
                     if not self.refreshingStreams:
-                        dedicatedMap, rstrm, _ = MapString.FastParse(dedicatedMapfile, epg_channels, self.log)
+                        dedicatedMap, rstrm, _ = MapString.FastParse(dedicatedMapfile, None, self.log)
                     else:
                         #Avoid printing content of map to log on every refresh
-                        dedicatedMap, rstrm, _ = MapString.FastParse(dedicatedMapfile, epg_channels, None)
+                        dedicatedMap, rstrm, _ = MapString.FastParse(dedicatedMapfile, None, None)
                     for dedicatedEntry in dedicatedMap:
                         for baseEntry in self.automap:
                             if dedicatedEntry.channelid == baseEntry.channelid:
