@@ -3127,8 +3127,11 @@ def prepareTimeZone(zone, autozone, local):
 
     if autozone:
         if local:
-            t = 86400  # one day (to avoid negative TZ at timestamo 0)
-            local = datetime.fromtimestamp(t) - datetime.utcfromtimestamp(t)
+            # adjust for summertime
+            if PY3:
+                local = datetime.now(timezone.utc).astimezone().utcoffset()
+            else:
+                local = datetime.now(timezone(timedelta(0))).astimezone().utcoffset()
         else:
             local = None
         zone = None
@@ -3150,8 +3153,7 @@ def parseTvDate(dateString, zone, autozone, local):
     if zoneString:
         offset = timedelta(minutes=int(zoneString[:3]) * 60 + int(zoneString[-2:]))
     else:
-        zoneString = '+0000'
-        offset = timedelta(minutes=int(zoneString[:3]) * 60 + int(zoneString[-2:]))
+        offset = local - timedelta(hours=1)
 
     dt = datetime(*(int(dateString[i:i+2 if i else i+4]) for i in (0, 4, 6, 8, 10, 12)))
     if zone:

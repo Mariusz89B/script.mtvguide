@@ -281,7 +281,7 @@ class PlayService(xbmc.Player, BasePlayService):
 
             else:
                 time.sleep(1)
-                
+
                 if customPlugin:
                     waitTime = self.maxStreamStartupTime + 30
                 else:
@@ -315,14 +315,14 @@ class PlayService(xbmc.Player, BasePlayService):
 
             try:
                 #move stream to the end of list
-                if url is not None:
+                if self.urlList and url is not None:
                     self.urlList.remove(url)
                     self.urlList.append(url)
             except Exception as ex:
                 deb('_playUrlList exception: {}'.format(getExceptionString()))
 
         deb('PlayService _playUrlList non of streams started - stopping playback!')
-        
+
         self.userStoppedPlayback = True
         xbmc.Player().stop()
 
@@ -1060,6 +1060,8 @@ class PlayService(xbmc.Player, BasePlayService):
                             PROTOCOL = 'hls'
                             mimeType = 'application/x-mpegURL'
 
+                            strmUrl = ''
+
                             for s in streams:
                                 if (s['mimeType']=='application/dash+xml'):
                                     strmUrl = s['url']
@@ -1075,7 +1077,7 @@ class PlayService(xbmc.Player, BasePlayService):
 
                                 break
 
-                            if 'material_niedostepny' in strmUrl:
+                            if ('material_niedostepny' in strmUrl or strmUrl == ''):
                                 xbmcgui.Dialog().notification(service, strings(SERVICE_NO_CONTENT), sound=False)
                                 return None
 
@@ -1094,7 +1096,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                 ListItem.setProperty('inputstream.adaptive.stream_headers', 'Referer: https://tvpstream.vod.tvp.pl/&User-Agent='+quote(UA))
                                 ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
                                 ListItem.setProperty('IsPlayable', 'true')
-                            
+
                             self.strmUrl = strmUrl
                             xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
 
@@ -1626,7 +1628,7 @@ class PlayService(xbmc.Player, BasePlayService):
                     conn_timeout = int(ADDON.getSetting('max_wait_for_playback'))
                     read_timeout = int(ADDON.getSetting('max_wait_for_playback'))
                     timeouts = (conn_timeout, read_timeout)
-                    
+
                     response = scraper.get(strmUrl, headers=headers, allow_redirects=False, stream=True, timeout=timeouts)
                     status = response.status_code
 
@@ -1647,7 +1649,7 @@ class PlayService(xbmc.Player, BasePlayService):
             except:
                 deb('chkConn RequestException')
                 status = 400
-            
+
             time.sleep(1)
 
             if status >= 400 and xbmc.getCondVisibility('!Player.HasMedia'):
