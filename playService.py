@@ -1046,68 +1046,78 @@ class PlayService(xbmc.Player, BasePlayService):
                         xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
 
                 if service == 'TVP GO':
-                    if self.archiveService == '' or self.archivePlaylist == '':
+                    try:
+                        self.playbackStopped = False
+
                         try:
-                            self.playbackStopped = False
+                            from urllib.parse import urlencode, quote_plus, quote, unquote
+                        except ImportError:
+                            from urllib import urlencode, quote_plus, quote, unquote
 
-                            try:
-                                from urllib.parse import urlencode, quote_plus, quote, unquote
-                            except ImportError:
-                                from urllib import urlencode, quote_plus, quote, unquote
+                        streams = channelInfo.strm
 
-                            streams = channelInfo.strm
+                        PROTOCOL = 'hls'
+                        mimeType = 'application/x-mpegURL'
 
-                            PROTOCOL = 'hls'
-                            mimeType = 'application/x-mpegURL'
+                        strmUrl = ''
 
-                            strmUrl = ''
+                        sorted_data = sorted(streams, key=lambda d: list(str(d['totalBitrate'])), reverse=True)
 
-                            sorted_data = sorted(streams, key=lambda d: list(str(d['totalBitrate'])), reverse=True)
+                        for s in sorted_data:
+                            if 'material_niedostepny' not in s['url']:
+                                if (s['mimeType'] == 'application/dash+xml'):
+                                    strmUrl = s['url']
+                                    PROTOCOL = 'mpd'
+                                    mimeType = 'application/xml+dash'
 
-                            for s in sorted_data:
-                                if 'material_niedostepny' not in s['url']:
-                                    if (s['mimeType'] == 'application/dash+xml'):
-                                        strmUrl = s['url']
-                                        PROTOCOL = 'mpd'
-                                        mimeType = 'application/xml+dash'
+                                elif (s['mimeType'] == 'application/x-mpegurl'):
+                                    strmUrl = s['url']
 
-                                    elif (s['mimeType'] == 'application/x-mpegurl'):
-                                        strmUrl = s['url']
+                                elif (s['mimeType'] == 'video/mp2t'):
+                                    strmUrl = s['url']
 
-                                    elif (s['mimeType'] == 'video/mp2t'):
-                                        strmUrl = s['url']
-
-                                    else:
-                                        strmUrl = s['url']
-                                        mimeType = 'video/mp4'
-
-                            if ('material_niedostepny' in strmUrl or strmUrl == ''):
-                                xbmcgui.Dialog().notification(service, strings(SERVICE_NO_CONTENT), sound=False)
-                                return None
-
-                            import inputstreamhelper
-                            is_helper = inputstreamhelper.Helper(PROTOCOL)
-                            if is_helper.check_inputstream():  
-                                ListItem = xbmcgui.ListItem(path=strmUrl)
-                                ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
-                                ListItem.setContentLookup(False)
-                                if PY3:
-                                    ListItem.setProperty('inputstream', is_helper.inputstream_addon)
                                 else:
-                                    ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
-                                ListItem.setMimeType(mimeType)
-                                ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
-                                ListItem.setProperty('IsPlayable', 'true')
+                                    strmUrl = s['url']
+                                    mimeType = 'video/mp4'
 
-                            self.strmUrl = strmUrl
-                            xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
+                        if ('material_niedostepny' in strmUrl or strmUrl == ''):
+                            xbmcgui.Dialog().notification(service, strings(SERVICE_NO_CONTENT), sound=False)
+                            return None
 
-                            res = True
+                        if ADDON.getSetting('archive_support') == 'true':
+                            if str(self.playlistArchive()) != '':
+                                archivePlaylist = str(self.playlistArchive())
+                                catchupList = archivePlaylist.split(', ')
 
-                        except Exception as ex:
-                            deb('Exception while trying to play video: {}'.format(getExceptionString()))
-                            self.unlockCurrentlyPlayedService()
-                            xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
+                                # Catchup strings
+                                utc = catchupList[2]
+
+                                date_time = datetime.datetime.fromtimestamp(int(utc))
+                                timeshift = date_time.strftime('%Y%m%dT%H%M%S')
+
+                        import inputstreamhelper
+                        is_helper = inputstreamhelper.Helper(PROTOCOL)
+                        if is_helper.check_inputstream():  
+                            ListItem = xbmcgui.ListItem(path=strmUrl)
+                            ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
+                            ListItem.setContentLookup(False)
+                            if PY3:
+                                ListItem.setProperty('inputstream', is_helper.inputstream_addon)
+                            else:
+                                ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
+                            ListItem.setMimeType(mimeType)
+                            ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
+                            ListItem.setProperty('IsPlayable', 'true')
+
+                        self.strmUrl = strmUrl
+                        xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
+
+                        res = True
+
+                    except Exception as ex:
+                        deb('Exception while trying to play video: {}'.format(getExceptionString()))
+                        self.unlockCurrentlyPlayedService()
+                        xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
 
                 if service == 'WP Pilot':
                     if self.archiveService == '' or self.archivePlaylist == '':

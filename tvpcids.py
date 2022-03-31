@@ -121,8 +121,8 @@ class TvpUpdater(baseServiceUpdater):
 
             if ch_data:
                 for c in ch_data:
-                    cid = c['code']
-                    name = c['name'].replace('EPG - ', '').replace('TVP3', 'TVP 3')
+                    cid = c['code']# + '_TS_3'
+                    name = c['name'].replace('EPG - ', '').replace('TVP3', 'TVP 3').replace('Historia2', 'Historia 2').replace('UA1', 'UA 1')
                     title = name + ' PL'
                     img = c['image_square']['url'].replace('{width}','140').replace('{height}','140')
 
@@ -136,10 +136,19 @@ class TvpUpdater(baseServiceUpdater):
             self.log('getChannelList exception: {}'.format(getExceptionString()))
         return result
 
+    def channCid(self, cid):
+        try:
+            r = re.compile('^(.*?)_TS_.*$', re.IGNORECASE)
+            cid = r.findall(cid)[0]
+        except:
+            cid 
+
+        return cid
+
     def getChannelStream(self, chann):
         data = None
 
-        code = chann.cid
+        code = chann.cid #self.channCid(chann.cid)
 
         streams = []
 
