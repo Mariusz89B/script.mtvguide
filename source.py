@@ -1154,23 +1154,33 @@ class Database(object):
                     #deb('[UPD]     %-40s %-40s %-35s ' % (x.channelid, x.channelid, x.strm))
                     try:
                         channelid = None
+                        backup = False
+
                         p = re.compile('\w+\d+')
-                        if p.match(x.channelid) and CH_DISP_NAME:
+                        if PY3:
+                            channel_match = p.fullmatch(x.channelid)
+                        else:
+                            channel_match = p.match(x.channelid)
+
+                        if channel_match and CH_DISP_NAME:
                             channelid = re.sub(r"([0-9]+(\.[0-9]+)?)",r" \1", x.channelid).strip()
+                            backup = True
 
-                        try:
+                            if PY3:
+                                c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [channelid, x.strm + '_BACKUP'])
+                            else:
+                                c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [channelid.decode('utf-8'), x.strm + '_BACKUP'])
+
+                        if PY3:
                             c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid, x.strm])
-                            if channelid:
-                                c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [channelid, x.strm])
-                        except:
+                        else:
                             c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid.decode('utf-8'), x.strm])
-                            if channelid:
-                                c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [channelid.decode('utf-8'), x.strm])
 
-                        if channelid:
+                        if backup:
                             nrOfChannelsUpdated += 2
                         else:
                             nrOfChannelsUpdated += 1
+
                     except Exception as ex:
                         deb('[UPD] Error updating stream: {}'.format(getExceptionString()))
 
@@ -1281,7 +1291,7 @@ class Database(object):
             programs = self._getProgramList(channelsOnPage, date)
 
             return [channelStart, channelsOnPage, programs, cacheExpired]
-            
+
         except Exception as ex:
             deb('getEPGView Exception: {}'.format(ex))
             self.updateFailed = True
@@ -2387,11 +2397,10 @@ class Database(object):
                     deb('Required m-TVGuide restart')
                     raise RestartRequired()
 
-
             # make sure we have a record in sources for this Source
             c.execute('CREATE TABLE IF NOT EXISTS lastplayed(idx INTEGER, start_date TEXT, end_date TEXT, played_date TEXT)')
             c.execute("INSERT OR IGNORE INTO sources(id, channels_updated) VALUES(?, ?)", [self.source.KEY, 0])
-            
+
             self.conn.commit()
             c.close()
 

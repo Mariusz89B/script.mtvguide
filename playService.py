@@ -1093,8 +1093,6 @@ class PlayService(xbmc.Player, BasePlayService):
                                     ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
                                 ListItem.setMimeType(mimeType)
                                 ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
-                                ListItem.setProperty('inputstream.adaptive.stream_headers', 'Referer: https://tvpstream.vod.tvp.pl/&User-Agent='+quote(UA))
-                                ListItem.setProperty('inputstream.adaptive.license_flags', "persistent_storage")
                                 ListItem.setProperty('IsPlayable', 'true')
 
                             self.strmUrl = strmUrl

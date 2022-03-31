@@ -536,7 +536,7 @@ class MapString:
                 string_xml = '\n<channel id="{}" title="" strm=""/>'.format(title)
                 xmlstr += string_xml
 
-                if titles:
+                if titles:   
                     string_xml = '\n<channel id="{0}" title="" titles="{1}" strm=""/>'.format(title, titles)
                     xmlstr += string_xml
 
@@ -553,7 +553,6 @@ class MapString:
             aid = r.group(1) if r else ''
 
             for achannel in aid.split(', '):
-
                 r = channelTitleRe.search(channel)
                 atitle = r.group(1) if r else ''
 
