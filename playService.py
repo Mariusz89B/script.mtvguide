@@ -1062,20 +1062,24 @@ class PlayService(xbmc.Player, BasePlayService):
 
                             strmUrl = ''
 
-                            for s in streams:
-                                if (s['mimeType']=='application/dash+xml'):
-                                    strmUrl = s['url']
-                                    PROTOCOL = 'mpd'
-                                    mimeType = 'application/xml+dash'
+                            sorted_data = sorted(streams, key=lambda d: list(str(d['totalBitrate'])), reverse=True)
 
-                                elif (s['mimeType']=='application/x-mpegurl' and not ('mobile' in s['url'])):
-                                    strmUrl = s['url']
+                            for s in sorted_data:
+                                if 'material_niedostepny' not in s['url']:
+                                    if (s['mimeType'] == 'application/dash+xml'):
+                                        strmUrl = s['url']
+                                        PROTOCOL = 'mpd'
+                                        mimeType = 'application/xml+dash'
 
-                                else:
-                                    strmUrl = s['url']
-                                    mimeType = 'video/mp2t'
+                                    elif (s['mimeType'] == 'application/x-mpegurl'):
+                                        strmUrl = s['url']
 
-                                break
+                                    elif (s['mimeType'] == 'video/mp2t'):
+                                        strmUrl = s['url']
+
+                                    else:
+                                        strmUrl = s['url']
+                                        mimeType = 'video/mp4'
 
                             if ('material_niedostepny' in strmUrl or strmUrl == ''):
                                 xbmcgui.Dialog().notification(service, strings(SERVICE_NO_CONTENT), sound=False)
