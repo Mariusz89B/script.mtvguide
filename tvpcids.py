@@ -152,7 +152,7 @@ class TvpUpdater(baseServiceUpdater):
 
         streams = []
 
-        url = f'https://tvpstream.tvp.pl/api/tvp-stream/stream/data?station_code={code}'
+        url = 'https://tvpstream.tvp.pl/api/tvp-stream/stream/data?station_code={0}'.format(code)
 
         response = requests.get(url).json()
 
