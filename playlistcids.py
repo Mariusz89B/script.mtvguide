@@ -146,12 +146,12 @@ class PlaylistUpdater(baseServiceUpdater):
         else:
             self.filtered = False
 
-        if ADDON.getSetting('VOD_EPG') == 'true':
+        if ADDON.getSetting('VOD_EPG') != '' and ADDON.getSetting('VOD_EPG') != 'false':
             self.vod = True
         else:
             self.vod = False
 
-        if ADDON.getSetting('XXX_EPG') == 'true':
+        if ADDON.getSetting('XXX_EPG') != '' and ADDON.getSetting('XXX_EPG') != 'false':
             self.xxx = True
         else:
             self.xxx = False
@@ -526,6 +526,7 @@ class PlaylistUpdater(baseServiceUpdater):
 
                         if tmpTitle is not None and tmpTitle != '':
                             title = tmpTitle
+                            name = title
 
                             HDStream = False
                             UHDStream = False
@@ -542,8 +543,6 @@ class PlaylistUpdater(baseServiceUpdater):
                                 UHDStream = True
 
                             title = ' '.join(OrderedDict((w, w) for w in title.split()).keys())
-
-                            name = title
 
                             if PATTERN <= 2:
                                 try:
@@ -596,6 +595,12 @@ class PlaylistUpdater(baseServiceUpdater):
                                             string = ' ' + cc.upper()
                                             title = re.sub('$', string, title)
 
+                            if 1 >= PATTERN <= 3:
+                                if any(cc.lower() in title.lower() for cc in langList + nativeList):
+                                    for cc in langList + nativeList:
+                                        p = re.compile(re.escape(cc + ' '), re.IGNORECASE)
+                                        title = p.sub('', str(title))
+
                             for regexRemove in regexRemoveList:
                                 if( regexRemove.findall(title) ):
                                     title = ''
@@ -631,15 +636,11 @@ class PlaylistUpdater(baseServiceUpdater):
 
                             title = re.sub('  ', ' ', title).strip()
 
-                            if PATTERN == 0 and self.filtered and title != '':
-                                title = name
-
                             if tvg_id:
                                 if tvg_title == title:
                                     tvg_title = ''
 
                     elif (title is not None or tvg_title is not None) and regexCorrectStream.match(stripLine):
-
                         if not self.vod:
                             regexRemoveStream = re.compile('^(?!.*(\.)(mkv|avi|mov|wma)).*$')
                             try:

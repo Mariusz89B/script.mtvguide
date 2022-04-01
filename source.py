@@ -2267,14 +2267,14 @@ class Database(object):
 
             if version < [6, 6, 9]:
                 #its version 6.6.8...
-                ADDON.setSetting(id="XXX_EPG", value=("false"))
+                ADDON.setSetting(id="XXX_EPG", value=(""))
                 ADDON.setSetting(id="showAdultChannels", value=(strings(30720)))
                 c.execute('UPDATE version SET major=6, minor=6, patch=9')
                 self.conn.commit()
 
             if version < [6, 6, 9]:
                 #its version 6.6.8...
-                ADDON.setSetting(id="VOD_EPG", value=("false"))
+                ADDON.setSetting(id="VOD_EPG", value=(""))
                 ADDON.setSetting(id="showVodChannels", value=(strings(30720)))
                 c.execute('UPDATE version SET major=6, minor=6, patch=9')
                 self.conn.commit()
@@ -2910,6 +2910,8 @@ class MTVGUIDESource(Source):
         self.MTVGUIDEUrl       = ADDON.getSetting('m-TVGuide').strip()
         self.MTVGUIDEUrl2      = ADDON.getSetting('m-TVGuide2').strip()
         self.MTVGUIDEUrl3      = ADDON.getSetting('m-TVGuide3').strip()
+        self.XXX_EPG_Url       = ADDON.getSetting('XXX_EPG').strip()
+        self.VOD_EPG_Url       = ADDON.getSetting('VOD_EPG').strip()
         self.epgBasedOnLastModDate = ADDON.getSetting('UpdateEPGOnModifiedDate')
         self.logoFolder = ADDON.getSetting('xmltv_logo_folder')
         self.EPGSize    = None
@@ -2936,9 +2938,13 @@ class MTVGUIDESource(Source):
                     parsedData.update({self.MTVGUIDEUrl2:{'date': date}})
                 if self.MTVGUIDEUrl3 != "" and not strings2.M_TVGUIDE_CLOSING:
                     parsedData.update({self.MTVGUIDEUrl3:{'date': date}})
+                if self.XXX_EPG_Url != "" and self.XXX_EPG_Url != "false" and not strings2.M_TVGUIDE_CLOSING:
+                    parsedData.update({self.XXX_EPG_Url:{'date': date}})
+                if self.VOD_EPG_Url != "" and self.VOD_EPG_Url != "false" and not strings2.M_TVGUIDE_CLOSING:
+                    parsedData.update({self.VOD_EPG_Url:{'date': date}})
 
                 for epg in EPG_LIST:
-                    parsedData.update({epg:{'date': date}})    
+                    parsedData.update({epg:{'date': date}})
 
                 data = self._getDataFromExternal(data=parsedData, progress_callback=progress_callback)
             else:
@@ -2950,6 +2956,12 @@ class MTVGUIDESource(Source):
                 if self.MTVGUIDEUrl3 != "" and not strings2.M_TVGUIDE_CLOSING:
                     parsedData_etree = self._getDataFromExternal(date=date, progress_callback=progress_callback, url=self.MTVGUIDEUrl3)
                     data = chain(data, parsedData_etree)
+                if self.XXX_EPG_Url != "" and self.XXX_EPG_Url != "false":
+                    parsedData_etree = self._getDataFromExternal(date=date, progress_callback=progress_callback, url=self.XXX_EPG_Url)
+                    data = chain(data, parsedData_etree)
+                if self.VOD_EPG_Url != "" and self.VOD_EPG_Url != "false":
+                    parsedData_etree = self._getDataFromExternal(date=date, progress_callback=progress_callback, url=self.VOD_EPG_Url)
+                    data = chain(data, parsedData_etree)
 
                 for epg in EPG_LIST:
                     parsedData_etree = self._getDataFromExternal(date=date, progress_callback=progress_callback, url=epg)
@@ -2958,7 +2970,7 @@ class MTVGUIDESource(Source):
         except SourceFaultyEPGException as ex:
             deb("Failed to download custom EPG but addon should start!, EPG: {}".format(ex.epg))
             xbmcgui.Dialog().ok(strings(LOAD_ERROR_TITLE), strings(LOAD_ERROR_LINE1) + '\n' + ex.epg + '\n' + strings(LOAD_NOT_CRITICAL_ERROR))
-            
+
             parsedDataEx = {}
             parsedDataEx.update({self.MTVGUIDEUrl:{'date': date}})
             data = self._getDataFromExternal(data=parsedDataEx, progress_callback=progress_callback)

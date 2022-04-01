@@ -117,13 +117,13 @@ for k, v in CC_DICT.items():
         BASE_LIST.append(k)
 
 XXX = ADDON.getSetting('XXX_EPG')
-if XXX == 'true':
+if XXX != '' and XXX != 'false':
     XXX_EPG = True
 else:
     XXX_EPG = False
 
 VOD = ADDON.getSetting('VOD_EPG')
-if VOD == 'true':
+if VOD != '' and XXX != 'false':
     VOD_EPG = True
 else:
     VOD_EPG = False

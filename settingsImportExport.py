@@ -84,6 +84,9 @@ recordAppWindows    = M_TVGUIDE_SUPPORT + 'record_apps/recording_windows.zip'
 recordAppAndroid    = M_TVGUIDE_SUPPORT + 'record_apps/recording_android.zip'
 recordAppMacOS      = M_TVGUIDE_SUPPORT + 'record_apps/recording_macos.zip'
 
+adultEPG            = M_TVGUIDE_SUPPORT + 'freeepg/xxx.xml'
+vodEPG              = M_TVGUIDE_SUPPORT + 'freeepg/vod.xml'
+
 CC_DICT = ccDict()
 
 class SettingsImp:
@@ -485,7 +488,7 @@ class SettingsImp:
         except:
             options.append(strings(30008).encode('utf-8', 'replace'))
         options.append(strings(30008))
-        if ADDON.getSetting('XXX_EPG') == "true":
+        if ADDON.getSetting('XXX_EPG') != "":
             #disabling
             try:
                 options.append( strings(30719) + " " + strings(30747))
@@ -505,7 +508,7 @@ class SettingsImp:
             if not enabling:
                 #disable adult
                 deb('Adult - disabling!')
-                ADDON.setSetting(id="XXX_EPG", value=str("false"))
+                ADDON.setSetting(id="XXX_EPG", value=str(""))
                 try:
                     ADDON.setSetting(id="showAdultChannels", value=str(strings(30720)))
                 except:
@@ -519,7 +522,7 @@ class SettingsImp:
                     password = xbmcgui.Dialog().input(strings(30723).encode('utf-8', 'replace'))
                 if password == 'mods':
                     deb('Adult - password correct, enabling!')
-                    ADDON.setSetting(id="XXX_EPG", value=str("true"))
+                    ADDON.setSetting(id="XXX_EPG", value=str(adultEPG))
                     try:
                         ADDON.setSetting(id="showAdultChannels", value=str(strings(30721)))
                     except:
@@ -539,7 +542,7 @@ class SettingsImp:
 
         options = list()
         options.append(strings(30008))
-        if ADDON.getSetting('VOD_EPG') == "true":
+        if ADDON.getSetting('VOD_EPG') != "":
             #disabling
             try:
                 options.append( strings(30719) + " " + strings(30748))
@@ -559,7 +562,7 @@ class SettingsImp:
             if not enabling:
                 #disable vod
                 deb('Vod - disabling!')
-                ADDON.setSetting(id="VOD_EPG", value=str("false"))
+                ADDON.setSetting(id="VOD_EPG", value=str(""))
                 try:
                     ADDON.setSetting(id="showVodChannels", value=str(strings(30720)))
                 except:
@@ -567,7 +570,7 @@ class SettingsImp:
             else:
                 #enable vod
                 deb('Vod - enabling!')
-                ADDON.setSetting(id="VOD_EPG", value=str("true"))
+                ADDON.setSetting(id="VOD_EPG", value=str(vodEPG))
                 try:
                     ADDON.setSetting(id="showVodChannels", value=str(strings(30721)))
                 except:
