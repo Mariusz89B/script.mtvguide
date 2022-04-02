@@ -1054,12 +1054,15 @@ class PlayService(xbmc.Player, BasePlayService):
                         except ImportError:
                             from urllib import urlencode, quote_plus, quote, unquote
 
-                        streams = channelInfo.strm
+                        data = channelInfo.strm
 
                         PROTOCOL = 'hls'
                         mimeType = 'application/x-mpegURL'
 
+                        streams = data['formats']
                         strmUrl = ''
+
+                        catchup = data['timeShift']
 
                         sorted_data = sorted(streams, key=lambda d: list(str(d['totalBitrate'])), reverse=True)
 
@@ -1089,11 +1092,26 @@ class PlayService(xbmc.Player, BasePlayService):
                                 archivePlaylist = str(self.playlistArchive())
                                 catchupList = archivePlaylist.split(', ')
 
-                                # Catchup strings
-                                utc = catchupList[2]
+                                if catchup:
+                                    # Catchup strings
+                                    utc = catchupList[2]
+                                    lutc = catchupList[3]
 
-                                date_time = datetime.datetime.fromtimestamp(int(utc))
-                                timeshift = date_time.strftime('%Y%m%dT%H%M%S')
+                                    start = datetime.datetime.utcfromtimestamp(int(utc))
+                                    s_timeshift = start.strftime('%Y%m%dT%H%M%S')
+
+                                    end = datetime.datetime.utcfromtimestamp(int(lutc))
+                                    e_timeshift = end.strftime('%Y%m%dT%H%M%S')
+
+                                    strmUrl = strmUrl.replace('live', 'vod')
+                                    strmUrl = re.sub(r'begin=\d+T\d+', 'begin={utc}&end={lutc}'.format(utc=s_timeshift, lutc=e_timeshift), strmUrl)
+
+                                else:
+                                    res = xbmcgui.Dialog().yesno(strings(30998), strings(59980))
+                                    if res:
+                                        strmUrl = strmUrl
+                                    else:
+                                        return None
 
                         import inputstreamhelper
                         is_helper = inputstreamhelper.Helper(PROTOCOL)
@@ -1108,6 +1126,8 @@ class PlayService(xbmc.Player, BasePlayService):
                             ListItem.setMimeType(mimeType)
                             ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
                             ListItem.setProperty('IsPlayable', 'true')
+                            if catchup:
+                                ListItem.setProperty('inputstream.adaptive.play_timeshift_buffer', 'true')
 
                         self.strmUrl = strmUrl
                         xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)

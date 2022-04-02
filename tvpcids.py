@@ -121,7 +121,7 @@ class TvpUpdater(baseServiceUpdater):
 
             if ch_data:
                 for c in ch_data:
-                    cid = c['code']# + '_TS_3'
+                    cid = c['code'] + '_TS_3'
                     name = c['name'].replace('EPG - ', '').replace('TVP3', 'TVP 3').replace('Historia2', 'Historia 2').replace('UA1', 'UA 1')
                     title = name + ' PL'
                     img = c['image_square']['url'].replace('{width}','140').replace('{height}','140')
@@ -148,24 +148,21 @@ class TvpUpdater(baseServiceUpdater):
     def getChannelStream(self, chann):
         data = None
 
-        code = chann.cid #self.channCid(chann.cid)
+        code = self.channCid(chann.cid)
 
         streams = []
 
         url = 'https://tvpstream.tvp.pl/api/tvp-stream/stream/data?station_code={0}'.format(code)
 
         response = requests.get(url).json()
-
         live = response.get('data')
         if live:
             urls = live['stream_url']
             response = requests.get(urls).json()
-            streams = response['formats']
+            data = response
 
         else:
-            streams = None
-
-        data = streams
+            data = None
 
         try:
             if data is not None and data != "":
