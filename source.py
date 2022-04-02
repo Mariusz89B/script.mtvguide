@@ -1080,12 +1080,11 @@ class Database(object):
                         if service.serviceName not in cacheList:
                             progress_callback(100, "{}: {}".format(strings(59915), service.getDisplayName()) )
                         else:
-                            progress_callback(100, "{}: {}".format(strings(59915), 'Cached playlists') )
+                            progress_callback(100, "{}: {}".format(strings(59915), strings(69072)) )
                             time.sleep(1)
 
                     service.waitUntilDone()
-
-                    if not cacheList:
+                    if (not cacheList or 'playlist_' not in service.serviceName):
                         self.storeCustomStreams(service, service.serviceName, service.serviceRegex)
 
         serviceList = []
@@ -1228,6 +1227,13 @@ class Database(object):
 
     def _reloadServices(self):
         serviceList = list()
+        cacheList = []
+
+        playlist_cache = os.path.join(PROFILE_PATH, 'playlist_cache.list')
+
+        if os.path.exists(playlist_cache):
+            with open(playlist_cache, 'r', encoding='utf-8') as r:
+                cacheList = r.read().splitlines()
 
         epgChannels = self.epgChannels()
 
@@ -1236,7 +1242,8 @@ class Database(object):
             serviceHandler = playService.SERVICES[serviceName]
             if serviceHandler.serviceEnabled == 'true':
                 serviceHandler.resetService()
-                serviceHandler.startLoadingChannelList(epgChannels)
+                if service.serviceName not in cacheList:
+                    serviceHandler.startLoadingChannelList(epgChannels)
                 serviceList.append(serviceHandler)
 
         deb('[UPD] Starting updating STRM')
@@ -1244,7 +1251,8 @@ class Database(object):
             for service in serviceList:
                 if priority == service.servicePriority:
                     service.waitUntilDone()
-                    self.storeCustomStreams(service, service.serviceName, service.serviceRegex)
+                    if (not cacheList or 'playlist_' not in service.serviceName):
+                        self.storeCustomStreams(service, service.serviceName, service.serviceRegex)
 
     def setCategory(self, category):
         try:

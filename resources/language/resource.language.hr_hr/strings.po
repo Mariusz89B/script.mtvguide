@@ -2632,6 +2632,10 @@ msgctxt "#69071"
 msgid "Enable debug mode"
 msgstr "Omogući način za otklanjanje pogrešaka"
 
+msgctxt "#69072"
+msgid "Cached playlists"
+msgstr "Keširani popisi za reprodukciju"
+
 msgctxt "#70000"
 msgid "Program title"
 msgstr "Naslov programa"

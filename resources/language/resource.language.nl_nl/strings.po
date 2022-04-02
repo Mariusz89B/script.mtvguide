@@ -2632,6 +2632,10 @@ msgctxt "#69071"
 msgid "Enable debug mode"
 msgstr "Schakel foutopsporingsmodus in"
 
+msgctxt "#69072"
+msgid "Cached playlists"
+msgstr "Afspeellijsten in cache"
+
 msgctxt "#70000"
 msgid "Program title"
 msgstr "Programma titel"

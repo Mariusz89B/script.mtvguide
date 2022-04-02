@@ -2660,6 +2660,10 @@ msgctxt "#69071"
 msgid "Enable debug mode"
 msgstr ""
 
+msgctxt "#69072"
+msgid "Cached playlists"
+msgstr ""
+
 msgctxt "#70000"
 msgid "Program title"
 msgstr ""

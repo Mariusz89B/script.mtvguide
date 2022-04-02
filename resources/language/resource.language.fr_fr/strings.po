@@ -2632,6 +2632,10 @@ msgctxt "#69071"
 msgid "Enable debug mode"
 msgstr "Activer le mode débogage"
 
+msgctxt "#69072"
+msgid "Cached playlists"
+msgstr "Playlistes en cache"
+
 msgctxt "#70000"
 msgid "Program title"
 msgstr "Titre du programme"
