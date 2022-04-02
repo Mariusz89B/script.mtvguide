@@ -834,6 +834,8 @@ class Database(object):
         sqlite3.register_adapter(datetime, self.adapt_datetime)
         sqlite3.register_converter(str('timestamp'), self.convert_datetime)
 
+        playlist_cache = os.path.join(PROFILE_PATH, 'playlist_cache.list')
+
         cacheList = []
 
         # Start service threads
@@ -861,7 +863,6 @@ class Database(object):
                     if os.path.exists(urlpath):
                         os.remove(urlpath)
 
-                    playlist_cache = os.path.join(PROFILE_PATH, 'playlist_cache.list')
                     if PY3:
                         if os.path.exists(playlist_cache):
                             with open(playlist_cache, 'r', encoding='utf-8') as r:
@@ -881,8 +882,6 @@ class Database(object):
                                     if service != 'playlist_{0}'.format(playlist):
                                         f.write(service+'\n')
 
-            playlist_cache = os.path.join(PROFILE_PATH, 'playlist_cache.list')
-
             playlists = [playlist for playlist in services if 'playlist_' in playlist]
 
             if not playlists:
@@ -890,8 +889,12 @@ class Database(object):
                     os.remove(playlist_cache)
 
             if os.path.exists(playlist_cache):
-                with open(playlist_cache, 'r', encoding='utf-8') as r:
-                    cacheList = r.read().splitlines()
+                if PY3:
+                    with open(playlist_cache, 'r', encoding='utf-8') as r:
+                        cacheList = r.read().splitlines()
+                else:
+                    with codecs.open(playlist_cache, 'r', encoding='utf-8') as r:
+                        cacheList = r.read().splitlines()
 
             if not cacheList:
                 self.deleteAllCustomStreams()
@@ -1232,8 +1235,12 @@ class Database(object):
         playlist_cache = os.path.join(PROFILE_PATH, 'playlist_cache.list')
 
         if os.path.exists(playlist_cache):
-            with open(playlist_cache, 'r', encoding='utf-8') as r:
-                cacheList = r.read().splitlines()
+            if PY3:
+                with open(playlist_cache, 'r', encoding='utf-8') as r:
+                    cacheList = r.read().splitlines()
+            else:
+                with codecs.open(playlist_cache, 'r', encoding='utf-8') as r:
+                    cacheList = r.read().splitlines()
 
         epgChannels = self.epgChannels()
 
@@ -1242,7 +1249,7 @@ class Database(object):
             serviceHandler = playService.SERVICES[serviceName]
             if serviceHandler.serviceEnabled == 'true':
                 serviceHandler.resetService()
-                if service.serviceName not in cacheList:
+                if serviceName not in cacheList:
                     serviceHandler.startLoadingChannelList(epgChannels)
                 serviceList.append(serviceHandler)
 
@@ -3160,7 +3167,7 @@ def prepareTimeZone(zone, autozone, local):
             if PY3:
                 local = datetime.now(timezone.utc).astimezone().utcoffset()
             else:
-                local = datetime.now(timezone(timedelta(0))).astimezone().utcoffset()
+                local = datetime.now() - datetime.utcnow()
         else:
             local = None
         zone = None
