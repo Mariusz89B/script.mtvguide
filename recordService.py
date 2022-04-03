@@ -2015,7 +2015,7 @@ class RecordService(BasePlayService):
         sess = cloudscraper.create_scraper()
         scraper = cloudscraper.CloudScraper()
 
-        if strmUrl != '' or strmUrl is not None and (strmUrl != 'plugin'):
+        if strmUrl != '' or strmUrl is not None and 'plugin' not in strmUrl:
             ctx = ssl.create_default_context()
             ctx.check_hostname = False
             ctx.verify_mode = ssl.CERT_NONE

@@ -231,7 +231,8 @@ class PlayService(xbmc.Player, BasePlayService):
         self.reconnectFailedStreams = ADDON.getSetting('reconnect_stream')
         self.maxStreamStartupTime   = int(ADDON.getSetting('max_wait_for_playback')) * 10
         self.strmUrl                = None
-        self.service                = None        
+        self.service                = None   
+        self.customPlugin           = False     
 
     def playUrlList(self, urlList, archiveService, archivePlaylist, resetReconnectCounter=False):
         self.archiveService = archiveService
@@ -283,8 +284,10 @@ class PlayService(xbmc.Player, BasePlayService):
                 time.sleep(1)
 
                 if customPlugin:
+                    self.customPlugin = True
                     waitTime = self.maxStreamStartupTime + 30
                 else:
+                    self.customPlugin = False
                     waitTime = self.maxStreamStartupTime
 
                 start_date = datetime.datetime.now()
@@ -1627,7 +1630,7 @@ class PlayService(xbmc.Player, BasePlayService):
 
 
     def checkConnection(self, strmUrl):
-        if strmUrl != '' or strmUrl is not None and (strmUrl != 'plugin'):
+        if strmUrl != '' or strmUrl is not None and not self.customPlugin:
             ctx = ssl.create_default_context()
             ctx.check_hostname = False
             ctx.verify_mode = ssl.CERT_NONE
