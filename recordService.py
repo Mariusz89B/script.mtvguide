@@ -459,6 +459,11 @@ class RecordService(BasePlayService):
                     self.timersdw.remove(element)
                     for program in programList:
                         urlList = self.epg.database.getStreamUrlList(program.channel)
+                        try:
+                            urlList = sorted(urlList, key=lambda x: x[1], reverse=True)
+                        except:
+                            pass
+
                         threadData = {'urlDownloadList' : urlList, 'program' : program, 'downloadHandle' : None, 'stopDownloadTimer' : None, 'terminateDownloadThread' : False}
                         thread = threading.Thread(name='downloadLoop', target = self.downloadLoop, args=[threadData])
                         self.threadDownloadList.append([thread, threadData])
@@ -565,15 +570,20 @@ class RecordService(BasePlayService):
 
         while self.checkIfDownloadShouldContinue(threadData):
             for url in threadData['urlDownloadList']:
+                try:
+                    strmUrl = url[0]
+                except:
+                    pass
+
                 if not self.checkIfDownloadShouldContinue(threadData):
                     break
 
                 threadData['downloadOptions']['forceRTMPDump'] = False
 
-                self.downloadUrl(url, threadData)
+                self.downloadUrl(strmUrl, threadData)
                 if threadData['downloadOptions']['settingsChanged'] == True and self.checkIfDownloadShouldContinue(threadData):
                     deb('DownloadService - detected settings change for downloaded stream - retrying download')
-                    self.downloadUrl(url, threadData)
+                    self.downloadUrl(strmUrl, threadData)
 
             #Go to sleep, maybe after that any service will be free to use
             for sleepTime in range(5):
@@ -676,7 +686,7 @@ class RecordService(BasePlayService):
             self.epg.playService.stopPlayback()
             xbmc.sleep(500)
 
-        drmList = ['C More', 'Polsat GO', 'Polsat GO Box', 'Ipla', 'nc+ GO', 'PlayerPL', 'Telia Play']
+        drmList = ['C More', 'Polsat GO', 'Polsat GO Box', 'Ipla', 'nc+ GO', 'PlayerPL', 'Telia Play', 'TVP GO']
 
         try:
             p = re.compile('service=(.+?)&cid=.*')
@@ -1281,6 +1291,11 @@ class RecordService(BasePlayService):
                     self.timers.remove(element)
                     for program in programList:
                         urlList = self.epg.database.getStreamUrlList(program.channel)
+                        try:
+                            urlList = sorted(urlList, key=lambda x: x[1], reverse=True)
+                        except:
+                            pass
+
                         threadData = {'urlList' : urlList, 'program' : program, 'recordHandle' : None, 'stopRecordTimer' : None, 'terminateThread' : False}
                         thread = threading.Thread(name='recordLoop', target = self.recordLoop, args=[threadData])
                         self.threadList.append([thread, threadData])
@@ -1300,15 +1315,20 @@ class RecordService(BasePlayService):
 
         while self.checkIfRecordingShouldContinue(threadData):
             for url in threadData['urlList']:
+                try:
+                    strmUrl = url[0]
+                except:
+                    pass
+
                 if not self.checkIfRecordingShouldContinue(threadData):
                     break
 
                 threadData['recordOptions']['forceRTMPDump'] = False
 
-                self.recordUrl(url, threadData)
+                self.recordUrl(strmUrl, threadData)
                 if threadData['recordOptions']['settingsChanged'] == True and self.checkIfRecordingShouldContinue(threadData):
                     deb('RecordService - detected settings change for recorded stream - retrying record')
-                    self.recordUrl(url, threadData)
+                    self.recordUrl(strmUrl, threadData)
 
             #Go to sleep, maybe after that any service will be free to use
             for sleepTime in range(5):
@@ -1344,7 +1364,7 @@ class RecordService(BasePlayService):
             self.epg.playService.stopPlayback()
             xbmc.sleep(500)
 
-        drmList = ['C More', 'Polsat GO', 'Polsat GO Box', 'Ipla', 'nc+ GO', 'PlayerPL', 'Telia Play']
+        drmList = ['C More', 'Polsat GO', 'Polsat GO Box', 'Ipla', 'nc+ GO', 'PlayerPL', 'Telia Play', 'TVP GO']
 
         try:
             p = re.compile('service=(.+?)&cid=.*')
@@ -1771,9 +1791,18 @@ class RecordService(BasePlayService):
     def abortProgramRecord(self, program):
         try:
             urlList = self.epg.database.getStreamUrlList(program.channel)
+            try:
+                urlList = sorted(urlList, key=lambda x: x[1], reverse=True)
+            except:
+                pass
 
             for url in urlList:
-                cid, service = self.parseUrl(url)
+                try:
+                    strmUrl = url[0]
+                except:
+                    pass
+
+                cid, service = self.parseUrl(strmUrl)
                 channelInfo = self.getChannel(cid, service)
 
                 if channelInfo is not None:
@@ -1841,8 +1870,18 @@ class RecordService(BasePlayService):
     def abortProgramDownload(self, program):
         try:
             urlList = self.epg.database.getStreamUrlList(program.channel)
+            try:
+                urlList = sorted(urlList, key=lambda x: x[1], reverse=True)
+            except:
+                pass
+
             for url in urlList:
-                cid, service = self.parseUrl(url)
+                try:
+                    strmUrl = url[0]
+                except:
+                    pass
+
+                cid, service = self.parseUrl(strmUrl)
                 channelInfo = self.getChannelDownload(cid, service)
 
                 if channelInfo is not None:

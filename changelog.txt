@@ -1,6 +1,6 @@
 ﻿v9.9.5 (2022-04-03)
 - Added catchup for service TVPGO.
-- Fixed PlayerPL parsing error.
+- Fixed service PlayerPL parsing error.
 - Fixed encodings.
 - Optimized performance.
 - Added playlist caching.

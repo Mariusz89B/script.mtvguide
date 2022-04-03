@@ -72,8 +72,8 @@
 		<setting id="pgobox_sesskey" visible="false" subsetting="true"/>
 		<setting id="pgobox_myperm" visible="false" subsetting="true"/>
 		
-		<setting id="tvp_enabled" type="bool" label="80007" default="false" visible="eq(-56,0)"/>
-		<setting id="priority_tvp" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-1,true) + eq(-57,0)" subsetting="true"/>
+		<setting id="tvpgo_enabled" type="bool" label="80007" default="false" visible="eq(-56,0)"/>
+		<setting id="priority_tvpgo" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-1,true) + eq(-57,0)" subsetting="true"/>
 		
 		<setting id="videostar_enabled" type="bool" label="80005" default="false" visible="eq(-58,0)"/>
 		<setting id="videostar_username" type="text" label="55002" default="" visible="eq(-1,true) + eq(-59,0)" subsetting="true"/>

@@ -750,7 +750,7 @@
 						<heading/>
 					</control>
 				</setting>
-				<setting help="95007" id="tvp_enabled" label="80007" type="boolean">
+				<setting help="95007" id="tvpgo_enabled" label="80007" type="boolean">
 					<level>0</level>
 					<default>false</default>
 					<dependencies>
@@ -760,7 +760,7 @@
 					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<setting help="95012" id="priority_tvp" label="55009" type="integer" parent="tvp_enabled">
+				<setting help="95012" id="priority_tvpgo" label="55009" type="integer" parent="tvpgo_enabled">
 					<level>1</level>
 					<default>6</default>
 					<constraints>
@@ -781,7 +781,7 @@
 					</constraints>
 					<dependencies>
 						<dependency type="visible">
-							<condition operator="is" setting="tvp_enabled">true</condition>
+							<condition operator="is" setting="tvpgo_enabled">true</condition>
 							<condition operator="is" setting="country_service">0</condition>
 						</dependency>
 					</dependencies>

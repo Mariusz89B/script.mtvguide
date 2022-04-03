@@ -2,7 +2,7 @@
 <addon
     id="script.mtvguide"
     name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]"
-    version="9.9.5-beta.24"
+    version="9.9.5-beta.25"
     provider-name="Mods-kodi">
   <requires>
     <import addon="xbmc.addon" version="17.0.0"/>
@@ -43,7 +43,7 @@
     <source>m-TVGuide © 2013 - 2022</source>
     <news>v9.9.5 (2022-04-03)
 - Added catchup for service TVPGO.
-- Fixed PlayerPL parsing error.
+- Fixed service PlayerPL parsing error.
 - Fixed encodings.
 - Optimized performance.
 - Added playlist caching.

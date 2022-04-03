@@ -848,16 +848,19 @@ class Database(object):
 
             for serviceName in playService.SERVICES:
                 serviceHandler = playService.SERVICES[serviceName]
+                services.append(serviceHandler)
                 if serviceHandler.serviceEnabled == 'true':
                     serviceList.append(serviceHandler)
-                    services.append(serviceHandler.serviceName)
                     if 'playlist_' in serviceName:
                         self.cachePlaylist(serviceName)
 
-            for playlist in range(1,6):
-                if (ADDON.getSetting('playlist_{}_enabled'.format(playlist)) == 'false' or ADDON.getSetting('playlist_{}_refr'.format(playlist)) == 'false'):
-                    filepath = os.path.join(PROFILE_PATH, 'playlists', 'playlist_{playlist}.m3u'.format(playlist=playlist))
-                    urlpath = os.path.join(PROFILE_PATH, 'playlists', 'playlist_{playlist}.url'.format(playlist=playlist))
+            for num in range(1, 6):
+                enabled = ADDON.getSetting('playlist_{}_enabled'.format(num))
+                refr = ADDON.getSetting('playlist_{}_refr'.format(num))
+
+                if (enabled == 'false' or refr == 'false'):
+                    filepath = os.path.join(PROFILE_PATH, 'playlists', 'playlist_{playlist}.m3u'.format(playlist=num))
+                    urlpath = os.path.join(PROFILE_PATH, 'playlists', 'playlist_{playlist}.url'.format(playlist=num))
                     if os.path.exists(filepath):
                         os.remove(filepath)
                     if os.path.exists(urlpath):
@@ -870,7 +873,7 @@ class Database(object):
 
                             with open(playlist_cache, 'w', encoding='utf-8') as f:
                                 for service in r_services:
-                                    if service != 'playlist_{0}'.format(playlist):
+                                    if service != 'playlist_{0}'.format(num):
                                         f.write(service+'\n')
                     else:
                         if os.path.exists(playlist_cache):
@@ -879,10 +882,14 @@ class Database(object):
 
                             with codecs.open(playlist_cache, 'w', encoding='utf-8') as f:
                                 for service in r_services:
-                                    if service != 'playlist_{0}'.format(playlist):
+                                    if service != 'playlist_{0}'.format(num):
                                         f.write(service+'\n')
 
-            playlists = [playlist for playlist in services if 'playlist_' in playlist]
+            for s in services:
+                if s not in serviceList:
+                    self.deleteCustomStreams(s.serviceName, s.serviceRegex)
+
+            playlists = [playlist for playlist in [x.serviceName for x in services] if 'playlist_' in playlist]
 
             if not playlists:
                 if os.path.exists(playlist_cache):
@@ -1070,6 +1077,7 @@ class Database(object):
 
         # Waiting for all services
         deb('[UPD] Waiting for loading STRM')
+
         for priority in reversed(list(range(self.number_of_service_priorites))):
             for service in serviceList:
                 if strings2.M_TVGUIDE_CLOSING:
@@ -1087,8 +1095,8 @@ class Database(object):
                             time.sleep(1)
 
                     service.waitUntilDone()
-                    if (not cacheList or 'playlist_' not in service.serviceName):
-                        self.storeCustomStreams(service, service.serviceName, service.serviceRegex)
+                    if service.serviceName not in cacheList:
+                        self.storeCustomStreams(service, priority, service.serviceName, service.serviceRegex)
 
         serviceList = []
         self.printStreamsWithoutChannelEPG()
@@ -1140,9 +1148,8 @@ class Database(object):
 
         return result.items()
 
-    def storeCustomStreams(self, streams, streamSource, serviceStreamRegex):
+    def storeCustomStreams(self, streams, priority, streamSource, serviceStreamRegex):
         try:
-            #if len(streams.automap) > 0 and len(streams.channels) > 0:
             self.deleteCustomStreams(streamSource, serviceStreamRegex)
             #deb('-------------------------------------------------------------------------------------')
             #deb('[UPD] Updating database')
@@ -1169,14 +1176,14 @@ class Database(object):
                             backup = True
 
                             if PY3:
-                                c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [channelid, x.strm + '_BACKUP'])
+                                c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url, priority) VALUES(?, ?, ?)", [channelid, x.strm + '_BACKUP', priority])
                             else:
-                                c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [channelid.decode('utf-8'), x.strm + '_BACKUP'])
+                                c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url, priority) VALUES(?, ?, ?)", [channelid.decode('utf-8'), x.strm + '_BACKUP', priority])
 
                         if PY3:
-                            c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid, x.strm])
+                            c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url, priority) VALUES(?, ?, ?)", [x.channelid, x.strm, priority])
                         else:
-                            c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [x.channelid.decode('utf-8'), x.strm])
+                            c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url, priority) VALUES(?, ?, ?)", [x.channelid.decode('utf-8'), x.strm, priority])
 
                         if backup:
                             nrOfChannelsUpdated += 2
@@ -1188,14 +1195,12 @@ class Database(object):
 
             self.conn.commit()
             c.close()
-            #deb('[UPD] Finished updating database, stored: {} streams from service: {}'.format(nrOfChannelsUpdated, streamSource))
 
         except Exception as ex:
             deb('[UPD] Error updating streams: {}'.format(getExceptionString()))
 
             self.conn.commit()
             c.close()
-            #deb('[UPD] Finished updating database, stored: {} streams from service: {}'.format(nrOfChannelsUpdated, streamSource))
 
         except Exception as ex:
             deb('[UPD] Error updating streams: {}'.format(getExceptionString()))
@@ -1258,8 +1263,8 @@ class Database(object):
             for service in serviceList:
                 if priority == service.servicePriority:
                     service.waitUntilDone()
-                    if (not cacheList or 'playlist_' not in service.serviceName):
-                        self.storeCustomStreams(service, service.serviceName, service.serviceRegex)
+                    if service.serviceName not in cacheList:
+                        self.storeCustomStreams(service, priority, service.serviceName, service.serviceRegex)
 
     def setCategory(self, category):
         try:
@@ -2017,7 +2022,7 @@ class Database(object):
         if stream_url is not None:
             c = self.conn.cursor()
             c.execute("DELETE FROM custom_stream_url WHERE channel like ?", [channel.id])
-            c.execute("INSERT INTO custom_stream_url(channel, stream_url) VALUES(?, ?)", [channel.id, stream_url])#.decode('utf-8', 'ignore')])
+            c.execute("INSERT INTO custom_stream_url(channel, stream_url, priority) VALUES(?, ?, ?)", [channel.id, stream_url, 12]) #.decode('utf-8', 'ignore')])
             self.conn.commit()
             c.close()
             self.channelList = None
@@ -2043,10 +2048,11 @@ class Database(object):
     def _getCustomStreamUrlList(self, channel):
         result = list()
         c = self.conn.cursor()
-        c.execute("SELECT stream_url FROM custom_stream_url WHERE channel like ? OR channel like ?", [channel.id, channel.title])
+        c.execute("SELECT stream_url, priority FROM custom_stream_url WHERE channel like ? OR channel like ?", [channel.id, channel.title])
         for row in c:
             url = row[str('stream_url')]
-            result.append(url)
+            priority = row[str('priority')]
+            result.append([url, priority])
         c.close()
         return result
 
@@ -2081,7 +2087,7 @@ class Database(object):
 
         for row in c:
             if row[str('channel')].upper() in channelList:
-            
+
                 url = row[str('channel')]
                 cid = row[str('stream_url')]
 
@@ -2089,7 +2095,7 @@ class Database(object):
                     result[url].append(cid)
                 else:
                     result[url]=[cid]
-        
+
         c.close()
 
         return result
@@ -2119,12 +2125,10 @@ class Database(object):
         customStreamUrlList = self.getCustomStreamUrlList(channel)
         if len(customStreamUrlList) > 0:
             for url in customStreamUrlList:
-                url = url.encode('utf-8', 'ignore')
-                
-                deb('getStreamUrlList channel: %-30s, stream: %-30s' % (channel.id, url))
+                deb('getStreamUrlList channel: %-30s, stream: %-30s' % (channel.id, url[0]))
 
         elif channel.isPlayable():
-            streamUrl = channel.streamUrl.encode('utf-8', 'ignore')
+            streamUrl = channel.streamUrl
             customStreamUrlList.append(streamUrl)
         return customStreamUrlList
 
@@ -2404,6 +2408,17 @@ class Database(object):
             if version < [6, 7, 5]:
                 c.execute('ALTER TABLE programs ADD COLUMN rating TEXT DEFAULT NULL')
                 c.execute('UPDATE version SET major=6, minor=7, patch=5')
+                neededRestart = False
+
+                self.conn.commit()
+
+                if neededRestart:
+                    deb('Required m-TVGuide restart')
+                    raise RestartRequired()
+
+            if version < [6, 7, 6]:
+                c.execute('ALTER TABLE custom_stream_url ADD COLUMN priority INTEGER DEFAULT 0')
+                c.execute('UPDATE version SET major=6, minor=7, patch=6')
                 neededRestart = False
 
                 self.conn.commit()

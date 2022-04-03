@@ -121,7 +121,7 @@ SERVICES = {
 for serviceName in list(SERVICES.keys()):
     if SERVICES[serviceName].serviceEnabled != 'true':
         SERVICES[serviceName].close()
-        del SERVICES[serviceName]
+        #del SERVICES[serviceName]
 
 class BasePlayService:
     lockMap = {}
@@ -232,11 +232,18 @@ class PlayService(xbmc.Player, BasePlayService):
         self.maxStreamStartupTime   = int(ADDON.getSetting('max_wait_for_playback')) * 10
         self.strmUrl                = None
         self.service                = None   
-        self.customPlugin           = False     
+        self.customPlugin           = False 
 
-    def playUrlList(self, urlList, archiveService, archivePlaylist, resetReconnectCounter=False):
+    def playUrlList(self, urlList, archiveService, archivePlaylist, resetReconnectCounter=False, playNext=False):
         self.archiveService = archiveService
         self.archivePlaylist = archivePlaylist
+
+        if not playNext:
+            try:
+                urlList = sorted(urlList, key=lambda x: x[1], reverse=True)
+            except:
+                pass
+
         if urlList is None or len(urlList) == 0:
             deb('playUrlList got empty list to play - aborting!')
             self.starting = False
@@ -268,11 +275,16 @@ class PlayService(xbmc.Player, BasePlayService):
 
         for url in self.urlList[:]:
 
+            try:
+                strmUrl = url[0]
+            except:
+                pass
+
             if self.userStoppedPlayback or self.terminating or strings2.M_TVGUIDE_CLOSING:
                 deb('_playUrlList aborting loop, self.userStoppedPlayback: {}, self.terminating: {}'.format(self.userStoppedPlayback, self.terminating))
                 return
 
-            playStarted, customPlugin = self.playUrl(url)
+            playStarted, customPlugin = self.playUrl(strmUrl)
 
             if playStarted is None:
                 return
@@ -368,8 +380,11 @@ class PlayService(xbmc.Player, BasePlayService):
         if self.urlList and len(self.urlList) > 1:
             tmpUrl = self.urlList.pop(0)
             self.urlList.append(tmpUrl)
+
+            playNext = True
+
             debug('PlayService playNextStream skipping: {}, next: {}'.format(tmpUrl, self.urlList[0]))
-            self.playUrlList(self.urlList, self.archiveService, self.archivePlaylist)
+            self.playUrlList(self.urlList, self.archiveService, self.archivePlaylist, playNext=playNext)
 
     def archiveService(self):
         archiveStr = self.archiveService

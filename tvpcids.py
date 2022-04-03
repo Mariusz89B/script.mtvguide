@@ -90,8 +90,8 @@ class TvpUpdater(baseServiceUpdater):
         self.serviceName        = serviceName
         self.localMapFile       = 'basemap_pl.xml'
         baseServiceUpdater.__init__(self)
-        self.serviceEnabled     = ADDON.getSetting('tvp_enabled')
-        self.servicePriority    = int(ADDON.getSetting('priority_tvp'))
+        self.serviceEnabled     = ADDON.getSetting('tvpgo_enabled')
+        self.servicePriority    = int(ADDON.getSetting('priority_tvpgo'))
         self.url = url
 
     def loginService(self):
