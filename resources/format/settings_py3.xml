@@ -3100,11 +3100,14 @@
 				</setting>
 				<setting help="95054" id="set_key" label="31002" type="action">
 					<level>1</level>
-					<data>RunScript(special://home/addons/script.mtvguide/setkey.py)</data>
+					<default></default>
 					<constraints>
 						<allowempty>true</allowempty>
 					</constraints>
-					<control format="action" type="button"/>
+					<control type="button" format="action">
+						<data>RunScript(special://home/addons/script.mtvguide/setkey.py,Key)</data>
+						<close>true</close>
+					</control>
 				</setting>
 				<setting help="" id="info_key" type="string">
 					<level>0</level>

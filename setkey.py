@@ -53,11 +53,20 @@ import time
 from strings import *
 
 ACTION_MOUSE_MOVE = 107
+KEYLIST = list()
 
-class start():
-
+class SettingsImp():
     def __init__(self):
-        self.set_key = self.set_key()
+        try:
+            self.command = sys.argv[1]
+        except:
+            self.command = None
+
+        if self.command is None or self.command == '':
+            return
+
+        if self.command == 'Key':
+            self.set_key()
 
     def set_key(self):
         a_info = ADDON.getSetting(id="info_key")
@@ -72,7 +81,29 @@ class start():
         a_volDown = ADDON.getSetting(id="volume_down_key")
         a_switchLastKey = ADDON.getSetting(id="switch_to_last_key")
 
-        keyList = ['info_key', 'stop_key', 'pp_key', 'pm_key', 'home_key', 'context_key', 'record_key', 'list_key', 'volume_up_key', 'volume_down_key', 'switch_to_last_key']
+        for k in KEYLIST:
+            if 'info_key' == k[0]:
+                a_info = k[1]
+            elif 'stop_key' == k[0]:
+                a_stop = k[1]
+            elif 'pp_key' == k[0]:
+                a_pp = k[1]
+            elif 'pm_key' == k[0]:
+                a_pm = k[1]
+            elif 'home_key' == k[0]:
+                a_home = k[1]
+            elif 'context_key' == k[0]:
+                a_ctxt = k[1]
+            elif 'record_key' == k[0]:
+                a_rec = k[1]
+            elif 'list_key' == k[0]:
+                a_list = k[1]
+            elif 'volume_up_key' == k[0]:
+                a_volUp = k[1]
+            elif 'volume_down_key' == k[0]:
+                a_volDown = k[1]
+            elif 'switch_to_last_key' == k[0]:
+                a_switchLastKey = k[1]
 
         info = strings(31009) + '     ' + '[COLOR selected]' + a_info + '[/COLOR]'
         stop = strings(31008) + '     ' + '[COLOR selected]' + a_stop + '[/COLOR]'
@@ -87,13 +118,12 @@ class start():
         switchLastKey = strings(31017) + '     ' + '[COLOR selected]' + a_switchLastKey + '[/COLOR]'
         resetAll = '[COLOR red]' + strings(30010) + '[/COLOR]'
 
+        keyList = ['info_key', 'stop_key', 'pp_key', 'pm_key', 'home_key', 'context_key', 'record_key', 'list_key', 'volume_up_key', 'volume_down_key', 'switch_to_last_key']
+
         ret = xbmcgui.Dialog().select(strings(31002), [info, stop, pp, pm, home, ctxt, rec, listing, volUp, volDown, switchLastKey, resetAll])
 
         if ret >= 0 and ret < len(keyList):
-            newkey = KeyListener.record_key()
-            newid = keyList[ret]
-            ADDON.setSetting(id=newid, value=newkey)
-            xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)
+            self.get_key(keyList, ret)
 
         elif ret == len(keyList):
             xbmcgui.Dialog().ok(strings(31002), strings(30013))
@@ -110,7 +140,14 @@ class start():
             a_switchLastKey = ADDON.setSetting(id="switch_to_last_key", value="")
 
         else:
-            return
+            return xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)
+
+    def get_key(self, keyList, ret):
+        newkey = KeyListener.record_key()
+        newid = keyList[ret]
+        ADDON.setSetting(id=newid, value=newkey)
+        KEYLIST.append([newid, newkey])
+        return xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)
 
 class KeyListener(xbmcgui.WindowXMLDialog):
     TIMEOUT = 10
@@ -155,5 +192,4 @@ class KeyListener(xbmcgui.WindowXMLDialog):
         del dialog
         return key
 
-if __name__ == '__main__':
-    dialog = start()
+settingI = SettingsImp()

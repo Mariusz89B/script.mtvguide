@@ -251,7 +251,7 @@
 		<setting id="touch_panel" label="30910" type="bool" default="false"/>
 		<setting id="categories_remember" label="30993" type="bool" visible="true" default="true" />
 		<setting id="category" visible="false"/>
-		<setting label="31002" type="action" action="RunScript($CWD/setkey.py)"/>
+		<setting label="31002" action="RunScript($CWD/setkey.py, Key)" option="close" type="action"/>
 		<setting id="info_key" visible="false"/>
 		<setting id="stop_key" visible="false"/>
 		<setting id="pp_key" visible="false"/>
