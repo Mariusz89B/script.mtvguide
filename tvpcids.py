@@ -110,7 +110,7 @@ class TvpUpdater(baseServiceUpdater):
         self.log('\n\n')
         self.log('[UPD] Downloading list of available {} channels from {}'.format(self.serviceName, self.url))
         self.log('[UPD] -------------------------------------------------------------------------------------')
-        self.log('[UPD] %-10s %-35s %-15s %-20s %-35s' % ( '-CID-', '-NAME-', '-GEOBLOCK-', '-ACCESS STATUS-', '-IMG-'))
+        self.log('[UPD] %-12s %-35s %-35s' % ( '-CID-', '-NAME-', '-TITLE-'))
 
         try:
             url = "https://tvpstream.tvp.pl/api/tvp-stream/program-tv/stations"
@@ -122,15 +122,19 @@ class TvpUpdater(baseServiceUpdater):
             if ch_data:
                 for c in ch_data:
                     cid = c['code'] + '_TS_3'
-                    name = c['name'].replace('EPG - ', '').replace('TVP3', 'TVP 3').replace('Historia2', 'Historia 2').replace('UA1', 'UA 1')
+                    name = c['name'].replace('EPG - ', '').replace('TVP3', 'TVP 3').replace('Historia2', 'Historia 2').replace('Kultura2', 'Kultura 2').replace('UA1', 'UA 1')
                     title = name + ' PL'
                     img = c['image_square']['url'].replace('{width}','140').replace('{height}','140')
 
                     program = TvCid(cid=cid, name=name, title=title, img=img)
                     result.append(program)
 
+                    self.log('[UPD] %-12s %-35s %-35s' % (cid, name, title))
+
             if len(result) <= 0:
                 self.log('Error while parsing service {}, returned data is: {}'.format(self.serviceName, str(response)))
+
+            self.log('-------------------------------------------------------------------------------------')
 
         except:
             self.log('getChannelList exception: {}'.format(getExceptionString()))

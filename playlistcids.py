@@ -485,7 +485,7 @@ class PlaylistUpdater(baseServiceUpdater):
             self.log('\n\n')
             self.log('[UPD] Downloading a list of available channels for {}'.format(self.serviceName))
             self.log('-------------------------------------------------------------------------------------')
-            self.log('[UPD]     %-40s %-12s %-35s' % ('-ORIG NAME-', '-CID-', '-STRM-'))
+            self.log('[UPD] %-12s %-35s %-35s %-35s' % ( '-CID-', '-NAME-', '-TITLE-', '-STRM-'))
 
             if channelsArray and len(channelsArray) > 0:
                 for line in channelsArray:
@@ -681,9 +681,9 @@ class PlaylistUpdater(baseServiceUpdater):
                                 if tvg_id and tvg_title != '':
                                     sdList.append(TvCid(cid=channelCid, name=tvg_title, title=tvg_title, strm=stripLine, catchup=catchupLine))
 
-                            self.log('[UPD]     %-40s %-12s %-35s' % (title, channelCid, stripLine))
+                            self.log('[UPD] %-12s %-35s %-35s %-35s' % (channelCid, name, title, stripLine))
                             if tvg_id and tvg_title != '':
-                                self.log('[TVG]     %-40s %-12s %-35s' % (tvg_title, channelCid, stripLine))
+                                self.log('[TVG] %-12s %-35s %-35s %-35s' % (channelCid, tvg_title, title, stripLine))
                             nextFreeCid = nextFreeCid + 1
 
                         #else:

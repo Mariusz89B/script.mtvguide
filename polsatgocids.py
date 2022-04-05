@@ -408,7 +408,7 @@ class PolsatGoUpdater(baseServiceUpdater):
                 return base64.b64decode(s)
 
         secretAccessKey = base64_decode(skey.replace('-','+').replace('_','/'))
-        
+
         auth = hmac.new(secretAccessKey, ssdalej.encode("ascii"), sha256)
         vv = base64.b64encode(bytes(auth.digest())).decode("ascii")
 
@@ -423,7 +423,7 @@ class PolsatGoUpdater(baseServiceUpdater):
         self.sesstoken = sesja['id']
         self.sessexpir = str(sesja['keyExpirationTime'])
         self.sesskey = sesja['key']
-        
+
         ADDON.setSetting('polsatgo_sesstoken', self.sesstoken)
         ADDON.setSetting('polsatgo_sessexpir', str(self.sessexpir))
         ADDON.setSetting('polsatgo_sesskey', self.sesskey)
@@ -431,14 +431,14 @@ class PolsatGoUpdater(baseServiceUpdater):
 
     def getChannelList(self, silent):
         result = list()
-        
+
         if not self.loginService():
             return result
 
         self.log('\n\n')
         self.log('[UPD] Downloading list of available {} channels from {}'.format(self.serviceName, self.url))
         self.log('[UPD] -------------------------------------------------------------------------------------')
-        self.log('[UPD] %-10s %-35s %-35s' % ( '-CID-', '-NAME-', '-IMG-'))
+        self.log('[UPD] %-12s %-35s %-35s' % ( '-CID-', '-NAME-', '-TITLE-'))
 
         try:
             self.getSesja()
@@ -446,11 +446,11 @@ class PolsatGoUpdater(baseServiceUpdater):
 
             self.sesstoken = ADDON.getSetting('polsatgo_sesstoken')
             self.sessexpir = ADDON.getSetting('polsatgo_sessexpir')
-            
+
             self.dane = self.sesstoken+'|'+self.sessexpir+'|{0}|{1}'
 
             dane = (self.dane).format('navigation','getTvChannels')
-            
+
             authdata = self.getHmac(dane)
 
             self.client_id = ADDON.getSetting('polsatgo_client_id')
@@ -517,16 +517,20 @@ class PolsatGoUpdater(baseServiceUpdater):
                         cid = i['id']
                         name = i['title'].upper()
                         title = i['title'].upper() + ' PL'
-                        
+
                         name = name.replace(' SD', '')
                         title = title.replace(' SD', '')
 
                         program = TvCid(cid=cid, name=name, title=title, img=img)
                         result.append(program)
 
+                        self.log('[UPD] %-12s %-35s %-35s' % (cid, name, title))
+
             if len(result) <= 0:
                 self.noContentMessage()
                 self.log('Error while parsing service %s' % (self.serviceName))
+
+            self.log('-------------------------------------------------------------------------------------')
 
         except Exception as e:
             self.log('getChannelList exception: %s' % getExceptionString())

@@ -61,6 +61,7 @@ import time, datetime
 import xbmc, xbmcgui, xbmcvfs
 from unidecode import unidecode
 from xml.etree import ElementTree
+from collections import OrderedDict
 from strings import *
 from groups import *
 import simplejson as json
@@ -536,7 +537,7 @@ class MapString:
                 string_xml = '\n<channel id="{}" title="" strm=""/>'.format(title)
                 xmlstr += string_xml
 
-                if titles:   
+                if titles:
                     string_xml = '\n<channel id="{0}" title="" titles="{1}" strm=""/>'.format(title, titles)
                     xmlstr += string_xml
 
@@ -616,10 +617,10 @@ class SleepSupervisor(object):
         self.sleepTimer = int(ADDON.getSetting('sleep_timer')) * 60 #time in secs
         self.timer = None
         self.actions = {
-                        '0': 'PlayerControl(Stop)',
-                        '1': 'Quit',
-                        '2': 'Powerdown',
-                        '3': 'Suspend'
+            '0': 'PlayerControl(Stop)',
+            '1': 'Quit',
+            '2': 'Powerdown',
+            '3': 'Suspend'
         }
         try:
             self.action = self.actions[self.sleepAction]
@@ -826,7 +827,7 @@ class baseServiceUpdater:
             map += MapString.loadFile(os.path.join(pathMapBase, 'basemap.xml'), self.log)
             self.log('{} file download failed - using local map: {}'.format(lang, localMapFilename))
 
-        entries, _, seCat         = MapString.FastParse(map, epg_channels, None)
+        entries, _, seCat         = MapString.FastParse(map, epg_channels, False)
 
         if entries is not None:
             baseServiceUpdater.baseMapContent.extend(entries)
@@ -842,7 +843,7 @@ class baseServiceUpdater:
             xbmcvfs.copy(os.path.join(pathMapBase, mapFilePath), os.path.join(pathMapExtraBase, mapFilePath))
         localMapFilename      = os.path.join(pathMapExtraBase, mapFilePath)
         map                   = MapString.loadFile(localMapFilename, self.log)
-        entries, _, seCat         = MapString.FastParse(map, None, None)
+        entries, _, seCat         = MapString.FastParse(map, None, False)
         baseServiceUpdater.baseMapContent.extend(entries)
         for id in seCat:
             if id in baseServiceUpdater.categories:
@@ -875,10 +876,10 @@ class baseServiceUpdater:
 
                 if dedicatedMapfile:
                     if not self.refreshingStreams:
-                        dedicatedMap, rstrm, _ = MapString.FastParse(dedicatedMapfile, None, self.log)
+                        dedicatedMap, rstrm, _ = MapString.FastParse(dedicatedMapfile, None, False) #self.log)
                     else:
                         #Avoid printing content of map to log on every refresh
-                        dedicatedMap, rstrm, _ = MapString.FastParse(dedicatedMapfile, None, None)
+                        dedicatedMap, rstrm, _ = MapString.FastParse(dedicatedMapfile, None, False)
                     for dedicatedEntry in dedicatedMap:
                         for baseEntry in self.automap:
                             if dedicatedEntry.channelid == baseEntry.channelid:
@@ -904,7 +905,7 @@ class baseServiceUpdater:
             pass 
         return self.serviceName
 
-    def getBaseChannelList(self, silent=False, returnCopy=True):
+    def getBaseChannelList(self, silent=False, returnCopy=True): ## need fix
         result = list()
         try:
             if self.channelList and self.isChannelListStillValid():
@@ -958,6 +959,8 @@ class baseServiceUpdater:
             channelList = []
             filtered_channels = []
 
+            duplicate = {}
+
             for x in self.automap[:]:
                 if strings2.M_TVGUIDE_CLOSING:
                     self.log('loadChannelList loop service {} requested abort!'.format(self.serviceName))
@@ -998,7 +1001,9 @@ class baseServiceUpdater:
                             except:
                                 filtered_channels = [z for z in self.channels if unidecode(x.channelid.upper()) == unidecode(self.decodeString(z.name).upper())]
 
-                    for y in filtered_channels:
+                    ordered_channels = [duplicate.setdefault(x, x) for x in filtered_channels if x not in duplicate]
+
+                    for y in ordered_channels:
                         if x.strm != '' and self.addDuplicatesToList:
                             newMapElement = copy.deepcopy(x)
                             newMapElement.strm = self.rstrm % y.cid
@@ -1066,7 +1071,7 @@ class baseServiceUpdater:
                         except:
                             self.log('[UPD]     %-40s %-40s %-12s %-35s' % (unidecode(self.decodeString(y.title.upper())), unidecode(self.decodeString(y.name)), y.cid, y.strm))
 
-            channelList = list(dict.fromkeys(channelList))
+            channelList = list(OrderedDict.fromkeys(channelList))
 
             if PY3:
                 with open(file_name, 'ab+') as f:

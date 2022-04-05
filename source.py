@@ -733,8 +733,9 @@ class Database(object):
             self.updateFailed = True
             return
 
-    def cachePlaylist(self, serviceName):
+    def cachePlaylist(self, serviceHandler):
         playlist_cache = os.path.join(PROFILE_PATH, 'playlist_cache.list')
+        serviceName = serviceHandler.serviceName
 
         n = datetime.now()
         d = timedelta(days=int(ADDON.getSetting('{playlist}_refr_days'.format(playlist=serviceName))))
@@ -777,6 +778,16 @@ class Database(object):
 
         if int(tnow) >= int(cachedate) or (not os.path.exists(filepath) or os.stat(filepath).st_size <= 0 or url != url_setting):
             deb('[UPD] Cache playlist: Write, expiration date: {}'.format(datetime.fromtimestamp(int(cachedate))))
+            cache = False
+
+        else:
+            if ADDON.getSetting('{playlist}_refr'.format(playlist=serviceName)) == 'true':
+                deb('[UPD] Cache playlist: Read')
+                cache = True
+            else:
+                cache = False
+
+        if not cache:
             if PY3:
                 if os.path.exists(playlist_cache):
                     with open(playlist_cache, 'r', encoding='utf-8') as r:
@@ -795,32 +806,31 @@ class Database(object):
                         for service in services:
                             if service != serviceName:
                                 f.write(service+'\n')
-
         else:
-            deb('[UPD] Cache playlist: Read')
-            if ADDON.getSetting('{}_refr'.format(serviceName)) == 'true':
-                if (os.path.exists(filepath) or os.stat(filepath).st_size > 0 or url == url_setting):
-                    if PY3:
-                        try:
-                            with open(playlist_cache, 'r', encoding='utf-8') as r:
-                                services = r.read().splitlines()
-                        except:
-                            services = []
+            if (os.path.exists(filepath) or os.stat(filepath).st_size > 0 or url == url_setting):
+                if PY3:
+                    try:
+                        with open(playlist_cache, 'r', encoding='utf-8') as r:
+                            services = r.read().splitlines()
+                    except:
+                        services = []
 
-                        with open(playlist_cache, 'a', encoding='utf-8') as f:
-                            if serviceName not in services:
-                                f.write(serviceName+'\n')
+                    with open(playlist_cache, 'a', encoding='utf-8') as f:
+                        if serviceName not in services:
+                            f.write(serviceName+'\n')
 
-                    else:
-                        try:
-                            with codecs.open(playlist_cache, 'r', encoding='utf-8') as r:
-                                services = r.read().splitlines()
-                        except:
-                            services = []
+                else:
+                    try:
+                        with codecs.open(playlist_cache, 'r', encoding='utf-8') as r:
+                            services = r.read().splitlines()
+                    except:
+                        services = []
 
-                        with codecs.open(playlist_cache, 'a', encoding='utf-8') as f:
-                            if serviceName not in services:
-                                f.write(serviceName+'\n')
+                    with codecs.open(playlist_cache, 'a', encoding='utf-8') as f:
+                        if serviceName not in services:
+                            f.write(serviceName+'\n')
+
+        return cache
 
     def updateChannelAndProgramListCaches(self, callback, date = datetime.now(), progress_callback = None, initializing=False, startup=False, force=False, clearExistingProgramList = True):
         self.eventQueue.append([self._updateChannelAndProgramListCaches, callback, date, progress_callback, initializing, startup, force, clearExistingProgramList])
@@ -834,9 +844,7 @@ class Database(object):
         sqlite3.register_adapter(datetime, self.adapt_datetime)
         sqlite3.register_converter(str('timestamp'), self.convert_datetime)
 
-        playlist_cache = os.path.join(PROFILE_PATH, 'playlist_cache.list')
-
-        cacheList = []
+        cacheList = dict()
 
         # Start service threads
         updateServices = self.services_updated == False and UPDATE_CID
@@ -852,59 +860,15 @@ class Database(object):
                 if serviceHandler.serviceEnabled == 'true':
                     serviceList.append(serviceHandler)
                     if 'playlist_' in serviceName:
-                        self.cachePlaylist(serviceName)
-
-            for num in range(1, 6):
-                enabled = ADDON.getSetting('playlist_{}_enabled'.format(num))
-                refr = ADDON.getSetting('playlist_{}_refr'.format(num))
-
-                if (enabled == 'false' or refr == 'false'):
-                    filepath = os.path.join(PROFILE_PATH, 'playlists', 'playlist_{playlist}.m3u'.format(playlist=num))
-                    urlpath = os.path.join(PROFILE_PATH, 'playlists', 'playlist_{playlist}.url'.format(playlist=num))
-                    if os.path.exists(filepath):
-                        os.remove(filepath)
-                    if os.path.exists(urlpath):
-                        os.remove(urlpath)
-
-                    if PY3:
-                        if os.path.exists(playlist_cache):
-                            with open(playlist_cache, 'r', encoding='utf-8') as r:
-                                r_services = r.read().splitlines()
-
-                            with open(playlist_cache, 'w', encoding='utf-8') as f:
-                                for service in r_services:
-                                    if service != 'playlist_{0}'.format(num):
-                                        f.write(service+'\n')
-                    else:
-                        if os.path.exists(playlist_cache):
-                            with codecs.open(playlist_cache, 'r', encoding='utf-8') as r:
-                                r_services = r.read().splitlines()
-
-                            with codecs.open(playlist_cache, 'w', encoding='utf-8') as f:
-                                for service in r_services:
-                                    if service != 'playlist_{0}'.format(num):
-                                        f.write(service+'\n')
-
-            for s in services:
-                if s not in serviceList:
-                    self.deleteCustomStreams(s.serviceName, s.serviceRegex)
-
-            playlists = [playlist for playlist in [x.serviceName for x in services] if 'playlist_' in playlist]
-
-            if not playlists:
-                if os.path.exists(playlist_cache):
-                    os.remove(playlist_cache)
-
-            if os.path.exists(playlist_cache):
-                if PY3:
-                    with open(playlist_cache, 'r', encoding='utf-8') as r:
-                        cacheList = r.read().splitlines()
-                else:
-                    with codecs.open(playlist_cache, 'r', encoding='utf-8') as r:
-                        cacheList = r.read().splitlines()
+                        cache = self.cachePlaylist(serviceHandler)
+                        cacheList.update({serviceHandler: {'cache': cache}})
 
             if not cacheList:
                 self.deleteAllCustomStreams()
+            else:
+                for s in services:
+                    if s not in serviceList:
+                        self.deleteCustomStreams(s.serviceName, s.serviceRegex)
 
         cacheExpired = self._isCacheExpired(date, initializing, startup, force)
 
@@ -1077,25 +1041,30 @@ class Database(object):
 
         # Waiting for all services
         deb('[UPD] Waiting for loading STRM')
-
         for priority in reversed(list(range(self.number_of_service_priorites))):
             for service in serviceList:
                 if strings2.M_TVGUIDE_CLOSING:
                     break
 
                 if priority == service.servicePriority:
-                    if service.serviceName not in cacheList:
+                    cached_service = [v['cache'] for k,v in cacheList.items() if k == service]
+                    if cached_service:
+                        cache = cached_service[0]
+                    else:
+                        cache = False
+
+                    if not cache:
                         service.startLoadingChannelList(epgChannels)
 
                     if progress_callback:
-                        if service.serviceName not in cacheList:
+                        if not cache:
                             progress_callback(100, "{}: {}".format(strings(59915), service.getDisplayName()) )
                         else:
                             progress_callback(100, "{}: {}".format(strings(59915), strings(69072)) )
-                            time.sleep(1)
+                            time.sleep(0.3)
 
                     service.waitUntilDone()
-                    if service.serviceName not in cacheList:
+                    if not cache:
                         self.storeCustomStreams(service, priority, service.serviceName, service.serviceRegex)
 
         serviceList = []
@@ -1181,7 +1150,7 @@ class Database(object):
                                 c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url, priority) VALUES(?, ?, ?)", [channelid.decode('utf-8'), x.strm + '_BACKUP', priority])
 
                         if PY3:
-                            c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url, priority) VALUES(?, ?, ?)", [x.channelid, x.strm, priority])
+                            c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url, priority) VALUES(?, ?, ?)", [x.channelid, x.strm, priority])
                         else:
                             c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url, priority) VALUES(?, ?, ?)", [x.channelid.decode('utf-8'), x.strm, priority])
 
@@ -1284,6 +1253,7 @@ class Database(object):
         return result
 
     def _getEPGView(self, channelStart, date, progress_callback, initializing, startup, force, clearExistingProgramList):
+        deb('_getEPGView')
         if strings2.M_TVGUIDE_CLOSING:
             self.updateFailed = True
             return
@@ -1454,6 +1424,7 @@ class Database(object):
         return result
 
     def _getChannelList(self, onlyVisible, customCategory=None, excludeCurrentCategory = False):
+        deb('_getChannelList')
         try:
             if not self.channelList or not onlyVisible or excludeCurrentCategory or customCategory:
 
@@ -1957,6 +1928,7 @@ class Database(object):
         return program
 
     def _getProgramList(self, channels, startTime):
+        deb('_getProgramList')
         programList = list()
         try:
             """
@@ -2003,6 +1975,7 @@ class Database(object):
         return programList
 
     def _isProgramListCacheExpired(self, date = datetime.now()):
+        deb('_isProgramListCacheExpired')
         # check if data is up-to-date in database
         dateStr = date.strftime('%Y-%m-%d')
         c = self.conn.cursor()
@@ -2019,6 +1992,7 @@ class Database(object):
         # no result, but block until operation is done
 
     def _setCustomStreamUrl(self, channel, stream_url):
+        deb('_setCustomStreamUrl')
         if stream_url is not None:
             c = self.conn.cursor()
             c.execute("DELETE FROM custom_stream_url WHERE channel like ?", [channel.id])
@@ -2031,6 +2005,7 @@ class Database(object):
         return self._invokeAndBlockForResult(self._getCustomStreamUrl, channel)
 
     def _getCustomStreamUrl(self, channel):
+        deb('_getCustomStreamUrl')
         c = self.conn.cursor()
         c.execute("SELECT stream_url FROM custom_stream_url WHERE channel like ? limit 1", [channel.id])
         stream_url = c.fetchone()
@@ -2046,6 +2021,7 @@ class Database(object):
         return self._invokeAndBlockForResult(self._getCustomStreamUrlList, channel)
 
     def _getCustomStreamUrlList(self, channel):
+        deb('_getCustomStreamUrlList')
         result = list()
         c = self.conn.cursor()
         c.execute("SELECT stream_url, priority FROM custom_stream_url WHERE channel like ? OR channel like ?", [channel.id, channel.title])
@@ -2060,6 +2036,7 @@ class Database(object):
         return self._invokeAndBlockForResult(self._getAllStreamUrlList)
 
     def _getAllStreamUrlList(self):
+        deb('_getAllStreamUrlList')
         result = list()
         c = self.conn.cursor()
         c.execute("SELECT channel, stream_url FROM custom_stream_url")
@@ -2074,6 +2051,7 @@ class Database(object):
         return self._invokeAndBlockForResult(self._getAllCatchupUrlList, channels)
 
     def _getAllCatchupUrlList(self, channels):
+        deb('_getAllCatchupUrlList')
         result = dict()
 
         channelList = list()
@@ -2105,6 +2083,7 @@ class Database(object):
         self.event.set()
 
     def _deleteCustomStreamUrl(self, channel):
+        deb('_deleteCustomStreamUrl')
         c = self.conn.cursor()
         c.execute("DELETE FROM custom_stream_url WHERE channel like ?", [channel.id])
         self.conn.commit()
@@ -2112,6 +2091,7 @@ class Database(object):
         self.channelList = None
 
     def getStreamUrl(self, channel):
+        deb('getStreamUrl')
         customStreamUrl = self.getCustomStreamUrl(channel)
         if customStreamUrl:
             customStreamUrl = customStreamUrl.encode('utf-8', 'ignore')
@@ -2122,6 +2102,7 @@ class Database(object):
         return None
 
     def getStreamUrlList(self, channel):
+        deb('getStreamUrlList')
         customStreamUrlList = self.getCustomStreamUrlList(channel)
         if len(customStreamUrlList) > 0:
             for url in customStreamUrlList:

@@ -1220,7 +1220,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                     ListItem.setProperty('inputstream.adaptive.license_type', DRM)
                                     ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl) 
                                 ListItem.setProperty('IsPlayable', 'true')
-                            
+
                             self.strmUrl = strmUrl
                             xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
                             xbmcgui.Dialog().notification('WP Pilot', strings(30965))
@@ -1244,7 +1244,7 @@ class PlayService(xbmc.Player, BasePlayService):
                             strmUrl = redirected_strm
                         else:
                             strmUrl = channelInfo.strm
-                            
+
                         strmUrl_catchup = channelInfo.catchup
 
                         p = re.compile('service=playlist_\d&cid=\d+_AR.*')
@@ -1319,10 +1319,10 @@ class PlayService(xbmc.Player, BasePlayService):
 
                                                     if fsListType == 'index':
                                                         m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/timeshift_rel-' + str(offset) + '.m3u8' + str(fsUrlAppend)
-                                                        
+
                                                     elif fsListType == 'video':
                                                         m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/video-' + str(utc) + '-' + str(lutc) + '.m3u8' + str(fsUrlAppend)
-                                                    
+
                                                     elif any(x in fsListType for x in catchupList):
                                                         new_url = strmUrl + '?utc={utc}&lutc={lutc}'.format(utc=utc, lutc=lutc)
                                                         response = requests.get(new_url, allow_redirects=False, timeout=5)
@@ -1347,7 +1347,7 @@ class PlayService(xbmc.Player, BasePlayService):
 
                                                         r = matches.search(strmUrlNew)
                                                         fsUrlAppend = r.group(5) if r else ''
-                                                        
+
                                                         fsUrlAppend = re.sub('&.*$', '', str(fsUrlAppend))
                                                         fsListType = 'video'
 
@@ -1396,7 +1396,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                             elif mutv:
                                                 strmUrl = m_catchupSource + '?duration={duration}'.format(duration=str(int(duration)*60))
                                                 catchup = True
-                                                
+
                                             else:
                                                 if p.match(url):
                                                     deb('archive_type(1) wrong type')

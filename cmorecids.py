@@ -377,7 +377,7 @@ class CmoreUpdater(baseServiceUpdater):
         self.log('\n\n')
         self.log('[UPD] Downloading list of available {} channels from {}'.format(self.serviceName, self.url))
         self.log('[UPD] -------------------------------------------------------------------------------------')
-        self.log('[UPD] %-10s %-35s %-15s %-20s %-35s' % ( '-CID-', '-NAME-', '-GEOBLOCK-', '-ACCESS STATUS-', '-IMG-'))
+        self.log('[UPD] %-12s %-35s %-35s' % ( '-CID-', '-NAME-', '-TITLE-'))
 
         try: 
             channels = self.get_channels()
@@ -405,8 +405,13 @@ class CmoreUpdater(baseServiceUpdater):
                 program = TvCid(cid=cid, name=name, title=title, img=img)
                 result.append(program)
 
+                self.log('[UPD] %-12s %-35s %-35s' % (cid, name, title))
+
             if len(result) <= 0:
                 self.log('Error while parsing service {}, returned data is: {}'.format(self.serviceName, str(response)))
+
+            self.log('-------------------------------------------------------------------------------------')
+
         except:
             self.log('getChannelList exception: {}'.format(getExceptionString()))
         return result 

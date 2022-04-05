@@ -369,13 +369,13 @@ class TeliaPlayUpdater(baseServiceUpdater):
 
             url = 'https://ottapi.prod.telia.net/web/{cc}/tvclientgateway/rest/secure/v1/pubsub'.format(cc=cc[self.country])
 
-            headers = { 
-                    "User-Agent": UA,
-                    "Accept": "*/*",
-                    "Accept-Language": "sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6",
-                    "Authorization": "Bearer " + self.beartoken,
-                    'tv-client-boot-id': self.tv_client_boot_id,
-                }
+            headers = {
+                "User-Agent": UA,
+                "Accept": "*/*",
+                "Accept-Language": "sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6",
+                "Authorization": "Bearer " + self.beartoken,
+                'tv-client-boot-id': self.tv_client_boot_id,
+            }
 
             response = self.sendRequest(url, headers=headers, cookies=sess.cookies, allow_redirects=False, timeout=timeouts)
             if not response:
@@ -395,15 +395,15 @@ class TeliaPlayUpdater(baseServiceUpdater):
             return True
         except:
             self.log('getChannelList exception: {}'.format(getExceptionString()))
-            self.connErrorMessage()  
+            self.connErrorMessage()
         return False
 
     def loginService(self):
         self.dashjs = ADDON.getSetting('teliaplay_devush')
-        
+
         try:
             if self.dashjs == '':
-                try: 
+                try:
                     from BeautifulSoup import BeautifulSoup
                 except ImportError:
                     from bs4 import BeautifulSoup
@@ -423,7 +423,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                         xbmcgui.Dialog().ok('Telia Play', str(msg.encode('utf-8')))
                 except:
                     pass
-            
+
                 self.createData()
 
             login = self.loginData(reconnect=False)
@@ -510,22 +510,22 @@ class TeliaPlayUpdater(baseServiceUpdater):
             return result
 
         self.checkLogin()
-        
+
         self.log('\n\n')
         self.log('[UPD] Downloading list of available {} channels from {}'.format(self.serviceName, self.country))
         self.log('[UPD] -------------------------------------------------------------------------------------')
-        self.log('[UPD] %-15s %-35s %-30s' % ('-CID-', '-NAME-', '-TITLE-'))
-        
+        self.log('[UPD] %-12s %-35s %-35s' % ( '-CID-', '-NAME-', '-TITLE-'))
+
         try:
             url = 'https://ottapi.prod.telia.net/web/{cc}/engagementgateway/rest/secure/v2/engagementinfo'.format(cc=cc[self.country])
-            
-            headers = { 
+
+            headers = {
                 "User-Agent": UA,
                 "Accept": "*/*",
                 "Accept-Language": "sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6",
                 "Authorization": "Bearer " + self.beartoken,
             }
-            
+
             engagementjson = self.sendRequest(url, headers=headers, verify=True)
             if not engagementjson:
                 return result
@@ -543,6 +543,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
             try:
                for channel in engagementjson['stores']:
                    self.engagementPlayChannels.append(channel['id'])
+
             except KeyError as k:
                 deb('errorMessage: {k}'.format(k=str(k)))
 
@@ -570,7 +571,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
 
                     try:
                         res = channel["resolutions"]
-                        
+
                         p = re.compile('\d+')
                         res_int = p.search(res[0]).group(0)
 
@@ -582,16 +583,20 @@ class TeliaPlayUpdater(baseServiceUpdater):
                     else:
                         title = channel["name"] + ' ' + ca[self.country]
                     img = channel["id"]
-                
+
                     program = TvCid(cid=cid, name=name, title=title, img=img) 
                     result.append(program)
 
+                    self.log('[UPD] %-12s %-35s %-35s' % (cid, name, title))
+
             if len(result) <= 0:
                 self.log('Error while parsing service {}'.format(self.serviceName))
-        
+
+            self.log('-------------------------------------------------------------------------------------')
+
         except:
             self.log('getChannelList exception: {}'.format(getExceptionString()))
-        
+
         return result
 
     def channCid(self, cid):

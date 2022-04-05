@@ -4190,7 +4190,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 if epgChann != '':
                     newChannel = epgChann
                     self.channelsFromStream(epgChann=epgChann, newChannel=newChannel, logo=logo)
-        
+
     def letterSort(self, channels):
         epgList = []
 
@@ -4198,7 +4198,7 @@ class mTVGuide(xbmcgui.WindowXML):
         n = ([channel.title.upper() for channel in self.database.getAllChannelList() if channel.title.upper()])
 
         epgList = v + n
-        epgList = list(dict.fromkeys(epgList))
+        epgList = list(collections.OrderedDict.fromkeys(epgList)) #list(dict.fromkeys(epgList))
 
         if channels < 2:
             if channels == 0:
@@ -4227,7 +4227,7 @@ class mTVGuide(xbmcgui.WindowXML):
                         check = letterList[res]
                         epgList = [idx for idx in epgList if idx[0].lower() == check.lower()] 
                         epgList = sorted(epgList)
-                
+
                         if epgList:
                             self.channelsFromEPG(epgList, channels)
                         else:

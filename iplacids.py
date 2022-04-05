@@ -306,7 +306,7 @@ class IplaUpdater(baseServiceUpdater):
         self.sesstoken = sesja['id']
         self.sessexpir = str(sesja['keyExpirationTime'])
         self.sesskey = sesja['key']
-        
+
         ADDON.setSetting('ipla_sesstoken', self.sesstoken)
         ADDON.setSetting('ipla_sessexpir', str(self.sessexpir))
         ADDON.setSetting('ipla_sesskey', self.sesskey)
@@ -314,14 +314,14 @@ class IplaUpdater(baseServiceUpdater):
 
     def getChannelList(self, silent):
         result = list()
-        
+
         if not self.loginService():
             return result
 
         self.log('\n\n')
         self.log('[UPD] Downloading list of available {} channels from {}'.format(self.serviceName, self.url))
         self.log('[UPD] -------------------------------------------------------------------------------------')
-        self.log('[UPD] %-10s %-35s %-35s' % ( '-CID-', '-NAME-', '-IMG-'))
+        self.log('[UPD] %-12s %-35s %-35s' % ( '-CID-', '-NAME-', '-TITLE-'))
 
         try:
             self.getSesja()
@@ -333,7 +333,7 @@ class IplaUpdater(baseServiceUpdater):
             self.dane = self.sesstoken+'|'+self.sessexpir+'|{0}|{1}'
 
             dane = (self.dane).format('navigation','getTvChannels')
-            
+
             authdata = self.getHmac(dane)
 
             self.client_id = ADDON.getSetting('ipla_client_id')
@@ -351,9 +351,7 @@ class IplaUpdater(baseServiceUpdater):
                     myper.append(str(i))
                 if 'oth:' in i:
                     myper.append(str(i))
-            
-            
-            
+
             for i in data['result']['results']:
                 item = {}
                 channelperms = i['grantExpression'].split('*')
@@ -371,8 +369,12 @@ class IplaUpdater(baseServiceUpdater):
                         program = TvCid(cid=cid, name=name, title=title, img=img)
                         result.append(program)
 
+                        self.log('[UPD] %-12s %-35s %-35s' % (cid, name, title))
+
             if len(result) <= 0:
                 self.log('Error while parsing service %s' % (self.serviceName))
+
+            self.log('-------------------------------------------------------------------------------------')
 
         except Exception as e:
             self.log('getChannelList exception: %s' % getExceptionString())

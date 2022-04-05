@@ -328,14 +328,14 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
 
     def getChannelList(self, silent):
         result = list()
-        
+
         if not self.loginService():
             return result
 
         self.log('\n\n')
         self.log('[UPD] Downloading list of available {} channels from {}'.format(self.serviceName, self.url))
         self.log('[UPD] -------------------------------------------------------------------------------------')
-        self.log('[UPD] %-10s %-35s %-35s' % ( '-CID-', '-NAME-', '-IMG-'))
+        self.log('[UPD] %-12s %-35s %-35s' % ( '-CID-', '-NAME-', '-TITLE-'))
 
         try:
             self.getSesja()
@@ -343,11 +343,11 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
 
             self.sesstoken = ADDON.getSetting('pgobox_sesstoken')
             self.sessexpir = ADDON.getSetting('pgobox_sessexpir')
-            
+
             self.dane = self.sesstoken+'|'+self.sessexpir+'|{0}|{1}'
 
             dane = (self.dane).format('navigation','getTvChannels')
-            
+
             authdata = self.getHmac(dane)
 
             self.client_id = ADDON.getSetting('pgobox_client_id')
@@ -414,16 +414,20 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
                         cid = i['id']
                         name = i['title'].upper()
                         title = i['title'].upper() + ' PL'
-                        
+
                         name = name.replace(' SD', '')
                         title = title.replace(' SD', '')
 
                         program = TvCid(cid=cid, name=name, title=title, img=img)
                         result.append(program)
 
+                        self.log('[UPD] %-12s %-35s %-35s' % (cid, name, title))
+
             if len(result) <= 0:
                 self.noContentMessage()
                 self.log('Error while parsing service %s' % (self.serviceName))
+
+            self.log('-------------------------------------------------------------------------------------')
 
         except Exception as e:
             self.log('getChannelList exception: %s' % getExceptionString())
