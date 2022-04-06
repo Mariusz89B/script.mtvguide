@@ -320,8 +320,8 @@ class PlaylistUpdater(baseServiceUpdater):
         result = []
         cached = dict()
 
-        if self.cachedList:
-            cachepath = os.path.join(self.profilePath, 'playlists', '{playlist}.cache'.format(playlist=self.serviceName))
+        cachepath = os.path.join(self.profilePath, 'playlists', '{playlist}.cache'.format(playlist=self.serviceName))
+        if self.cachedList and os.path.exists(cachepath):
             if PY3:
                 with open(cachepath, 'r', encoding='utf-8') as f:
                     data = json.load(f)
