@@ -851,6 +851,8 @@ class Database(object):
         if updateServices:
             deb('[UPD] Starting updating STRM')
 
+            playlist_cache = os.path.join(PROFILE_PATH, 'playlist_cache.list')
+
             serviceList = list()
             services = list()
 
@@ -865,10 +867,45 @@ class Database(object):
 
             if not cacheList:
                 self.deleteAllCustomStreams()
+                os.remove(playlist_cache)
+                for num in range(1, 6):
+                    filepath = os.path.join(PROFILE_PATH, 'playlists', 'playlist_{playlist}.m3u'.format(playlist=num))
+                    urlpath = os.path.join(PROFILE_PATH, 'playlists', 'playlist_{playlist}.url'.format(playlist=num))
+                    if os.path.exists(filepath):
+                        os.remove(filepath)
+                    if os.path.exists(urlpath):
+                        os.remove(urlpath)
             else:
                 for s in services:
                     if s not in serviceList:
                         self.deleteCustomStreams(s.serviceName, s.serviceRegex)
+                        if 'playlist_' in s.serviceName:
+                            filepath = os.path.join(PROFILE_PATH, 'playlists', '{playlist}.m3u'.format(playlist=s.serviceName))
+                            urlpath = os.path.join(PROFILE_PATH, 'playlists', '{playlist}.url'.format(playlist=s.serviceName))
+
+                            if os.path.exists(filepath):
+                                os.remove(filepath)
+                            if os.path.exists(urlpath):
+                                os.remove(urlpath)
+
+                            if PY3:
+                                if os.path.exists(playlist_cache):
+                                    with open(playlist_cache, 'r', encoding='utf-8') as r:
+                                        r_services = r.read().splitlines()
+
+                                    with open(playlist_cache, 'w', encoding='utf-8') as f:
+                                        for service in r_services:
+                                            if service != s.serviceName:
+                                                f.write(service+'\n')
+                            else:
+                                if os.path.exists(playlist_cache):
+                                    with codecs.open(playlist_cache, 'r', encoding='utf-8') as r:
+                                        r_services = r.read().splitlines()
+
+                                    with codecs.open(playlist_cache, 'w', encoding='utf-8') as f:
+                                        for service in r_services:
+                                            if service != s.serviceName:
+                                                f.write(service+'\n')
 
         cacheExpired = self._isCacheExpired(date, initializing, startup, force)
 
