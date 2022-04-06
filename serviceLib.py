@@ -959,8 +959,6 @@ class baseServiceUpdater:
             channelList = []
             filtered_channels = []
 
-            duplicate = {}
-
             for x in self.automap[:]:
                 if strings2.M_TVGUIDE_CLOSING:
                     self.log('loadChannelList loop service {} requested abort!'.format(self.serviceName))
@@ -1001,9 +999,7 @@ class baseServiceUpdater:
                             except:
                                 filtered_channels = [z for z in self.channels if unidecode(x.channelid.upper()) == unidecode(self.decodeString(z.name).upper())]
 
-                    ordered_channels = [duplicate.setdefault(x, x) for x in filtered_channels if x not in duplicate]
-
-                    for y in ordered_channels:
+                    for y in filtered_channels:
                         if x.strm != '' and self.addDuplicatesToList:
                             newMapElement = copy.deepcopy(x)
                             newMapElement.strm = self.rstrm % y.cid
