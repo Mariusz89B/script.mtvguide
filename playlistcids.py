@@ -63,6 +63,7 @@ from unidecode import unidecode
 from collections import OrderedDict
 
 import codecs
+import json
 
 sess = cloudscraper.create_scraper()
 scraper = cloudscraper.CloudScraper()
@@ -87,6 +88,7 @@ class PlaylistUpdater(baseServiceUpdater):
         self.source = ADDON.getSetting('{}_source'.format(self.serviceName))
         self.addDuplicatesToList = True
         self.useOnlineMap = False
+        self.cachedList = False
 
         self.UA = ADDON.getSetting('{}_user_agent'.format(self.serviceName))
         if self.UA == '':
@@ -218,6 +220,8 @@ class PlaylistUpdater(baseServiceUpdater):
                     with codecs.open(urlpath, 'w', encoding='utf-8') as f2:
                         f2.write(url_setting)
 
+                self.cachedList = False
+
         else:
             try:
                 if PY3:
@@ -230,6 +234,8 @@ class PlaylistUpdater(baseServiceUpdater):
                     except:
                         with codecs.open(filepath.decode('utf-8'), 'r', encoding='utf-8') as f:
                             content = [line.strip() for line in f]
+
+                self.cachedList = True
 
                 if not content:
                     raise Exception
@@ -312,6 +318,22 @@ class PlaylistUpdater(baseServiceUpdater):
 
     def getChannelList(self, silent):
         result = []
+        cached = dict()
+
+        if self.cachedList:
+            cachepath = os.path.join(self.profilePath, 'playlists', '{playlist}.cache'.format(playlist=self.serviceName))
+            if PY3:
+                with open(cachepath, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+            else:
+                with codecs.open(cachepath, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+
+            for k,v in data.items():
+                result.append(TvCid(cid=v['cid'], name=v['name'], title=v['title'], strm=v['strm'], catchup=v['catchup']))
+
+            return result
+
         try:
             regexReplaceList = []
 
@@ -669,17 +691,23 @@ class PlaylistUpdater(baseServiceUpdater):
                             if UHDStream:
                                 channelCid = channelCid + '_UHD'
                                 uhdList.append(TvCid(cid=channelCid, name=name, title=title, strm=stripLine, catchup=catchupLine))
+                                cached.update({title: {'cid':channelCid, 'name':name, 'title':title, 'strm':stripLine, 'catchup':catchupLine}})
                                 if tvg_id and tvg_title != '':
                                     uhdList.append(TvCid(cid=channelCid, name=tvg_title, title=tvg_title, strm=stripLine, catchup=catchupLine))
+                                    cached.update({title: {'cid':channelCid, 'name':name, 'title':tvg_title, 'strm':stripLine, 'catchup':catchupLine}})
                             elif HDStream:
                                 channelCid = channelCid + '_HD'
                                 hdList.append(TvCid(cid=channelCid, name=name, title=title, strm=stripLine, catchup=catchupLine))
+                                cached.update({title: {'cid':channelCid, 'name':name, 'title':title, 'strm':stripLine, 'catchup':catchupLine}})
                                 if tvg_id and tvg_title != '':
                                     hdList.append(TvCid(cid=channelCid, name=tvg_title, title=tvg_title, strm=stripLine, catchup=catchupLine))
+                                    cached.update({title: {'cid':channelCid, 'name':name, 'title':tvg_title, 'strm':stripLine, 'catchup':catchupLine}})
                             else:
                                 sdList.append(TvCid(cid=channelCid, name=name, title=title, strm=stripLine, catchup=catchupLine))
+                                cached.update({title: {'cid':channelCid, 'name':name, 'title':title, 'strm':stripLine, 'catchup':catchupLine}})
                                 if tvg_id and tvg_title != '':
                                     sdList.append(TvCid(cid=channelCid, name=tvg_title, title=tvg_title, strm=stripLine, catchup=catchupLine))
+                                    cached.update({title: {'cid':channelCid, 'name':name, 'title':tvg_title, 'strm':stripLine, 'catchup':catchupLine}})
 
                             self.log('[UPD] %-12s %-35s %-35s %-35s' % (channelCid, name, title, stripLine))
                             if tvg_id and tvg_title != '':
@@ -700,8 +728,17 @@ class PlaylistUpdater(baseServiceUpdater):
 
             self.log('-------------------------------------------------------------------------------------')
 
+            cachepath = os.path.join(self.profilePath, 'playlists', '{playlist}.cache'.format(playlist=self.serviceName))
+            if PY3:
+                with open(cachepath, 'w', encoding='utf-8') as f:
+                    f.write(json.dumps(cached) )
+            else:
+                with codecs.open(cachepath, 'w', encoding='utf-8') as f:
+                    f.write(json.dumps(cached) )
+
         except Exception:
             self.log('getChannelList Error {}'.format(getExceptionString()))
+
         return result
 
     def getChannelStream(self, chann):

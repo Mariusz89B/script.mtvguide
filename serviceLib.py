@@ -744,12 +744,15 @@ class baseServiceUpdater:
         self.log('no content for service: {}'.format(self.serviceName))
         xbmcgui.Dialog().notification(self.serviceName, strings(SERVICE_NO_CONTENT), sound=False)
 
-    def startLoadingChannelList(self, automap=None):
+    def startLoadingChannelList(self, automap, cache):
         if self.thread is None or not self.thread.is_alive():
             self.traceList.append('\n')
             self.traceList.append('##############################################################################################################')
             self.traceList.append('\n')
-            self.thread = threading.Thread(name='loadChannelList thread', target = self.loadChannelList, args=(automap,))
+            if cache:
+                self.thread = threading.Thread(name='cachedChannelList thread', target = self.cachedChannelList, args=(automap,))
+            else:
+                self.thread = threading.Thread(name='loadChannelList thread', target = self.loadChannelList, args=(automap,))
             self.thread.start()
             self.printLogTimer = threading.Timer(15, self.printLogTimeout)
             self.printLogTimer.start()
@@ -905,7 +908,7 @@ class baseServiceUpdater:
             pass 
         return self.serviceName
 
-    def getBaseChannelList(self, silent=False, returnCopy=True): ## need fix
+    def getBaseChannelList(self, silent=False, returnCopy=True, cache=False):
         result = list()
         try:
             if self.channelList and self.isChannelListStillValid():
@@ -930,6 +933,21 @@ class baseServiceUpdater:
             s = s if isinstance(s, unicode) else s.decode('utf-8')
 
         return s
+
+    def cachedChannelList(self, epg_channels=None):
+        startTime = datetime.datetime.now()
+        self.channels = self.getBaseChannelList()
+        if len(self.channels) <= 0:
+            self.log('loadChannelList error lodaing channel list for service {} - aborting!'.format(self.serviceName))
+            self.close()
+            return
+
+        if strings2.M_TVGUIDE_CLOSING:
+            self.log('loadChannelList service {} requested abort!'.format(self.serviceName))
+            self.close()
+            return
+
+        self.log('Loading channel list took: %s seconds' % (datetime.datetime.now() - startTime).seconds)
 
     def loadChannelList(self, epg_channels=None):
         from re import match

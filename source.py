@@ -427,6 +427,7 @@ class Database(object):
         self.channelList = list()
         self.channelListAll = list()
         self.servicePlaylist = dict()
+        self.cacheList = dict()
         self.category = None
 
         if PY3:
@@ -844,8 +845,6 @@ class Database(object):
         sqlite3.register_adapter(datetime, self.adapt_datetime)
         sqlite3.register_converter(str('timestamp'), self.convert_datetime)
 
-        cacheList = dict()
-
         # Start service threads
         updateServices = self.services_updated == False and UPDATE_CID
         if updateServices:
@@ -863,11 +862,13 @@ class Database(object):
                     serviceList.append(serviceHandler)
                     if 'playlist_' in serviceName:
                         cache = self.cachePlaylist(serviceHandler)
-                        cacheList.update({serviceHandler: {'cache': cache}})
+                        self.cacheList.update({serviceHandler: {'cache': cache}})
 
-            if not cacheList:
+            if not self.cacheList:
                 self.deleteAllCustomStreams()
-                os.remove(playlist_cache)
+                if os.path.exists(playlist_cache):
+                    os.remove(playlist_cache)
+
                 for num in range(1, 6):
                     filepath = os.path.join(PROFILE_PATH, 'playlists', 'playlist_{playlist}.m3u'.format(playlist=num))
                     urlpath = os.path.join(PROFILE_PATH, 'playlists', 'playlist_{playlist}.url'.format(playlist=num))
@@ -1084,24 +1085,25 @@ class Database(object):
                     break
 
                 if priority == service.servicePriority:
-                    cached_service = [v['cache'] for k,v in cacheList.items() if k == service]
+                    cached_service = [v['cache'] for k,v in self.cacheList.items() if k == service]
                     if cached_service:
                         cache = cached_service[0]
                     else:
                         cache = False
 
                     if not cache:
-                        service.startLoadingChannelList(epgChannels)
+                        service.startLoadingChannelList(automap=epgChannels, cache=False)
+                    else:
+                        service.startLoadingChannelList(automap=epgChannels, cache=True)
 
                     if progress_callback:
                         if not cache:
                             progress_callback(100, "{}: {}".format(strings(59915), service.getDisplayName()) )
                         else:
                             progress_callback(100, "{}: {}".format(strings(59915), strings(69072)) )
-                            time.sleep(0.3)
 
-                    service.waitUntilDone()
                     if not cache:
+                        service.waitUntilDone()
                         self.storeCustomStreams(service, priority, service.serviceName, service.serviceRegex)
 
         serviceList = []
@@ -1241,27 +1243,25 @@ class Database(object):
 
     def _reloadServices(self):
         serviceList = list()
-        cacheList = []
-
-        playlist_cache = os.path.join(PROFILE_PATH, 'playlist_cache.list')
-
-        if os.path.exists(playlist_cache):
-            if PY3:
-                with open(playlist_cache, 'r', encoding='utf-8') as r:
-                    cacheList = r.read().splitlines()
-            else:
-                with codecs.open(playlist_cache, 'r', encoding='utf-8') as r:
-                    cacheList = r.read().splitlines()
+        cacheList = list()
 
         epgChannels = self.epgChannels()
 
         serviceLib.baseServiceUpdater.baseMapContent = None
         for serviceName in playService.SERVICES:
             serviceHandler = playService.SERVICES[serviceName]
+            cached_service = [v['cache'] for k,v in self.cacheList.items() if k == serviceHandler]
+            if cached_service:
+                cache = cached_service[0]
+                if cache:
+                    cacheList.append(serviceName)
+
             if serviceHandler.serviceEnabled == 'true':
                 serviceHandler.resetService()
                 if serviceName not in cacheList:
-                    serviceHandler.startLoadingChannelList(epgChannels)
+                    serviceHandler.startLoadingChannelList(automap=epgChannels, cache=False)
+                else:
+                    serviceHandler.startLoadingChannelList(automap=epgChannels, cache=True)
                 serviceList.append(serviceHandler)
 
         deb('[UPD] Starting updating STRM')

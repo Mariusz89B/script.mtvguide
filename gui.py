@@ -4330,7 +4330,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
                 if strmList:
                     res = xbmcgui.Dialog().select(strings(59992) + ': [COLOR gold]' + epgChann + '[/COLOR]', strmList)
-                    
+
                     if res < 0:
                         if epgList != '':
                             self.channelsFromStream(epgChann=epgChann, epgList=epgList, channels=channels)
@@ -4404,23 +4404,24 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def _debugMenu(self, program):
         deb('Debug')
-        res = xbmcgui.Dialog().contextmenu(['Reinitialize guide', 'Upload log file', 'Read log', 'Guide information', 'Response status', 'Python version'])
+        res = xbmcgui.Dialog().contextmenu(['Reinitialize guide', 'Reload services', 'Upload log file', 'Read log', 'Guide information', 'Response status', 'Python version'])
 
         if res < 0:
             self._showContextMenu(program)
 
         if res == 0:
-            deb('Reload EPG')
             epgDbSize = self.database.source.getEpgSize()
             self.onRedrawEPG(self.channelIdx, self.viewStartDate, force=True)
             ADDON.setSetting('epg_size', str(epgDbSize))
-            self._debugMenu(program)
-        
+
         elif res == 1:
+            self.database.reloadServices()
+
+        elif res == 2:
             import logUploader
             self._debugMenu(program)
 
-        elif res == 2:
+        elif res == 3:
             if PY3:
                 LOGPATH  = xbmcvfs.translatePath('special://logpath')
             else:
@@ -4443,13 +4444,13 @@ class mTVGuide(xbmcgui.WindowXML):
             xbmcgui.Dialog().textviewer('Log - ' + strings(57051), logContent, True)
             self._debugMenu(program)
 
-        elif res == 3:
+        elif res == 4:
             size, updated = self.database.getDbEPGSize()
 
             xbmcgui.Dialog().textviewer('Guide information - ' + strings(57051), 'Content-Size: ' + str(formatFileSize(int( size ) )) + '[CR]Updated on: ' + str(updated.strftime("%Y-%m-%d %H:%M")), True)
             self._debugMenu(program)
 
-        elif res == 4:
+        elif res == 5:
             UA = xbmc.getUserAgent()
 
             headers = {
@@ -4484,7 +4485,7 @@ class mTVGuide(xbmcgui.WindowXML):
             xbmcgui.Dialog().textviewer('Response status - ' + strings(57051), 'HTTP/S Status: ' + str(response.status_code) + '[CR]Internet connection: ' + conn + '[CR]Repository connection: ' + conn_r, True)
             self._debugMenu(program)
 
-        elif res == 5:
+        elif res == 6:
             xbmcgui.Dialog().textviewer('Python version - ' + strings(57051), 'Python ' + str(sys.version), True)
             self._debugMenu(program)
 
