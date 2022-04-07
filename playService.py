@@ -1080,7 +1080,10 @@ class PlayService(xbmc.Player, BasePlayService):
                         streams = data['formats']
                         strmUrl = ''
 
-                        catchup = data['timeShift']
+                        try:
+                            catchup = data['timeShift']
+                        except:
+                            catchup = False
 
                         sorted_data = sorted(streams, key=lambda d: list(str(d['totalBitrate'])), reverse=True)
 
@@ -1097,9 +1100,14 @@ class PlayService(xbmc.Player, BasePlayService):
                                 elif (s['mimeType'] == 'video/mp2t'):
                                     strmUrl = s['url']
 
-                                else:
+                                elif (s['mimeType'] == 'video/mp4'):
                                     strmUrl = s['url']
                                     mimeType = 'video/mp4'
+
+                                elif (s['mimeType'] == 'application/vnd.ms-ss'):
+                                    strmUrl = s['url']
+                                    PROTOCOL = 'ism'
+                                    mimeType = 'application/vnd.ms-ss'
 
                         if ('material_niedostepny' in strmUrl or strmUrl == ''):
                             xbmcgui.Dialog().notification(service, strings(SERVICE_NO_CONTENT), sound=False)
@@ -1144,7 +1152,7 @@ class PlayService(xbmc.Player, BasePlayService):
                             ListItem.setMimeType(mimeType)
                             ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
                             ListItem.setProperty('IsPlayable', 'true')
-                            if catchup:
+                            if str(self.playlistArchive()) != '':
                                 ListItem.setProperty('inputstream.adaptive.play_timeshift_buffer', 'true')
 
                         self.strmUrl = strmUrl

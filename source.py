@@ -872,10 +872,14 @@ class Database(object):
                 for num in range(1, 6):
                     filepath = os.path.join(PROFILE_PATH, 'playlists', 'playlist_{playlist}.m3u'.format(playlist=num))
                     urlpath = os.path.join(PROFILE_PATH, 'playlists', 'playlist_{playlist}.url'.format(playlist=num))
+                    cachepath = os.path.join(PROFILE_PATH, 'playlists', 'playlist_{playlist}.cache'.format(playlist=num))
+
                     if os.path.exists(filepath):
                         os.remove(filepath)
                     if os.path.exists(urlpath):
                         os.remove(urlpath)
+                    if os.path.exists(cachepath):
+                        os.remove(cachepath)
             else:
                 for s in services:
                     if s not in serviceList:
@@ -883,11 +887,14 @@ class Database(object):
                         if 'playlist_' in s.serviceName:
                             filepath = os.path.join(PROFILE_PATH, 'playlists', '{playlist}.m3u'.format(playlist=s.serviceName))
                             urlpath = os.path.join(PROFILE_PATH, 'playlists', '{playlist}.url'.format(playlist=s.serviceName))
+                            cachepath = os.path.join(PROFILE_PATH, 'playlists', '{playlist}.cache'.format(playlist=s.serviceName))
 
                             if os.path.exists(filepath):
                                 os.remove(filepath)
                             if os.path.exists(urlpath):
                                 os.remove(urlpath)
+                            if os.path.exists(cachepath):
+                                os.remove(cachepath)
 
                             if PY3:
                                 if os.path.exists(playlist_cache):
