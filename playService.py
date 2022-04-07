@@ -234,7 +234,7 @@ class PlayService(xbmc.Player, BasePlayService):
         self.service                = None   
         self.customPlugin           = False 
 
-    def playUrlList(self, urlList, archiveService, archivePlaylist, resetReconnectCounter=False, playNext=False):
+    def playUrlList(self, urlList, archiveService, archivePlaylist, resetReconnectCounter=False, playNext=False, cachedChannel=None):
         self.archiveService = archiveService
         self.archivePlaylist = archivePlaylist
 

@@ -90,6 +90,17 @@ pathMapBase = os.path.join(ADDON.getAddonInfo('path'), 'resources')
 
 if PY3:
     try:
+        PROFILE_PATH = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
+    except:
+        PROFILE_PATH = xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
+else:
+    try:
+        PROFILE_PATH = xbmc.translatePath(ADDON.getAddonInfo('profile'))
+    except:
+        PROFILE_PATH = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
+
+if PY3:
+    try:
         pathMapExtraBase  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
     except:
         pathMapExtraBase  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
@@ -911,6 +922,20 @@ class baseServiceUpdater:
     def getBaseChannelList(self, silent=False, returnCopy=True, cache=False):
         result = list()
         try:
+            if cache:
+                import ast
+                cachepath = os.path.join(PROFILE_PATH, 'playlists', '{playlist}.cache'.format(playlist=self.serviceName))
+                if os.path.exists(cachepath):
+                    with open(cachepath, 'r', encoding='utf-8') as f:
+                        data = [line.strip() for line in f]
+
+                    cachedList = []
+                    for line in data:
+                        y = ast.literal_eval(line)
+                        cachedList.append(TvCid(cid=y[0], name=y[1], title=y[2], strm=y[3], catchup=y[4]))
+
+                    self.channelList = cachedList
+
             if self.channelList and self.isChannelListStillValid():
                 self.log('getBaseChannelList return cached channel list')
                 if returnCopy:
@@ -926,7 +951,17 @@ class baseServiceUpdater:
         except:
             self.log('getBaseChannelList exception: %s' % getExceptionString())
 
+        cachedList = ([[y.cid, y.name, y.title, y.strm, y.catchup] for y in result])
+
+        self.cache = threading.Thread(name='saveCacheList thread', target = self.saveCacheList, args=(cachedList, self.serviceName,))
+        self.cache.start()
+
         return result
+
+    def saveCacheList(self, cachedList, serviceName):
+        cachepath = os.path.join(PROFILE_PATH, 'playlists', '{playlist}.cache'.format(playlist=serviceName))
+        with open(cachepath, 'w', encoding='utf-8') as f:
+            f.write('\n'.join([str(i) for i in cachedList]))
 
     def decodeString(self, s):
         if sys.version_info[0] < 3:
@@ -936,7 +971,8 @@ class baseServiceUpdater:
 
     def cachedChannelList(self, epg_channels=None):
         startTime = datetime.datetime.now()
-        self.channels = self.getBaseChannelList()
+
+        self.channels = self.getBaseChannelList(cache=True)
         if len(self.channels) <= 0:
             self.log('loadChannelList error lodaing channel list for service {} - aborting!'.format(self.serviceName))
             self.close()
@@ -1120,7 +1156,7 @@ class baseServiceUpdater:
             self.log('loadChannelList exception: {}'.format(getExceptionString()))
         self.close()
 
-    def getChannel(self, cid):
+    def getChannel(self, cid, service=None):
         try:
             channels = self.getBaseChannelList(silent=True, returnCopy=False)
             for chann in channels:

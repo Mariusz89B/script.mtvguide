@@ -2038,6 +2038,21 @@ class Database(object):
             c.close()
             self.channelList = None
 
+    def getCustomChannel(self, cid, service):
+        return self._invokeAndBlockForResult(self._getCustomChannel, cid, service)
+
+    def _getCustomChannel(self, cid, service):
+        deb('_getCustomStreamUrl')
+
+        stream_url = 'service={0}&cid={1}'.format(service, cid)
+
+        c = self.conn.cursor()
+        c.execute("SELECT stream_url FROM custom_stream_url WHERE strm like ? limit 1", [stream_url])
+        channel = c.fetchone()
+        c.close()
+
+        return channel
+
     def getCustomStreamUrl(self, channel):
         return self._invokeAndBlockForResult(self._getCustomStreamUrl, channel)
 
