@@ -67,6 +67,8 @@ from groups import *
 import simplejson as json
 import strings as strings2
 import zlib
+import ast
+import codecs
 
 try:
     import ssl
@@ -923,11 +925,14 @@ class baseServiceUpdater:
         result = list()
         try:
             if cache:
-                import ast
                 cachepath = os.path.join(PROFILE_PATH, 'playlists', '{playlist}.cache'.format(playlist=self.serviceName))
                 if os.path.exists(cachepath):
-                    with open(cachepath, 'r', encoding='utf-8') as f:
-                        data = [line.strip() for line in f]
+                    if PY3:
+                        with open(cachepath, 'r', encoding='utf-8') as f:
+                            data = [line.strip() for line in f]
+                    else:
+                        with codecs.open(cachepath, 'r', encoding='utf-8') as f:
+                            data = [line.strip() for line in f]
 
                     cachedList = []
                     for line in data:
@@ -952,14 +957,14 @@ class baseServiceUpdater:
             self.log('getBaseChannelList exception: %s' % getExceptionString())
 
         if 'playlist_' in self.serviceName and cache:
-            cachedList = ([[y.cid, y.name, y.title, y.strm, y.catchup] for y in result])
-
-            self.cache = threading.Thread(name='saveCacheList thread', target = self.saveCacheList, args=(cachedList, self.serviceName,))
+            self.cache = threading.Thread(name='saveCacheList thread', target = self.saveCacheList, args=(self.serviceName,))
             self.cache.start()
 
         return result
 
-    def saveCacheList(self, cachedList, serviceName):
+    def saveCacheList(self, serviceName):
+        cachedList = ([[y.cid, y.name, y.title, y.strm, y.catchup] for y in result])
+
         cachepath = os.path.join(PROFILE_PATH, 'playlists', '{playlist}.cache'.format(playlist=serviceName))
         with open(cachepath, 'w', encoding='utf-8') as f:
             f.write('\n'.join([str(i) for i in cachedList]))
