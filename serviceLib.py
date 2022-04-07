@@ -951,10 +951,11 @@ class baseServiceUpdater:
         except:
             self.log('getBaseChannelList exception: %s' % getExceptionString())
 
-        cachedList = ([[y.cid, y.name, y.title, y.strm, y.catchup] for y in result])
+        if 'playlist_' in self.serviceName and cache:
+            cachedList = ([[y.cid, y.name, y.title, y.strm, y.catchup] for y in result])
 
-        self.cache = threading.Thread(name='saveCacheList thread', target = self.saveCacheList, args=(cachedList, self.serviceName,))
-        self.cache.start()
+            self.cache = threading.Thread(name='saveCacheList thread', target = self.saveCacheList, args=(cachedList, self.serviceName,))
+            self.cache.start()
 
         return result
 
