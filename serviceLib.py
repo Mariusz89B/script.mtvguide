@@ -925,7 +925,7 @@ class baseServiceUpdater:
         result = list()
         try:
             if cache:
-                cachefile = os.path.join(PROFILE_PATH, 'playlists', '{playlist}.m3u'.format(playlist=serviceName))
+                cachefile = os.path.join(PROFILE_PATH, 'playlists', '{playlist}.m3u'.format(playlist=self.serviceName))
                 cachepath = os.path.join(PROFILE_PATH, 'playlists', '{playlist}.cache'.format(playlist=self.serviceName))
                 if os.path.exists(cachepath) and os.path.exists(cachefile):
                     if PY3:
