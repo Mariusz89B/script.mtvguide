@@ -925,8 +925,9 @@ class baseServiceUpdater:
         result = list()
         try:
             if cache:
+                cachefile = os.path.join(PROFILE_PATH, 'playlists', '{playlist}.m3u'.format(playlist=serviceName))
                 cachepath = os.path.join(PROFILE_PATH, 'playlists', '{playlist}.cache'.format(playlist=self.serviceName))
-                if os.path.exists(cachepath):
+                if os.path.exists(cachepath) and os.path.exists(cachefile):
                     if PY3:
                         with open(cachepath, 'r', encoding='utf-8') as f:
                             data = [line.strip() for line in f]
@@ -940,6 +941,10 @@ class baseServiceUpdater:
                         cachedList.append(TvCid(cid=y[0], name=y[1], title=y[2], strm=y[3], catchup=y[4]))
 
                     self.channelList = cachedList
+
+                else:
+                    if os.path.exists(cachepath):
+                        os.remove(cachepath)
 
             if self.channelList and self.isChannelListStillValid():
                 self.log('getBaseChannelList return cached channel list')
