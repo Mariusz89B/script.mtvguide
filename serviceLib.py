@@ -957,17 +957,21 @@ class baseServiceUpdater:
             self.log('getBaseChannelList exception: %s' % getExceptionString())
 
         if 'playlist_' in self.serviceName and cache:
-            self.cache = threading.Thread(name='saveCacheList thread', target = self.saveCacheList, args=(self.serviceName,))
+            self.cache = threading.Thread(name='saveCacheList thread', target = self.saveCacheList, args=(result, self.serviceName,))
             self.cache.start()
 
         return result
 
-    def saveCacheList(self, serviceName):
+    def saveCacheList(self, result, serviceName):
         cachedList = ([[y.cid, y.name, y.title, y.strm, y.catchup] for y in result])
 
         cachepath = os.path.join(PROFILE_PATH, 'playlists', '{playlist}.cache'.format(playlist=serviceName))
-        with open(cachepath, 'w', encoding='utf-8') as f:
-            f.write('\n'.join([str(i) for i in cachedList]))
+        if PY3:
+            with open(cachepath, 'w', encoding='utf-8') as f:
+                f.write('\n'.join([str(i) for i in cachedList]))
+        else:
+            with codecs.open(cachepath, 'w', encoding='utf-8') as f:
+                f.write('\n'.join([str(i) for i in cachedList]))
 
     def decodeString(self, s):
         if sys.version_info[0] < 3:

@@ -187,8 +187,12 @@ class PlaylistUpdater(baseServiceUpdater):
         services = []
 
         if os.path.exists(playlist_cache):
-            with open(playlist_cache, 'r', encoding='utf-8') as r:
-                services = r.read().splitlines()
+            if PY3:
+                with open(playlist_cache, 'r', encoding='utf-8') as r:
+                    services = r.read().splitlines()
+            else:
+                with codecs.open(playlist_cache, 'r', encoding='utf-8') as r:
+                    services = r.read().splitlines()
 
         path = os.path.join(self.profilePath, 'playlists')
         filepath = os.path.join(self.profilePath, 'playlists', '{playlist}.m3u'.format(playlist=self.serviceName))

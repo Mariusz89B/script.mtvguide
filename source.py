@@ -1193,12 +1193,12 @@ class Database(object):
                             if PY3:
                                 c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url, priority) VALUES(?, ?, ?)", [channelid, x.strm + '_BACKUP', priority])
                             else:
-                                c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url, priority) VALUES(?, ?, ?)", [channelid.decode('utf-8'), x.strm + '_BACKUP', priority])
+                                c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url, priority) VALUES(?, ?, ?)", [channelid.encode('utf-8').decode('utf-8'), x.strm + '_BACKUP', priority])
 
                         if PY3:
                             c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url, priority) VALUES(?, ?, ?)", [x.channelid, x.strm, priority])
                         else:
-                            c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url, priority) VALUES(?, ?, ?)", [x.channelid.decode('utf-8'), x.strm, priority])
+                            c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url, priority) VALUES(?, ?, ?)", [x.channelid.encode('utf-8').decode('utf-8'), x.strm, priority])
 
                         if backup:
                             nrOfChannelsUpdated += 2
