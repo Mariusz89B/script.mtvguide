@@ -3228,7 +3228,10 @@ def prepareTimeZone(zone, autozone, local):
         zone = None
 
     elif zone:
-        zone = timedelta(minutes=int(zone[:3]) * 60 + int(zone[-2:]))
+        if zone == '00:00':
+            zone = timedelta(hours=0)
+        else:
+            zone = timedelta(minutes=int(zone[:3]) * 60 + int(zone[-2:]))
 
     return zone, autozone, local
 
