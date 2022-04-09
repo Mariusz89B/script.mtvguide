@@ -782,7 +782,8 @@ class Database(object):
             cache = False
 
         else:
-            if ADDON.getSetting('{playlist}_refr'.format(playlist=serviceName)) == 'true':
+            refr = ADDON.getSetting('{playlist}_refr'.format(playlist=serviceName))
+            if refr == 'true':
                 deb('[UPD] Cache playlist: Read')
                 cache = True
             else:
@@ -1098,16 +1099,14 @@ class Database(object):
                     else:
                         cache = False
 
-                    if not cache:
-                        service.startLoadingChannelList(automap=epgChannels, cache=False)
-                    else:
-                        service.startLoadingChannelList(automap=epgChannels, cache=True)
+                    service.startLoadingChannelList(automap=epgChannels, cache=cache)
 
                     if progress_callback:
                         if not cache:
                             progress_callback(100, "{}: {}".format(strings(59915), service.getDisplayName()) )
                         else:
                             progress_callback(100, "{}: {}".format(strings(59915), strings(69072)) )
+                            time.sleep(0.5)
 
                     if not cache:
                         service.waitUntilDone()

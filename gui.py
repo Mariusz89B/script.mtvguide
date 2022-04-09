@@ -6135,8 +6135,10 @@ class mTVGuide(xbmcgui.WindowXML):
                     self.disableUnusedChannelControls(self.C_CHANNEL_IMAGE_START_INDEX_SHORTCUT)
                     self.disableUnusedChannelControls(self.C_CHANNEL_NUMBER_START_INDEX_SHORTCUT)
 
-                if ADDON.getSetting('categories_remember') == 'true' or ADDON.getSetting('category') != '':
-                    self.database.setCategory(ADDON.getSetting('category'))
+                category = ADDON.getSetting('category')
+
+                if ADDON.getSetting('categories_remember') == 'true' or category != '':
+                    self.database.setCategory(category)
 
                 res = self.onRedrawEPG(0, self.viewStartDate, initializing=True)
 

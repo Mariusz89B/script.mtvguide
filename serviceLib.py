@@ -943,8 +943,9 @@ class baseServiceUpdater:
                     self.channelList = cachedList
 
                 else:
-                    if os.path.exists(cachepath):
-                        os.remove(cachepath)
+                    if not cache:
+                        if os.path.exists(cachepath):
+                            os.remove(cachepath)
 
             if self.channelList and self.isChannelListStillValid():
                 self.log('getBaseChannelList return cached channel list')
@@ -961,9 +962,11 @@ class baseServiceUpdater:
         except:
             self.log('getBaseChannelList exception: %s' % getExceptionString())
 
-        if 'playlist_' in self.serviceName and cache:
-            self.cache = threading.Thread(name='saveCacheList thread', target = self.saveCacheList, args=(result, self.serviceName,))
-            self.cache.start()
+        if 'playlist_' in self.serviceName:
+            refr = ADDON.getSetting('{playlist}_refr'.format(playlist=self.serviceName))
+            if refr == 'true':
+                self.cache = threading.Thread(name='saveCacheList thread', target = self.saveCacheList, args=(result, self.serviceName,))
+                self.cache.start()
 
         return result
 
@@ -1110,57 +1113,9 @@ class baseServiceUpdater:
 
             self.log('-------------------------------------------------------------------------------------')
             self.log('\n\n')
-            self.log('[UPD] Not matched streams for {} channels:'.format(self.serviceName))
-            self.log('-------------------------------------------------------------------------------------')
-            self.log('[UPD]     %-40s %-40s %-12s %-35s' % ('-TITLE-', '-ORIG NAME-', '-CID-', '-STRM-'))
 
-            file_name = os.path.join(pathMapExtraBase, 'custom_channels.list')
-            if not os.path.exists(pathMapExtraBase):
-                os.makedirs(pathMapExtraBase)
-
-            for y in self.channels:
-                if y.src == '' or y.src != self.serviceName:
-                    if y.title != '':
-                        try:
-                            if y.strm == '':
-                                y.strm == 'None'
-                            try:
-                                channelList.append(unidecode(y.title) + ', ' + y.strm)
-                            except:
-                                channelList.append(unidecode(self.decodeString(y.title)) + ', ' + y.strm)
-                        except:
-                            pass
-
-                        try:
-                            self.log('[UPD]     %-40s %-40s %-12s %-35s' % (unidecode(y.title.upper()), unidecode(y.name), y.cid, y.strm))
-                        except:
-                            self.log('[UPD]     %-40s %-40s %-12s %-35s' % (unidecode(self.decodeString(y.title.upper())), unidecode(self.decodeString(y.name)), y.cid, y.strm))
-
-            channelList = list(OrderedDict.fromkeys(channelList))
-
-            if PY3:
-                with open(file_name, 'ab+') as f:
-                    f.seek(0)
-                    data = f.read()
-                    if len(data) > 0:
-                        f.write(bytearray('\n', 'utf-8'))
-                    f.write(bytearray('\n'.join(channelList), 'utf-8'))
-            else:
-                newline = False
-
-                try:
-                    with open(file_name, 'r') as f:
-                        data = f.read()
-                        if len(data) > 0:
-                            newline = True
-                except:
-                    pass
-
-                with open(file_name, 'a') as f:
-                    f.seek(0)
-                    if newline:
-                        f.write(str('\n'))
-                    f.write(str('\n'.join(channelList)))
+            self.print = threading.Thread(name='notMatched thread', target = self.notMatched, args=(channelList,))
+            self.print.start()
 
             self.log('-------------------------------------------------------------------------------------')
             self.log("[UPD] The analysis has been completed...")
@@ -1170,6 +1125,61 @@ class baseServiceUpdater:
         except Exception as ex:
             self.log('loadChannelList exception: {}'.format(getExceptionString()))
         self.close()
+
+    def notMatched(self, channelList):
+        self.log('[UPD] Not matched streams for {} channels:'.format(self.serviceName))
+        self.log('-------------------------------------------------------------------------------------')
+        self.log('[UPD]     %-40s %-40s %-12s %-35s' % ('-TITLE-', '-ORIG NAME-', '-CID-', '-STRM-'))
+
+        file_name = os.path.join(pathMapExtraBase, 'custom_channels.list')
+        if not os.path.exists(pathMapExtraBase):
+            os.makedirs(pathMapExtraBase)
+
+        for y in self.channels:
+            if y.src == '' or y.src != self.serviceName:
+                if y.title != '':
+                    try:
+                        if y.strm == '':
+                            y.strm == 'None'
+                        try:
+                            channelList.append(unidecode(y.title) + ', ' + y.strm)
+                        except:
+                            channelList.append(unidecode(self.decodeString(y.title)) + ', ' + y.strm)
+                    except:
+                        pass
+
+                    try:
+                        self.log('[UPD]     %-40s %-40s %-12s %-35s' % (unidecode(y.title.upper()), unidecode(y.name), y.cid, y.strm))
+                    except:
+                        self.log('[UPD]     %-40s %-40s %-12s %-35s' % (unidecode(self.decodeString(y.title.upper())), unidecode(self.decodeString(y.name)), y.cid, y.strm))
+
+        channelList = list(OrderedDict.fromkeys(channelList))
+
+        if PY3:
+            with open(file_name, 'ab+') as f:
+                f.seek(0)
+                data = f.read()
+                if len(data) > 0:
+                    f.write(bytearray('\n', 'utf-8'))
+                f.write(bytearray('\n'.join(channelList), 'utf-8'))
+        else:
+            newline = False
+
+            try:
+                with open(file_name, 'r') as f:
+                    data = f.read()
+                    if len(data) > 0:
+                        newline = True
+            except:
+                pass
+
+            with open(file_name, 'a') as f:
+                f.seek(0)
+                if newline:
+                    f.write(str('\n'))
+                f.write(str('\n'.join(channelList)))
+
+        self.log('-------------------------------------------------------------------------------------')
 
     def getChannel(self, cid, service=None):
         try:
