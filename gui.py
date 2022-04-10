@@ -895,7 +895,7 @@ class mTVGuide(xbmcgui.WindowXML):
         for p in res:
             if p == 0:
                 res = xbmcgui.Dialog().multiselect(strings(59949), 
-                        ['C More', 'Ipla', 'nc+ GO', 'PlayerPL', 'Polsat GO', 'Polsat GO Box', 'Telewizja Polska', 'Telia Play', 'WP Pilot'])
+                        ['C More', 'Ipla', 'nc+ GO', 'PlayerPL', 'Polsat GO', 'Polsat GO Box', 'TVP GO', 'Telia Play', 'WP Pilot'])
 
                 if not res:
                     resBack = xbmcgui.Dialog().yesno(strings(59924), strings(59938), yeslabel=strings(59939), nolabel=strings(30308))
@@ -1025,6 +1025,7 @@ class mTVGuide(xbmcgui.WindowXML):
                         label = 'PlayerPL'
                         xbmcgui.Dialog().ok(label, label + ' ' + strings(30721).lower() + '.')
                         ADDON.setSetting('playerpl_enabled', 'true')
+                        progExec = True
 
                     if s == 4:
                         label = 'Polsat GO'
@@ -1105,7 +1106,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
                                 elif res == 1:
                                     ADDON.setSetting('pgobox_client', 'Ipla')
-                                    
+
                                 elif res == 2:
                                     ADDON.setSetting('pgobox_client', 'Polsat Box')
 
@@ -1118,9 +1119,10 @@ class mTVGuide(xbmcgui.WindowXML):
                             self.tutorialGetService()
 
                     if s == 6:
-                        label = 'Telewizja Polska'
+                        label = 'TVP GO'
                         xbmcgui.Dialog().ok(label, label + ' ' + strings(30721).lower() + '.')
-                        ADDON.setSetting('tvp_enabled', 'true')
+                        ADDON.setSetting('tvpgo_enabled', 'true')
+                        progExec = True
 
                     if s == 7:
                         label = 'Telia Play'
@@ -1226,7 +1228,7 @@ class mTVGuide(xbmcgui.WindowXML):
                     kb.doModal()
                     c = kb.getText() if kb.isConfirmed() else None
                     if c == '': c = None
-                    
+
                     ADDON.setSetting('playlist_1_url', c)
                     if c is not None:
                         progExec = True
@@ -1243,7 +1245,7 @@ class mTVGuide(xbmcgui.WindowXML):
                     else:
                         self.tutorialGetService()
 
-        if progExec is True:
+        if progExec:
             self.tutorialCatchup(False)
 
     def tutorialCatchup(self, playlist):
