@@ -2,7 +2,7 @@
 <addon
     id="script.mtvguide"
     name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]"
-    version="9.9.5-beta.43"
+    version="9.9.5-beta.44"
     provider-name="Mods-kodi">
   <requires>
     <import addon="xbmc.addon" version="17.0.0"/>
@@ -41,7 +41,7 @@
     <forum>https://github.com/Mariusz89B/script.mtvguide/discussions</forum>
 	<website>https://github.com/Mariusz89B/script.mtvguide</website>
     <source>m-TVGuide © 2013 - 2022</source>
-    <news>v9.9.5 (2022-04-08)
+    <news>v9.9.5 (2022-04-13)
 - Added catchup for service TVPGO.
 - Fixed service PlayerPL parsing error.
 - Fixed encodings.

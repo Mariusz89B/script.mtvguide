@@ -1059,7 +1059,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
                                 elif res == 0:
                                     ADDON.setSetting('polsatgo_client', 'Ipla')
-                                    
+
                                 elif res == 1:
                                     ADDON.setSetting('polsatgo_client', 'Polsat Box')
 
@@ -6563,7 +6563,7 @@ class mTVGuide(xbmcgui.WindowXML):
         else:
             self.refreshStreamsTimer = None
 
-    def checkUrl(slef, url='http://www.google.com'):
+    def checkUrl(self, url='https://www.google.com'):
         if PY3:
             try:
                 import urllib.request, urllib.error, urllib.parse

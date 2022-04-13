@@ -1610,18 +1610,13 @@ class Database(object):
                 categories = self.addCategory(predefined.group(1))
 
                 deb('Using predefined category: {}'.format(predefined.group(1)))
-                deb(categories)
                 predefined = '|'.join(categories)
 
                 channel_regex = re.compile('.*({})$'.format(predefined))
 
-                deb('TEST999')
                 for channel in channelList[:]:
 
                     if channel_regex.match(channel.id):
-                        deb(channel)
-                        deb(channel_regex)
-
                         newChannelList.append(channel)
                         channelList.remove(channel)
                         #deb('Adding channel: {}'.format(channel.title))
@@ -3617,8 +3612,10 @@ class RssFeed(object):
             else:
                 rssData = self.downloader.getJsonFromExtendedAPI(url)
 
-            #if PY3:
-            rssData = rssData.decode('utf-8')
+            try:
+                rssData = rssData.decode('utf-8')
+            except:
+                pass
 
             if rssData is not None:
                 for line in reversed(rssData.split('\n')):
