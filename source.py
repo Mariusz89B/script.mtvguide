@@ -1586,14 +1586,14 @@ class Database(object):
             categories = []
 
             for k, v in EPG_DICT:
-                if k.upper() == category.upper():                   
-                    categories.append(k.upper())
-                    categories.append('.'+k.lower())
-                    categories.append(v['alpha-3'])
-                    categories.append(v['language'])
-                    categories.append(v['native'])
+                if k.upper() == category.upper():
+                    categories.append('\s'+k.upper())
+                    categories.append(re.escape('.'+k.lower()))
+                    categories.append('\s'+v['alpha-3'])
+                    categories.append('\s'+v['language'])
+                    categories.append('\s'+v['native'])
                 else:
-                    categories.append(category)
+                    categories.append('\s'+category)
 
             return categories
         except Exception as ex:
@@ -1610,13 +1610,18 @@ class Database(object):
                 categories = self.addCategory(predefined.group(1))
 
                 deb('Using predefined category: {}'.format(predefined.group(1)))
-                for cat in categories:
-                    predefined = '|'.join(re.escape(cat))
+                deb(categories)
+                predefined = '|'.join(categories)
 
                 channel_regex = re.compile('.*({})$'.format(predefined))
 
+                deb('TEST999')
                 for channel in channelList[:]:
+
                     if channel_regex.match(channel.id):
+                        deb(channel)
+                        deb(channel_regex)
+
                         newChannelList.append(channel)
                         channelList.remove(channel)
                         #deb('Adding channel: {}'.format(channel.title))
