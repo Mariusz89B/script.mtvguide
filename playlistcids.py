@@ -572,38 +572,41 @@ class PlaylistUpdater(baseServiceUpdater):
                                 except:
                                     regex_match = re.compile('(^|(\s))(L\s*)?({lang})((:|\s)|$)'.format(lang=lang.encode('utf-8')), re.IGNORECASE)
 
-                            if self.append_cc != '' and self.serviceEnabled == 'true':
-                                match = regex_match.match(title)
-                                if match is None:
-                                    title = title + ' ' + self.append_cc
+                            match = regex_match.match(title)
+                            if match is None:
 
-                            elif self.serviceEnabled == 'true':
-                                match = regex_match.match(title)
-                                if match is None:
+                                pattern = re.compile(r'^\.')
 
-                                    try:
-                                        pattern = re.compile('((?:^|[^a-zA-Z])({n})(?:[^a-zA-Z]|$)|({e}))'.format(n=non_escaped, e=escaped))
-                                    except:
-                                        pattern = re.compile('((?:^|[^a-zA-Z])({n})(?:[^a-zA-Z]|$)|({e}))'.format(n=non_escaped.encode('utf-8'), e=escaped))
+                                if pattern.match(self.append_cc):
+                                    space = ''
+                                else:
+                                    space = ' '
 
-                                    if PY3:
-                                        r = pattern.search(str(splitedLine[0]))
-                                        group = r.group(1).strip() if r else ''
+                                title = title + space + self.append_cc
 
-                                    else:
-                                        r = pattern.search(str(splitedLine[0].encode('utf-8')))
-                                        group = r.group(1).strip() if r else ''
+                                try:
+                                    pattern = re.compile('((?:^|[^a-zA-Z])({n})(?:[^a-zA-Z]|$)|({e}))'.format(n=non_escaped, e=escaped))
+                                except:
+                                    pattern = re.compile('((?:^|[^a-zA-Z])({n})(?:[^a-zA-Z]|$)|({e}))'.format(n=non_escaped.encode('utf-8'), e=escaped))
 
-                                    if group:
-                                        ccCh = [c for c in grouplist if group == c]
-                                        cc = ccCh[0] if ccCh else ''
+                                if PY3:
+                                    r = pattern.search(str(splitedLine[0]))
+                                    group = r.group(1).strip() if r else ''
 
-                                        if PATTERN > 0:
-                                            if '.' in cc:
-                                                cc.replace('.', '')
+                                else:
+                                    r = pattern.search(str(splitedLine[0].encode('utf-8')))
+                                    group = r.group(1).strip() if r else ''
 
-                                            string = ' ' + cc.upper()
-                                            title = re.sub('$', string, title)
+                                if group:
+                                    ccCh = [c for c in grouplist if group == c]
+                                    cc = ccCh[0] if ccCh else ''
+
+                                    if PATTERN > 0:
+                                        if '.' in cc:
+                                            cc.replace('.', '')
+
+                                        string = ' ' + cc.upper()
+                                        title = re.sub('$', string, title)
 
                             if 1 >= PATTERN <= 3:
                                 if any(cc.lower() in title.lower() for cc in langList + nativeList):
@@ -618,23 +621,38 @@ class PlaylistUpdater(baseServiceUpdater):
                                     if( regexRemove.findall(tvg_title) ):
                                         tvg_title = ''
 
-                            for defReplaceMap in defReplaceList:
-                                title, match = defReplaceMap['regex'].subn('', title)
-                                if match > 0:
-                                    title += ' ' + defReplaceMap['def']
-                                    title = ' '.join(OrderedDict((w, w) for w in title.split()).keys())
-                                    if PATTERN == 5:
-                                        title = re.sub(defReplaceMap['def'], '', title)
-
                             for langReplaceMap in langReplaceList:
                                 title, match = langReplaceMap['regex'].subn('', title)
                                 if match > 0:
-                                    if PATTERN == 3:
-                                        title += '' + langReplaceMap['lang']
-                                    elif PATTERN == 5:
-                                        title = re.sub(langReplaceMap['lang'], '', title)
+                                    if langReplaceMap['lang'] not in title:
+                                        if PATTERN == 3:
+                                            title += '' + langReplaceMap['lang']
+                                        elif PATTERN == 5:
+                                            title = re.sub(langReplaceMap['lang'], '', title)
+                                        else:
+                                            title += ' ' + langReplaceMap['lang']
+
+                            for defReplaceMap in defReplaceList:
+                                title, match = defReplaceMap['regex'].subn('', title)
+                                if match > 0:
+                                    pattern = re.compile(r'(\s\w{2,3}\s?$)')
+
+                                    r = pattern.search(title)
+                                    cc = r.group(1) if r else ''
+
+                                    if cc != '':
+                                        title_ = title.split(' ')
+                                        title_.insert(-2, defReplaceMap['def'])
+
+                                        title = ' '.join(title_)
+
                                     else:
-                                        title += ' ' + langReplaceMap['lang']
+                                        title += ' ' + defReplaceMap['def']
+
+                                    title = ' '.join(OrderedDict((w, w) for w in title.split()).keys())
+
+                                    if PATTERN == 5:
+                                        title = re.sub(defReplaceMap['def'], '', title)
 
                             if self.filtered and PATTERN != 5:
                                 for regexAdd in regexAddList:
@@ -644,7 +662,7 @@ class PlaylistUpdater(baseServiceUpdater):
                                         if not ( regexAdd.findall(tvg_title) ):
                                             tvg_title = ''
 
-                            title = re.sub('  ', ' ', title).strip()
+                            title = title.strip()
 
                             if tvg_id:
                                 if tvg_title == title:

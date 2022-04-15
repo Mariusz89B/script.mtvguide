@@ -1,4 +1,7 @@
-﻿v9.9.5 (2022-04-13)
+﻿v9.9.6 (2022-04-15)
+- Hotfix.
+
+v9.9.5 (2022-04-13)
 - Added catchup for service TVPGO.
 - Fixed service PlayerPL parsing error.
 - Fixed encodings.

@@ -783,7 +783,9 @@ class Database(object):
 
         else:
             refr = ADDON.getSetting('{playlist}_refr'.format(playlist=serviceName))
-            if refr == 'true':
+            src = ADDON.getSetting('{playlist}_source'.format(playlist=serviceName))
+
+            if refr == 'true' and src == '0':
                 deb('[UPD] Cache playlist: Read')
                 cache = True
             else:
@@ -1222,7 +1224,7 @@ class Database(object):
     def printStreamsWithoutChannelEPG(self):
         try:
             c = self.conn.cursor()
-            c.execute("SELECT custom.channel, custom.stream_url FROM custom_stream_url as custom LEFT JOIN channels as chann ON (UPPER(custom.channel)) = (UPPER(chann.id) OR UPPER(custom.channel)) = (UPPER(chann.title)) WHERE chann.id IS NULL")
+            c.execute("SELECT custom.channel, custom.stream_url FROM custom_stream_url as custom LEFT JOIN channels as chann ON UPPER(custom.channel) = UPPER(chann.id) WHERE chann.id IS NULL")
 
             if c.rowcount:
                 deb('\n\n')
@@ -1484,9 +1486,9 @@ class Database(object):
 
                 if self.ChannelsWithStream == 'true':
                     if onlyVisible:
-                        c.execute('SELECT DISTINCT chann.id, chann.title, chann.logo, chann.stream_url, chann.source, chann.visible, chann.weight, chann.titles FROM channels AS chann INNER JOIN custom_stream_url AS custom ON (UPPER(chann.id)) = (UPPER(custom.channel)) OR (UPPER(chann.title)) = (UPPER(custom.channel)) WHERE source=? AND visible=? ORDER BY weight', [self.source.KEY, True])
+                        c.execute('SELECT DISTINCT chann.id, chann.title, chann.logo, chann.stream_url, chann.source, chann.visible, chann.weight, chann.titles FROM channels AS chann INNER JOIN custom_stream_url AS custom ON UPPER(chann.id) = UPPER(custom.channel) WHERE source=? AND visible=? ORDER BY weight', [self.source.KEY, True])
                     else:
-                        c.execute('SELECT DISTINCT chann.id, chann.title, chann.logo, chann.stream_url, chann.source, chann.visible, chann.weight, chann.titles FROM channels AS chann INNER JOIN custom_stream_url AS custom ON (UPPER(chann.id)) = (UPPER(custom.channel)) OR (UPPER(chann.title)) = (UPPER(custom.channel)) WHERE source=? ORDER BY weight', [self.source.KEY])
+                        c.execute('SELECT DISTINCT chann.id, chann.title, chann.logo, chann.stream_url, chann.source, chann.visible, chann.weight, chann.titles FROM channels AS chann INNER JOIN custom_stream_url AS custom ON UPPER(chann.id) = UPPER(custom.channel) WHERE source=? ORDER BY weight', [self.source.KEY])
                 else:
                     if onlyVisible:
                         c.execute('SELECT * FROM channels WHERE source=? AND visible=? ORDER BY weight', [self.source.KEY, True])
@@ -2789,7 +2791,7 @@ class Source(object):
 
                     filename = ''
                     contentType = ''
-                    
+
                     headers = {
                         'User-Agent': UA,
                         'Keep-Alive': 'timeout=20',
@@ -2882,7 +2884,7 @@ class Source(object):
                     deb('Faulty EPG content: {}'.format(str(content[:15000])))
                 except:
                     deb('Faulty EPG content: {}'.format(str(content[:15000]).decode('utf-8')))
-                
+
                 #not a valid EPG XML
                 deb("Error downloading EPG: {}\n\nDetails:\n{}".format(url, getExceptionString()))
                 raise SourceFaultyEPGException(url)
@@ -2997,52 +2999,82 @@ class MTVGUIDESource(Source):
             except:
                 self.profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
 
+    def check_url(self, url):
+        return bool(re.match(
+            r"(https?|ftp)://"
+            r"(\w+(\-\w+)*\.)?"
+            r"((\w+(\-\w+)*)\.(\w+))"
+            r"(\.\w+)*"
+            r"([\w\-\._\~/]*)*(?<!\.)"
+        , url))
+
     def getDataFromExternal(self, date, progress_callback = None):
         parsedData = {}
-        parsedData.update({self.MTVGUIDEUrl:{'date': date}})
+
+        errorList = []
+
+        mainEpgs = [self.MTVGUIDEUrl2, self.MTVGUIDEUrl3] + EPG_LIST
+        extraEpgs = [self.XXX_EPG_Url, self.VOD_EPG_Url]
+
+        if self.check_url(self.MTVGUIDEUrl):
+            if not strings2.M_TVGUIDE_CLOSING:
+                parsedData.update({self.MTVGUIDEUrl:{'date': date}})
+        else:
+            raise SourceFaultyEPGException(self.MTVGUIDEUrl)
 
         try:
             if CUSTOM_PARSER:
-                if self.MTVGUIDEUrl2 != "" and not strings2.M_TVGUIDE_CLOSING:
-                    parsedData.update({self.MTVGUIDEUrl2:{'date': date}})
-                if self.MTVGUIDEUrl3 != "" and not strings2.M_TVGUIDE_CLOSING:
-                    parsedData.update({self.MTVGUIDEUrl3:{'date': date}})
-                if self.XXX_EPG_Url != "" and self.XXX_EPG_Url != "false" and not strings2.M_TVGUIDE_CLOSING:
-                    parsedData.update({self.XXX_EPG_Url:{'date': date}})
-                if self.VOD_EPG_Url != "" and self.VOD_EPG_Url != "false" and not strings2.M_TVGUIDE_CLOSING:
-                    parsedData.update({self.VOD_EPG_Url:{'date': date}})
+                for epg in mainEpgs:
+                    if self.check_url(epg) and not strings2.M_TVGUIDE_CLOSING:
+                        parsedData.update({epg:{'date': date}})
+                    else:
+                        errorList.append(epg)
 
-                for epg in EPG_LIST:
-                    parsedData.update({epg:{'date': date}})
+                for epg in extraEpgs:
+                    if self.check_url(epg) and epg != 'false' and not strings2.M_TVGUIDE_CLOSING:
+                        parsedData.update({epg:{'date': date}})
+                    else:
+                        if epg != 'false':
+                            errorList.append(epg)
 
                 data = self._getDataFromExternal(data=parsedData, progress_callback=progress_callback)
+
             else:
                 data = self._getDataFromExternal(date=date, progress_callback=progress_callback, url=self.MTVGUIDEUrl)
 
-                if self.MTVGUIDEUrl2 != "" and not strings2.M_TVGUIDE_CLOSING:
-                    parsedData_etree = self._getDataFromExternal(date=date, progress_callback=progress_callback, url=self.MTVGUIDEUrl2)
-                    data = chain(data, parsedData_etree)
-                if self.MTVGUIDEUrl3 != "" and not strings2.M_TVGUIDE_CLOSING:
-                    parsedData_etree = self._getDataFromExternal(date=date, progress_callback=progress_callback, url=self.MTVGUIDEUrl3)
-                    data = chain(data, parsedData_etree)
-                if self.XXX_EPG_Url != "" and self.XXX_EPG_Url != "false":
-                    parsedData_etree = self._getDataFromExternal(date=date, progress_callback=progress_callback, url=self.XXX_EPG_Url)
-                    data = chain(data, parsedData_etree)
-                if self.VOD_EPG_Url != "" and self.VOD_EPG_Url != "false":
-                    parsedData_etree = self._getDataFromExternal(date=date, progress_callback=progress_callback, url=self.VOD_EPG_Url)
-                    data = chain(data, parsedData_etree)
+                for epg in mainEpgs:
+                    if self.check_url(epg) and not strings2.M_TVGUIDE_CLOSING:
+                        parsedData_etree = self._getDataFromExternal(date=date, progress_callback=progress_callback, url=epg)
+                        data = chain(data, parsedData_etree)
+                    else:
+                        errorList.append(epg)
 
-                for epg in EPG_LIST:
-                    parsedData_etree = self._getDataFromExternal(date=date, progress_callback=progress_callback, url=epg)
-                    data = chain(data, parsedData_etree)
+                for epg in extraEpgs:
+                    if self.check_url(epg) and epg != 'false' and not strings2.M_TVGUIDE_CLOSING:
+                        parsedData_etree = self._getDataFromExternal(date=date, progress_callback=progress_callback, url=epg)
+                        data = chain(data, parsedData_etree)
+                    else:
+                        if epg != 'false':
+                            errorList.append(epg)
+
+            errorList = filter(lambda x: len(x) > 0, errorList)
+
+            error_str = ', '.join(errorList)
+            if error_str.strip() != '':
+                raise SourceFaultyEPGException(error_str)
 
         except SourceFaultyEPGException as ex:
             deb("Failed to download custom EPG but addon should start!, EPG: {}".format(ex.epg))
             xbmcgui.Dialog().ok(strings(LOAD_ERROR_TITLE), strings(LOAD_ERROR_LINE1) + '\n' + ex.epg + '\n' + strings(LOAD_NOT_CRITICAL_ERROR))
 
             parsedDataEx = {}
-            parsedDataEx.update({self.MTVGUIDEUrl:{'date': date}})
-            data = self._getDataFromExternal(data=parsedDataEx, progress_callback=progress_callback)
+
+            if self.check_url(self.MTVGUIDEUrl):
+                if not strings2.M_TVGUIDE_CLOSING:
+                    parsedDataEx.update({self.MTVGUIDEUrl:{'date': date}})
+                    data = self._getDataFromExternal(data=parsedDataEx, progress_callback=progress_callback)
+            else:
+                raise SourceFaultyEPGException(self.MTVGUIDEUrl)
 
         return data
 
@@ -3111,6 +3143,8 @@ class MTVGUIDESource(Source):
         return False
 
     def getEpgSize(self, defaultSize = 0, forceCheck = False):
+        if not self.check_url(self.MTVGUIDEUrl):
+            return 0
         if self.epgBasedOnLastModDate == 'false':
             return 0
         if self.EPGSize is not None and forceCheck == False:
@@ -3297,6 +3331,12 @@ def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
 
         start = retimezone(program, programStartRe)
         stop = retimezone(program, programStopRe)
+
+        try:
+            if stop - start > timedelta(hours=24):
+                stop = start
+        except:
+            pass
 
         r = programDesc.search(program)
         desc = r.group(1) if r else ''
@@ -3489,6 +3529,12 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
         except Exception as ex:
             deb('TimeZone Exception: {}'.format(ex))
             stop = ''
+
+        try:
+            if stop - start > timedelta(hours=24):
+                stop = start
+        except:
+            pass
 
         return Program(channel, elem.findtext('title'), start, stop, description, productionDate=date,
                        director=director, actor=actor, episode=episode, rating=value, imageLarge=live, imageSmall=icon,
