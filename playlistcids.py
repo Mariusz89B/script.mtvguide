@@ -668,14 +668,7 @@ class PlaylistUpdater(baseServiceUpdater):
                                     tvg_title = ''
 
                     elif (title is not None or tvg_title is not None) and regexCorrectStream.match(stripLine):
-                        if not self.vod:
-                            regexRemoveStream = re.compile('^(?!.*(\.)(mkv|avi|mov|wma)).*$')
-                            try:
-                                match = regexRemoveStream.match(stripLine)
-                            except:
-                                match = True
-
-                        if (title != '' or tvg_title != '') and match:
+                        if (title != '' or tvg_title != ''):
                             channelCid = ''
 
                             catchupDaysList = ['catchup-days=', 'timeshift=']
