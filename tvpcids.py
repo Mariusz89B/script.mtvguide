@@ -106,7 +106,7 @@ class TvpUpdater(baseServiceUpdater):
         self.log('[UPD] %-12s %-35s %-35s' % ( '-CID-', '-NAME-', '-TITLE-'))
 
         try:
-            url = "https://tvpstream.tvp.pl/api/tvp-stream/program-tv/stations"
+            url = 'https://tvpstream.tvp.pl/api/tvp-stream/program-tv/stations'
 
             response = requests.get(url).json()
 

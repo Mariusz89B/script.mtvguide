@@ -1050,7 +1050,14 @@ class PlayService(xbmc.Player, BasePlayService):
                         except:
                             catchup = False
 
-                        sorted_data = sorted(streams, key=lambda d: list(str(d['totalBitrate'])), reverse=True)
+                        mime_types = ['application/vnd.ms-ss', 'video/mp4','video/mp2t', 'application/dash+xml', 'application/x-mpegurl']
+
+                        for s in streams:
+                            for r in range(len(mime_types)):
+                                if s['mimeType'] == mime_types[r]:
+                                    s['priority'] = r
+
+                        sorted_data = sorted(streams, key=lambda d: (-int(d['totalBitrate']), (d['priority'])), reverse=True)
 
                         for s in sorted_data:
                             if 'material_niedostepny' not in s['url']:
@@ -1058,21 +1065,25 @@ class PlayService(xbmc.Player, BasePlayService):
                                     strmUrl = s['url']
                                     PROTOCOL = 'mpd'
                                     mimeType = 'application/xml+dash'
+                                    break
 
                                 elif (s['mimeType'] == 'application/x-mpegurl'):
                                     strmUrl = s['url']
+                                    break
 
                                 elif (s['mimeType'] == 'video/mp2t'):
                                     strmUrl = s['url']
+                                    break
 
                                 elif (s['mimeType'] == 'video/mp4'):
                                     strmUrl = s['url']
-                                    mimeType = 'video/mp4'
+                                    break
 
                                 elif (s['mimeType'] == 'application/vnd.ms-ss'):
                                     strmUrl = s['url']
                                     PROTOCOL = 'ism'
                                     mimeType = 'application/vnd.ms-ss'
+                                    break
 
                         if ('material_niedostepny' in strmUrl or strmUrl == ''):
                             xbmcgui.Dialog().notification(service, strings(SERVICE_NO_CONTENT), sound=False)
