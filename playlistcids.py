@@ -641,7 +641,7 @@ class PlaylistUpdater(baseServiceUpdater):
 
                                     if cc != '':
                                         title_ = title.split(' ')
-                                        title_.insert(-2, defReplaceMap['def'])
+                                        title_.insert(-1, defReplaceMap['def'])
 
                                         title = ' '.join(title_)
 
