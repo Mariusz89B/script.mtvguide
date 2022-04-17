@@ -53,29 +53,25 @@ else:
     import ConfigParser
 
 import os, threading, datetime, subprocess, unicodedata, time, re, copy
-import xbmc, xbmcaddon, xbmcgui, xbmcplugin, xbmcvfs
+import xbmc, xbmcgui, xbmcvfs
 from strings import *
 import strings as strings2
 from playService import BasePlayService
-from contextlib import contextmanager
 import serviceLib
 from skins import Skin
 
 if PY3:
     import urllib.request, urllib.parse, urllib.error
     import urllib.request as Request
+    from urllib.parse import quote
     from urllib.error import HTTPError, URLError
 else:
     import urllib
     import urllib2 as Request
     from urllib2 import HTTPError, URLError 
+    from urllib2 import quote
 
 import requests
-
-if PY3:
-    from requests.exceptions import HTTPError, ConnectionError, Timeout, RequestException
-else:
-    from requests import HTTPError, ConnectionError, Timeout, RequestException
 
 recordIcon = 'recordIcon.png'
 downloadIcon = 'downloadIcon.png'

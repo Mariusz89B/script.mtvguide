@@ -60,7 +60,6 @@ if PY3:
     import configparser
 else:
     import urllib
-    import urllib2
     import ConfigParser
 
 from collections import Counter
@@ -73,9 +72,9 @@ from datetime import datetime, timedelta
 try:
     from datetime import timezone
 except ImportError:
-    import pytz
+    pass
 
-import xbmc, xbmcgui, xbmcvfs, xbmcaddon
+import xbmc, xbmcgui, xbmcvfs
 import shutil
 import playService
 import serviceLib
@@ -413,10 +412,7 @@ class Database(object):
     def __init__(self):
         self.conn = None
         self.eventQueue = []
-        try:
-            self.event = multiprocessing.Event()
-        except:
-            self.event = threading.Event()
+        self.event = threading.Event()
 
         self.eventResults = dict()
         self.source = instantiateSource()
@@ -2924,7 +2920,7 @@ class XMLTVSource(Source):
             with open(filename, 'rb') as file:
                 if filename.lower().endswith('.xz') or '.xz' in filename:
                     tnow = datetime.now()
-                    deb("[EPG] Type: .xz, Unpacking epg: {} [{} sek.]".format(url, str((tnow-start).seconds)))
+                    deb("[EPG] Type: .xz, Unpacking epg: {} [{} sek.]".format(filename, str((tnow-start).seconds)))
                     try:
                         import lzma
                     except ImportError:

@@ -43,7 +43,7 @@ from __future__ import unicode_literals
 
 import sys
 
-import xbmc, xbmcaddon, xbmcgui, xbmcplugin, xbmcvfs
+import xbmcgui, xbmcvfs
 import os
 from strings import *
 which = sys.argv[1]

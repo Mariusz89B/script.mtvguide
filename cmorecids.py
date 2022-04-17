@@ -59,19 +59,15 @@ else:
 
 import re, os
 import requests
-import xbmc, xbmcaddon, xbmcgui, xbmcplugin, xbmcvfs
-import inputstreamhelper
+import xbmc, xbmcgui, xbmcvfs
 
 import json
 import calendar
 import time
-from collections import OrderedDict
 from datetime import datetime, timedelta
 
 import requests
 import iso8601
-
-import string
 
 from strings import *
 from serviceLib import *
@@ -124,10 +120,6 @@ class CmoreUpdater(baseServiceUpdater):
 
     class CMoreError(Exception):
         pass
-
-    def get_addon(self):
-        """Returns a fresh addon instance."""
-        return Addon()
 
     def get_setting(self, setting_id):
         setting = ADDON.getSetting(setting_id)
@@ -408,7 +400,7 @@ class CmoreUpdater(baseServiceUpdater):
                 self.log('[UPD] %-12s %-35s %-35s' % (cid, name, title))
 
             if len(result) <= 0:
-                self.log('Error while parsing service {}, returned data is: {}'.format(self.serviceName, str(response)))
+                self.log('Error while parsing service {}, returned data is: {}'.format(self.serviceName, str(channels)))
 
             self.log('-------------------------------------------------------------------------------------')
 

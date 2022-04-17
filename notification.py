@@ -51,7 +51,7 @@ else:
 
 import datetime
 import os
-import xbmc, xbmcaddon, xbmcgui, xbmcplugin, xbmcvfs
+import xbmc, xbmcgui
 import source as src
 import threading
 from strings import *

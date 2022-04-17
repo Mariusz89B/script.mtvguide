@@ -70,8 +70,8 @@ except AttributeError:
     # no pyopenssl support used / needed / available
     pass
 
-import re, os, copy, random, json
-import xbmc, xbmcaddon, xbmcgui, xbmcplugin, xbmcvfs
+import re, os, random
+import xbmc, xbmcgui, xbmcvfs
 from strings import *
 from serviceLib import *
 

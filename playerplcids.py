@@ -56,18 +56,14 @@ import xbmc, xbmcvfs
 
 if PY3:
     import urllib.request, urllib.parse, urllib.error
-    import http.cookiejar as cookielib
 else:
     import urllib
-    import cookielib
 
-import os, copy, re
+import re
 
 from strings import *
 from serviceLib import *
-from random import randrange
 import requests
-import base64
 import json
 
 serviceName         = 'PlayerPL'

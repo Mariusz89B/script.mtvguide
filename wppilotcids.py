@@ -53,19 +53,17 @@ if sys.version_info[0] > 2:
 else:
     PY3 = False
 
-import os, copy, re
+import os
 import xbmc, xbmcvfs
 from strings import *
 from serviceLib import *
-from random import randrange
 import requests
-import base64
 import json
 
 try:
-    from urllib.parse import urlencode, quote_plus, quote, unquote
+    from urllib.parse import urlencode
 except ImportError:
-    from urllib import urlencode, quote_plus, quote, unquote
+    from urllib import urlencode
 
 if PY3:
     import urllib3
@@ -235,11 +233,6 @@ class WpPilotUpdater(baseServiceUpdater):
         return result
 
     def getChannelStream(self, chann=None, vid=None, retry=False):
-        try:
-            from urllib.parse import urlencode, quote_plus, quote, unquote
-        except ImportError:
-            from urllib import urlencode, quote_plus, quote, unquote
-
         if not retry:
             video_id = chann.cid
         else:

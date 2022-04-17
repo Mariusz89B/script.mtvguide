@@ -44,11 +44,7 @@
 
 from __future__ import unicode_literals
 
-import sys
-
-import os, shutil
-import xbmc, xbmcgui, xbmcvfs
-import source as src
+import xbmcgui
 from strings import *
 
 class clearTeliaPlay:

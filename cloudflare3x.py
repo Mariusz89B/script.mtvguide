@@ -56,10 +56,6 @@ else:
 
 import re
 import time
-import requests
-
-from decimal import Decimal, ROUND_UP
-
 
 class Cloudflare:
     def __init__(self, url,check):

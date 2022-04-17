@@ -53,7 +53,7 @@ import requests
 import codecs
 
 import os, datetime
-import xbmc, xbmcaddon, xbmcgui, xbmcplugin, xbmcvfs
+import xbmc, xbmcgui, xbmcvfs
 from strings import *
 
 URL      = 'https://paste.ubuntu.com/'

@@ -42,12 +42,8 @@
 #   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #   SOFTWARE.
 
-import sys
-
-import re, os
-import xbmc, xbmcaddon, xbmcgui, xbmcplugin, xbmcvfs
 import gui
-import time
+
 from strings import *
 from skins import Skin
 
@@ -72,7 +68,7 @@ class Start:
             deb('###################################################################################')
             deb('')
 
-        except Exception as ex:
+        except Exception:
             deb('addon.py exception: {}'.format(getExceptionString()))
 
 init = Start()

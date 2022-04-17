@@ -52,7 +52,6 @@ else:
 if PY3: 
     import urllib.request, urllib.error, urllib.parse, http.client, http.cookiejar
 else:
-    import StringIO
     import urllib, urllib2, httplib
     import cookielib
 

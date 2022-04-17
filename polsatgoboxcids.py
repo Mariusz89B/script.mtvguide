@@ -75,8 +75,8 @@ except AttributeError:
     # no pyopenssl support used / needed / available
     pass
 
-import re, os, copy, random, json
-import xbmc, xbmcaddon, xbmcgui, xbmcplugin, xbmcvfs
+import re, os
+import xbmc, xbmcgui, xbmcvfs
 from strings import *
 from serviceLib import *
 
@@ -176,7 +176,7 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
                 try:
                     if data['error']['data']["type"] == "RulesException":
                         postData = {"id":1,"jsonrpc":"2.0","method":"acceptRules","params":{"ua":"pbg_mobile_android_chrome_html/1 (Mozilla/5.0 (Linux; Android 10; Redmi Note 8 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.62 Mobile Safari/537.36)","deviceId":{"type":"other","value":self.device_id},"userAgentData":{"portal":"pbg","deviceType":"mobile","application":"chrome","player":"html","build":1,"os":"android","osInfo":"Mozilla/5.0 (Linux; Android 10; Redmi Note 8 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.62 Mobile Safari/537.36"},"clientId":self.client_id,"rulesIds":[105],"authData":{"authProvider":"icok","login":self.login,"password":self.password,"deviceId":{"type":"other","value":self.device_id}}}}
-                        data = getRequests(self.auth, data=postData, headers=self.headers)
+                        data = self.getRequests(self.auth, data=postData, headers=self.headers)
                 except:
                     pass
 

@@ -51,21 +51,12 @@ try:  # Python 3
 except ImportError:  # Python 2
     from SocketServer import TCPServer
 
-try:  # Python 3
-    from urllib.parse import parse_qsl, quote,unquote
-except ImportError:  # Python 2
-    from urlparse import parse_qsl
-    from urllib import urlencode,quote,unquote
-
-import re
-
 import xbmcaddon
 import socket
 from contextlib import closing
 
 ADDON = xbmcaddon.Addon(id='script.mtvguide')
 import requests
-import urllib3
 
 requests.packages.urllib3.disable_warnings()
 requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += ':HIGH:!DH:!aNULL'

@@ -59,9 +59,9 @@ else:
     from urllib2 import HTTPError, URLError 
 
 try:
-    from urllib.parse import urlencode, quote_plus, quote, unquote
+    from urllib.parse import urlencode, unquote_plus, quote, unquote
 except ImportError:
-    from urllib import urlencode, quote_plus, quote, unquote
+    from urllib import urlencode, unquote_plus, quote, unquote
 
 if PY3:
     from requests.exceptions import HTTPError, ConnectionError, Timeout, RequestException
@@ -75,8 +75,8 @@ import json
 import ssl
 import socket
 
-import datetime, threading, sys, os, re
-import xbmc, xbmcaddon, xbmcgui, xbmcplugin, xbmcvfs
+import datetime, threading, sys, re
+import xbmc, xbmcgui
 from strings import *
 import strings as strings2
 import serviceLib
@@ -721,15 +721,10 @@ class PlayService(xbmc.Player, BasePlayService):
                         try:
                             self.playbackStopped = False
 
-                            try:
-                                from urllib.parse import urlencode, quote_plus, quote, unquote
-                            except ImportError:
-                                from urllib import urlencode, quote_plus, quote, unquote
-
                             licenseUrl = channelInfo.lic
                             strmUrl = channelInfo.strm
 
-                            if lic['type'] == 'hls':
+                            if licenseUrl['type'] == 'hls':
                                 PROTOCOL = 'hls'
                             else:
                                 PROTOCOL = 'mpd'
@@ -765,11 +760,6 @@ class PlayService(xbmc.Player, BasePlayService):
                     if self.archiveService == '' or self.archivePlaylist == '':
                         try:
                             self.playbackStopped = False
-
-                            try:
-                                from urllib.parse import urlencode, quote_plus, quote, unquote
-                            except ImportError:
-                                from urllib import urlencode, quote_plus, quote, unquote
 
                             licenseUrl, licenseData = channelInfo.lic
                             strmUrl = channelInfo.strm
@@ -820,11 +810,6 @@ class PlayService(xbmc.Player, BasePlayService):
                     try:
                         self.playbackStopped = False
 
-                        try:
-                            from urllib.parse import urlencode, quote_plus, quote, unquote
-                        except ImportError:
-                            from urllib import urlencode, quote_plus, quote, unquote
-
                         licenseUrl = channelInfo.lic
                         strmUrl = channelInfo.strm
 
@@ -872,11 +857,6 @@ class PlayService(xbmc.Player, BasePlayService):
                             UAcp = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0'
 
                             self.playbackStopped = False
-
-                            try:
-                                from urllib.parse import urlencode, quote_plus, quote, unquote
-                            except ImportError:
-                                from urllib import urlencode, quote_plus, quote, unquote
 
                             licenseUrl, licenseData = channelInfo.lic
                             strmUrl = channelInfo.strm
@@ -937,11 +917,6 @@ class PlayService(xbmc.Player, BasePlayService):
 
                             self.playbackStopped = False
 
-                            try:
-                                from urllib.parse import urlencode, quote_plus, quote, unquote
-                            except ImportError:
-                                from urllib import urlencode, quote_plus, quote, unquote
-
                             licenseUrl, licenseData = channelInfo.lic
                             strmUrl = channelInfo.strm
 
@@ -997,11 +972,6 @@ class PlayService(xbmc.Player, BasePlayService):
                 if service == 'Telia Play':
                     try:
                         self.playbackStopped = False
-
-                        try:
-                            from urllib.parse import urlencode, quote_plus, quote, unquote
-                        except ImportError:
-                            from urllib import urlencode, quote_plus, quote, unquote
 
                         strmUrl = channelInfo.strm
                         licenseUrl = channelInfo.lic
@@ -1066,11 +1036,6 @@ class PlayService(xbmc.Player, BasePlayService):
                 if service == 'TVP GO':
                     try:
                         self.playbackStopped = False
-
-                        try:
-                            from urllib.parse import urlencode, quote_plus, quote, unquote
-                        except ImportError:
-                            from urllib import urlencode, quote_plus, quote, unquote
 
                         data = channelInfo.strm
 
@@ -1169,11 +1134,6 @@ class PlayService(xbmc.Player, BasePlayService):
                     if self.archiveService == '' or self.archivePlaylist == '':
                         try:
                             self.playbackStopped = False
-
-                            try:
-                                from urllib.parse import urlencode, quote_plus, quote, unquote
-                            except ImportError:
-                                from urllib import urlencode, quote_plus, quote, unquote
 
                             strmUrl = channelInfo.strm
                             licenseUrl, headers = channelInfo.lic

@@ -61,7 +61,6 @@ from groups import *
 
 compressionType = zipfile.ZIP_STORED
 try:
-    import zlib
     compressionType = zipfile.ZIP_DEFLATED
 except:
     pass

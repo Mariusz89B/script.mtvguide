@@ -54,11 +54,9 @@ import xbmc
 
 if PY3:
     import urllib.request, urllib.parse, urllib.error
-    import http.cookiejar as cookielib
     from requests.exceptions import HTTPError, ConnectionError, Timeout, RequestException
 else:
     import urllib
-    import cookielib
     from requests import HTTPError, ConnectionError, Timeout, RequestException
 
 import os, copy, re
@@ -404,9 +402,9 @@ class TeliaPlayUpdater(baseServiceUpdater):
         try:
             if self.dashjs == '':
                 try:
-                    from BeautifulSoup import BeautifulSoup
-                except ImportError:
                     from bs4 import BeautifulSoup
+                except ImportError:
+                    from BeautifulSoup import BeautifulSoup
 
                 try:
                     html = sess.get('https://www.telia.se/privat/support/info/registrerade-enheter-telia-play', verify=True, timeout=timeouts).text
@@ -454,22 +452,11 @@ class TeliaPlayUpdater(baseServiceUpdater):
 
         return result
 
-
-    def utcToLocal(self, utc_dt):
-        # get integer timestamp to avoid precision lost
-        timestamp = calendar.timegm(utc_dt.timetuple())
-        local_dt = datetime.datetime.fromtimestamp(timestamp)
-        assert utc_dt.resolution >= timedelta(microseconds=1)
-        return local_dt.replace(microsecond=utc_dt.microsecond)
-
-
     def refreshTimeDelta(self):
         result = None
 
         if 'Z' in self.validTo:
             validTo = iso8601.parse_date(self.validTo)
-            if localize:
-                result = self.utcToLocal(validTo)
         elif self.validTo != '':
             if not self.validTo:
                 try:

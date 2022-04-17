@@ -63,7 +63,6 @@ from unidecode import unidecode
 from collections import OrderedDict
 
 import codecs
-import json
 
 sess = cloudscraper.create_scraper()
 scraper = cloudscraper.CloudScraper()

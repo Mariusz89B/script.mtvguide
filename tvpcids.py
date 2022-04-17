@@ -49,19 +49,12 @@ if sys.version_info[0] > 2:
 else:
     PY3 = False
 
-import os
 import xbmc, xbmcvfs
 import requests
 
-if PY3:
-    from requests.exceptions import HTTPError, ConnectionError, Timeout, RequestException
-else:
-    from requests import HTTPError, ConnectionError, Timeout, RequestException
-
 from strings import *
 from serviceLib import *
-import json, re, random
-import time
+import re
 
 serviceName         = 'TVP GO'
 

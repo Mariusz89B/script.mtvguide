@@ -50,10 +50,9 @@ else:
     
 import os
 
-import xbmc, xbmcgui, xbmcvfs, xbmcaddon
+import xbmcaddon
 
-import requests
-import urllib3
+#import requests
 import json
 from strings import *
 

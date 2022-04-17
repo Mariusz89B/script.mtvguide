@@ -62,8 +62,8 @@ if PY3:
 else:
     import ConfigParser
 
-import re, os, datetime, time, platform, threading, zipfile, shutil, glob
-import xbmc, xbmcgui, xbmcplugin, xbmcvfs, xbmcaddon
+import re, os, datetime, time, platform, threading, shutil
+import xbmc, xbmcgui, xbmcvfs, xbmcaddon
 import source as src
 from unidecode import unidecode
 from notification import Notification
@@ -74,7 +74,6 @@ import streaming
 import playService
 import requests
 import json
-import urllib
 from vosd import VideoOSD
 from recordService import RecordService
 from settingsImportExport import SettingsImp
@@ -6556,27 +6555,20 @@ class mTVGuide(xbmcgui.WindowXML):
         else:
             self.refreshStreamsTimer = None
 
-    def checkUrl(self, url='https://www.google.com'):
-        if PY3:
-            try:
-                import urllib.request, urllib.error, urllib.parse
-                open = urllib.request.urlopen(url, timeout=3)
-                if (open):
-                    open.read()
-                    return True
-            except:
-                pass
-            return False
-        else:
-            try:
-                import urllib2
-                open = urllib2.urlopen(url, timeout = 3)
-                if(open):
-                    open.read()
-                    return True
-            except:
-                pass
-            return False
+    def checkUrl(url='https://www.googlex.com'):
+        try:
+            if PY3:
+                import urllib.request as Request
+            else:
+                import urllib2 as Request
+
+            open = Request.urlopen(url, timeout=3)
+            if (open):
+                open.read()
+                return True
+        except:
+            pass
+        return False
 
 
 class PopupMenu(xbmcgui.WindowXMLDialog):

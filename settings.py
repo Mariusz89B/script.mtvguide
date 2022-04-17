@@ -77,7 +77,7 @@ class Settings:
                 pass
             else:
                 if size < copySize:
-                    success = xbmcvfs.copy(copy, dest)
+                    xbmcvfs.copy(copy, dest)
                 
         else:
             copy = os.path.join(Settings.addonPath, 'resources', 'format', 'settings_py2.xml')
@@ -93,4 +93,4 @@ class Settings:
                 pass
             else:   
                 if size > (copySize):
-                    success = xbmcvfs.copy(copy, dest)
+                    xbmcvfs.copy(copy, dest)

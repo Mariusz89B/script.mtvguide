@@ -64,8 +64,8 @@ else:
     from urllib import urlencode, quote_plus, quote, unquote
     import cookielib
 
-import re, os, copy, random, json
-import xbmc, xbmcaddon, xbmcgui, xbmcplugin, xbmcvfs
+import re, os
+import xbmc, xbmcvfs
 import requests
 from strings import *
 from serviceLib import *

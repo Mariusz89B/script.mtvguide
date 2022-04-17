@@ -41,11 +41,7 @@
 
 from __future__ import unicode_literals
 
-import sys
-
-import os, shutil
-import xbmc, xbmcgui, xbmcvfs, xbmcaddon
-import source as src
+import xbmc, xbmcaddon
 from strings import *
 
 class inputstreamAdaptive:

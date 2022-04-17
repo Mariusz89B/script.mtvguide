@@ -46,6 +46,11 @@ import xbmc, xbmcgui, xbmcvfs
 import source as src
 from strings import *
 
+if sys.version_info[0] > 2:
+    PY3 = True
+else:
+    PY3 = False
+
 class clearDB:
 
     def __init__(self):
@@ -55,8 +60,8 @@ class clearDB:
         if self.command == 'deleteDbFile' or self.command == 'deleteAll' or self.command == 'deleteDb59908':
             self.database.deleteDbFile()
             self.database.close()
-            #Delete skinsFix check            
-            if sys.version_info[0] > 2:
+            
+            if PY3:
                 try:
                     self.profilePath = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
                 except:
@@ -66,7 +71,8 @@ class clearDB:
                     self.profilePath = xbmc.translatePath(ADDON.getAddonInfo('profile'))
                 except:
                     self.profilePath = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
- 
+    
+            #Delete skinsFix check
             if xbmcvfs.exists(os.path.join(self.profilePath, 'skin_fonts.ini')) == True:
                 os.remove(os.path.join(self.profilePath, 'skin_fonts.ini'))
                 with open(os.path.join(self.profilePath, 'skin_fonts.ini'), 'w+') as fp:
