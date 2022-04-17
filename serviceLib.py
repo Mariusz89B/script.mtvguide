@@ -1113,8 +1113,8 @@ class baseServiceUpdater:
             self.log('-------------------------------------------------------------------------------------')
             self.log('\n\n')
 
-            self.print = threading.Thread(name='notMatched thread', target = self.notMatched, args=(channelList,))
-            self.print.start()
+            self.printNotMatched = threading.Thread(name='notMatched thread', target = self.notMatched, args=(channelList,))
+            self.printNotMatched.start()
 
             self.log('-------------------------------------------------------------------------------------')
             self.log("[UPD] The analysis has been completed...")
