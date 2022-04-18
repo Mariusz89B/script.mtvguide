@@ -165,7 +165,7 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
 
             if self.login and self.password:
                 self.client = ADDON.getSetting('pgobox_client')
-                
+
                 if self.client == 'ICOK':
                     postData = {"id":1,"jsonrpc":"2.0","method":"login","params":{"ua":"pbg_mobile_android_chrome_html/1 (Mozilla/5.0 (Linux; Android 10; Redmi Note 8 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.62 Mobile Safari/537.36)","deviceId":{"type":"other","value":self.device_id},"userAgentData":{"portal":"pbg","deviceType":"mobile","application":"chrome","player":"html","build":1,"os":"android","osInfo":"Mozilla/5.0 (Linux; Android 10; Redmi Note 8 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.62 Mobile Safari/537.36"},"clientId":self.client_id,"authData":{"authProvider":"icok","login":self.login,"password":self.password,"deviceId":{"type":"other","value":self.device_id}}}}
                 else:
@@ -189,7 +189,6 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
                     myper = []
 
                     m_pack = {'multiple_packet_tv' : 'sc:tv', 'multiple_packet_premium': 'sc:premium', 'multiple_packet_sport': 'sc:sport', 'pos:multiple_packet_dzieci' : 'sc:kat_odzieci', 'news:true': 'sc:news'}
-
                     for i in data["result"]["accessGroups"]:
                         for k,v in m_pack.items():
                             if k in i:
@@ -217,17 +216,17 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
                     self.myperms = myper
 
                     sesja = data['result']['session']
-            
+
                     self.sesstoken = sesja['id']
                     self.sessexpir = str(sesja['keyExpirationTime'])
                     self.sesskey = sesja['key']
-                    
+
                     ADDON.setSetting('pgobox_sesstoken', self.sesstoken)
                     ADDON.setSetting('pgobox_sessexpir', str(self.sessexpir))
                     ADDON.setSetting('pgobox_sesskey', self.sesskey)
-                    
+
                 return True
-            
+
         except:
             self.log('getLogin exception: {}'.format(getExceptionString()))
             self.connErrorMessage()  
@@ -238,7 +237,7 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
         def getSystemId(il):
             def gen_hex_code(myrange=6):
                 return ''.join([random.choice('0123456789ABCDEF') for x in range(myrange)])
-        
+
             systemid = gen_hex_code(il) + '-' + gen_hex_code(4) + '-' + gen_hex_code(4) + '-' + gen_hex_code(4) + '-' + gen_hex_code(12)
             systemid = systemid.strip()
 
@@ -405,11 +404,33 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
                 if 'cp_:' in i:
                     myper.append(str(i))
 
+            dane = (self.dane).format('navigation','getCommonlyAccessiblePackets')
+
+            authdata = self.getHmac(dane)
+
+            postDatax = {"id":1,"jsonrpc":"2.0","method":"getCommonlyAccessiblePackets","params":{"ua":UAIPLA,"deviceId":{"type":"other","value":self.device_id},"userAgentData":{"portal":"pbg","deviceType":"pc","application":"firefox","player":"html","build":1,"os":"windows","osInfo":OSINFO},"authData":{"sessionToken":authdata},"clientId":self.client_id}}
+
+            datax = self.getRequests(self.navigate, data=postDatax, headers=self.headers)
+
+            results = datax.get("result", None)
+            for rr in results:
+                abcd = rr.get("id", None)
+                if abcd:
+                    myper.append('sc:'+ str(abcd))
+
+            ADDON.setSetting('pgobox_myperm', str(myper))
+
             for i in channels:
                 channelperms = i['grantExpression'].split('*')
-                channelperms = [w.replace('*plat:all', '') for w in channelperms]
+                if len(channelperms) == 1 and channelperms[0] == '':
+                    channelperms = []
+                else:
+                    channelperms = [w.replace('+plat:all', '') for w in channelperms]
+                    channelperms = [w.replace('+dev:pc', '') for w in channelperms]
+                    channelperms = [w.replace('+dev:mobile', '') for w in channelperms]
+                    channelperms = [w.replace('+dev:pc', '') for w in channelperms]
                 for j in myper:
-                    if j in channelperms or i['title'] == 'Polsat' or i['title'] == 'TV4':
+                    if j in channelperms or i['title'] == 'Polsat' or i['title'] == 'TV4' or i['title'] == 'Ukraina 24 HD' or not channelperms:
                         img = i['thumbnails'][0]['src']
                         cid = i['id']
                         name = i['title'].upper()
