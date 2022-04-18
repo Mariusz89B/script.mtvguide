@@ -116,7 +116,17 @@ class TvpUpdater(baseServiceUpdater):
                 for c in ch_data:
                     cid = c['code'] + '_TS_3'
                     name = c['name'].replace('EPG - ', '').replace('TVP3', 'TVP 3').replace('Historia2', 'Historia 2').replace('Kultura2', 'Kultura 2').replace('UA1', 'UA 1')
-                    title = name + ' PL'
+
+                    p = re.compile(r'(\sPL$)')
+
+                    r = p.search(name)
+                    match = r.group(1) if r else None
+
+                    if match:
+                        title = name
+                    else:
+                        title = name + ' PL'
+
                     img = c['image_square']['url'].replace('{width}','140').replace('{height}','140')
 
                     program = TvCid(cid=cid, name=name, title=title, img=img)

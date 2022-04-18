@@ -384,11 +384,35 @@ class CmoreUpdater(baseServiceUpdater):
                 name = channel['title']
 
                 if self.locale == 'sv_SE':
-                    title = channel['title']+' SE'
+                    p = re.compile(r'(\sSE$)')
+
+                    r = p.search(name)
+                    match = r.group(1) if r else None
+
+                    if match:
+                        title = channel['title']
+                    else:
+                        title = channel['title'] + ' SE'
                 elif self.locale == 'da_DK':
-                    title = channel['title']+' DK'
+                    p = re.compile(r'(\sDK$)')
+
+                    r = p.search(name)
+                    match = r.group(1) if r else None
+
+                    if match:
+                        title = channel['title']
+                    else:
+                        title = channel['title'] + ' DK'
                 elif self.locale == 'nb_NO':
-                    title = channel['title']+' NO'
+                    p = re.compile(r'(\sNO$)')
+
+                    r = p.search(name)
+                    match = r.group(1) if r else None
+
+                    if match:
+                        title = channel['title']
+                    else:
+                        title = channel['title'] + ' NO'
                 else:
                     title = ''
 

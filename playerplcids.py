@@ -320,7 +320,16 @@ class PlayerPLUpdater(baseServiceUpdater):
                 if id_ != '':
                     if id_ in self.mylist or 'TVN HD' == name:
                         if name != '': 
-                            title = name + ' PL'
+                            p = re.compile(r'(\sPL$)')
+
+                            r = p.search(name)
+                            match = r.group(1) if r else None
+
+                            if match:
+                                title = name
+                            else:
+                                title = name + ' PL'
+
                             for regexReplace in regexReplaceList:
                                 name = regexReplace.sub('', name)
                                 title = regexReplace.sub('', title)

@@ -210,7 +210,17 @@ class WpPilotUpdater(baseServiceUpdater):
                 if channel.get('access_status', '') != 'unsubscribed':
                     cid  = channel['id']
                     name = channel['name']
-                    title = channel['name'] + ' PL'
+
+                    p = re.compile(r'(\sPL$)')
+
+                    r = p.search(name)
+                    match = r.group(1) if r else None
+
+                    if match:
+                        title = channel['name']
+                    else:
+                        title = channel['name'] + ' PL'
+
                     img  = channel['thumbnail_mobile']
                     geoblocked = channel['geoblocked']
                     slug = channel['slug']

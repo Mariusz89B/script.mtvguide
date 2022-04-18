@@ -434,7 +434,16 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
                         img = i['thumbnails'][0]['src']
                         cid = i['id']
                         name = i['title'].upper()
-                        title = i['title'].upper() + ' PL'
+
+                        p = re.compile(r'(\sPL$)')
+
+                        r = p.search(name)
+                        match = r.group(1) if r else None
+
+                        if match:
+                            title = i['title'].upper()
+                        else:
+                            title = i['title'].upper() + ' PL'
 
                         name = name.replace(' SD', '')
                         title = title.replace(' SD', '')

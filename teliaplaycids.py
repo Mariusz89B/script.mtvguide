@@ -565,10 +565,20 @@ class TeliaPlayUpdater(baseServiceUpdater):
                     except:
                         res_int = 0
 
-                    if int(res_int) > 576 and ' HD' not in name:
-                        title = channel["name"] + ' HD ' + ca[self.country]
+                    p = re.compile(r'(\s{0}$)'.format(ca[self.country]))
+
+                    r = p.search(name)
+                    match = r.group(1) if r else None
+
+                    if match:
+                        ccCh = ''
                     else:
-                        title = channel["name"] + ' ' + ca[self.country]
+                        ccCh = ca[self.country]
+
+                    if int(res_int) > 576 and ' HD' not in name:
+                        title = channel["name"] + ' HD ' + ccCh
+                    else:
+                        title = channel["name"] + ' ' + ccCh
                     img = channel["id"]
 
                     program = TvCid(cid=cid, name=name, title=title, img=img) 

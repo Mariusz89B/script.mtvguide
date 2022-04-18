@@ -347,21 +347,44 @@ class IplaUpdater(baseServiceUpdater):
             self.myperms = ADDON.getSetting('ipla_myperm')
             for i in eval(self.myperms):
                 if 'sc:' in i:
-
                     myper.append(str(i))
                 if 'oth:' in i:
                     myper.append(str(i))
+                if 'cpuser:true' in i:
+                    myper.append(str(i))
+                if 'vip:true' in i:
+                    myper.append(str(i))
+                if 'rodo:true' in i:
+                    myper.append(str(i))
+                if 'plususer:true' in i:
+                    myper.append(str(i))
+                if 'cp_:' in i:
+                    myper.append(str(i))
 
             for i in data['result']['results']:
-                item = {}
                 channelperms = i['grantExpression'].split('*')
-                channelperms = [w.replace('+plat:all', '') for w in channelperms]
+                if len(channelperms) == 1 and channelperms[0] == '':
+                    channelperms = []
+                else:
+                    channelperms = [w.replace('+plat:all', '') for w in channelperms]
+                    channelperms = [w.replace('+dev:pc', '') for w in channelperms]
+                    channelperms = [w.replace('+dev:mobile', '') for w in channelperms]
+                    channelperms = [w.replace('+dev:pc', '') for w in channelperms]
                 for j in myper:
-                    if j in channelperms or i['title']=='Polsat' or i['title']=='TV4':
+                    if j in channelperms or i['title'] == 'Polsat' or i['title'] == 'TV4' or i['title'] == 'Ukraina 24 HD' or not channelperms:
                         img = i['thumbnails'][-1]['src']
                         cid = i['id']
                         name = i['title'].upper() 
-                        title = i['title'].upper() + ' PL'
+
+                        p = re.compile(r'(\sPL$)')
+
+                        r = p.search(name)
+                        match = r.group(1) if r else None
+
+                        if match:
+                            title = i['title'].upper()
+                        else:
+                            title = i['title'].upper() + ' PL'
 
                         name = name.replace(' SD', '')
                         title = title.replace(' SD', '')
