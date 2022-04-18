@@ -339,7 +339,11 @@ class PlaylistUpdater(baseServiceUpdater):
             #regexReplaceList.append( re.compile('[^A-Za-z0-9+/:]+', re.IGNORECASE) )
             regexReplaceList.append( re.compile('[^A-Za-zÀ-ȕ0-9+\/:]+', re.IGNORECASE) )
             regexReplaceList.append( re.compile('\sL\s', re.IGNORECASE) )
-            regexReplaceList.append( re.compile('(\s|^)(FULL|SD|LQ|HQ|RAW|LOW|HIGH|QUALITY|FEED|FPS60|EUROPE|NORDIC|SCANDINAVIA|ADULT:|EXTRA:|VIP:|VIP|AUDIO|L1|B|BACKUP|MULTI|SUB|SUBTITLE(S)?|NAPISY|VIASAT:|XXX|XXX:|\d{1,2}\s*FPS|LIVE\s*DURING\s*EVENTS\s*ONLY)(?=\s|$)', re.IGNORECASE) )
+
+            removeList = ['ADULT:', 'AUDIO', 'B', 'BACKUP', 'CDA', 'EUROPE', 'EXTRA:', 'FEED', 'FPS60', 'FULL', 'GO', 'HIGH', 'HQ', 'L1', 'LIVE\s*DURING\s*EVENTS\s*ONLY', 'LOW', 'LQ', 'MULTI', 'NAPISY', 'NORDIC', 'OKAZYJNIE', 'QUALITY', 'RAW', 'SCANDINAVIA', 'SD', 'SUB', 'SUBTITLE(S)?', 'VIASAT:', 'VIP', 'VIP:', 'XXX:?', '\d{1,2}\s*FPS']
+            removeString = '|'.join(removeList)
+
+            regexReplaceList.append( re.compile('(\s|^)({0})(?=\s|$)'.format(removeString), re.IGNORECASE) )
 
             defReplaceList = []
             langReplaceList = []
@@ -471,11 +475,11 @@ class PlaylistUpdater(baseServiceUpdater):
 
             regex_chann_name = re.compile('tvg-id="[^"]*"', re.IGNORECASE)
 
-            if self.vod:
-                regexCorrectStream = re.compile('^(plugin|http|rtmp)(?!.*?[.]((\.)(mp4|mkv|avi|mov|wma)))', re.IGNORECASE)
+            if not self.vod:
+                regexCorrectStream = re.compile('^(plugin|http(s)?|rtmp)(?!.*?[.](mp4|mkv|avi|mov|wma))', re.IGNORECASE)
                 regexRemoveList.append( re.compile('(\s|^)?(L\s*)?((?i)Vod|VOD|On\sDemand)(?=\s|$)', re.IGNORECASE) )
             else:
-                regexCorrectStream = re.compile('^plugin|http|^rtmp', re.IGNORECASE)
+                regexCorrectStream = re.compile('^(plugin|http(s)?|rtmp)', re.IGNORECASE)
 
             if self.xxx:
                 regexRemoveList.append( re.compile('(\s|^)?(L\s*)?((?i)Adult|XXX)(?=\s|$)', re.IGNORECASE) )
