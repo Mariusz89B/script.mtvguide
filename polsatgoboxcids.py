@@ -493,27 +493,35 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
 
     def checkAccess(self, chann):
         id_ = self.channCid(chann.cid)
+
         acc = False
-
-        self.sesstoken = ADDON.getSetting('pgobox_sesstoken')
-        self.sessexpir = ADDON.getSetting('pgobox_sessexpir')
-
-        self.dane = self.sesstoken+'|'+self.sessexpir+'|{0}|{1}'
-
         dane = self.dane.format('drm','checkProductAccess')
         authdata = self.getHmac(dane)
-        postData = {"id":1,"jsonrpc":"2.0","method":"checkProductAccess","params":{"userAgentData":{"portal":"pbg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua": UAIPLA,"product":{"id":id_,"type":"media","subType":"movie"},"authData":{"sessionToken":authdata},"clientId":self.client_id}}
+        postData = {"id":1,"jsonrpc":"2.0","method":"checkProductAccess","params":{"userAgentData":{"portal":"pbg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":UAIPLA,"product":{"id":id_,"type":"media","subType":"movie"},"authData":{"sessionToken":authdata},"clientId":self.client_id}}
 
         if 'HBOacc' in id_:
-            postData = {"id":1,"jsonrpc":"2.0","method":"checkProductAccess","params":{"userAgentData":{"portal":"pbg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua": UAIPLA,"product":{"id":"hbo","type":"multiple","subType":"packet"},"authData":{"sessionToken":authdata},"clientId":self.client_id}}   
-        
+            postData = {"id":1,"jsonrpc":"2.0","method":"checkProductAccess","params":{"userAgentData":{"portal":"pbg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":UAIPLA,"product":{"id":"hbo","type":"multiple","subType":"packet"},"authData":{"sessionToken":authdata},"clientId":self.client_id}}  
+            postData2 = {"id":1,"jsonrpc":"2.0","method":"checkProductAccess","params":{"userAgentData":{"portal":"pbg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":UAIPLA,"product":{"id":"kat_hbohd","type":"multiple","subType":"packet"},"authData":{"sessionToken":authdata},"clientId":self.client_id}}   
+            data = self.getRequests('https://b2c-www.redefine.pl/rpc/drm/', data = postData, headers=self.headers)
+            data2 = self.getRequests('https://b2c-www.redefine.pl/rpc/drm/', data = postData2, headers=self.headers)
+            if data['result']["statusDescription"] == "has access":
+                acc = True
+            elif data2['result']["statusDescription"] == "has access":
+                acc = True
+            else:
+                acc = False
+
         elif 'HBOtv' in id_:
-                id_=id_.split('|')[0]
-                postData = {"id":1,"jsonrpc":"2.0","method":"checkProductAccess","params":{"userAgentData":{"portal":"pbg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua": UAIPLA,"product":{"id":id_,"type":"media","subType":"tv"},"authData":{"sessionToken":authdata},"clientId":self.client_id}}    
-                
-        data = self.getRequests('https://b2c-www.redefine.pl/rpc/drm/', data=postData, headers=self.headers)
-        
-        acc = True if data['result']["statusDescription"] == "has access" else False
+            id_= id_.split('|')[0]
+            postData = {"id":1,"jsonrpc":"2.0","method":"checkProductAccess","params":{"userAgentData":{"portal":"pbg","deviceType":"pc","application":"firefox","os":"windows","build":1,"osInfo":OSINFO},"ua":UAIPLA,"product":{"id":id_,"type":"media","subType":"tv"},"authData":{"sessionToken":authdata},"clientId":self.client_id}}    
+            data = self.getRequests('https://b2c-www.redefine.pl/rpc/drm/', data = postData, headers=self.headers)
+            acc = True if data['result']["statusDescription"] == "has access" else False
+        else:
+            data = self.getRequests('https://b2c-www.redefine.pl/rpc/drm/', data = postData, headers=self.headers)
+
+            acc = True if data['result']["statusDescription"] == "has access" else False
+
+        return acc
 
     def getChannelStream(self, chann):
         stream = None
@@ -548,11 +556,11 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
                 self.dane = self.sesstoken+'|'+self.sessexpir+'|{0}|{1}'
 
                 dane = self.dane.format('navigation','prePlayData')
-                
+
                 authdata = self.getHmac(dane)
-                
+
                 postData = {"jsonrpc":"2.0","id":1,"method":"prePlayData","params":{"ua":"pbg_pc_windows_firefox_html/1 (Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0) (Windows 7; widevine=True)","userAgentData":{"deviceType":"pc","application":"firefox","os":"windows","build":2160500,"portal":"pbg","player":"html","widevine":True},"cpid":cpid,"mediaId":id_,"authData":{"sessionToken":authdata},"clientId":self.client_id}}
-            
+
                 data = self.getRequests(self.navigate, data=postData, headers=self.headers)
 
                 playback = data['result']['mediaItem']['playback']
@@ -562,14 +570,14 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
                 sourceid = mediaSources['id']
                 cc = mediaSources.get('authorizationServices', None).get('pseudo', None)
                 if not cc:
-                    UAcp=  'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0'
+                    UAcp = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0'
                     hd = {'Accept-Charset': 'UTF-8','User-Agent': UAcp,}
                     licenseUrl = mediaSources['authorizationServices']['widevine']['getWidevineLicenseUrl']
                     dane = self.dane.format('drm','getWidevineLicense')
                     authdata = self.getHmac(dane)
                     devcid = (self.device_id).replace('-','')
                     licenseData = quote('{"jsonrpc":"2.0","id":1,"method":"getWidevineLicense","params":{"userAgentData":{"deviceType":"pc","application":"firefox","os":"windows","build":2160500,"portal":"pbg","player":"html","widevine":true},"cpid":%s'%cpid+',"mediaId":"'+mediaid+'","sourceId":"'+sourceid+'","keyId":"'+keyid+'","object":"b{SSM}","deviceId":{"type":"other","value":"'+devcid+'"},"ua":"pbg_pc_windows_firefox_html/2160500","authData":{"sessionToken":"'+authdata+'"},"clientId":"'+self.client_id+'"}}')
-                
+
                     stream = mediaSources['url']
                 else:
                     dane = self.dane.format('drm','getPseudoLicense')
@@ -581,11 +589,12 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
                     getData = self.getRequests('https://b2c-www.redefine.pl/rpc/drm/', data=postData, headers=self.headers)
 
                     stream = getData['result']['url']
+                    licenseData = None
 
             if stream is not None and stream != "":
                 chann.strm = stream
                 chann.lic = licenseUrl, licenseData
-                
+
                 self.log('getChannelStream found matching channel: cid: {}, name: {}, rtmp:{}'.format(chann.cid, chann.name, chann.strm))
                 return chann
             else:

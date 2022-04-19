@@ -900,7 +900,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                 ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
                                 ListItem.setContentLookup(False)
                                 ListItem.setProperty('IsPlayable', 'true')
-                            
+
                             self.strmUrl = strmUrl
                             xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
                             res = True
@@ -957,8 +957,18 @@ class PlayService(xbmc.Player, BasePlayService):
                             else:
                                 ListItem = xbmcgui.ListItem(path=strmUrl)
                                 ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
-                                ListItem.setContentLookup(False)
-                                ListItem.setProperty('IsPlayable', 'true')
+                                if '.mpd' in strmUrl:
+                                    is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
+                                    if is_helper.check_inputstream():
+                                        ListItem.setMimeType('application/xml+dash')
+                                        ListItem.setContentLookup(False)
+                                        if PY3:
+                                            ListItem.setProperty('inputstream', is_helper.inputstream_addon)
+                                        else:
+                                            ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
+
+                                        ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
+                                        ListItem.setProperty('IsPlayable', 'true')
 
                             self.strmUrl = strmUrl
                             xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
