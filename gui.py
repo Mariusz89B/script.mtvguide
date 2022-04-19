@@ -2196,7 +2196,10 @@ class mTVGuide(xbmcgui.WindowXML):
         try:
             index = channelList[self.channelIdx]
         except:
-            index = channelList[0]
+            if channelList:
+                index = channelList[0]
+            else:
+                return
         program = Program(channel=index, title='', startDate='', endDate='', description='', productionDate='', director='', actor='', episode='', 
                         imageLarge='', imageSmall='', categoryA='', categoryB='')
 
@@ -2213,7 +2216,10 @@ class mTVGuide(xbmcgui.WindowXML):
         try:
             index = channelList[self.channelIdx]
         except:
-            index = channelList[0]
+            if channelList:
+                index = channelList[0]
+            else:
+                return
         program = Program(channel=index, title='', startDate='', endDate='', description='', productionDate='', director='', actor='', episode='', 
                         imageLarge='', imageSmall='', categoryA='', categoryB='')
         xbmc.sleep(350)
@@ -2363,7 +2369,10 @@ class mTVGuide(xbmcgui.WindowXML):
             try:
                 index = channelList[self.channelIdx]
             except:
-                index = channelList[0]
+                if channelList:
+                    index = channelList[0]
+                else:
+                    return
             program = Program(channel=index, title='', startDate='', endDate='', description='', productionDate='', director='', actor='', episode='', categoryA='', categoryB='')
             self.playChannel2(program)
         elif (behaviour == 1) or (behaviour == 1 and self.mode != MODE_EPG):
@@ -7923,7 +7932,10 @@ class Pla(xbmcgui.WindowXMLDialog):
         try:
             index = channelList[self.channelIdx]
         except:
-            index = channelList[0]
+            if channelList:
+                index = channelList[0]
+            else:
+                return
 
         self.program = Program(channel=index, title='', startDate='', endDate='', description='', productionDate='', director='', actor='', episode='', imageLarge='', imageSmall='', categoryA='', categoryB='')
         
