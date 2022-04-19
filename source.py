@@ -1262,10 +1262,7 @@ class Database(object):
 
             if serviceHandler.serviceEnabled == 'true':
                 serviceHandler.resetService()
-                if serviceName not in cacheList:
-                    serviceHandler.startLoadingChannelList(automap=epgChannels, cache=False)
-                else:
-                    serviceHandler.startLoadingChannelList(automap=epgChannels, cache=True)
+                serviceHandler.startLoadingChannelList(automap=epgChannels, cache=cache)
                 serviceList.append(serviceHandler)
 
         deb('[UPD] Starting updating STRM')

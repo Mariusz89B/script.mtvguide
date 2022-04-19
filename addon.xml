@@ -2,7 +2,7 @@
 <addon
     id="script.mtvguide"
     name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]"
-    version="9.9.602-beta.4"
+    version="9.9.602-beta.5"
     provider-name="Mods-kodi">
   <requires>
     <import addon="xbmc.addon" version="17.0.0"/>
@@ -41,8 +41,9 @@
     <forum>https://github.com/Mariusz89B/script.mtvguide/discussions</forum>
 	<website>https://github.com/Mariusz89B/script.mtvguide</website>
     <source>m-TVGuide © 2013 - 2022</source>
-    <news>v9.9.602 (2022-04-18)
+    <news>v9.9.602 (2022-04-19)
 - Fixed channel access for service Polsat GO BOX.
+- Other improvements.
 
 v9.9.601 (2022-04-18)
 - Bug fixes.
