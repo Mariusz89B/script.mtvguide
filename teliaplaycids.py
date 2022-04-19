@@ -711,6 +711,6 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 self.log('getChannelStream error getting channel stream2, result: {}'.format(str(data)))
                 return None
 
-        except Exception as e:
+        except Exception:
             self.log('getChannelStream exception while looping: {}\n Data: {}'.format(getExceptionString(), str(data)))
         return None

@@ -117,7 +117,7 @@ class WpPilotUpdater(baseServiceUpdater):
         if os.path.exists(cacheFile):
             os.remove(cacheFile)
         else:
-            print('File does not exists')
+            deb('File does not exists')
         conn = sqlite3.connect(cacheFile, detect_types=sqlite3.PARSE_DECLTYPES, cached_statements=20000)
         c = conn.cursor()
         c.execute('CREATE TABLE IF NOT EXISTS Cache(%s TEXT)' % table_name)
@@ -138,8 +138,8 @@ class WpPilotUpdater(baseServiceUpdater):
     def cookiesToString(self, cookies):
         try:
             return "; ".join([str(x) + "=" + str(y) for x, y in cookies.items()])
-        except Exception as e:
-            print('exception: ' + e)
+        except Exception as ex:
+            deb('cookiesToString exception: ' + ex)
             return ''
 
     def loginService(self):
@@ -343,6 +343,6 @@ class WpPilotUpdater(baseServiceUpdater):
                 self.log('getChannelStream error getting channel stream2, result: {}'.format(str(stream)))
                 return None
 
-        except Exception as e:
+        except Exception:
             self.log('getChannelStream exception while looping: {}\n Data: {}'.format(getExceptionString(), str(stream)))
         return None

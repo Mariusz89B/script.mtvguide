@@ -58,7 +58,7 @@ import re
 
 serviceName         = 'TVP GO'
 
-url = 'https://tvpstream.vod.tvp.pl/'
+url = 'https://tvpstream.tvp.pl/'
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36 Edg/98.0.1108.50'
@@ -89,7 +89,7 @@ class TvpUpdater(baseServiceUpdater):
 
     def loginService(self):
         response = requests.get(url, headers=headers).status_code
-        if response == 200:
+        if response < 400:
             return True
         else:
             self.connErrorMessage() 
