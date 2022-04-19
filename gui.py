@@ -6555,7 +6555,7 @@ class mTVGuide(xbmcgui.WindowXML):
         else:
             self.refreshStreamsTimer = None
 
-    def checkUrl(url='https://www.googlex.com'):
+    def checkUrl(url='https://www.google.com'):
         try:
             if PY3:
                 import urllib.request as Request
