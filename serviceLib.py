@@ -923,6 +923,7 @@ class baseServiceUpdater:
     def getBaseChannelList(self, silent=False, returnCopy=True, cache=False):
         result = list()
         try:
+            saveCache = True
             if cache and 'playlist_' in self.serviceName:
                 cachefile = os.path.join(PROFILE_PATH, 'playlists', '{playlist}.m3u'.format(playlist=self.serviceName))
                 cachepath = os.path.join(PROFILE_PATH, 'playlists', '{playlist}.cache'.format(playlist=self.serviceName))
@@ -940,6 +941,7 @@ class baseServiceUpdater:
                         cachedList.append(TvCid(cid=y[0], name=y[1], title=y[2], strm=y[3], catchup=y[4]))
 
                     self.channelList = cachedList
+                    saveCache = False
 
                 else:
                     if not cache:
@@ -961,7 +963,7 @@ class baseServiceUpdater:
         except:
             self.log('getBaseChannelList exception: %s' % getExceptionString())
 
-        if 'playlist_' in self.serviceName:
+        if 'playlist_' in self.serviceName and saveCache:
             refr = ADDON.getSetting('{playlist}_refr'.format(playlist=self.serviceName))
             if refr == 'true':
                 self.cache = threading.Thread(name='saveCacheList thread', target = self.saveCacheList, args=(self.channelList, self.serviceName,))
