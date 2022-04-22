@@ -964,7 +964,7 @@ class baseServiceUpdater:
         if 'playlist_' in self.serviceName:
             refr = ADDON.getSetting('{playlist}_refr'.format(playlist=self.serviceName))
             if refr == 'true':
-                self.cache = threading.Thread(name='saveCacheList thread', target = self.saveCacheList, args=(result, self.serviceName,))
+                self.cache = threading.Thread(name='saveCacheList thread', target = self.saveCacheList, args=(self.channelList, self.serviceName,))
                 self.cache.start()
 
         return result

@@ -2922,7 +2922,7 @@ class XMLTVSource(Source):
                         import lzma
                     except ImportError:
                         from backports import lzma
-                    memfile = io.BytesIO(content)
+                    memfile = io.BytesIO(file.read())
                     unziped = lzma.LZMAFile(filename=memfile)
                     content = unziped.read()
                     unziped.close()
