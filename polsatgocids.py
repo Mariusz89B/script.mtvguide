@@ -198,35 +198,37 @@ class PolsatGoUpdater(baseServiceUpdater):
             else:
                 if self.login and self.password:
                     data = {
-                            "id": 1,
-                            "jsonrpc": "2.0",
-                            "method": "login",
-                            "params": {
-                                "ua": UAPG,
-                                "deviceId": {
-                                    "type": "other",
-                                    "value": self.device_id
+                        'id': 1,
+                        'jsonrpc': '2.0',
+                        'method': 'login',
+                        'params': {
+                            'ua': UAPG,
+                            'deviceId': {
+                                'type': 'other',
+                                'value': self.device_id,
+                            },
+                            'userAgentData': {
+                                'portal': 'pg',
+                                'deviceType': 'pc',
+                                'application': 'firefox',
+                                'player': 'html',
+                                'build': 1,
+                                'os': 'windows',
+                                'osInfo': OSINFO,
+                            },
+                            'clientId': '',
+                            'authData': {
+                                'login': self.login,
+                                'password': self.password,
+                                'deviceId': {
+                                    'type': 'other',
+                                    'value': self.device_id,
                                 },
-                                "userAgentData": {
-                                    "portal": "pg",
-                                    "deviceType": "pc",
-                                    "application": "firefox",
-                                    "player": "html",
-                                    "build": 1,
-                                    "os": "windows",
-                                    "osInfo": OSINFO
-                                },
-                                "clientId": "",
-                                "authData": {
-                                    "login": self.login,
-                                    "password": self.password,
-                                    "deviceId": {
-                                        "type": "other",
-                                        "value": self.device_id}}}
-                            }
+                            },
+                        },
+                    }
 
                     response = requests.post(self.auth, headers=headers, json=data, timeout=15, verify=False).json()
-
                     try:
                         error = response['error']
                         if error:
@@ -249,28 +251,28 @@ class PolsatGoUpdater(baseServiceUpdater):
                         authdata = self.getHmac(dane)
 
                         data = {
-                                "id": 1,
-                                "jsonrpc": "2.0",
-                                "method": "getSession",
-                                "params": {
-                                    "ua": UAPG,
-                                    "deviceId": {
-                                        "type": "other",
-                                        "value": self.device_id
-                                    },
-                                    "userAgentData": {
-                                        "portal": "pg",
-                                        "deviceType": "pc",
-                                        "application": "firefox",
-                                        "player": "html",
-                                        "build": 1,
-                                        "os": "windows",
-                                        "osInfo": OSINFO
-                                    },
-                                    "authData": {
-                                        "sessionToken": authdata
-                                    },
-                                    "clientId": ""}}
+                            "id": 1,
+                            "jsonrpc": "2.0",
+                            "method": "getSession",
+                            "params": {
+                                "ua": UAPG,
+                                "deviceId": {
+                                    "type": "other",
+                                    "value": self.device_id
+                                },
+                                "userAgentData": {
+                                    "portal": "pg",
+                                    "deviceType": "pc",
+                                    "application": "firefox",
+                                    "player": "html",
+                                    "build": 1,
+                                    "os": "windows",
+                                    "osInfo": OSINFO
+                                },
+                                "authData": {
+                                    "sessionToken": authdata
+                                },
+                                "clientId": ""}}
 
 
                         response = requests.post(self.auth, headers=headers, json=data,timeout=15, verify=False).json()
@@ -337,13 +339,13 @@ class PolsatGoUpdater(baseServiceUpdater):
                         ADDON.setSetting('polsatgo_sessexpir', str(sessexpir))
                         ADDON.setSetting('polsatgo_sesskey', sesskey)
 
-                        accesgroup = response['result']['accessGroups']
+                        accessgroup = response['result']['accessGroups']
 
                         myper = []
 
                         m_pack = {'multiple_packet_tv' : 'sc:tv', 'multiple_packet_premium': 'sc:premium', 'multiple_packet_sport': 'sc:sport', 'pos:multiple_packet_dzieci' : 'sc:kat_odzieci', 'news:true': 'sc:news'}
 
-                        for i in data["result"]["accessGroups"]:
+                        for i in accessgroup:
                             for k,v in m_pack.items():
                                 if k in i:
                                     myper.append(str(v))
@@ -507,6 +509,9 @@ class PolsatGoUpdater(baseServiceUpdater):
                     myper.append(str(i))
                 if 'cp_:' in i:
                     myper.append(str(i))
+
+            if not myper:
+                myper.append('no_accessgroups:')
 
             for i in channels:
                 channelperms = i['grantExpression'].split('*')

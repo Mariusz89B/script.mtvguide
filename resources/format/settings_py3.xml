@@ -494,7 +494,6 @@
 					<constraints>
 						<options>
 							<option label="Polsat Go">Polsat Go</option>
-							<option label="ICOK">ICOK</option>
 						</options>
 					</constraints>
 					<dependencies>

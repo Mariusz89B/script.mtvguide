@@ -404,6 +404,9 @@ class PolsatGoBoxUpdater(baseServiceUpdater):
                 if 'cp_:' in i:
                     myper.append(str(i))
 
+            if not myper:
+                myper.append('no_accessgroups:')
+
             dane = (self.dane).format('navigation','getCommonlyAccessiblePackets')
 
             authdata = self.getHmac(dane)

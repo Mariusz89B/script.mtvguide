@@ -1,4 +1,7 @@
-﻿v9.9.602 (2022-04-22)
+﻿v9.9.603 (2022-04-23)
+- Fixed service Polsat GO.
+
+v9.9.602 (2022-04-22)
 - Fixed channel access for service Polsat GO BOX.
 - Other improvements.
 
