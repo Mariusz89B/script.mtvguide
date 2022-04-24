@@ -2941,5 +2941,5 @@ msgid "Quickstart"
 msgstr "Početak"
 
 msgctxt "#90006"
-msgid "Commmands"
-msgstr "Naredbe"
+msgid "Basic controls"
+msgstr "Osnovne kontrole"

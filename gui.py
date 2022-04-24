@@ -7124,84 +7124,89 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
             self.updateDirsInfo()
 
     def onClick(self, controlId):
-        if controlId == self.C_STREAM_BROWSE_ADDONS:
-            self.updateDirsInfo()
+        try:
+            if controlId == self.C_STREAM_BROWSE_ADDONS:
+                self.updateDirsInfo()
 
-        elif controlId == self.C_STREAM_BROWSE_DIRS:
-            self.updateBrowseInfo()
+            elif controlId == self.C_STREAM_BROWSE_DIRS:
+                self.updateBrowseInfo()
 
-        elif controlId == self.C_STREAM_STRM_BROWSE:
-            stream = xbmcgui.Dialog().browse(1, ADDON.getLocalizedString(30304), 'video', '.strm')
-            if stream:
-                self.database.setCustomStreamUrl(self.channel, stream)
-                self.getControl(self.C_STREAM_STRM_FILE_LABEL).setText(stream)
-                self.strmFile = stream
+            elif controlId == self.C_STREAM_STRM_BROWSE:
+                stream = xbmcgui.Dialog().browse(1, ADDON.getLocalizedString(30304), 'video', '.strm')
+                if stream:
+                    self.database.setCustomStreamUrl(self.channel, stream)
+                    self.getControl(self.C_STREAM_STRM_FILE_LABEL).setText(stream)
+                    self.strmFile = stream
 
-        elif controlId == self.C_STREAM_BROWSE_OK:
-            listControl = self.getControl(self.C_STREAM_BROWSE_DIRS)
-            item = listControl.getSelectedItem()
-            if item and self.playable:
-                stream = self.strmFile
-                self.database.setCustomStreamUrl(self.channel, stream)
-                xbmcgui.Dialog().notification(self.channel.title, strings(59993).format(item.getLabel()))
-            else:
-                return
+            elif controlId == self.C_STREAM_BROWSE_OK:
+                listControl = self.getControl(self.C_STREAM_BROWSE_DIRS)
+                item = listControl.getSelectedItem()
+                if item and self.playable:
+                    stream = self.strmFile
+                    self.database.setCustomStreamUrl(self.channel, stream)
+                    xbmcgui.Dialog().notification(self.channel.title, strings(59993).format(item.getLabel()))
+                else:
+                    return
+                self.close()
+                return self.epg.onRedrawEPG(self.epg.channelIdx, self.epg.viewStartDate, self.epg._getCurrentProgramFocus)
+
+            elif controlId == self.C_STREAM_ADDONS_OK:
+                listControl = self.getControl(self.C_STREAM_ADDONS_STREAMS)
+                item = listControl.getSelectedItem()
+                if item:
+                    stream = item.getProperty('stream')
+                    self.database.setCustomStreamUrl(self.channel, stream)
+                    xbmcgui.Dialog().notification(self.channel.title, strings(59993).format(item.getLabel()))
+                self.close()
+                return self.epg.onRedrawEPG(self.epg.channelIdx, self.epg.viewStartDate, self.epg._getCurrentProgramFocus)
+
+            elif controlId == self.C_STREAM_FAVOURITES_OK:
+                listControl = self.getControl(self.C_STREAM_FAVOURITES)
+                item = listControl.getSelectedItem()
+                if item:
+                    stream = item.getProperty('stream')
+                    self.database.setCustomStreamUrl(self.channel, stream)
+                    xbmcgui.Dialog().notification(self.channel.title, strings(59993).format(item.getLabel()))
+                self.close()
+                return self.epg.onRedrawEPG(self.epg.channelIdx, self.epg.viewStartDate, self.epg._getCurrentProgramFocus)
+
+            elif controlId == self.C_STREAM_STRM_OK:
+                listControl = self.getControl(self.C_STREAM_STRM_BROWSE)
+                item = listControl.getSelectedItem()
+                if item:
+                    stream = item.getProperty('stream')
+                    self.database.setCustomStreamUrl(self.channel, stream)
+                    xbmcgui.Dialog().notification(self.channel.title, strings(59993).format(item.getLabel()))
+                self.close()
+                return self.epg.onRedrawEPG(self.epg.channelIdx, self.epg.viewStartDate, self.epg._getCurrentProgramFocus)
+
+            elif controlId == self.C_STREAM_PLAYLIST_OK:
+                listControl = self.getControl(self.C_STREAM_PLAYLIST_STREAMS)
+                item = listControl.getSelectedItem()
+                if item:
+                    stream = item.getProperty('stream')
+                    self.database.setCustomStreamUrl(self.channel, stream)
+                    xbmcgui.Dialog().notification(self.channel.title, strings(59993).format(item.getLabel()))
+                self.close()
+                return self.epg.onRedrawEPG(self.epg.channelIdx, self.epg.viewStartDate, self.epg._getCurrentProgramFocus)
+
+            elif controlId in [self.C_STREAM_ADDONS_CANCEL, self.C_STREAM_FAVOURITES_CANCEL, self.C_STREAM_STRM_CANCEL, self.C_STREAM_BROWSE_CANCEL, self.C_STREAM_PLAYLIST_CANCEL]:
+                self.close()
+                return self.epg.onRedrawEPG(self.epg.channelIdx, self.epg.viewStartDate)
+
+            elif controlId in [self.C_STREAM_ADDONS_PREVIEW, self.C_STREAM_FAVOURITES_PREVIEW, self.C_STREAM_STRM_PREVIEW, self.C_STREAM_BROWSE_PREVIEW, self.C_STREAM_PLAYLIST_PREVIEW]:
+                if xbmc.Player().isPlaying():
+                    xbmc.Player().stop()
+                    self.getControl(self.C_STREAM_ADDONS_PREVIEW).setLabel(strings(PREVIEW_STREAM))
+                    self.getControl(self.C_STREAM_FAVOURITES_PREVIEW).setLabel(strings(PREVIEW_STREAM))
+                    self.getControl(self.C_STREAM_STRM_PREVIEW).setLabel(strings(PREVIEW_STREAM))
+                    self.getControl(self.C_STREAM_BROWSE_PREVIEW).setLabel(strings(PREVIEW_STREAM))
+                    self.getControl(self.C_STREAM_PLAYLIST_PREVIEW).setLabel(strings(PREVIEW_STREAM))
+                    return
+
+        except:
             self.close()
             return self.epg.onRedrawEPG(self.epg.channelIdx, self.epg.viewStartDate, self.epg._getCurrentProgramFocus)
-
-        elif controlId == self.C_STREAM_ADDONS_OK:
-            listControl = self.getControl(self.C_STREAM_ADDONS_STREAMS)
-            item = listControl.getSelectedItem()
-            if item:
-                stream = item.getProperty('stream')
-                self.database.setCustomStreamUrl(self.channel, stream)
-                xbmcgui.Dialog().notification(self.channel.title, strings(59993).format(item.getLabel()))
-            self.close()
-            return self.epg.onRedrawEPG(self.epg.channelIdx, self.epg.viewStartDate, self.epg._getCurrentProgramFocus)
-
-        elif controlId == self.C_STREAM_FAVOURITES_OK:
-            listControl = self.getControl(self.C_STREAM_FAVOURITES)
-            item = listControl.getSelectedItem()
-            if item:
-                stream = item.getProperty('stream')
-                self.database.setCustomStreamUrl(self.channel, stream)
-                xbmcgui.Dialog().notification(self.channel.title, strings(59993).format(item.getLabel()))
-            self.close()
-            return self.epg.onRedrawEPG(self.epg.channelIdx, self.epg.viewStartDate, self.epg._getCurrentProgramFocus)
-
-        elif controlId == self.C_STREAM_STRM_OK:
-            listControl = self.getControl(self.C_STREAM_STRM_BROWSE)
-            item = listControl.getSelectedItem()
-            if item:
-                stream = item.getProperty('stream')
-                self.database.setCustomStreamUrl(self.channel, stream)
-                xbmcgui.Dialog().notification(self.channel.title, strings(59993).format(item.getLabel()))
-            self.close()
-            return self.epg.onRedrawEPG(self.epg.channelIdx, self.epg.viewStartDate, self.epg._getCurrentProgramFocus)
-
-        elif controlId == self.C_STREAM_PLAYLIST_OK:
-            listControl = self.getControl(self.C_STREAM_PLAYLIST_STREAMS)
-            item = listControl.getSelectedItem()
-            if item:
-                stream = item.getProperty('stream')
-                self.database.setCustomStreamUrl(self.channel, stream)
-                xbmcgui.Dialog().notification(self.channel.title, strings(59993).format(item.getLabel()))
-            self.close()
-            return self.epg.onRedrawEPG(self.epg.channelIdx, self.epg.viewStartDate, self.epg._getCurrentProgramFocus)
-
-        elif controlId in [self.C_STREAM_ADDONS_CANCEL, self.C_STREAM_FAVOURITES_CANCEL, self.C_STREAM_STRM_CANCEL, self.C_STREAM_BROWSE_CANCEL, self.C_STREAM_PLAYLIST_CANCEL]:
-            self.close()
-            return self.epg.onRedrawEPG(self.epg.channelIdx, self.epg.viewStartDate)
-
-        elif controlId in [self.C_STREAM_ADDONS_PREVIEW, self.C_STREAM_FAVOURITES_PREVIEW, self.C_STREAM_STRM_PREVIEW, self.C_STREAM_BROWSE_PREVIEW, self.C_STREAM_PLAYLIST_PREVIEW]:
-            if xbmc.Player().isPlaying():
-                xbmc.Player().stop()
-                self.getControl(self.C_STREAM_ADDONS_PREVIEW).setLabel(strings(PREVIEW_STREAM))
-                self.getControl(self.C_STREAM_FAVOURITES_PREVIEW).setLabel(strings(PREVIEW_STREAM))
-                self.getControl(self.C_STREAM_STRM_PREVIEW).setLabel(strings(PREVIEW_STREAM))
-                self.getControl(self.C_STREAM_BROWSE_PREVIEW).setLabel(strings(PREVIEW_STREAM))
-                self.getControl(self.C_STREAM_PLAYLIST_PREVIEW).setLabel(strings(PREVIEW_STREAM))
-                return
 
             stream = None
             visible = self.getControl(self.C_STREAM_VISIBILITY_MARKER).getLabel()

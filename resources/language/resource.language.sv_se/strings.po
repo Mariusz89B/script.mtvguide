@@ -2941,5 +2941,5 @@ msgid "Quickstart"
 msgstr "Snabbstart"
 
 msgctxt "#90006"
-msgid "Commmands"
-msgstr "Styrning"
+msgid "Basic controls"
+msgstr "Grundläggande styrning"

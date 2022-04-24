@@ -2974,8 +2974,19 @@ class MTVGUIDESource(Source):
         self.MTVGUIDEUrl       = ADDON.getSetting('m-TVGuide').strip()
         self.MTVGUIDEUrl2      = ADDON.getSetting('m-TVGuide2').strip()
         self.MTVGUIDEUrl3      = ADDON.getSetting('m-TVGuide3').strip()
+
         self.XXX_EPG_Url       = ADDON.getSetting('XXX_EPG').strip()
+        if self.XXX_EPG_Url == 'true':
+            ADDON.setSetting('XXX_EPG', M_TVGUIDE_SUPPORT + 'freeepg/xxx.xml')
+        elif self.XXX_EPG_Url == 'false':
+            ADDON.setSetting('XXX_EPG', '')
+
         self.VOD_EPG_Url       = ADDON.getSetting('VOD_EPG').strip()
+        if self.VOD_EPG_Url == 'true':
+            ADDON.setSetting('VOD_EPG', M_TVGUIDE_SUPPORT + 'freeepg/vod.xml')
+        elif self.VOD_EPG_Url == 'false':
+            ADDON.setSetting('VOD_EPG', '')
+
         self.epgBasedOnLastModDate = ADDON.getSetting('UpdateEPGOnModifiedDate')
         self.logoFolder = ADDON.getSetting('xmltv_logo_folder')
         self.EPGSize    = None
@@ -2998,8 +3009,7 @@ class MTVGUIDESource(Source):
             r"(\w+(\-\w+)*\.)?"
             r"((\w+(\-\w+)*)\.(\w+))"
             r"(\.\w+)*"
-            r"([\w\-\._\~/]*)*(?<!\.)"
-        , url))
+            r"([\w\-\._\~/]*)*(?<!\.)", url))
 
     def getDataFromExternal(self, date, progress_callback = None):
         parsedData = {}

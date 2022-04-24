@@ -2941,5 +2941,5 @@ msgid "Quickstart"
 msgstr "Début"
 
 msgctxt "#90006"
-msgid "Commmands"
-msgstr "Pilotage"
+msgid "Basic controls"
+msgstr "Pilotage de base"
