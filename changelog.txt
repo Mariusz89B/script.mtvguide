@@ -1,4 +1,7 @@
-﻿v9.9.603 (2022-04-24)
+﻿v9.9.604 (2022-04-30)
+- Added support for TheMovieDb extended information.
+
+v9.9.603 (2022-04-24)
 - Fixed service Polsat GO.
 - Updated translations.
 

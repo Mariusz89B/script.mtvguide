@@ -580,12 +580,12 @@ class mTVGuide(xbmcgui.WindowXML):
         deb('###################################################################################')
         deb('')
         deb('m-TVGuide __init__ System: {}, ARH: {}, python: {}, version: {}, kodi: {}'.format(platform.system(),
-                                                                                               platform.machine(),
-                                                                                               platform.python_version(),
-                                                                                               ADDON.getAddonInfo(
-                                                                                                   'version'),
-                                                                                               xbmc.getInfoLabel(
-                                                                                                   'System.BuildVersion')))
+        platform.machine(),
+        platform.python_version(),
+        ADDON.getAddonInfo(
+            'version'),
+        xbmc.getInfoLabel(
+            'System.BuildVersion')))
         deb('')
         deb('###################################################################################')
         deb('')
@@ -681,7 +681,7 @@ class mTVGuide(xbmcgui.WindowXML):
             self.refreshStreamsTimer.start()
         else:
             self.refreshStreamsTimer = None
-        
+
         if ADDON.getSetting('skin_fontpack') == 'true':
             self.skinsFix()
             self.changeFonts()
@@ -690,7 +690,7 @@ class mTVGuide(xbmcgui.WindowXML):
         self.tutorialExec()
 
         self.cat_index = 0
-        
+
         self.interval = 0
 
     def restartKodi(self):
@@ -698,7 +698,7 @@ class mTVGuide(xbmcgui.WindowXML):
         iOS = xbmc.getCondVisibility('system.platform.ios')
         macOS = xbmc.getCondVisibility('system.platform.osx')
         atvOS = xbmc.getCondVisibility('system.platform.atv2')
-        
+
         if androidOS:
             xbmc.executebuiltin("Quit")
 
@@ -739,7 +739,7 @@ class mTVGuide(xbmcgui.WindowXML):
             if c == '': c = None
 
             ADDON.setSetting('m-TVGuide', c)
-            
+
             if c is not None:
                 ans = xbmcgui.Dialog().yesno(strings(60011), strings(60012))
                 if ans:
@@ -2242,6 +2242,12 @@ class mTVGuide(xbmcgui.WindowXML):
         else:
             return xbmc.getCondVisibility('System.HasAddon({id})'.format(id='script.extendedinfo'))
 
+    def scriptChkMovieDBHelper(self):
+        if PY3:
+            return xbmc.getCondVisibility('System.AddonIsEnabled({id})'.format(id='plugin.video.themoviedb.helper'))
+        else:
+            return xbmc.getCondVisibility('System.HasAddon({id})'.format(id='plugin.video.themoviedb.helper'))
+
     @contextmanager
     def busyDialog(self):
         xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
@@ -2251,21 +2257,15 @@ class mTVGuide(xbmcgui.WindowXML):
             xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
 
     def ExtendedInfo(self, program):
-        check = self.scriptChkExtendedInfo()
+        extInfo = self.scriptChkExtendedInfo()
+        mvDbHelper = self.scriptChkMovieDBHelper()
 
-        if check == False:
-            try:
-                res = xbmc.executebuiltin('InstallAddon(script.extendedinfo)')
-                if res is None:
-                    xbmcgui.Dialog().ok(strings(69062), strings(31021).format('script.extendedinfo')+'.')
-            except:
-                None
+        check = True
 
-            if res is True:
-                xbmcgui.Dialog().ok(strings(57051), strings(30979))
-                self.exitAddon()
+        if not extInfo and not mvDbHelper:
+            check = False
 
-        elif check == True:
+        if check:
             title = program.title
             match = re.search('(.*?)\([0-9]{4}\)$', title)
             if match:
@@ -2308,9 +2308,23 @@ class mTVGuide(xbmcgui.WindowXML):
                                 else:
                                     ttype = "tv"
                             if ttype == 'movie':
-                                xbmc.executebuiltin('RunScript(script.extendedinfo,info=extendedinfo,name={title},id={id})'.format(title=title.encode('unicode_escape'), id=id))
+                                if not PY3:
+                                    title = title.encode('unicode_escape')
+
+                                if extInfo:
+                                    xbmc.executebuiltin('RunScript(script.extendedinfo,info=extendedinfo,name={title},id={id})'.format(title=title, id=id))
+                                elif mvDbHelper:
+                                    xbmc.executebuiltin('Dialog.Close(all,true)')
+                                    xbmc.executebuiltin('ActivateWindow(Videos,"plugin://plugin.video.themoviedb.helper/?info=search&type=movie&query={title}&tmdb_id={id}",return)'.format(title=title, id=id))
                             elif ttype == 'tv':
-                                xbmc.executebuiltin('RunScript(script.extendedinfo,info=extendedtvinfo,name={title},id={id})'.format(title=program.title.encode('unicode_escape'), id=id))
+                                if not PY3:
+                                    title = program.title.encode('unicode_escape')
+
+                                if extInfo:
+                                    xbmc.executebuiltin('RunScript(script.extendedinfo,info=extendedtvinfo,name={title},id={id})'.format(title=title, id=id))
+                                elif mvDbHelper:
+                                    xbmc.executebuiltin('Dialog.Close(all,true)')
+                                    xbmc.executebuiltin('ActivateWindow(Videos,"plugin://plugin.video.themoviedb.helper/?info=search&type=tv&query={title}&tmdb_id={id}",return)'.format(title=title, id=id))
                             else:
                                 xbmcgui.Dialog().notification(strings(30353), strings(30361).format(title))
 
@@ -2319,14 +2333,28 @@ class mTVGuide(xbmcgui.WindowXML):
                             xbmcgui.Dialog().notification(strings(30353), strings(30362).format(title))
                             search = xbmcgui.Dialog().input(strings(30322), program.title)
                             if search:
-                                xbmc.executebuiltin('RunScript(script.extendedinfo,info=extendedinfo,name={title})'.format(title=search.encode('unicode_escape')))
+                                if not PY3:
+                                    search = search.encode('unicode_escape')
+
+                                if extInfo:
+                                    xbmc.executebuiltin('RunScript(script.extendedinfo,info=extendedinfo,name={title})'.format(title=search))
+                                elif mvDbHelper:
+                                    xbmc.executebuiltin('Dialog.Close(all,true)')
+                                    xbmc.executebuiltin('ActivateWindow(Videos,"plugin://plugin.video.themoviedb.helper/?info=search&type=movies&query={title}",return)'.format(title=title))
                             else:
                                 return
                         elif selection == 1:
                             xbmcgui.Dialog().notification(strings(30353), strings(30363).format(title))
                             search = xbmcgui.Dialog().input(strings(30322), title)
                             if search:
-                                xbmc.executebuiltin('RunScript(script.extendedinfo,info=extendedtvinfo,name={title})'.format(title=search.encode('unicode_escape')))
+                                if not PY3:
+                                    search = search.encode('unicode_escape')
+
+                                if extInfo:
+                                    xbmc.executebuiltin('RunScript(script.extendedinfo,info=extendedtvinfo,name={title})'.format(title=search))
+                                elif mvDbHelper:
+                                    xbmc.executebuiltin('Dialog.Close(all,true)')
+                                    xbmc.executebuiltin('ActivateWindow(Videos,"plugin://plugin.video.themoviedb.helper/?info=search&type=tv&query={title}",return)'.format(title=title))
                             else:
                                 return
                         else:
@@ -2336,18 +2364,62 @@ class mTVGuide(xbmcgui.WindowXML):
                         xbmcgui.Dialog().notification(strings(30353), strings(30362).format(title))
                         search = xbmcgui.Dialog().input(strings(30322), program.title)
                         if search:
-                            xbmc.executebuiltin('RunScript(script.extendedinfo,info=extendedinfo,name={title})'.format(title=search.encode('unicode_escape')))
+                            if not PY3:
+                                search = search.encode('unicode_escape')
+
+                            if extInfo:
+                                xbmc.executebuiltin('RunScript(script.extendedinfo,info=extendedinfo,name={title})'.format(title=search))
+                            elif mvDbHelper:
+                                xbmc.executebuiltin('Dialog.Close(all,true)')
+                                xbmc.executebuiltin('ActivateWindow(Videos,"plugin://plugin.video.themoviedb.helper/?info=search&type=movies&query={title}",return)'.format(title=search))
                         else:
                             return
                     elif selection == 1:
                         xbmcgui.Dialog().notification(strings(30353), strings(30363).format(title))
                         search = xbmcgui.Dialog().input(strings(30322), title)
                         if search:
-                            xbmc.executebuiltin('RunScript(script.extendedinfo,info=extendedtvinfo,name={title})'.format(title=search.encode('unicode_escape')))
+                            if not PY3:
+                                search = search.encode('unicode_escape')
+
+                            if extInfo:
+                                xbmc.executebuiltin('RunScript(script.extendedinfo,info=extendedtvinfo,name={title})'.format(title=search))
+                            elif mvDbHelper:
+                                xbmc.executebuiltin('Dialog.Close(all,true)')
+                                xbmc.executebuiltin('ActivateWindow(Videos,"plugin://plugin.video.themoviedb.helper/?info=search&type=tv&query={title}",return)'.format(title=search))
                         else:
                             return
                     else:
                         xbmcgui.Dialog().notification(strings(30353), strings(30361).format(title))
+
+        else:
+            sel = xbmcgui.Dialog().select(strings(70100), ['script.extendedinfo', 'plugin.video.themoviedb.helper'])
+            restart = True
+
+            if sel < 0:
+                return
+            if sel == 0:
+                selected = 'script.extendedinfo'
+            elif sel == 1: 
+                selected = 'plugin.video.themoviedb.helper'
+                restart = False
+
+            try:
+                res = xbmc.executebuiltin('InstallAddon({0})'.format(selected))
+                if not res:
+                    installed = xbmc.getCondVisibility('System.HasAddon({id})'.format(id=selected))
+                    if installed:
+                        xbmc.executebuiltin('EnableAddon({0})'.format(selected))
+
+            except:
+                res = None
+
+            if restart:
+                if res:
+                    xbmcgui.Dialog().ok(strings(57051), strings(30979))
+                    self.exitAddon()
+                else:
+                    xbmcgui.Dialog().ok(strings(69062), strings(31021).format('{0}'.format(selected))+'.')
+                    return
 
     def playShortcut(self):
         self.channel_number_input = False
