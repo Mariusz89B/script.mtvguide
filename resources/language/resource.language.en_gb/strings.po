@@ -1105,7 +1105,7 @@ msgid "Multisession"
 msgstr ""
 
 msgctxt "#59910"
-msgid "Use free account"
+msgid "Free account in use"
 msgstr ""
 
 msgctxt "#59911"
@@ -3586,6 +3586,34 @@ msgstr ""
 
 msgctxt "#95151"
 msgid "If enabled debugging mode will be turned on and a Debug menu will be visible in add-on context options."
+msgstr ""
+
+msgctxt "#75000"
+msgid "Unlocked"
+msgstr ""
+
+msgctxt "#75001"
+msgid "[COLOR blue]Ekranik TV[/COLOR]"
+msgstr ""
+
+msgctxt "#75002"
+msgid "[COLOR blue]Hejo TV[/COLOR]"
+msgstr ""
+
+msgctxt "#75003"
+msgid "[COLOR blue]Internetowa TV[/COLOR]"
+msgstr ""
+
+msgctxt "#75004"
+msgid "[COLOR blue]Weeb TV[/COLOR]"
+msgstr ""
+
+msgctxt "#75005"
+msgid "[COLOR blue]Weeb TV Beta[/COLOR]"
+msgstr ""
+
+msgctxt "#75006"
+msgid "[COLOR blue]CDA TV[/COLOR]"
 msgstr ""
 
 msgctxt "#99994"

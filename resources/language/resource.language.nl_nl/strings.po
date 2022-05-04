@@ -1097,8 +1097,8 @@ msgid "Multisession"
 msgstr "Multisession"
 
 msgctxt "#59910"
-msgid "Use free account"
-msgstr "Gebruik gratis account"
+msgid "Free account in use"
+msgstr "Gratis account in gebruik"
 
 msgctxt "#59911"
 msgid "[COLOR]Playlist 1[/COLOR]"
