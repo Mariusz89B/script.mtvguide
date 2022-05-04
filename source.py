@@ -6,11 +6,12 @@
 #   m-TVGuide KODI Addon
 #   Copyright (C) 2022 Mariusz89B
 #   Copyright (C) 2022 rysson
-#   Copyright (C) 2018 primaeval
 #   Copyright (C) 2016 Andrzej Mleczko
 #   Copyright (C) 2014 Krzysztof Cebulski
 #   Copyright (C) 2013 Szakalit
 #   Copyright (C) 2013 Tommy Winther
+
+#   Some implementation are modificated and taken from "Fullscreen TVGuide" - thank you very much primaeval!
 
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by

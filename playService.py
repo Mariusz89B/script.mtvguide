@@ -97,13 +97,6 @@ import teliaplaycids
 import tvpcids
 import wppilotcids
 
-### unlocked streams ###
-import ekraniktvcids
-import internetwscids
-import hejotvcids
-import weebtvbetacids
-import cdatvcids
-
 sess = cloudscraper.create_scraper()
 scraper = cloudscraper.CloudScraper()
 
@@ -122,14 +115,7 @@ SERVICES = {
     polsatgoboxcids.serviceName     : polsatgoboxcids.PolsatGoBoxUpdater(),
     teliaplaycids.serviceName       : teliaplaycids.TeliaPlayUpdater(),
     tvpcids.serviceName             : tvpcids.TvpUpdater(),
-    wppilotcids.serviceName         : wppilotcids.WpPilotUpdater(),
-
-    ### unlocked streams ###
-    ekraniktvcids.serviceName       : ekraniktvcids.EkranikTVUpdater(),
-    internetwscids.serviceName      : internetwscids.InternetwsUpdater(),
-    hejotvcids.serviceName          : hejotvcids.HejoTVUpdater(),
-    weebtvbetacids.serviceName      : weebtvbetacids.WeebTVBetaUpdater(),
-    cdatvcids.serviceName           : cdatvcids.CdaTvUpdater()
+    wppilotcids.serviceName         : wppilotcids.WpPilotUpdater()
 }
 
 for serviceName in list(SERVICES.keys()):
@@ -731,68 +717,44 @@ class PlayService(xbmc.Player, BasePlayService):
                     return res
 
                 if service == 'C More':
-                    try:
-                        self.playbackStopped = False
+                    if self.archiveService == '' or self.archivePlaylist == '':
+                        try:
+                            self.playbackStopped = False
 
-                        strmUrl = channelInfo.strm
-                        licenseUrl = channelInfo.lic
+                            licenseUrl = channelInfo.lic
+                            strmUrl = channelInfo.strm
 
-                        catchup = False
-
-                        if ADDON.getSetting('archive_support') == 'true':
-                            if str(self.playlistArchive()) != '':
-                                archivePlaylist = str(self.playlistArchive())
-                                catchupList = archivePlaylist.split(', ')
-
-                                catchup = True
-
-                                # Catchup strings
-                                utc = catchupList[2]
-                                lutc = catchupList[3]
-
-                                strmUrlx, licenseUrlx = self.catchupTeliaPlay(channelInfo, utc, lutc)
-
-                                if strmUrlx is None:
-                                    res = xbmcgui.Dialog().yesno(strings(30998), strings(59980))
-                                    if res:
-                                        strmUrl = strmUrl
-                                    else:
-                                        return None
-                                else:
-                                    strmUrl = strmUrlx
-                                    licenseUrl = licenseUrlx
-
-                        PROTOCOL = 'mpd'
-                        DRM = 'com.widevine.alpha'
-
-                        import inputstreamhelper
-                        is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
-                        if is_helper.check_inputstream():  
-                            ListItem = xbmcgui.ListItem(path=strmUrl)
-                            ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
-                            ListItem.setContentLookup(False)
-                            if PY3:
-                                ListItem.setProperty('inputstream', is_helper.inputstream_addon)
+                            if licenseUrl['type'] == 'hls':
+                                PROTOCOL = 'hls'
                             else:
-                                ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
-                            ListItem.setMimeType('application/dash+xml')
-                            ListItem.setProperty('inputstream.adaptive.license_type', DRM)
-                            ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl)
-                            ListItem.setProperty('inputstream.adaptive.stream_headers', 'Referer: https://www.cmore.se/&User-Agent='+quote(UA))
-                            ListItem.setProperty('inputstream.adaptive.manifest_type', 'mpd')
-                            ListItem.setProperty('IsPlayable', 'true')
-                            if catchup:
-                                ListItem.setProperty('inputstream.adaptive.play_timeshift_buffer', 'true')
+                                PROTOCOL = 'mpd'
 
-                        self.strmUrl = strmUrl
-                        xbmc.Player().play(item=self.strmUrl, listitem=ListItem, windowed=startWindowed)
+                            DRM = 'com.widevine.alpha'
 
-                        res = True
+                            import inputstreamhelper
+                            is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
+                            if is_helper.check_inputstream():
+                                ListItem = xbmcgui.ListItem(path=strmUrl)
+                                ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
+                                ListItem.setContentLookup(False)
+                                if PY3:
+                                    ListItem.setProperty('inputstream', is_helper.inputstream_addon)
+                                else:
+                                    ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
+                                ListItem.setProperty('inputstream.adaptive.manifest_type', PROTOCOL)
+                                if DRM:
+                                    ListItem.setProperty('inputstream.adaptive.license_type', DRM)
+                                    ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl['license']['castlabsServer'] + '|Content-Type=&x-dt-auth-token=%s|R{SSM}|' % licenseUrl['license']['castlabsToken'])
+                                    ListItem.setProperty('IsPlayable', 'true')
 
-                    except Exception as ex:
-                        deb('Exception while trying to play video: {}'.format(getExceptionString()))
-                        self.unlockCurrentlyPlayedService()
-                        xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
+                            self.strmUrl = strmUrl
+                            xbmc.Player().play(item=str(self.strmUrl), listitem=ListItem, windowed=startWindowed)
+                            res = True
+
+                        except Exception as ex:
+                            deb('Exception while trying to play video: {}'.format(getExceptionString()))
+                            self.unlockCurrentlyPlayedService()
+                            xbmcgui.Dialog().ok(strings(57018), strings(57021) + '\n' + strings(57028) + '\n' + str(ex))
 
                 if service == 'Ipla':
                     if self.archiveService == '' or self.archivePlaylist == '':
