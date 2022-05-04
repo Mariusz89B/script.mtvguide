@@ -57,11 +57,16 @@ class clearCMore:
         return xbmcaddon.Addon('script.mtvguide').setSetting(key, value)
 
     def reset_login(self):
-        self.set_setting('cmore_operator', '')
-        self.set_setting('cmore_operator_title', '')
-        self.set_setting('cmore_username', '')
-        self.set_setting('cmore_password', '')
-        self.set_setting('login_token', '')
+        self.set_setting('cmore_subtoken', '')
+        self.set_setting('cmore_timestamp', '')
+        self.set_setting('cmore_tv_client_boot_id', '')
+        self.set_setting('cmore_validTo', '')
+        self.set_setting('cmore_sess_id', '')
+        self.set_setting('cmore_devush', '')
+        self.set_setting('cmore_beartoken', '')
+        self.set_setting('cmore_refrtoken', '')
+        self.set_setting('cmore_cookies', '')
+        self.set_setting('cmore_usern', '')
         xbmcgui.Dialog().ok(strings(30371), strings(30372))
 
 clearcmore = clearCMore()

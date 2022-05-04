@@ -914,14 +914,13 @@
 					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<setting help="95008" id="cmore_locale" label="30368" type="string" parent="cmore_enabled">
+				<setting help="95008" id="cmore_locale" label="30368" type="integer" parent="cmore_enabled">
 					<level>0</level>
-					<default>cmore.se</default>
+					<default>0</default>
 					<constraints>
 						<options>
-							<option label="cmore.se">cmore.se</option>
-							<option label="cmore.dk">cmore.dk</option>
-							<option label="cmore.no">cmore.no</option>
+							<option label="cmore.se">0</option>
+							<option label="cmore.dk">1</option>
 						</options>
 					</constraints>
 					<dependencies>
@@ -934,17 +933,6 @@
 						<heading>30368</heading>
 					</control>
 				</setting>
-				<setting help="95009" id="cmore_tv_provider_login" label="30369" type="boolean" parent="cmore_enabled">
-					<level>0</level>
-					<default>false</default>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="is" setting="cmore_enabled">true</condition>
-							<condition operator="is" setting="country_service">1</condition>
-						</dependency>
-					</dependencies>
-					<control type="toggle"/>
-				</setting>
 				<setting help="95010" id="cmore_username" label="55002" type="string" parent="cmore_enabled">
 					<level>0</level>
 					<default/>
@@ -953,11 +941,8 @@
 					</constraints>
 					<dependencies>
 						<dependency type="visible">
-							<and>
-								<condition operator="is" setting="cmore_enabled">true</condition>
-								<condition operator="is" setting="cmore_tv_provider_login">false</condition>
-								<condition operator="is" setting="country_service">1</condition>
-							</and>
+							<condition operator="is" setting="cmore_enabled">true</condition>
+							<condition operator="is" setting="country_service">1</condition>
 						</dependency>
 					</dependencies>
 					<control format="string" type="edit">
@@ -972,11 +957,8 @@
 					</constraints>
 					<dependencies>
 						<dependency type="visible">
-							<and>
-								<condition operator="is" setting="cmore_enabled">true</condition>
-								<condition operator="is" setting="cmore_tv_provider_login">false</condition>
-								<condition operator="is" setting="country_service">1</condition>
-							</and>
+							<condition operator="is" setting="cmore_enabled">true</condition>
+							<condition operator="is" setting="country_service">1</condition>
 						</dependency>
 					</dependencies>
 					<control format="string" type="edit">
@@ -1010,6 +992,86 @@
 						</dependency>
 					</dependencies>
 					<control format="string" type="spinner"/>
+				</setting>
+				<setting help="95013" id="clear_cmore" label="30371" type="action" parent="cmore_enabled">
+					<level>0</level>
+					<data>RunScript(special://home/addons/script.mtvguide/clearcmore.py,clearcmore)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="cmore_enabled">true</condition>
+							<condition operator="is" setting="country_service">1</condition>
+						</dependency>
+					</dependencies>
+					<control format="action" type="button"/>
+				</setting>
+				<setting help="" id="cmore_sess_id" type="string" parent="cmore_enabled">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<visible>false</visible>
+					<control format="string" type="edit">
+						<heading/>
+					</control>
+				</setting>
+				<setting help="" id="cmore_devush" type="string" parent="cmore_enabled">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<visible>false</visible>
+					<control format="string" type="edit">
+						<heading/>
+					</control>
+				</setting>
+				<setting help="" id="cmore_beartoken" type="string" parent="cmore_enabled">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<visible>false</visible>
+					<control format="string" type="edit">
+						<heading/>
+					</control>
+				</setting>
+				<setting help="" id="cmore_refrtoken" type="string" parent="cmore_enabled">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<visible>false</visible>
+					<control format="string" type="edit">
+						<heading/>
+					</control>
+				</setting>
+				<setting help="" id="cmore_cookies" type="string" parent="cmore_enabled">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<visible>false</visible>
+					<control format="string" type="edit">
+						<heading/>
+					</control>
+				</setting>
+				<setting help="" id="cmore_usern" type="string" parent="cmore_enabled">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<visible>false</visible>
+					<control format="string" type="edit">
+						<heading/>
+					</control>
 				</setting>
 				<setting help="95013" id="clear_cmore" label="30371" type="action" parent="cmore_enabled">
 					<level>0</level>

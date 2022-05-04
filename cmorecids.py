@@ -4,10 +4,7 @@
 #   GNU General Public License
 
 #   m-TVGuide KODI Addon
-#   Copyright (C) 2020 Mariusz89B
-#   Copyright (c) 2017 Nils Emil Svensson
-
-#   Some implementations are modified and taken from "plugin.video.cmore" - thank you very much emilsvennesson!
+#   Copyright (C) 2022 Mariusz89B
 
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -51,314 +48,461 @@ if sys.version_info[0] > 2:
     PY3 = True
 else:
     PY3 = False
+    
+import xbmc
 
 if PY3:
     import urllib.request, urllib.parse, urllib.error
+    from requests.exceptions import HTTPError, ConnectionError, Timeout, RequestException
 else:
     import urllib
+    from requests import HTTPError, ConnectionError, Timeout, RequestException
 
-import re, os
-import requests
-import xbmc, xbmcgui, xbmcvfs
-
-import json
-import calendar
-import time
-from datetime import datetime, timedelta
-
-import requests
-import iso8601
+import os, copy, re
 
 from strings import *
 from serviceLib import *
+import requests
+import json
+import iso8601
+from datetime import timedelta
+import time
+import pytz
+import threading
+import textwrap
+import uuid
+import six
 
-serviceName         = 'C More'
+serviceName = 'C More'
 
-base_url = 'https://cmore-mobile-bff.b17g.services'
+base = ['https://cmore.dk', 'https://www.cmore.se']
+referer = ['https://cmore.dk/', 'https://www.cmore.se/']
+host = ['www.cmore.dk', 'www.cmore.se']
+cc = ['dk', 'se']
+ca = ['DK', 'SE']
 
-timeouts = (30, 60)
+UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.41 Safari/537.36 Edg/101.0.1210.32'
+
+if PY3:
+    try:
+        profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
+    except:
+        profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
+else:
+    try:
+        profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile'))
+    except:
+        profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
+
+sess = requests.Session()
+timeouts = (5, 5)
+
+class Threading(object):
+    def __init__(self):
+        self.thread = threading.Thread(target=self.run, args=())
+        self.thread.daemon = True
+        self.thread.start()
+
+    def run(self):
+        while not xbmc.Monitor().abortRequested():
+            ab = CmoreUpdater().checkRefresh()
+            if not ab:
+                result = CmoreUpdater().checkLogin()
+                if result is not None:
+                    validTo, beartoken, refrtoken, cookies = result
+
+                    ADDON.setSetting('cmore_validTo', str(validTo))
+                    ADDON.setSetting('cmore_beartoken', str(beartoken))
+                    ADDON.setSetting('cmore_refrtoken', str(refrtoken))
+                    ADDON.setSetting('cmore_cookies', str(cookies))
+
+                time.sleep(30)
+
+            if xbmc.Monitor().waitForAbort(1):
+                break
 
 class CmoreUpdater(baseServiceUpdater):
     def __init__(self):
         self.serviceName        = serviceName
         self.localMapFile       = 'basemap.xml'
-        if ADDON.getSetting('cmore_locale') == 'cmore.se':
-            self.localMapFile = 'basemap_se.xml'
-            locale = 'sv_SE'
-        elif ADDON.getSetting('cmore_locale') == 'cmore.dk':
+        if ADDON.getSetting('cmore_locale') == '0':
             self.localMapFile = 'basemap_dk.xml'
-            locale = 'da_DK'
-        elif ADDON.getSetting('cmore_locale') == 'cmore.no':
-            self.localMapFile = 'basemap_no.xml'
-            locale = 'nb_NO'
-        else:
-            locale = ''
+        elif ADDON.getSetting('cmore_locale') == '1':
+            self.localMapFile = 'basemap_se.xml'
 
         baseServiceUpdater.__init__(self)
-        self.serviceEnabled     = ADDON.getSetting('cmore_enabled')
+        self.serviceEnabled     = ADDON.getSetting('cmore_enabled') 
+        self.login              = ADDON.getSetting('cmore_username').strip()
+        self.password           = ADDON.getSetting('cmore_password').strip()
         self.servicePriority    = int(ADDON.getSetting('priority_cmore'))
-        self.addDuplicatesToList = True
-        self.locale = locale
-        self.locale_suffix = self.locale.partition('_')[2].lower()
-        self.http_session = requests.Session()
-        if PY3:
-            try:
-                self.profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
-            except:
-                self.profilePath  = xbmcvfs.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
-        else:
-            try:
-                self.profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile'))
-            except:
-                self.profilePath  = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
-                
-        self.config_path = os.path.join(self.profilePath, 'cmore.cookie')
-        self.config_version = '3.14.1'
-        if self.serviceEnabled == 'true':
-            self.config = self.get_config()
-        self.client = 'cmore-kodi'
 
-    class CMoreError(Exception):
-        pass
-
-    def get_setting(self, setting_id):
-        setting = ADDON.getSetting(setting_id)
-        if setting == 'true':
-            return True
-        elif setting == 'false':
-            return False
-        else:
-            return setting
-
-    def set_setting(self, key, value):
-        return ADDON.setSetting(key, value)
-
-    def dialog(self, dialog_type, heading, message=None, options=None, nolabel=None, yeslabel=None):
-        dialog = xbmcgui.Dialog()
-        if dialog_type == 'ok':
-            dialog.ok(heading, message)
-        elif dialog_type == 'yesno':
-            return dialog.yesno(heading, message, nolabel=nolabel, yeslabel=yeslabel)
-        elif dialog_type == 'select':
-            ret = dialog.select(heading, options)
-            if ret > -1:
-                return ret
-            else:
-                return None
-
-    def get_user_input(self, heading, hidden=False):
-        keyboard = xbmc.Keyboard('', heading, hidden)
-        keyboard.doModal()
-        if keyboard.isConfirmed():
-            query = keyboard.getText()
-            deb('User input string: {}'.format(query))
-        else:
-            query = None
-
-        if query and len(query) > 0:
-            return query
-        else:
-            return None
-
-    def get_numeric_input(self, heading):
-        dialog = xbmcgui.Dialog()
-        numeric_input = dialog.numeric(0, heading)
-
-        if len(numeric_input) > 0:
-            return str(numeric_input)
-        else:
-            return None
-
-    def make_request(self, url, method, params=None, payload=None, headers=None):
-        """Make an HTTP request. Return the response."""
-        #deb('Request URL: {}'.format(url))
-        #deb('Method: {}'.format(method))
-        #if params:
-            #deb('Params: {}'.format(params))
-        #if payload:
-            #deb('Payload: {}'.format(payload))
-        #if headers:
-            #deb('Headers: {}'.format(headers))
-
-        if method == 'get':
-            req = self.http_session.get(url, params=params, headers=headers, timeout=timeouts)
-        elif method == 'put':
-            req = self.http_session.put(url, params=params, data=payload, headers=headers, timeout=timeouts)
-        else:  # post
-            req = self.http_session.post(url, params=params, data=payload, headers=headers, timeout=timeouts)
-        deb('Response code: {}'.format(req.status_code))
-        deb('Response: {}'.format(req.content))
-
-        if b'UNAUTHORIZED' in req.content:
-            self.noPremiumMessage()
-
-        if b'ASSET_PLAYBACK_PROXY_BLOCKED' in req.content:
-            self.proxyErrorMessage()
-
-        return self.parse_response(req.content)
-
-    def parse_response(self, response):
-        """Try to load JSON data into dict and raise potential API errors."""
         try:
-            response = json.loads(response)
-            if 'error' in response:
-                error_keys = ['message', 'description', 'code']
-                for error in error_keys:
-                    if error in response['error']:
-                        raise self.CMoreError(response['error'][error])
-            elif 'errors' in response:
-                raise self.CMoreError(response['errors'][0]['message'])
-            elif 'errorCode' in response:
-                raise self.CMoreError(response['message'])
+            self.country            = int(ADDON.getSetting('cmore_locale'))
+        except:
+            self.country            = 0
 
-        except ValueError:  # when response is not in json
-            pass
+        self.dashjs             = ADDON.getSetting('cmore_devush')
+        self.sessionid          = ADDON.getSetting('cmore_sess_id')
+        self.tv_client_boot_id  = ADDON.getSetting('cmore_tv_client_boot_id')
+        self.timestamp          = ADDON.getSetting('cmore_timestamp')
+        self.validTo            = ADDON.getSetting('cmore_validTo')
+        self.beartoken          = ADDON.getSetting('cmore_beartoken')
+        self.refrtoken          = ADDON.getSetting('cmore_refrtoken')
+        self.cookies            = ADDON.getSetting('cmore_cookies')
+        self.usern              = ADDON.getSetting('cmore_usern')
+        self.subtoken           = ADDON.getSetting('cmore_subtoken')
+
+
+    def sendRequest(self, url, post=False, json=None, headers=None, data=None, params=None, cookies=None, verify=True, allow_redirects=False, timeout=None):
+        try:
+            if post:
+                response = sess.post(url, headers=headers, json=json, data=data, params=params, cookies=cookies, verify=verify, allow_redirects=allow_redirects, timeout=timeout)
+            else:
+                response = sess.get(url, headers=headers, json=json, data=data, params=params, cookies=cookies, verify=verify, allow_redirects=allow_redirects, timeout=timeout)
+
+        except HTTPError as e:
+            deb('HTTPError: {}'.format(str(e)))
+            response = False
+
+        except ConnectionError as e:
+            deb('ConnectionError: {}'.format(str(e)))
+            response = False
+
+        except Timeout as e:
+            deb('Timeout: {}'.format(str(e))) 
+            response = False
+
+        except RequestException as e:
+            deb('RequestException: {}'.format(str(e))) 
+            response = False
+
+        except:
+            self.connErrorMessage()
+            response = False
 
         return response
 
-    def get_config(self):
-        """Return the config in a dict. Re-download if the config version doesn't match self.config_version."""
+
+    def createData(self):
+        self.dashjs = str(uuid.uuid4())
+        ADDON.setSetting('cmore_devush', str(self.dashjs))
+
+        self.tv_client_boot_id = str(uuid.uuid4())
+        ADDON.setSetting('cmore_tv_client_boot_id', str(self.tv_client_boot_id))
+
+        self.timestamp = int(time.time())*1000
+        ADDON.setSetting('cmore_timestamp', str(self.timestamp))
+
+        self.sessionid = six.text_type(uuid.uuid4())
+        ADDON.setSetting('cmore_sess_id', str(self.sessionid))
+
+
+    def loginData(self, reconnect, retry=0):
         try:
-            config = json.load(open(self.config_path))['data']
-        except IOError:
-            self.download_config()
-            config = json.load(open(self.config_path))['data']
+            url = 'https://log.tvoip.telia.com:6003/logstash'
 
-        config_version = int(str(config['settings']['currentAppVersion']).replace('.', ''))
-        version_to_use = int(str(self.config_version).replace('.', ''))
-        config_lang = config['bootstrap']['suggested_site']['locale']
-        if version_to_use > config_version or config_lang != self.locale:
-            self.download_config()
-            config = json.load(open(self.config_path))['data']
+            headers = {
+                'Accept': '*/*',
+                'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6,fr;q=0.5',
+                'Connection': 'keep-alive',
+                'Content-Type': 'text/plain;charset=UTF-8',
+                'DNT': '1',
+                'Origin': 'https://login.cmore.{cc}'.format(cc=cc[self.country]),
+                'Referer': 'https://login.cmore.{cc}/'.format(cc=cc[self.country]),
+                'User-Agent': UA,
+            }
 
-        try:
-            os.remove(self.config_path)
-        except:
-            None
+            data = {
+                "bootId":self.tv_client_boot_id,
+                "networkType":"UNKNOWN",
+                "deviceId":self.dashjs,
+                "deviceType":"WEB",
+                "model":"unknown_model",
+                "productName":"Microsoft Edge 101.0.1210.32",
+                "platformName":"Windows",
+                "platformVersion":"NT 10.0",
+                "nativeVersion":"unknown_platformVersion",
+                "uiName":"one-web-login",
+                "client":"WEB",
+                "uiVersion":"1.35.0",
+                "environment":"PROD",
+                "country":ca[self.country],
+                "brand":"CMORE",
+                "logType":"STATISTICS_HTTP",
+                "payloads": [{
+                        "sequence": 1,
+                        "timestamp": self.timestamp,
+                        "level": "ERROR",
+                        "loggerId": "telia-data-backend/System",
+                        "message": "Failed to get service status due to timeout after 1000 ms"
+                    }]
+                }
 
-        return config
+            response = self.sendRequest(url, post=True, headers=headers, json=data, verify=True, timeout=timeouts)
 
-    def download_config(self):
-        """Download the C More app configuration."""
-        url = base_url + '/configuration'
-        params = {
-            'device': 'android_tab',
-            'locale': self.locale
-        }
-        config_data = self.make_request(url, 'get', params=params)
-        try:
-            with open(self.config_path, 'w') as fh_config:
-                fh_config.write(json.dumps(config_data))
-        except:
-            None
+            url = 'https://logingateway-cmore.t6a.net/logingateway/rest/v1/authenticate'
 
-    def get_operators(self):
-        """Return a list of TV operators supported by the C More login system."""
-        url = self.config['links']['tveAPI'] + 'country/{0}/operator'.format(self.locale_suffix)
-        params = {'client': self.client}
-        data = self.make_request(url, 'get', params=params)
+            headers = {
+                'authority': 'logingateway-cmore.t6a.net',
+                'accept': '*/*',
+                'accept-language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6,fr;q=0.5',
+                'dnt': '1',
+                'origin': 'https://login.cmore.{cc}'.format(cc=cc[self.country]),
+                'referer': 'https://login.cmore.{cc}/'.format(cc=cc[self.country]),
+                'user-agent': UA,
+                'x-country': ca[self.country],
+            }
 
-        telia = {'country_code': 'se', 'forgot_password_url': 'https://www.telia.se/privat/mitt-telia/', 'homepage': 'https://www.telia.se/', 'id': 2, 'login': 'Ange användarnamn och lösenord för att logga in.[CR]Mer information hittar du på vår hemsida https://www.telia.se/.', 'login_credentials': 'email', 'logo_url': None, 'name': 'telia', 'password': 'Lösenord', 'phone': None, 'support_information': '', 'title': 'Telia', 'username': 'Kundnummer'}
-        data['data']['operators'].append(dict(telia))
-        data['data']['operators'] = sorted(data['data']['operators'], key=lambda k: k['title']) 
+            params = {
+                'redirectUri': 'https://www.cmore.{cc}/'.format(cc=cc[self.country]),
+            }
 
-        return data['data']['operators']
+            data = {
+                'deviceId': self.dashjs,
+                'deviceType': 'WEB',
+                'password': self.password,
+                'username': self.login,
+                'whiteLabelBrand': 'CMORE',
+            }
 
-    def loginService(self):
-        try:
-            username = ADDON.getSetting('cmore_username').strip()
-            password = ADDON.getSetting('cmore_password').strip()
+            response = self.sendRequest(url, post=True, params=params, headers=headers, json=data, verify=True, timeout=timeouts)
+            code = ''
 
-            if ADDON.getSetting('cmore_tv_provider_login') == 'true':
-                operator = self.get_operator(ADDON.getSetting('cmore_operator'))
-                if not operator:
-                    self.loginErrorMessage() 
-                    return False
-            else:
-                operator = None
-                self.set_setting('cmore_operator_title', '')
-                self.set_setting('cmore_operator', '')
+            if response:
+                j_response = response.json()
+                code = j_response['redirectUri'].replace('https://www.cmore.{cc}/?code='.format(cc=cc[self.country]), '')
 
-            if not username or not password:
-                if operator:
-                    return self.set_tv_provider_credentials()
+            url = 'https://logingateway.cmore.{cc}/logingateway/rest/v1/oauth/token'.format(cc=cc[self.country])
+
+            headers = {
+                'authority': 'logingateway.cmore.{cc}'.format(cc=cc[self.country]),
+                'accept': 'application/json',
+                'accept-language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6,fr;q=0.5',
+                'dnt': '1',
+                'origin': 'https://www.cmore.{cc}'.format(cc=cc[self.country]),
+                'referer': 'https://www.cmore.{cc}/'.format(cc=cc[self.country]),
+                'tv-client-boot-id': self.tv_client_boot_id,
+                'tv-client-name': 'web',
+                'user-agent': UA,
+                'x-country': ca[self.country],
+            }
+
+            params = {
+                'code': code,
+            }
+
+            response = self.sendRequest(url, post=True, params=params, headers=headers, timeout=timeouts)
+
+            if not response:
+                if reconnect and retry < 3:
+                    retry += 1
+                    self.loginData(reconnect=True, retry=retry)
                 else:
-                    self.loginErrorMessage() 
+                    self.connErrorMessage()
                     return False
-            else:
-                return True
+
+            j_response = response.json()
+
+            try:
+                if 'Username/password was incorrect' in j_response['errorMessage']:
+                    self.loginErrorMessage()
+                    return False
+            except:
+                pass
+
+            self.validTo = j_response.get('validTo', '')
+            ADDON.setSetting('cmore_validTo', str(self.validTo))
+
+            self.beartoken = j_response.get('accessToken', '')
+            ADDON.setSetting('cmore_beartoken', str(self.beartoken))
+
+            self.refrtoken = j_response.get('refreshToken', '')
+            ADDON.setSetting('cmore_refrtoken', str(self.refrtoken))
+
+            url = 'https://ottapi.prod.telia.net/web/{cc}/tvclientgateway/rest/secure/v1/provision'.format(cc=cc[self.country])
+
+            headers = {
+                'Accept': '*/*',
+                'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6,fr;q=0.5',
+                'Authorization': 'Bearer ' + self.beartoken,
+                'Cache-Control': 'no-cache',
+                'DNT': '1',
+                'Origin': 'https://www.cmore.{cc}'.format(cc=cc[self.country]),
+                'Referer': 'https://www.cmore.{cc}/'.format(cc=cc[self.country]),
+                'Sec-Fetch-Dest': 'empty',
+                'Sec-Fetch-Mode': 'cors',
+                'Sec-Fetch-Site': 'cross-site',
+                'User-Agent': UA,
+                'tv-client-boot-id': self.tv_client_boot_id,
+            }
+
+            data = {
+                'deviceId': self.dashjs,
+                'drmType': 'WIDEVINE',
+                'uiName': 'one-web',
+                'uiVersion': '1.43.0',
+                'nativeVersion': 'NT 10.0',
+                'model': 'windows_desktop',
+                'networkType': 'unknown',
+                'productName': 'Microsoft Edge 101.0.1210.32',
+                'platformName': 'Windows',
+                'platformVersion': 'NT 10.0',
+            }
+
+            response = self.sendRequest(url, post=True, headers=headers, json=data, verify=True, timeout=timeouts)
+
+            try:
+                response = response.json()
+                if response['errorCode'] == 61004:
+                    self.maxDeviceIdMessage()
+                    ADDON.setSetting('cmore_sess_id', '')
+                    ADDON.setSetting('cmore_devush', '')
+                    if reconnect:
+                        self.loginData(reconnect=True)
+                    else:
+                        return False
+                elif response['errorCode'] == 9030:
+                    if not reconnect:
+                        self.connErrorMessage() 
+                    ADDON.setSetting('cmore_sess_id', '')
+                    ADDON.setSetting('cmore_devush', '')
+                    if reconnect:
+                        self.loginData(reconnect=True)
+                    else:
+                        self.connErrorMessage()
+                        return False
+
+                elif response['errorCode'] == 61002:
+                    self.tv_client_boot_id = str(uuid.uuid4())
+                    ADDON.setSetting('cmore_tv_client_boot_id', str(self.tv_client_boot_id))
+
+            except:
+                pass
+
+            cookies = {}
+
+            self.cookies = sess.cookies
+            ADDON.setSetting('cmore_cookies', str(self.cookies))
+
+            url = 'https://tvclientgateway-cmore.clientapi-prod.live.tv.telia.net/tvclientgateway/rest/secure/v1/pubsub'
+
+            headers = {
+                'Accept': '*/*',
+                'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6,fr;q=0.5',
+                'Authorization': 'Bearer' + self.beartoken,
+                'Origin': 'https://www.cmore.{cc}'.format(cc=cc[self.country]),
+                'Referer': 'https://www.cmore.{cc}/'.format(cc=cc[self.country]),
+                'User-Agent': UA,
+                'tv-client-boot-id': self.tv_client_boot_id,
+            }
+
+            response = self.sendRequest(url, headers=headers, cookies=sess.cookies, allow_redirects=False, timeout=timeouts)
+            deb('TEST X')
+            deb(response.text)
+
+            if not response:
+                if reconnect and retry < 3:
+                    retry += 1
+                    self.loginData(reconnect=True, retry=retry)
+                else:
+                    self.connErrorMessage()
+                    return True
+
+            response = response.json()
+
+            self.usern = response['channels']['engagement']
+            ADDON.setSetting('cmore_usern', str(self.usern))
+
+            self.subtoken = response['config']['subscriberToken']
+            ADDON.setSetting('cmore_subtoken', str(self.subtoken))
+
+            return True
+
         except:
-            self.log('getChannelList exception: {}'.format(getExceptionString()))
+            self.log('loginData exception: {}'.format(getExceptionString()))
             self.connErrorMessage()
         return False
 
-    def loginC(self, username=None, password=None, operator=None):
-        """Complete login process for C More."""
-        if operator:
-            url = self.config['links']['accountJune']
+    def loginService(self):
+        self.dashjs = ADDON.getSetting('cmore_devush')
+
+        try:
+            if self.dashjs == '':
+                try:
+                    msg = 'Hos oss på C More kan du titta som mest på två enheter samtidigt, med en begränsning på en ström för varje enskild sportsändning. Du kan se två olika matcher/livesportsändningar samtidigt men du kan inte se samma match på två olika enheter.'
+                    if PY3:
+                        xbmcgui.Dialog().ok('C More', str(msg))
+                    else:
+                        xbmcgui.Dialog().ok('C More', str(msg.encode('utf-8')))
+                except:
+                    pass
+
+                self.createData()
+
+            login = self.loginData(reconnect=False)
+
+            if login:
+                run = Threading()
+
+            return login
+
+        except:
+            self.log('loginService exception: {}'.format(getExceptionString()))
+            self.connErrorMessage()
+        return False
+
+
+    def checkLogin(self):
+        result = None
+
+        refreshTimeDelta = self.refreshTimeDelta()
+
+        if not self.validTo:
+            self.validTo = datetime.datetime.now() - timedelta(days=1)
+
+        if not self.beartoken or refreshTimeDelta < timedelta(minutes=1):
+            login = self.loginData(reconnect=True)
+
+            result = self.validTo, self.beartoken, self.refrtoken, self.cookies
+
+        return result
+
+    def refreshTimeDelta(self):
+        result = None
+
+        if 'Z' in self.validTo:
+            validTo = iso8601.parse_date(self.validTo)
+        elif self.validTo != '':
+            if not self.validTo:
+                try:
+                    date_time_format = '%Y-%m-%dT%H:%M:%S.%f+' + self.validTo.split('+')[1]
+                except:
+                    date_time_format = '%Y-%m-%dT%H:%M:%S.%f+' + self.validTo.split('+')[0]
+
+                validTo = datetime.datetime(*(time.strptime(self.validTo, date_time_format)[0:6]))
+                timestamp = int(time.mktime(validTo.timetuple()))
+                tokenValidTo = datetime.datetime.fromtimestamp(int(timestamp))
+            else:
+                tokenValidTo = datetime.datetime.now()
         else:
-            url = self.config['links']['accountDelta']
-        params = {'client': self.client}
-        headers = {'content-type': 'application/json'}
+            tokenValidTo = datetime.datetime.now()
 
-        method = 'post'
-        payload = {
-            'query': 'mutation($username: String!, $password: String, $site: String) {\n  login(credentials: {username: $username, password: $password}, site: $site) {\n    user {\n      ...UserFields\n    }\n    session {\n      token\n      vimondToken\n    }\n  }\n}\nfragment UserFields on User {\n    acceptedCmoreTerms\n    acceptedPlayTerms\n    countryCode\n    email\n    firstName\n    genericAds\n    lastName\n    tv4UserDataComplete\n    userId\n    username\n    yearOfBirth\n    zipCode\n}\n',
-            'variables': {
-            'username': username,
-            'password': password,
-            'site': 'CMORE_{locale_suffix}'.format(locale_suffix=self.locale_suffix.upper())
-                }
-            }
-        if operator:
-            payload['query'] = '\n    mutation loginTve($operatorName: String!, $username: String!, $password: String, $countryCode: String!) {\n      login(tveCredentials: {\n        operator: $operatorName,\n        username: $username,\n        password: $password,\n        countryCode: $countryCode\n      }) {\n        session{\n          token\n        }\n      }\n    }'
-            payload['variables']['countryCode'] = self.locale_suffix
-            payload['variables']['operatorName'] = operator
+        result = tokenValidTo - datetime.datetime.now()
 
-        credentials = self.make_request(url, method, params=params, payload=json.dumps(payload), headers=headers)
-        deb('credentials: {}'.format(credentials))
-        return credentials
+        return result
 
-    def get_channels(self):
-        url = self.config['links']['graphqlAPI']
-        params = {'country': self.locale_suffix}
-        payload = {
-            'operationName': 'EpgQuery',
-            'variables': {
-                'date': datetime.datetime.now().strftime('%Y-%m-%d')
-            },
-            'query': 'query EpgQuery($date: String!) {\n  epg(date: $date) {\n    days {\n      channels {\n        asset {\n          id\n          __typename\n        }\n        channelId\n        name\n        title\n        schedules {\n          scheduleId\n          assetId\n          asset {\n            title\n            urlToCDP\n            type\n            __typename\n          }\n          nextStart\n          calendarDate\n          isPremiere\n          isLive\n          program {\n            programId\n            title\n            seasonNumber\n            episodeNumber\n            duration\n            category\n            shortSynopsis\n            imageId\n            __typename\n          }\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}\n'
-        }
+    def checkRefresh(self):
+        refreshTimeDelta = self.refreshTimeDelta()
 
-        headers = {'content-type': 'application/json'}
-        data = self.make_request(url, 'post', params=params, payload=json.dumps(payload), headers=headers)['data']
-        return data['epg']['days'][0]['channels']
+        if not self.validTo:
+            self.validTo = datetime.datetime.now() - timedelta(days=1)
 
-    def image_proxy(self, image_url):
-        """Request the image from C More's image proxy. Can be extended to resize/add image effects automatically.
-        See https://imageproxy.b17g.services/docs for more information."""
-        if image_url:
-            return '{0}?source={1}'.format(self.config['links']['imageProxy'], image_url)
+        if refreshTimeDelta is not None:
+            refr = True if not self.beartoken or refreshTimeDelta < timedelta(minutes=1) else False
         else:
-            return None
+            refr = False
 
-    def parse_datetime(self, event_date, localize=True):
-        """Parse date string to datetime object."""
-        if 'Z' in event_date:
-            datetime_obj = iso8601.parse_date(event_date)
-            if localize:
-                datetime_obj = self.utc_to_local(datetime_obj)
-        else:
-            date_time_format = '%Y-%m-%dT%H:%M:%S+' + event_date.split('+')[1]  # summer/winter time changes format
-            datetime_obj = datetime(*(time.strptime(event_date, date_time_format)[0:6]))
-        return datetime_obj
-
-    def utc_to_local(self, utc_dt):
-        # get integer timestamp to avoid precision lost
-        timestamp = calendar.timegm(utc_dt.timetuple())
-        local_dt = datetime.datetime.fromtimestamp(timestamp)
-        assert utc_dt.resolution >= timedelta(microseconds=1)
-        return local_dt.replace(microsecond=utc_dt.microsecond)
+        return refr
 
     def getChannelList(self, silent):
         result = list()
@@ -366,187 +510,118 @@ class CmoreUpdater(baseServiceUpdater):
         if not self.loginService():
             return result
 
+        self.checkLogin()
+
         self.log('\n\n')
-        self.log('[UPD] Downloading list of available {} channels from {}'.format(self.serviceName, self.url))
+        self.log('[UPD] Downloading list of available {} channels from {}'.format(self.serviceName, self.country))
         self.log('[UPD] -------------------------------------------------------------------------------------')
         self.log('[UPD] %-12s %-35s %-35s' % ( '-CID-', '-NAME-', '-TITLE-'))
 
-        try: 
-            channels = self.get_channels()
+        try:
+            url = 'https://engagementgateway-cmore.clientapi-prod.live.tv.telia.net/engagementgateway/rest/secure/v2/engagementinfo'
+
+            headers = {
+                "User-Agent": UA,
+                "Accept": "*/*",
+                "Accept-Language": "sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6",
+                "Authorization": "Bearer " + self.beartoken,
+            }
+
+            headers = {
+                'authority': 'engagementgateway-cmore.clientapi-prod.live.tv.telia.net',
+                'accept': '*/*',
+                'accept-language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6,fr;q=0.5',
+                'authorization': 'Bearer ' + self.beartoken,
+                'dnt': '1',
+                'origin': 'https://settings.cmore.{cc}'.format(cc=cc[self.country]),
+                'referer': 'https://settings.cmore.{cc}/'.format(cc=cc[self.country]),
+                'tv-client-boot-id': self.tv_client_boot_id,
+                'user-agent': UA,
+                'x-country': ca[self.country],
+            }
+
+            engagementjson = self.sendRequest(url, headers=headers, verify=True)
+            if not engagementjson:
+                return result
+
+            engagementjson = engagementjson.json()
+
+            try:
+                self.engagementLiveChannels = engagementjson['channelIds']
+            except KeyError as k:
+                self.engagementLiveChannels = []
+                deb('errorMessage: {k}'.format(k=str(k)))
+
+            self.engagementPlayChannels = []
+
+            try:
+               for channel in engagementjson['stores']:
+                   self.engagementPlayChannels.append(channel['id'])
+
+            except KeyError as k:
+                deb('errorMessage: {k}'.format(k=str(k)))
+
+            url = 'https://ottapi.prod.telia.net/web/{cc}/contentsourcegateway/rest/v1/channels'.format(cc=cc[self.country])
+
+            headers = {
+                'Host': host[self.country],
+                'User-Agent': UA,
+                'Accept': '*/*',
+                'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6,da;q=0.5,no;q=0.4',
+                'Origin': base[self.country],
+
+            }
+
+            channels = self.sendRequest(url, headers=headers, verify=True) 
+            if not channels:
+                return result
+
+            channels = channels.json()
+
             for channel in channels:
-                programs = [x for x in channel['schedules'] if datetime.datetime.now() >= self.parse_datetime(x['calendarDate'])]
-                if programs:
-                    current_program = programs[-1]['program']
-                else:
-                    continue  # no current live program
+                if channel['id'] in self.engagementLiveChannels:
+                    cid = channel["id"] + '_TS_3'
+                    name = channel["name"]
 
-                cid = channel['asset']['id'] 
-                name = channel['title']
+                    try:
+                        res = channel["resolutions"]
 
-                if self.locale == 'sv_SE':
-                    p = re.compile(r'(\sSE$)')
+                        p = re.compile('\d+')
+                        res_int = p.search(res[0]).group(0)
 
-                    r = p.search(name)
-                    match = r.group(1) if r else None
+                    except:
+                        res_int = 0
 
-                    if match:
-                        title = channel['title']
-                    else:
-                        title = channel['title'] + ' SE'
-                elif self.locale == 'da_DK':
-                    p = re.compile(r'(\sDK$)')
+                    p = re.compile(r'(\s{0}$)'.format(ca[self.country]))
 
                     r = p.search(name)
                     match = r.group(1) if r else None
 
                     if match:
-                        title = channel['title']
+                        ccCh = ''
                     else:
-                        title = channel['title'] + ' DK'
-                elif self.locale == 'nb_NO':
-                    p = re.compile(r'(\sNO$)')
+                        ccCh = ca[self.country]
 
-                    r = p.search(name)
-                    match = r.group(1) if r else None
-
-                    if match:
-                        title = channel['title']
+                    if int(res_int) > 576 and ' HD' not in name:
+                        title = channel["name"] + ' HD ' + ccCh
                     else:
-                        title = channel['title'] + ' NO'
-                else:
-                    title = ''
+                        title = channel["name"] + ' ' + ccCh
+                    img = channel["id"]
 
-                img = current_program['imageId']
+                    program = TvCid(cid=cid, name=name, title=title, img=img) 
+                    result.append(program)
 
-                program = TvCid(cid=cid, name=name, title=title, img=img)
-                result.append(program)
-
-                self.log('[UPD] %-12s %-35s %-35s' % (cid, name, title))
+                    self.log('[UPD] %-12s %-35s %-35s' % (cid, name, title))
 
             if len(result) <= 0:
-                self.log('Error while parsing service {}, returned data is: {}'.format(self.serviceName, str(channels)))
+                self.log('Error while parsing service {}'.format(self.serviceName))
 
             self.log('-------------------------------------------------------------------------------------')
 
         except:
             self.log('getChannelList exception: {}'.format(getExceptionString()))
-        return result 
 
-    def set_login_credentials(self):
-        username = ADDON.getSetting('cmore_username').strip()
-        password = ADDON.getSetting('cmore_password').strip()
-
-        if ADDON.getSetting('cmore_tv_provider_login') == 'true':
-            operator = self.get_operator(ADDON.getSetting('cmore_operator'))
-            if not operator:
-                return False
-        else:
-            operator = None
-            self.set_setting('cmore_operator_title', '')
-            self.set_setting('cmore_operator', '')
-
-        if not username or not password:
-            if operator:
-                return self.set_tv_provider_credentials()
-            else:
-                self.loginErrorMessage()
-                return False
-        else:
-            return True
-
-    def get_token(self):
-        if not ADDON.getSetting('cmore_username') or not ADDON.getSetting('cmore_password'):
-            self.set_login_credentials()
-        username = ADDON.getSetting('cmore_username').strip()
-        password = ADDON.getSetting('cmore_password').strip()
-        operator = ADDON.getSetting('cmore_operator').strip()
-        login_data = self.loginC(username, password, operator)
-        if 'data' in str(login_data) and 'login' in login_data['data']:
-            self.set_setting('cmore_login_token', login_data['data']['login']['session']['token'])
-            return login_data['data']['login']['session']['token']
-        else:
-            return ''
-
-    def set_tv_provider_credentials(self):
-        operator = ADDON.getSetting('cmore_operator')
-        operators = self.get_operators()
-        for i in operators:
-            if operator == i['name']:
-                username_type = i['username']
-                password_type = i['password']
-                info_message = re.sub('<[^<]+?>', '', i['login'])  # strip html tags
-                break
-        self.dialog('ok', ADDON.getSetting('cmore_operator_title'), message=info_message)
-        username = self.get_user_input(strings(59952) + ' (C More)')
-        password = self.get_user_input(strings(59953) + ' (C More)', hidden=True)
-
-        if username and password:
-            self.set_setting('cmore_username', username)
-            self.set_setting('cmore_password', password)
-            return True
-        else:
-            return False
-
-    def set_locale(self, locale=None):
-        countries = ['sv_SE', 'da_DK', 'nb_NO']
-        if not locale:
-            options = ['cmore.se', 'cmore.dk', 'cmore.no']
-            selected_locale = self.dialog('select', strings(30368), options=options)
-            if selected_locale is None:
-                selected_locale = 0  # default to .se
-            self.set_setting('cmore_locale_title', options[selected_locale])
-            self.set_setting('cmore_locale', countries[selected_locale])
-            self.set_setting('cmore_login_token', '')  # reset token when locale is changed
-
-        return True
-
-    def get_operator(self, operator=None):
-        if not operator:
-            self.set_setting('cmore_tv_provider_login', 'true')
-            operators = self.get_operators()
-            options = [x['title'] for x in operators]
-
-            selected_operator = self.dialog('select', strings(30370), options=options)
-            if selected_operator is not None:
-                operator = operators[selected_operator]['name']
-                operator_title = operators[selected_operator]['title']
-                self.set_setting('cmore_operator', operator)
-                self.set_setting('cmore_operator_title', operator_title)
-
-        return ADDON.getSetting('cmore_operator')
-
-    def get_stream(self, chann, login_token):
-        """Return stream data in a dict for a specified video ID."""
-        init_data = self.get_playback_init()
-        asset = self.get_playback_asset(chann, init_data)
-        url = '{playback_api}{media_uri}'.format(playback_api=init_data['envPlaybackApi'], media_uri=asset['mediaUri'])
-        headers = {'x-jwt': 'Bearer {login_token}'.format(login_token=login_token)}
-        stream = self.make_request(url, 'get', headers=headers)['playbackItem']
-
-        return stream
-
-    def get_playback_init(self):
-        """Get playback init data (API URL:s and request variables etc)"""
-        deb('Getting playback init.')
-        url = 'https://bonnier-player-android-prod.b17g.net/init'
-        params = {
-            'domain': 'cmore.{locale_suffix}'.format(locale_suffix=self.locale_suffix)
-        }
-        data = self.make_request(url, 'get', params=params)['config']
-        return data
-
-    def get_playback_asset(self, chann, init_data):
-        """Get playback metadata needed to complete the stream request."""
-        deb('Getting playback asset for video id {chann}'.format(chann=chann))
-        url = '{playback_api}/asset/{chann}'.format(playback_api=init_data['envPlaybackApi'], chann=chann)
-        params = {
-            'service': 'cmore.{locale_suffix}'.format(locale_suffix=self.locale_suffix),
-            'device': init_data['envPlaybackDevice'],
-            'protocol': init_data['envPlaybackProtocol'],
-            'drm': init_data['envPlaybackDrm']
-        }
-        asset = self.make_request(url, 'get', params=params)
-        return asset
+        return result
 
     def channCid(self, cid):
         try:
@@ -556,41 +631,113 @@ class CmoreUpdater(baseServiceUpdater):
             cid 
 
         return cid
-        
+
     def getChannelStream(self, chann):
         data = None
 
-        cid = self.channCid(chann.cid)
+        self.checkLogin()
 
         try:
-            login_token = ADDON.getSetting('cmore_login_token')
-            if not login_token:
-                login_token = self.get_token()
-
             try:
-                data = self.get_stream(cid, login_token=login_token)
-            except self.CMoreError as error:
-                if str(error) == 'User is not authenticated':
-                    login_token = self.get_token()
-                    try:
-                        data = self.get_stream(cid, login_token)
-                    except:
-                        data = None
-                        self.noPremiumMessage()
-        
-            if data is not None and data != "":
-                chann.strm = data['manifestUrl']
-                chann.lic = data
+                from urllib.parse import urlencode, quote_plus, quote, unquote
+            except ImportError:
+                from urllib import urlencode, quote_plus, quote, unquote
 
+            cid = self.channCid(chann.cid)
+
+            self.sessionid = six.text_type(uuid.uuid4())
+            ADDON.setSetting('cmore_sess_id', str(self.sessionid))
+
+            streamType = 'CHANNEL'
+
+            url = 'https://streaminggateway-telia.clientapi-prod.live.tv.telia.net/streaminggateway/rest/secure/v2/streamingticket/{type}/{cid}?country={cc}'.format(type=streamType, cid=(str(cid)), cc=cc[self.country].upper())
+
+            headers = {
+                'Connection': 'keep-alive',
+                'tv-client-boot-id': self.tv_client_boot_id,
+                'DNT': '1',
+                'Authorization': 'Bearer '+ self.beartoken,
+                'tv-client-tz': 'Europe/Stockholm',
+                'X-Country': cc[self.country],
+                'User-Agent': UA,
+                'content-type': 'application/json',
+                'Accept': '*/*',
+                'Origin': base[self.country],
+                'Referer': base[self.country]+'/',
+                'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
+            }
+
+            params = (
+                ('country', cc[self.country].upper()),
+            )
+
+            data = {
+                "sessionId": self.sessionid,
+                "whiteLabelBrand":"CMORE",
+                "watchMode":"LIVE",
+                "accessControl":"SUBSCRIPTION",
+                "device": {
+                    "deviceId": self.tv_client_boot_id,
+                    "category":"desktop_windows",
+                    "packagings":["DASH_MP4_CTR"],
+                    "drmType":"WIDEVINE",
+                    "capabilities":[],
+                    "screen": {
+                        "height":1080,
+                        "width":1920
+                        },
+                        "os":"Windows",
+                        "model":"windows_desktop"
+                        },
+                        "preferences": {
+                            "audioLanguage":["undefined"],
+                            "accessibility":[]}
+                }
+
+            response = self.sendRequest(url, post=True, headers=headers, json=data, params=params, cookies=sess.cookies, verify=True, timeout=timeouts)
+            if not response:
+                self.connErrorMessage()
+                return None 
+
+            response = response.json()
+
+            hea = ''
+
+            LICENSE_URL = response.get('streams', '')[0].get('drm', '').get('licenseUrl', '')
+            stream_url = response.get('streams', '')[0].get('url', '')
+            headr = response.get('streams', '')[0].get('drm', '').get('headers', '')
+
+            if 'X-AxDRM-Message' in headr:
+                hea = 'Content-Type=&X-AxDRM-Message=' + self.dashjs
+
+            elif 'x-dt-auth-token' in headr:
+                hea = 'Content-Type=&x-dt-auth-token=' + headr.get('x-dt-auth-token', self.dashjs)
+
+            else:
+                if PY3:
+                    hea = urllib.parse.urlencode(headr)
+                else:
+                    hea = urllib.urlencode(headr)
+
+                if 'Content-Type=&' not in hea:
+                    hea = 'Content-Type=&' + hea
+
+            license_url = LICENSE_URL + '|' + hea + '|R{SSM}|'
+
+            data = stream_url
+
+            if data is not None and data != "":
+                chann.strm = data
+                chann.lic = license_url
                 try:
-                    self.log('getChannelStream found matching channel: cid: {}, name: {}, rtmp:{}'.format(cid, chann.name, chann.strm))
+                    self.log('getChannelStream found matching channel: cid: {}, name: {}, rtmp:{}'.format(chann.cid, chann.name, chann.strm))
                 except:
-                    self.log('getChannelStream found matching channel: cid: {}, name: {}, rtmp:{}'.format(str(cid), str(chann.name), str(chann.strm)))
+                    self.log('getChannelStream found matching channel: cid: {}, name: {}, rtmp:{}'.format(str(chann.cid), str(chann.name), str(chann.strm)))
                 return chann
             else:
                 self.log('getChannelStream error getting channel stream2, result: {}'.format(str(data)))
                 return None
 
-        except Exception as e:
+        except Exception:
             self.log('getChannelStream exception while looping: {}\n Data: {}'.format(getExceptionString(), str(data)))
         return None
