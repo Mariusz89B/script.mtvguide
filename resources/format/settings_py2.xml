@@ -84,7 +84,7 @@
 		<setting id="priority_videostar" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-6,true) + eq(-64,0)" subsetting="true"/>
 		
 		<setting id="cmore_enabled" type="bool" label="59920" default="false" visible="eq(-65,1)"/>
-		<setting id="cmore_locale" type="select" label="30368" default="0" lvalues="57056|57057" visible="eq(-1,true) + eq(-66,1)" subsetting="true"/>
+		<setting id="cmore_locale" type="select" label="30368" default="0" lvalues="cmore.dk|cmore.se" visible="eq(-1,true) + eq(-66,1)" subsetting="true"/>
 		<setting id="cmore_username" type="text" label="55002" default="" visible="eq(-2,true) + eq(-67,1)" subsetting="true"/>
 		<setting id="cmore_password" type="text" option="hidden" label="55003" default="" visible="eq(-3,true) + eq(-68,1)" subsetting="true"/>
 		<setting id="priority_cmore" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-4,true) + eq(-69,1)" subsetting="true"/>

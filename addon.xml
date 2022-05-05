@@ -2,7 +2,7 @@
 <addon
     id="script.mtvguide"
     name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]"
-    version="9.9.604-beta.3"
+    version="9.9.604-beta.4"
     provider-name="Mods-kodi">
   <requires>
     <import addon="xbmc.addon" version="17.0.0"/>
@@ -41,8 +41,9 @@
     <forum>https://github.com/Mariusz89B/script.mtvguide/discussions</forum>
 	<website>https://github.com/Mariusz89B/script.mtvguide</website>
     <source>m-TVGuide © 2013 - 2022</source>
-    <news>v9.9.604 (2022-04-30)
+    <news>v9.9.604 (2022-05-05)
 - Added support for TheMovieDb extended information.
+- Fixed service CMore.
 
 v9.9.603 (2022-04-24)
 - Fixed service Polsat GO.

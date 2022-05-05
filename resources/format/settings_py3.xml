@@ -919,8 +919,8 @@
 					<default>0</default>
 					<constraints>
 						<options>
-							<option label="cmore.se">0</option>
-							<option label="cmore.dk">1</option>
+							<option label="cmore.dk">0</option>
+							<option label="cmore.se">1</option>
 						</options>
 					</constraints>
 					<dependencies>

@@ -266,6 +266,7 @@ class CmoreUpdater(baseServiceUpdater):
             }
 
             response = self.sendRequest(url, post=True, params=params, headers=headers, json=data, verify=True, timeout=timeouts)
+
             code = ''
 
             if response:
@@ -354,6 +355,7 @@ class CmoreUpdater(baseServiceUpdater):
             try:
                 response = response.json()
                 if response['errorCode'] == 61004:
+                    deb('errorCode 61004')
                     self.maxDeviceIdMessage()
                     ADDON.setSetting('cmore_sess_id', '')
                     ADDON.setSetting('cmore_devush', '')
@@ -362,6 +364,7 @@ class CmoreUpdater(baseServiceUpdater):
                     else:
                         return False
                 elif response['errorCode'] == 9030:
+                    deb('errorCode 9030')
                     if not reconnect:
                         self.connErrorMessage() 
                     ADDON.setSetting('cmore_sess_id', '')
@@ -373,6 +376,7 @@ class CmoreUpdater(baseServiceUpdater):
                         return False
 
                 elif response['errorCode'] == 61002:
+                    deb('errorCode 61002')
                     self.tv_client_boot_id = str(uuid.uuid4())
                     ADDON.setSetting('cmore_tv_client_boot_id', str(self.tv_client_boot_id))
 
@@ -389,7 +393,7 @@ class CmoreUpdater(baseServiceUpdater):
             headers = {
                 'Accept': '*/*',
                 'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6,fr;q=0.5',
-                'Authorization': 'Bearer' + self.beartoken,
+                'Authorization': 'Bearer ' + self.beartoken,
                 'Origin': 'https://www.cmore.{cc}'.format(cc=cc[self.country]),
                 'Referer': 'https://www.cmore.{cc}/'.format(cc=cc[self.country]),
                 'User-Agent': UA,
@@ -397,16 +401,12 @@ class CmoreUpdater(baseServiceUpdater):
             }
 
             response = self.sendRequest(url, headers=headers, cookies=sess.cookies, allow_redirects=False, timeout=timeouts)
-            deb('TEST X')
-            deb(response.text)
 
             if not response:
-                if reconnect and retry < 3:
-                    retry += 1
-                    self.loginData(reconnect=True, retry=retry)
+                if reconnect:
+                    self.loginData(reconnect=True)
                 else:
-                    self.connErrorMessage()
-                    return True
+                    return False
 
             response = response.json()
 
@@ -460,7 +460,7 @@ class CmoreUpdater(baseServiceUpdater):
         if not self.validTo:
             self.validTo = datetime.datetime.now() - timedelta(days=1)
 
-        if not self.beartoken or refreshTimeDelta < timedelta(minutes=1):
+        if not self.beartoken and refreshTimeDelta < timedelta(minutes=1):
             login = self.loginData(reconnect=True)
 
             result = self.validTo, self.beartoken, self.refrtoken, self.cookies
@@ -548,6 +548,7 @@ class CmoreUpdater(baseServiceUpdater):
 
             try:
                 self.engagementLiveChannels = engagementjson['channelIds']
+                deb(self.engagementLiveChannels)
             except KeyError as k:
                 self.engagementLiveChannels = []
                 deb('errorMessage: {k}'.format(k=str(k)))
