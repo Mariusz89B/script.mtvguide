@@ -423,7 +423,48 @@ class CmoreUpdater(baseServiceUpdater):
             self.connErrorMessage()
         return False
 
+    def operatorLogin(self, operator, login, password):
+        url = 'https://tve.cmore.se/country/se/operator/{operator}/user/{login}/exists'.format(operator=operator, login=login)
+
+        headers = {
+            'authority': 'tve.cmore.se',
+            'accept': '*/*',
+            'accept-language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6,fr;q=0.5',
+            'dnt': '1',
+            'origin': 'https://login.cmore.{cc}'.format(cc=cc[self.country]),
+            'referer': 'https://login.cmore.{cc}/'.format(cc=cc[self.country]),
+            'user-agent': UA,
+        }
+
+        params = {
+            'client': 'login-web',
+        }
+
+        data = {
+            'password': password,
+        }
+
+        response = self.sendRequest(url, post=True, params=params, headers=headers, json=data, verify=True, timeout=timeouts)
+
+        return False
+
     def loginService(self):
+
+        if ADDON.getSetting('cmore_tv_provider_login') == 'true':
+            operator = self.getOperator(ADDON.getSetting('cmore_operator'))
+        else:
+            operator = None
+            ADDON.setSetting('cmore_operator_title', '')
+            ADDON.setSetting('cmore_operator', '')
+
+        if operator:
+            operator_, login, password = self.setProviderCredentials()
+            return self.operatorLogin(operator_, login, password)
+        else:
+            if not self.login and self.password:
+                self.loginErrorMessage() 
+                return False
+
         self.dashjs = ADDON.getSetting('cmore_devush')
 
         try:
@@ -450,6 +491,84 @@ class CmoreUpdater(baseServiceUpdater):
             self.log('loginService exception: {}'.format(getExceptionString()))
             self.connErrorMessage()
         return False
+
+    def UserInput(self, heading, hidden=False):
+        keyboard = xbmc.Keyboard('', heading, hidden)
+        keyboard.doModal()
+        if keyboard.isConfirmed():
+            query = keyboard.getText()
+        else:
+            query = None
+
+        if query and len(query) > 0:
+            return query
+        else:
+            return None
+
+    def setProviderCredentials(self):
+        operator = ADDON.getSetting('cmore_operator')
+        operators = self.getOperators()
+        for i in operators:
+            if operator == i['name']:
+                username_type = i['username']
+                password_type = i['password']
+                operator_ = i['name']
+                title = i['title']
+                info_message = re.sub('<[^<]+?>', '', i['login'])
+                break
+
+        xbmcgui.Dialog().ok(ADDON.getSetting('cmore_operator_title'), info_message)
+        login = self.UserInput(strings(59952) + ' ' + title)
+        password = self.UserInput(strings(59953) + ' ' + title, hidden=True)
+
+        if login and password:
+            ADDON.setSetting('cmore_username', login)
+            ADDON.setSetting('cmore_password', password)
+            return operator_, login, password
+        else:
+            self.loginErrorMessage()
+
+    def getOperator(self, operator=None):
+        if not operator:
+            ADDON.setSetting('cmore_tv_provider_login', 'true')
+            operators = self.getOperators()
+            options = [x['title'] for x in operators]
+
+            selected_operator = xbmcgui.Dialog().select(strings(30370), options)
+            if selected_operator is not None:
+                operator = operators[selected_operator]['name']
+                operator_title = operators[selected_operator]['title']
+                ADDON.setSetting('cmore_operator', operator)
+                ADDON.setSetting('cmore_operator_title', operator_title)
+
+        return ADDON.getSetting('cmore_operator')
+
+    def getOperators(self):
+        """Return a list of TV operators supported by the C More login system."""
+        url = 'https://tve.cmore.se/country/se/operator'
+
+        headers = {
+            'authority': 'tve.cmore.{cc}'.format(cc=cc[self.country]),
+            'accept': '*/*',
+            'accept-language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6,fr;q=0.5',
+            'cache-control': 'no-cache',
+            'dnt': '1',
+            'origin': 'https://login.cmore.{cc}'.format(cc=cc[self.country]),
+            'referer': 'https://login.cmore.{cc}/'.format(cc=cc[self.country]),
+            'user-agent': UA,
+        }
+
+        params = {
+            'client': 'test',
+        }
+
+        response = self.sendRequest(url, params=params, headers=headers, verify=True, timeout=timeouts)
+        if response:
+            j_response = response.json()
+
+            j_response['data']['operators'] = sorted(j_response['data']['operators'], key=lambda k: k['title']) 
+
+            return j_response['data']['operators']
 
 
     def checkLogin(self):

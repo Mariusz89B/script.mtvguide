@@ -85,10 +85,11 @@
 		
 		<setting id="cmore_enabled" type="bool" label="59920" default="false" visible="eq(-65,1)"/>
 		<setting id="cmore_locale" type="select" label="30368" default="0" lvalues="cmore.dk|cmore.se" visible="eq(-1,true) + eq(-66,1)" subsetting="true"/>
-		<setting id="cmore_username" type="text" label="55002" default="" visible="eq(-2,true) + eq(-67,1)" subsetting="true"/>
-		<setting id="cmore_password" type="text" option="hidden" label="55003" default="" visible="eq(-3,true) + eq(-68,1)" subsetting="true"/>
-		<setting id="priority_cmore" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-4,true) + eq(-69,1)" subsetting="true"/>
-		<setting label="30371" type="action" action="RunScript($CWD/clearcmore.py, clearcmore)" visible="eq(-5,true) + eq(-70,1)" subsetting="true"/>
+		<setting id="cmore_tv_provider_login" type="bool" label="30369" default="false" visible="eq(-2,true) + eq(-67,1)" subsetting="true"/>
+		<setting id="cmore_username" type="text" label="55002" default="" visible="eq(-2,true) + eq(-68,1)" subsetting="true"/>
+		<setting id="cmore_password" type="text" option="hidden" label="55003" default="" visible="eq(-3,true) + eq(-69,1)" subsetting="true"/>
+		<setting id="priority_cmore" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-4,true) + eq(-70,1)" subsetting="true"/>
+		<setting label="30371" type="action" action="RunScript($CWD/clearcmore.py, clearcmore)" visible="eq(-5,true) + eq(-71,1)" subsetting="true"/>
 		<setting id="cmore_sess_id" visible="false" subsetting="true"/>
 		<setting id="cmore_devush" visible="false" subsetting="true"/>
 		<setting id="cmore_beartoken" visible="false" subsetting="true"/>
@@ -96,12 +97,12 @@
 		<setting id="cmore_cookies" visible="false" subsetting="true"/>
 		<setting id="cmore_usern" visible="false" subsetting="true"/>
 		
-		<setting id="teliaplay_enabled" type="bool" label="30904" default="false" visible="eq(-77,1)"/>
-		<setting id="teliaplay_locale" type="select" label="30368" default="0" lvalues="57056|57057" visible="eq(-1,true) + eq(-78,1)" subsetting="true"/>
-		<setting id="teliaplay_username" type="text" label="55002" default="" visible="eq(-2,true) + eq(-79,1)" subsetting="true"/>
-		<setting id="teliaplay_password" type="text" option="hidden" label="55003" default="" visible="eq(-3,true) + eq(-80,1)" subsetting="true"/>
-		<setting id="priority_teliaplay" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-4,true) + eq(-81,1)" subsetting="true"/>
-		<setting label="30371" type="action" action="RunScript($CWD/clearteliaplay.py, clearTeliaPlay)" visible="eq(-5,true) + eq(-82,1)" subsetting="true"/>
+		<setting id="teliaplay_enabled" type="bool" label="30904" default="false" visible="eq(-78,1)"/>
+		<setting id="teliaplay_locale" type="select" label="30368" default="0" lvalues="57056|57057" visible="eq(-1,true) + eq(-79,1)" subsetting="true"/>
+		<setting id="teliaplay_username" type="text" label="55002" default="" visible="eq(-2,true) + eq(-80,1)" subsetting="true"/>
+		<setting id="teliaplay_password" type="text" option="hidden" label="55003" default="" visible="eq(-3,true) + eq(-81,1)" subsetting="true"/>
+		<setting id="priority_teliaplay" label="55009" type="enum" default="6" lvalues="55010|55011|55017|55012|55018|55013|55019|55014|55020|55021|55022|55023" visible="eq(-4,true) + eq(-82,1)" subsetting="true"/>
+		<setting label="30371" type="action" action="RunScript($CWD/clearteliaplay.py, clearTeliaPlay)" visible="eq(-5,true) + eq(-83,1)" subsetting="true"/>
 		<setting id="teliaplay_sess_id" visible="false" subsetting="true"/>
 		<setting id="teliaplay_devush" visible="false" subsetting="true"/>
 		<setting id="teliaplay_beartoken" visible="false" subsetting="true"/>

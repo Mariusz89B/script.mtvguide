@@ -933,6 +933,17 @@
 						<heading>30368</heading>
 					</control>
 				</setting>
+				<setting help="95009" id="cmore_tv_provider_login" label="30369" type="boolean" parent="cmore_enabled">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="cmore_enabled">true</condition>
+							<condition operator="is" setting="country_service">1</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
 				<setting help="95010" id="cmore_username" label="55002" type="string" parent="cmore_enabled">
 					<level>0</level>
 					<default/>

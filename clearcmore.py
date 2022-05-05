@@ -67,6 +67,8 @@ class clearCMore:
         self.set_setting('cmore_refrtoken', '')
         self.set_setting('cmore_cookies', '')
         self.set_setting('cmore_usern', '')
+        self.set_setting('cmore_operator', '')
+        self.set_setting('cmore_operator_title', '')
         xbmcgui.Dialog().ok(strings(30371), strings(30372))
 
 clearcmore = clearCMore()
