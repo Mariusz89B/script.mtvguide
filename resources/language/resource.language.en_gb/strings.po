@@ -3588,34 +3588,6 @@ msgctxt "#95151"
 msgid "If enabled debugging mode will be turned on and a Debug menu will be visible in add-on context options."
 msgstr ""
 
-msgctxt "#75000"
-msgid "Unlocked"
-msgstr ""
-
-msgctxt "#75001"
-msgid "[COLOR blue]Ekranik TV[/COLOR]"
-msgstr ""
-
-msgctxt "#75002"
-msgid "[COLOR blue]Hejo TV[/COLOR]"
-msgstr ""
-
-msgctxt "#75003"
-msgid "[COLOR blue]Internetowa TV[/COLOR]"
-msgstr ""
-
-msgctxt "#75004"
-msgid "[COLOR blue]Weeb TV[/COLOR]"
-msgstr ""
-
-msgctxt "#75005"
-msgid "[COLOR blue]Weeb TV Beta[/COLOR]"
-msgstr ""
-
-msgctxt "#75006"
-msgid "[COLOR blue]CDA TV[/COLOR]"
-msgstr ""
-
 msgctxt "#99994"
 msgid "[COLOR gold][B]Basic controls[/B][/COLOR]\n\nDefault keyboard and remote commands.\n\n[COLOR blue][B]EPG window[/B][/COLOR]\n\n- [B]Movement[/B]\n[I](Shortcut key [ UP ], [ DOWN ], [ LEFT ], [ RIGHT ], [ PG UP ], [ PG DOWN ])[/I]\n\n- [B]Play channel[/B]\n[I](Shortcut key [ ENTER ] or [ OK ])[/I]\n\n- [B]Context menu[/B]\n[I](Shortcut key [ C ] or [ CONTEXT ])[/I]\n\n- [B]Programme information[/B]\n[I](Shortcut key [ I ] or [ INFO ])[/I]\n\n- [B]Return to TV window[/B]\n[I](Shortcut key [ C ] or [ CONTEXT ])[/I]\n\n- [B]Exit[/B]\n[I](Shortcut key [ ESC ] or [ BACK ])[/I]\n\n[COLOR blue][B]TV window[/B][/COLOR]\n\n- [B]Return to EPG window and stop playback[/B]\n[I](Shortcut key [ ESC ] or [ BACK X2 ])[/I]\n\n- [B]Return to EPG window[/B]\n[I](Shortcut key [ BACK ])[/I]\n\n- [B]Show OSD[/B]\n[I](Shortcut key [ ENTER ] or [ OK ])[/I]\n\n- [B]Show programme information[/B]\n[I](Shortcut key [ I ] or [ INFO ])[/I]\n\n- [B]Change to next / prev channel[/B]\n[I](Shortcut key [ PG UP ], [ PG DOWN ])[/I]\n\n- [B]Show listing view[/B]\n[I](Shortcut key [ CUSTOM ])[/I]\n\n- [B]Change to last channel[/B]\n[I](Shortcut key [ CUSTOM ])[/I]\n\n[COLOR blue][B]OSD window[/B][/COLOR]\n\n- [B]Close OSD window[/B]\n[I](Shortcut key [ ESC ] or [ BACK ])[/I]\n\n- [B]Next / prev channel[/B]\n[I](Shortcut key [ UP ], [ DOWN ])[/I]\n\n- [B]Next / prev program[/B]\n[I](Shortcut key [ LEFT ], [ RIGHT ])[/I]\n\n- [B]Change channel[/B]\n[I](Shortcut key [ ENTER ] or [ OK ])[/I]\n\n- [B]Change to next / prev channel[/B]\n[I](Shortcut key [ PG UP ], [ PG DOWN ])[/I]\n\n- [B]Show listing view[/B]\n[I](Shortcut key [ CUSTOM ])[/I]\n\n- [B]Change to last channel[/B]\n[I](Shortcut key [ CUSTOM ])[/I]\n\n[COLOR blue][B]PVR channel manager[/B][/COLOR]\n\n[COLOR blue][B]Listing view[/B][/COLOR]"
 msgstr ""
