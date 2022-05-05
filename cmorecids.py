@@ -427,7 +427,7 @@ class CmoreUpdater(baseServiceUpdater):
         url = 'https://tve.cmore.se/country/se/operator/{operator}/user/{login}/exists'.format(operator=operator, login=login)
 
         headers = {
-            'authority': 'tve.cmore.se',
+            'authority': 'tve.cmore.{cc}'.format(cc=cc[self.country]),
             'accept': '*/*',
             'accept-language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6,fr;q=0.5',
             'dnt': '1',
@@ -445,8 +445,10 @@ class CmoreUpdater(baseServiceUpdater):
         }
 
         response = self.sendRequest(url, post=True, params=params, headers=headers, json=data, verify=True, timeout=timeouts)
-
-        return False
+        if response:
+            return True
+        else:
+            return False
 
     def loginService(self):
 
@@ -459,7 +461,10 @@ class CmoreUpdater(baseServiceUpdater):
 
         if operator:
             operator_, login, password = self.setProviderCredentials()
-            return self.operatorLogin(operator_, login, password)
+            response = self.operatorLogin(operator_, login, password)
+            if not response:
+                self.loginErrorMessage() 
+                return False
         else:
             if not self.login and self.password:
                 self.loginErrorMessage() 
@@ -517,9 +522,13 @@ class CmoreUpdater(baseServiceUpdater):
                 info_message = re.sub('<[^<]+?>', '', i['login'])
                 break
 
-        xbmcgui.Dialog().ok(ADDON.getSetting('cmore_operator_title'), info_message)
-        login = self.UserInput(strings(59952) + ' ' + title)
-        password = self.UserInput(strings(59953) + ' ' + title, hidden=True)
+        if not self.login and self.password:
+            xbmcgui.Dialog().ok(ADDON.getSetting('cmore_operator_title'), info_message)
+            login = self.UserInput(strings(59952) + ' ' + title)
+            password = self.UserInput(strings(59953) + ' ' + title, hidden=True)
+        else:
+            login = self.login
+            password = self.password
 
         if login and password:
             ADDON.setSetting('cmore_username', login)
