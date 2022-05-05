@@ -335,6 +335,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
             try:
                 response = response.json()
                 if response['errorCode'] == 61004:
+                    deb('errorCode 61004')
                     self.maxDeviceIdMessage()
                     ADDON.setSetting('teliaplay_sess_id', '')
                     ADDON.setSetting('teliaplay_devush', '')
@@ -343,6 +344,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                     else:
                         return False
                 elif response['errorCode'] == 9030:
+                    deb('errorCode 9030')
                     if not reconnect:
                         self.connErrorMessage() 
                     ADDON.setSetting('teliaplay_sess_id', '')
@@ -354,6 +356,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                         return False
 
                 elif response['errorCode'] == 61002:
+                    deb('errorCode 61002')
                     self.tv_client_boot_id = str(uuid.uuid4())
                     ADDON.setSetting('teliaplay_tv_client_boot_id', str(self.tv_client_boot_id))
 
@@ -445,7 +448,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
         if not self.validTo:
             self.validTo = datetime.datetime.now() - timedelta(days=1)
 
-        if not self.beartoken or refreshTimeDelta < timedelta(minutes=1):
+        if not self.beartoken and refreshTimeDelta < timedelta(minutes=1):
             login = self.loginData(reconnect=True)
 
             result = self.validTo, self.beartoken, self.refrtoken, self.cookies

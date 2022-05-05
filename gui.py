@@ -5692,7 +5692,7 @@ class mTVGuide(xbmcgui.WindowXML):
             self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(timebarAdjust()))
 
         self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
-        if self.currentChannel is not None:
+        if not self.currentChannel:
             currentChannelIndex = self.database.getCurrentChannelIdx(self.currentChannel)
             self.channelIdx = (currentChannelIndex // CHANNELS_PER_PAGE) * CHANNELS_PER_PAGE
 
