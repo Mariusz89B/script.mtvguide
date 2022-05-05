@@ -471,25 +471,29 @@ class PlayService(xbmc.Player, BasePlayService):
         return cid
 
 
-    def catchupTeliaPlay(self, channelInfo, utc, lutc):
-        deb('catchupTeliaPlay')
+    def catchupTelia(self, channelInfo, utc, lutc, cmore=False):
+        deb('catchupTelia')
 
         try:
-            base = ['https://teliatv.dk', 'https://www.teliaplay.se']
-            classic = ['https://teliatv.dk', 'https://classic.teliaplay.se']
-
-            host = ['www.teliatv.dk', 'www.teliaplay.se']
-            hclassic = ['www.teliatv.dk', 'classic.teliaplay.se']
-
             cc = ['dk', 'se']
 
-            country            = int(ADDON.getSetting('teliaplay_locale'))
+            if cmore:
+                base = ['https://cmore.dk', 'https://www.cmore.se']
+                country            = int(ADDON.getSetting('cmore_locale'))
+                dashjs             = ADDON.getSetting('cmore_devush')
+                beartoken          = ADDON.getSetting('cmore_beartoken')
+                tv_client_boot_id  = ADDON.getSetting('cmore_tv_client_boot_id')
+
+                whiteLabelBrand = 'CMORE'
             
-            dashjs             = ADDON.getSetting('teliaplay_devush')
-            beartoken          = ADDON.getSetting('teliaplay_beartoken')
-            tv_client_boot_id  = ADDON.getSetting('teliaplay_tv_client_boot_id')
-            usern              = ADDON.getSetting('teliaplay_usern')
-            sessionid          = ADDON.getSetting('teliaplay_sess_id')
+            else:
+                base = ['https://teliatv.dk', 'https://www.teliaplay.se']
+                country            = int(ADDON.getSetting('teliaplay_locale'))
+                dashjs             = ADDON.getSetting('teliaplay_devush')
+                beartoken          = ADDON.getSetting('teliaplay_beartoken')
+                tv_client_boot_id  = ADDON.getSetting('teliaplay_tv_client_boot_id')
+
+                whiteLabelBrand = 'TELIA'
 
             utc = str(int(utc) * 1000 + 1000)
             lutc = str(int(lutc) * 1000)
@@ -595,7 +599,7 @@ class PlayService(xbmc.Player, BasePlayService):
 
             data = {
                 "sessionId": six.text_type(uuid.uuid4()),
-                "whiteLabelBrand":"TELIA",
+                "whiteLabelBrand":whiteLabelBrand,
                 "watchMode": catchupType,
                 "accessControl":"SUBSCRIPTION",
                 "device": {
@@ -674,7 +678,7 @@ class PlayService(xbmc.Player, BasePlayService):
             return stream_url, license_url
 
         except Exception as ex:
-            deb('catchupTeliaPlay exception: {}'.format(ex))
+            deb('catchupTelia exception: {}'.format(ex))
             return None, None
 
     @contextmanager
@@ -736,7 +740,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                 utc = catchupList[2]
                                 lutc = catchupList[3]
 
-                                strmUrlx, licenseUrlx = self.catchupTeliaPlay(channelInfo, utc, lutc)
+                                strmUrlx, licenseUrlx = self.catchupTelia(channelInfo, utc, lutc, cmore=True)
 
                                 if strmUrlx is None:
                                     res = xbmcgui.Dialog().yesno(strings(30998), strings(59980))
@@ -1023,7 +1027,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                 utc = catchupList[2]
                                 lutc = catchupList[3]
 
-                                strmUrlx, licenseUrlx = self.catchupTeliaPlay(channelInfo, utc, lutc)
+                                strmUrlx, licenseUrlx = self.catchupTelia(channelInfo, utc, lutc)
 
                                 if strmUrlx is None:
                                     res = xbmcgui.Dialog().yesno(strings(30998), strings(59980))
