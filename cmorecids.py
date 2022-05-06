@@ -691,6 +691,23 @@ class CmoreUpdater(baseServiceUpdater):
             except KeyError as k:
                 deb('errorMessage: {k}'.format(k=str(k)))
 
+            url = 'https://ottapi.prod.telia.net/web/{cc}/contentsourcegateway/rest/v1/channels'.format(cc=cc[self.country])
+
+            headers = {
+                'Host': host[self.country],
+                'User-Agent': UA,
+                'Accept': '*/*',
+                'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6,da;q=0.5,no;q=0.4',
+                'Origin': base[self.country],
+
+            }
+
+            j_response = self.sendRequest(url, headers=headers, verify=True) 
+            if not j_response:
+                return result
+
+            j_response_2 = j_response.json()
+
             headers = {
                 'authority': 'graphql-cmore.t6a.net',
                 'accept': '*/*',
@@ -724,7 +741,7 @@ class CmoreUpdater(baseServiceUpdater):
                 return result
 
             j_response = response.json()
-            channels = j_response['data']['channels']['channelItems']
+            channels = j_response['data']['channels']['channelItems'] + j_response_2
 
             for channel in channels:
                 if channel['id'] in self.engagementLiveChannels:
