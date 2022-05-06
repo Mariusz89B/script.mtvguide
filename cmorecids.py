@@ -75,11 +75,11 @@ import six
 
 serviceName = 'C More'
 
-base = ['https://cmore.dk', 'https://www.cmore.se']
-referer = ['https://cmore.dk/', 'https://www.cmore.se/']
-host = ['www.cmore.dk', 'www.cmore.se']
-cc = ['dk', 'se']
-ca = ['DK', 'SE']
+base = ['https://cmore.dk', 'https://cmore.no', 'https://www.cmore.se']
+referer = ['https://cmore.dk/', 'https://cmore.no/', 'https://www.cmore.se/']
+host = ['www.cmore.dk', 'www.cmore.no', 'www.cmore.se']
+cc = ['dk', 'no', 'se']
+ca = ['DK', 'NO', 'SE']
 
 UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.41 Safari/537.36 Edg/101.0.1210.32'
 
@@ -128,6 +128,8 @@ class CmoreUpdater(baseServiceUpdater):
         if ADDON.getSetting('cmore_locale') == '0':
             self.localMapFile = 'basemap_dk.xml'
         elif ADDON.getSetting('cmore_locale') == '1':
+            self.localMapFile = 'basemap_no.xml'
+        elif ADDON.getSetting('cmore_locale') == '2':
             self.localMapFile = 'basemap_se.xml'
 
         baseServiceUpdater.__init__(self)
@@ -453,18 +455,19 @@ class CmoreUpdater(baseServiceUpdater):
     def loginService(self):
 
         if ADDON.getSetting('cmore_tv_provider_login') == 'true':
-            operator = self.getOperator(ADDON.getSetting('cmore_operator'))
+            operator, operator_title = self.getOperator(ADDON.getSetting('cmore_operator'))
         else:
             operator = None
             ADDON.setSetting('cmore_operator_title', '')
             ADDON.setSetting('cmore_operator', '')
 
         if operator:
-            operator_, login, password = self.setProviderCredentials()
+            operator_, login, password = self.setProviderCredentials(operator, operator_title)
             response = self.operatorLogin(operator_, login, password)
             if not response:
                 self.loginErrorMessage() 
                 return False
+
         else:
             if not self.login and self.password:
                 self.loginErrorMessage() 
@@ -510,29 +513,29 @@ class CmoreUpdater(baseServiceUpdater):
         else:
             return None
 
-    def setProviderCredentials(self):
-        operator = ADDON.getSetting('cmore_operator')
+    def setProviderCredentials(self, operator, operator_title):
+        operator_ = None
+
         operators = self.getOperators()
         for i in operators:
             if operator == i['name']:
                 username_type = i['username']
+                login_type = i['login']
                 password_type = i['password']
                 operator_ = i['name']
                 title = i['title']
+
                 info_message = re.sub('<[^<]+?>', '', i['login'])
                 break
 
-        if not self.login and self.password:
-            xbmcgui.Dialog().ok(ADDON.getSetting('cmore_operator_title'), info_message)
-            login = self.UserInput(strings(59952) + ' ' + title)
-            password = self.UserInput(strings(59953) + ' ' + title, hidden=True)
-        else:
-            login = self.login
-            password = self.password
+        if operator_:
+            xbmcgui.Dialog().ok(title, info_message)
+            login = self.UserInput(login_type + ' ' + title)
+            password = self.UserInput(password_type + ' ' + title, hidden=True)
 
-        if login and password:
-            ADDON.setSetting('cmore_username', login)
-            ADDON.setSetting('cmore_password', password)
+            ADDON.setSetting('cmore_operator', operator)
+            ADDON.setSetting('cmore_operator_title', operator_title)
+
             return operator_, login, password
         else:
             self.loginErrorMessage()
@@ -547,10 +550,8 @@ class CmoreUpdater(baseServiceUpdater):
             if selected_operator is not None:
                 operator = operators[selected_operator]['name']
                 operator_title = operators[selected_operator]['title']
-                ADDON.setSetting('cmore_operator', operator)
-                ADDON.setSetting('cmore_operator_title', operator_title)
 
-        return ADDON.getSetting('cmore_operator')
+        return operator, operator_title
 
     def getOperators(self):
         """Return a list of TV operators supported by the C More login system."""
@@ -690,22 +691,40 @@ class CmoreUpdater(baseServiceUpdater):
             except KeyError as k:
                 deb('errorMessage: {k}'.format(k=str(k)))
 
-            url = 'https://ottapi.prod.telia.net/web/{cc}/contentsourcegateway/rest/v1/channels'.format(cc=cc[self.country])
-
             headers = {
-                'Host': host[self.country],
-                'User-Agent': UA,
-                'Accept': '*/*',
-                'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6,da;q=0.5,no;q=0.4',
-                'Origin': base[self.country],
-
+                'authority': 'graphql-cmore.t6a.net',
+                'accept': '*/*',
+                'accept-language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6,fr;q=0.5',
+                'authorization': 'Bearer ' + self.beartoken,
+                'content-type': 'application/json',
+                'dnt': '1',
+                'origin': 'https://www.cmore.{cc}'.format(cc=cc[self.country]),
+                'referer': 'https://www.cmore.{cc}/'.format(cc=cc[self.country]),
+                'tv-client-boot-id': self.tv_client_boot_id,
+                'tv-client-browser': 'Microsoft Edge',
+                'tv-client-browser-version': '101.0.1210.32',
+                'tv-client-name': 'web',
+                'tv-client-os-name': 'Windows',
+                'tv-client-os-version': 'NT 10.0',
+                'tv-client-tz': 'Europe/Stockholm',
+                'tv-client-version': '1.43.2',
+                'user-agent': UA,
+                'x-country': ca[self.country],
             }
 
-            channels = self.sendRequest(url, headers=headers, verify=True) 
-            if not channels:
+            params = (
+                ('operationName', 'getTvChannels'),
+                ('variables', '{"limit":500,"offset":0}'),
+                ('query', "\n    query getTvChannels($limit: Int!, $offset: Int!) {\n  channels(limit: $limit, offset: $offset) {\n    pageInfo {\n      totalCount\n      hasNextPage\n    }\n    channelItems {\n      id\n      name\n      \nicons {dark\n{source\n}}   }\n  }\n}\n    \n")
+            )
+
+            response = requests.get('https://graphql-cmore.t6a.net/graphql', headers=headers, params=params, verify=False)
+
+            if not response:
                 return result
 
-            channels = channels.json()
+            j_response = response.json()
+            channels = j_response['data']['channels']['channelItems']
 
             for channel in channels:
                 if channel['id'] in self.engagementLiveChannels:

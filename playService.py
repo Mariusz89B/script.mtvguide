@@ -475,25 +475,27 @@ class PlayService(xbmc.Player, BasePlayService):
         deb('catchupTelia')
 
         try:
-            cc = ['dk', 'se']
+            cc = ['dk', 'no', 'se']
 
             if cmore:
-                base = ['https://cmore.dk', 'https://www.cmore.se']
+                base = ['https://cmore.dk', 'https://cmore.no', 'https://www.cmore.se']
                 country            = int(ADDON.getSetting('cmore_locale'))
                 dashjs             = ADDON.getSetting('cmore_devush')
                 beartoken          = ADDON.getSetting('cmore_beartoken')
                 tv_client_boot_id  = ADDON.getSetting('cmore_tv_client_boot_id')
 
                 whiteLabelBrand = 'CMORE'
-            
+                refr = 'cmore'
+
             else:
-                base = ['https://teliatv.dk', 'https://www.teliaplay.se']
+                base = ['https://teliatv.dk', 'https://teliatv.no', 'https://www.teliaplay.se']
                 country            = int(ADDON.getSetting('teliaplay_locale'))
                 dashjs             = ADDON.getSetting('teliaplay_devush')
                 beartoken          = ADDON.getSetting('teliaplay_beartoken')
                 tv_client_boot_id  = ADDON.getSetting('teliaplay_tv_client_boot_id')
 
                 whiteLabelBrand = 'TELIA'
+                refr = 'telia'
 
             utc = str(int(utc) * 1000 + 1000)
             lutc = str(int(lutc) * 1000)
@@ -541,7 +543,7 @@ class PlayService(xbmc.Player, BasePlayService):
                   "\nfragment episode on Episode{id\n title\n descriptionLong\n images{\nshowcard2x3{\nsource}}\n  playback\n{\nplay{\nsubscription {\nitem{\nid \nvalidFrom{\ntimestamp} \nvalidTo{\ntimestamp} \nplaybackSpec{\nvideoId \nvideoIdType \nwatchMode \naccessControl \n__typename}\n__typename }} }}\n genre\n mediaType\n __typename\n} ")
                 )
 
-            response = requests.get('https://graphql-telia.t6a.net/graphql', headers=headers, params=params, cookies=sess.cookies, verify=False).json()
+            response = requests.get('https://graphql-{refr}.t6a.net/graphql'.format(refr=refr), headers=headers, params=params, cookies=sess.cookies, verify=False).json()
 
             if response.get('errors', ''):
                 return None, None
@@ -552,6 +554,7 @@ class PlayService(xbmc.Player, BasePlayService):
             streamType = 'MEDIA'
 
             programItems = response['data']['channel']['programs']['programItems']
+
             for item in programItems:
                 start_time = item['startTime']['timestamp']
                 end_time = item['endTime']['timestamp']

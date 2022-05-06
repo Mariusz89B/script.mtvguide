@@ -920,7 +920,8 @@
 					<constraints>
 						<options>
 							<option label="cmore.dk">0</option>
-							<option label="cmore.se">1</option>
+							<option label="cmore.no">1</option>
+							<option label="cmore.se">2</option>
 						</options>
 					</constraints>
 					<dependencies>
