@@ -821,8 +821,8 @@ msgid "Disabled"
 msgstr "Wyłączone"
 
 msgctxt "#30721"
-msgid "Enabled"
-msgstr "Włączone"
+msgid "Enabled."
+msgstr "Włączone."
 
 msgctxt "#30722"
 msgid "Enable"
@@ -1845,12 +1845,12 @@ msgid "Failure - no settings to export!"
 msgstr "Niepowodzenie - brak ustawień do eksportowania!"
 
 msgctxt "#58005"
-msgid "Settings exported successfully"
-msgstr "Pomyślnie zapisano ustawienia"
+msgid "Settings exported successfully."
+msgstr "Pomyślnie zapisano ustawienia."
 
 msgctxt "#58006"
-msgid "Failure - please check if you have write permissions to that path"
-msgstr "Niepowodzenie - proszę sprawdzić czy masz prawa zapisu do wybranego folderu"
+msgid "Failure - please check if you have write permissions to that path."
+msgstr "Niepowodzenie - proszę sprawdzić czy masz prawa zapisu do wybranego folderu."
 
 msgctxt "#58007"
 msgid "Select settings backup file"
@@ -1953,8 +1953,8 @@ msgid "Reached reconnection limit, aborting playback"
 msgstr "Osiągnięto limit ponownych połączeń, odtwarzanie zostało przerwane"
 
 msgctxt "#31021"
-msgid "Missing add-on: {}"
-msgstr "Brakujący dodatek: {}"
+msgid "Missing add-on: {}."
+msgstr "Brakujący dodatek: {}."
 
 msgctxt "#31022"
 msgid "Add channel to group"
@@ -2413,8 +2413,8 @@ msgid "Import record application"
 msgstr "Importowanie aplikacji do nagrywania"
 
 msgctxt "#69013"
-msgid "successfully imported"
-msgstr "pomyślnie zaimportowany"
+msgid "successfully imported."
+msgstr "pomyślnie zaimportowany."
 
 msgctxt "#69014"
 msgid "FFMPEG record format"
@@ -2437,20 +2437,20 @@ msgid "m-TVGuide is downloading files, Please press OK and wait until installati
 msgstr "m-TVGuide pobiera pliki. Naciśnij OK i poczekaj do zakończenia instalacji."
 
 msgctxt "#69019"
-msgid "An error has occurred - try again or install manualy"
-msgstr "Pobieranie aplikacji nie powiodło się - spróbuj ponownie lub zainstaluj ręcznie"
+msgid "An error has occurred - try again or install manually."
+msgstr "Pobieranie aplikacji nie powiodło się - spróbuj ponownie lub zainstaluj ręcznie."
 
 msgctxt "#69020"
 msgid "Debug log"
 msgstr "Debug log"
 
 msgctxt "#69021"
-msgid "Can't find FFMPEG or RTMPDUMP in system - please try to install by packet manager RTMPDUMP, FFMPEG or libav-tools or install manualy"
-msgstr "Nie udało się znaleźć FFMPEG ani RTMPDUMP na systemie - proszę zainstalować korzystając z wbudowanego packet managera RTMPDUMP, FFMPEG lub libav-tools oraz ponownie spróbować zaimportować automatycznie lub wybrać pliki ręcznie"
+msgid "Can't find FFMPEG or RTMPDUMP in system - please try to install by packet manager RTMPDUMP, FFMPEG or libav-tools or install manually."
+msgstr "Nie udało się znaleźć FFMPEG ani RTMPDUMP na systemie - proszę zainstalować korzystając z wbudowanego packet managera RTMPDUMP, FFMPEG lub libav-tools oraz ponownie spróbować zaimportować automatycznie lub wybrać pliki ręcznie."
 
 msgctxt "#69022"
-msgid "Error during automatic import - try importing files manually"
-msgstr "Blad automatycznego importowania aplikacji - proszę zaimportować pliki ręcznie"
+msgid "Error during automatic import - try importing files manually."
+msgstr "Blad automatycznego importowania aplikacji - proszę zaimportować pliki ręcznie."
 
 msgctxt "#69023"
 msgid "Choose OS"

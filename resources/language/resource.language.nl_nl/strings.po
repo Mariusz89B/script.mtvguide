@@ -821,8 +821,8 @@ msgid "Disabled"
 msgstr "Gedeactiveerd"
 
 msgctxt "#30721"
-msgid "Enabled"
-msgstr "Geactiveerd"
+msgid "Enabled."
+msgstr "Geactiveerd."
 
 msgctxt "#30722"
 msgid "Enable"
@@ -1845,12 +1845,12 @@ msgid "Failure - no settings to export!"
 msgstr "Fout - geen instellingen om te exporteren!"
 
 msgctxt "#58005"
-msgid "Settings exported successfully"
-msgstr "Instellingen succesvol geëxporteerd"
+msgid "Settings exported successfully."
+msgstr "Instellingen succesvol geëxporteerd."
 
 msgctxt "#58006"
-msgid "Failure - please check if you have write permissions to that path"
-msgstr "Fout - controleer of u schrijfrechten voor dat pad hebt"
+msgid "Failure - please check if you have write permissions to that path."
+msgstr "Fout - controleer of u schrijfrechten voor dat pad hebt."
 
 msgctxt "#58007"
 msgid "Select settings backup file"
@@ -1953,8 +1953,8 @@ msgid "Reached reconnection limit, aborting playback"
 msgstr "Limiet voor opnieuw verbinden bereikt, afspelen wordt afgebroken"
 
 msgctxt "#31021"
-msgid "Missing add-on: {}"
-msgstr "Ontbrekende add-on: {}"
+msgid "Missing add-on: {}."
+msgstr "Ontbrekende add-on: {}."
 
 msgctxt "#31022"
 msgid "Add channel to group"
@@ -2413,8 +2413,8 @@ msgid "Import record application"
 msgstr "Importeer optekeningtoepassing"
 
 msgctxt "#69013"
-msgid "successfully imported"
-msgstr "succesvol geïmporteerd"
+msgid "successfully imported."
+msgstr "succesvol geïmporteerd."
 
 msgctxt "#69014"
 msgid "FFMPEG record format"
@@ -2437,20 +2437,20 @@ msgid "m-TVGuide is downloading files, Please press OK and wait until installati
 msgstr "m-TVGuide is bestanden aan het downloaden. Druk op OK en wacht tot de installatie is voltooid."
 
 msgctxt "#69019"
-msgid "An error has occurred - try again or install manualy"
-msgstr "Er is een fout opgetreden - probeer het opnieuw of installeer handmatig"
+msgid "An error has occurred - try again or install manually."
+msgstr "Er is een fout opgetreden - probeer het opnieuw of installeer handmatig."
 
 msgctxt "#69020"
 msgid "Debug log"
 msgstr "Foutopsporingslogboek"
 
 msgctxt "#69021"
-msgid "Can't find FFMPEG or RTMPDUMP in system - please try to install by packet manager RTMPDUMP, FFMPEG or libav-tools or install manualy"
-msgstr "Kan FFMPEG of RTMPDUMP niet vinden in het systeem - probeer te installeren door pakketbeheerder RTMPDUMP, FFMPEG of libav-tools of manueel te installeren"
+msgid "Can't find FFMPEG or RTMPDUMP in system - please try to install by packet manager RTMPDUMP, FFMPEG or libav-tools or install manually."
+msgstr "Kan FFMPEG of RTMPDUMP niet vinden in het systeem - probeer te installeren door pakketbeheerder RTMPDUMP, FFMPEG of libav-tools of manueel te installeren."
 
 msgctxt "#69022"
-msgid "Error during automatic import - try importing files manually"
-msgstr "Fout tijdens automatisch importeren - probeer bestanden handmatig te importeren"
+msgid "Error during automatic import - try importing files manually."
+msgstr "Fout tijdens automatisch importeren - probeer bestanden handmatig te importeren."
 
 msgctxt "#69023"
 msgid "Choose OS"

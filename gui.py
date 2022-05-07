@@ -1020,7 +1020,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
                     if s == 3:
                         label = 'PlayerPL'
-                        xbmcgui.Dialog().ok(label, label + ' ' + strings(30721).lower() + '.')
+                        xbmcgui.Dialog().ok(label, label + ' ' + strings(30721).lower())
                         ADDON.setSetting('playerpl_enabled', 'true')
                         progExec = True
 
@@ -1117,7 +1117,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
                     if s == 6:
                         label = 'TVP GO'
-                        xbmcgui.Dialog().ok(label, label + ' ' + strings(30721).lower() + '.')
+                        xbmcgui.Dialog().ok(label, label + ' ' + strings(30721).lower())
                         ADDON.setSetting('tvpgo_enabled', 'true')
                         progExec = True
 
@@ -2417,7 +2417,7 @@ class mTVGuide(xbmcgui.WindowXML):
                     xbmcgui.Dialog().ok(strings(57051), strings(30979))
                     self.exitAddon()
                 else:
-                    xbmcgui.Dialog().ok(strings(69062), strings(31021).format('{0}'.format(selected))+'.')
+                    xbmcgui.Dialog().ok(strings(69062), strings(31021).format('{0}'.format(selected)))
                     return
 
     def playShortcut(self):
@@ -5692,7 +5692,10 @@ class mTVGuide(xbmcgui.WindowXML):
             self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(timebarAdjust()))
 
         self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
-        if not self.currentChannel:
+        if self.channelIdx != 0:
+            self.channelIdx = self.channelIdx
+
+        elif self.currentChannel is not None:
             currentChannelIndex = self.database.getCurrentChannelIdx(self.currentChannel)
             self.channelIdx = (currentChannelIndex // CHANNELS_PER_PAGE) * CHANNELS_PER_PAGE
 
@@ -8485,10 +8488,10 @@ class ProgramListDialog(xbmcgui.WindowXMLDialog):
             day = self.formatDateTodayTomorrow(start)
             start_str = start.strftime("%H:%M")
             start_str = "{} {} - {}".format(start_str, start.strftime("%d-%m").replace('-', '/').replace(r'^0', '').replace('/0', '/'), day)
-            
+
             if len(start_str) > 18 and xbmcgui.getScreenWidth() < 2560:
                 start_str = start_str[0:18] + '.'
-            
+
             item.setProperty('StartTime', start_str)
 
             duration_str = "{} min".format(duration.seconds // 60)

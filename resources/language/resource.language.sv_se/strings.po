@@ -821,8 +821,8 @@ msgid "Disabled"
 msgstr "Inaktiverad"
 
 msgctxt "#30721"
-msgid "Enabled"
-msgstr "Aktiverad"
+msgid "Enabled."
+msgstr "Aktiverad."
 
 msgctxt "#30722"
 msgid "Enable"
@@ -1845,12 +1845,12 @@ msgid "Failure - no settings to export!"
 msgstr "Fel - inga inställningar att exportera!"
 
 msgctxt "#58005"
-msgid "Settings exported successfully"
-msgstr "Inställningar har exporteras framgångsrikt"
+msgid "Settings exported successfully."
+msgstr "Inställningar har exporteras framgångsrikt."
 
 msgctxt "#58006"
-msgid "Failure - please check if you have write permissions to that path"
-msgstr "Fel - kontrollera om du har skrivbehörighet till lokaliseringen"
+msgid "Failure - please check if you have write permissions to that path."
+msgstr "Fel - kontrollera om du har skrivbehörighet till lokaliseringen."
 
 msgctxt "#58007"
 msgid "Select settings backup file"
@@ -1953,8 +1953,8 @@ msgid "Reached reconnection limit, aborting playback"
 msgstr "Uppnådd gräns för återanslutning, uppspelning avbryts"
 
 msgctxt "#31021"
-msgid "Missing add-on: {}"
-msgstr "Tillägg saknas: {}"
+msgid "Missing add-on: {}."
+msgstr "Tillägg saknas: {}."
 
 msgctxt "#31022"
 msgid "Add channel to group"
@@ -2413,8 +2413,8 @@ msgid "Import record application"
 msgstr "Importera inspelnings program"
 
 msgctxt "#69013"
-msgid "successfully imported"
-msgstr "Framgångsrikt importerat"
+msgid "successfully imported."
+msgstr "Framgångsrikt importerat."
 
 msgctxt "#69014"
 msgid "FFMPEG record format"
@@ -2437,20 +2437,20 @@ msgid "m-TVGuide is downloading files, Please press OK and wait until installati
 msgstr "m-TVGuide laddar ner filer. Tryck på OK och vänta tills installationen är klar."
 
 msgctxt "#69019"
-msgid "An error has occurred - try again or install manualy"
-msgstr "Ett fel har uppstått - Försök igen eller installera manuellt"
+msgid "An error has occurred - try again or install manually."
+msgstr "Ett fel har uppstått - Försök igen eller installera manuellt."
 
 msgctxt "#69020"
 msgid "Debug log"
 msgstr "Debug log"
 
 msgctxt "#69021"
-msgid "Can't find FFMPEG or RTMPDUMP in system - please try to install by packet manager RTMPDUMP, FFMPEG or libav-tools or install manualy"
-msgstr "Det går inte att hitta FFMPEG eller RTMPDUMP i systemet - försök att installera genom paket manager RTMPDUMP, FFMPEG eller libav-verktyg eller installera manuellt"
+msgid "Can't find FFMPEG or RTMPDUMP in system - please try to install by packet manager RTMPDUMP, FFMPEG or libav-tools or install manually."
+msgstr "Det går inte att hitta FFMPEG eller RTMPDUMP i systemet - försök att installera genom paket manager RTMPDUMP, FFMPEG eller libav-verktyg eller installera manuellt."
 
 msgctxt "#69022"
-msgid "Error during automatic import - try importing files manually"
-msgstr "Fel vid automatisk import - försök att importera filer manuellt"
+msgid "Error during automatic import - try importing files manually."
+msgstr "Fel vid automatisk import - försök att importera filer manuellt."
 
 msgctxt "#69023"
 msgid "Choose OS"

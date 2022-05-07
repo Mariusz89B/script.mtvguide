@@ -821,7 +821,7 @@ msgid "Disabled"
 msgstr ""
 
 msgctxt "#30721"
-msgid "Enabled"
+msgid "Enabled."
 msgstr ""
 
 msgctxt "#30722"
@@ -1857,11 +1857,11 @@ msgid "Failure - no settings to export!"
 msgstr ""
 
 msgctxt "#58005"
-msgid "Settings exported successfully"
+msgid "Settings exported successfully."
 msgstr ""
 
 msgctxt "#58006"
-msgid "Failure - please check if you have write permissions to that path"
+msgid "Failure - please check if you have write permissions to that path."
 msgstr ""
 
 msgctxt "#58007"
@@ -1965,7 +1965,7 @@ msgid "Reached reconnection limit, aborting playback"
 msgstr ""
 
 msgctxt "#31021"
-msgid "Missing add-on: {}"
+msgid "Missing add-on: {}."
 msgstr ""
 
 msgctxt "#31022"
@@ -2425,7 +2425,7 @@ msgid "Import record application"
 msgstr ""
 
 msgctxt "#69013"
-msgid "successfully imported"
+msgid "successfully imported."
 msgstr ""
 
 msgctxt "#69014"
@@ -2449,7 +2449,7 @@ msgid "m-TVGuide is downloading files, Please press OK and wait until installati
 msgstr ""
 
 msgctxt "#69019"
-msgid "An error has occurred - try again or install manualy"
+msgid "An error has occurred - try again or install manually."
 msgstr ""
 
 msgctxt "#69020"
@@ -2457,11 +2457,11 @@ msgid "Debug log"
 msgstr ""
 
 msgctxt "#69021"
-msgid "Can't find FFMPEG or RTMPDUMP in system - please try to install by packet manager RTMPDUMP, FFMPEG or libav-tools or install manualy"
+msgid "Can't find FFMPEG or RTMPDUMP in system - please try to install by packet manager RTMPDUMP, FFMPEG or libav-tools or install manually."
 msgstr ""
 
 msgctxt "#69022"
-msgid "Error during automatic import - try importing files manually"
+msgid "Error during automatic import - try importing files manually."
 msgstr ""
 
 msgctxt "#69023"

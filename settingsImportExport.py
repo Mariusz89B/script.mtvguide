@@ -170,14 +170,14 @@ class SettingsImp:
 
             if success == True:
                 try:
-                    xbmcgui.Dialog().ok(strings(58002),"\n" + strings(58005) + '.')
+                    xbmcgui.Dialog().ok(strings(58002),"\n" + strings(58005))
                 except:
-                    xbmcgui.Dialog().ok(strings(58002).encode('utf-8'),"\n" + strings(58005).encode('utf-8') + '.')
+                    xbmcgui.Dialog().ok(strings(58002).encode('utf-8'),"\n" + strings(58005).encode('utf-8'))
             else:
                 try:
-                    xbmcgui.Dialog().ok(strings(58002),"\n" + strings(58006) + '.')
+                    xbmcgui.Dialog().ok(strings(58002),"\n" + strings(58006))
                 except:
-                    xbmcgui.Dialog().ok(strings(58002).encode('utf-8'),"\n" + strings(58006).encode('utf-8') + '.')
+                    xbmcgui.Dialog().ok(strings(58002).encode('utf-8'),"\n" + strings(58006).encode('utf-8'))
         return success
 
     def importSettings(self):
@@ -306,17 +306,17 @@ class SettingsImp:
                         deb('importRecordApp setting ffmpeg app to: %s' % binaryFinalPath)
                         ADDON.setSetting(id="ffmpegExe", value=str(binaryFinalPath))
                         try:
-                            xbmcgui.Dialog().ok(strings(69012),'\n' + 'FFMPEG ' + strings(69013) + '.')
+                            xbmcgui.Dialog().ok(strings(69012),'\n' + 'FFMPEG ' + strings(69013))
                         except:
-                            xbmcgui.Dialog().ok(strings(69012).encode('utf-8'),'\n' + 'FFMPEG ' + strings(69013).encode('utf-8') + '.')
+                            xbmcgui.Dialog().ok(strings(69012).encode('utf-8'),'\n' + 'FFMPEG ' + strings(69013).encode('utf-8'))
 
                     if 'rtmpdump' in binaryFilename:
                         deb('importRecordApp setting rtmpdump app to: %s' % binaryFinalPath)
                         ADDON.setSetting(id="rtmpdumpExe", value=str(binaryFinalPath))
                         try:
-                            xbmcgui.Dialog().ok(strings(69012),'\n' + 'RTMPDUMP ' + strings(69013) + '.')
+                            xbmcgui.Dialog().ok(strings(69012),'\n' + 'RTMPDUMP ' + strings(69013))
                         except:
-                            xbmcgui.Dialog().ok(strings(69012).encode('utf-8'),'\n' + 'RTMPDUMP ' + strings(69013).encode('utf-8') + '.')
+                            xbmcgui.Dialog().ok(strings(69012).encode('utf-8'),'\n' + 'RTMPDUMP ' + strings(69013).encode('utf-8'))
                 else:
                     deb('importRecordApp error destination file: %s does not exist' % binaryFinalPath)
 
