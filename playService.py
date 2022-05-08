@@ -768,7 +768,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                 ListItem.setProperty('inputstream', is_helper.inputstream_addon)
                             else:
                                 ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
-                            ListItem.setMimeType('application/dash+xml')
+                            ListItem.setMimeType('application/xml+dash')
                             ListItem.setProperty('inputstream.adaptive.license_type', DRM)
                             ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl)
                             ListItem.setProperty('inputstream.adaptive.stream_headers', 'Referer: https://www.cmore.se/&User-Agent='+quote(UA))
@@ -1055,7 +1055,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                 ListItem.setProperty('inputstream', is_helper.inputstream_addon)
                             else:
                                 ListItem.setProperty('inputstreamaddon', is_helper.inputstream_addon)
-                            ListItem.setMimeType('application/dash+xml')
+                            ListItem.setMimeType('application/xml+dash')
                             ListItem.setProperty('inputstream.adaptive.license_type', DRM)
                             ListItem.setProperty('inputstream.adaptive.license_key', licenseUrl)
                             ListItem.setProperty('inputstream.adaptive.stream_headers', 'Referer: https://www.teliaplay.se/&User-Agent='+quote(UA))

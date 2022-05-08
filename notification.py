@@ -75,9 +75,13 @@ class Notification(object):
         deb("[{}] Scheduling notifications".format(ADDON_ID))
         self.close()  #cleanup
         self.channels = self.database.getChannelList(True)
-        for channelTitle, programTitle, startTime in self.database.getNotifications():
-            self._scheduleNotification(channelTitle, programTitle, startTime)
-        debug('Scheduling notification completed!')
+        try:
+            for channelTitle, programTitle, startTime in self.database.getNotifications():
+                self._scheduleNotification(channelTitle, programTitle, startTime)
+            debug('Scheduling notification completed!')
+        except:
+            pass
+            debug('Scheduling notification error!')
 
     def _scheduleNotification(self, channelTitle, programTitle, startTime):
         if PY3:
