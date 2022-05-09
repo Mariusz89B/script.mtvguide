@@ -1596,41 +1596,24 @@ class Database(object):
 
     def getCategoryChannelList(self, category, channelList, excludeCurrentCategory):
         try:
-            newChannelList = list()
+            newChannelList = []
             predefined_category_re = re.compile(r'\w+: ([^\s]*)', re.IGNORECASE)
             predefined = predefined_category_re.search(category)
 
             if predefined:
                 categories = self.addCategory(predefined.group(1))
+                categories = list(dict.fromkeys(categories))
 
                 deb('Using predefined category: {}'.format(predefined.group(1)))
                 predefined = '|'.join(categories)
 
                 channel_regex = re.compile('.*({})$'.format(predefined))
-
-                for channel in channelList[:]:
-
-                    if channel_regex.match(channel.id):
-                        newChannelList.append(channel)
-                        channelList.remove(channel)
-                        #deb('Adding channel: {}'.format(channel.title))
-                    else:
-                        try:
-                            channelList.remove(channel)
-                        except:
-                            pass
+                newChannelList = [channel for channel in channelList[:] if channel_regex.search(channel.id)]
 
             else:
                 channelsInCategory = self.getChannelsInCategory(category)
                 if len(channelsInCategory) > 0:
-                    for channel in channelList[:]:
-                        for channelInCategory in channelsInCategory:
-                            if channel.title == channelInCategory:
-                                newChannelList.append(channel)
-                            try:
-                                channelList.remove(channel)
-                            except:
-                                pass
+                    newChannelList = [channel for channel in channelList[:] if channel.title in channelsInCategory]
 
             if len(newChannelList) > 0 and not excludeCurrentCategory:
                 channelList = newChannelList

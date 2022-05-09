@@ -1,4 +1,7 @@
-﻿v9.9.605 (2022-05-09)
+﻿v9.9.606 (2022-05-10)
+- Optimized performance.
+
+v9.9.605 (2022-05-09)
 - Fixed channel listing for service CMore.
 - Bug fixes.
 
