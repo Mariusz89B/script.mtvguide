@@ -5248,19 +5248,21 @@ class mTVGuide(xbmcgui.WindowXML):
 
         self.program = program
 
+        dt = datetime.datetime.now() + datetime.timedelta(minutes=int(timebarAdjust()))
+
         # Playback for services
         if ADDON.getSetting('archive_support') == 'true':
             try:
                 ProgramEndDate = datetime.proxydt.strptime(str(self.program.endDate), '%Y-%m-%d %H:%M:%S')
                 ProgramStartDate = datetime.proxydt.strptime(str(self.program.startDate), '%Y-%m-%d %H:%M:%S')
             except:
-                ProgramEndDate = datetime.proxydt.strptime(str(datetime.datetime.now()), '%Y-%m-%d %H:%M:%S.%f')
-                ProgramStartDate = datetime.proxydt.strptime(str(datetime.datetime.now()), '%Y-%m-%d %H:%M:%S.%f')
+                ProgramEndDate = datetime.proxydt.strptime(str(dt), '%Y-%m-%d %H:%M:%S.%f')
+                ProgramStartDate = datetime.proxydt.strptime(str(dt), '%Y-%m-%d %H:%M:%S.%f')
 
             try:
-                ProgramNowDate = datetime.proxydt.strptime(str(datetime.datetime.now()), '%Y-%m-%d %H:%M:%S.%f')
+                ProgramNowDate = datetime.proxydt.strptime(str(dt), '%Y-%m-%d %H:%M:%S.%f')
             except:
-                ProgramNowDate = datetime.proxydt.strptime(str(datetime.datetime.now()), '%Y-%m-%d %H:%M:%S')
+                ProgramNowDate = datetime.proxydt.strptime(str(dt), '%Y-%m-%d %H:%M:%S')
 
             if ADDON.getSetting('archive_finished_program') == 'true':
                 finishedProgram = ProgramEndDate
@@ -5282,38 +5284,38 @@ class mTVGuide(xbmcgui.WindowXML):
                     day = ADDON.getSetting('archive_reverse_days')
 
                 if day == '3H':
-                    reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(3)) - datetime.timedelta(minutes = 5)
+                    reverseTime = dt - datetime.timedelta(hours = int(3)) - datetime.timedelta(minutes = 5)
 
                 elif ADDON.getSetting('archive_reverse_auto') == '0' and day != '':
                     try:
-                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(day)) * 24 - datetime.timedelta(minutes = 5)
+                        reverseTime = dt - datetime.timedelta(hours = int(day)) * 24 - datetime.timedelta(minutes = 5)
                     except:
-                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
+                        reverseTime = dt - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
                 else:
                     try:
-                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(ADDON.getSetting('archive_manual_days'))) * 24 - datetime.timedelta(minutes = 5)
+                        reverseTime = dt - datetime.timedelta(hours = int(ADDON.getSetting('archive_manual_days'))) * 24 - datetime.timedelta(minutes = 5)
                     except:
-                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
+                        reverseTime = dt - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
 
                 if day == '3H':
-                    reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(3)) - datetime.timedelta(minutes = 5)
+                    reverseTime = dt - datetime.timedelta(hours = int(3)) - datetime.timedelta(minutes = 5)
 
                 elif ADDON.getSetting('archive_reverse_auto') == '0' and day != '':
                     try:
-                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(day)) * 24 - datetime.timedelta(minutes = 5)
+                        reverseTime = dt - datetime.timedelta(hours = int(day)) * 24 - datetime.timedelta(minutes = 5)
                     except:
-                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
+                        reverseTime = dt - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
 
                 else:
                     try:
-                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(ADDON.getSetting('archive_manual_days'))) * 24 - datetime.timedelta(minutes = 5)
+                        reverseTime = dt - datetime.timedelta(hours = int(ADDON.getSetting('archive_manual_days'))) * 24 - datetime.timedelta(minutes = 5)
                     except:
-                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
+                        reverseTime = dt - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
             except:
-                reverseTime = datetime.datetime.now()
+                reverseTime = dt
 
             try:
-                if finishedProgram < datetime.datetime.now() and ADDON.getSetting('archive_support') == 'true' and program.title != program.channel.title:
+                if finishedProgram < dt and ADDON.getSetting('archive_support') == 'true' and program.title != program.channel.title:
 
                     if (program.channel.title.upper() in [k for k,v in catchupList] and program.startDate > reverseTime):
                         res = xbmcgui.Dialog().yesno(strings(30998), strings(30999).format(program.title))
@@ -5321,10 +5323,10 @@ class mTVGuide(xbmcgui.WindowXML):
                         if res:
                             # archiveService
                             if ADDON.getSetting('archive_finished_program') == 'true': 
-                                if program.channel.title.upper() in [k for k,v in catchupList] and program.endDate < datetime.datetime.now():
+                                if program.channel.title.upper() in [k for k,v in catchupList] and program.endDate < dt:
                                     from time import mktime
 
-                                    n = datetime.datetime.now()
+                                    n = dt
                                     t = ProgramStartDate
                                     e = ProgramEndDate
 
@@ -5333,7 +5335,7 @@ class mTVGuide(xbmcgui.WindowXML):
                                     duration = str(durationCalc)
 
                                     # Offset
-                                    offsetCalc = int(((datetime.datetime.now() - ProgramStartDate).total_seconds() / 60.0))
+                                    offsetCalc = int(((dt - ProgramStartDate).total_seconds() / 60.0))
                                     offset = str(offsetCalc)
 
                                     # UTC/LUTC
@@ -5355,16 +5357,16 @@ class mTVGuide(xbmcgui.WindowXML):
                                     self.archivePlaylist = '{duration}, {offset}, {utc}, {lutc}, {y}, {m}, {d}, {h}, {min}, {s}'.format(
                                         duration=duration, offset=offset, utc=utc, lutc=lutc, y=year, m=month, d=day, h=hour, min=minute, s=second)
 
-                                    self.archiveService = datetime.datetime.now() - ProgramStartDate
+                                    self.archiveService = dt - ProgramStartDate
 
                                 else:
                                     self.archivePlaylist = ''
                                     self.archiveService = ''
                             else:
-                                if program.channel.title.upper() in [k for k,v in catchupList] and program.startDate < datetime.datetime.now():
+                                if program.channel.title.upper() in [k for k,v in catchupList] and program.startDate < dt:
                                     from time import mktime
 
-                                    n = datetime.datetime.now()
+                                    n = dt
                                     t = ProgramStartDate
                                     e = ProgramEndDate
 
@@ -5373,7 +5375,7 @@ class mTVGuide(xbmcgui.WindowXML):
                                     duration = str(durationCalc)
 
                                     # Offset
-                                    offsetCalc = int(((datetime.datetime.now() - ProgramStartDate).total_seconds() / 60.0))
+                                    offsetCalc = int(((dt - ProgramStartDate).total_seconds() / 60.0))
                                     offset = str(offsetCalc)
 
                                     # UTC/LUTC
@@ -5395,7 +5397,7 @@ class mTVGuide(xbmcgui.WindowXML):
                                     self.archivePlaylist = '{duration}, {offset}, {utc}, {lutc}, {y}, {m}, {d}, {h}, {min}, {s}'.format(
                                         duration=duration, offset=offset, utc=utc, lutc=lutc, y=year, m=month, d=day, h=hour, min=minute, s=second)
 
-                                    self.archiveService = datetime.datetime.now() - ProgramStartDate
+                                    self.archiveService = dt - ProgramStartDate
 
                                 else:
                                     self.archivePlaylist = ''
@@ -5403,7 +5405,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
                         else:
                             if ADDON.getSetting('archive_finished_program') == 'false':
-                                if ProgramEndDate > datetime.datetime.now():
+                                if ProgramEndDate > dt:
                                     self.archiveService = ''
                                     self.archivePlaylist = ''
                                 else:
@@ -5412,7 +5414,7 @@ class mTVGuide(xbmcgui.WindowXML):
                                 return 'None'
 
                     else:
-                        if program.endDate > datetime.datetime.now():
+                        if program.endDate > dt:
                             self.archiveService = ''
                             self.archivePlaylist = ''
                         else:
@@ -5455,19 +5457,21 @@ class mTVGuide(xbmcgui.WindowXML):
         if xbmc.Player().isPlaying():
             time.sleep(0.2)
 
+        dt = datetime.datetime.now() + datetime.timedelta(minutes=int(timebarAdjust()))
+
         # Playback for services
         if ADDON.getSetting('archive_support') == 'true':
             try:
                 ProgramEndDate = datetime.proxydt.strptime(str(self.program.endDate), '%Y-%m-%d %H:%M:%S')
                 ProgramStartDate = datetime.proxydt.strptime(str(self.program.startDate), '%Y-%m-%d %H:%M:%S')
             except:
-                ProgramEndDate = datetime.proxydt.strptime(str(datetime.datetime.now()), '%Y-%m-%d %H:%M:%S.%f')
-                ProgramStartDate = datetime.proxydt.strptime(str(datetime.datetime.now()), '%Y-%m-%d %H:%M:%S.%f')
+                ProgramEndDate = datetime.proxydt.strptime(str(dt), '%Y-%m-%d %H:%M:%S.%f')
+                ProgramStartDate = datetime.proxydt.strptime(str(dt), '%Y-%m-%d %H:%M:%S.%f')
 
             try:
-                ProgramNowDate = datetime.proxydt.strptime(str(datetime.datetime.now()), '%Y-%m-%d %H:%M:%S.%f')
+                ProgramNowDate = datetime.proxydt.strptime(str(dt), '%Y-%m-%d %H:%M:%S.%f')
             except:
-                ProgramNowDate = datetime.proxydt.strptime(str(datetime.datetime.now()), '%Y-%m-%d %H:%M:%S')
+                ProgramNowDate = datetime.proxydt.strptime(str(dt), '%Y-%m-%d %H:%M:%S')
 
             if ADDON.getSetting('archive_finished_program') == 'true':
                 finishedProgram = ProgramEndDate
@@ -5489,38 +5493,38 @@ class mTVGuide(xbmcgui.WindowXML):
                     day = ADDON.getSetting('archive_reverse_days')
 
                 if day == '3H':
-                    reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(3)) - datetime.timedelta(minutes = 5)
+                    reverseTime = dt - datetime.timedelta(hours = int(3)) - datetime.timedelta(minutes = 5)
 
                 elif ADDON.getSetting('archive_reverse_auto') == '0' and day != '':
                     try:
-                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(day)) * 24 - datetime.timedelta(minutes = 5)
+                        reverseTime = dt - datetime.timedelta(hours = int(day)) * 24 - datetime.timedelta(minutes = 5)
                     except:
-                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
+                        reverseTime = dt - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
                 else:
                     try:
-                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(ADDON.getSetting('archive_manual_days'))) * 24 - datetime.timedelta(minutes = 5)
+                        reverseTime = dt - datetime.timedelta(hours = int(ADDON.getSetting('archive_manual_days'))) * 24 - datetime.timedelta(minutes = 5)
                     except:
-                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
+                        reverseTime = dt - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
 
                 if day == '3H':
-                    reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(3)) - datetime.timedelta(minutes = 5)
+                    reverseTime = dt - datetime.timedelta(hours = int(3)) - datetime.timedelta(minutes = 5)
 
                 elif ADDON.getSetting('archive_reverse_auto') == '0' and day != '':
                     try:
-                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(day)) * 24 - datetime.timedelta(minutes = 5)
+                        reverseTime = dt - datetime.timedelta(hours = int(day)) * 24 - datetime.timedelta(minutes = 5)
                     except:
-                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
+                        reverseTime = dt - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
 
                 else:
                     try:
-                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(ADDON.getSetting('archive_manual_days'))) * 24 - datetime.timedelta(minutes = 5)
+                        reverseTime = dt - datetime.timedelta(hours = int(ADDON.getSetting('archive_manual_days'))) * 24 - datetime.timedelta(minutes = 5)
                     except:
-                        reverseTime = datetime.datetime.now() - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
+                        reverseTime = dt - datetime.timedelta(hours = int(1)) * 24 - datetime.timedelta(minutes = 5)
             except:
-                reverseTime = datetime.datetime.now()
+                reverseTime = dt
 
             try:
-                if finishedProgram < datetime.datetime.now() and ADDON.getSetting('archive_support') == 'true' and program.title != program.channel.title:
+                if finishedProgram < dt and ADDON.getSetting('archive_support') == 'true' and program.title != program.channel.title:
 
                     if (program.channel.title.upper() in [k for k,v in catchupList] and program.startDate > reverseTime):
                         res = xbmcgui.Dialog().yesno(strings(30998), strings(30999).format(program.title))
@@ -5528,21 +5532,21 @@ class mTVGuide(xbmcgui.WindowXML):
                         if res:
                             # archiveService
                             if ADDON.getSetting('archive_finished_program') == 'true': 
-                                if program.channel.title.upper() in [k for k,v in catchupList] and program.endDate < datetime.datetime.now():
-                                    self.archiveService = datetime.datetime.now() - ProgramStartDate
+                                if program.channel.title.upper() in [k for k,v in catchupList] and program.endDate < dt:
+                                    self.archiveService = dt - ProgramStartDate
                                 else:
                                     self.archiveService = ''
                             else:
-                                if program.channel.title.upper() in [k for k,v in catchupList] and program.startDate < datetime.datetime.now():
-                                    self.archiveService = datetime.datetime.now() - ProgramStartDate
+                                if program.channel.title.upper() in [k for k,v in catchupList] and program.startDate < dt:
+                                    self.archiveService = dt - ProgramStartDate
                                 else:
                                     self.archiveService = ''
 
                             if ADDON.getSetting('archive_finished_program') == 'true': 
-                                if program.channel.title.upper() in [k for k,v in catchupList] and program.endDate < datetime.datetime.now():
+                                if program.channel.title.upper() in [k for k,v in catchupList] and program.endDate < dt:
                                     from time import mktime
 
-                                    n = datetime.datetime.now()
+                                    n = dt
                                     t = ProgramStartDate
                                     e = ProgramEndDate
 
@@ -5551,7 +5555,7 @@ class mTVGuide(xbmcgui.WindowXML):
                                     duration = str(durationCalc)
 
                                     # Offset
-                                    offsetCalc = int(((datetime.datetime.now() - ProgramStartDate).total_seconds() / 60.0))
+                                    offsetCalc = int(((dt - ProgramStartDate).total_seconds() / 60.0))
                                     offset = str(offsetCalc)
 
                                     # UTC/LUTC
@@ -5576,10 +5580,10 @@ class mTVGuide(xbmcgui.WindowXML):
                                 else:
                                     self.archivePlaylist = ''
                             else:
-                                if program.channel.title.upper() in [k for k,v in catchupList] and program.startDate < datetime.datetime.now():
+                                if program.channel.title.upper() in [k for k,v in catchupList] and program.startDate < dt:
                                     from time import mktime
 
-                                    n = datetime.datetime.now()
+                                    n = dt
                                     t = ProgramStartDate
                                     e = ProgramEndDate
 
@@ -5588,7 +5592,7 @@ class mTVGuide(xbmcgui.WindowXML):
                                     duration = str(durationCalc)
 
                                     # Offset
-                                    offsetCalc = int(((datetime.datetime.now() - ProgramStartDate).total_seconds() / 60.0))
+                                    offsetCalc = int(((dt - ProgramStartDate).total_seconds() / 60.0))
                                     offset = str(offsetCalc)
 
                                     # UTC/LUTC
@@ -5615,7 +5619,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
                         else:
                             if ADDON.getSetting('archive_finished_program') == 'false':
-                                if ProgramEndDate > datetime.datetime.now():
+                                if ProgramEndDate > dt:
                                     self.archiveService = ''
                                     self.archivePlaylist = ''
                                 else:
@@ -6525,6 +6529,7 @@ class mTVGuide(xbmcgui.WindowXML):
         try:
             # move timebar to current time
             timeDelta = datetime.datetime.today() - self.viewStartDate + datetime.timedelta(minutes=int(timebarAdjust()))
+
             control = self.getControl(self.C_MAIN_TIMEBAR)
             background = self.getControl(self.C_MAIN_TIMEBAR_BACK)
 
@@ -6535,7 +6540,8 @@ class mTVGuide(xbmcgui.WindowXML):
                     # exceptions.RuntimeError: Unknown exception thrown from the call "setVisible"
                     control.setVisible(timeDelta.days == 0)
                     background.setVisible(timeDelta.days == 0)
-                except:
+                except Exception as ex:
+                    debug('updateTimebar error: {}'.format(ex))
                     pass
 
                 xPositionBar = self._secondsToXposition(timeDelta.seconds)
@@ -6588,7 +6594,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 try:
                     # Sometimes raises:
                     # exceptions.RuntimeError: Unknown exception thrown from the call "setVisible"
-                    if self.lastKeystroke >= self.viewStartDate and xbmc.getCondVisibility('!Control.IsVisible(5000)'):               
+                    if self.lastKeystroke >= self.viewStartDate:# and xbmc.getCondVisibility('!Control.IsVisible(5000)'):
                         if self.viewStartDate.date() == self.lastKeystroke.date():
                             self.timebar.setVisible(True)
                             self.timebarBack.setVisible(True)
@@ -6600,8 +6606,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.timebar.setVisible(False)
                         self.timebarBack.setVisible(False)
 
-                except:
-                    pass
+                except Exception as ex:
+                    debug('setVisible error: {}'.format(ex))
 
             if scheduleTimer and not strings2.M_TVGUIDE_CLOSING and not self.isClosing:
                 if self.updateTimebarTimer is not None:

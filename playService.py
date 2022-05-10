@@ -475,9 +475,9 @@ class PlayService(xbmc.Player, BasePlayService):
         deb('catchupTelia')
 
         try:
-            cc = ['dk', 'no', 'se']
-
             if cmore:
+                cc = ['dk', 'no', 'se']
+
                 base = ['https://cmore.dk', 'https://cmore.no', 'https://www.cmore.se']
                 country            = int(ADDON.getSetting('cmore_locale'))
                 dashjs             = ADDON.getSetting('cmore_devush')
@@ -488,7 +488,9 @@ class PlayService(xbmc.Player, BasePlayService):
                 refr = 'cmore'
 
             else:
-                base = ['https://teliatv.dk', 'https://teliatv.no', 'https://www.teliaplay.se']
+                cc = ['dk', 'se']
+
+                base = ['https://teliatv.dk', 'https://www.teliaplay.se']
                 country            = int(ADDON.getSetting('teliaplay_locale'))
                 dashjs             = ADDON.getSetting('teliaplay_devush')
                 beartoken          = ADDON.getSetting('teliaplay_beartoken')
@@ -515,18 +517,27 @@ class PlayService(xbmc.Player, BasePlayService):
             else:
                 timestamp = tday
 
+            url = 'https://graphql-{refr}.t6a.net/graphql'.format(refr=refr)
+
             headers = {
                 'authority': 'graphql-telia.t6a.net',
                 'accept': '*/*',
-                'tv-client-name': 'web',
-                'tv-client-boot-id': tv_client_boot_id,
-                'Authorization': 'Bearer '+ beartoken,
-                'access-control-request-method': 'GET',
-                'access-control-request-headers': 'authorization,content-type,tv-client-boot-id,tv-client-name,tv-client-tz,tv-client-version,x-country',
-                'user-agent': UA,
-                'Origin': base[country],
-                'Referer': base[country]+'/',
                 'accept-language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6,fr;q=0.5',
+                'authorization': 'Bearer ' + beartoken,
+                'content-type': 'application/json',
+                'dnt': '1',
+                'origin': base[country],
+                'referer': base[country]+'/',
+                'tv-client-boot-id': tv_client_boot_id,
+                'tv-client-browser': 'Microsoft Edge',
+                'tv-client-browser-version': '101.0.1210.39',
+                'tv-client-name': 'web',
+                'tv-client-os-name': 'Windows',
+                'tv-client-os-version': 'NT 10.0',
+                'tv-client-tz': 'Europe/Stockholm',
+                'tv-client-version': '1.45.1',
+                'user-agent': UA,
+                'x-country': cc[country].upper(),
             }
 
             params = (
@@ -543,7 +554,7 @@ class PlayService(xbmc.Player, BasePlayService):
                   "\nfragment episode on Episode{id\n title\n descriptionLong\n images{\nshowcard2x3{\nsource}}\n  playback\n{\nplay{\nsubscription {\nitem{\nid \nvalidFrom{\ntimestamp} \nvalidTo{\ntimestamp} \nplaybackSpec{\nvideoId \nvideoIdType \nwatchMode \naccessControl \n__typename}\n__typename }} }}\n genre\n mediaType\n __typename\n} ")
                 )
 
-            response = requests.get('https://graphql-{refr}.t6a.net/graphql'.format(refr=refr), headers=headers, params=params, cookies=sess.cookies, verify=False).json()
+            response = requests.get(url, headers=headers, params=params, verify=False).json()
 
             if response.get('errors', ''):
                 return None, None
