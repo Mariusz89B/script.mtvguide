@@ -91,6 +91,8 @@ class clearDB:
         else:
             self.database.initialize(self.onInitialized)
 
+        ADDON.setSetting('database_cleared', 'true')
+
     def onDBCleared(self):
         xbmcgui.Dialog().ok(strings(CLEAR_DB), strings(DONE_DB)+'.')
 

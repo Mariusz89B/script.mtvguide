@@ -135,6 +135,12 @@ if AUTO_CID == 'true':
 else:
     UPDATE_CID = False
 
+DATABASE_CLEARED = ADDON.getSetting("database_cleared")
+if DATABASE_CLEARED == 'true':
+    GET_DATABASE_CLEARED = True
+else:
+    GET_DATABASE_CLEARED = False
+
 PRAGMA_MODE = ADDON.getSetting("pragma_mode")
 if PRAGMA_MODE == 'true':
     GET_PRAGMA_MODE = True
@@ -860,6 +866,8 @@ class Database(object):
                     serviceList.append(serviceHandler)
                     if 'playlist_' in serviceName:
                         cache = self.cachePlaylist(serviceHandler)
+                        if GET_DATABASE_CLEARED:
+                            cache = False
                         self.cacheList.update({serviceHandler: {'cache': cache}})
 
             if not self.cacheList:
@@ -1108,6 +1116,8 @@ class Database(object):
                     if not cache:
                         service.waitUntilDone()
                         self.storeCustomStreams(service, priority, service.serviceName, service.serviceRegex)
+
+        ADDON.setSetting('database_cleared', 'false')
 
         serviceList = []
         self.printStreamsWithoutChannelEPG()
