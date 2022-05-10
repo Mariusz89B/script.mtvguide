@@ -91,7 +91,7 @@ class PlaylistUpdater(baseServiceUpdater):
 
         self.UA = ADDON.getSetting('{}_user_agent'.format(self.serviceName))
         if self.UA == '':
-            self.UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36 Edg/99.0.1150.46'
+            self.UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36 Edg/101.0.1210.39'
 
         if PY3:
             try:
@@ -160,15 +160,19 @@ class PlaylistUpdater(baseServiceUpdater):
         self.append_cc = ADDON.getSetting('{}_append_country_code'.format(self.serviceName))
 
     def requestUrl(self, path):
-        headers = {'User-Agent': self.UA}
+        headers = {
+            'User-Agent': self.UA,
+            'Connection': 'keep-alive',
+            'Upgrade-Insecure-Requests': '1',
+        }
 
         try:
-            content = requests.get(path, headers=headers, allow_redirects=False, verify=False, timeout=5).content.decode('utf-8')
+            content = requests.get(path, headers=headers, allow_redirects=False, verify=False, timeout=15).content.decode('utf-8')
 
         except Exception as ex:
             deb('requestUrl requests Exception: {}'.format(ex))
             try:
-                content = scraper.get(path, headers=headers, allow_redirects=False, verify=False, timeout=5).content.decode('utf-8')
+                content = scraper.get(path, headers=headers, allow_redirects=False, verify=False, timeout=15).content.decode('utf-8')
 
             except Exception as ex:
                 deb('requestUrl scraper Exception: {}'.format(ex))
