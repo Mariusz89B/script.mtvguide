@@ -137,7 +137,7 @@ class SettingsImp:
             dirname = xbmcgui.Dialog().browseSingle(type=3, heading=strings(58001).encode('utf-8'), shares='files')
         filename = 'm-TVGuide_backup_' + str(datetime.datetime.now().strftime("%Y-%m-%d")) + '.zip'
         if dirname is not None and dirname != '':
-            if os.path.isdir(self.profilePath) == False:
+            if not os.path.isdir(self.profilePath):
                 try:
                     xbmcgui.Dialog().ok(strings(58002),"\n" + strings(58004))
                 except:
@@ -160,15 +160,18 @@ class SettingsImp:
                 except:
                     pass
                 dest_dir = os.path.join(dirname, filename).replace('.zip', '')
-                if os.path.isdir(dest_dir) == False:
-                    os.makedirs(dest_dir)
+                if not os.path.isdir(dest_dir):
+                    if PY3:
+                        os.makedirs(dest_dir, exist_ok=True)
+                    else:
+                        os.makedirs(dest_dir)
                 for fileN in [ dbFileName, settingsFileName ]:
                     if os.path.isfile(os.path.join(self.profilePath, fileN)):
                         shutil.copy2(os.path.join(self.profilePath, fileN), dest_dir)
                         success = True
                 deb('Settings exported as separate files')
 
-            if success == True:
+            if success:
                 try:
                     xbmcgui.Dialog().ok(strings(58002),"\n" + strings(58005))
                 except:
@@ -189,9 +192,11 @@ class SettingsImp:
 
         if filename is not None and filename != '':
             deb('SettingsImp importSettings file %s' % filename)
-            if os.path.isdir(self.profilePath) == False:
-                os.makedirs(self.profilePath)
-
+            if not os.path.isdir(self.profilePath):
+                if PY3:
+                    os.makedirs(self.profilePath, exist_ok=True)
+                else:
+                    os.makedirs(self.profilePath)
             if filename[-4:] == '.zip':
                 try:
                     zf = zipfile.ZipFile(filename)
@@ -223,7 +228,7 @@ class SettingsImp:
                     except:
                         deb('Failed to copy file')
 
-            if success == True:
+            if success:
                 try:
                     xbmcgui.Dialog().ok(strings(58003),"\n" + strings(58008) + ".")
                 except:
@@ -263,12 +268,18 @@ class SettingsImp:
 
                 if 'ffmpeg' in binaryFilename or 'rtmpdump' in binaryFilename or 'avconv' in binaryFilename:
                     try:
-                        os.makedirs(recordAppDir)
+                        if PY3:
+                            os.makedirs(recordAppDir, exist_ok=True)
+                        else:
+                            os.makedirs(recordAppDir)
                     except:
                         deb('RecordAppImporter exception: %s' % getExceptionString())
 
                     try:
-                        os.makedirs(recordAppLibDir)
+                        if PY3:
+                            os.makedirs(recordAppLibDir, exist_ok=True)
+                        else:
+                            os.makedirs(recordAppLibDir)
                     except:
                         deb('RecordAppImporter exception: %s' % getExceptionString())
 
@@ -388,8 +399,11 @@ class SettingsImp:
                 recordAppDir = os.path.join(self.profilePath, 'record_app')
                 if os.path.isdir(recordAppDir):
                     shutil.rmtree(recordAppDir)
-                if os.path.isdir(recordAppDir) == False:
-                    os.makedirs(recordAppDir)
+                if not os.path.isdir(recordAppDir):
+                    if PY3:
+                        os.makedirs(recordAppDir, exist_ok=True)
+                    else:
+                        os.makedirs(recordAppDir)
 
                 failCounter = 0
                 content = None
@@ -462,12 +476,12 @@ class SettingsImp:
             deb('downloadRecordApp found only FFmpeg but no rtmpdump - setting ffmpeg as only app')
             ADDON.setSetting(id="use_only_ffmpeg", value=str('true'))
 
-        if failedToDownload == True:
+        if failedToDownload:
             try:
                 xbmcgui.Dialog().ok(strings(69012),"\n" + strings(69019))
             except:
                 xbmcgui.Dialog().ok(strings(69012).encode('utf-8', 'replace'),"\n" + strings(69019).encode('utf-8'))
-        elif failedToFindBinary == True:
+        elif failedToFindBinary:
             try:
                 xbmcgui.Dialog().ok(strings(69012),"\n" + strings(69021))
             except:

@@ -700,7 +700,7 @@ class RecordService(BasePlayService):
 
         cid, service = self.parseUrl(url)
         channelInfo = self.getChannelDownload(cid, service)
-        
+
         strmUrl_catchup = ''
         strmUrl = ''
 
@@ -782,7 +782,7 @@ class RecordService(BasePlayService):
 
                                 if fsListType == 'index':
                                     m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/timeshift_rel-' + str(offset) + '.m3u8' + str(fsUrlAppend)
-                                    
+
                                 elif fsListType == 'video':
                                     m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/video-' + str(utc) + '-' + str(lutc) + '.m3u8' + str(fsUrlAppend)
 
@@ -819,7 +819,7 @@ class RecordService(BasePlayService):
 
                                     r = matches.search(strmUrlNew)
                                     fsUrlAppend = r.group(5) if r else ''
-                                    
+
                                     fsUrlAppend = re.sub('&.*$', '', str(fsUrlAppend))
                                     fsListType = 'video'
 
@@ -1379,8 +1379,6 @@ class RecordService(BasePlayService):
         cid, service = self.parseUrl(url)
         channelInfo = self.getChannel(cid, service)
 
-        self.checkConnection(url)
-
         if channelInfo is None:
             threadData['nrOfReattempts'] += 1
             deb('RecordService recordUrl - locked service {} - trying next, nrOfReattempts: {}, max: {}'.format(service, threadData['nrOfReattempts'], maxNrOfReattempts))
@@ -1388,7 +1386,7 @@ class RecordService(BasePlayService):
 
         else:
             self.findNextUnusedOutputFilename(threadData)
-            
+
             if self.rtmpdumpAvailable and self.useOnlyFFmpeg == 'false' and (channelInfo.rtmpdumpLink is not None or (threadData['recordOptions']['forceRTMPDump'] == True and 'rtmp:' in channelInfo.strm) ):
                 recordCommand = self.generateRTMPDumpCommand(channelInfo, threadData['recordDuration'], threadData['destinationFile'], threadData['recordOptions'])
             elif self.ffmpegdumpAvailable:
@@ -1404,7 +1402,8 @@ class RecordService(BasePlayService):
             else:
                 threadData['nrOfReattempts'] += 1
 
-            self.unlockService(service)                          
+            self.checkConnection(channelInfo.strm)
+            self.unlockService(service)
 
     def record(self, recordCommand, threadData):
         deb('RecordService record command: {}'.format(str(recordCommand)))
@@ -2067,7 +2066,7 @@ class RecordService(BasePlayService):
                 response = Request.urlopen(req, context=ctx, timeout=timeout)
                 status = response.code
 
-                if status == 200:
+                if status != 200:
                     headers = {
                         'User-Agent': UA,
                         'Accept': 'application/json, text/javascript, */*; q=0.01',
@@ -2078,7 +2077,7 @@ class RecordService(BasePlayService):
                     conn_timeout = int(ADDON.getSetting('max_wait_for_playback'))
                     read_timeout = int(ADDON.getSetting('max_wait_for_playback'))
                     timeouts = (conn_timeout, read_timeout)
-                    
+
                     response = scraper.get(strmUrl, headers=headers, allow_redirects=False, stream=True, timeout=timeouts)
                     status = response.status_code
 
@@ -2096,10 +2095,10 @@ class RecordService(BasePlayService):
                 deb('chkConn Timeout: {}, open stream in xbmc.Player'.format('408'))
                 status = 408
 
-            except:
-                deb('chkConn RequestException')
+            except Exception as ex:
+                deb('chkConn RequestException: {}'.format(ex))
                 status = 400
-            
+
             time.sleep(1)
 
             if status >= 400 and xbmc.getCondVisibility('!Player.HasMedia'):

@@ -111,7 +111,7 @@ class Threading(object):
                 result = TeliaPlayUpdater().checkLogin()
                 if result is not None:
                     validTo, beartoken, refrtoken, cookies = result
-                    
+
                     ADDON.setSetting('teliaplay_validTo', str(validTo))
                     ADDON.setSetting('teliaplay_beartoken', str(beartoken))
                     ADDON.setSetting('teliaplay_refrtoken', str(refrtoken))
@@ -203,7 +203,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
 
         try:
             url = 'https://log.tvoip.telia.com:6003/logstash'
-                
+
             data = {
                 "bootId": self.tv_client_boot_id,
                 "networkType": "unknown",
@@ -229,7 +229,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                     "message": "Failed to get service status due to timeout after 1000 ms"
                 }]
             }
-            
+
             headers = {
                 'Host': 'log.tvoip.telia.com:6003',
                 'User-Agent': UA,
@@ -269,7 +269,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 "password": self.password,
                 "deviceType": "WEB",
             }
-            
+
             response = self.sendRequest(url, post=True, headers=headers, data=json.dumps(data), verify=True, timeout=timeouts)
             if not response:
                 if reconnect and retry < 3:
@@ -478,8 +478,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
         result = tokenValidTo - datetime.datetime.now()
 
         return result
-        
-        
+
     def checkRefresh(self):
         refreshTimeDelta = self.refreshTimeDelta()
 

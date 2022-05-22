@@ -1693,7 +1693,7 @@ class PlayService(xbmc.Player, BasePlayService):
                 response = Request.urlopen(req, context=ctx, timeout=timeout)
                 status = response.code
 
-                if status == 200:
+                if status != 200:
                     UAx = ADDON.getSetting('{}_user_agent'.format(self.currentlyPlayedService['service']))
 
                     headers = {

@@ -21,8 +21,7 @@ Zrzeczenie
 Wtyczka nie jest oficjalna koncesjonowanego dostawy, oraz nie jest przez niego zatwierdzona 
 i wspierana. Wszelkie użyte znaki handlowe należą do firm i organizacji podmiotu koncesjonowanego.
 
-Logowanie do stron internetowych odbywa się za pośrednictwem usług operatora telewizji, 
-jest udostępniane przez podmiot Application Programming Interface (API).
+Połączenie z usługą odbywa się za pomocą żądania API, które jest przetwarzane przez serwer i odpowiada zwrotnie klientowi.
 
 
 Przepisy prawne
