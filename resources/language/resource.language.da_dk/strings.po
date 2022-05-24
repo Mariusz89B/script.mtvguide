@@ -821,8 +821,8 @@ msgid "Disabled"
 msgstr "Deaktiveret"
 
 msgctxt "#30721"
-msgid "Enabled."
-msgstr "Aktivereet."
+msgid "Enabled"
+msgstr "Aktivereet"
 
 msgctxt "#30722"
 msgid "Enable"
@@ -869,8 +869,8 @@ msgid "Oceania"
 msgstr "Oceanien"
 
 msgctxt "#30733"
-msgid ""
-msgstr ""
+msgid "Enabled."
+msgstr "Aktivereet."
 
 msgctxt "#30734"
 msgid ""

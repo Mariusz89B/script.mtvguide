@@ -1020,7 +1020,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
                     if s == 3:
                         label = 'PlayerPL'
-                        xbmcgui.Dialog().ok(label, label + ' ' + strings(30721).lower())
+                        xbmcgui.Dialog().ok(label, label + ' ' + strings(30733).lower())
                         ADDON.setSetting('playerpl_enabled', 'true')
                         progExec = True
 
@@ -1117,7 +1117,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
                     if s == 6:
                         label = 'TVP GO'
-                        xbmcgui.Dialog().ok(label, label + ' ' + strings(30721).lower())
+                        xbmcgui.Dialog().ok(label, label + ' ' + strings(30733).lower())
                         ADDON.setSetting('tvpgo_enabled', 'true')
                         progExec = True
 

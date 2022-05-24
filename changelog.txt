@@ -1,4 +1,7 @@
-﻿v9.9.606 (2022-05-22)
+﻿v9.9.607 (2022-05-24)
+- Updated translations.
+
+v9.9.606 (2022-05-22)
 - Optimized performance.
 - Bug fixes.
 
