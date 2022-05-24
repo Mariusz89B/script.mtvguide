@@ -3418,14 +3418,16 @@ def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
             if titles == '':
                 titles = title
 
-        r = channelIconRe.search(channel)
-        logo = r.group(1) if r else None
+        logo = None
 
-        if not logo:
-            if logoFolder:
-                logoFile = os.path.join(logoFolder, title.replace(' ', '_').lower() + '.png')
+        if logoFolder:
+            logoFile = os.path.join(logoFolder, title.replace(' ', '_').lower() + '.png')
                 if xbmcvfs.exists(logoFile):
                     logo = logoFile
+
+        if not logo:
+            r = channelIconRe.search(channel)
+            logo = r.group(1) if r else None
 
         channel = None
         yield Channel(id, title, logo, titles)
