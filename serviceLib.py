@@ -49,7 +49,7 @@ if sys.version_info[0] > 2:
 else:
     PY3 = False
 
-if PY3: 
+if PY3:
     import urllib.request, urllib.error, urllib.parse, http.client, http.cookiejar
 else:
     import urllib, urllib2, httplib
@@ -66,7 +66,7 @@ from groups import *
 import simplejson as json
 import strings as strings2
 import zlib
-import ast
+import json
 import codecs
 
 try:
@@ -917,7 +917,8 @@ class baseServiceUpdater:
         try:
             return self.serviceDisplayName
         except:
-            pass 
+            pass
+
         return self.serviceName
 
     def getBaseChannelList(self, silent=False, returnCopy=True, cache=False):
@@ -929,15 +930,15 @@ class baseServiceUpdater:
                 if os.path.exists(cachepath) and os.path.exists(cachefile):
                     if PY3:
                         with open(cachepath, 'r', encoding='utf-8') as f:
-                            data = [line.strip() for line in f]
+                            data = json.load(f)
                     else:
                         with codecs.open(cachepath, 'r', encoding='utf-8') as f:
-                            data = [line.strip() for line in f]
+                            data = json.load(f)
 
-                    cachedList = []
-                    for line in data:
-                        y = ast.literal_eval(line)
-                        cachedList.append(TvCid(cid=y[0], name=y[1], title=y[2], strm=y[3], catchup=y[4]))
+                    cachedList = list()
+
+                    for k, v in data.items():
+                        cachedList.append(TvCid(cid=k, name=v['name'], title=v['title'], strm=v['strm'], catchup=v['catchup']))
 
                     self.channelList = cachedList
 
@@ -962,24 +963,23 @@ class baseServiceUpdater:
             self.log('getBaseChannelList exception: %s' % getExceptionString())
 
         if 'playlist_' in self.serviceName:
-            refr = ADDON.getSetting('{playlist}_refr'.format(playlist=self.serviceName))
             cachepath = os.path.join(PROFILE_PATH, 'playlists', '{playlist}.cache'.format(playlist=self.serviceName))
-            if refr == 'false':
+            if not os.path.exists(cachepath) and cache:
                 self.cache = threading.Thread(name='saveCacheList thread', target = self.saveCacheList, args=(self.channelList, self.serviceName,))
                 self.cache.start()
 
         return result
 
     def saveCacheList(self, result, serviceName):
-        cachedList = ([[y.cid, y.name, y.title, y.strm, y.catchup] for y in result])
+        cachedDict = {y.cid: {'name': y.name, 'title': y.title, 'strm': y.strm, 'catchup': y.catchup} for y in result}
 
         cachepath = os.path.join(PROFILE_PATH, 'playlists', '{playlist}.cache'.format(playlist=serviceName))
         if PY3:
             with open(cachepath, 'w', encoding='utf-8') as f:
-                f.write('\n'.join([str(i) for i in cachedList]))
+                f.write(json.dumps(cachedDict, indent=4))
         else:
             with codecs.open(cachepath, 'w', encoding='utf-8') as f:
-                f.write('\n'.join([str(i) for i in cachedList]))
+                f.write(json.dumps(cachedDict, indent=4))
 
     def decodeString(self, s):
         if sys.version_info[0] < 3:
@@ -1028,7 +1028,7 @@ class baseServiceUpdater:
             self.log('-------------------------------------------------------------------------------------')
             self.log('[UPD]     %-40s %-40s %-35s' % ('-TITLE-', '-ORIG NAME-', '-SERVICE-'))
 
-            channelList = []
+            channelList = list()
             filtered_channels = []
 
             for x in self.automap[:]:
@@ -1097,9 +1097,9 @@ class baseServiceUpdater:
                                 if y.strm == '':
                                     y.strm == 'None'
                                 try:
-                                    channelList.append(unidecode(y.title) + ', ' + y.strm)
+                                    channelList.append((unidecode(y.name), y.strm))
                                 except:
-                                    channelList.append(unidecode(self.decodeString(y.title)) + ', ' + y.strm)
+                                    channelList.append((unidecode(self.decodeString(y.name)), y.strm))
                             except:
                                 pass
 
@@ -1142,9 +1142,9 @@ class baseServiceUpdater:
                         if y.strm == '':
                             y.strm == 'None'
                         try:
-                            channelList.append(unidecode(y.title) + ', ' + y.strm)
+                            channelList.append((unidecode(y.name), y.strm))
                         except:
-                            channelList.append(unidecode(self.decodeString(y.title)) + ', ' + y.strm)
+                            channelList.append((unidecode(self.decodeString(y.name)), y.strm))
                     except:
                         pass
 
@@ -1153,15 +1153,13 @@ class baseServiceUpdater:
                     except:
                         self.log('[UPD]     %-40s %-40s %-12s %-35s' % (unidecode(self.decodeString(y.title.upper())), unidecode(self.decodeString(y.name)), y.cid, y.strm))
 
-        channelList = list(OrderedDict.fromkeys(channelList))
-
         if PY3:
             with open(file_name, 'ab+') as f:
                 f.seek(0)
                 data = f.read()
                 if len(data) > 0:
                     f.write(bytearray('\n', 'utf-8'))
-                f.write(bytearray('\n'.join(channelList), 'utf-8'))
+                f.write(bytearray('\n'.join(str(s) for s in channelList), 'utf-8'))
         else:
             newline = False
 
@@ -1177,7 +1175,7 @@ class baseServiceUpdater:
                 f.seek(0)
                 if newline:
                     f.write(str('\n'))
-                f.write(str('\n'.join(channelList)))
+                f.write(str('\n'.join(str(s) for s in channelList)))
 
         self.log('-------------------------------------------------------------------------------------')
 

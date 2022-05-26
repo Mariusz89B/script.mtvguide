@@ -4358,7 +4358,7 @@ class mTVGuide(xbmcgui.WindowXML):
         strmList = file.read().splitlines()
 
         strmList = sorted(set(strmList))
-        strmList = [x.split(', ')[0].strip() for x in strmList if x.split(', ')[0].strip()]
+        strmList = [x.split(',')[0].strip('(\'\')').strip() for x in strmList if x.split(',')[0].strip('(\'\')').strip()]
 
         res = xbmcgui.Dialog().select(strings(59994), [strings(30988), strings(59997)])
 
@@ -7174,14 +7174,13 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
         strmList = file.read().splitlines()
 
         strmList = sorted(set(strmList))
-        strmList = [x.strip() for x in strmList if x.strip()]
 
         items = []
         for i in strmList:
             playlist = i.split(',')
             if playlist:
-                label = playlist[0]
-                stream = playlist[-1]
+                label = playlist[0].strip('(\'\')').strip()
+                stream = playlist[-1].strip('(\'\')').strip()
                 item = xbmcgui.ListItem(label)
                 item.setProperty('stream', stream)
                 items.append(item)
