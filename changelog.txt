@@ -1,4 +1,7 @@
-﻿v9.9.607 (2022-05-26)
+﻿v9.9.608 (2022-05-26)
+- Hotfix.
+
+v9.9.607 (2022-05-26)
 - Updated translations.
 - Bug fixes.
 

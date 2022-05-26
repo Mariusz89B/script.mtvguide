@@ -947,6 +947,7 @@ class baseServiceUpdater:
                         cachedList.append(TvCid(cid=k, name=v['name'], title=v['title'], strm=v['strm'], catchup=v['catchup']))
 
                     self.channelList = cachedList
+                    return self.channelList
 
                 else:
                     if not cache:
