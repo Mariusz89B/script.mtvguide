@@ -141,6 +141,12 @@ if VOD != '' and XXX != 'false':
 else:
     VOD_EPG = False
 
+def unidecodeStr(s):
+    if PY3:
+        return s
+    else:
+        return unidecode(s)
+
 class ShowList:
     def __init__(self, logCall=deb):
         self.logCall = logCall
@@ -507,8 +513,8 @@ class ShowList:
 class TvCid:
     def __init__(self, cid, name, title, strm="", catchup="", lic="", img=""):
         self.cid = cid
-        self.name = unidecode(name)
-        self.title = unidecode(title)
+        self.name = unidecodeStr(name)
+        self.title = unidecodeStr(title)
         self.strm = strm
         self.catchup = catchup
         self.lic = lic
@@ -1039,7 +1045,7 @@ class baseServiceUpdater:
 
                 if x.strm != '':
                     x.src = 'CONST'
-                    self.log('[UPD]     %-40s %-12s %-35s' % (unidecode(x.channelid), x.src, x.strm))
+                    self.log('[UPD]     %-40s %-12s %-35s' % (unidecodeStr(x.channelid), x.src, x.strm))
                     continue
 
                 try:
@@ -1050,26 +1056,26 @@ class baseServiceUpdater:
 
                     elif x.displayName:
                         try:
-                            filtered_channels = [z for z in self.channels if unidecode(x.displayName.upper()) == unidecode(z.title.upper())]
+                            filtered_channels = [z for z in self.channels if unidecodeStr(x.displayName.upper()) == unidecodeStr(z.title.upper())]
                         except:
-                            filtered_channels = [z for z in self.channels if unidecode(x.displayName.upper()) == unidecode(self.decodeString(z.title).upper())]
+                            filtered_channels = [z for z in self.channels if unidecodeStr(x.displayName.upper()) == unidecodeStr(self.decodeString(z.title).upper())]
                         if not filtered_channels:
                             try:
-                                filtered_channels = [z for z in self.channels if unidecode(x.displayName.upper()) == unidecode(z.name.upper())]
+                                filtered_channels = [z for z in self.channels if unidecodeStr(x.displayName.upper()) == unidecodeStr(z.name.upper())]
                             except:
-                                filtered_channels = [z for z in self.channels if unidecode(x.displayName.upper()) == unidecode(self.decodeString(z.name).upper())]
+                                filtered_channels = [z for z in self.channels if unidecodeStr(x.displayName.upper()) == unidecodeStr(self.decodeString(z.name).upper())]
 
 
                     elif x.displayName == '':
                         try:
-                            filtered_channels = [z for z in self.channels if unidecode(x.channelid.upper()) == unidecode(z.title.upper())]
+                            filtered_channels = [z for z in self.channels if unidecodeStr(x.channelid.upper()) == unidecodeStr(z.title.upper())]
                         except:
-                            filtered_channels = [z for z in self.channels if unidecode(x.channelid.upper()) == unidecode(self.decodeString(z.title).upper())]
+                            filtered_channels = [z for z in self.channels if unidecodeStr(x.channelid.upper()) == unidecodeStr(self.decodeString(z.title).upper())]
                         if not filtered_channels:
                             try:
-                                filtered_channels = [z for z in self.channels if unidecode(x.channelid.upper()) == unidecode(z.name.upper())]
+                                filtered_channels = [z for z in self.channels if unidecodeStr(x.channelid.upper()) == unidecodeStr(z.name.upper())]
                             except:
-                                filtered_channels = [z for z in self.channels if unidecode(x.channelid.upper()) == unidecode(self.decodeString(z.name).upper())]
+                                filtered_channels = [z for z in self.channels if unidecodeStr(x.channelid.upper()) == unidecodeStr(self.decodeString(z.name).upper())]
 
                     for y in filtered_channels:
                         if x.strm != '' and self.addDuplicatesToList:
@@ -1080,9 +1086,9 @@ class baseServiceUpdater:
                             y.strm = newMapElement.strm
 
                             try:
-                                self.log('[UPD] [B] %-40s %-40s %-35s ' % (unidecode(newMapElement.channelid), unidecode(y.title), newMapElement.strm))
+                                self.log('[UPD] [B] %-40s %-40s %-35s ' % (unidecodeStr(newMapElement.channelid), unidecodeStr(y.title), newMapElement.strm))
                             except:
-                                self.log('[UPD] [B] %-40s %-40s %-35s ' % (unidecode(newMapElement.channelid), unidecode(self.decodeString(y.title)), newMapElement.strm))
+                                self.log('[UPD] [B] %-40s %-40s %-35s ' % (unidecodeStr(newMapElement.channelid), unidecodeStr(self.decodeString(y.title)), newMapElement.strm))
                             if not self.addDuplicatesAtBeginningOfList:
                                 self.automap.append(newMapElement)
                             else:
@@ -1097,19 +1103,19 @@ class baseServiceUpdater:
                                 if y.strm == '':
                                     y.strm == 'None'
                                 try:
-                                    channelList.append((unidecode(y.name), y.strm))
+                                    channelList.append((unidecodeStr(y.name), y.strm))
                                 except:
-                                    channelList.append((unidecode(self.decodeString(y.name)), y.strm))
+                                    channelList.append((unidecodeStr(self.decodeString(y.name)), y.strm))
                             except:
                                 pass
 
                             try:
-                                self.log('[UPD]     %-40s %-40s %-35s ' % (unidecode(x.channelid), unidecode(y.title), x.strm))
+                                self.log('[UPD]     %-40s %-40s %-35s ' % (unidecodeStr(x.channelid), unidecodeStr(y.title), x.strm))
                             except:
-                                self.log('[UPD]     %-40s %-40s %-35s ' % (unidecode(x.channelid), unidecode(self.decodeString(y.title)), x.strm))
+                                self.log('[UPD]     %-40s %-40s %-35s ' % (unidecodeStr(x.channelid), unidecodeStr(self.decodeString(y.title)), x.strm))
 
                 except Exception as ex:
-                    self.log('{} Error: {} {}'.format(unidecode(x.channelid), x.titleRegex, getExceptionString()))
+                    self.log('{} Error: {} {}'.format(unidecodeStr(x.channelid), x.titleRegex, getExceptionString()))
 
             self.log('-------------------------------------------------------------------------------------')
             self.log('\n\n')
@@ -1142,16 +1148,16 @@ class baseServiceUpdater:
                         if y.strm == '':
                             y.strm == 'None'
                         try:
-                            channelList.append((unidecode(y.name), y.strm))
+                            channelList.append((unidecodeStr(y.name), y.strm))
                         except:
-                            channelList.append((unidecode(self.decodeString(y.name)), y.strm))
+                            channelList.append((unidecodeStr(self.decodeString(y.name)), y.strm))
                     except:
                         pass
 
                     try:
-                        self.log('[UPD]     %-40s %-40s %-12s %-35s' % (unidecode(y.title.upper()), unidecode(y.name), y.cid, y.strm))
+                        self.log('[UPD]     %-40s %-40s %-12s %-35s' % (unidecodeStr(y.title.upper()), unidecodeStr(y.name), y.cid, y.strm))
                     except:
-                        self.log('[UPD]     %-40s %-40s %-12s %-35s' % (unidecode(self.decodeString(y.title.upper())), unidecode(self.decodeString(y.name)), y.cid, y.strm))
+                        self.log('[UPD]     %-40s %-40s %-12s %-35s' % (unidecodeStr(self.decodeString(y.title.upper())), unidecodeStr(self.decodeString(y.name)), y.cid, y.strm))
 
         if PY3:
             with open(file_name, 'ab+') as f:

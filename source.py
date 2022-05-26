@@ -195,6 +195,12 @@ SETTINGS_TO_CHECK = ['source', 'xmltv_file', 'xmltv_logo_folder',
                      'country_code_us', 'epg_us',
                      'country_code_radio', 'epg_radio']
 
+def unidecodeStr(s):
+    if PY3:
+        return s
+    else:
+        return unidecode(s)
+
 class proxydt(datetime):
     @staticmethod
     def strptime(date_string, format):
@@ -1238,7 +1244,7 @@ class Database(object):
                 deb('[UPD]     %-40s %-35s' % ( '-TITLE-', '-SERVICE-'))
                 #cur = self.conn.cursor()
                 for row in c:
-                    deb('[UPD]     %-40s %-35s' % (unidecode(row[str('channel')]), row[str('stream_url')]))
+                    deb('[UPD]     %-40s %-35s' % (unidecodeStr(row[str('channel')]), row[str('stream_url')]))
                     #cur.execute('INSERT OR IGNORE INTO channels(id, title, logo, stream_url, visible, weight, source) VALUES(?, ?, ?, ?, ?, (CASE ? WHEN -1 THEN (SELECT COALESCE(MAX(weight)+1, 0) FROM channels WHERE source=?) ELSE ? END), ?)', [row['channel'], row['channel'], '', '', 1, -1, 'm-TVGuide', -1, 'm-TVGuide'])
                 #self.conn.commit()
                 deb('End of streams without EPG!')
