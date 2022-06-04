@@ -6769,9 +6769,8 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
         elif action.getId() in [KEY_CONTEXT_MENU] and xbmc.getCondVisibility('Control.HasFocus(7004)'):
             cList = self.getControl(self.C_POPUP_CATEGORY)
             label = cList.getSelectedItem().getLabel()
-            match = re.search(r'\w+: ([^\s]*)', label)
 
-            if match or cList.getSelectedPosition() == 0:
+            if label in PREDEFINED_CATEGORIES or cList.getSelectedPosition() == 0:
                 return
 
             item = cList.getSelectedItem()
