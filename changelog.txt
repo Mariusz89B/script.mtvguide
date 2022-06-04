@@ -1,5 +1,7 @@
 ﻿v9.9.609 (2022-06-04)
 - Fixed exception error while adding missing channels.
+- Fixed grouping error.
+- Fixed login for services C More and Telia Play.
 
 v9.9.608 (2022-05-26)
 - Hotfix.

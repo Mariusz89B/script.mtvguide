@@ -204,45 +204,45 @@ class CmoreUpdater(baseServiceUpdater):
             url = 'https://log.tvoip.telia.com:6003/logstash'
 
             headers = {
-                'Accept': '*/*',
-                'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6,fr;q=0.5',
-                'Connection': 'keep-alive',
-                'Content-Type': 'text/plain;charset=UTF-8',
+                'accept': '*/*',
+                'accept-language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6,fr;q=0.5',
+                'connection': 'keep-alive',
+                'content-type': 'text/plain;charset=UTF-8',
                 'DNT': '1',
-                'Origin': 'https://login.cmore.{cc}'.format(cc=cc[self.country]),
-                'Referer': 'https://login.cmore.{cc}/'.format(cc=cc[self.country]),
-                'User-Agent': UA,
+                'origin': 'https://login.cmore.{cc}'.format(cc=cc[self.country]),
+                'referer': 'https://login.cmore.{cc}/'.format(cc=cc[self.country]),
+                'user-agent': UA,
             }
 
             data = {
-                "bootId":self.tv_client_boot_id,
-                "networkType":"UNKNOWN",
-                "deviceId":self.dashjs,
-                "deviceType":"WEB",
-                "model":"unknown_model",
-                "productName":"Microsoft Edge 101.0.1210.32",
-                "platformName":"Windows",
-                "platformVersion":"NT 10.0",
-                "nativeVersion":"unknown_platformVersion",
-                "uiName":"one-web-login",
-                "client":"WEB",
-                "uiVersion":"1.35.0",
-                "environment":"PROD",
-                "country":ca[self.country],
-                "brand":"CMORE",
-                "logType":"STATISTICS_HTTP",
-                "payloads": [{
-                        "sequence": 1,
-                        "timestamp": self.timestamp,
-                        "level": "ERROR",
-                        "loggerId": "telia-data-backend/System",
-                        "message": "Failed to get service status due to timeout after 1000 ms"
+                'bootId': self.tv_client_boot_id,
+                'networkType': 'UNKNOWN',
+                'deviceId': self.dashjs,
+                'deviceType': 'WEB',
+                'model': 'unknown_model',
+                'productName': 'Microsoft Edge 101.0.1210.32',
+                'platformName': 'Windows',
+                'platformVersion': 'NT 10.0',
+                'nativeVersion': 'unknown_platformVersion',
+                'uiName': 'one-web-login',
+                'client': 'WEB',
+                'uiVersion': '1.35.0',
+                'environment': 'PROD',
+                'country': ca[self.country],
+                'brand': 'CMORE',
+                'logType': 'STATISTICS_HTTP',
+                'payloads': [{
+                    'sequence': 1,
+                    'timestamp': self.timestamp,
+                    'level': 'ERROR',
+                    'loggerId': 'telia-data-backend/System',
+                    'message': 'Failed to get service status due to timeout after 1000 ms'
                     }]
                 }
 
             response = self.sendRequest(url, post=True, headers=headers, json=data, verify=True, timeout=timeouts)
 
-            url = 'https://logingateway-cmore.t6a.net/logingateway/rest/v1/authenticate'
+            url = 'https://logingateway-cmore.clientapi-prod.live.tv.telia.net/logingateway/rest/v1/authenticate?redirectUri=https%3A%2F%2Fwww.cmore.{cc}%2F'.format(cc=cc[country])
 
             headers = {
                 'authority': 'logingateway-cmore.t6a.net',
@@ -273,7 +273,7 @@ class CmoreUpdater(baseServiceUpdater):
 
             if response:
                 j_response = response.json()
-                code = j_response['redirectUri'].replace('https://www.cmore.{cc}/?code='.format(cc=cc[self.country]), '')
+                code = j_response['redirectUri'].replace('https://www.cmore.{cc}/,https://www.cmore.{cc}/?code='.format(cc=cc[self.country]), '')
 
             url = 'https://logingateway.cmore.{cc}/logingateway/rest/v1/oauth/token'.format(cc=cc[self.country])
 
@@ -487,8 +487,10 @@ class CmoreUpdater(baseServiceUpdater):
                     pass
 
                 self.createData()
+                login = self.loginData(reconnect=False)
 
-            login = self.loginData(reconnect=False)
+            else:
+                login = True
 
             if login:
                 run = Threading()

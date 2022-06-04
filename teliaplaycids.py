@@ -244,33 +244,63 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 'Accept-Language': 'en-US,en;q=0.9',
             }
 
-            response = self.sendRequest(url, post=True, headers=headers, data=json.dumps(data), verify=True, timeout=timeouts)
+            response = self.sendRequest(url, post=True, headers=headers, json=data, verify=True, timeout=timeouts)
 
-            url = 'https://ottapi.prod.telia.net/web/{cc}/logingateway/rest/v1/login'.format(cc=cc[self.country])
+            url = 'https://logingateway-telia.clientapi-prod.live.tv.telia.net/logingateway/rest/v1/authenticate'
 
             headers = {
-                'Host': 'ottapi.prod.telia.net',
-                'tv-client-boot-id': self.tv_client_boot_id,
-                'User-Agent': UA,
-                'Content-Type': 'application/json',
-                'Accept': '*/*',
-                'Sec-GPC': '1',
-                'Origin':  base[self.country],
-                'Sec-Fetch-Site': 'cross-site',
-                'Sec-Fetch-Mode': 'cors',
-                'Sec-Fetch-Dest': 'empty',
-                'Referer': referer[self.country],
-                'Accept-Language': 'en-US,en;q=0.9',
+                'accept': '*/*',
+                'accept-language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6,fr;q=0.5',
+                'DNT': '1',
+                'origin': 'https://login.teliaplay.{cc}'.format(cc=cc[self.country]),
+                'referer': 'https://login.teliaplay.{cc}/'.format(cc=cc[self.country]),
+                'user-agent': UA,
+                'x-country': ca[self.country],
+            }
+
+            params = {
+                'redirectUri': 'https://www.teliaplay.{cc}/'.format(cc=cc[self.country]),
             }
 
             data = {
-                "deviceId": self.dashjs,
-                "username": self.login,
-                "password": self.password,
-                "deviceType": "WEB",
+                'deviceId': self.dashjs,
+                'deviceType': 'WEB',
+                'password': self.password,
+                'username': self.login,
+                'whiteLabelBrand': 'TELIA',
             }
 
-            response = self.sendRequest(url, post=True, headers=headers, data=json.dumps(data), verify=True, timeout=timeouts)
+            response = self.sendRequest(url, post=True, headers=headers, params=params, json=data, verify=True, timeout=timeouts)
+
+            code = ''
+
+            if not response:
+                self.loginErrorMessage()
+                return
+
+            j_response = response.json()
+            code = j_response['redirectUri'].replace('https://www.teliaplay.{cc}/?code='.format(cc=cc[self.country]), '')
+
+            url = 'https://logingateway-telia.clientapi-prod.live.tv.telia.net/logingateway/rest/v1/oauth/token'
+
+            headers = {
+                'accept-language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6,fr;q=0.5',
+                'DNT': '1',
+                'origin': 'https://www.teliaplay.{cc}'.format(cc=cc[self.country]),
+                'referer': 'https://www.teliaplay.{cc}/'.format(cc=cc[self.country]),
+                'user-agent': UA,
+                'x-country': ca[self.country],
+                'accept': 'application/json',
+                'tv-client-boot-id': self.tv_client_boot_id,
+                'tv-client-name': 'web',
+            }
+
+            params = {
+                'code': code,
+            }
+
+            response = self.sendRequest(url, post=True, params=params, headers=headers, timeout=timeouts)
+
             if not response:
                 if reconnect and retry < 3:
                     retry += 1
@@ -330,7 +360,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 "platformVersion": "NT 6.1"
             }
 
-            response = self.sendRequest(url, post=True, json=False, headers=headers, data=json.dumps(data), verify=True, timeout=timeouts)
+            response = self.sendRequest(url, post=True, headers=headers, json=data, verify=True, timeout=timeouts)
 
             try:
                 response = response.json()
@@ -379,6 +409,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
             }
 
             response = self.sendRequest(url, headers=headers, cookies=sess.cookies, allow_redirects=False, timeout=timeouts)
+
             if not response:
                 if reconnect:
                     self.loginData(reconnect=True)
@@ -426,8 +457,10 @@ class TeliaPlayUpdater(baseServiceUpdater):
                     pass
 
                 self.createData()
+                login = self.loginData(reconnect=False)
 
-            login = self.loginData(reconnect=False)
+            else:
+                login = True
 
             if login:
                 run = Threading()
@@ -647,27 +680,29 @@ class TeliaPlayUpdater(baseServiceUpdater):
             )
 
             data = {
-                "sessionId": self.sessionid,
-                "whiteLabelBrand":"TELIA",
-                "watchMode":"LIVE",
-                "accessControl":"SUBSCRIPTION",
-                "device": {
-                    "deviceId": self.tv_client_boot_id,
-                    "category":"desktop_windows",
-                    "packagings":["DASH_MP4_CTR"],
-                    "drmType":"WIDEVINE",
-                    "capabilities":[],
-                    "screen": {
-                        "height":1080,
-                        "width":1920
-                        },
-                        "os":"Windows",
-                        "model":"windows_desktop"
-                        },
-                        "preferences": {
-                            "audioLanguage":["undefined"],
-                            "accessibility":[]}
+                'sessionId': self.sessionid,
+                'whiteLabelBrand': 'TELIA',
+                'watchMode': 'LIVE',
+                'accessControl': 'SUBSCRIPTION',
+                'device': {
+                    'deviceId': self.tv_client_boot_id,
+                    'category': 'desktop_windows',
+                    'packagings': ['DASH_MP4_CTR'],
+                    'drmType': 'WIDEVINE',
+                    'capabilities': [],
+                    'screen': {
+                        'height': 1080,
+                        'width': 1920
+                    },
+                    'os': 'Windows',
+                    'model': 'windows_desktop'
+                },
+
+                'preferences': {
+                    'audioLanguage': [],
+                    'accessibility': []
                 }
+            }
 
             response = self.sendRequest(url, post=True, headers=headers, json=data, params=params, cookies=sess.cookies, verify=True, timeout=timeouts)
             if not response:
