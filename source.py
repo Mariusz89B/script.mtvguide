@@ -1260,7 +1260,7 @@ class Database(object):
             return
         self._invokeAndBlockForResult(self._reloadServices)
 
-    def _reloadServices(self):
+    def _reloadServices(self, cache=False):
         serviceList = list()
         cacheList = list()
 

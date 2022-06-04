@@ -1104,9 +1104,9 @@ class baseServiceUpdater:
                                 if y.strm == '':
                                     y.strm == 'None'
                                 try:
-                                    channelList.append((unidecodeStr(y.name), y.strm))
+                                    channelList.append((unidecodeStr(y.title), y.strm))
                                 except:
-                                    channelList.append((unidecodeStr(self.decodeString(y.name)), y.strm))
+                                    channelList.append((unidecodeStr(self.decodeString(y.title)), y.strm))
                             except:
                                 pass
 
@@ -1149,9 +1149,9 @@ class baseServiceUpdater:
                         if y.strm == '':
                             y.strm == 'None'
                         try:
-                            channelList.append((unidecodeStr(y.name), y.strm))
+                            channelList.append((unidecodeStr(y.title), y.strm))
                         except:
-                            channelList.append((unidecodeStr(self.decodeString(y.name)), y.strm))
+                            channelList.append((unidecodeStr(self.decodeString(y.title)), y.strm))
                     except:
                         pass
 
@@ -1183,6 +1183,18 @@ class baseServiceUpdater:
                 if newline:
                     f.write(str('\n'))
                 f.write(str('\n'.join(str(s) for s in channelList)))
+
+
+        lines_seen = set()
+
+        with open(file_name, 'r+') as f:
+            d = f.readlines()
+            f.seek(0)
+            for i in d:
+                if i not in lines_seen:
+                    f.write(i)
+                    lines_seen.add(i)
+            f.truncate()
 
         self.log('-------------------------------------------------------------------------------------')
 
