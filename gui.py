@@ -263,7 +263,7 @@ for k, v in CC_DICT.items():
     else:
         if ADDON.getSetting('country_code_{cc}'.format(cc=k)) == "true":
             CC_LIST.append(k.lower())
-            PREDEFINED_CATEGORIES.append('Group: {}'.format(k.upper()))
+            PREDEFINED_CATEGORIES.append('TV Group: {}'.format(k.upper()))
 
 def category_formatting(label):  
     label = re.sub('^0$', '1.png', label)
@@ -6129,9 +6129,9 @@ class mTVGuide(xbmcgui.WindowXML):
                     for k,v in CC_DICT.items():
                         if item == k:
                             if v in categories:
-                                categories.remove('Group: {cc}'.format(cc=v))
+                                categories.remove('TV Group: {cc}'.format(cc=v))
 
-            categories = [label.replace('Group', strings(30995)) for label in categories]
+            categories = [label.replace('TV Group', strings(30995)) for label in categories]
 
             for label in categories:
                 item = xbmcgui.ListItem(label)
@@ -6714,9 +6714,9 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
                     for k,v in CC_DICT.items():
                         if item == k:
                             if v in categories:
-                                categories.remove('Group: {cc}'.format(cc=v))
+                                categories.remove('TV Group: {cc}'.format(cc=v))
 
-            categories = [label.replace('Group', strings(30995)) for label in categories]
+            categories = [label.replace('TV Group', strings(30995)) for label in categories]
 
             for label in categories:
                 item = xbmcgui.ListItem(label)
@@ -6861,15 +6861,19 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
                     categories = set(self.categories)
                     categories.add(cat)
                     self.categories = list(set(categories))
+
                     items = []
+
                     categories = PREDEFINED_CATEGORIES + list(self.categories)
+                    categories = [label.replace('TV Group', strings(30995)) for label in categories]
+
                     for label in categories:
                         item = xbmcgui.ListItem(label)
                         items.append(item)
-                
+
                     listControl = self.getControl(self.C_POPUP_CATEGORY)
                     listControl.reset()
-                
+
                     listControl.addItems(items)
                     listControl.selectItem(categories.index(cat))
 

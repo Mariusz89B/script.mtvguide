@@ -104,10 +104,13 @@ else:
     except:
         PROFILE_PATH = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
 
+PREDEFINED_CATEGORIES = []
 EPG_LIST = []
 EPG_DICT = {}
 
 CC_DICT = ccDict()
+
+CC_LIST = []
 for k, v in CC_DICT.items():
     epg = ADDON.getSetting('epg_{cc}'.format(cc=k)).strip()
 
@@ -115,6 +118,14 @@ for k, v in CC_DICT.items():
         EPG_DICT.update({k: v})
         if epg and epg != '':
             EPG_LIST.append(epg)
+
+    if k == 'all':
+        all_channels = strings(30325)
+        PREDEFINED_CATEGORIES.append(all_channels)
+    else:
+        if ADDON.getSetting('country_code_{cc}'.format(cc=k)) == "true":
+            CC_LIST.append(k.lower())
+            PREDEFINED_CATEGORIES.append(strings(30995) + ': {}'.format(k.upper()))
 
 # ADDON settings
 SOURCE = ADDON.getSetting('source')
@@ -1597,13 +1608,13 @@ class Database(object):
 
             for k, v in EPG_DICT:
                 if k.upper() == category.upper():
-                    categories.append('\s'+k.upper())
-                    categories.append(re.escape('.'+k.lower()))
-                    categories.append('\s'+v['alpha-3'])
-                    categories.append('\s'+v['language'])
-                    categories.append('\s'+v['native'])
+                    categories.append(k.upper())
+                    categories.append('.' + k.lower())
+                    categories.append(v['alpha-3'])
+                    categories.append(v['language'])
+                    categories.append(v['native'])
                 else:
-                    categories.append('\s'+category)
+                    categories.append(category)
 
             return categories
         except Exception as ex:
@@ -1613,21 +1624,27 @@ class Database(object):
     def getCategoryChannelList(self, category, channelList, excludeCurrentCategory):
         try:
             newChannelList = []
-            predefined_category_re = re.compile(r'\w+: ([^\s]*)', re.IGNORECASE)
-            predefined = predefined_category_re.search(category)
 
-            if predefined:
-                categories = self.addCategory(predefined.group(1))
+            if category in PREDEFINED_CATEGORIES:
+                predefined_category_re = re.compile(strings(30995) + r': ([^\s]*)', re.IGNORECASE)
+                r = predefined_category_re.search(category)
+                category = r.group(1) if r else ''
+
+                categories = self.addCategory(category)
                 categories = list(dict.fromkeys(categories))
 
-                deb('Using predefined category: {}'.format(predefined.group(1)))
+                deb('Using predefined category: {}'.format(category))
                 predefined = '|'.join(categories)
 
                 channel_regex = re.compile('.*({})$'.format(predefined))
                 newChannelList = [channel for channel in channelList[:] if channel_regex.search(channel.id)]
 
             else:
+                category = category.replace(strings(30995), 'TV Group')
+
                 channelsInCategory = self.getChannelsInCategory(category)
+                deb('Using custom category: {}'.format(category))
+
                 if len(channelsInCategory) > 0:
                     newChannelList = [channel for channel in channelList[:] if channel.title in channelsInCategory]
 
