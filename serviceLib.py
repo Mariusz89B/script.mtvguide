@@ -1187,14 +1187,24 @@ class baseServiceUpdater:
 
         lines_seen = set()
 
-        with open(file_name, 'r+') as f:
-            d = f.readlines()
-            f.seek(0)
-            for i in d:
-                if i not in lines_seen:
-                    f.write(i)
-                    lines_seen.add(i)
-            f.truncate()
+        if PY3:
+            with open(file_name, 'r+', encoding='utf-8') as f:
+                d = f.readlines()
+                f.seek(0)
+                for i in d:
+                    if i not in lines_seen:
+                        f.write(i)
+                        lines_seen.add(i)
+                f.truncate()
+        else:
+            with codecs.open(file_name, 'r+', encoding='utf-8') as f:
+                d = f.readlines()
+                f.seek(0)
+                for i in d:
+                    if i not in lines_seen:
+                        f.write(i)
+                        lines_seen.add(i)
+                f.truncate()
 
         self.log('-------------------------------------------------------------------------------------')
 
