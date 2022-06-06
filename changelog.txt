@@ -1,4 +1,7 @@
-﻿v9.9.609 (2022-06-05)
+﻿v9.9.611 (2022-06-06)
+- Fixed login for services C More and Telia Play.
+
+v9.9.610 (2022-06-05)
 - Hotfix.
 
 v9.9.609 (2022-06-05)

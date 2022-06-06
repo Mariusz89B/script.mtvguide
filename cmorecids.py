@@ -48,7 +48,7 @@ if sys.version_info[0] > 2:
     PY3 = True
 else:
     PY3 = False
-    
+
 import xbmc
 
 if PY3:
@@ -487,10 +487,8 @@ class CmoreUpdater(baseServiceUpdater):
                     pass
 
                 self.createData()
-                login = self.loginData(reconnect=False)
 
-            else:
-                login = True
+            login = self.loginData(reconnect=False)
 
             if login:
                 run = Threading()
