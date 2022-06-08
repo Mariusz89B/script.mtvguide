@@ -242,7 +242,7 @@ class CmoreUpdater(baseServiceUpdater):
 
             response = self.sendRequest(url, post=True, headers=headers, json=data, verify=True, timeout=timeouts)
 
-            url = 'https://logingateway-cmore.clientapi-prod.live.tv.telia.net/logingateway/rest/v1/authenticate?redirectUri=https%3A%2F%2Fwww.cmore.{cc}%2F'.format(cc=cc[country])
+            url = 'https://logingateway-cmore.clientapi-prod.live.tv.telia.net/logingateway/rest/v1/authenticate?redirectUri=https%3A%2F%2Fwww.cmore.{cc}%2F'.format(cc=cc[self.country])
 
             headers = {
                 'authority': 'logingateway-cmore.t6a.net',
@@ -587,9 +587,9 @@ class CmoreUpdater(baseServiceUpdater):
         refreshTimeDelta = self.refreshTimeDelta()
 
         if not self.validTo:
-            self.validTo = datetime.datetime.now() - timedelta(days=1)
+            self.validTo = datetime.datetime.now() + timedelta(days=1)
 
-        if not self.beartoken and refreshTimeDelta < timedelta(minutes=1):
+        if (not self.beartoken or refreshTimeDelta < timedelta(minutes=1)):
             login = self.loginData(reconnect=True)
 
             result = self.validTo, self.beartoken, self.refrtoken, self.cookies
@@ -599,10 +599,10 @@ class CmoreUpdater(baseServiceUpdater):
     def refreshTimeDelta(self):
         result = None
 
-        if 'Z' in self.validTo:
+        if 'Z' in str(self.validTo):
             validTo = iso8601.parse_date(self.validTo)
         elif self.validTo != '':
-            if not self.validTo:
+            if 'T' in str(self.validTo):
                 try:
                     date_time_format = '%Y-%m-%dT%H:%M:%S.%f+' + self.validTo.split('+')[1]
                 except:
@@ -612,7 +612,7 @@ class CmoreUpdater(baseServiceUpdater):
                 timestamp = int(time.mktime(validTo.timetuple()))
                 tokenValidTo = datetime.datetime.fromtimestamp(int(timestamp))
             else:
-                tokenValidTo = datetime.datetime.now()
+                tokenValidTo = self.validTo
         else:
             tokenValidTo = datetime.datetime.now()
 
@@ -624,10 +624,10 @@ class CmoreUpdater(baseServiceUpdater):
         refreshTimeDelta = self.refreshTimeDelta()
 
         if not self.validTo:
-            self.validTo = datetime.datetime.now() - timedelta(days=1)
+            self.validTo = datetime.datetime.now() + timedelta(days=1)
 
         if refreshTimeDelta is not None:
-            refr = True if not self.beartoken or refreshTimeDelta < timedelta(minutes=1) else False
+            refr = True if (not self.beartoken or refreshTimeDelta < timedelta(minutes=1)) else False
         else:
             refr = False
 
