@@ -51,7 +51,7 @@ if sys.version_info[0] > 2:
     PY3 = True
 else:
     PY3 = False
-    
+
 import xbmc, xbmcvfs
 
 if PY3:
@@ -95,7 +95,7 @@ class PlayerPLUpdater(baseServiceUpdater):
         self.api_base           = 'https://player.pl/playerapi/'
         self.login_api          = 'https://konto.tvn.pl/oauth/' 
         self.mylist             = None
-        
+
         self.GETTOKEN = self.login_api + 'tvn-reverse-onetime-code/create'
         self.POSTTOKEN = self.login_api + 'token'
         self.SUBSCRIBER = self.api_base + 'subscriber/login/token'
@@ -103,18 +103,18 @@ class PlayerPLUpdater(baseServiceUpdater):
         self.JINFO = self.api_base + 'info'
         self.TRANSLATE = self.api_base + 'item/translate'
         self.KATEGORIE = self.api_base + 'item/category/list'
-        
+
         self.PRODUCTVODLIST = self.api_base + 'product/vod/list'
         self.PRODUCTLIVELIST= self.api_base + 'product/list/list'
-        
+
         self.PARAMS = {'4K': 'true','platform': 'ANDROID_TV'}
-        
+
         self.HEADERS3 = {
             'Host': 'konto.tvn.pl',
             'user-agent': UA,
             'content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
         }
-        
+
         self.ACCESS_TOKEN = ADDON.getSetting('playerpl_access_token')
         self.USER_PUB = ADDON.getSetting('playerpl_user_pub')
         self.USER_HASH = ADDON.getSetting('playerpl_user_hash')
@@ -136,10 +136,10 @@ class PlayerPLUpdater(baseServiceUpdater):
         def gen_hex_code(myrange=6):
             import random
             return ''.join([random.choice('0123456789abcdef') for x in range(myrange)])
-            
+
         def uniq_usagent():
             usagent_id = ''
-        
+
             if ADDON.getSetting('playerpl_usagent_id'):
                 usagent_id = ADDON.getSetting('playerpl_usagent_id')
             else:
@@ -147,10 +147,10 @@ class PlayerPLUpdater(baseServiceUpdater):
 
             ADDON.setSetting('playerpl_usagent_id', usagent_id)
             return usagent_id
-        
+
         def uniq_usagentver():
             usagentver_id = ''
-        
+
             if ADDON.getSetting('playerpl_usagentver_id'):
                 usagentver_id = ADDON.getSetting('playerpl_usagentver_id')
             else:
@@ -158,10 +158,10 @@ class PlayerPLUpdater(baseServiceUpdater):
 
             ADDON.setSetting('playerpl_usagentver_id', usagentver_id)
             return usagentver_id
-            
+
         def uniq_maker():
             maker_id = ''
-        
+
             if ADDON.getSetting('playerpl_maker_id'):
                 maker_id = ADDON.getSetting('playerpl_maker_id')
             else:
@@ -169,10 +169,10 @@ class PlayerPLUpdater(baseServiceUpdater):
 
             ADDON.setSetting('playerpl_maker_id', maker_id)
             return maker_id
-            
+
         def uniq_id():
             device_id = ''
-        
+
             if ADDON.getSetting('playerpl_device_id'):
                 device_id = ADDON.getSetting('playerpl_device_id')
             else:
@@ -208,14 +208,14 @@ class PlayerPLUpdater(baseServiceUpdater):
         try:
             if not self.DEVICE_ID or not self.MAKER or not self.USAGENT or not self.USAGENTVER:
                 self.createDatas()
-            
+
             if not self.REFRESH_TOKEN and self.LOGGED != 'true':
                 POST_DATA = 'scope=/pub-api/user/me&client_id=Player_TV_Android_28d3dcc063672068'
                 data = self.getRequests(self.GETTOKEN, data = POST_DATA, headers=self.HEADERS3)
                 kod = data.get('code')
                 dg = xbmcgui.DialogProgress()
                 dg.create('Uwaga','Przepisz kod: [COLOR gold][B]{}[/COLOR][/B]\nNa stronie https://player.pl/zaloguj-tv'.format(kod))
-                
+
                 time_to_wait = 340
                 secs = 0
                 increment = 100 // time_to_wait
@@ -228,19 +228,19 @@ class PlayerPLUpdater(baseServiceUpdater):
                     secs_left = time_to_wait - secs
                     if secs_left == 0: percent = 100
                     else: percent = increment * secs
-                    
+
                     POST_DATA = 'grant_type=tvn_reverse_onetime_code&code={}&client_id=Player_TV_Android_28d3dcc063672068'.format(kod)
                     data = self.getRequests(self.POSTTOKEN, data=POST_DATA, headers=self.HEADERS3)
                     token_type = data.get("token_type", None)
                     errory = data.get('error', None)
                     if token_type == 'bearer': break
                     secs += 1
-                
+
                     dg.update(percent)
                     secs += 1
 
                 dg.close()
-                
+
                 if not cancelled:
                     self.ACCESS_TOKEN = data.get('access_token', None)
                     self.USER_PUB = data.get('user_pub', None)
@@ -258,28 +258,25 @@ class PlayerPLUpdater(baseServiceUpdater):
 
                 POST_DATA = {"agent":self.USAGENT,"agentVersion":self.USAGENTVER,"appVersion":"1.0.38(62)","maker":self.MAKER,"os":"Android","osVersion":"9","token":self.ACCESS_TOKEN,"uid":self.DEVICE_ID}
                 data = self.getRequests(self.SUBSCRIBER, data=POST_DATA, headers=self.HEADERS2, params=PARAMS)
-            
+
                 self.SELECTED_PROFILE = data.get('profile',{}).get('name', None)
                 self.SELECTED_PROFILE_ID = data.get('profile',{}).get('externalUid', None)
-            
+
                 self.HEADERS2['API-ProfileUid'] =  self.SELECTED_PROFILE_ID
-                
+
                 ADDON.setSetting('playerpl_selected_profile_id', self.SELECTED_PROFILE_ID)
                 ADDON.setSetting('playerpl_selected_profile', self.SELECTED_PROFILE)
+                ADDON.setSetting('playerpl_logged', 'true')
                 return True
-
-            #if self.LOGGED != 'true':
-                #ADDON.setSetting('playerpl_logged', 'false')
-                #return False
 
             if self.LOGGED == 'true':
                 return True
-            else:
-                return False
 
         except:
             self.log('Exception while trying to log in: {}'.format(getExceptionString()))
             self.connErrorMessage()
+
+        ADDON.setSetting('playerpl_logged', 'false')
         return False
 
     def getChannelList(self, silent):
@@ -422,32 +419,31 @@ class PlayerPLUpdater(baseServiceUpdater):
             'Host': 'player.pl',
             'X-NewRelic-ID': 'VQEOV1JbABABV1ZaBgMDUFU=',
         }
-    
-    
+
         if 'kanal' in id_:
             id_= id_.split(':')[0]
             rodzaj = 'LIVE'
 
         urlk = 'https://player.pl/playerapi/product/%s/player/configuration?type=%s&4K=true&platform=ANDROID_TV' % (str(id_), rodzaj)
-    
+
         data = self.getRequests(urlk, headers=HEADERSz)
-    
+
         try:
             vidsesid = data["videoSession"]["videoSessionId"]
             prolongvidses = data["prolongVideoSessionUrl"]
-        
+
         except:
             vidsesid = False
             pass
 
         PARAMS = {'type': rodzaj, 'platform': 'ANDROID_TV'}
-    
+
         data = self.getRequests(self.api_base+'item/%s/playlist' % (str(id_)), headers=HEADERSz, params=PARAMS)
-    
+
         if not data:
             urlk = 'https://player.pl/playerapi/item/%s/playlist?type=%s&platform=ANDROID_TV&videoSessionId=%s' % (str(id_), rodzaj, str(vidsesid))
             data = self.getRequests(urlk,headers = HEADERSz, params = {})
-    
+
         vid = data['movie']
         outsub = []
 
@@ -465,7 +461,7 @@ class PlayerPLUpdater(baseServiceUpdater):
         widev = vid['video']['protections']['widevine']['src']
         if vidsesid:
             widev += '&videoSessionId=%s' % vidsesid
-    
+
         src = requests.get(src, allow_redirects=False, verify=False)
         src = src.headers['Location']
 
@@ -475,7 +471,7 @@ class PlayerPLUpdater(baseServiceUpdater):
         data = None
 
         cid = self.channCid(chann.cid)
-        
+
         try:
             run = self.getTranslate(str(cid))
 
@@ -500,6 +496,6 @@ class PlayerPLUpdater(baseServiceUpdater):
                 self.log('getChannelStream error getting channel stream2, result: {}'.format(str(data)))
                 return None
 
-        except Exception as e:
+        except:
             self.log('getChannelStream exception while looping: {}\n Data: {}'.format(getExceptionString(), str(data)))
         return None

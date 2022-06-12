@@ -2,7 +2,7 @@
 <addon
     id="script.mtvguide"
     name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]"
-    version="9.9.613"
+    version="9.9.614-beta.1"
     provider-name="mariusz89b">
   <requires>
     <import addon="xbmc.addon" version="17.0.0"/>
@@ -41,7 +41,10 @@
     <forum>https://github.com/Mariusz89B/script.mtvguide/discussions</forum>
 	<website>https://github.com/Mariusz89B/script.mtvguide</website>
     <source>m-TVGuide © 2013 - 2022</source>
-    <news>v9.9.613 (2022-06-11)
+    <news>v9.9.614 (2022-06-12)
+- Fixed service PlayerPL login.
+
+v9.9.613 (2022-06-11)
 - Fixed playlists load error.
 
 v9.9.612 (2022-06-10)
