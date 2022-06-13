@@ -191,10 +191,10 @@ class PlaylistUpdater(baseServiceUpdater):
 
         if os.path.exists(playlist_cache):
             if PY3:
-                with open(playlist_cache, 'r', encoding='utf-8', errors='ignore') as r:
+                with open(playlist_cache, 'r', encoding='utf-8', errors='replace') as r:
                     services = r.read().splitlines()
             else:
-                with codecs.open(playlist_cache, 'r', encoding='utf-8', errors='ignore') as r:
+                with codecs.open(playlist_cache, 'r', encoding='utf-8', errors='replace') as r:
                     services = r.read().splitlines()
 
         path = os.path.join(self.profilePath, 'playlists')
@@ -232,14 +232,14 @@ class PlaylistUpdater(baseServiceUpdater):
         else:
             try:
                 if PY3:
-                    with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
+                    with open(filepath, 'r', encoding='utf-8', errors='replace') as f:
                         content = [line.strip() for line in f]
                 else:
                     try:
-                        with codecs.open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
+                        with codecs.open(filepath, 'r', encoding='utf-8', errors='replace') as f:
                             content = [line.strip() for line in f]
                     except:
-                        with codecs.open(filepath.decode('utf-8'), 'r', encoding='utf-8', errors='ignore') as f:
+                        with codecs.open(filepath.decode('utf-8'), 'r', encoding='utf-8', errors='replace') as f:
                             content = [line.strip() for line in f]
 
                 self.cachedList = True
@@ -291,14 +291,14 @@ class PlaylistUpdater(baseServiceUpdater):
             else:
                 try:
                     if PY3:
-                        with open(path, 'r', encoding='utf-8', errors='ignore') as f:
+                        with open(path, 'r', encoding='utf-8', errors='replace') as f:
                             tmpcontent = [line.strip() for line in f]
                     else:
                         try:
-                            with codecs.open(path, 'r', encoding='utf-8', errors='ignore') as f:
+                            with codecs.open(path, 'r', encoding='utf-8', errors='replace') as f:
                                 tmpcontent = [line.strip() for line in f]
                         except:
-                            with codecs.open(path.decode('utf-8'), 'r', encoding='utf-8', errors='ignore') as f:
+                            with codecs.open(path.decode('utf-8'), 'r', encoding='utf-8', errors='replace') as f:
                                 tmpcontent = [line.strip() for line in f]
 
                     if not tmpcontent:
@@ -530,9 +530,9 @@ class PlaylistUpdater(baseServiceUpdater):
 
                         if len(splitedLine) > 1:
                             try:
-                                tmpTitle = splitedLine[len(splitedLine) - 1].strip()
+                                tmpTitle = unidecode(splitedLine[len(splitedLine) - 1].strip())
                             except:
-                                tmpTitle = splitedLine[len(splitedLine) - 1].strip().decode('utf-8')
+                                tmpTitle = unidecode(splitedLine[len(splitedLine) - 1].strip().decode('utf-8'))
 
                         tvg_id = False
 

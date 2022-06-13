@@ -51,7 +51,7 @@ if sys.version_info[0] > 2:
     PY3 = True
 else:
     PY3 = False
-
+    
 import xbmc, xbmcvfs
 
 if PY3:
@@ -93,13 +93,13 @@ class PlayerPLUpdater(baseServiceUpdater):
         self.serviceEnabled     = ADDON.getSetting('playerpl_enabled')
         self.servicePriority    = int(ADDON.getSetting('priority_playerpl'))
         self.api_base           = 'https://player.pl/playerapi/'
-        self.login_api          = 'https://konto.tvn.pl/oauth/' 
+        self.login_api          = 'https://konto.tvn.pl/oauth/'
         self.mylist             = None
 
         self.GETTOKEN = self.login_api + 'tvn-reverse-onetime-code/create'
         self.POSTTOKEN = self.login_api + 'token'
         self.SUBSCRIBER = self.api_base + 'subscriber/login/token'
-        self.SUBSCRIBERDETAIL = self.api_base + 'subscriber/detail' 
+        self.SUBSCRIBERDETAIL = self.api_base + 'subscriber/detail'
         self.JINFO = self.api_base + 'info'
         self.TRANSLATE = self.api_base + 'item/translate'
         self.KATEGORIE = self.api_base + 'item/category/list'
@@ -266,17 +266,18 @@ class PlayerPLUpdater(baseServiceUpdater):
 
                 ADDON.setSetting('playerpl_selected_profile_id', self.SELECTED_PROFILE_ID)
                 ADDON.setSetting('playerpl_selected_profile', self.SELECTED_PROFILE)
-                ADDON.setSetting('playerpl_logged', 'true')
                 return True
 
             if self.LOGGED == 'true':
+                ADDON.setSetting('playerpl_logged', 'true')
                 return True
+            else:
+                ADDON.setSetting('playerpl_logged', 'false')
+                return False
 
         except:
             self.log('Exception while trying to log in: {}'.format(getExceptionString()))
             self.connErrorMessage()
-
-        ADDON.setSetting('playerpl_logged', 'false')
         return False
 
     def getChannelList(self, silent):
@@ -302,7 +303,7 @@ class PlayerPLUpdater(baseServiceUpdater):
 
             data = self.getRequests(urlk, headers=self.HEADERS2, params={})
 
-            self.mylist = self.getRequests('https://player.pl/playerapi/subscriber/product/available/list?platform=ANDROID_TV', headers=self.HEADERS2, params={})
+            self.mylist = self.getRequests('https://player.pl/playerapi/subscriber/product/available/list?4K=true&platform=ANDROID_TV', headers=self.HEADERS2, params={})
 
             if PY3:
                 jdata = data
@@ -315,12 +316,12 @@ class PlayerPLUpdater(baseServiceUpdater):
                 img = ''
 
                 if id_ != '':
-                    if id_ in self.mylist or 'TVN HD' == name:
-                        if name != '': 
+                    if id_ in self.mylist:
+                        if name != '':
                             p = re.compile(r'(\sPL$)')
 
                             r = p.search(name)
-                            match = r.group(1) if r else None
+                            match = r.group(1) if r else ''
 
                             if match:
                                 title = name
@@ -334,11 +335,12 @@ class PlayerPLUpdater(baseServiceUpdater):
                             name = re.sub(r'^\s*', '', str(name))
                             title = re.sub(r'^\s*', '', str(title))
 
-                            images = channel.get('images', '')
-                            if images != '':
-                                op = images.get('pc', '')
-                                if op != '':
-                                    img = op[0].get('mainUrl', '')
+                            images = channel.get('images')
+                            if images:
+                                op = images.get('pc')
+                                if op:
+                                    for i in op:
+                                        img = i.get('mainUrl')
 
                             cid = '%s:%s' % (id_,'kanal')
                             program = TvCid(cid=cid, name=name, title=title, img=img)
@@ -346,13 +348,14 @@ class PlayerPLUpdater(baseServiceUpdater):
 
                             self.log('[UPD] %-12s %-35s %-35s' % (cid, name, title))
 
-                if len(result) <= 0:
-                    self.loginErrorMessage()
-                    self.log('Error while parsing service {}, returned data is: {}'.format(self.serviceName, str(data)))
+            if len(result) <= 0:
+                self.noContentMessage()
+                self.log('Error while parsing service {}, returned data is: {}'.format(self.serviceName, str(data)))
 
-                self.log('-------------------------------------------------------------------------------------')
+            self.log('-------------------------------------------------------------------------------------')
 
         except:
+            self.connErrorMessage()
             self.log('getChannelList exception: {}'.format(getExceptionString()))
         return result
 
@@ -419,31 +422,32 @@ class PlayerPLUpdater(baseServiceUpdater):
             'Host': 'player.pl',
             'X-NewRelic-ID': 'VQEOV1JbABABV1ZaBgMDUFU=',
         }
-
+    
+    
         if 'kanal' in id_:
             id_= id_.split(':')[0]
             rodzaj = 'LIVE'
 
         urlk = 'https://player.pl/playerapi/product/%s/player/configuration?type=%s&4K=true&platform=ANDROID_TV' % (str(id_), rodzaj)
-
+    
         data = self.getRequests(urlk, headers=HEADERSz)
-
+    
         try:
             vidsesid = data["videoSession"]["videoSessionId"]
             prolongvidses = data["prolongVideoSessionUrl"]
-
+        
         except:
             vidsesid = False
             pass
 
         PARAMS = {'type': rodzaj, 'platform': 'ANDROID_TV'}
-
+    
         data = self.getRequests(self.api_base+'item/%s/playlist' % (str(id_)), headers=HEADERSz, params=PARAMS)
-
+    
         if not data:
             urlk = 'https://player.pl/playerapi/item/%s/playlist?type=%s&platform=ANDROID_TV&videoSessionId=%s' % (str(id_), rodzaj, str(vidsesid))
             data = self.getRequests(urlk,headers = HEADERSz, params = {})
-
+    
         vid = data['movie']
         outsub = []
 
@@ -461,7 +465,7 @@ class PlayerPLUpdater(baseServiceUpdater):
         widev = vid['video']['protections']['widevine']['src']
         if vidsesid:
             widev += '&videoSessionId=%s' % vidsesid
-
+    
         src = requests.get(src, allow_redirects=False, verify=False)
         src = src.headers['Location']
 
@@ -471,7 +475,7 @@ class PlayerPLUpdater(baseServiceUpdater):
         data = None
 
         cid = self.channCid(chann.cid)
-
+        
         try:
             run = self.getTranslate(str(cid))
 
@@ -496,6 +500,6 @@ class PlayerPLUpdater(baseServiceUpdater):
                 self.log('getChannelStream error getting channel stream2, result: {}'.format(str(data)))
                 return None
 
-        except:
+        except Exception as e:
             self.log('getChannelStream exception while looping: {}\n Data: {}'.format(getExceptionString(), str(data)))
         return None
