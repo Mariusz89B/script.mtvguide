@@ -2,7 +2,7 @@
 <addon
     id="script.mtvguide"
     name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]"
-    version="9.9.614-beta.3"
+    version="9.9.614"
     provider-name="mariusz89b">
   <requires>
     <import addon="xbmc.addon" version="17.0.0"/>
@@ -44,6 +44,7 @@
     <news>v9.9.614 (2022-06-16)
 - Fixed service PlayerPL login.
 - Added option to manually assign adult and vod EPG URL.
+- Other fixes.
 
 v9.9.613 (2022-06-11)
 - Fixed playlists load error.
