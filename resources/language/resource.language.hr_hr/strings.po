@@ -228,6 +228,18 @@ msgctxt "#30169"
 msgid "No channels available in EPG list. Check your settings or Kodi log for more information.[CR][CR]Do you want to exit m-TVGuide?"
 msgstr "Na popisu EPG nema dostupnih kanala. Za više informacija provjerite svoje postavke ili dnevnik Kodi.[CR][CR]Želite li izaći iz m-TVGuide?"
 
+msgctxt "#30170"
+msgid "Failed to download predefined {0} from server.[CR]Response HTTP status: {1}[CR][CR]Error is not critical and addon will start."
+msgstr "Preuzimanje unaprijed definiranog {0} s poslužitelja nije uspjelo.[CR]HTTP status odgovora: {1}[CR][CR]Pogreška nije kritična i dodatak će se pokrenuti."
+
+msgctxt "#30171"
+msgid "Use predefined"
+msgstr "Koristite unaprijed definirano"
+
+msgctxt "#30172"
+msgid "Manually assign EPG URL"
+msgstr "Ručno dodijeli EPG URL"
+
 msgctxt "#30200"
 msgid "on [B]{}[/B] in 5 minutes..."
 msgstr "na [B]{}[/B] za 5 minuta..."

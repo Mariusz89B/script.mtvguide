@@ -228,6 +228,18 @@ msgctxt "#30169"
 msgid "No channels available in EPG list. Check your settings or Kodi log for more information.[CR][CR]Do you want to exit m-TVGuide?"
 msgstr "Ingen kanaler tilgængelige på EPG listen. Tjek dine indstillinger eller Kodi log for mere information.[CR][CR]Vil du afslutte m-TVGuide?"
 
+msgctxt "#30170"
+msgid "Failed to download predefined {0} from server.[CR]Response HTTP status: {1}[CR][CR]Error is not critical and addon will start."
+msgstr "Kunne ikke downloade foruddefinerede {0} fra serveren.[CR]Svar HTTP status: {1}[CR][CR]Fejlen er ikke kritisk, og tilføjelsen starter."
+
+msgctxt "#30171"
+msgid "Use predefined"
+msgstr "Brug foruddefineret"
+
+msgctxt "#30172"
+msgid "Manually assign EPG URL"
+msgstr "Tildel manuelt EPG URL"
+
 msgctxt "#30200"
 msgid "on [B]{}[/B] in 5 minutes..."
 msgstr "På [B]{}[/B] om 5 minutter..."

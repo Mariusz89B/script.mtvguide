@@ -332,7 +332,6 @@ class ProgramDescriptionParser(object):
 
         return director
 
-    
     def extractEpisode(self):
         try:
             episode = re.search(".*((Odcinek:|Avsnitt:|Episode:|Episode:|.?pisode:|Folge:|Odjeljak:|Epizoda:|Aflevering:|Sezione:)\s*(\[B\])?(.*?\/B\]|.*?[^\.]*)(\.)?).*", self.description).group(1)
@@ -1467,7 +1466,7 @@ class Database(object):
                     c.close()
         except:
             pass
-            
+
     def saveChannelList(self, callback, channelList):
         self.eventQueue.append([self._saveChannelList, callback, channelList])
         self.event.set()
@@ -1920,9 +1919,74 @@ class Database(object):
         if row:
             program = Program(channel, row[str('title')], row[str('start_date')], row[str('end_date')], row[str('description')], row[str('productionDate')], row[str('director')], row[str('actor')], row[str('episode')], row[str('rating')], row[str('image_large')], row[str('image_small')], row[str('categoryA')], row[str('categoryB')])
         else:
-            program = Program(channel, channel.title, datetime.now(), datetime.now(), '', channel.logo, 'tvguide-logo-epg.png', '', '', '')
+            try:
+                title = channel.title
+            except:
+                title = ''
+
+            try:
+                start = channel.start_date
+            except:
+                start = datetime.now().replace(microsecond=0)
+
+            try:
+                end = channel.end_date
+            except:
+                end = datetime.now().replace(microsecond=0)
+
+            try:
+                desc = channel.description
+            except:
+                desc = ''
+
+            try:
+                date = channel.productionDate
+            except:
+                date = ''
+
+            try:
+                director = channel.director
+            except:
+                director = ''
+
+            try:
+                actor = channel.actor
+            except:
+                actor = ''
+
+            try:
+                episode = channel.episode
+            except:
+                episode = ''
+
+            try:
+                rating = channel.rating
+            except:
+                rating = ''
+
+            try:
+                imageLarge = channel.image_large
+            except:
+                imageLarge = 'tvguide-logo-epg.png'
+
+            try:
+                imageSmall = channel.image_small
+            except:
+                imageSmall = 'tvguide-logo-epg.png'
+
+            try:
+                categoryA = channel.categoryA
+            except:
+                categoryA = ''
+
+            try:
+                categoryB = channel.categoryB
+            except:
+                categoryB = ''
+
+            program = Program(channel, title, start, end, desc, date, director, actor, episode, rating, imageLarge, imageSmall, categoryA, categoryB)
         c.close()
-            
+
         return program
 
     def getNextProgram(self, program):
@@ -1991,7 +2055,7 @@ class Database(object):
             @type startTime: datetime
             @return:
             """
-            endTime = startTime + timedelta(hours = 2)
+            endTime = startTime + timedelta(hours=2)
             channelsWithoutProg = list(channels)
 
             channelMap = dict()
@@ -2004,10 +2068,10 @@ class Database(object):
             c = self.conn.cursor()
 
             if startTime == '' or startTime is None:
-                startTime = datetime.now()
+                startTime = datetime.now().replace(microsecond=0)
 
             if endTime == '' or endTime is None:
-                endTime = datetime.now()
+                endTime = datetime.now().replace(microsecond=0)
 
             c.execute('SELECT p.*, (SELECT 1 FROM notifications n WHERE n.channel=p.channel AND n.program_title=p.title AND n.source=p.source AND (n.start_date IS NULL OR n.start_date = p.start_date)) AS notification_scheduled , (SELECT 1 FROM recordings r WHERE r.channel=p.channel AND r.program_title=p.title AND r.start_date=p.start_date AND r.source=p.source) AS recording_scheduled FROM programs p WHERE p.channel IN (\'' + ('\',\''.join(channelMap.keys())) + '\') AND p.source=? AND p.end_date > ? AND p.start_date < ?', [self.source.KEY, startTime.replace(microsecond=0), endTime.replace(microsecond=0)])
 
@@ -2018,8 +2082,74 @@ class Database(object):
                     channelsWithoutProg.remove(channelMap[row[str('channel')]])
                 except ValueError:
                     pass
+
             for channel in channelsWithoutProg:
-                program = Program(channel, channel.title, startTime, endTime, '', '', 'tvguide-logo-epg.png', '', '', '')
+                try:
+                    title = channel.title
+                except:
+                    title = ''
+
+                try:
+                    start = channel.start_date
+                except:
+                    start = startTime
+
+                try:
+                    end = channel.end_date
+                except:
+                    end = endTime
+
+                try:
+                    desc = channel.description
+                except:
+                    desc = ''
+
+                try:
+                    date = channel.productionDate
+                except:
+                    date = ''
+
+                try:
+                    director = channel.director
+                except:
+                    director = ''
+
+                try:
+                    actor = channel.actor
+                except:
+                    actor = ''
+
+                try:
+                    episode = channel.episode
+                except:
+                    episode = ''
+
+                try:
+                    rating = channel.rating
+                except:
+                    rating = ''
+
+                try:
+                    imageLarge = channel.image_large
+                except:
+                    imageLarge = 'tvguide-logo-epg.png'
+
+                try:
+                    imageSmall = channel.image_small
+                except:
+                    imageSmall = 'tvguide-logo-epg.png'
+
+                try:
+                    categoryA = channel.categoryA
+                except:
+                    categoryA = ''
+
+                try:
+                    categoryB = channel.categoryB
+                except:
+                    categoryB = ''
+
+                program = Program(channel, title, start, end, desc, date, director, actor, episode, rating, imageLarge, imageSmall, categoryA, categoryB)
                 programList.append(program)
             c.close()
         except Exception as ex:
@@ -2975,7 +3105,7 @@ class XMLTVSource(Source):
                 iob = io.BytesIO(content)
                 context = ElementTree.iterparse(iob, events=("start", "end"))
                 return parseXMLTV(context=context, f=iob, size=len(content), progress_callback=progress_callback, zone=zone, autozone=autozone, local=local, logoFolder=self.logoFolder)
-            
+
     def isUpdated(self, channelsLastUpdated, programLastUpdate, epgSize):
         if channelsLastUpdated is None or not xbmcvfs.exists(self.xmltvFile):
             return True
@@ -3083,7 +3213,26 @@ class MTVGUIDESource(Source):
 
         except SourceFaultyEPGException as ex:
             deb("Failed to download custom EPG but addon should start!, EPG: {}".format(ex.epg))
-            xbmcgui.Dialog().ok(strings(LOAD_ERROR_TITLE), strings(LOAD_ERROR_LINE1) + '\n' + ex.epg + '\n' + strings(LOAD_NOT_CRITICAL_ERROR))
+
+            adultEPG = M_TVGUIDE_SUPPORT + 'freeepg/xxx.xml'
+            vodEPG = M_TVGUIDE_SUPPORT + 'freeepg/vod.xml'
+
+            epgTitle = strings(LOAD_ERROR_LINE1) + '\n' + ex.epg + '\n' + strings(LOAD_NOT_CRITICAL_ERROR)
+            if ex.epg == adultEPG:
+                res = requests.get(adultEPG, timeout=5)
+                status = res.status_code
+                title = 'Adult XXX EPG'
+
+                epgTitle = strings(30170).format(title, status)
+
+            elif ex.epg == vodEPG:
+                res = requests.get(vodEPG, timeout=5)
+                status = res.status_code
+                title = 'VOD EPG'
+
+                epgTitle = strings(30170).format(title, status)
+
+            xbmcgui.Dialog().ok(strings(LOAD_ERROR_TITLE), epgTitle)
 
             parsedDataEx = {}
 
@@ -3350,12 +3499,6 @@ def customParseXMLTV(xml, progress_callback, zone, autozone, local, logoFolder):
         start = retimezone(program, programStartRe)
         stop = retimezone(program, programStopRe)
 
-        try:
-            if stop - start > timedelta(hours=24):
-                stop = start
-        except:
-            pass
-
         r = programDesc.search(program)
         desc = r.group(1) if r else ''
 
@@ -3549,12 +3692,6 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
         except Exception as ex:
             deb('TimeZone Exception: {}'.format(ex))
             stop = ''
-
-        try:
-            if stop - start > timedelta(hours=24):
-                stop = start
-        except:
-            pass
 
         return Program(channel, elem.findtext('title'), start, stop, description, productionDate=date,
                        director=director, actor=actor, episode=episode, rating=value, imageLarge=live, imageSmall=icon,

@@ -135,13 +135,13 @@ class SettingsImp:
             dirname = xbmcgui.Dialog().browseSingle(type=3, heading=strings(58001), shares='files')
         except:
             dirname = xbmcgui.Dialog().browseSingle(type=3, heading=strings(58001).encode('utf-8'), shares='files')
-        filename = 'm-TVGuide_backup_' + str(datetime.datetime.now().strftime("%Y-%m-%d")) + '.zip'
+        filename = 'm-TVGuide_backup_' + str(datetime.datetime.now().strftime('%Y-%m-%d')) + '.zip'
         if dirname is not None and dirname != '':
             if not os.path.isdir(self.profilePath):
                 try:
-                    xbmcgui.Dialog().ok(strings(58002),"\n" + strings(58004))
+                    xbmcgui.Dialog().ok(strings(58002),'\n' + strings(58004))
                 except:
-                    xbmcgui.Dialog().ok(strings(58002).encode('utf-8'),"\n" + strings(58004).encode('utf-8'))
+                    xbmcgui.Dialog().ok(strings(58002).encode('utf-8'),'\n' + strings(58004).encode('utf-8'))
                 return success
 
             deb('SettingsImp exportSettings to file %s' % os.path.join(dirname, filename))
@@ -173,14 +173,14 @@ class SettingsImp:
 
             if success:
                 try:
-                    xbmcgui.Dialog().ok(strings(58002),"\n" + strings(58005))
+                    xbmcgui.Dialog().ok(strings(58002),'\n' + strings(58005))
                 except:
-                    xbmcgui.Dialog().ok(strings(58002).encode('utf-8'),"\n" + strings(58005).encode('utf-8'))
+                    xbmcgui.Dialog().ok(strings(58002).encode('utf-8'),'\n' + strings(58005).encode('utf-8'))
             else:
                 try:
-                    xbmcgui.Dialog().ok(strings(58002),"\n" + strings(58006))
+                    xbmcgui.Dialog().ok(strings(58002),'\n' + strings(58006))
                 except:
-                    xbmcgui.Dialog().ok(strings(58002).encode('utf-8'),"\n" + strings(58006).encode('utf-8'))
+                    xbmcgui.Dialog().ok(strings(58002).encode('utf-8'),'\n' + strings(58006).encode('utf-8'))
         return success
 
     def importSettings(self):
@@ -230,14 +230,14 @@ class SettingsImp:
 
             if success:
                 try:
-                    xbmcgui.Dialog().ok(strings(58003),"\n" + strings(58008) + ".")
+                    xbmcgui.Dialog().ok(strings(58003),'\n' + strings(58008) + '.')
                 except:
-                    xbmcgui.Dialog().ok(strings(58003).encode('utf-8'),"\n" + strings(58008).encode('utf-8') + ".")
+                    xbmcgui.Dialog().ok(strings(58003).encode('utf-8'),'\n' + strings(58008).encode('utf-8') + '.')
             else:
                 try:
-                    xbmcgui.Dialog().ok(strings(58003),"\n" + strings(58009) + "." + "\n" + strings(58010) + ".")
+                    xbmcgui.Dialog().ok(strings(58003),'\n' + strings(58009) + '.' + '\n' + strings(58010) + '.')
                 except:
-                    xbmcgui.Dialog().ok(strings(58003).encode('utf-8'),"\n" + strings(58009).encode('utf-8') + "." + "\n" + strings(58010).encode('utf-8') + ".")
+                    xbmcgui.Dialog().ok(strings(58003).encode('utf-8'),'\n' + strings(58009).encode('utf-8') + '.' + '\n' + strings(58010).encode('utf-8') + '.')
         return success
 
     def importRecordApp(self, filename):
@@ -315,7 +315,7 @@ class SettingsImp:
 
                     if 'ffmpeg' in binaryFilename or 'avconv' in binaryFilename:
                         deb('importRecordApp setting ffmpeg app to: %s' % binaryFinalPath)
-                        ADDON.setSetting(id="ffmpegExe", value=str(binaryFinalPath))
+                        ADDON.setSetting(id='ffmpegExe', value=str(binaryFinalPath))
                         try:
                             xbmcgui.Dialog().ok(strings(69012),'\n' + 'FFMPEG ' + strings(69013))
                         except:
@@ -323,7 +323,7 @@ class SettingsImp:
 
                     if 'rtmpdump' in binaryFilename:
                         deb('importRecordApp setting rtmpdump app to: %s' % binaryFinalPath)
-                        ADDON.setSetting(id="rtmpdumpExe", value=str(binaryFinalPath))
+                        ADDON.setSetting(id='rtmpdumpExe', value=str(binaryFinalPath))
                         try:
                             xbmcgui.Dialog().ok(strings(69012),'\n' + 'RTMPDUMP ' + strings(69013))
                         except:
@@ -391,9 +391,9 @@ class SettingsImp:
 
         if recordApp is not None:
             try:
-                xbmcgui.Dialog().ok(strings(69012),"\n" + strings(69018))
+                xbmcgui.Dialog().ok(strings(69012),'\n' + strings(69018))
             except:
-                xbmcgui.Dialog().ok(strings(69012).encode('utf-8', 'replace'),"\n" + strings(69018).encode('utf-8'))
+                xbmcgui.Dialog().ok(strings(69012).encode('utf-8', 'replace'),'\n' + strings(69018).encode('utf-8'))
             try:
                 deb('downloadRecordApp downloading app from %s' % recordApp)
                 recordAppDir = os.path.join(self.profilePath, 'record_app')
@@ -467,30 +467,30 @@ class SettingsImp:
             settingsImportScript = os.path.join(xbmc.translatePath(ADDON.getAddonInfo('path')), 'settingsImportExport.py')
         if ffmpegExe is not None:
             sys.argv = [settingsImportScript, 'ImportRecordApp', ffmpegExe]
-            exec(compile(open(settingsImportScript, "rb").read(), settingsImportScript, 'exec'))
+            exec(compile(open(settingsImportScript, 'rb').read(), settingsImportScript, 'exec'))
         if rtmpdumpExe is not None:
             sys.argv = [settingsImportScript, 'ImportRecordApp', rtmpdumpExe]
-            exec(compile(open(settingsImportScript, "rb").read(), settingsImportScript, 'exec'))
+            exec(compile(open(settingsImportScript, 'rb').read(), settingsImportScript, 'exec'))
 
         if ffmpegExe is not None and rtmpdumpExe is None:
             deb('downloadRecordApp found only FFmpeg but no rtmpdump - setting ffmpeg as only app')
-            ADDON.setSetting(id="use_only_ffmpeg", value=str('true'))
+            ADDON.setSetting(id='use_only_ffmpeg', value=str('true'))
 
         if failedToDownload:
             try:
-                xbmcgui.Dialog().ok(strings(69012),"\n" + strings(69019))
+                xbmcgui.Dialog().ok(strings(69012),'\n' + strings(69019))
             except:
-                xbmcgui.Dialog().ok(strings(69012).encode('utf-8', 'replace'),"\n" + strings(69019).encode('utf-8'))
+                xbmcgui.Dialog().ok(strings(69012).encode('utf-8', 'replace'),'\n' + strings(69019).encode('utf-8'))
         elif failedToFindBinary:
             try:
-                xbmcgui.Dialog().ok(strings(69012),"\n" + strings(69021))
+                xbmcgui.Dialog().ok(strings(69012),'\n' + strings(69021))
             except:
-                xbmcgui.Dialog().ok(strings(69012).encode('utf-8', 'replace'),"\n" + strings(69021).encode('utf-8'))
+                xbmcgui.Dialog().ok(strings(69012).encode('utf-8', 'replace'),'\n' + strings(69021).encode('utf-8'))
         elif ffmpegExe is None and rtmpdumpExe is None:
             try:
-                xbmcgui.Dialog().ok(strings(69012),"\n" + strings(69022))
+                xbmcgui.Dialog().ok(strings(69012),'\n' + strings(69022))
             except:
-                xbmcgui.Dialog().ok(strings(69012).encode('utf-8', 'replace'),"\n" + strings(69022).encode('utf-8'))
+                xbmcgui.Dialog().ok(strings(69012).encode('utf-8', 'replace'),'\n' + strings(69022).encode('utf-8'))
 
     def adultPicker(self):
         deb('starting adultPicker')
@@ -501,18 +501,18 @@ class SettingsImp:
         except:
             options.append(strings(30008).encode('utf-8', 'replace'))
         options.append(strings(30008))
-        if ADDON.getSetting('XXX_EPG') != "":
+        if ADDON.getSetting('XXX_EPG') != '':
             #disabling
             try:
-                options.append( strings(30719) + " " + strings(30747))
+                options.append( strings(30719) + ' ' + strings(30747))
             except:
-                options.append( strings(30719).encode('utf-8', 'replace') + " " + strings(30747).encode('utf-8', 'replace'))
+                options.append( strings(30719).encode('utf-8', 'replace') + ' ' + strings(30747).encode('utf-8', 'replace'))
         else:
             #enabling
             try:
-                options.append( strings(30722) + " " + strings(30747))
+                options.append( strings(30722) + ' ' + strings(30747))
             except:
-                options.append( strings(30722).encode('utf-8', 'replace') + " " + strings(30747).encode('utf-8', 'replace'))
+                options.append( strings(30722).encode('utf-8', 'replace') + ' ' + strings(30747).encode('utf-8', 'replace'))
             enabling = True
 
         ret = xbmcgui.Dialog().select(strings(30715), options)
@@ -521,11 +521,11 @@ class SettingsImp:
             if not enabling:
                 #disable adult
                 deb('Adult - disabling!')
-                ADDON.setSetting(id="XXX_EPG", value=str(""))
+                ADDON.setSetting(id='XXX_EPG', value=str(''))
                 try:
-                    ADDON.setSetting(id="showAdultChannels", value=str(strings(30720)))
+                    ADDON.setSetting(id='showAdultChannels', value=str(strings(30720)))
                 except:
-                    ADDON.setSetting(id="showAdultChannels", value=str(strings(30720).encode('utf-8', 'replace')))
+                    ADDON.setSetting(id='showAdultChannels', value=str(strings(30720).encode('utf-8', 'replace')))
             else:
                 #enable adult
                 deb('Adult - enter password!')
@@ -535,11 +535,34 @@ class SettingsImp:
                     password = xbmcgui.Dialog().input(strings(30723).encode('utf-8', 'replace'))
                 if password == 'mods':
                     deb('Adult - password correct, enabling!')
-                    ADDON.setSetting(id="XXX_EPG", value=str(adultEPG))
+                    adult = adultEPG
+                    ret = xbmcgui.Dialog().select(strings(30745), [strings(30171), strings(30172)])
+
+                    if ret < 0:
+                        return
+
+                    if ret == 0:
+                        pass
+
+                    elif ret == 1:
+                        label = strings(30747).capitalize()
+                        txt = 'https://'
+
+                        kb = xbmc.Keyboard(txt,'')
+                        kb.setHeading(strings(59945).format(label))
+                        kb.setHiddenInput(False)
+                        kb.doModal()
+                        c = kb.getText() if kb.isConfirmed() else None
+                        if c == '': c = None
+
+                        if c is not None:
+                            adult = c
+
+                    ADDON.setSetting(id='XXX_EPG', value=str(adult))
                     try:
-                        ADDON.setSetting(id="showAdultChannels", value=str(strings(30721)))
+                        ADDON.setSetting(id='showAdultChannels', value=str(strings(30721)))
                     except:
-                        ADDON.setSetting(id="showAdultChannels", value=str(strings(30721).encode('utf-8', 'replace')))
+                        ADDON.setSetting(id='showAdultChannels', value=str(strings(30721).encode('utf-8', 'replace')))
                 else:
                     deb('Adult - password incorrect: %s' % password)
                     try:
@@ -555,18 +578,18 @@ class SettingsImp:
 
         options = list()
         options.append(strings(30008))
-        if ADDON.getSetting('VOD_EPG') != "":
+        if ADDON.getSetting('VOD_EPG') != '':
             #disabling
             try:
-                options.append( strings(30719) + " " + strings(30748))
+                options.append( strings(30719) + ' ' + strings(30748))
             except:
-                options.append( strings(30719).encode('utf-8', 'replace') + " " + strings(30748).encode('utf-8', 'replace'))
+                options.append( strings(30719).encode('utf-8', 'replace') + ' ' + strings(30748).encode('utf-8', 'replace'))
         else:
             #enabling
             try:
-                options.append( strings(30722) + " " + strings(30748))
+                options.append( strings(30722) + ' ' + strings(30748))
             except:
-                options.append( strings(30722).encode('utf-8', 'replace') + " " + strings(30748).encode('utf-8', 'replace'))
+                options.append( strings(30722).encode('utf-8', 'replace') + ' ' + strings(30748).encode('utf-8', 'replace'))
             enabling = True
 
         ret = xbmcgui.Dialog().select(strings(30745), options)
@@ -575,19 +598,42 @@ class SettingsImp:
             if not enabling:
                 #disable vod
                 deb('Vod - disabling!')
-                ADDON.setSetting(id="VOD_EPG", value=str(""))
+                ADDON.setSetting(id='VOD_EPG', value=str(''))
                 try:
-                    ADDON.setSetting(id="showVodChannels", value=str(strings(30720)))
+                    ADDON.setSetting(id='showVodChannels', value=str(strings(30720)))
                 except:
-                    ADDON.setSetting(id="showVodChannels", value=str(strings(30720).encode('utf-8', 'replace')))
+                    ADDON.setSetting(id='showVodChannels', value=str(strings(30720).encode('utf-8', 'replace')))
             else:
                 #enable vod
                 deb('Vod - enabling!')
-                ADDON.setSetting(id="VOD_EPG", value=str(vodEPG))
+                vod = vodEPG
+                ret = xbmcgui.Dialog().select(strings(30745), [strings(30171), strings(30172)])
+
+                if ret < 0:
+                    return
+
+                if ret == 0:
+                    pass
+
+                elif ret == 1:
+                    label = strings(30748).capitalize()
+                    txt = 'https://'
+
+                    kb = xbmc.Keyboard(txt,'')
+                    kb.setHeading(strings(59945).format(label))
+                    kb.setHiddenInput(False)
+                    kb.doModal()
+                    c = kb.getText() if kb.isConfirmed() else None
+                    if c == '': c = None
+
+                    if c is not None:
+                        vod = c
+
+                ADDON.setSetting(id='VOD_EPG', value=str(vod))
                 try:
-                    ADDON.setSetting(id="showVodChannels", value=str(strings(30721)))
+                    ADDON.setSetting(id='showVodChannels', value=str(strings(30721)))
                 except:
-                    ADDON.setSetting(id="showVodChannels", value=str(strings(30721).encode('utf-8', 'replace')))
+                    ADDON.setSetting(id='showVodChannels', value=str(strings(30721).encode('utf-8', 'replace')))
 
         xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)
 
@@ -684,9 +730,9 @@ class SettingsImp:
 
             deb('epg url - disabling!')
             try:
-                ADDON.setSetting(id="countryUrlChannels", value=str(strings(30720)))
+                ADDON.setSetting(id='countryUrlChannels', value=str(strings(30720)))
             except:
-                ADDON.setSetting(id="countryUrlChannels", value=str(strings(30720).encode('utf-8', 'replace')))
+                ADDON.setSetting(id='countryUrlChannels', value=str(strings(30720).encode('utf-8', 'replace')))
             return xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)
 
         elif len(multiselect) == 1:
@@ -708,9 +754,9 @@ class SettingsImp:
 
                     deb('epg url - enabling!')
                     try:
-                        ADDON.setSetting(id="countryUrlChannels", value=str(strings(30721) + ' (' + strings(59919)+')'))
+                        ADDON.setSetting(id='countryUrlChannels', value=str(strings(30721) + ' (' + strings(59919)+')'))
                     except:
-                        ADDON.setSetting(id="countryUrlChannels", value=str((strings(30721) + ' (' + strings(59919)+')').encode('utf-8', 'replace'))) 
+                        ADDON.setSetting(id='countryUrlChannels', value=str((strings(30721) + ' (' + strings(59919)+')').encode('utf-8', 'replace'))) 
 
         elif len(multiselect) > 1:
             for item in multiselect:
@@ -752,9 +798,9 @@ class SettingsImp:
 
                     deb('epg url - enabling!')
                     try:
-                        ADDON.setSetting(id="countryUrlChannels", value=str(strings(30721) + ' (' + strings(59919)+')'))
+                        ADDON.setSetting(id='countryUrlChannels', value=str(strings(30721) + ' (' + strings(59919)+')'))
                     except:
-                        ADDON.setSetting(id="countryUrlChannels", value=str((strings(30721) + ' (' + strings(59919)+')').encode('utf-8', 'replace'))) 
+                        ADDON.setSetting(id='countryUrlChannels', value=str((strings(30721) + ' (' + strings(59919)+')').encode('utf-8', 'replace'))) 
 
             else:
                 setList = list()
@@ -765,16 +811,16 @@ class SettingsImp:
                 if 'true' in setList:
                     deb('epg url - enabling!')
                     try:
-                        ADDON.setSetting(id="countryUrlChannels", value=str(strings(30721) + ' (' + strings(59919)+')'))
+                        ADDON.setSetting(id='countryUrlChannels', value=str(strings(30721) + ' (' + strings(59919)+')'))
                     except:
-                        ADDON.setSetting(id="countryUrlChannels", value=str((strings(30721) + ' (' + strings(59919)+')').encode('utf-8', 'replace'))) 
+                        ADDON.setSetting(id='countryUrlChannels', value=str((strings(30721) + ' (' + strings(59919)+')').encode('utf-8', 'replace'))) 
 
                 else:
                     deb('epg url - disabling!')
                     try:
-                        ADDON.setSetting(id="countryUrlChannels", value=str(strings(30720)))
+                        ADDON.setSetting(id='countryUrlChannels', value=str(strings(30720)))
                     except:
-                        ADDON.setSetting(id="countryUrlChannels", value=str(strings(30720).encode('utf-8', 'replace')))
+                        ADDON.setSetting(id='countryUrlChannels', value=str(strings(30720).encode('utf-8', 'replace')))
 
                 break
 
@@ -871,9 +917,9 @@ class SettingsImp:
 
             deb('epg url - disabling!')
             try:
-                ADDON.setSetting(id="countryFileChannels", value=str(strings(30720)))
+                ADDON.setSetting(id='countryFileChannels', value=str(strings(30720)))
             except:
-                ADDON.setSetting(id="countryFileChannels", value=str(strings(30720).encode('utf-8', 'replace')))
+                ADDON.setSetting(id='countryFileChannels', value=str(strings(30720).encode('utf-8', 'replace')))
             return xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)  
 
         elif multiselect:
@@ -893,16 +939,16 @@ class SettingsImp:
             if fn != '':
                 deb('epg url - enabling!')
                 try:
-                    ADDON.setSetting(id="countryFileChannels", value=str(strings(30721) + ' (' + strings(59908)+')'))
+                    ADDON.setSetting(id='countryFileChannels', value=str(strings(30721) + ' (' + strings(59908)+')'))
                 except:
-                    ADDON.setSetting(id="countryFileChannels", value=str((strings(30721) + ' (' + strings(59908)+')').encode('utf-8', 'replace'))) 
+                    ADDON.setSetting(id='countryFileChannels', value=str((strings(30721) + ' (' + strings(59908)+')').encode('utf-8', 'replace'))) 
 
             else:
                 deb('epg url - disabling!')
                 try:
-                    ADDON.setSetting(id="countryFileChannels", value=str(strings(30720)))
+                    ADDON.setSetting(id='countryFileChannels', value=str(strings(30720)))
                 except:
-                    ADDON.setSetting(id="countryFileChannels", value=str(strings(30720).encode('utf-8', 'replace')))
+                    ADDON.setSetting(id='countryFileChannels', value=str(strings(30720).encode('utf-8', 'replace')))
 
         enabling = True
 

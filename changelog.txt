@@ -1,5 +1,6 @@
-﻿v9.9.614 (2022-06-12)
+﻿v9.9.614 (2022-06-16)
 - Fixed service PlayerPL login.
+- Added option to manually assign adult and vod EPG URL.
 
 v9.9.613 (2022-06-11)
 - Fixed playlists load error.

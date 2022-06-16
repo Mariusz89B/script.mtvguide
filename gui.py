@@ -4927,9 +4927,12 @@ class mTVGuide(xbmcgui.WindowXML):
 
         if program.description:
             description = program.description
+            if not description:
+                strings(NO_DESCRIPTION)
         elif program.categoryA:
-            description = strings(NO_DESCRIPTION)
             category = program.categoryA
+            if not category:
+                category = strings(NO_CATEGORY)
         else:
             description = strings(NO_DESCRIPTION)
             category = strings(NO_CATEGORY)
