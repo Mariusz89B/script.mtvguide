@@ -659,6 +659,7 @@ class SettingsImp:
 
         elif continent == 0:
             filtered_dict = dict((k, v) for k, v in CC_DICT.items() if int(v['continent']) != 7)
+            ADDON.setSetting(id='show_group_channels', value='true')
 
         elif continent == 7:
             filtered_dict = dict((k, v) for k, v in CC_DICT.items() if int(v['continent']) == 7)
@@ -666,6 +667,7 @@ class SettingsImp:
 
         else:
             filtered_dict = dict((k, v) for k, v in CC_DICT.items() if int(v['continent']) == continent or (int(v['continent']) == -1 and continent != 6))
+            ADDON.setSetting(id='show_group_channels', value='true')
 
         if sys.version_info[0] < 3:
             filtered_dict = collections.OrderedDict(sorted(filtered_dict.items()))
@@ -852,6 +854,7 @@ class SettingsImp:
 
         elif continent == 0:
             filtered_dict = dict((k, v) for k, v in CC_DICT.items() if int(v['continent']) != 7)
+            ADDON.setSetting(id='show_group_channels', value='true')
 
         elif continent == 7:
             filtered_dict = dict((k, v) for k, v in CC_DICT.items() if int(v['continent']) == 7)
@@ -859,6 +862,7 @@ class SettingsImp:
 
         else:
             filtered_dict = dict((k, v) for k, v in CC_DICT.items() if int(v['continent']) == continent or (int(v['continent']) == -1 and continent != 6))
+            ADDON.setSetting(id='show_group_channels', value='true')
 
         if sys.version_info[0] < 3:
             filtered_dict = collections.OrderedDict(sorted(filtered_dict.items()))

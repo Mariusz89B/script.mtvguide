@@ -4264,7 +4264,7 @@
 			<group id="1">
 				<setting help="95128" id="update_addon" label="30902" type="action">
 					<level>0</level>
-					<data>UpdateAddonRepos</data>
+					<data>RunScript(special://home/addons/script.mtvguide/update.py,Update)</data>
 					<constraints>
 						<allowempty>true</allowempty>
 					</constraints>

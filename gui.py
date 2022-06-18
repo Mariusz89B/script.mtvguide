@@ -786,6 +786,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
         elif continent == 0:
             filtered_dict = dict((k, v) for k, v in CC_DICT.items() if int(v['continent']) != 7)
+            ADDON.setSetting(id='show_group_channels', value='true')
 
         elif continent == 7:
             filtered_dict = dict((k, v) for k, v in CC_DICT.items() if int(v['continent']) == 7)
@@ -793,6 +794,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
         else:
             filtered_dict = dict((k, v) for k, v in CC_DICT.items() if int(v['continent']) == continent or (int(v['continent']) == -1 and continent != 6))
+            ADDON.setSetting(id='show_group_channels', value='true')
 
         if sys.version_info[0] < 3:
             filtered_dict = collections.OrderedDict(sorted(filtered_dict.items()))
@@ -4769,43 +4771,44 @@ class mTVGuide(xbmcgui.WindowXML):
             self.close()
 
     def popupMenu(self, program):
-        d = PopupMenu(self.database, program)
-        d.doModal()
-        buttonClicked = d.buttonClicked
-        new_category = d.category
-        del d
+        if not xbmc.getCondVisibility('Window.IsVisible(script-tvguide-menu.xml)'):
+            d = PopupMenu(self.database, program)
+            d.doModal()
+            buttonClicked = d.buttonClicked
+            new_category = d.category
+            del d
 
-        if buttonClicked == PopupMenu.C_POPUP_PLAY:
-            self.playChannel(program.channel)
+            if buttonClicked == PopupMenu.C_POPUP_PLAY:
+                self.playChannel(program.channel)
 
-        elif buttonClicked == PopupMenu.C_POPUP_RECORDINGS:
-            if PY3:
-                record_folder = ADDON.getSetting('record_folder')
-                xbmc.executebuiltin('ActivateWindow(Videos,{record_folder},return)'.format(record_folder=record_folder))
-            else:
-                record_folder = native(ADDON.getSetting('record_folder'))
-                xbmc.executebuiltin(b'ActivateWindow(Videos,{record_folder},return)'.format(record_folder=record_folder))
+            elif buttonClicked == PopupMenu.C_POPUP_RECORDINGS:
+                if PY3:
+                    record_folder = ADDON.getSetting('record_folder')
+                    xbmc.executebuiltin('ActivateWindow(Videos,{record_folder},return)'.format(record_folder=record_folder))
+                else:
+                    record_folder = native(ADDON.getSetting('record_folder'))
+                    xbmc.executebuiltin(b'ActivateWindow(Videos,{record_folder},return)'.format(record_folder=record_folder))
 
-        elif buttonClicked == PopupMenu.C_POPUP_FAQ:
-            xbmcgui.Dialog().textviewer(strings(30994), strings(99996), True)
-            self.popupMenu(program)
-
-        elif buttonClicked == PopupMenu.C_POPUP_CATEGORY:
-            self.database.setCategory(new_category)
-            ADDON.setSetting('category', new_category)
-            with self.busyDialog():
-                self.onRedrawEPG(self.channelIdx == 1, self.viewStartDate)
+            elif buttonClicked == PopupMenu.C_POPUP_FAQ:
+                xbmcgui.Dialog().textviewer(strings(30994), strings(99996), True)
                 self.popupMenu(program)
 
-        elif buttonClicked == PopupMenu.C_POPUP_ADD_CHANNEL:
-            deb('AddChannel')
-            self.channelsSelect()
-            self.popupMenu(program)
+            elif buttonClicked == PopupMenu.C_POPUP_CATEGORY:
+                self.database.setCategory(new_category)
+                ADDON.setSetting('category', new_category)
+                with self.busyDialog():
+                    self.onRedrawEPG(self.channelIdx == 1, self.viewStartDate)
+                    self.popupMenu(program)
 
-        elif buttonClicked == PopupMenu.C_POPUP_REMOVE_CHANNEL:
-            deb('RemoveChannel')
-            self.channelsRemove()
-            self.popupMenu(program)
+            elif buttonClicked == PopupMenu.C_POPUP_ADD_CHANNEL:
+                deb('AddChannel')
+                self.channelsSelect()
+                self.popupMenu(program)
+
+            elif buttonClicked == PopupMenu.C_POPUP_REMOVE_CHANNEL:
+                deb('RemoveChannel')
+                self.channelsRemove()
+                self.popupMenu(program)
 
 
     def setFocusId(self, controlId):

@@ -382,5 +382,6 @@
 	</category>
 	<category label="30901">
 		<setting label="30902" type="action" action="UpdateAddonRepos"/>
+		<setting id="update" type="action" label="30902" action="RunScript($CWD/update.py, Update)" option="close" />
 	</category>
 </settings>

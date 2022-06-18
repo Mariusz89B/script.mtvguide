@@ -240,6 +240,14 @@ msgctxt "#30172"
 msgid "Manually assign EPG URL"
 msgstr "Tildel manuelt EPG URL"
 
+msgctxt "#30173"
+msgid "Latest version available in repository:[CR]{0}"
+msgstr "Seneste version tilgængelig i repository:[CR]{0}"
+
+msgctxt "#30174"
+msgid "Error connecting to repository.[CR]Response HTTP status: {0}"
+msgstr "Fejl ved forbindelse til lager.[CR]Svar HTTP status: {0}"
+
 msgctxt "#30200"
 msgid "on [B]{}[/B] in 5 minutes..."
 msgstr "På [B]{}[/B] om 5 minutter..."
