@@ -106,15 +106,16 @@ else:
 
 PREDEFINED_CATEGORIES = []
 EPG_LIST = []
+
 EPG_DICT = {}
 
 CC_DICT = ccDict()
 
-CC_LIST = []
 for k, v in CC_DICT.items():
     epg = ADDON.getSetting('epg_{cc}'.format(cc=k)).strip()
+    cc = ADDON.getSetting('country_code_{}'.format(k.lower()))
 
-    if ADDON.getSetting('country_code_{cc}'.format(cc=k)) == "true":
+    if cc == 'true' and cc != '':
         EPG_DICT.update({k: v})
         if epg and epg != '':
             EPG_LIST.append(epg)
@@ -123,9 +124,8 @@ for k, v in CC_DICT.items():
         all_channels = strings(30325)
         PREDEFINED_CATEGORIES.append(all_channels)
     else:
-        if ADDON.getSetting('country_code_{cc}'.format(cc=k)) == "true":
-            CC_LIST.append(k.lower())
-            PREDEFINED_CATEGORIES.append(strings(30995) + ': {}'.format(k.upper()))
+        if cc == 'true' and cc != '':
+            PREDEFINED_CATEGORIES.append(k.upper())
 
 # ADDON settings
 SOURCE = ADDON.getSetting('source')
@@ -878,6 +878,8 @@ class Database(object):
             for serviceName in playService.SERVICES:
                 serviceHandler = playService.SERVICES[serviceName]
                 services.append(serviceHandler)
+                cache = False
+
                 if serviceHandler.serviceEnabled == 'true':
                     serviceList.append(serviceHandler)
                     if 'playlist_' in serviceName:
@@ -885,6 +887,9 @@ class Database(object):
                         if GET_DATABASE_CLEARED:
                             cache = False
                         self.cacheList.update({serviceHandler: {'cache': cache}})
+
+                if (not cache and not 'playlist_' in serviceName) or serviceHandler.serviceEnabled == 'false':
+                    self.removePredefinedCategoriesDb(serviceName)
 
             if not self.cacheList:
                 self.deleteAllCustomStreams()
@@ -1140,7 +1145,7 @@ class Database(object):
 
         self.services_updated = True
         self.channelList = None
-        deb ('[UPD] Update finished')
+        deb('[UPD] Update finished')
         return cacheExpired
 
     def deleteAllCustomStreams(self):
@@ -1192,6 +1197,8 @@ class Database(object):
             #deb('[UPD] Updating database')
             #deb('-------------------------------------------------------------------------------------')
             #deb('[UPD]     %-40s %-40s %-35s' % ('-TITLE-', '-ORIG NAME-', '-SERVICE-'))
+            categories = []
+
             nrOfChannelsUpdated = 0
             c = self.conn.cursor()
 
@@ -1202,11 +1209,22 @@ class Database(object):
                         channelid = None
                         backup = False
 
-                        p = re.compile('\w+\d+')
+                        for predefined in PREDEFINED_CATEGORIES:
+                            channel_regex = re.compile('.*({})$'.format(predefined))
+                            if PY3:
+                                cat = channel_regex.fullmatch(x.channelid)
+                            else:
+                                cat = channel_regex.match(x.channelid)
+
+                            if cat:
+                                if predefined not in categories:
+                                    categories.append(predefined)
+
+                        backup_regex = re.compile('\w+\d+')
                         if PY3:
-                            channel_match = p.fullmatch(x.channelid)
+                            channel_match = backup_regex.fullmatch(x.channelid)
                         else:
-                            channel_match = p.match(x.channelid)
+                            channel_match = backup_regex.match(x.channelid)
 
                         if channel_match and CH_DISP_NAME:
                             channelid = re.sub(r"([0-9]+(\.[0-9]+)?)",r" \1", x.channelid).strip()
@@ -1229,6 +1247,10 @@ class Database(object):
 
                     except Exception as ex:
                         deb('[UPD] Error updating stream: {}'.format(getExceptionString()))
+
+            # Categories
+            for cat in categories:
+                c.execute("INSERT OR REPLACE INTO categories(category, source) VALUES(?, ?)", [cat, streamSource])
 
             self.conn.commit()
             c.close()
@@ -1440,6 +1462,35 @@ class Database(object):
 
         return idx, start, end, played
 
+    def getPredefinedCategoriesDb(self):
+        result = self._invokeAndBlockForResult(self._getPredefinedCategoriesDb)
+        return result
+
+    def _getPredefinedCategoriesDb(self):
+        categories = list()
+
+        try:
+            c = self.conn.cursor()
+            c.execute("SELECT * FROM categories")
+            for row in c:
+                category = row[str('category')]
+                categories.append(category)
+
+            categories = list(dict.fromkeys(categories))
+            self.conn.commit()
+            c.close()
+
+        except Exception as ex:
+            deb('_getPredefinedCategories Error: {}'.format(ex))
+
+        return categories
+
+    def removePredefinedCategoriesDb(self, serviceName):
+        c = self.conn.cursor()
+        c.execute("DELETE FROM categories WHERE source=?", [serviceName])
+        self.conn.commit()
+        c.close()
+
     def addChannel(self, channel):
         self._invokeAndBlockForResult(self._addChannel, channel)
 
@@ -1480,7 +1531,6 @@ class Database(object):
         c.execute("UPDATE sources SET channels_updated=? WHERE id=?", [self.source.getNewUpdateTime(), self.source.KEY])
         self.conn.commit()
         self.channelList = None
-
 
     def getChannelList(self, onlyVisible = True, customCategory=None, excludeCurrentCategory = False):
         result = self._invokeAndBlockForResult(self._getChannelList, onlyVisible, customCategory, excludeCurrentCategory)
@@ -1605,38 +1655,50 @@ class Database(object):
         try:
             categories = []
 
-            for k, v in EPG_DICT:
-                if k.upper() == category.upper():
+            for k, v in EPG_DICT.items():
+                if k.upper() == category:
                     categories.append(k.upper())
-                    categories.append('.' + k.lower())
-                    categories.append(v['alpha-3'])
-                    categories.append(v['language'])
-                    categories.append(v['native'])
+
+                elif '.' + k.lower() == category:
+                    categories.append(k.upper())
+
+                elif v['alpha-3'] == category:
+                    categories.append(k.upper())
+
+                elif v['language'] == category:
+                    categories.append(k.upper())
+
+                elif v['native'] == category:
+                    categories.append(k.upper())
+
                 else:
                     categories.append(category)
 
+            categories = list(dict.fromkeys(categories))
             return categories
+
         except Exception as ex:
             deb('addCategory error: {}'.format(ex))
-
 
     def getCategoryChannelList(self, category, channelList, excludeCurrentCategory):
         try:
             newChannelList = []
 
-            if category in PREDEFINED_CATEGORIES:
+            newList = [strings(30995) + ': {}'.format(cat) for cat in PREDEFINED_CATEGORIES]
+
+            if category in newList:
                 predefined_category_re = re.compile(strings(30995) + r': ([^\s]*)', re.IGNORECASE)
                 r = predefined_category_re.search(category)
                 category = r.group(1) if r else ''
-
                 categories = self.addCategory(category)
-                categories = list(dict.fromkeys(categories))
 
                 deb('Using predefined category: {}'.format(category))
                 predefined = '|'.join(categories)
 
                 channel_regex = re.compile('.*({})$'.format(predefined))
                 newChannelList = [channel for channel in channelList[:] if channel_regex.search(channel.id)]
+                if not newChannelList:
+                    channelList = []
 
             else:
                 category = category.replace(strings(30995), 'TV Group')
@@ -1649,9 +1711,11 @@ class Database(object):
 
             if len(newChannelList) > 0 and not excludeCurrentCategory:
                 channelList = newChannelList
-            return channelList
+
         except Exception as ex:
             deb('getCategoryChannelList error: {}'.format(ex))
+
+        return channelList
 
     def getCategoryMap(self):
         categoryMap = list()
@@ -1886,8 +1950,7 @@ class Database(object):
         c = self.conn.cursor()
         channelList = self._getChannelList(True)
         for channel in channelList:
-            try: c.execute('SELECT * FROM programs WHERE channel=? AND source=? AND start_date >= ? AND end_date >= ?',
-                      [channel.id, self.source.KEY,now,now])
+            try: c.execute('SELECT * FROM programs WHERE channel=? AND source=? AND start_date >= ? AND end_date >= ?', [channel.id, self.source.KEY,now,now])
             except: return
             row = c.fetchone()
             if row:
@@ -2598,6 +2661,18 @@ class Database(object):
             if version < [6, 7, 6]:
                 c.execute('ALTER TABLE custom_stream_url ADD COLUMN priority INTEGER DEFAULT 0')
                 c.execute('UPDATE version SET major=6, minor=7, patch=6')
+                neededRestart = False
+
+                self.conn.commit()
+
+                if neededRestart:
+                    deb('Required m-TVGuide restart')
+                    raise RestartRequired()
+
+            if version < [6, 7, 7]:
+                c.execute('CREATE TABLE IF NOT EXISTS categories(category TEXT PRIMARY KEY)')
+                c.execute('ALTER TABLE categories ADD COLUMN source TEXT COLLATE NOCASE')
+                c.execute('UPDATE version SET major=6, minor=7, patch=7')
                 neededRestart = False
 
                 self.conn.commit()

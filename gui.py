@@ -251,20 +251,6 @@ HALF_HOUR = datetime.timedelta(minutes=30)
 AUTO_OSD = 666
 REFRESH_STREAMS_TIME = 14400
 
-CC_DICT = ccDict()
-
-CC_LIST = []
-PREDEFINED_CATEGORIES = []
-
-for k, v in CC_DICT.items():
-    if k == 'all':
-        all_channels = strings(30325)
-        PREDEFINED_CATEGORIES.append(all_channels)
-    else:
-        if ADDON.getSetting('country_code_{cc}'.format(cc=k)) == "true":
-            CC_LIST.append(k.lower())
-            PREDEFINED_CATEGORIES.append('TV Group: {}'.format(k.upper()))
-
 def category_formatting(label):  
     label = re.sub('^0$', '1.png', label)
     label = re.sub('^1$', '2.png', label)
@@ -475,8 +461,7 @@ class VideoPlayerStateChange(xbmc.Player):
                     playlistFileName = re.sub('_part_\d*.mpeg', '.mpeg', playedFile)
                     currentPositionInPlaylist = int(xbmc.PlayList(xbmc.PLAYLIST_VIDEO).getposition())
                     self.recordedFilesPlaylistPositions[playlistFileName] = currentPositionInPlaylist
-                    deb('onPlayBackStarted updating playlist position to: {} file: {}'.format(currentPositionInPlaylist,
-                                                                                              playlistFileName))
+                    deb('onPlayBackStarted updating playlist position to: {} file: {}'.format(currentPositionInPlaylist, playlistFileName))
                 except:
                     pass
                 try:
@@ -624,6 +609,7 @@ class mTVGuide(xbmcgui.WindowXML):
         self.streamingService = streaming.StreamsService()
         self.playService = playService.PlayService()
         self.recordService = RecordService(self)
+        self.predefinedCategories = []
         self.getListLenght = []
         self.catchupChannels = None
         self.force = None
@@ -4772,7 +4758,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def popupMenu(self, program):
         if not xbmc.getCondVisibility('Window.IsVisible(script-tvguide-menu.xml)'):
-            d = PopupMenu(self.database, program)
+            d = PopupMenu(self.database, program, self.predefinedCategories)
             d.doModal()
             buttonClicked = d.buttonClicked
             new_category = d.category
@@ -5836,6 +5822,9 @@ class mTVGuide(xbmcgui.WindowXML):
             self.onEPGLoadError()
             return
 
+        if not self.predefinedCategories:
+            self.predefinedCategories = self.getPredefinedCategories()
+
         if cacheExpired == True and ADDON.getSetting('program_notifications_enabled') == 'true':
             # make sure notifications are scheduled for newly downloaded programs
             self.notification.scheduleNotifications()
@@ -5888,9 +5877,6 @@ class mTVGuide(xbmcgui.WindowXML):
             self._showControl(self.C_MAIN_EPG)
             self.updateTimebar(scheduleTimer=False)
 
-             # remove existing controls
-            self._clearEpg()
-
             try:
                 self.channelIdx, channels, programs, cacheExpired = self.database.getEPGView(channelStart, startTime, self.onSourceProgressUpdate, initializing, startup, force, clearExistingProgramList=True)
 
@@ -5899,6 +5885,12 @@ class mTVGuide(xbmcgui.WindowXML):
                 debug('onRedrawEPG onEPGLoadError')
                 self.onEPGLoadError()
                 return
+
+            if not self.predefinedCategories:
+                self.predefinedCategories = self.getPredefinedCategories()
+
+             # remove existing controls
+            self._clearEpg()
 
             self.catchupChannels = channels
 
@@ -6087,6 +6079,16 @@ class mTVGuide(xbmcgui.WindowXML):
             deb('onRedrawEPG Exception: {}'.format(ex))
             return self.catchupChannels
 
+    def getPredefinedCategories(self):
+        predefinedCategories = []
+
+        categories = self.database.getPredefinedCategoriesDb()
+        for cat in categories:
+            predefinedCategories.append('{0}: {1}'.format(strings(30995), cat.upper()))
+
+        predefinedCategories.insert(0, strings(30325))
+        return predefinedCategories
+
     def _clearEpg(self):
         deb('_clearEpg')
 
@@ -6128,16 +6130,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
             items = []
 
-            categories = PREDEFINED_CATEGORIES + list(self.categories)
-
-            for item in CC_LIST:
-                if ADDON.getSetting('country_code_{cc}'.format(cc=item)) != "true":
-                    for k,v in CC_DICT.items():
-                        if item == k:
-                            if v in categories:
-                                categories.remove('TV Group: {cc}'.format(cc=v))
-
-            categories = [label.replace('TV Group', strings(30995)) for label in categories]
+            categories = self.predefinedCategories + list(self.categories)
 
             for label in categories:
                 item = xbmcgui.ListItem(label)
@@ -6682,10 +6675,10 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
     C_POPUP_REMOVE_CHANNEL = 4016
     C_MAIN_SLIDE_CLICK = 4976
 
-    def __new__(cls, database, program):
+    def __new__(cls, database, program, predefinedCategories):
         return super(PopupMenu, cls).__new__(cls, 'script-tvguide-menu.xml', Skin.getSkinBasePath(), Skin.getSkinName(), skin_resolution)
 
-    def __init__(self, database, program):
+    def __init__(self, database, program, predefinedCategories):
         """
 
         @type database: source.Database
@@ -6696,6 +6689,7 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
         super(PopupMenu, self).__init__()
         self.database = database
         self.program = program
+        self.predefinedCategories = predefinedCategories
         self.buttonClicked = None
         self.category = self.database.category
         self.categories = self.database.getAllCategories()
@@ -6713,14 +6707,16 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
 
             items = []
 
-            categories = PREDEFINED_CATEGORIES + list(self.categories)
+            categories = self.predefinedCategories + list(self.categories)
 
+            """
             for item in CC_LIST:
                 if ADDON.getSetting('country_code_{cc}'.format(cc=item)) != "true":
                     for k,v in CC_DICT.items():
                         if item == k:
                             if v in categories:
                                 categories.remove('TV Group: {cc}'.format(cc=v))
+            """
 
             categories = [label.replace('TV Group', strings(30995)) for label in categories]
 
@@ -6776,7 +6772,7 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
             cList = self.getControl(self.C_POPUP_CATEGORY)
             label = cList.getSelectedItem().getLabel()
 
-            if label in PREDEFINED_CATEGORIES or cList.getSelectedPosition() == 0:
+            if label in self.predefinedCategories or cList.getSelectedPosition() == 0:
                 return
 
             item = cList.getSelectedItem()
@@ -6869,8 +6865,7 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
 
                     items = []
 
-                    categories = PREDEFINED_CATEGORIES + list(self.categories)
-                    categories = [label.replace('TV Group', strings(30995)) for label in categories]
+                    categories = self.predefinedCategories + list(self.categories)
 
                     for label in categories:
                         item = xbmcgui.ListItem(label)

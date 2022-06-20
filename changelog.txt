@@ -1,6 +1,8 @@
-﻿v9.9.615 (2022-06-18)
+﻿v9.9.615 (2022-06-20)
 - Bug fixes.
-- Other improvements.
+- Fixed categories sortings.
+- Fixed playlist channel matching.
+- Optimized performance.
 
 v9.9.614 (2022-06-16)
 - Fixed service PlayerPL login.

@@ -349,7 +349,6 @@ class PlaylistUpdater(baseServiceUpdater):
 
             regexReplaceList.append( re.compile('(\s|^)({0})(?=\s|$)'.format(removeString), re.IGNORECASE) )
 
-            defReplaceList = []
             langReplaceList = []
             prefixList = []
             regexRemoveList = []
@@ -386,19 +385,17 @@ class PlaylistUpdater(baseServiceUpdater):
                 PATTERN = 5
 
             for cc, value in CC_DICT.items():
-                cc_pattern = cc.upper()
-                cc_pattern_regex = cc_pattern
-
-                if PATTERN == 0:
-                    cc_pattern_regex = cc.upper() + ':?|' + value['alpha-3'] + ':?|' + re.escape('.' + cc.lower()) + ':?|' + value['language']
+                cc_pattern_regex = cc.upper() + ':?|' + value['alpha-3'] + ':?|' + re.escape('.' + cc.lower()) + ':?|' + value['language']
 
                 # Alpha-2
-                elif PATTERN == 1:
+                if PATTERN == 1:
                     cc_pattern = cc.upper()
+                    cc_pattern_regex = cc_pattern
 
                 # Alpha-3
                 elif PATTERN == 2:
                     cc_pattern = value['alpha-3']
+                    cc_pattern_regex = cc_pattern
 
                 # ccTLD
                 elif PATTERN == 3:
@@ -408,10 +405,11 @@ class PlaylistUpdater(baseServiceUpdater):
                 # Lang
                 elif PATTERN == 4:
                     cc_pattern = value['language']
+                    cc_pattern_regex = cc_pattern
 
                 # Remove all
-                elif PATTERN == 5:
-                    cc_pattern_regex = cc.upper() + ':?|' + value['alpha-3'] + ':?|' + re.escape('.' + cc.lower()) + ':?|' + value['language']
+                else:
+                    cc_pattern = ''
 
                 if cc in cc_settings or not self.filtered:
                     alpha_1 = value['native']
@@ -427,9 +425,9 @@ class PlaylistUpdater(baseServiceUpdater):
 
                     if self.filtered:
                         try:
-                            langReplaceList.append({ 'regex': re.compile('(\s|^)(\s*'+cc.upper()+'$|'+alpha_4+':?|'+alpha_3+':?|'+alpha_2+':?|'+alpha_1+':?)(?=\s|$)|^('+alpha_4+':|'+alpha_3+':|'+alpha_2+':|'+alpha_1+':)', re.IGNORECASE), 'lang': cc_pattern})
+                            langReplaceList.append({ 'regex': re.compile('(\s|^)(\s*'+cc.upper()+'$|'+alpha_4+':?|'+alpha_3+':?|\s'+alpha_2+':?|'+alpha_1+':?)(?=\s|$)|^('+alpha_4+':|'+alpha_3+':|'+alpha_2+':|'+alpha_1+':)', re.IGNORECASE), 'lang': cc_pattern})
                         except:
-                            langReplaceList.append({ 'regex': re.compile('(\s|^)(\s*'+cc.upper()+'$|'+alpha_4+':?|'+alpha_3+':?|'+alpha_2+':?|'+alpha_1.encode('utf-8')+':?)(?=\s|$)|^('+alpha_4+':|'+alpha_3+':|'+alpha_2+':|'+alpha_1.encode('utf-8')+':)', re.IGNORECASE), 'lang': cc_pattern})
+                            langReplaceList.append({ 'regex': re.compile('(\s|^)(\s*'+cc.upper()+'$|'+alpha_4+':?|'+alpha_3+':?|\s'+alpha_2+':?|'+alpha_1.encode('utf-8')+':?)(?=\s|$)|^('+alpha_4+':|'+alpha_3+':|'+alpha_2+':|'+alpha_1.encode('utf-8')+':)', re.IGNORECASE), 'lang': cc_pattern})
 
                         langReplaceList.append({ 'regex': re.compile('(\s|^)('+cc.upper()+':?)(?=\s|$)|^('+cc.upper()+':?)'), 'lang': cc_pattern})
                         prefixList.append(cc_pattern_regex + ':?')
@@ -468,14 +466,8 @@ class PlaylistUpdater(baseServiceUpdater):
             else:
                 regexAddList.append( re.compile('(\s|^)(L\s*)?({prefix})(?=\s|$)'.format(prefix=prefix)) )
 
-            regexHD = re.compile('(\s|^)(720p|720|FHD|1080p|1080|HD\sHD|HD)(?=\s|$)', re.IGNORECASE)
-            regexUHD = re.compile('(\s|^)(4K|UHD)(?=\s|$)', re.IGNORECASE)
-
-            defReplaceList.append({ 'regex': re.compile('(\s|^)(SD:?|480:?|480p:?|576:?|576i:?|576p:?)(?=\s|$)|^(SD:?|480:?|480p:?|576:?|576i:?|576p:?)'), 'def': 'SD'})
-            if 'SD' not in defReplaceList:
-                defReplaceList.append({ 'regex': re.compile('(\s|^)(HD:?|720:?|720p:?|1080:?|1080i:?|1080p:?)(?=\s|$)|^(HD:?|720:?|720p:?|1080:?|1080i:?|1080p:?)'), 'def': 'HD'})
-            if 'HD' not in defReplaceList:
-                defReplaceList.append({ 'regex': re.compile('(\s|^)(UHD:?|UHDTV:?|4K:?|2160p:?)(?=\s|$)|^(UHD:?|UHDTV:?|4K:?|2160p:?)'), 'def': 'UHD'})
+            regexHD = re.compile('(\s|^)(FHD:?|HD:?|720:?|720p:?|1080:?|1080i:?|1080p:?|HD\sHD)(?=\s|$)', re.IGNORECASE)
+            regexUHD = re.compile('(\s|^)(UHD:?|UHDTV:?|4K:?|2160p:?)(?=\s|$)', re.IGNORECASE)
 
             regex_chann_name = re.compile('tvg-id="[^"]*"', re.IGNORECASE)
 
@@ -563,25 +555,26 @@ class PlaylistUpdater(baseServiceUpdater):
 
                             if PATTERN <= 2:
                                 try:
-                                    regex_match = re.compile('(^|(\s))(L\s*)?((?i){lang})((:|\s)|$)'.format(lang=lang.upper()))
+                                    regex_match = re.compile('(^|(\s))(L\s*)?({lang})((:|\s)|$)'.format(lang=lang.upper()), re.S|re.DOTALL)
                                 except:
-                                    regex_match = re.compile('(^|(\s))(L\s*)?((?i){lang})((:|\s)|$)'.format(lang=lang.upper().encode('utf-8')))
+                                    regex_match = re.compile('(^|(\s))(L\s*)?({lang})((:|\s)|$)'.format(lang=lang.upper().encode('utf-8')), re.S|re.DOTALL)
 
                             elif PATTERN == 3:
                                 try:
-                                    regex_match = re.compile('((?i){lang})'.format(lang=lang.lower()))
+                                    regex_match = re.compile('({lang})'.format(lang=lang.lower()), re.S|re.DOTALL)
                                 except:
-                                    regex_match = re.compile('((?i){lang})'.format(lang=lang.lower().encode('utf-8')))
+                                    regex_match = re.compile('({lang})'.format(lang=lang.lower().encode('utf-8')), re.S|re.DOTALL)
 
-                            elif PATTERN > 4:
+                            elif PATTERN >= 4:
                                 try:
                                     regex_match = re.compile('(^|(\s))(L\s*)?({lang})((:|\s)|$)'.format(lang=lang), re.IGNORECASE)
                                 except:
                                     regex_match = re.compile('(^|(\s))(L\s*)?({lang})((:|\s)|$)'.format(lang=lang.encode('utf-8')), re.IGNORECASE)
 
-                            match = regex_match.match(title)
-                            if match is None:
+                            r = regex_match.search(title)
+                            match = r.group(0) if r else None
 
+                            if not match:
                                 pattern = re.compile(r'^\.')
 
                                 if pattern.match(self.append_cc):
@@ -611,9 +604,12 @@ class PlaylistUpdater(baseServiceUpdater):
                                     if PATTERN > 0:
                                         if '.' in cc:
                                             cc.replace('.', '')
-
-                                        string = ' ' + cc.upper()
+                                            string = cc.lower()
+                                        else:
+                                            string = ' ' + cc.upper()
                                         title = re.sub('$', string, title)
+
+                            title = title.strip()
 
                             if 1 >= PATTERN <= 3:
                                 if any(cc.lower() in title.lower() for cc in langList + nativeList):
@@ -628,38 +624,17 @@ class PlaylistUpdater(baseServiceUpdater):
                                     if( regexRemove.findall(tvg_title) ):
                                         tvg_title = ''
 
-                            for langReplaceMap in langReplaceList:
-                                title, match = langReplaceMap['regex'].subn('', title)
-                                if match > 0:
-                                    if langReplaceMap['lang'] not in title:
-                                        if PATTERN == 3:
-                                            title += '' + langReplaceMap['lang']
-                                        elif PATTERN == 5:
-                                            title = re.sub(langReplaceMap['lang'], '', title)
-                                        else:
-                                            title += ' ' + langReplaceMap['lang']
-
-                            for defReplaceMap in defReplaceList:
-                                title, match = defReplaceMap['regex'].subn('', title)
-                                if match > 0:
-                                    pattern = re.compile(r'(\s\w{2,3}\s?$)')
-
-                                    r = pattern.search(title)
-                                    cc = r.group(1) if r else ''
-
-                                    if cc != '':
-                                        title_ = title.split(' ')
-                                        title_.insert(-1, defReplaceMap['def'])
-
-                                        title = ' '.join(title_)
-
-                                    else:
-                                        title += ' ' + defReplaceMap['def']
-
-                                    title = ' '.join(OrderedDict((w, w) for w in title.split()).keys())
-
-                                    if PATTERN == 5:
-                                        title = re.sub(defReplaceMap['def'], '', title)
+                            if PATTERN != 0:
+                                for langReplaceMap in langReplaceList:
+                                    title, match = langReplaceMap['regex'].subn('', title)
+                                    if match > 0:
+                                        if langReplaceMap['lang'] not in title:
+                                            if PATTERN == 3:
+                                                title += '' + langReplaceMap['lang']
+                                            elif PATTERN == 5:
+                                                title = re.sub(langReplaceMap['lang'], '', title)
+                                            else:
+                                                title += ' ' + langReplaceMap['lang']
 
                             if self.filtered and PATTERN != 5:
                                 for regexAdd in regexAddList:
@@ -668,8 +643,6 @@ class PlaylistUpdater(baseServiceUpdater):
                                     if tvg_id:
                                         if not ( regexAdd.findall(tvg_title) ):
                                             tvg_title = ''
-
-                            title = title.strip()
 
                             if tvg_id:
                                 if tvg_title == title:

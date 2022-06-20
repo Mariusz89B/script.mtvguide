@@ -120,6 +120,8 @@ except:
 
 HTTP_ConnectionTimeout = 10
 
+PREDEFINED_CATEGORIES = []
+
 BASE_LIST = []
 
 CC_DICT = ccDict()
@@ -128,6 +130,13 @@ for k, v in CC_DICT.items():
     cc = ADDON.getSetting('country_code_{}'.format(k.lower()))
     if cc == 'true' and cc != '':
         BASE_LIST.append(k)
+
+    if k == 'all':
+        all_channels = strings(30325)
+        PREDEFINED_CATEGORIES.append(all_channels)
+    else:
+        if cc == 'true' and cc != '':
+            PREDEFINED_CATEGORIES.append(k.upper())
 
 XXX = ADDON.getSetting('XXX_EPG')
 if XXX != '' and XXX != 'false':
@@ -1065,7 +1074,6 @@ class baseServiceUpdater:
                                 filtered_channels = [z for z in self.channels if unidecodeStr(x.displayName.upper()) == unidecodeStr(z.name.upper())]
                             except:
                                 filtered_channels = [z for z in self.channels if unidecodeStr(x.displayName.upper()) == unidecodeStr(self.decodeString(z.name).upper())]
-
 
                     elif x.displayName == '':
                         try:
