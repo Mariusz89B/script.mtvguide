@@ -2919,6 +2919,13 @@ class Database(object):
         except:
             pass
 
+        cache = os.path.join(self.profilePath, 'playlists')
+        if os.path.exists(cache):
+            try:
+                shutil.rmtree(cache)
+            except:
+                pass
+
         c = self.conn.cursor()
         c.execute('DELETE FROM channels')
         c.execute('DELETE FROM programs')
@@ -2935,6 +2942,13 @@ class Database(object):
         self._invokeAndBlockForResult(self._deleteAllStreams)
 
     def _deleteAllStreams(self):
+        cache = os.path.join(self.profilePath, 'playlists')
+        if os.path.exists(cache):
+            try:
+                shutil.rmtree(cache)
+            except:
+                pass
+
         c = self.conn.cursor()
         c.execute('DELETE FROM custom_stream_url')
         self.conn.commit()
@@ -2956,6 +2970,13 @@ class Database(object):
             shutil.copyfile(os.path.join(ADDON.getAddonInfo('path'), 'resources', 'basemap_extra.xml'), os.path.join(self.profilePath, 'basemap_extra.xml'))
         except:
             pass
+
+        cache = os.path.join(self.profilePath, 'playlists')
+        if os.path.exists(cache):
+            try:
+                shutil.rmtree(cache)
+            except:
+                pass
 
         if os.path.isfile (self.databasePath) == False:
             deb('_deleteDbFile successfully deleted database file')
