@@ -706,6 +706,7 @@ class baseServiceUpdater:
         self.channelList = None
         self.channels    = None
         self.refreshingStreams = False
+        self.cache = False
         try:
             self.onlineMapFile = onlineMapPathBase + self.localMapFile
         except:
@@ -939,29 +940,29 @@ class baseServiceUpdater:
     def getBaseChannelList(self, silent=False, returnCopy=True, cache=False):
         result = list()
         try:
-            if cache and 'playlist_' in self.serviceName:
+            if 'playlist_' in self.serviceName:
                 cachefile = os.path.join(PROFILE_PATH, 'playlists', '{playlist}.m3u'.format(playlist=self.serviceName))
                 cachepath = os.path.join(PROFILE_PATH, 'playlists', '{playlist}.cache'.format(playlist=self.serviceName))
-                if os.path.exists(cachepath) and os.path.exists(cachefile):
-                    if PY3:
-                        with open(cachepath, 'r', encoding='utf-8') as f:
-                            data = json.load(f)
-                    else:
-                        with codecs.open(cachepath, 'r', encoding='utf-8') as f:
-                            data = json.load(f)
+                if cache:
+                    if os.path.exists(cachepath) and os.path.exists(cachefile):
+                        if PY3:
+                            with open(cachepath, 'r', encoding='utf-8') as f:
+                                data = json.load(f)
+                        else:
+                            with codecs.open(cachepath, 'r', encoding='utf-8') as f:
+                                data = json.load(f)
 
-                    cachedList = list()
+                        cachedList = list()
 
-                    for k, v in data.items():
-                        cachedList.append(TvCid(cid=k, name=v['name'], title=v['title'], strm=v['strm'], catchup=v['catchup']))
+                        for k, v in data.items():
+                            cachedList.append(TvCid(cid=k, name=v['name'], title=v['title'], strm=v['strm'], catchup=v['catchup']))
 
-                    self.channelList = cachedList
-                    return self.channelList
+                        self.channelList = cachedList
+                        return self.channelList
 
                 else:
-                    if not cache:
-                        if os.path.exists(cachepath):
-                            os.remove(cachepath)
+                    if os.path.exists(cachepath) and 'playlist_' in self.serviceName:
+                        os.remove(cachepath)
 
             if self.channelList and self.isChannelListStillValid():
                 self.log('getBaseChannelList return cached channel list')
@@ -990,12 +991,35 @@ class baseServiceUpdater:
         cachedDict = {y.cid: {'name': y.name, 'title': y.title, 'strm': y.strm, 'catchup': y.catchup} for y in result}
 
         cachepath = os.path.join(PROFILE_PATH, 'playlists', '{playlist}.cache'.format(playlist=serviceName))
+
+        if not os.path.exists(cachepath):
+            if PY3:
+                with open(cachepath, 'w', encoding='utf-8') as f:
+                    f.write('')
+            else:
+                with codecs.open(cachepath, 'w', encoding='utf-8') as f:
+                    f.write('')
+
         if PY3:
-            with open(cachepath, 'w', encoding='utf-8') as f:
-                f.write(json.dumps(cachedDict, indent=4))
+            with open(cachepath, 'r+', encoding='utf-8') as f:
+                r = f.read()
+                if len(r) > 0:
+                    data = json.loads(r)
+                    data.update(user_json)
+                    f.seek(0)
+                    json.dump(cachedDict, f, indent=4)
+                else:
+                    json.dump(cachedDict, f, indent=4)
         else:
-            with codecs.open(cachepath, 'w', encoding='utf-8') as f:
-                f.write(json.dumps(cachedDict, indent=4))
+            with codecs.open(cachepath, 'r+', encoding='utf-8') as f:
+                r = f.read()
+                if len(r) > 0:
+                    data = json.loads(r)
+                    data.update(user_json)
+                    f.seek(0)
+                    json.dump(cachedDict, f, indent=4)
+                else:
+                    json.dump(cachedDict, f, indent=4)
 
     def decodeString(self, s):
         if sys.version_info[0] < 3:
@@ -1005,8 +1029,8 @@ class baseServiceUpdater:
 
     def cachedChannelList(self, epg_channels=None):
         startTime = datetime.datetime.now()
-
-        self.channels = self.getBaseChannelList(cache=True)
+        self.cache = True
+        self.channels = self.getBaseChannelList(cache=self.cache)
         if len(self.channels) <= 0:
             self.log('loadChannelList error lodaing channel list for service {} - aborting!'.format(self.serviceName))
             self.close()
@@ -1024,7 +1048,8 @@ class baseServiceUpdater:
 
         try:
             startTime = datetime.datetime.now()
-            self.channels = self.getBaseChannelList()
+            self.cache = False
+            self.channels = self.getBaseChannelList(cache=self.cache)
             if len(self.channels) <= 0:
                 self.log('loadChannelList error lodaing channel list for service {} - aborting!'.format(self.serviceName))
                 self.close()
@@ -1218,7 +1243,7 @@ class baseServiceUpdater:
 
     def getChannel(self, cid, service=None):
         try:
-            channels = self.getBaseChannelList(silent=True, returnCopy=False)
+            channels = self.getBaseChannelList(silent=True, returnCopy=False, cache=self.cache)
             for chann in channels:
                 if chann.cid == cid:
                     return self.getChannelStream(copy.deepcopy(chann))

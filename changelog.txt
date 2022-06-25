@@ -1,4 +1,7 @@
-﻿v9.9.615 (2022-06-20)
+﻿v9.9.616 (2022-06-25)
+- Fixed cached playlists channel mismatching.
+
+v9.9.615 (2022-06-20)
 - Bug fixes.
 - Fixed categories sortings.
 - Fixed playlist channel matching.
