@@ -943,6 +943,7 @@ class Database(object):
                                                 f.write(service+'\n')
 
         cacheExpired = self._isCacheExpired(date, initializing, startup, force)
+        ADDON.setSetting('database_cleared', 'false')
 
         if cacheExpired and not self.skipUpdateRetries:
             deb('_isCacheExpired')
@@ -1137,8 +1138,6 @@ class Database(object):
                     if not cache:
                         service.waitUntilDone()
                         self.storeCustomStreams(service, priority, service.serviceName, service.serviceRegex)
-
-        ADDON.setSetting('database_cleared', 'false')
 
         serviceList = []
         self.printStreamsWithoutChannelEPG()
@@ -2375,13 +2374,11 @@ class Database(object):
         return customStreamUrlList
 
     def adapt_datetime(self, ts):
-        if ts == '' or ts is None:
-            ts = datetime.now()
-
         try:
             adapt_datetime = time.mktime(ts.timetuple())
         except:
-            adapt_datetime = time.mktime(ts.utctimetuple())
+            ts = datetime.now()
+            adapt_datetime = time.mktime(ts.timetuple())
 
         return adapt_datetime
 

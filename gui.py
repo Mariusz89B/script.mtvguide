@@ -4920,6 +4920,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 strings(NO_DESCRIPTION)
         elif program.categoryA:
             category = program.categoryA
+            description = program.description
             if not category:
                 category = strings(NO_CATEGORY)
         else:
@@ -7607,7 +7608,7 @@ class InfoDialog(xbmcgui.WindowXMLDialog):
 
         elif matchMin:
             calcTime = re.sub(r'^0', '', str(calcTime))
-        
+
         return calcTime
 
     def onInit(self):
@@ -7682,9 +7683,9 @@ class InfoDialog(xbmcgui.WindowXMLDialog):
 
                         if age == '3':
                             age = '0'
-                        
+
                         icon = os.path.join(addonPath, 'icons', 'age_rating', 'icon_{}.png'.format(age))
-                    
+
                     ageImageControl.setImage(icon)
                 except:
                     pass
@@ -7791,6 +7792,116 @@ class InfoDialog(xbmcgui.WindowXMLDialog):
     def close(self):
         super(InfoDialog, self).close()
 
+class Guide(xbmcgui.WindowXMLDialog):
+    C_PROGRAM_LIST = 7000
+
+    def __new__(cls, programs, database, index, epg):
+        return super(Guide, cls).__new__(cls, 'script-tvguide-guide.xml', Skin.getSkinBasePath(), Skin.getSkinName(), skin_resolution)
+
+    def __init__(self, programs, database, index, epg):
+        # debug('Guide __init__')
+        super(Guide, self).__init__()
+        self.epg = epg
+        self.database = database
+        self.programs = programs
+        self.startIndex = index
+
+    def formatTime(self, timestamp):
+        format = xbmc.getRegion('time').replace(':%S', '').replace('%H%H', '%H')
+        return timestamp.strftime(format)
+
+    def setControlLabel(self, controlId, label):
+        control = self.getControl(controlId)
+        if control:
+            control.setLabel(label)
+
+    def setControlText(self, controlId, text):
+        control = self.getControl(controlId)
+        if control:
+            control.setText(text)
+
+    def setControlImage(self, controlId, image):
+        control = self.getControl(controlId)
+        if control:
+            control.setImage(image)
+
+    def setFocusId(self, controlId):
+        debug('setFocusId')
+        control = self.getControl(controlId)
+        if control:
+            self.setFocus(control)
+
+    def onInit(self):
+        date = datetime.datetime.now()
+
+        listControl = self.getControl(self.C_PROGRAM_LIST)
+        listControl.reset()
+
+        items = []
+
+        for program in self.programs:
+            label = program.title
+            if not label:
+                label = program.channel.title
+            item = xbmcgui.ListItem(label)
+
+            description = program.description
+            descriptionParser = src.ProgramDescriptionParser(description)
+            parsedEpisode = descriptionParser.extractEpisode()
+            if parsedEpisode == '':
+                parsedEpisode = program.episode
+
+            episode_regex = re.compile(r'E(\d+)', re.DOTALL)
+            season_regex = re.compile(r'S(\d+)', re.DOTALL)
+
+            r = episode_regex.search(parsedEpisode)
+            episode = r.group(1) if r else ''
+
+            r = season_regex.search(parsedEpisode)
+            season = r.group(1) if r else ''
+
+            icon = program.channel.logo
+
+            channelName = replace_formatting(program.channel.title)
+            plot =  replace_formatting(program.description)
+            startDate = str(time.mktime(program.startDate.timetuple()))
+
+            start = program.startDate
+            end = program.endDate
+            duration = end - start
+
+            start_str = start.strftime("%H:%M")
+            start_str = "{}".format(start_str)
+
+            season_str = 'S' + season
+            episode_str = 'E' + episode
+
+            if season_str != 'S' or episode_str != 'E':
+                label = season_str + episode_str + ' : ' + label   
+
+            item.setInfo('video', {'title': label,  'plot': plot, 'originaltitle': start_str, 'episode': episode, 'season': season})
+            item.setArt({'thumb': icon})
+            items.append(item)
+
+        listControl.addItems(items)
+        listControl.selectItem(int(self.startIndex))
+        self.setFocusId(self.C_PROGRAM_LIST)
+
+    def onAction(self, action):
+        if action.getId() in [ACTION_SHOW_INFO, ACTION_PREVIOUS_MENU, KEY_NAV_BACK, ACTION_PARENT_DIR] or (action.getButtonCode() == KEY_INFO and KEY_INFO != 0) or (action.getButtonCode() == KEY_STOP and KEY_STOP != 0):
+            self.close()
+
+        elif action in [ACTION_STOP, KEY_NAV_BACK]:
+            self.epg.playService.stopPlayback()
+            self.close()
+
+    def onClick(self, controlId):
+        if controlId == 1000:
+            self.close()
+
+    def close(self):
+        super(Guide, self).close()
+
 class Pla(xbmcgui.WindowXMLDialog):
     def __new__(cls, program, database, urlList, archiveService, archivePlaylist, epg):
         return super(Pla, cls).__new__(cls, 'Vid.xml', Skin.getSkinBasePath(), Skin.getSkinName(), skin_resolution)
@@ -7801,6 +7912,7 @@ class Pla(xbmcgui.WindowXMLDialog):
         self.epg = epg
         self.database = database
         self.controlAndProgramList = []
+        self.programs = []
         self.ChannelChanged = 0
         self.mouseCount = 0
         self.isClosing = False
@@ -7853,7 +7965,9 @@ class Pla(xbmcgui.WindowXMLDialog):
             return
         if not self.ctrlService:
             self.ctrlService = self.getControl(C_VOSD_SERVICE)
-   
+
+        self.programs = self.database.getNowList(self.program.channel)
+
         if ADDON.getSetting('info_osd') == "true":
             program = self.database.getCurrentProgram(self.epg.currentChannel)
             idx = self.database.getCurrentChannelIdx(self.epg.currentChannel)
@@ -7921,7 +8035,7 @@ class Pla(xbmcgui.WindowXMLDialog):
                 except:
                     file_check = xbmcvfs.File(os.path.join(self.kodiSkinPath, path1, 'Font.xml'), 'r')
                 f = file_check.read()
-                
+
                 sizeList = re.findall('<size>(.*?)</size>', f)
                 nameList = re.findall('<name>(.*?)</name>', f)
 
@@ -7944,7 +8058,7 @@ class Pla(xbmcgui.WindowXMLDialog):
                     size = largeList[0]
                 else:
                     size = 'font13'
-                    
+
             except:
                 size = 'font13'
 
@@ -8027,7 +8141,7 @@ class Pla(xbmcgui.WindowXMLDialog):
                 return
 
         self.program = Program(channel=index, title='', startDate='', endDate='', description='', productionDate='', director='', actor='', episode='', imageLarge='', imageSmall='', categoryA='', categoryB='')
-        
+
         self.playChannel(self.program.channel, self.program)
 
     def onAction(self, action):
@@ -8036,6 +8150,15 @@ class Pla(xbmcgui.WindowXMLDialog):
         if action.getId() == ACTION_PREVIOUS_MENU or action.getId() == ACTION_STOP or (action.getButtonCode() == KEY_STOP and KEY_STOP != 0) or (action.getId() == KEY_STOP and KEY_STOP != 0):
             self.epg.playService.stopPlayback()
             self.closeOSD()
+
+        elif action.getId() == ACTION_LEFT and self.key_right_left_show_next == 'false':
+            for programInList in self.programs:
+                if programInList.channel == self.program.channel:
+                    currentChannel = self.programs.index(programInList)
+
+            d = Guide(self.programs, self.database, currentChannel, self.epg)
+            d.doModal()
+            del d
 
         elif action.getButtonCode() == KEY_LIST and KEY_LIST != 0 or action.getId() == KEY_LIST and KEY_LIST != 0:
             program = self.program
@@ -8295,10 +8418,10 @@ class Pla(xbmcgui.WindowXMLDialog):
         self.wait = True
 
         xbmc.sleep(50)
-        while self.epg.playService.isWorking() == True and not self.isClosing:
+        while self.epg.playService.isWorking() and not self.isClosing:
             xbmc.sleep(100)
 
-        while self.wait == True and not self.isClosing:
+        while self.wait and not self.isClosing:
             if xbmc.Player().isPlaying() and not strings2.M_TVGUIDE_CLOSING and not self.isClosing and not self.epg.playService.isWorking():
                 self.playbackStarted = True
                 if self.displayService:
@@ -8311,8 +8434,8 @@ class Pla(xbmcgui.WindowXMLDialog):
             else:
                 xbmc.sleep(100)
                 self.playbackStarted = False
-                if not self.isClosing and (self.ChannelChanged == 1 or self.epg.playService.isWorking() == True):
-                    while self.epg.playService.isWorking() == True and not self.isClosing:
+                if not self.isClosing and (self.ChannelChanged == 1 or self.epg.playService.isWorking()):
+                    while self.epg.playService.isWorking() and not self.isClosing:
                         xbmc.sleep(100)
                     self.ChannelChanged = 0
                     self.show()
@@ -8380,9 +8503,9 @@ class Pla(xbmcgui.WindowXMLDialog):
             channel = channel
         else:
             channel = self.epg.currentChannel
-            
+
         return self.database.getCurrentProgram(channel)
-         
+
 
     def showVidOsd(self, action=None):
         if ADDON.getSetting('archive_support') == 'true' and (self.archiveService != '' or self.archivePlaylist != ''):
