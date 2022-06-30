@@ -7804,6 +7804,8 @@ class Guide(xbmcgui.WindowXMLDialog):
         self.epg = epg
         self.database = database
         self.programs = programs
+        self.index = -1
+        self.action = None
         self.startIndex = index
 
     def formatTime(self, timestamp):
@@ -7834,16 +7836,20 @@ class Guide(xbmcgui.WindowXMLDialog):
     def onInit(self):
         date = datetime.datetime.now()
 
-        listControl = self.getControl(self.C_PROGRAM_LIST)
+        listControl = self.getControl(Guide.C_PROGRAM_LIST)
         listControl.reset()
 
         items = []
+        index = 0
 
         for program in self.programs:
             label = program.title
             if not label:
                 label = program.channel.title
             item = xbmcgui.ListItem(label)
+
+            item.setProperty('index', str(index))
+            index = index + 1
 
             description = program.description
             descriptionParser = src.ProgramDescriptionParser(description)
@@ -7884,20 +7890,47 @@ class Guide(xbmcgui.WindowXMLDialog):
             items.append(item)
 
         listControl.addItems(items)
-        listControl.selectItem(int(self.startIndex))
+        if self.startIndex is not None:
+            try:
+                listControl.selectItem(int(self.startIndex))
+            except:
+                listControl.selectItem(int(0))
         self.setFocusId(self.C_PROGRAM_LIST)
 
     def onAction(self, action):
-        if action.getId() in [ACTION_SHOW_INFO, ACTION_PREVIOUS_MENU, KEY_NAV_BACK, ACTION_PARENT_DIR] or (action.getButtonCode() == KEY_INFO and KEY_INFO != 0) or (action.getButtonCode() == KEY_STOP and KEY_STOP != 0):
+        listControl = self.getControl(self.C_PROGRAM_LIST)
+        self.id = self.getFocusId(self.C_PROGRAM_LIST)
+        item = listControl.getSelectedItem()
+        if item:
+            self.index = int(item.getProperty('index'))
+        else:
+            self.index = -1
+
+        if action.getId() in [ACTION_PARENT_DIR, ACTION_PREVIOUS_MENU, KEY_NAV_BACK]:
+            self.action = KEY_NAV_BACK
             self.close()
 
         elif action in [ACTION_STOP, KEY_NAV_BACK]:
+            self.action = ACTION_STOP
             self.epg.playService.stopPlayback()
             self.close()
 
     def onClick(self, controlId):
-        if controlId == 1000:
+        if controlId == self.C_PROGRAM_LIST:
+            listControl = self.getControl(self.C_PROGRAM_LIST)
+            self.id = self.getFocusId(self.C_PROGRAM_LIST)
+            item = listControl.getSelectedItem()
+            if item:
+                self.index = int(item.getProperty('index'))
+            else:
+                self.index = -1
             self.close()
+
+        elif controlId == 1000:
+            self.close()
+
+    def onFocus(self, controlId):
+        pass
 
     def close(self):
         super(Guide, self).close()
@@ -8158,7 +8191,19 @@ class Pla(xbmcgui.WindowXMLDialog):
 
             d = Guide(self.programs, self.database, currentChannel, self.epg)
             d.doModal()
-            del d
+            index = d.index
+            action = d.action
+
+            if action == KEY_NAV_BACK:
+                return
+
+            elif action == ACTION_STOP:
+                return
+
+            else:
+                if index > -1:
+                    program = self.programs[index]
+                    self.epg.playChannel2(program)
 
         elif action.getButtonCode() == KEY_LIST and KEY_LIST != 0 or action.getId() == KEY_LIST and KEY_LIST != 0:
             program = self.program
