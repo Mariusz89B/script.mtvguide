@@ -7,21 +7,55 @@
 			<animation effect="fade" start="100" end="0" time="100">WindowClose</animation>
 			<animation effect="fade" start="100" end="75" time="0" condition="true">Conditional</animation>
 			<visible>!Window.IsActive(fullscreenvideo)</visible>
-			<include>ColoredBackgroundImages</include>
+			<control type="image">
+				<depth>-0.80</depth>
+				<left>0</left>
+				<top>0</top>
+				<width>100%</width>
+				<height>100%</height>
+				<aspectratio>scale</aspectratio>
+				<texture colordiffuse="primary_background">special://skin/extras/backgrounds/primary.jpg</texture>
+			</control>
+			<control type="image">
+				<depth>-0.80</depth>
+				<left>0</left>
+				<top>0</top>
+				<width>100%</width>
+				<height>100%</height>
+				<aspectratio>scale</aspectratio>
+				<texture colordiffuse="secondary_background" fallback="special://skin/extras/backgrounds/pattern1.jpg">$INFO[Skin.String(background_overlay),special://skin/extras/backgrounds/pattern,.jpg]</texture>
+			</control>
 		</control>
 		<control type="group">
 			<depth>DepthOSD</depth>
 			<animation effect="fade" start="100" end="0" time="200" tween="sine" condition="$EXP[infodialog_active]">Conditional</animation>
 			<control type="group">
-				<include>OpenClose_Left</include>
-				<include content="ContentPanel">
-					<param name="width" value="840" />
-				</include>
+				<animation effect="fade" end="100" time="200">WindowOpen</animation>
+				<animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
+				<animation type="WindowOpen">
+					<effect type="fade" start="0" end="100" time="300" tween="sine" easing="out" />
+					<effect type="slide" start="-320" end="0" time="400" tween="cubic" easing="out" />
+				</animation>
+				<animation type="WindowClose">
+					<effect type="fade" start="100" end="0" time="300" tween="sine" easing="out" />
+					<effect type="slide" start="0" end="-320" time="300" tween="cubic" easing="out" />
+				</animation>	
+				<control type="image">
+					<texture flipx="false" colordiffuse="EDFFFFFF">../../skin.default/media/dialogs/panel.png</texture>
+					<bordertexture border="21">../../skin.default/media/dialogs/shadow.png</bordertexture>
+					<bordersize>20</bordersize>
+					<width>840</width>
+					<left>-40</left>
+					<right></right>
+					<top>-10%</top>
+					<height>120%</height>
+				</control>
+
 				<control type="fixedlist" id="7000">
 					<left>0</left>
-					<top>list_top_offset</top>
+					<top>100</top>
 					<width>1900</width>
-					<bottom>list_bottom</bottom>
+					<bottom>0</bottom>
 					<onleft>60</onleft>
 					<onright>60</onright>
 					<onup>7000</onup>
@@ -37,7 +71,7 @@
 							<bottom>0</bottom>
 							<aligny>center</aligny>
 							<textcolor>grey</textcolor>
-							<label>$INFO[ListItem.originaltitle]</label>
+							<label>$INFO[ListItem.Property(StartTime)]</label>
 						</control>
 						<control type="label">
 							<left>150</left>
@@ -62,7 +96,7 @@
 							<width>150</width>
 							<bottom>0</bottom>
 							<aligny>center</aligny>
-							<label>$INFO[ListItem.originaltitle]</label>
+							<label>$INFO[ListItem.Property(StartTime)]</label>
 						</control>
 						<control type="label">
 							<left>150</left>
@@ -81,7 +115,7 @@
 								<top>-100</top>
 								<width>1210</width>
 								<height>350</height>
-								<texture border="40">buttons/dialogbutton-nofo.png</texture>
+								<texture border="40">../../skin.default/media/dialogs/dialogbutton-nofo.png</texture>
 							</control>
 							<control type="image">
 								<left>805</left>
@@ -89,7 +123,7 @@
 								<width>320</width>
 								<height>280</height>
 								<aspectratio align="center" aligny="center">keep</aspectratio>
-								<texture fallback="DefaultTVShows.png" >$INFO[Listitem.Icon]</texture>
+								<texture fallback="../../skin.default/media/tvguide-logo-epg.png" >$INFO[Listitem.Icon]</texture>
 							</control>
 							<control type="textbox">
 								<left>1135</left>
@@ -104,9 +138,9 @@
 				</control>
 				<control type="scrollbar" id="60">
 					<left>768</left>
-					<top>list_top_offset</top>
+					<top>100</top>
 					<width>12</width>
-					<bottom>list_bottom</bottom>
+					<bottom>0</bottom>
 					<onleft>7000</onleft>
 					<onright>7000</onright>
 					<texturesliderbackground />
@@ -118,7 +152,7 @@
 				<bottom>0</bottom>
 				<width>100%</width>
 				<height>115</height>
-				<texture flipy="true">frame/InfoBar.png</texture>
+				<texture flipy="true">../../skin.default/media/dialogs/infobar.png</texture>
 			</control>
 			<control type="group">
 				<include>Animation_TopSlide</include>
@@ -126,7 +160,7 @@
 					<left>0</left>
 					<width>780</width>
 					<height>110</height>
-					<texture>frame/InfoBar.png</texture>
+					<texture>../../skin.default/media/dialogs/infobar.png</texture>
 				</control>
 				<control type="label" id="2">
 					<description>header label</description>
@@ -135,7 +169,7 @@
 					<height>70</height>
 					<font>font45</font>
 					<aligny>center</aligny>
-					<label>$LOCALIZE[19069]$INFO[Container(7000).ListItem.startTime, - ]</label>
+					<label>$LOCALIZE[19069]$INFO[Container(7000).ListItem.Property(StartDate), - ]</label>
 					<shadowcolor>black</shadowcolor>
 				</control>
 			</control>

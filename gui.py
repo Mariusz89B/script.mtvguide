@@ -7853,39 +7853,71 @@ class Guide(xbmcgui.WindowXMLDialog):
 
             description = program.description
             descriptionParser = src.ProgramDescriptionParser(description)
-            parsedEpisode = descriptionParser.extractEpisode()
-            if parsedEpisode == '':
-                parsedEpisode = program.episode
+            episode = descriptionParser.extractEpisode()
+            if episode != '':
+                se_label = '{} : '.format(episode)
+            else:
+                se_label = ''
+            try:
+                episode = program.episode
+                if episode:
+                    se_label = '{} : '.format(episode)
+            except:
+                se_label = ''
 
-            episode_regex = re.compile(r'E(\d+)', re.DOTALL)
-            season_regex = re.compile(r'S(\d+)', re.DOTALL)
-
-            r = episode_regex.search(parsedEpisode)
-            episode = r.group(1) if r else ''
-
-            r = season_regex.search(parsedEpisode)
-            season = r.group(1) if r else ''
+            label = se_label.replace(' E', 'E') + label
 
             icon = program.channel.logo
 
-            channelName = replace_formatting(program.channel.title)
-            plot =  replace_formatting(program.description)
-            startDate = str(time.mktime(program.startDate.timetuple()))
+            startDate = str(program.startDate)
+            try:
+                now = datetime.proxydt.strptime(startDate, '%Y-%m-%d %H:%M:%S')
+            except:
+                now = datetime.proxydt.strptime(str(datetime.datetime.now()), '%Y-%m-%d %H:%M:%S.%f')
+
+            nowDay = now.strftime("%a").replace('Mon', xbmc.getLocalizedString(11)).replace('Tue', xbmc.getLocalizedString(12)).replace('Wed', xbmc.getLocalizedString(13)).replace('Thu', xbmc.getLocalizedString(14)).replace('Fri', xbmc.getLocalizedString(15)).replace('Sat', xbmc.getLocalizedString(16)).replace('Sun', xbmc.getLocalizedString(17))
+            nowDate = now.strftime("%d %m %Y")
+
+            item.setProperty('ChannelName', replace_formatting(program.channel.title))
+            item.setProperty('Plot', replace_formatting(program.description))
+            item.setProperty('startDate', str(nowDay + ', ' + nowDate))
 
             start = program.startDate
             end = program.endDate
             duration = end - start
 
+            now = datetime.datetime.now() + datetime.timedelta(minutes=int(timebarAdjust()))
+
+            if now > start:
+                when = datetime.timedelta(-1)
+                elapsed = now - start
+            else:
+                when = start - now
+                elapsed = datetime.timedelta(0)
+
+            if elapsed.seconds > 0:
+                progress = 100.0 * float(timedelta_total_seconds(elapsed)) // float(duration.seconds + 0.001)
+                progress = str(int(progress))
+            else:
+                # TODO hack for progress bar with 0 time
+                progress = "0"
+
+            if progress and (int(progress) < 100):
+                item.setProperty('Completed', progress)
+
             start_str = start.strftime("%H:%M")
             start_str = "{}".format(start_str)
 
-            season_str = 'S' + season
-            episode_str = 'E' + episode
+            end_str = end.strftime("%H:%M")
+            end_str = "{}".format(end_str)
 
-            if season_str != 'S' or episode_str != 'E':
-                label = season_str + episode_str + ' : ' + label   
+            item.setProperty('StartTime', str(start_str))
+            item.setProperty('EndTime', str(end_str))
 
-            item.setInfo('video', {'title': label,  'plot': plot, 'originaltitle': start_str, 'episode': episode, 'season': season})
+            duration_str = "{} min".format(duration.seconds // 60)
+            item.setProperty('Duration', duration_str)
+
+            item.setInfo('video', {'title': label,  'plot': program.description})
             item.setArt({'thumb': icon})
             items.append(item)
 
@@ -8636,10 +8668,12 @@ class ProgramListDialog(xbmcgui.WindowXMLDialog):
                 if episode:
                     se_label = ' - {}'.format(episode)
             except:
-                pass
-            label = label + se_label
+                se_label = ''
+
+            label = label + se_label.replace(' E', 'E')
             name = ''
-            icon = program.channel.logo  # type: object
+
+            icon = program.channel.logo
             item = xbmcgui.ListItem(label, name)
 
             item.setArt({'icon':icon})
