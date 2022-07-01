@@ -425,9 +425,9 @@ class PlaylistUpdater(baseServiceUpdater):
 
                     if self.filtered:
                         try:
-                            langReplaceList.append({ 'regex': re.compile('(\s|^)(\s*'+cc.upper()+'$|'+alpha_4+':?|'+alpha_3+':?|\s'+alpha_2+':?|'+alpha_1+':?)(?=\s|$)|^('+alpha_4+':|'+alpha_3+':|'+alpha_2+':|'+alpha_1+':)', re.IGNORECASE), 'lang': cc_pattern})
+                            langReplaceList.append({ 'regex': re.compile('(\s|^)(\s*'+cc.upper()+'$|'+alpha_4+':?|'+alpha_3+':?|'+alpha_2+':?|'+alpha_1+':?)(?=\s|$)|^('+alpha_4+':|'+alpha_3+':|'+alpha_2+':|'+alpha_1+':)', re.IGNORECASE), 'lang': cc_pattern})
                         except:
-                            langReplaceList.append({ 'regex': re.compile('(\s|^)(\s*'+cc.upper()+'$|'+alpha_4+':?|'+alpha_3+':?|\s'+alpha_2+':?|'+alpha_1.encode('utf-8')+':?)(?=\s|$)|^('+alpha_4+':|'+alpha_3+':|'+alpha_2+':|'+alpha_1.encode('utf-8')+':)', re.IGNORECASE), 'lang': cc_pattern})
+                            langReplaceList.append({ 'regex': re.compile('(\s|^)(\s*'+cc.upper()+'$|'+alpha_4+':?|'+alpha_3+':?|'+alpha_2+':?|'+alpha_1.encode('utf-8')+':?)(?=\s|$)|^('+alpha_4+':|'+alpha_3+':|'+alpha_2+':|'+alpha_1.encode('utf-8')+':)', re.IGNORECASE), 'lang': cc_pattern})
 
                         langReplaceList.append({ 'regex': re.compile('(\s|^)('+cc.upper()+':?)(?=\s|$)|^('+cc.upper()+':?)'), 'lang': cc_pattern})
                         prefixList.append(cc_pattern_regex + ':?')
@@ -574,7 +574,7 @@ class PlaylistUpdater(baseServiceUpdater):
                             r = regex_match.search(title)
                             match = r.group(0) if r else None
 
-                            if not match:
+                            if match is None:
                                 pattern = re.compile(r'^\.')
 
                                 if pattern.match(self.append_cc):
@@ -635,6 +635,8 @@ class PlaylistUpdater(baseServiceUpdater):
                                                 title = re.sub(langReplaceMap['lang'], '', title)
                                             else:
                                                 title += ' ' + langReplaceMap['lang']
+
+                                            title = title.strip()
 
                             if self.filtered and PATTERN != 5:
                                 for regexAdd in regexAddList:
