@@ -7865,6 +7865,15 @@ class Guide(xbmcgui.WindowXMLDialog):
             except:
                 se_label = ''
 
+            episode_regex = re.compile(r'E(\d+)', re.DOTALL)
+            season_regex = re.compile(r'S(\d+)', re.DOTALL)
+
+            r = episode_regex.search(episode)
+            episode_str = r.group(1) if r else ''
+
+            r = season_regex.search(episode)
+            season_str = r.group(1) if r else ''
+
             label = se_label.replace(' E', 'E') + label
 
             icon = program.channel.logo
@@ -7917,7 +7926,7 @@ class Guide(xbmcgui.WindowXMLDialog):
             duration_str = "{} min".format(duration.seconds // 60)
             item.setProperty('Duration', duration_str)
 
-            item.setInfo('video', {'title': label,  'plot': program.description})
+            item.setInfo('video', {'title': label,  'plot': program.description, 'episode': episode_str, 'season': season_str})
             item.setArt({'thumb': icon})
             items.append(item)
 
