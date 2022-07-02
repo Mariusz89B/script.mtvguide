@@ -154,8 +154,8 @@ C_SUBS = 109
 C_LANG = 110
 C_ACTION_RIGHT = 111
 C_ACTION_BACK = 112
-C_ACTION_DESC = 118
 C_ACTION_NUMBER = 113
+C_ACTION_DESC = 118
 C_PAUSE = 114
 C_CLOSE_WINDOW = 1000
 C_VIDEO_OSD_WINDOW = 100
@@ -163,6 +163,8 @@ C_VIDEO_OSD_WINDOW = 100
 ACTION_MOUSE_WHEEL_UP = 104
 ACTION_MOUSE_WHEEL_DOWN = 105
 ACTION_MOUSE_MOVE = 107
+
+ACTION_GUIDE = 777
 
 KEY_NAV_BACK = 92
 KEY_CONTEXT_MENU = 117
@@ -720,6 +722,10 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
         elif controlId == C_ACTION_RIGHT:
             self.isClosing = False
             self.showNextProgram()
+        elif controlId == C_ACTION_DESC:
+            self.isClosing = True
+            self.gu.onAction2(ACTION_GUIDE, self.program)
+
         elif controlId == C_ACTION_NUMBER:
             if ADDON.getSetting('channel_shortcut') == 'false':
                 xbmcgui.Dialog().notification(strings(30353).encode('UTF-8'), strings(30354).encode('UTF-8'))

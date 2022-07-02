@@ -117,6 +117,8 @@ KEY_CONTEXT_MENU = 117
 KEY_HOME = 159
 KEY_END = 160
 
+ACTION_GUIDE = 777
+
 KEY_CODEC_INFO = 0
 
 if PY3:
@@ -6361,7 +6363,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def _findControlBelow(self, point):
         # debug('_findControlBelow')
-        if self.getChannelNumber() == self.getListLenght:
+        if self.getChannelNumber() == self.getListLenght and xbmc.getCondVisibility('Control.IsVisible(7900)'):
             nearestControl = self.getControl(self.C_MAIN_CATEGORY)
         else:
             nearestControl = None
@@ -6380,7 +6382,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def _findControlAbove(self, point):
         # debug('_findControlAbove')
-        if self.getChannelNumber() == 1:
+        if self.getChannelNumber() == 1 and xbmc.getCondVisibility('Control.IsVisible(7900)'):
             nearestControl = self.getControl(self.C_MAIN_CATEGORY)
         else:
             nearestControl = None
@@ -8479,6 +8481,23 @@ class Pla(xbmcgui.WindowXMLDialog):
             except:
                 pass
             return
+
+        elif action == ACTION_GUIDE:
+            d = Guide(self.programs, self.database, program, self.epg)
+            d.doModal()
+            index = d.index
+            action = d.action
+
+            if action == KEY_NAV_BACK:
+                return
+
+            elif action == ACTION_STOP:
+                return
+
+            else:
+                if index > -1:
+                    program = self.programs[index]
+                    self.epg.playChannel2(program)
 
         elif action == ACTION_PAGE_UP:
             self.ChannelChanged = 1
