@@ -2974,7 +2974,7 @@ class mTVGuide(xbmcgui.WindowXML):
     def showListing(self, channel):
         programList = self.database.getChannelListing(channel)
         title = channel.title
-        d = ProgramListDialog(title, programList, 0)
+        d = ProgramListDialog(title, programList, channel)
         d.doModal()
         index = d.index
         action = d.action
@@ -3069,12 +3069,7 @@ class mTVGuide(xbmcgui.WindowXML):
         programList = self.database.getNowList(channel)
         title = strings(30311)
 
-        currentChannel = None
-        for programInList in programList:
-            if programInList.channel == channel:
-                currentChannel = programList.index(programInList)
-
-        d = ProgramListDialog(title, programList, currentChannel)
+        d = ProgramListDialog(title, programList, channel)
         d.doModal()
         index = d.index
         action = d.action
@@ -3168,12 +3163,7 @@ class mTVGuide(xbmcgui.WindowXML):
         programList = self.database.getNextList(channel)
         title = strings(30312)
 
-        currentChannel = None
-        for programInList in programList:
-            if programInList.channel == channel:
-                currentChannel = programList.index(programInList)
-
-        d = ProgramListDialog(title, programList, currentChannel)
+        d = ProgramListDialog(title, programList, channel)
         d.doModal()
         index = d.index
         action = d.action
@@ -3317,7 +3307,7 @@ class mTVGuide(xbmcgui.WindowXML):
             if not self.context:
                 self.programSearchSelect(channel)
         elif what == 4:
-            self.channelSearch()
+            self.channelSearch(channel)
             self.index = -1
             if not self.context:
                 self.programSearchSelect(channel)
@@ -3380,7 +3370,7 @@ class mTVGuide(xbmcgui.WindowXML):
         f.close()
         programList = self.database.programSearch(search)
         title = strings(30322)
-        d = ProgramListDialog(title, programList, ADDON.getSetting('listing_sort_time') == 'true')
+        d = ProgramListDialog(title=title, programs=programList, sort_time=ADDON.getSetting('listing_sort_time') == 'true')
         d.doModal()
         index = d.index
         action = d.action
@@ -3497,7 +3487,7 @@ class mTVGuide(xbmcgui.WindowXML):
         f.close()
         programList = self.database.descriptionSearch(search)
         title = strings(30322)
-        d = ProgramListDialog(title, programList, ADDON.getSetting('listing_sort_time') == 'true')
+        d = ProgramListDialog(title=title, programs=programList, sort_time=ADDON.getSetting('listing_sort_time') == 'true')
         d.doModal()
         index = d.index
         action = d.action
@@ -3615,7 +3605,7 @@ class mTVGuide(xbmcgui.WindowXML):
         f.close()
         programList = self.database.programCategorySearch(search)
         title = strings(30344)
-        d = ProgramListDialog(title, programList, ADDON.getSetting('listing_sort_time') == 'true')
+        d = ProgramListDialog(title=title, programs=programList, sort_time=ADDON.getSetting('listing_sort_time') == 'true')
         d.doModal()
         index = d.index
         action = d.action
@@ -3709,7 +3699,7 @@ class mTVGuide(xbmcgui.WindowXML):
         category = category_count[which][0]
         programList = self.database.programCategorySearch(category)
         title = "{}".format(category)
-        d = ProgramListDialog(title, programList, ADDON.getSetting('listing_sort_time') == 'true')
+        d = ProgramListDialog(title=title, programs=programList, sort_time=ADDON.getSetting('listing_sort_time') == 'true')
         d.doModal()
         index = d.index
         action = d.action
@@ -3776,14 +3766,14 @@ class mTVGuide(xbmcgui.WindowXML):
                     time.sleep(1)
                     self.categorySearch(programList[index].channel)
 
-    def channelSearch(self):
+    def channelSearch(self, channel):
         d = xbmcgui.Dialog()
-        search = d.input(strings(30326))
+        search = d.input(strings(30326), str(channel.title))
         if not search:
             return
         programList = self.database.channelSearch(search)
         title = strings(30326)
-        d = ProgramListDialog(title, programList, self.currentChannel, ADDON.getSetting('listing_sort_time') == 'true')
+        d = ProgramListDialog(title=title, programs=programList, sort_time=ADDON.getSetting('listing_sort_time') == 'true')
         d.doModal()
         index = d.index
         action = d.action
@@ -3854,7 +3844,7 @@ class mTVGuide(xbmcgui.WindowXML):
     def showReminders(self, channel):
         programList = self.database.getNotifications()
         title = (strings(30336))
-        d = ProgramListDialog(title, programList, self.currentChannel, ADDON.getSetting('listing_sort_time') == 'true')
+        d = ProgramListDialog(title, programList, channel, ADDON.getSetting('listing_sort_time') == 'true')
         d.doModal()
         index = d.index
         action = d.action
@@ -3951,7 +3941,7 @@ class mTVGuide(xbmcgui.WindowXML):
     def showFullReminders(self, channel):
         programList = self.database.getFullNotifications(int(ADDON.getSetting('listing_days')))
         title = (strings(30336))
-        d = ProgramListDialog(title, programList, self.currentChannel, ADDON.getSetting('listing_sort_time') == 'true')
+        d = ProgramListDialog(title, programList, channel, ADDON.getSetting('listing_sort_time') == 'true')
         d.doModal()
         index = d.index
         action = d.action
@@ -4048,7 +4038,7 @@ class mTVGuide(xbmcgui.WindowXML):
     def showFullRecordings(self, channel):
         programList = self.database.getFullRecordings(int(ADDON.getSetting('listing_days')))
         title = (strings(30337))
-        d = ProgramListDialog(title, programList, self.currentChannel, ADDON.getSetting('listing_sort_time') == 'true')
+        d = ProgramListDialog(title, programList, channel, ADDON.getSetting('listing_sort_time') == 'true')
         d.doModal()
         index = d.index
         action = d.action
@@ -7795,18 +7785,18 @@ class InfoDialog(xbmcgui.WindowXMLDialog):
 class Guide(xbmcgui.WindowXMLDialog):
     C_PROGRAM_LIST = 7000
 
-    def __new__(cls, programs, database, index, epg):
+    def __new__(cls, programs, database, program, epg):
         return super(Guide, cls).__new__(cls, 'script-tvguide-guide.xml', Skin.getSkinBasePath(), Skin.getSkinName(), skin_resolution)
 
-    def __init__(self, programs, database, index, epg):
+    def __init__(self, programs, database, program, epg):
         # debug('Guide __init__')
         super(Guide, self).__init__()
         self.epg = epg
         self.database = database
         self.programs = programs
+        self.program = program
         self.index = -1
         self.action = None
-        self.startIndex = index
 
     def formatTime(self, timestamp):
         format = xbmc.getRegion('time').replace(':%S', '').replace('%H%H', '%H')
@@ -7840,6 +7830,8 @@ class Guide(xbmcgui.WindowXMLDialog):
         listControl.reset()
 
         items = []
+        idxs = []
+
         index = 0
 
         for program in self.programs:
@@ -7849,6 +7841,9 @@ class Guide(xbmcgui.WindowXMLDialog):
             item = xbmcgui.ListItem(label)
 
             item.setProperty('index', str(index))
+            if program.channel.id == self.program.channel.id:
+                idxs.append(index)
+
             index = index + 1
 
             description = program.description
@@ -7930,12 +7925,13 @@ class Guide(xbmcgui.WindowXMLDialog):
             item.setArt({'thumb': icon})
             items.append(item)
 
+        if idxs:
+            idx = idxs[0]
+        else:
+            idx = 0
+
         listControl.addItems(items)
-        if self.startIndex is not None:
-            try:
-                listControl.selectItem(int(self.startIndex))
-            except:
-                listControl.selectItem(int(0))
+        listControl.selectItem(int(idx))
         self.setFocusId(self.C_PROGRAM_LIST)
 
     def onAction(self, action):
@@ -8226,11 +8222,7 @@ class Pla(xbmcgui.WindowXMLDialog):
             self.closeOSD()
 
         elif action.getId() == ACTION_LEFT and self.key_right_left_show_next == 'false':
-            for programInList in self.programs:
-                if programInList.channel == self.program.channel:
-                    currentChannel = self.programs.index(programInList)
-
-            d = Guide(self.programs, self.database, currentChannel, self.epg)
+            d = Guide(self.programs, self.database, self.program, self.epg)
             d.doModal()
             index = d.index
             action = d.action
@@ -8643,17 +8635,18 @@ class ProgramListDialog(xbmcgui.WindowXMLDialog):
     C_PROGRAM_LIST = 1000
     C_PROGRAM_LIST_TITLE = 1001
 
-    def __new__(cls, title, programs, currentChannel, sort_time=False):
+    def __new__(cls, title, programs, channel=None, sort_time=False):
         return super(ProgramListDialog, cls).__new__(cls, 'script-tvguide-programlist.xml', Skin.getSkinBasePath(), Skin.getSkinName(), skin_resolution)
 
-    def __init__(self, title, programs, currentChannel, sort_time=False):
+    def __init__(self, title, programs, channel=None, sort_time=False):
+        # debug('ProgramListDialog __init__')
         super(ProgramListDialog, self).__init__()
         self.title = title
         self.programs = programs
+        self.channel = channel
         self.index = -1
         self.action = None
         self.sort_time = sort_time
-        self.startChannelIndex = currentChannel
 
     def onInit(self):
         xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
@@ -8661,9 +8654,11 @@ class ProgramListDialog(xbmcgui.WindowXMLDialog):
         control.setLabel(self.title)
 
         items = []
+        idxs = []
+
         index = 0
 
-        for program in self.programs:  # type: object
+        for program in self.programs:
             label = program.title
             description = program.description
             descriptionParser = src.ProgramDescriptionParser(description)
@@ -8688,6 +8683,10 @@ class ProgramListDialog(xbmcgui.WindowXMLDialog):
             item.setArt({'icon':icon})
 
             item.setProperty('index', str(index))
+            if self.channel:
+                if program.channel.id == self.channel.id:
+                    idxs.append(index)
+
             index = index + 1
 
             item.setProperty('ChannelName', replace_formatting(program.channel.title))
@@ -8751,13 +8750,14 @@ class ProgramListDialog(xbmcgui.WindowXMLDialog):
         if self.sort_time == True:
             items = sorted(items, key=lambda x: x.getProperty('startDate'))
 
+        if idxs:
+            idx = idxs[0]
+        else:
+            idx = 0
+
         listControl = self.getControl(ProgramListDialog.C_PROGRAM_LIST)
         listControl.addItems(items)
-        if self.startChannelIndex is not None:
-            try:
-                listControl.selectItem(int(self.startChannelIndex))
-            except:
-                listControl.selectItem(int(0))
+        listControl.selectItem(int(idx))
 
         if items != '':
             xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
