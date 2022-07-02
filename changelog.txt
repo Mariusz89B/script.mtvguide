@@ -1,4 +1,7 @@
-﻿v9.9.617 (2022-07-02)
+﻿v9.9.618 (2022-07-02)
+- Hotfix.
+
+v9.9.617 (2022-07-02)
 - Added overview guide window during playback.
 - Fixed mktime overflow error.
 - Optimized performance.

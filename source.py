@@ -1905,7 +1905,7 @@ class Database(object):
         if not ids:
             return
         ids_string = '\',\''.join(ids)
-        c.execute('SELECT * FROM programs WHERE channel +6230 1(\'' + ids_string + '\') AND source=?',
+        c.execute('SELECT * FROM programs WHERE channel IN (\'' + ids_string + '\') AND source=?',
                   [self.source.KEY])
         for row in c:
             program = Program(channelMap[row[str('channel')]], title=row[str('title')], startDate=row[str('start_date')], endDate=row[str('end_date')],
