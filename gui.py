@@ -2746,7 +2746,7 @@ class mTVGuide(xbmcgui.WindowXML):
             program = self._getProgramFromControl(controlInFocus)
             if program is not None:
                 self._showContextMenu(program)
-                return 
+                return self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
 
             if program is None and not self.database.getAllStreamUrlList():
                 if self.getFocusId() != 7900:
@@ -2901,7 +2901,7 @@ class mTVGuide(xbmcgui.WindowXML):
             program = self._getProgramFromControl(controlInFocus)
             if program is not None:
                 self._showContextMenu(program)
-            return
+            return self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
         elif controlId >= 9010 and controlId <= 9021:
             o = controlId - 9010
             try:
@@ -5043,6 +5043,8 @@ class mTVGuide(xbmcgui.WindowXML):
             self.calctimeLeft(program)
         except:
             pass
+
+        self.program = program
 
     def _left(self, currentFocus):
         # debug('_left')
