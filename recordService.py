@@ -113,7 +113,7 @@ def decodeBackslashPath(s):
         s = s.replace('\\', '/').decode('utf-8').encode('utf-8')
     else:
         s = s
-    
+
     return s
 
 def decodePath(s):
@@ -121,7 +121,7 @@ def decodePath(s):
         s = s.decode('utf-8')
     else:
         s = s
-    
+
     return s
 
 def encodePath(s):
@@ -129,7 +129,7 @@ def encodePath(s):
         s = s.encode('utf-8')
     else: 
         s = s
-    
+
     return s
 
 def asciiPath(s):
@@ -137,7 +137,7 @@ def asciiPath(s):
         s = s.decode('utf-8').encode('latin-1')
     else:
         s = s
-    
+
     return s
 
 class proxydt(datetime.datetime):
@@ -327,7 +327,8 @@ class RecordService(BasePlayService):
                 xbmcgui.Dialog().notification(strings(30353), strings(60017))
                 return self.renameFile(program)
 
-        self.rectitle = filename
+        if filename:
+            self.rectitle = filename.replace('.mpeg', '')
 
     def recordProgramGui(self, program, catchupList, watch=False, length=0):
         self.program = program
@@ -1687,7 +1688,11 @@ class RecordService(BasePlayService):
         return re.compile('[^A-Za-z0-9_]+', re.IGNORECASE).sub('_', text)
 
     def getOutputFilename(self, program, partNumber = 0):
-        filename = self.rectitle.replace('.mpeg', '')
+        if self.rectitle:
+            filename = self.rectitle
+        else:
+            filename = self.normalizeString(program.title) + '_' + str(program.startDate.strftime('%Y-%m-%d_%H-%M'))
+
         if partNumber > 1:
             filename = filename + '_part_{0}'.format(partNumber)
 
