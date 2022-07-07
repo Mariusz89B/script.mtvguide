@@ -108,7 +108,6 @@
 							<scroll>true</scroll>
 						</control>
 						<control type="group">
-							<visible>!String.IsEmpty(ListItem.Plot) + Control.HasFocus(7000)</visible>
 							<animation effect="fade" start="0" end="100" time="200">Focus</animation>
 							<control type="image">
 								<left>772</left>
@@ -132,6 +131,16 @@
 								<height>290</height>
 								<label>$INFO[ListItem.Plot]</label>
 								<autoscroll time="3000" delay="4000" repeat="5000">Skin.HasSetting(AutoScroll)</autoscroll>
+								<visible>!String.IsEmpty(ListItem.Plot) + Control.HasFocus(7000)</visible>
+							</control>
+							<control type="textbox">
+								<left>1135</left>
+								<top>-70</top>
+								<width>760</width>
+								<height>290</height>
+								<label>$ADDON[script.mtvguide 30000]</label>
+								<autoscroll time="3000" delay="4000" repeat="5000">Skin.HasSetting(AutoScroll)</autoscroll>
+								<visible>String.IsEmpty(ListItem.Plot) + Control.HasFocus(7000)</visible>
 							</control>
 						</control>
 					</focusedlayout>

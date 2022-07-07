@@ -71,4 +71,5 @@ class Start:
         except Exception:
             deb('addon.py exception: {}'.format(getExceptionString()))
 
-init = Start()
+if __name__ == '__main__':
+    init = Start()

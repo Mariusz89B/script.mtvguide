@@ -1658,6 +1658,7 @@ class mTVGuide(xbmcgui.WindowXML):
                         removeContent = re.sub('<fonts>', '', str(removeContent))
                         removeContent = re.sub(r'\n\n\t<fontset', '\t<fontset', str(removeContent))
                         removeContent = re.sub(r'\n\t<fontset', '\t<fontset', str(removeContent))
+                        removeContent = re.sub(r'\t</fontset>\s<fontset', '\t</fontset>\n\t<fontset', str(removeContent))
                         file_temp.write(removeContent)
                         file_temp.close()
 

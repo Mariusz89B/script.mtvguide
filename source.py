@@ -498,6 +498,7 @@ class Database(object):
                 deb('Database.eventLoop() >>>>>>>>>> exception: {}!'.format(getExceptionString() ))
                 if self.close_callback:
                     self.close_callback(False)
+
         deb('Database.eventLoop() >>>>>>>>>> exiting...')
 
     def _invokeAndBlockForResult(self, method, *args):
@@ -518,6 +519,7 @@ class Database(object):
         self.event.set()
 
     def _initialize(self, cancel_requested_callback):
+        deb('_initialize')
         sqlite3.register_adapter(datetime, self.adapt_datetime)
         sqlite3.register_converter(str('timestamp'), self.convert_datetime)
 
@@ -525,6 +527,7 @@ class Database(object):
         while True:
             if cancel_requested_callback is not None and cancel_requested_callback():
                 break
+
             try:
                 self.unlockDbTimer = threading.Timer(120, self.delayedUnlockDb)
                 self.unlockDbTimer.start()
@@ -533,15 +536,12 @@ class Database(object):
                 self.conn.execute("PRAGMA foreign_keys = ON");
                 self.conn.execute("PRAGMA locking_mode = EXCLUSIVE");
                 self.conn.execute("PRAGMA encoding = 'UTF-8'");
+                self.conn.execute("PRAGMA temp_store = 2");
+                self.conn.execute("PRAGMA cache_size = -32000");
                 if GET_PRAGMA_MODE:
                     self.conn.execute("PRAGMA journal_mode = WAL");
                     self.conn.execute("PRAGMA temp_store = MEMORY");
                     self.conn.execute("PRAGMA synchronous = NORMAL");
-                #self.conn.execute("PRAGMA mmap_size = 268435456");
-                #self.conn.execute("PRAGMA page_size = 16384");
-                #self.conn.execute("PRAGMA cache_size = 64000");
-                #self.conn.execute("PRAGMA locking_mode = NORMAL");
-                #self.conn.execute("PRAGMA count_changes = OFF");
                 self.conn.row_factory = sqlite3.Row
 
                 # create and drop dummy table to check if database is locked
@@ -585,6 +585,7 @@ class Database(object):
                         pass
                     self.alreadyTriedUnlinking = True
                     xbmcgui.Dialog().ok(ADDON.getAddonInfo('name'), strings(DATABASE_SCHEMA_ERROR_1) + '\n' + strings(DATABASE_SCHEMA_ERROR_2) + ' ' + strings(DATABASE_SCHEMA_ERROR_3))
+
         return self.conn is not None
 
     def delayedUnlockDb(self):
@@ -620,6 +621,8 @@ class Database(object):
         try:
             # rollback any non-commit'ed changes to avoid database lock
             if self.conn:
+                self.conn.execute("PRAGMA analysis_limit = 400");
+                self.conn.execute("PRAGMA optimize");
                 self.conn.rollback()
         except sqlite3.OperationalError:
             pass # no transaction is active
