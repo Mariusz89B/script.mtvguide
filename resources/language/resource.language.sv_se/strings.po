@@ -1540,6 +1540,14 @@ msgctxt "#60015"
 msgid "Wrong date format"
 msgstr "Fel datumformat"
 
+msgctxt "#60016"
+msgid "Enter filename"
+msgstr "Ange filnamn"
+
+msgctxt "#60017"
+msgid "Wrong filename input"
+msgstr "Fel inmatning av filnamn"
+
 msgctxt "#30913"
 msgid "Settings"
 msgstr "Inställningar"

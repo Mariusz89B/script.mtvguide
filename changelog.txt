@@ -1,4 +1,8 @@
-﻿v9.9.619 (2022-07-07)
+﻿v9.9.620 (2022-07-08)
+- Added filename input for downloads and recordings.
+- Other improvements.
+
+v9.9.619 (2022-07-07)
 - Added overview guide window shourtcut.
 - Database optimizations.
 

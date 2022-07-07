@@ -1540,6 +1540,14 @@ msgctxt "#60015"
 msgid "Wrong date format"
 msgstr "Verkeerde datumnotatie"
 
+msgctxt "#60016"
+msgid "Enter filename"
+msgstr "Voer bestandsnaam in"
+
+msgctxt "#60017"
+msgid "Wrong filename input"
+msgstr "Verkeerde bestandsnaam invoer"
+
 msgctxt "#30913"
 msgid "Settings"
 msgstr "Instellingen"

@@ -204,6 +204,7 @@ class RecordService(BasePlayService):
         self.endOffsetDownload   = 0
         self.downloading         = False
         self.showDialogOk        = False
+        self.rectitle            = None
 
         if ADDON.getSetting('ffmpeg_dis_cop_un') == 'true':
             self.ffmpegDisableCopyUnknown = True
@@ -248,7 +249,6 @@ class RecordService(BasePlayService):
         seconds = (seconds % 60)
         return minutes
 
-
     def formatFileSize(self, num):
         step_unit = 1000.0
         for x in ['bytes', 'KB', 'MB', 'GB', 'TB']:
@@ -256,18 +256,15 @@ class RecordService(BasePlayService):
                 return "%3.1f %s" % (num, x)
             num /= step_unit
 
-
     def calcFileSize(self, duration, bitrate, depth):
         result = bitrate / depth * duration * 1000
         return result
-
 
     def createProgressDialog(self):
         self.progress = xbmcgui.DialogProgressBG()
         self.progress.create(strings(69056))
         #xbmc.sleep(1000)
         return self.progress
-
 
     def downloadMenuCoreELEC(self, program):
         self.dwnl = False
@@ -295,7 +292,6 @@ class RecordService(BasePlayService):
 
         return [self.dwnl, self.chkdate, 0, 0]
 
-
     def startInputDialog(self, startDate):
         input_date = xbmcgui.Dialog().input(strings(70024), defaultt=str(startDate) , type=xbmcgui.INPUT_ALPHANUM)
         if input_date:
@@ -305,7 +301,6 @@ class RecordService(BasePlayService):
             except:
                 xbmcgui.Dialog().notification(strings(57051), strings(60015), xbmcgui.NOTIFICATION_WARNING, sound=True)
                 self.startInputDialog(startDate)
-
 
     def endInputDialog(self, endDate):
         input_date = xbmcgui.Dialog().input(strings(70025), defaultt=str(endDate), type=xbmcgui.INPUT_ALPHANUM)
@@ -317,8 +312,24 @@ class RecordService(BasePlayService):
                 xbmcgui.Dialog().notification(strings(57051), strings(60015), xbmcgui.NOTIFICATION_WARNING, sound=True)
                 self.endInputDialog(endDate)
 
+    def renameFile(self, program):
+        filename = self.normalizeString(program.title) + '_' + str(program.startDate.strftime('%Y-%m-%d_%H-%M')) + '.mpeg'
+        kb = xbmc.Keyboard(filename,'')
+        kb.setHeading(strings(60016))
+        kb.setHiddenInput(False)
+        kb.doModal()
+        c = kb.getText() if kb.isConfirmed() else None
+        if c == '': c = None
 
-    def recordProgramGui(self, program, catchupList, watch='', length=''):
+        if c:
+            filename = c
+            if '.mpeg' not in filename:
+                xbmcgui.Dialog().notification(strings(30353), strings(60017))
+                return self.renameFile(program)
+
+        self.rectitle = filename
+
+    def recordProgramGui(self, program, catchupList, watch=False, length=0):
         self.program = program
         self.showDialogOk = True
         _program = None
@@ -356,6 +367,7 @@ class RecordService(BasePlayService):
                                     saveRecording, chkdate, self.startOffsetDownload, self.endOffsetDownload = downloadMenu.getOffsets()
 
                                 if saveRecording:
+                                    self.renameFile(program)
                                     self.startOffsetDownload *= 60
                                     self.endOffsetDownload *= 60
                                     _program = self.epg.database.getPrograms(program.channel, program, self.program.startDate, self.program.endDate)
@@ -384,12 +396,13 @@ class RecordService(BasePlayService):
                         updateDB = True
 
                 elif program.recordingScheduled != 1:
-                    if self.isDownload == False:
+                    if not self.isDownload:
                         recordMenu = RecordMenu(program)
                         recordMenu.doModal()
                         saveRecording, startOffset, endOffset = recordMenu.getOffsets()
 
-                        if saveRecording == True:
+                        if saveRecording:
+                            self.renameFile(program)
                             startOffset *= 60
                             endOffset *= 60
                             if self.scheduleRecording(program, startOffset, endOffset):
@@ -410,8 +423,8 @@ class RecordService(BasePlayService):
 
         except:
             deb('recordProgramGui exception: %s' % getExceptionString())
-        return updateDB
 
+        return updateDB
 
     def scheduleDownload(self, program, startOffset, endOffset, delayRecording = 0):
         program = copy.deepcopy(program)
@@ -445,7 +458,6 @@ class RecordService(BasePlayService):
         timer.start()
         return True
 
-
     def downloadChannel(self, startTime, startOffset):
         deb('DownloadService downloadChannel startTime {}, startOffset {}'.format(startTime, startOffset))
         try:
@@ -477,13 +489,12 @@ class RecordService(BasePlayService):
         except Exception as ex:
             deb('downloadChannel Exception: {}'.format(ex))
 
-
     def startDownload(self, threadData):
         deb('startDownload')
         diag = self.createProgressDialog()
 
         durationTime = (self.program.endDate - self.program.startDate).total_seconds()
-        
+
         iDownsize = 0
 
         while not (self.processIsCanceled or diag.isFinished()):
@@ -502,7 +513,7 @@ class RecordService(BasePlayService):
                 iTotalSize = float(self.downloadSize)
             else:
                 iTotalSize = 1000
-            
+
             self.stateCallBackFunction(program, iDownsize, iTotalSize, durationTime)
 
         self.processIsCanceled = True
@@ -519,7 +530,7 @@ class RecordService(BasePlayService):
             elapsedTime = datetime.proxydt.strptime(str('00:00:00.01'), '%H:%M:%S.%f')
 
         elapsedTime = (elapsedTime - datetime.datetime(1900, 1, 1, 0, 0)).total_seconds() + 5
-        
+
 
         iPercent = int(float(elapsedTime * 100) / durationTime)
         if iTotalSize <= 1000:
@@ -537,11 +548,10 @@ class RecordService(BasePlayService):
         downloadSpeed = round(int(iDownsize) * 0.000008 / int(elapsedTime), 1)
 
         self.progress.update(iPercent, str(program), str(Downsize) + ' / ' + str(TotalSize) + ', ' + str(downloadSpeed) + ' mbit/s')
-    
+
         if (self.progress.isFinished()) and not (self.processIsCanceled):
             self.processIsCanceled = True
             self.progress.close()
-
 
     def StopAll(self):
         self.processIsCanceled = True
@@ -554,7 +564,6 @@ class RecordService(BasePlayService):
 
         return
 
-    
     def downloadLoop(self, threadData):
         threadData['success']               = False
         threadData['notificationDisplayed'] = False
@@ -591,7 +600,7 @@ class RecordService(BasePlayService):
             deb('DownloadService - end of download program: {}'.format(threadData['program'].title))
         else:
             deb('DownloadService - end of download program: {}'.format(threadData['program'].title.encode('utf-8')))
-        
+
         self.epg.database.removeRecording(threadData['program'])
         threadData['notificationDisplayed'] = True
         self.showEndDownloadNotification(threadData)
@@ -600,13 +609,12 @@ class RecordService(BasePlayService):
             self.progress.close()
         except:
             pass
-        
+
         if self.cleanupDownloadTimer is not None:
             self.cleanupDownloadTimer.cancel()
         self.cleanupDownloadTimer = threading.Timer(0.2, self.cleanupFinishedDownloadThreads)
         self.cleanupDownloadTimer.start()
 
-    
     def downloadProgram(self, startDate, endDate):
         startDate += datetime.timedelta(seconds=self.startOffsetDownload)
         endDate += datetime.timedelta(seconds=self.endOffsetDownload)
@@ -665,7 +673,6 @@ class RecordService(BasePlayService):
         #mktime_duration = str(mktime_duration)
 
         return archivePlaylist, mktime_duration
-
 
     def downloadUrl(self, url, threadData):
         self.archiveString, self.downloadDuration = self.downloadProgram(self.program.startDate, self.program.endDate)
@@ -947,7 +954,6 @@ class RecordService(BasePlayService):
             else:
                 threadData['nrOfReattempts'] += 1
 
-
     def download(self, recordCommand, threadData):
         deb('DownloadService download command: {}'.format(str(recordCommand)))
         avgList = list()
@@ -988,11 +994,11 @@ class RecordService(BasePlayService):
                     bitrate_re = re.findall(r'.*bitrate=(.*?)kbits.*', line)
                     if not bitrate_re:
                         bitrate = 0
-                    
+
                     try:
                         bitrate = float(bitrate_re[0])
                         avgList.append(int(bitrate))
-                        
+
                     except:
                         bit = 0
 
@@ -1016,9 +1022,8 @@ class RecordService(BasePlayService):
 
         except Exception as ex:
             deb('DownloadService download exception: {}'.format(getExceptionString()))
-                
-        return output
 
+        return output
 
     def stopDownload(self, threadData, kill = False):
         if threadData['downloadHandle'] is not None:
@@ -1029,7 +1034,6 @@ class RecordService(BasePlayService):
                     #threadData['recordHandle'].kill()
             except:
                 pass
-
 
     def postDownloadActions(self, recordOutput, threadData):
         self.StopAll()
@@ -1055,7 +1059,6 @@ class RecordService(BasePlayService):
                 except:
                     pass
 
-
     def analyzeDownloadOutput(self, output, recordOptions):
         try:
             if 'Unrecognized option' in output:
@@ -1080,16 +1083,13 @@ class RecordService(BasePlayService):
         except:
             pass
 
-
     def calculateDownloadTimeDifference(self, programStartTime, programEndTime, timeOffset = 0):
         timeDiff = programEndTime - programStartTime
         programDuration = ((timeDiff.days * 86400) + timeDiff.seconds) + timeOffset
         return programDuration    
 
-
     def checkIfDownloadShouldContinue(self, threadData):
         return (threadData['success'] == False and threadData['nrOfReattempts'] <= maxNrOfReattempts and self.terminating == False and threadData['terminateDownloadThread'] == False and strings2.M_TVGUIDE_CLOSING == False)
-
 
     def generateFFMPEGDownloadCommand(self, channelInfo, programDuration, destinationFile, recordOptions):
         recordCommand = list()
@@ -1098,7 +1098,7 @@ class RecordService(BasePlayService):
         duration = datetime.timedelta(seconds=int(programDuration))
 
         streamSource = channelInfo.strm
-        
+
         cookieSeparator = streamSource.find('|')
         if cookieSeparator > 0 and not '.mpd' in streamSource:
             removedCookie = streamSource[cookieSeparator+1:]
@@ -1183,7 +1183,6 @@ class RecordService(BasePlayService):
 
         return recordCommand
 
-
     def showStartDownloadNotification(self, threadData):
         if threadData['notificationDisplayed'] == False:
             if PY3:
@@ -1207,7 +1206,6 @@ class RecordService(BasePlayService):
             else:
                 xbmc.executebuiltin('Notification({},{},10000,{})'.format(finishedDownloadNotificationName.encode('utf-8', 'replace'), self.normalizeString(program.title), self.dwicon))
 
-
     def scheduleAllRecordings(self):
         deb('scheduleAllRecordings')
         channels = self.epg.database.getChannelList(True)
@@ -1230,12 +1228,11 @@ class RecordService(BasePlayService):
                     break
         debug('scheduleAllRecordings completed!')
 
-
     def scheduleRecording(self, program, startOffset, endOffset, delayRecording = 0):
 
         program = copy.deepcopy(program)
         program.endDate += datetime.timedelta(seconds=endOffset)
-        
+
         secToFinishRecording = self.calculateTimeDifference(program.endDate, timeOffset = -5 )  #stop 5 sec earlier to release stream and allow recording of next program on that channel
         if secToFinishRecording <= 0:
             if PY3:
@@ -1259,14 +1256,14 @@ class RecordService(BasePlayService):
 
         secToRecording = self.calculateTimeDifference(program.startDate, timeOffset = startOffset + 5 )
         if secToRecording < 0:
-            secToRecording = delayRecording   #start now
+            secToRecording = delayRecording #start now
 
         for element in self.getScheduledRecordingsForThisTime(program.startDate):
             if element.startOffset == startOffset:
-                programList = element.programList    #Fetch already scheduled list of programs
+                programList = element.programList #Fetch already scheduled list of programs
                 for prog in programList:
                     if program.channel == prog.channel and program.startDate == prog.startDate:
-                        return False        #already on list
+                        return False #already on list
                 programList.append(program) #add one more
                 return True
 
@@ -1276,7 +1273,6 @@ class RecordService(BasePlayService):
         self.timers.append(RecordTimer(program.startDate, startOffset, timer, programList))
         timer.start()
         return True
-
 
     def recordChannel(self, startTime, startOffset):
         deb('RecordService recordChannel startTime {}, startOffset {}'.format(startTime, startOffset))
@@ -1345,7 +1341,6 @@ class RecordService(BasePlayService):
             self.cleanupTimer.cancel()
         self.cleanupTimer = threading.Timer(0.2, self.cleanupFinishedThreads)
         self.cleanupTimer.start()
-
 
     def recordUrl(self, url, threadData):
         threadData['recordOptions']['settingsChanged'] = False
@@ -1419,25 +1414,24 @@ class RecordService(BasePlayService):
         recordEnviron["LD_LIBRARY_PATH"] = os.path.join(os.path.dirname(recordCommand[0]), 'lib') + ':/lib:/usr/lib:/usr/local/lib'
         if oldLdPath != '':
             recordEnviron["LD_LIBRARY_PATH"] = recordEnviron["LD_LIBRARY_PATH"] + ":" + oldLdPath
-        
+
         try:
             threadData['stopRecordTimer'] = threading.Timer(threadData['recordDuration'] + 5, self.stopRecord, [threadData])
             threadData['stopRecordTimer'].start()
 
             threadData['recordHandle'] = subprocess.Popen(recordCommand, shell=False, stdin=None, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True, startupinfo=si, env=recordEnviron)
-            
+
             output = threadData['recordHandle'].communicate()[0]
             returnCode = threadData['recordHandle'].returncode
             threadData['stopRecordTimer'].cancel()
             threadData['recordHandle'] = None
 
             deb('RecordService record finished, \noutput: {}, \nstatus: {}, Command: {}'.format(output, returnCode, str(recordCommand)))
-        
+
         except Exception as ex:
             deb('RecordService record exception: {}'.format(getExceptionString()))
 
         return output
-
 
     def stopRecord(self, threadData, kill = False):
         if threadData['recordHandle'] is not None:
@@ -1447,7 +1441,6 @@ class RecordService(BasePlayService):
                     #threadData['recordHandle'].kill()
             except:
                 pass
-
 
     def postRecordActions(self, recordOutput, threadData):
         self.analyzeRecordOutput(recordOutput, threadData['recordOptions'])
@@ -1470,7 +1463,6 @@ class RecordService(BasePlayService):
                     os.remove(threadData['destinationFile'])
                 except:
                     pass
-
 
     def analyzeRecordOutput(self, output, recordOptions):
         try:
@@ -1496,16 +1488,13 @@ class RecordService(BasePlayService):
         except:
             pass
 
-
     def calculateTimeDifference(self, programTime, timeOffset = 0):
         timeDiff = programTime - datetime.datetime.now()
         programDuration = ((timeDiff.days * 86400) + timeDiff.seconds) + timeOffset
         return programDuration
 
-
     def checkIfRecordingShouldContinue(self, threadData):
         return (threadData['success'] == False and threadData['recordDuration'] > 0 and threadData['nrOfReattempts'] <= maxNrOfReattempts and self.terminating == False and threadData['terminateThread'] == False and strings2.M_TVGUIDE_CLOSING == False)
-
 
     def generateRTMPDumpCommand(self, channelInfo, programDuration, destinationFile, recordOptions):
         recordCommand = list()
@@ -1527,7 +1516,6 @@ class RecordService(BasePlayService):
         recordCommand.append("-o")
         recordCommand.append(destinationFile)
         return recordCommand
-
 
     def generateFFMPEGCommand(self, channelInfo, programDuration, destinationFile, recordOptions):
         recordCommand = list()
@@ -1614,7 +1602,6 @@ class RecordService(BasePlayService):
 
         return recordCommand
 
-
     def showStartRecordNotification(self, threadData):
         if threadData['notificationDisplayed'] == False:
             if PY3:
@@ -1624,14 +1611,12 @@ class RecordService(BasePlayService):
 
             threadData['notificationDisplayed'] = True #show only once
 
-
     def showEndRecordNotification(self, threadData):
         if threadData['notificationDisplayed'] == True:
             if PY3:
                 xbmc.executebuiltin('Notification({},{},10000,{})'.format(finishedRecordNotificationName, self.normalizeString(threadData['program'].title), self.icon))
             else:
                 xbmc.executebuiltin('Notification({},{},10000,{})'.format(finishedRecordNotificationName.encode('utf-8', 'replace'), self.normalizeString(threadData['program'].title), self.icon))
-
 
     def close(self):
         deb('RecordService close')
@@ -1668,7 +1653,6 @@ class RecordService(BasePlayService):
         if self.cleanupDownloadTimer is not None:
             self.cleanupDownloadTimer.cancel()
 
-
     def getScheduledRecordingsForThisTime(self, startDate):
         recordings = list()
         for element in self.timers:
@@ -1691,24 +1675,25 @@ class RecordService(BasePlayService):
             debug('DownloadService getScheduledDownloadingsForThisTime no programs starting at %s' % startDate)
         return recordings
 
-
     def normalizeString(self, text):
         import sys
         if PY3:
             nkfd_form = unicodedata.normalize('NFKD', str(text))
-            text = ("".join([c for c in nkfd_form if not unicodedata.combining(c)]))
+            text = (''.join([c for c in nkfd_form if not unicodedata.combining(c)]))
         else:
             nkfd_form = unicodedata.normalize('NFKD', unicode(text))
-            text = ("".join([c for c in nkfd_form if not unicodedata.combining(c)]))
-        
-        return re.compile('[^A-Za-z0-9_]+', re.IGNORECASE).sub('_', text)
-        
-    def getOutputFilename(self, program, partNumber = 0):
-        filename = self.normalizeString(program.title) + "_" + str(program.startDate.strftime("%Y-%m-%d_%H-%M"))
-        if partNumber > 1:
-            filename = filename + "_part_%d" % partNumber
-        return filename + ".mpeg"
+            text = (''.join([c for c in nkfd_form if not unicodedata.combining(c)]))
 
+        return re.compile('[^A-Za-z0-9_]+', re.IGNORECASE).sub('_', text)
+
+    def getOutputFilename(self, program, partNumber = 0):
+        filename = self.rectitle.replace('.mpeg', '')
+        if partNumber > 1:
+            filename = filename + '_part_{0}'.format(partNumber)
+
+        filename = filename + '.mpeg'
+
+        return filename
 
     def findNextUnusedOutputFilename(self, threadData):
         while os.path.isfile(threadData['destinationFile']): #Generate output filename which is not used
@@ -1729,7 +1714,6 @@ class RecordService(BasePlayService):
             filePath = os.path.join(decodePath(self.recordDestinationPath), filename)
         return filenameList
 
-
     def isProgramRecorded(self, program):
         #if PY3:
             #debug('RecordService isProgramRecorded program: %s' % program.title)
@@ -1743,7 +1727,6 @@ class RecordService(BasePlayService):
         if playlist.size() > 0:
             return playlist
         return None
-
 
     def isProgramRecordScheduled(self, program):
         if program is None:
@@ -1763,7 +1746,6 @@ class RecordService(BasePlayService):
                 return True
         return False
 
-
     def isProgramDownloadScheduled(self, program):
         if program is None:
             return False
@@ -1781,7 +1763,6 @@ class RecordService(BasePlayService):
             if program.channel == prog.channel and program.startDate == prog.startDate:
                 return True
         return False
-
 
     def abortProgramRecord(self, program):
         try:
@@ -1829,7 +1810,6 @@ class RecordService(BasePlayService):
         except:
             pass
 
-
     def cancelProgramRecord(self, program): #wylaczyc akturalnie nagrywany program?
         for element in self.getScheduledRecordingsForThisTime(program.startDate):
             programList = element.programList
@@ -1861,7 +1841,7 @@ class RecordService(BasePlayService):
                 else:
                     deb('RecordService canceled ongoing recording of: {}'.format(program.title.encode('utf-8')))
                 return
-          
+
     def abortProgramDownload(self, program):
         try:
             urlList = self.epg.database.getStreamUrlList(program.channel)
@@ -1904,7 +1884,7 @@ class RecordService(BasePlayService):
                     recordHandle.kill()
 
                     self.showEndDownloadNotification(program=program, notificationDisplayed=True)
-                    
+
         except:
             pass
 
@@ -1940,7 +1920,6 @@ class RecordService(BasePlayService):
                     deb('DownloadService canceled ongoing downloading of: {}'.format(program.title.encode('utf-8')))
                 return
 
-
     def cleanupFinishedThreads(self):
         for thread in self.threadList[:]:
             try:
@@ -1948,7 +1927,6 @@ class RecordService(BasePlayService):
                     self.threadList.remove(thread)
             except:
                 pass
-
 
     def cleanupFinishedDownloadThreads(self):
         for thread in self.threadDownloadList[:]:
@@ -1958,25 +1936,21 @@ class RecordService(BasePlayService):
             except:
                 pass
 
-
     def isRecordOngoing(self):
         for thread in self.threadList:
             if thread[0].is_alive():
                 return True
         return False
 
-
     def isDownloadOngoing(self):
         if self.downloading:
             return True
         return False
 
-
     def isRecordScheduled(self):
         if len(self.timers) > 0:
             return True
         return False
-
 
     def removeRecordedProgram(self, program):
         debug('removeRecordedProgram')
@@ -2109,7 +2083,6 @@ class RecordService(BasePlayService):
 
             return status
 
-
 class DownloadMenu(xbmcgui.WindowXMLDialog):
     START_DATE_ID = 401
     END_DATE_ID = 402
@@ -2146,7 +2119,7 @@ class DownloadMenu(xbmcgui.WindowXMLDialog):
         else:
             channel = self.program.channel.title.encode('utf-8')
             title = self.program.title.encode('utf-8')
-        
+
         self.programTitle = self.getControl(self.PROGRAM_TITLE_ID)
         self.programTitle = self.programTitle.setLabel(channel)
 
@@ -2184,7 +2157,7 @@ class DownloadMenu(xbmcgui.WindowXMLDialog):
         self.endTime.setType(xbmcgui.INPUT_TYPE_SECONDS, strings(70023))
         self.endTime.setLabel(strings(70023))
         self.endTime.setText(str(endTime))
-        
+
         self.updateLabels()
 
     def updateLabels(self):
@@ -2202,7 +2175,7 @@ class DownloadMenu(xbmcgui.WindowXMLDialog):
     def resetSettings(self):
         self.channelId.setText(self.orgTitle)
         self.program.title = self.orgTitle
-        
+
         self.startDate.setText(str(self.orgStartDate))
         self.endDate.setText(str(self.orgEndDate))
 
@@ -2214,7 +2187,6 @@ class DownloadMenu(xbmcgui.WindowXMLDialog):
 
         self.program.startDate = self.getStartDate(None, self.orgStartTime)
         self.program.endDate = self.getEndDate(None, self.orgEndTime)
-
 
     def getOffsets(self):
         if self.calculatedStartDate > self.calculatedEndDate:
@@ -2255,7 +2227,6 @@ class DownloadMenu(xbmcgui.WindowXMLDialog):
             self.program.endDate
 
         return self.program.endDate
-
 
     def onAction(self, action):
         if action.getId() in [ACTION_PREVIOUS_MENU, KEY_NAV_BACK, ACTION_PARENT_DIR, 101]:
@@ -2392,8 +2363,3 @@ class RecordMenu(xbmcgui.WindowXMLDialog):
         elif controlId == self.SAVE_CONTROL_ID:
             self.record = True
             self.close()
-        
-
-        
-        
-            

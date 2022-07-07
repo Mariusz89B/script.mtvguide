@@ -1540,6 +1540,14 @@ msgctxt "#60015"
 msgid "Wrong date format"
 msgstr "Pogrešan format datuma"
 
+msgctxt "#60016"
+msgid "Enter filename"
+msgstr "Unesite naziv datoteke"
+
+msgctxt "#60017"
+msgid "Wrong filename input"
+msgstr "Pogrešan unos naziva datoteke"
+
 msgctxt "#30913"
 msgid "Settings"
 msgstr "Postavke"

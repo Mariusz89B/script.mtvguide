@@ -1540,6 +1540,14 @@ msgctxt "#60015"
 msgid "Wrong date format"
 msgstr "Forkert datoformat"
 
+msgctxt "#60016"
+msgid "Enter filename"
+msgstr "Indtast filnavn"
+
+msgctxt "#60017"
+msgid "Wrong filename input"
+msgstr "Forkert indtastning af filnavn"
+
 msgctxt "#30913"
 msgid "Settings"
 msgstr "Indstillinger"

@@ -1540,6 +1540,14 @@ msgctxt "#60015"
 msgid "Wrong date format"
 msgstr "Niewłaściwy format daty"
 
+msgctxt "#60016"
+msgid "Enter filename"
+msgstr "Wpisz nazwę pliku"
+
+msgctxt "#60017"
+msgid "Wrong filename input"
+msgstr "Niewłaściwa nazwa pliku"
+
 msgctxt "#30913"
 msgid "Settings"
 msgstr "Ustawienia"
