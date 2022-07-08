@@ -2959,7 +2959,6 @@ class mTVGuide(xbmcgui.WindowXML):
 
                 else:
                     # multiple matches, let user decide
-
                     d = ChooseStreamAddonDialog(result)
                     d.doModal()
                     if d.stream is not None:
@@ -2984,7 +2983,6 @@ class mTVGuide(xbmcgui.WindowXML):
 
                 else:
                     # multiple matches, let user decide
-
                     d = ChooseStreamAddonDialog(result)
                     d.doModal()
                     if d.stream is not None:
@@ -3004,7 +3002,6 @@ class mTVGuide(xbmcgui.WindowXML):
 
                 else:
                     # multiple matches, let user decide
-
                     d = ChooseStreamAddonDialog(result)
                     d.doModal()
                     if d.stream is not None:
@@ -5698,7 +5695,6 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def _showEPG(self):
         deb('_showEpg')
-
         try:
             if self.end < self.played:
                 self.viewStartDate = self.program.startDate + datetime.timedelta(minutes=int(timebarAdjust()))
