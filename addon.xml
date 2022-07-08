@@ -2,7 +2,7 @@
 <addon
     id="script.mtvguide"
     name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]"
-    version="9.9.620-beta.5"
+    version="9.9.620-beta.6"
     provider-name="mariusz89b">
   <requires>
     <import addon="xbmc.addon" version="17.0.0"/>

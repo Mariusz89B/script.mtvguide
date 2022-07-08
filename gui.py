@@ -5698,6 +5698,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def _showEPG(self):
         deb('_showEpg')
+
         try:
             if self.end < self.played:
                 self.viewStartDate = self.program.startDate + datetime.timedelta(minutes=int(timebarAdjust()))
@@ -5707,10 +5708,8 @@ class mTVGuide(xbmcgui.WindowXML):
             self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(timebarAdjust()))
 
         self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
-        if self.channelIdx != 0:
-            self.channelIdx = self.channelIdx
 
-        elif self.currentChannel is not None:
+        if self.currentChannel:
             currentChannelIndex = self.database.getCurrentChannelIdx(self.currentChannel)
             self.channelIdx = (currentChannelIndex // CHANNELS_PER_PAGE) * CHANNELS_PER_PAGE
 
@@ -5848,7 +5847,7 @@ class mTVGuide(xbmcgui.WindowXML):
             # make sure notifications are scheduled for newly downloaded programs
             self.notification.scheduleNotifications()
 
-        self._showControl(self.C_MAIN_LOADING_BACKGROUND)    
+        self._showControl(self.C_MAIN_LOADING_BACKGROUND)
         self._hideControl(self.C_MAIN_LOADING)
 
         debug('onRedrawEPGPlaying done')
@@ -6110,7 +6109,6 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def _clearEpg(self):
         deb('_clearEpg')
-
         if self.timebar:
             try:
                 self.removeControl(self.timebar)
