@@ -1221,7 +1221,7 @@ class RecordService(BasePlayService):
                 continue
             for channel in channels:
                 if channel.id == channel_name:
-                    program = self.epg.database.getProgramStartingAt(channel, start_date)
+                    program = self.epg.database.getProgramStartingAt(channel, start_date, end_date)
                     if program is not None and self.isProgramRecordScheduled(program) == False and self.isDownload is False:
                         self.scheduleRecording(program, start_offset, end_offset, 30)
                     if program is not None and self.isProgramDownloadScheduled(program) == False and self.isDownload is True:

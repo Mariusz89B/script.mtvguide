@@ -2177,11 +2177,11 @@ class mTVGuide(xbmcgui.WindowXML):
             pass
 
     def AutoPlayByNumber(self):
+        deb('AutoPlayByNumber')
         self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(timebarAdjust()))
         self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
         channelList = self.database.getChannelList(onlyVisible=True)
         self.channelIdx = int(ADDON.getSetting('autostart_channel_number')) - 1
-        channel = Channel(id='', title='', logo='', titles='', streamUrl='', visible='', weight='')
 
         try:
             index = channelList[self.channelIdx]
@@ -2190,13 +2190,25 @@ class mTVGuide(xbmcgui.WindowXML):
                 index = channelList[0]
             else:
                 return
-        program = Program(channel=index, title='', startDate='', endDate='', description='', productionDate='', director='', actor='', episode='', 
-                        imageLarge='', imageSmall='', categoryA='', categoryB='')
+
+        now = datetime.datetime.now()
+
+        if PY3:
+            start = str(datetime.datetime.timestamp(now))
+        else:
+            start = str(int(time.mktime(now.timetuple())))
+
+        program = self.database.getProgramStartingAt(index, start, None)
+        if not program:
+            program = Program(channel=index, title='', startDate='', endDate='', description='', productionDate='', director='', actor='', episode='', 
+                imageLarge='', imageSmall='', categoryA='', categoryB='')
 
         xbmc.sleep(350)
-        self.playChannel(program.channel)
+        if not xbmc.Player().isPlaying():
+            self.playChannel(program.channel)
 
     def AutoPlayLastChannel(self):
+        deb('AutoPlayLastChannel')
         self.viewStartDate = datetime.datetime.today() + datetime.timedelta(minutes=int(timebarAdjust()))
         self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
         channelList = self.database.getChannelList(onlyVisible=True)
@@ -2210,8 +2222,19 @@ class mTVGuide(xbmcgui.WindowXML):
                 index = channelList[0]
             else:
                 return
-        program = Program(channel=index, title='', startDate='', endDate='', description='', productionDate='', director='', actor='', episode='', 
-                        imageLarge='', imageSmall='', categoryA='', categoryB='')
+
+        now = datetime.datetime.now()
+
+        if PY3:
+            start = str(datetime.datetime.timestamp(now))
+        else:
+            start = str(int(time.mktime(now.timetuple())))
+
+        program = self.database.getProgramStartingAt(index, start, None)
+        if not program:
+            program = Program(channel=index, title='', startDate='', endDate='', description='', productionDate='', director='', actor='', episode='', 
+                imageLarge='', imageSmall='', categoryA='', categoryB='')
+
         xbmc.sleep(350)
         if not xbmc.Player().isPlaying():
             self.playChannel(program.channel)
@@ -2435,7 +2458,19 @@ class mTVGuide(xbmcgui.WindowXML):
                     index = channelList[0]
                 else:
                     return
-            program = Program(channel=index, title='', startDate='', endDate='', description='', productionDate='', director='', actor='', episode='', categoryA='', categoryB='')
+
+            now = datetime.datetime.now()
+
+            if PY3:
+                start = str(datetime.datetime.timestamp(now))
+            else:
+                start = str(int(time.mktime(now.timetuple())))
+
+            program = self.database.getProgramStartingAt(index, start, None)
+            if not program:
+                program = Program(channel=index, title='', startDate='', endDate='', description='', productionDate='', director='', actor='', episode='', 
+                    imageLarge='', imageSmall='', categoryA='', categoryB='')
+
             self.playChannel2(program)
         elif (behaviour == 1) or (behaviour == 1 and self.mode != MODE_EPG):
             self.focusPoint.y = self.epgView.top
@@ -2746,7 +2781,7 @@ class mTVGuide(xbmcgui.WindowXML):
             program = self._getProgramFromControl(controlInFocus)
             if program is not None:
                 self._showContextMenu(program)
-                return self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
+                return
 
             if program is None and not self.database.getAllStreamUrlList():
                 if self.getFocusId() != 7900:
@@ -2901,7 +2936,7 @@ class mTVGuide(xbmcgui.WindowXML):
             program = self._getProgramFromControl(controlInFocus)
             if program is not None:
                 self._showContextMenu(program)
-            return self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
+            return
         elif controlId >= 9010 and controlId <= 9021:
             o = controlId - 9010
             try:
@@ -4545,6 +4580,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def _showContextMenu(self, program):
         deb('_showContextMenu')
+        self.program = program
         self._hideControl(self.C_MAIN_MOUSEPANEL_CONTROLS)
 
         if program.notificationScheduled:
@@ -4855,7 +4891,7 @@ class mTVGuide(xbmcgui.WindowXML):
             except:
                 return None, 0
 
-        program = self.database.getProgramStartingAt(chann, start)
+        program = self.database.getProgramStartingAt(chann, start, end)
 
         return program, idx
 
@@ -4880,31 +4916,22 @@ class mTVGuide(xbmcgui.WindowXML):
 
         if xbmc.Player().isPlaying():
             if ADDON.getSetting('info_osd') == "false" or self.program is None:
-                program = self.database.getCurrentProgram(self.currentChannel)
-                idx = self.database.getCurrentChannelIdx(self.currentChannel)
+                program, idx = self.getLastPlayingChannel()
 
-                if program is None:
+                if not program:
                     program = self.program
-
-                if self.program is not None:
-                    try:
-                        endDate = datetime.proxydt.strptime(str(self.program.endDate), '%Y-%m-%d %H:%M:%S')
-                    except:
-                        endDate = datetime.datetime.now()
-
-                    if endDate < datetime.datetime.now():
-                        program, idx = self.epg.getLastPlayingChannel()
 
                 try:
                     self.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format(program.channel.title))
                     self.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(program.title))
                     self.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format(self.formatTime(program.startDate), self.formatTime(program.endDate)))
                     self.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format((str(int(idx) + 1))))
+
                 except:
-                    self.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format("N/A"))
+                    self.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format('N/A'))
                     self.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(strings(55016)))
-                    self.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format("N/A", "N/A"))
-                    self.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format("-"))
+                    self.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format('N/A','N/A'))
+                    self.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format('-'))
                     return
 
         if program.description:
@@ -5043,8 +5070,6 @@ class mTVGuide(xbmcgui.WindowXML):
             self.calctimeLeft(program)
         except:
             pass
-
-        self.program = program
 
     def _left(self, currentFocus):
         # debug('_left')
@@ -5194,7 +5219,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 return True
 
     def updateCurrentChannel(self, channel, program=None):
-        #deb('updateCurrentChannel: {}'.format(channel))
+        deb('updateCurrentChannel: {}'.format(channel))
         self.lastChannel = self.currentChannel
         self.currentChannel = channel
 
@@ -5202,23 +5227,18 @@ class mTVGuide(xbmcgui.WindowXML):
 
         self.played = datetime.datetime.now()
 
-        try:
-            self.start = self.program.startDate
-            self.end = self.program.endDate
-        except:
-            self.start = ''
-            self.end == ''
+        if not program:
+            program = self.program
+            if not program:
+                program = self.database.getCurrentProgram(channel)
 
-        if self.start is None or self.start == '':
-            try:
-                program = self.database.getCurrentProgram(program.channel)
-                self.start = program.startDate
-                self.end = program.endDate
+        if program:
+            self.start = program.startDate
+            self.end = program.endDate
 
-                self.program = program
-            except:
-                self.start = self.played
-                self.end = self.played        
+        else:
+            self.start = self.played
+            self.end = self.played
 
         self.database.lastChannel(idx, self.start, self.end, self.played)
 
@@ -5229,7 +5249,7 @@ class mTVGuide(xbmcgui.WindowXML):
         return '%.2d:%.2d:%.2d' % (hour, minutes, secs)
 
     def playChannel2(self, program):
-        deb('playChannel2')
+        deb('playChannel2: {}'.format(program))
 
         if xbmc.Player().isPlaying():
             time.sleep(0.2)
@@ -5434,13 +5454,13 @@ class mTVGuide(xbmcgui.WindowXML):
             if ADDON.getSetting('start_video_minimalized') == 'false' and xbmc.Player().isPlaying():
                 xbmc.executebuiltin("Action(FullScreen)")
             if ADDON.getSetting('info_osd') == "true":
-                self.createOSD(self.program, urlList)
+                self.createOSD(program, urlList)
             else:
                 self.playService.playUrlList(urlList, self.archiveService, self.archivePlaylist, resetReconnectCounter=True)
         return len(urlList) > 0
 
     def playChannel(self, channel, program=None):
-        deb('playChannel')
+        deb('playChannel: {}'.format(program))
 
         if xbmc.Player().isPlaying():
             time.sleep(0.2)
@@ -5628,7 +5648,7 @@ class mTVGuide(xbmcgui.WindowXML):
             self.archivePlaylist = ''
 
         self.updateCurrentChannel(channel, program)
-        if program is not None:
+        if program:
             self.program = program
             if self.playRecordedProgram(program):
                 return True
@@ -5638,7 +5658,7 @@ class mTVGuide(xbmcgui.WindowXML):
             if ADDON.getSetting('start_video_minimalized') == 'false' and xbmc.Player().isPlaying():
                 xbmc.executebuiltin("Action(FullScreen)")
             if ADDON.getSetting('info_osd') == "true":
-                self.createOSD(self.program, urlList)
+                self.createOSD(program, urlList)
             else:
                 self.playService.playUrlList(urlList, self.archiveService, self.archivePlaylist, resetReconnectCounter=True)
         return len(urlList) > 0
@@ -8044,31 +8064,22 @@ class Pla(xbmcgui.WindowXMLDialog):
         self.programs = self.database.getNowList(self.program.channel)
 
         if ADDON.getSetting('info_osd') == "true":
-            program = self.database.getCurrentProgram(self.epg.currentChannel)
-            idx = self.database.getCurrentChannelIdx(self.epg.currentChannel)
+            program, idx = self.epg.getLastPlayingChannel()
 
-            if program is None:
+            if not program:
                 program = self.program
-
-            if self.program is not None:
-                try:
-                    endDate = datetime.proxydt.strptime(str(self.program.endDate), '%Y-%m-%d %H:%M:%S')
-                except:
-                    endDate = datetime.datetime.now()
-
-                if endDate < datetime.datetime.now():
-                    program, idx = self.epg.getLastPlayingChannel()
 
             try:
                 self.epg.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format(program.channel.title))
                 self.epg.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(program.title))
                 self.epg.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format(self.epg.formatTime(program.startDate), self.epg.formatTime(program.endDate)))
                 self.epg.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format((str(int(idx) + 1))))
+
             except:
-                self.epg.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format("N/A"))
+                self.epg.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format('N/A'))
                 self.epg.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(strings(55016)))
-                self.epg.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format("N/A", "N/A"))
-                self.epg.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format("-"))
+                self.epg.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format('N/A', 'N/A'))
+                self.epg.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format('-'))
                 return
 
         if ADDON.getSetting('show_time') == "true":
@@ -8205,8 +8216,6 @@ class Pla(xbmcgui.WindowXMLDialog):
             self.channel_number = ""
             self.getControl(9999).setLabel(self.channel_number)
 
-        channel = Channel(id='', title='', logo='', titles='', streamUrl='', visible='', weight='')
-
         try:
             index = channelList[self.channelIdx]
         except:
@@ -8215,9 +8224,19 @@ class Pla(xbmcgui.WindowXMLDialog):
             else:
                 return
 
-        self.program = Program(channel=index, title='', startDate='', endDate='', description='', productionDate='', director='', actor='', episode='', imageLarge='', imageSmall='', categoryA='', categoryB='')
+        now = datetime.datetime.now()
 
-        self.playChannel(self.program.channel, self.program)
+        if PY3:
+            start = str(datetime.datetime.timestamp(now))
+        else:
+            start = str(int(time.mktime(now.timetuple())))
+
+        program = self.database.getProgramStartingAt(index, start, None)
+        if not program:
+            program = Program(channel=index, title='', startDate='', endDate='', description='', productionDate='', director='', actor='', episode='', 
+                imageLarge='', imageSmall='', categoryA='', categoryB='')
+
+        self.playChannel(program.channel, program)
 
     def onAction(self, action):
         debug('Pla onAction keyId {}, buttonCode {}'.format(action.getId(), action.getButtonCode()))
@@ -8329,10 +8348,10 @@ class Pla(xbmcgui.WindowXMLDialog):
                 d = xbmcgui.Dialog()
                 list = d.select(strings(31009), [strings(58000), strings(30356)])
                 if list == 0:
-                    self.program = self.getCurrentProgram()
+                    self.program = self.getCurrentProgram(self.program.channel)
                     self.epg.Info(self.program, self.epg.playChannel2, self.epg.recordProgram, self.epg.notification, self.epg.ExtendedInfo, self.epg.onRedrawEPG, self.epg.channelIdx, self.epg.viewStartDate)
                 elif list == 1:
-                    self.program = self.getCurrentProgram()
+                    self.program = self.getCurrentProgram(self.program.channel)
                     self.epg.ExtendedInfo(self.program)
             except:
                 pass
@@ -8361,7 +8380,7 @@ class Pla(xbmcgui.WindowXMLDialog):
                 if ADDON.getSetting('VidOSD_on_select') == 'true':
                     self.showVidOsd()
                 else:
-                    self.program = self.getCurrentProgram()
+                    self.program = self.getCurrentProgram(self.program.channel)
                     self.epg.Info(self.program)
             except:
                 pass
@@ -8474,7 +8493,7 @@ class Pla(xbmcgui.WindowXMLDialog):
         elif action == ACTION_SHOW_INFO:
             try:
                 if program is None:
-                    program = self.getCurrentProgram()
+                    program = self.getCurrentProgram(self.program.channel)
                 d = xbmcgui.Dialog()
                 list = d.select(strings(31009), [strings(58000), strings(30356)])
                 if list == 0:
@@ -8562,12 +8581,12 @@ class Pla(xbmcgui.WindowXMLDialog):
         self.playChannel(channel)
 
     def playChannel(self, channel, program=None):
-        #debug('Pla playChannel: {}'.format(program))
+        debug('Pla playChannel: {}'.format(program))
         if channel.id != self.epg.currentChannel.id:
             self.ChannelChanged = 1
-            if program is not None:
+            if program:
                 self.program = program
-                self.epg.program = self.program
+                self.epg.program = program
 
             self.epg.updateCurrentChannel(channel, program)
             urlList = self.database.getStreamUrlList(channel)
@@ -8598,7 +8617,7 @@ class Pla(xbmcgui.WindowXMLDialog):
         return self.database.getNextProgram(program)
 
     def getCurrentProgram(self, channel=None):
-        #deb('getCurrentProgram: {}'.format(channel))
+        deb('getCurrentProgram: {}'.format(channel))
         if channel is not None:
             channel = channel
         else:
@@ -8608,10 +8627,11 @@ class Pla(xbmcgui.WindowXMLDialog):
 
 
     def showVidOsd(self, action=None):
-        if ADDON.getSetting('archive_support') == 'true' and (self.archiveService != '' or self.archivePlaylist != ''):
-            self.program = self.program
-        else:
-            self.program = self.getCurrentProgram()
+        if self.program:
+            if ADDON.getSetting('archive_support') == 'true' and (self.archiveService != '' or self.archivePlaylist != ''):
+                self.program = self.program
+            else:
+                self.program = self.getCurrentProgram(self.program.channel)
         self.displayServiceOnOSD()
         self.videoOSD = VideoOSD(self, False, action)
         self.videoOSD.doModal()

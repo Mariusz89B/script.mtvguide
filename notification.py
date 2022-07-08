@@ -117,10 +117,11 @@ class Notification(object):
         if ADDON.getSetting('program_notifications_enabled') == 'true' and timeToNotification > 0:
             for chann in self.channels:
                 if chann.title == channelTitle:
-                    program = self.database.getProgramStartingAt(chann, startTime)
+                    endTime = None
+                    program = self.database.getProgramStartingAt(chann, startTime, endTime)
                     element = self.getScheduledNotificationForThisTime(program.startDate)
                     if element is not None:
-                        programList = element[2]    #Fetch already scheduled list of programs
+                        programList = element[2] #Fetch already scheduled list of programs
                         programList.append(program) #And add one more
                     else:
                         programList = list()

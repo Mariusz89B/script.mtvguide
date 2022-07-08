@@ -438,7 +438,7 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
             self.pausePlaybackControl.controlLeft(self.stopPlaybackControl)
             self.pageUpControl.controlRight(self.stopPlaybackControl)
             self.setFocusIfNeeded(C_STOP)
-            
+
         elif self.controlledByMouse or self.showConfigButtons:
             self.stopPlaybackControl.setEnabled(True)
             self.stopPlaybackControl.setVisible(True)
@@ -473,12 +473,23 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
             self.channel_number = ""
             self.getControl(9999).setLabel(self.channel_number)
 
-        channel = Channel(id='', title='', logo='', titles='', streamUrl='', visible='', weight='')
         try:
             index = channelList[self.channelIdx]
         except:
             index = channelList[0]
-        program = Program(channel=index, title='', startDate='', endDate='', description='', imageLarge='', imageSmall='', categoryA='',categoryB='')
+
+        now = datetime.datetime.now()
+
+        if PY3:
+            start = str(datetime.datetime.timestamp(now))
+        else:
+            start = str(int(time.mktime(now.timetuple())))
+
+        program = self.gu.database.getProgramStartingAt(index, start, None)
+        if not program:
+            program = Program(channel=index, title='', startDate='', endDate='', description='', productionDate='', director='', actor='', episode='', 
+                imageLarge='', imageSmall='', categoryA='', categoryB='')
+
         self.gu.playChannel(program.channel, program)
         self.isClosing = True
 
@@ -771,10 +782,11 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
                 self.refreshControls()
 
     def refreshControls(self):
+        #deb('refreshControls: {}'.format(self.program))
         if not self.initialized:
             return
 
-        if self.program.title is None or self.program.title == '':
+        if not self.program.title:
             self.program = self.gu.database.getCurrentProgram(self.program.channel)
 
         if self.ctrlServiceName is not None and ADDON.getSetting('show_service_name') == 'true':
@@ -804,12 +816,12 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
                 now = datetime.proxydt.strptime(startDate, '%Y-%m-%d %H:%M:%S')
             except:
                 now = datetime.proxydt.strptime(startDate, '%Y-%m-%d %H:%M:%S.%f')
-                
+
             try:
                 nowDay = now.strftime("%a").replace('Mon', strings(70109)).replace('Tue', strings(70110)).replace('Wed', strings(70111)).replace('Thu', strings(70112)).replace('Fri', strings(70113)).replace('Sat', strings(70114)).replace('Sun', strings(70115))
             except:
                 nowDay = now.strftime("%a").replace('Mon', strings(70109).encode('UTF-8')).replace('Tue', strings(70110).encode('UTF-8')).replace('Wed', strings(70111).encode('UTF-8')).replace('Thu', strings(70112).encode('UTF-8')).replace('Fri', strings(70113).encode('UTF-8')).replace('Sat', strings(70114).encode('UTF-8')).replace('Sun', strings(70115).encode('UTF-8'))
-            
+
             self.ctrlWeekDay.setLabel('%s' % (nowDay))
 
         if self.ctrlDate is not None:
@@ -918,7 +930,7 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
 
                         if age == '3':
                             age = '0'
-                        
+
                         icon = os.path.join(addonPath, 'icons', 'age_rating', 'icon_{}.png'.format(age))
                     self.setControlImage(C_MAIN_AGE_ICON, icon)
 
@@ -932,7 +944,7 @@ class VideoOSD(xbmcgui.WindowXMLDialog):
                     if rating == '':
                         rating = self.program.rating
                     self.setControlText(C_MAIN_RATING, rating)
-                
+
                 description = descriptionParser.description
                 self.setControlText(C_MAIN_DESCRIPTION, description)
             else:
