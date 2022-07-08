@@ -754,6 +754,8 @@ class mTVGuide(xbmcgui.WindowXML):
 
 
     def tutorialGetCountry(self):
+        CC_DICT = ccDict()
+
         progExec = False
         resExtra = False
 
@@ -5233,6 +5235,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 program = self.database.getCurrentProgram(channel)
 
         if program:
+            self.program = program
             self.start = program.startDate
             self.end = program.endDate
 
@@ -5242,7 +5245,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
         self.database.lastChannel(idx, self.start, self.end, self.played)
 
-    def elapsed_interval(self, start, end):
+    def elapsedInterval(self, start, end):
         elapsed = end - start
         min, secs = divmod(elapsed.days * 86400 + elapsed.seconds, 60)
         hour, minutes = divmod(min, 60)
@@ -6724,16 +6727,6 @@ class PopupMenu(xbmcgui.WindowXMLDialog):
             items = []
 
             categories = self.predefinedCategories + list(self.categories)
-
-            """
-            for item in CC_LIST:
-                if ADDON.getSetting('country_code_{cc}'.format(cc=item)) != "true":
-                    for k,v in CC_DICT.items():
-                        if item == k:
-                            if v in categories:
-                                categories.remove('TV Group: {cc}'.format(cc=v))
-            """
-
             categories = [label.replace('TV Group', strings(30995)) for label in categories]
 
             for label in categories:

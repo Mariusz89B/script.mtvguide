@@ -107,9 +107,9 @@ class Threading(object):
     def run(self):
         while not xbmc.Monitor().abortRequested():
             ab = TeliaPlayUpdater().checkRefresh()
-            if not ab:
+            if ab:
                 result = TeliaPlayUpdater().checkLogin()
-                if result is not None:
+                if result:
                     validTo, beartoken, refrtoken, cookies = result
 
                     ADDON.setSetting('teliaplay_validTo', str(validTo))
@@ -304,7 +304,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
             if not response:
                 if reconnect and retry < 3:
                     retry += 1
-                    self.loginData(reconnect=True, retry=retry)
+                    self.loginService(reconnect=True, retry=retry)
                 else:
                     self.connErrorMessage()
                     return False
@@ -369,8 +369,9 @@ class TeliaPlayUpdater(baseServiceUpdater):
                     self.maxDeviceIdMessage()
                     ADDON.setSetting('teliaplay_sess_id', '')
                     ADDON.setSetting('teliaplay_devush', '')
-                    if reconnect:
-                        self.loginData(reconnect=True)
+                    if reconnect and retry < 1:
+                        retry += 1
+                        self.loginService(reconnect=True, retry=retry)
                     else:
                         return False
                 elif response['errorCode'] == 9030:
@@ -379,8 +380,9 @@ class TeliaPlayUpdater(baseServiceUpdater):
                         self.connErrorMessage() 
                     ADDON.setSetting('teliaplay_sess_id', '')
                     ADDON.setSetting('teliaplay_devush', '')
-                    if reconnect:
-                        self.loginData(reconnect=True)
+                    if reconnect and retry < 1:
+                        retry += 1
+                        self.loginService(reconnect=True, retry=retry)
                     else:
                         self.connErrorMessage()
                         return False
@@ -389,6 +391,12 @@ class TeliaPlayUpdater(baseServiceUpdater):
                     deb('errorCode 61002')
                     self.tv_client_boot_id = str(uuid.uuid4())
                     ADDON.setSetting('teliaplay_tv_client_boot_id', str(self.tv_client_boot_id))
+                    if reconnect and retry < 1:
+                        retry += 1
+                        self.loginService(reconnect=True, retry=retry)
+                    else:
+                        self.connErrorMessage()
+                        return False
 
             except:
                 pass
@@ -411,8 +419,9 @@ class TeliaPlayUpdater(baseServiceUpdater):
             response = self.sendRequest(url, headers=headers, cookies=sess.cookies, allow_redirects=False, timeout=timeouts)
 
             if not response:
-                if reconnect:
-                    self.loginData(reconnect=True)
+                if reconnect and retry < 3:
+                    retry += 1
+                    self.loginService(reconnect=True, retry=retry)
                 else:
                     return False
 
@@ -430,7 +439,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
             self.connErrorMessage()
         return False
 
-    def loginService(self):
+    def loginService(self, reconnect, retry=0):
         self.dashjs = ADDON.getSetting('teliaplay_devush')
 
         try:
@@ -457,8 +466,10 @@ class TeliaPlayUpdater(baseServiceUpdater):
                     pass
 
                 self.createData()
+                login = self.loginData(reconnect, retry)
 
-            login = self.loginData(reconnect=False)
+            else:
+                login = True
 
             if login:
                 run = Threading()
@@ -480,9 +491,9 @@ class TeliaPlayUpdater(baseServiceUpdater):
             self.validTo = datetime.datetime.now() + timedelta(days=1)
 
         if (not self.beartoken or refreshTimeDelta < timedelta(minutes=1)):
-            login = self.loginData(reconnect=True)
-
-            result = self.validTo, self.beartoken, self.refrtoken, self.cookies
+            login = self.loginService(reconnect=False)
+            if login:
+                result = self.validTo, self.beartoken, self.refrtoken, self.cookies
 
         return result
 
@@ -491,7 +502,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
 
         if 'Z' in str(self.validTo):
             validTo = iso8601.parse_date(self.validTo)
-        elif self.validTo != '':
+        elif self.validTo:
             if 'T' in str(self.validTo):
                 try:
                     date_time_format = '%Y-%m-%dT%H:%M:%S.%f+' + self.validTo.split('+')[1]
@@ -516,7 +527,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
         if not self.validTo:
             self.validTo = datetime.datetime.now() + timedelta(days=1)
 
-        if refreshTimeDelta is not None:
+        if refreshTimeDelta:
             refr = True if (not self.beartoken or refreshTimeDelta < timedelta(minutes=1)) else False
         else:
             refr = False
@@ -526,7 +537,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
     def getChannelList(self, silent):
         result = list()
 
-        if not self.loginService():
+        if not self.loginService(reconnect=False):
             return result
 
         self.checkLogin()
