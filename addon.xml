@@ -2,7 +2,7 @@
 <addon
     id="script.mtvguide"
     name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]"
-    version="9.9.620"
+    version="9.9.621-beta.1"
     provider-name="mariusz89b">
   <requires>
     <import addon="xbmc.addon" version="17.0.0"/>
@@ -41,7 +41,10 @@
     <forum>https://github.com/Mariusz89B/script.mtvguide/discussions</forum>
 	<website>https://github.com/Mariusz89B/script.mtvguide</website>
     <source>m-TVGuide © 2013 - 2022</source>
-    <news>v9.9.620 (2022-07-08)
+    <news>v9.9.621 (2022-07-09)
+- Bug fixes.
+
+v9.9.620 (2022-07-08)
 - Added filename input for downloads and recordings.
 - Other improvements.
 - Bug fixes.

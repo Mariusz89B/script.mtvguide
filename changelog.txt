@@ -1,4 +1,7 @@
-﻿v9.9.620 (2022-07-08)
+﻿v9.9.621 (2022-07-09)
+- Bug fixes.
+
+v9.9.620 (2022-07-08)
 - Added filename input for downloads and recordings.
 - Other improvements.
 - Bug fixes.

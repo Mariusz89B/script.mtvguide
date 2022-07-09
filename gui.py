@@ -6535,7 +6535,6 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def updateTimebar(self, scheduleTimer=True):
         # debug('updateTimebar')
-
         if xbmc.Player().isPlaying():
             self.lastKeystroke = datetime.datetime.now()
         try:

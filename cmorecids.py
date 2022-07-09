@@ -116,10 +116,10 @@ class Threading(object):
                     ADDON.setSetting('cmore_refrtoken', str(refrtoken))
                     ADDON.setSetting('cmore_cookies', str(cookies))
 
-                time.sleep(30)
-
             if xbmc.Monitor().waitForAbort(1):
                 break
+
+            time.sleep(60)
 
 class CmoreUpdater(baseServiceUpdater):
     def __init__(self):
@@ -483,9 +483,10 @@ class CmoreUpdater(baseServiceUpdater):
                 return False
 
         self.dashjs = ADDON.getSetting('cmore_devush')
+        self.validTo = ADDON.getSetting('cmore_validTo')
 
         try:
-            if self.dashjs == '':
+            if (self.dashjs == '' or self.validTo == ''):
                 try:
                     msg = 'Hos oss på C More kan du titta som mest på två enheter samtidigt, med en begränsning på en ström för varje enskild sportsändning. Du kan se två olika matcher/livesportsändningar samtidigt men du kan inte se samma match på två olika enheter.'
                     if PY3:

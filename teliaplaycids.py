@@ -117,11 +117,10 @@ class Threading(object):
                     ADDON.setSetting('teliaplay_refrtoken', str(refrtoken))
                     ADDON.setSetting('teliaplay_cookies', str(cookies))
 
-                time.sleep(30)
-
             if xbmc.Monitor().waitForAbort(1):
                 break
 
+            time.sleep(60)
 
 class TeliaPlayUpdater(baseServiceUpdater):
     def __init__(self):
@@ -200,7 +199,6 @@ class TeliaPlayUpdater(baseServiceUpdater):
 
 
     def loginData(self, reconnect, retry=0):
-
         try:
             url = 'https://log.tvoip.telia.com:6003/logstash'
 
@@ -275,8 +273,12 @@ class TeliaPlayUpdater(baseServiceUpdater):
             code = ''
 
             if not response:
-                self.loginErrorMessage()
-                return
+                if reconnect and retry < 3:
+                    retry += 1
+                    self.loginService(reconnect=True, retry=retry)
+                else:
+                    self.connErrorMessage()
+                    return False
 
             j_response = response.json()
             code = j_response['redirectUri'].replace('https://www.teliaplay.{cc}/?code='.format(cc=cc[self.country]), '')
@@ -441,9 +443,10 @@ class TeliaPlayUpdater(baseServiceUpdater):
 
     def loginService(self, reconnect, retry=0):
         self.dashjs = ADDON.getSetting('teliaplay_devush')
+        self.validTo = ADDON.getSetting('teliaplay_validTo')
 
         try:
-            if self.dashjs == '':
+            if (self.dashjs == '' or self.validTo == ''):
                 try:
                     from bs4 import BeautifulSoup
                 except ImportError:
