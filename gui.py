@@ -6248,7 +6248,7 @@ class mTVGuide(xbmcgui.WindowXML):
                             cached = []
 
                             for i in playService.SERVICES:
-                                if 'playlist' in i:
+                                if 'playlist_' in i:
                                     if ADDON.getSetting('{}_append_country_code'.format(i)) == '':
                                         playlists.append(i)
 
