@@ -878,8 +878,8 @@ class Database(object):
             serviceList = list()
             services = list()
 
-            for serviceName in playService.SERVICES:
-                serviceHandler = playService.SERVICES[serviceName]
+            for serviceName in playService.LIST:
+                serviceHandler = playService.LIST[serviceName]
                 services.append(serviceHandler)
                 cache = False
 
@@ -1301,8 +1301,8 @@ class Database(object):
         epgChannels = self.epgChannels()
 
         serviceLib.baseServiceUpdater.baseMapContent = None
-        for serviceName in playService.SERVICES:
-            serviceHandler = playService.SERVICES[serviceName]
+        for serviceName in playService.LIST:
+            serviceHandler = playService.LIST[serviceName]
             cached_service = [v['cache'] for k,v in self.cacheList.items() if k == serviceHandler]
             if cached_service:
                 cache = cached_service[0]

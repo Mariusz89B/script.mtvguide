@@ -6245,16 +6245,28 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.onRedrawEPG(0, self.viewStartDate, initializing=False)
                         if not self.controlAndProgramList:
                             playlists = []
-                            for i in range(5):
-                                if ADDON.getSetting('playlist_{}_append_country_code'.format(i)) == '' and ADDON.getSetting('playlist_{}_enabled'.format(i)) == 'true':
-                                    playlists.append(i)
+                            cached = []
+
+                            for i in playService.SERVICES:
+                                if 'playlist' in i:
+                                    if ADDON.getSetting('{}_append_country_code'.format(i)) == '':
+                                        playlists.append(i)
+
+                                    if ADDON.getSetting('{}_refr'.format(i)) == 'true':
+                                        cached.append(i)
 
                             if xbmc.getCondVisibility('!Window.IsVisible(notification)'):
-                                if ADDON.getSetting('epg_display_name') == 'false':
-                                    info = xbmcgui.Dialog().ok(strings(57051), strings(30166))
+                                if not playService.SERVICES:
+                                    info = xbmcgui.Dialog().ok(strings(57051), strings(30175))
+
+                                elif cached:
+                                    info = xbmcgui.Dialog().ok(strings(57051), strings(30176))
 
                                 elif playlists:
                                     info = xbmcgui.Dialog().ok(strings(57051), strings(30167))
+
+                                elif ADDON.getSetting('epg_display_name') == 'false':
+                                    info = xbmcgui.Dialog().ok(strings(57051), strings(30166))
 
                                 else:
                                     info = xbmcgui.Dialog().ok(strings(57051), strings(30168))

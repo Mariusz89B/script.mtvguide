@@ -248,6 +248,14 @@ msgctxt "#30174"
 msgid "Error connecting to repository.[CR]Response HTTP status: {0}"
 msgstr ""
 
+msgctxt "#30175"
+msgid "No services selected, please enable services in addon settings."
+msgstr ""
+
+msgctxt "#30176"
+msgid "Cache error, please reset custom streams in database settings."
+msgstr ""
+
 msgctxt "#30200"
 msgid "on [B]{}[/B] in 5 minutes..."
 msgstr ""
@@ -1661,7 +1669,7 @@ msgid "Recording colour"
 msgstr ""
 
 msgctxt "#30950"
-msgid "Clear database"
+msgid "Reset database"
 msgstr ""
 
 msgctxt "#30951"
@@ -1669,7 +1677,7 @@ msgid "Database cleared"
 msgstr ""
 
 msgctxt "#30952"
-msgid "Delete custom streams"
+msgid "Reset custom streams"
 msgstr ""
 
 msgctxt "#30953"

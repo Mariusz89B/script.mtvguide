@@ -248,6 +248,14 @@ msgctxt "#30174"
 msgid "Error connecting to repository.[CR]Response HTTP status: {0}"
 msgstr "Fehler beim Verbinden mit dem Repository.[CR]Antwort HTTP status: {0}"
 
+msgctxt "#30175"
+msgid "No services selected, please enable services in addon settings."
+msgstr "Keine Dienste ausgewählt, bitte aktivieren Sie Dienste in den Addon Einstellungen."
+
+msgctxt "#30176"
+msgid "Cache error, please reset custom streams in database settings."
+msgstr "Cache Fehler, bitte benutzerdefinierte Streams in den Datenbankeinstellungen zurücksetzen."
+
 msgctxt "#30200"
 msgid "on [B]{}[/B] in 5 minutes..."
 msgstr "Auf[b]{}[/b] in 5 minuten..."
@@ -1649,16 +1657,16 @@ msgid "Recording colour"
 msgstr "Aufzeichnungsfarbe"
 
 msgctxt "#30950"
-msgid "Clear database"
-msgstr "Löschen der datenbank"
+msgid "Reset database"
+msgstr "Datenbank zurücksetzen"
 
 msgctxt "#30951"
 msgid "Database cleared"
 msgstr "Datenbank gelöscht"
 
 msgctxt "#30952"
-msgid "Delete custom streams"
-msgstr "Benutzerdefinierte streams löschen"
+msgid "Reset custom streams"
+msgstr "Benutzerdefinierte Streams zurücksetzen"
 
 msgctxt "#30953"
 msgid "Export settings"

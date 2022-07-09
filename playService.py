@@ -102,7 +102,7 @@ scraper = cloudscraper.CloudScraper()
 
 UA = xbmc.getUserAgent()
 
-SERVICES = {
+LIST = {
     playlistcids.serviceName + '_1' : playlistcids.PlaylistUpdater(instance_number=1),
     playlistcids.serviceName + '_2' : playlistcids.PlaylistUpdater(instance_number=2),
     playlistcids.serviceName + '_3' : playlistcids.PlaylistUpdater(instance_number=3),
@@ -118,10 +118,15 @@ SERVICES = {
     wppilotcids.serviceName         : wppilotcids.WpPilotUpdater()
 }
 
+SERVICES = {}
+
+for service in LIST.items():
+    SERVICES.update({service})
+
 for serviceName in list(SERVICES.keys()):
     if SERVICES[serviceName].serviceEnabled != 'true':
         SERVICES[serviceName].close()
-        #del SERVICES[serviceName]
+        del SERVICES[serviceName]
 
 class BasePlayService:
     lockMap = {}

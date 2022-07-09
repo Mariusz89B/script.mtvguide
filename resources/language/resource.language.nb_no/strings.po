@@ -248,6 +248,14 @@ msgctxt "#30174"
 msgid "Error connecting to repository.[CR]Response HTTP status: {0}"
 msgstr "Feil ved tilkobling til repository.[CR]Svar HTTP-status: {0}"
 
+msgctxt "#30175"
+msgid "No services selected, please enable services in addon settings."
+msgstr "Ingen tjenester er valgt, vennligst aktiver tjenester i tilleggsinnstillinger."
+
+msgctxt "#30176"
+msgid "Cache error, please reset custom streams in database settings."
+msgstr "Cache feil, vennligst tilbakestill egendefinerte strømmer i databaseinnstillingene."
+
 msgctxt "#30200"
 msgid "on [B]{}[/B] in 5 minutes..."
 msgstr "på [B]{}[/B] om 5 minutter..."
@@ -1649,16 +1657,16 @@ msgid "Recording colour"
 msgstr "Opptaks farge"
 
 msgctxt "#30950"
-msgid "Clear database"
-msgstr "Klar database"
+msgid "Reset database"
+msgstr "Tilbakestill database"
 
 msgctxt "#30951"
 msgid "Database cleared"
 msgstr "Database slettet"
 
 msgctxt "#30952"
-msgid "Delete custom streams"
-msgstr "Slett tilpassede strømmer"
+msgid "Reset custom streams"
+msgstr "Tilbakestill egendefinerte strømmer"
 
 msgctxt "#30953"
 msgid "Export settings"

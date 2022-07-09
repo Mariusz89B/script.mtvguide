@@ -248,6 +248,14 @@ msgctxt "#30174"
 msgid "Error connecting to repository.[CR]Response HTTP status: {0}"
 msgstr "Pogreška pri povezivanju sa spremištem.[CR]HTTP status odgovora: {0}"
 
+msgctxt "#30175"
+msgid "No services selected, please enable services in addon settings."
+msgstr "Nisu odabrane usluge, omogućite usluge u postavkama dodatka."
+
+msgctxt "#30176"
+msgid "Cache error, please reset custom streams in database settings."
+msgstr "Pogreška predmemorije, molimo poništite prilagođene tokove u postavkama baze podataka."
+
 msgctxt "#30200"
 msgid "on [B]{}[/B] in 5 minutes..."
 msgstr "na [B]{}[/B] za 5 minuta..."
@@ -1649,16 +1657,16 @@ msgid "Recording colour"
 msgstr "Boja snimanja"
 
 msgctxt "#30950"
-msgid "Clear database"
-msgstr "Izbriši bazu podataka"
+msgid "Reset database"
+msgstr "Poništi bazu podataka"
 
 msgctxt "#30951"
 msgid "Database cleared"
 msgstr "Baza podataka je izbrisana"
 
 msgctxt "#30952"
-msgid "Delete custom streams"
-msgstr "Izbriši prilagođene streamove"
+msgid "Reset custom streams"
+msgstr "Poništi prilagođene streamove"
 
 msgctxt "#30953"
 msgid "Export settings"
