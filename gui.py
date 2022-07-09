@@ -4579,8 +4579,10 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def _showContextMenu(self, program):
         deb('_showContextMenu')
-        self.program = program
         self._hideControl(self.C_MAIN_MOUSEPANEL_CONTROLS)
+
+        self.currentChannel = program.channel
+        self.program = program
 
         if program.notificationScheduled:
             remindControl = (strings(DONT_REMIND_PROGRAM))

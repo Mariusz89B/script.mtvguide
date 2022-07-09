@@ -773,6 +773,7 @@ class baseServiceUpdater:
         xbmcgui.Dialog().notification(self.serviceName, strings(SERVICE_NO_CONTENT), sound=False)
 
     def startLoadingChannelList(self, automap, cache):
+        self.cache = cache
         if self.thread is None or not self.thread.is_alive():
             self.traceList.append('\n')
             self.traceList.append('##############################################################################################################')
@@ -982,8 +983,8 @@ class baseServiceUpdater:
         if 'playlist_' in self.serviceName:
             cachepath = os.path.join(PROFILE_PATH, 'playlists', '{playlist}.cache'.format(playlist=self.serviceName))
             if not os.path.exists(cachepath) and cache:
-                self.cache = threading.Thread(name='saveCacheList thread', target = self.saveCacheList, args=(self.channelList, self.serviceName,))
-                self.cache.start()
+                self.saveCache = threading.Thread(name='saveCacheList thread', target = self.saveCacheList, args=(self.channelList, self.serviceName,))
+                self.saveCache.start()
 
         return result
 
@@ -1029,7 +1030,6 @@ class baseServiceUpdater:
 
     def cachedChannelList(self, epg_channels=None):
         startTime = datetime.datetime.now()
-        self.cache = True
         self.channels = self.getBaseChannelList(cache=self.cache)
         if len(self.channels) <= 0:
             self.log('loadChannelList error lodaing channel list for service {} - aborting!'.format(self.serviceName))
@@ -1048,7 +1048,6 @@ class baseServiceUpdater:
 
         try:
             startTime = datetime.datetime.now()
-            self.cache = False
             self.channels = self.getBaseChannelList(cache=self.cache)
             if len(self.channels) <= 0:
                 self.log('loadChannelList error lodaing channel list for service {} - aborting!'.format(self.serviceName))
