@@ -98,30 +98,6 @@ else:
 sess = requests.Session()
 timeouts = (5, 5)
 
-class Threading(object):
-    def __init__(self):
-        self.thread = threading.Thread(target=self.run, args=())
-        self.thread.daemon = True
-        self.thread.start()
-
-    def run(self):
-        while not xbmc.Monitor().abortRequested():
-            ab = TeliaPlayUpdater().checkRefresh()
-            if ab:
-                result = TeliaPlayUpdater().checkLogin()
-                if result:
-                    validTo, beartoken, refrtoken, cookies = result
-
-                    ADDON.setSetting('teliaplay_validTo', str(validTo))
-                    ADDON.setSetting('teliaplay_beartoken', str(beartoken))
-                    ADDON.setSetting('teliaplay_refrtoken', str(refrtoken))
-                    ADDON.setSetting('teliaplay_cookies', str(cookies))
-
-            if xbmc.Monitor().waitForAbort(1):
-                break
-
-            time.sleep(60)
-
 class TeliaPlayUpdater(baseServiceUpdater):
     def __init__(self):
         self.serviceName        = serviceName
@@ -275,7 +251,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
             if not response:
                 if reconnect and retry < 3:
                     retry += 1
-                    self.loginService(reconnect=True, retry=retry)
+                    self.loginData(reconnect=True, retry=retry)
                 else:
                     self.connErrorMessage()
                     return False
@@ -306,7 +282,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
             if not response:
                 if reconnect and retry < 3:
                     retry += 1
-                    self.loginService(reconnect=True, retry=retry)
+                    self.loginData(reconnect=True, retry=retry)
                 else:
                     self.connErrorMessage()
                     return False
@@ -373,7 +349,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                     ADDON.setSetting('teliaplay_devush', '')
                     if reconnect and retry < 1:
                         retry += 1
-                        self.loginService(reconnect=True, retry=retry)
+                        self.loginData(reconnect=True, retry=retry)
                     else:
                         return False
                 elif response['errorCode'] == 9030:
@@ -384,7 +360,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                     ADDON.setSetting('teliaplay_devush', '')
                     if reconnect and retry < 1:
                         retry += 1
-                        self.loginService(reconnect=True, retry=retry)
+                        self.loginData(reconnect=True, retry=retry)
                     else:
                         self.connErrorMessage()
                         return False
@@ -395,7 +371,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                     ADDON.setSetting('teliaplay_tv_client_boot_id', str(self.tv_client_boot_id))
                     if reconnect and retry < 1:
                         retry += 1
-                        self.loginService(reconnect=True, retry=retry)
+                        self.loginData(reconnect=True, retry=retry)
                     else:
                         self.connErrorMessage()
                         return False
@@ -423,7 +399,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
             if not response:
                 if reconnect and retry < 3:
                     retry += 1
-                    self.loginService(reconnect=True, retry=retry)
+                    self.loginData(reconnect=True, retry=retry)
                 else:
                     return False
 
@@ -441,7 +417,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
             self.connErrorMessage()
         return False
 
-    def loginService(self, reconnect, retry=0):
+    def loginService(self):
         self.dashjs = ADDON.getSetting('teliaplay_devush')
         self.validTo = ADDON.getSetting('teliaplay_validTo')
 
@@ -469,13 +445,10 @@ class TeliaPlayUpdater(baseServiceUpdater):
                     pass
 
                 self.createData()
-                login = self.loginData(reconnect, retry)
+                login = self.loginData(reconnect=False)
 
             else:
-                login = True
-
-            if login:
-                run = Threading()
+                login = self.checkLogin()
 
             return login
 
@@ -484,9 +457,8 @@ class TeliaPlayUpdater(baseServiceUpdater):
             self.connErrorMessage()
         return False
 
-
     def checkLogin(self):
-        result = None
+        login = True
 
         refreshTimeDelta = self.refreshTimeDelta()
 
@@ -494,11 +466,9 @@ class TeliaPlayUpdater(baseServiceUpdater):
             self.validTo = datetime.datetime.now() + timedelta(days=1)
 
         if (not self.beartoken or refreshTimeDelta < timedelta(minutes=1)):
-            login = self.loginService(reconnect=False)
-            if login:
-                result = self.validTo, self.beartoken, self.refrtoken, self.cookies
+            login = self.loginData(reconnect=False)
 
-        return result
+        return login
 
     def refreshTimeDelta(self):
         result = None
@@ -524,26 +494,11 @@ class TeliaPlayUpdater(baseServiceUpdater):
 
         return result
 
-    def checkRefresh(self):
-        refreshTimeDelta = self.refreshTimeDelta()
-
-        if not self.validTo:
-            self.validTo = datetime.datetime.now() + timedelta(days=1)
-
-        if refreshTimeDelta:
-            refr = True if (not self.beartoken or refreshTimeDelta < timedelta(minutes=1)) else False
-        else:
-            refr = False
-
-        return refr
-
     def getChannelList(self, silent):
         result = list()
 
-        if not self.loginService(reconnect=False):
+        if not self.loginService():
             return result
-
-        self.checkLogin()
 
         self.log('\n\n')
         self.log('[UPD] Downloading list of available {} channels from {}'.format(self.serviceName, self.country))
@@ -655,7 +610,9 @@ class TeliaPlayUpdater(baseServiceUpdater):
     def getChannelStream(self, chann):
         data = None
 
-        self.checkLogin()
+        login = self.checkLogin()
+        if not login:
+            self.loginData(reconnect=False)
 
         try:
             try:

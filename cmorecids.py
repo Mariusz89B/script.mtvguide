@@ -97,30 +97,6 @@ else:
 sess = requests.Session()
 timeouts = (5, 5)
 
-class Threading(object):
-    def __init__(self):
-        self.thread = threading.Thread(target=self.run, args=())
-        self.thread.daemon = True
-        self.thread.start()
-
-    def run(self):
-        while not xbmc.Monitor().abortRequested():
-            ab = CmoreUpdater().checkRefresh()
-            if ab:
-                result = CmoreUpdater().checkLogin()
-                if result:
-                    validTo, beartoken, refrtoken, cookies = result
-
-                    ADDON.setSetting('cmore_validTo', str(validTo))
-                    ADDON.setSetting('cmore_beartoken', str(beartoken))
-                    ADDON.setSetting('cmore_refrtoken', str(refrtoken))
-                    ADDON.setSetting('cmore_cookies', str(cookies))
-
-            if xbmc.Monitor().waitForAbort(1):
-                break
-
-            time.sleep(60)
-
 class CmoreUpdater(baseServiceUpdater):
     def __init__(self):
         self.serviceName        = serviceName
@@ -299,7 +275,7 @@ class CmoreUpdater(baseServiceUpdater):
             if not response:
                 if reconnect and retry < 3:
                     retry += 1
-                    self.loginService(reconnect=True, retry=retry)
+                    self.loginData(reconnect=True, retry=retry)
                 else:
                     self.connErrorMessage()
                     return False
@@ -363,7 +339,7 @@ class CmoreUpdater(baseServiceUpdater):
                     ADDON.setSetting('cmore_devush', '')
                     if reconnect and retry < 1:
                         retry += 1
-                        self.loginService(reconnect=True, retry=retry)
+                        self.loginData(reconnect=True, retry=retry)
                     else:
                         return False
                 elif response['errorCode'] == 9030:
@@ -374,7 +350,7 @@ class CmoreUpdater(baseServiceUpdater):
                     ADDON.setSetting('cmore_devush', '')
                     if reconnect and retry < 1:
                         retry += 1
-                        self.loginService(reconnect=True, retry=retry)
+                        self.loginData(reconnect=True, retry=retry)
                     else:
                         self.connErrorMessage()
                         return False
@@ -385,7 +361,7 @@ class CmoreUpdater(baseServiceUpdater):
                     ADDON.setSetting('cmore_tv_client_boot_id', str(self.tv_client_boot_id))
                     if reconnect and retry < 1:
                         retry += 1
-                        self.loginService(reconnect=True, retry=retry)
+                        self.loginData(reconnect=True, retry=retry)
                     else:
                         self.connErrorMessage()
                         return False
@@ -415,7 +391,7 @@ class CmoreUpdater(baseServiceUpdater):
             if not response:
                 if reconnect and retry < 3:
                     retry += 1
-                    self.loginService(reconnect=True, retry=retry)
+                    self.loginData(reconnect=True, retry=retry)
                 else:
                     return False
 
@@ -461,8 +437,7 @@ class CmoreUpdater(baseServiceUpdater):
         else:
             return False
 
-    def loginService(self, reconnect, retry=0):
-
+    def loginService(self):
         if ADDON.getSetting('cmore_tv_provider_login') == 'true':
             operator, operator_title = self.getOperator(ADDON.getSetting('cmore_operator'))
         else:
@@ -497,13 +472,10 @@ class CmoreUpdater(baseServiceUpdater):
                     pass
 
                 self.createData()
-                login = self.loginData(reconnect, retry)
+                login = self.loginData(reconnect=False)
 
             else:
-                login = True
-
-            if login:
-                run = Threading()
+                login = self.checkLogin()
 
             return login
 
@@ -592,9 +564,8 @@ class CmoreUpdater(baseServiceUpdater):
 
             return j_response['data']['operators']
 
-
     def checkLogin(self):
-        result = None
+        login = True
 
         refreshTimeDelta = self.refreshTimeDelta()
 
@@ -602,11 +573,9 @@ class CmoreUpdater(baseServiceUpdater):
             self.validTo = datetime.datetime.now() + timedelta(days=1)
 
         if (not self.beartoken or refreshTimeDelta < timedelta(minutes=1)):
-            login = self.loginService(reconnect=False)
-            if login:
-                result = self.validTo, self.beartoken, self.refrtoken, self.cookies
+            login = self.loginData(reconnect=False)
 
-        return result
+        return login
 
     def refreshTimeDelta(self):
         result = None
@@ -632,26 +601,11 @@ class CmoreUpdater(baseServiceUpdater):
 
         return result
 
-    def checkRefresh(self):
-        refreshTimeDelta = self.refreshTimeDelta()
-
-        if not self.validTo:
-            self.validTo = datetime.datetime.now() + timedelta(days=1)
-
-        if refreshTimeDelta is not None:
-            refr = True if (not self.beartoken or refreshTimeDelta < timedelta(minutes=1)) else False
-        else:
-            refr = False
-
-        return refr
-
     def getChannelList(self, silent):
         result = list()
 
-        if not self.loginService(reconnect=False):
+        if not self.loginService():
             return result
-
-        self.checkLogin()
 
         self.log('\n\n')
         self.log('[UPD] Downloading list of available {} channels from {}'.format(self.serviceName, self.country))
@@ -812,7 +766,9 @@ class CmoreUpdater(baseServiceUpdater):
     def getChannelStream(self, chann):
         data = None
 
-        self.checkLogin()
+        login = self.checkLogin()
+        if not login:
+            self.loginData(reconnect=False)
 
         try:
             try:
