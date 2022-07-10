@@ -59,6 +59,7 @@ import strings as strings2
 from playService import BasePlayService
 import serviceLib
 from skins import Skin
+from source import Program, Channel
 
 if PY3:
     import urllib.request, urllib.parse, urllib.error
@@ -204,7 +205,6 @@ class RecordService(BasePlayService):
         self.endOffsetDownload   = 0
         self.downloading         = False
         self.showDialogOk        = False
-        self.rectitle            = None
 
         if ADDON.getSetting('ffmpeg_dis_cop_un') == 'true':
             self.ffmpegDisableCopyUnknown = True
@@ -328,7 +328,10 @@ class RecordService(BasePlayService):
                 return self.renameFile(program)
 
         if filename:
-            self.rectitle = filename.replace('.mpeg', '')
+            filename = filename.replace('.mpeg', '')
+            program = Program(channel=Channel(id=program.channel.id, title=program.channel.title, logo=program.channel.logo, titles=program.channel.titles, streamUrl=program.channel.streamUrl), title=program.title, startDate=program.startDate, endDate=program.endDate, description=program.description, productionDate=program.productionDate, director=program.director, actor=program.actor, imageLarge=program.imageLarge, imageSmall=program.imageSmall, categoryA=program.categoryA, categoryB=program.categoryB, fileName=filename)
+
+        return program
 
     def recordProgramGui(self, program, catchupList, watch=False, length=0):
         self.program = program
@@ -368,7 +371,7 @@ class RecordService(BasePlayService):
                                     saveRecording, chkdate, self.startOffsetDownload, self.endOffsetDownload = downloadMenu.getOffsets()
 
                                 if saveRecording:
-                                    self.renameFile(program)
+                                    program = self.renameFile(program)
                                     self.startOffsetDownload *= 60
                                     self.endOffsetDownload *= 60
                                     _program = self.epg.database.getPrograms(program.channel, program, self.program.startDate, self.program.endDate)
@@ -403,7 +406,7 @@ class RecordService(BasePlayService):
                         saveRecording, startOffset, endOffset = recordMenu.getOffsets()
 
                         if saveRecording:
-                            self.renameFile(program)
+                            program = self.renameFile(program)
                             startOffset *= 60
                             endOffset *= 60
                             if self.scheduleRecording(program, startOffset, endOffset):
@@ -1688,10 +1691,7 @@ class RecordService(BasePlayService):
         return re.compile('[^A-Za-z0-9_]+', re.IGNORECASE).sub('_', text)
 
     def getOutputFilename(self, program, partNumber = 0):
-        if self.rectitle:
-            filename = self.rectitle
-        else:
-            filename = self.normalizeString(program.title) + '_' + str(program.startDate.strftime('%Y-%m-%d_%H-%M'))
+        filename = program.fileName
 
         if partNumber > 1:
             filename = filename + '_part_{0}'.format(partNumber)

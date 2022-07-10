@@ -256,7 +256,7 @@ class Channel(object):
                .format(self.id, self.title, self.logo, self.titles, self.streamUrl)
 
 class Program(object):
-    def __init__(self, channel, title, startDate, endDate, description, productionDate = None, director = None, actor = None, episode = None, rating = None, imageLarge = None, imageSmall = None, categoryA = None, categoryB = None, notificationScheduled = None, recordingScheduled = None):
+    def __init__(self, channel, title, startDate, endDate, description, productionDate = None, director = None, actor = None, episode = None, rating = None, imageLarge = None, imageSmall = None, categoryA = None, categoryB = None, notificationScheduled = None, recordingScheduled = None, fileName = None):
         """
         @param channel:
         @type channel: source.Channel
@@ -283,6 +283,7 @@ class Program(object):
         self.categoryB = categoryB
         self.notificationScheduled = notificationScheduled
         self.recordingScheduled = recordingScheduled
+        self.fileName = fileName
 
     def __repr__(self):
         return 'Program(channel={}, title={}, startDate={}, endDate={}, description={}, productionDate={}, director={}, actor={}, episode{}, rating{}, imageLarge={}, imageSmall={}, categoryA={}, categoryB={})' \
