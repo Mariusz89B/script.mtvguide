@@ -614,7 +614,6 @@ class mTVGuide(xbmcgui.WindowXML):
         self.predefinedCategories = []
         self.getListLenght = []
         self.catchupChannels = None
-        self.force = None
         self.context = False
 
         # find nearest half hour
@@ -4492,7 +4491,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def _debugMenu(self, program):
         deb('Debug')
-        res = xbmcgui.Dialog().contextmenu(['Reinitialize guide', 'Reload services', 'Upload log file', 'Read log', 'Guide information', 'Response status', 'Python version'])
+        res = xbmcgui.Dialog().contextmenu(['Reinitialize guide', 'Reload services', 'Upload log file', 'Read log', 'Guide information', 'Response status', 'Python version', 'System information'])
 
         if res < 0:
             self._showContextMenu(program)
@@ -4503,7 +4502,7 @@ class mTVGuide(xbmcgui.WindowXML):
             ADDON.setSetting('epg_size', str(epgDbSize))
 
         elif res == 1:
-            self.database.reloadServices()
+            self.refreshStreamsLoop()
 
         elif res == 2:
             import logUploader
@@ -4570,11 +4569,22 @@ class mTVGuide(xbmcgui.WindowXML):
             else:
                 conn_r = '[COLOR green][B]Offline[/B][/COLOR]'
 
-            xbmcgui.Dialog().textviewer('Response status - ' + strings(57051), 'HTTP/S Status: ' + str(response.status_code) + '[CR]Internet connection: ' + conn + '[CR]Repository connection: ' + conn_r, True)
+            xbmcgui.Dialog().textviewer('Response status - ' + strings(57051), 'HTTP/S status: ' + str(response.status_code) + '[CR]Internet connection: ' + conn + '[CR]Repository connection: ' + conn_r, True)
             self._debugMenu(program)
 
         elif res == 6:
             xbmcgui.Dialog().textviewer('Python version - ' + strings(57051), 'Python ' + str(sys.version), True)
+            self._debugMenu(program)
+
+        elif res == 7:
+            try:
+                import platform
+                uname = platform.uname()
+
+                info = 'System: {0} {1}, release {2}\nUser: {3}\nMachine: {4}\nProcessor: {5}'.format(uname.system, uname.release, uname.version, uname.node, uname.machine, uname.processor)
+                xbmcgui.Dialog().textviewer('System information - ' + strings(57051), info, True)
+            except:
+                xbmcgui.Dialog().textviewer('System information - ' + strings(57051), 'System information not available.', True)
             self._debugMenu(program)
 
     def _showContextMenu(self, program):
@@ -5853,26 +5863,31 @@ class mTVGuide(xbmcgui.WindowXML):
 
 
     def updateEPG(self, channelStart, startTime, initializing, startup, force):
-        with self.busyDialog():
-            try:
-                self.channelIdx, channels, programs, cacheExpired = self.database.getEPGView(channelStart, startTime, self.onSourceProgressUpdate, initializing, startup, force, clearExistingProgramList=True)
-            except src.SourceException:
-                self.blockInputDueToRedrawing = False
-                debug('onRedrawEPG onEPGLoadError')
-                self.onEPGLoadError()
-                return
+        self._clearEpg()
 
-            self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
+        self.initialized = True
+        self._hideControl(self.C_MAIN_MOUSEPANEL_CONTROLS)
+        self._showControl(self.C_MAIN_LOADING)
+        self._hideControl(self.C_MAIN_LOADING_BACKGROUND)
+        self.setControlLabel(self.C_MAIN_LOADING_TIME_LEFT, strings(BACKGROUND_UPDATE_IN_PROGRESS))
+        self.setFocusId(self.C_MAIN_LOADING_CANCEL)
+
+        try:
+            self.channelIdx, channels, programs, cacheExpired = self.database.getEPGView(channelStart, startTime, self.onSourceProgressUpdate, initializing, startup, force, clearExistingProgramList=True)
+        except src.SourceException:
+            self.blockInputDueToRedrawing = False
+            debug('onRedrawEPG onEPGLoadError')
+            self.onEPGLoadError()
+            return
+
+        self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
 
 
     def onRedrawEPG(self, channelStart, startTime, focusFunction=None, initializing=False, startup=False, force=False):
         try:
             deb('onRedrawEPG')
-            self.force = force
             if force:
-                thread = threading.Thread(name='updateEPG', target = self.updateEPG, args=[channelStart, startTime, initializing, startup, force])
-                thread.start()
-                #self.updateEPG(channelStart, startTime, initializing, startup, debug)
+                self.updateEPG(channelStart, startTime, initializing, startup, debug)
                 return
 
             if self.redrawingEPG or (self.database is not None and self.database.updateInProgress) or self.isClosing or strings2.M_TVGUIDE_CLOSING:
@@ -6299,11 +6314,6 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.AutoPlayByNumber()
 
     def onSourceProgressUpdate(self, percentageComplete, additionalMessage=""):
-        force = self.force
-
-        if force:
-            xbmcgui.Dialog().notification('Debug', 'Reinitializing guide')
-
         if additionalMessage != "":
             self.setControlLabel(self.C_MAIN_LOADING_TIME_LEFT, additionalMessage)
             return not strings2.M_TVGUIDE_CLOSING and not self.isClosing
@@ -6318,8 +6328,6 @@ class mTVGuide(xbmcgui.WindowXML):
 
             # show Loading screen 
             self._showControl(self.C_MAIN_LOADING)
-            if force:
-                self._hideControl(self.C_MAIN_LOADING)
             self.setFocusId(self.C_MAIN_LOADING_CANCEL)
             self.setControlLabel(self.C_MAIN_LOADING_TIME_LEFT, strings(CALCULATING_REMAINING_TIME))
 

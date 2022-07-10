@@ -1691,12 +1691,16 @@ class RecordService(BasePlayService):
         return re.compile('[^A-Za-z0-9_]+', re.IGNORECASE).sub('_', text)
 
     def getOutputFilename(self, program, partNumber = 0):
-        filename = program.fileName
+        if program.fileName:
+            filename = program.fileName
+        else:
+            filename = self.normalizeString(program.title) + '_' + str(program.startDate.strftime('%Y-%m-%d_%H-%M'))
 
-        if partNumber > 1:
-            filename = filename + '_part_{0}'.format(partNumber)
+        if filename:
+            if partNumber > 1:
+                filename = filename + '_part_{0}'.format(partNumber)
 
-        filename = filename + '.mpeg'
+            filename = filename + '.mpeg'
 
         return filename
 
