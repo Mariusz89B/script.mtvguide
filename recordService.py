@@ -1691,6 +1691,8 @@ class RecordService(BasePlayService):
         return re.compile('[^A-Za-z0-9_]+', re.IGNORECASE).sub('_', text)
 
     def getOutputFilename(self, program, partNumber = 0):
+        output = None
+
         if program.fileName:
             filename = program.fileName
         else:
@@ -1700,9 +1702,9 @@ class RecordService(BasePlayService):
             if partNumber > 1:
                 filename = filename + '_part_{0}'.format(partNumber)
 
-            filename = filename + '.mpeg'
+            output = filename + '.mpeg'
 
-        return filename
+        return output
 
     def findNextUnusedOutputFilename(self, threadData):
         while os.path.isfile(threadData['destinationFile']): #Generate output filename which is not used
