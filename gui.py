@@ -2697,12 +2697,13 @@ class mTVGuide(xbmcgui.WindowXML):
             controlInFocus = self.getFocus()
             program = self._getProgramFromControl(controlInFocus)
             if not program and xbmc.Player().isPlaying():
-                if ADDON.getSetting('info_osd') == 'true' and not self.playingRecordedProgram and self.currentChannel is not None:
-                    if ADDON.getSetting('archive_support') == 'true' and (self.archiveService != '' or self.archivePlaylist != ''):
-                        self.createOSD(self.program, None)
-                    else:
-                        self.createOSD(None, None)
-                return
+                if xbmc.getCondVisibility('Window.IsVisible(VideoFullScreen.xml)'):
+                    if ADDON.getSetting('info_osd') == 'true' and not self.playingRecordedProgram and self.currentChannel is not None:
+                        if ADDON.getSetting('archive_support') == 'true' and (self.archiveService != '' or self.archivePlaylist != ''):
+                            self.createOSD(self.program, None)
+                        else:
+                            self.createOSD(None, None)
+                    return
 
         elif action.getId() == ACTION_STOP or (action.getButtonCode() == KEY_STOP and KEY_STOP != 0):
             self.playService.stopPlayback()
@@ -3069,6 +3070,8 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
 
+                self.program = programList[index]
+
                 self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
 
@@ -3161,6 +3164,8 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
 
+                self.program = programList[index]
+
                 self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
 
@@ -3250,6 +3255,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.osd.closeOSD()
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
+
+                self.program = programList[index]
 
                 self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
@@ -3432,7 +3439,9 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
 
-                self.viewStartDate = programList[index].startDate + datetime.timedelta(seconds=5, microseconds=000) + datetime.timedelta(minutes=int(timebarAdjust()))
+                self.program = programList[index]
+
+                self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
 
                 self.onRedrawEPG(channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
@@ -3546,7 +3555,9 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
 
-                self.viewStartDate = programList[index].startDate + datetime.timedelta(seconds=5, microseconds=000) + datetime.timedelta(minutes=int(timebarAdjust()))
+                self.program = programList[index]
+
+                self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
 
                 self.onRedrawEPG(channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
@@ -3659,6 +3670,8 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
 
+                self.program = programList[index]
+
                 self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
 
@@ -3748,6 +3761,8 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
 
+                self.program = programList[index]
+
                 self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
 
@@ -3818,6 +3833,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.osd.closeOSD()
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
+
+                self.program = programList[index]
 
                 self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
@@ -3897,6 +3914,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.osd.closeOSD()
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
+
+                self.program = programList[index]
 
                 self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
@@ -3991,6 +4010,8 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
 
+                self.program = programList[index]
+
                 self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
 
@@ -4083,6 +4104,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.osd.closeOSD()
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
+
+                self.program = programList[index]
 
                 self.viewStartDate = programList[index].startDate + datetime.timedelta(minutes=int(timebarAdjust()))
                 self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)

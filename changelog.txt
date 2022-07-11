@@ -1,6 +1,7 @@
 ﻿v9.9.624 (2022-07-11)
 - Fixed show Video OSD on touch tap.
 - Fixed recording filename input return action.
+- Bug fixes.
 
 v9.9.623 (2022-07-10)
 - Fixed recording filename match.
