@@ -313,8 +313,8 @@ class RecordService(BasePlayService):
                 self.endInputDialog(endDate)
 
     def renameFile(self, program):
-        filename = self.normalizeString(program.title) + '_' + str(program.startDate.strftime('%Y-%m-%d_%H-%M')) + '.mpeg'
-        kb = xbmc.Keyboard(filename,'')
+        filename = None
+        kb = xbmc.Keyboard(self.normalizeString(program.title) + '_' + str(program.startDate.strftime('%Y-%m-%d_%H-%M')) + '.mpeg','')
         kb.setHeading(strings(60016))
         kb.setHiddenInput(False)
         kb.doModal()
@@ -372,6 +372,8 @@ class RecordService(BasePlayService):
 
                                 if saveRecording:
                                     program = self.renameFile(program)
+                                    if not program.fileName:
+                                        return
                                     self.startOffsetDownload *= 60
                                     self.endOffsetDownload *= 60
                                     _program = self.epg.database.getPrograms(program.channel, program, self.program.startDate, self.program.endDate)
@@ -407,6 +409,8 @@ class RecordService(BasePlayService):
 
                         if saveRecording:
                             program = self.renameFile(program)
+                            if not program.fileName:
+                                return
                             startOffset *= 60
                             endOffset *= 60
                             if self.scheduleRecording(program, startOffset, endOffset):

@@ -8405,6 +8405,11 @@ class Pla(xbmcgui.WindowXMLDialog):
                 osd.doModal()
                 del osd
 
+        elif action.getId() == ACTION_TOUCH_TAP and xbmc.Player().isPlaying():
+            osd = VideoOSD(self)
+            osd.doModal()
+            del osd
+
         if action.getButtonCode() == KEY_SWITCH_TO_LAST:
             deb('Pla play last channel')
             channel = self.epg.getLastPreviousChannel()
