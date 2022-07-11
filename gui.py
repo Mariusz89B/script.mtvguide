@@ -119,6 +119,7 @@ KEY_HOME = 159
 KEY_END = 160
 
 ACTION_GUIDE = 777
+ACTION_CLOSE = 1000
 
 KEY_CODEC_INFO = 0
 
@@ -1852,10 +1853,7 @@ class mTVGuide(xbmcgui.WindowXML):
     def createOSD(self, program, urlList):
         try:
             if self.osd:
-                try:
-                    self.osd.closeOSD()
-                except:
-                    pass
+                self.osd.closeOSD()
 
             osd = Pla(program, self.database, urlList, self.archiveService, self.archivePlaylist, self)
 
@@ -1972,10 +1970,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 pass
 
             if self.osd:
-                try:
-                    self.osd.closeOSD()
-                except:
-                    pass
+                self.osd.closeOSD()
             if not background:
                 self.playService.close()
                 self.recordService.close()
@@ -2638,9 +2633,9 @@ class mTVGuide(xbmcgui.WindowXML):
                     # Ask to close
                     if xbmc.getCondVisibility('!Window.IsVisible(10100)'): 
                         ret = xbmcgui.Dialog().yesno(strings(30963), '{}?'.format(C_MAIN_EXIT_STR))
-                        if ret == False:
+                        if not ret:
                             return
-                        elif ret == True:
+                        elif ret:
                             self.close(background=background)
                 else:
                     # Close by two returns
@@ -2680,7 +2675,6 @@ class mTVGuide(xbmcgui.WindowXML):
             return
 
         elif action.getId() == KEY_CONTEXT_MENU or action.getButtonCode() == KEY_CONTEXT or action.getId() == ACTION_MOUSE_RIGHT_CLICK:
-
             if self.currentChannel is None:
                 prog, idx = self.getLastPlayingChannel()
                 try:
@@ -2692,9 +2686,20 @@ class mTVGuide(xbmcgui.WindowXML):
                 if ADDON.getSetting('start_video_minimalized') == 'false' or self.playingRecordedProgram or self.currentChannel is None:
                     xbmc.executebuiltin("Action(FullScreen)")
                 self._hideEpg()
-                if ADDON.getSetting('info_osd') == "true" and not self.playingRecordedProgram and self.currentChannel is not None:
-                    if ADDON.getSetting('archive_support') == "true" and (self.archiveService != '' or self.archivePlaylist != ''):
-                        self.createOSD(self.program, '')
+                if ADDON.getSetting('info_osd') == 'true' and not self.playingRecordedProgram and self.currentChannel is not None:
+                    if ADDON.getSetting('archive_support') == 'true' and (self.archiveService != '' or self.archivePlaylist != ''):
+                        self.createOSD(self.program, None)
+                    else:
+                        self.createOSD(None, None)
+                return
+
+        elif action.getId() == ACTION_MOUSE_LEFT_CLICK: # need refactor, close vosd onClick
+            controlInFocus = self.getFocus()
+            program = self._getProgramFromControl(controlInFocus)
+            if not program and xbmc.Player().isPlaying():
+                if ADDON.getSetting('info_osd') == 'true' and not self.playingRecordedProgram and self.currentChannel is not None:
+                    if ADDON.getSetting('archive_support') == 'true' and (self.archiveService != '' or self.archivePlaylist != ''):
+                        self.createOSD(self.program, None)
                     else:
                         self.createOSD(None, None)
                 return
@@ -2851,7 +2856,7 @@ class mTVGuide(xbmcgui.WindowXML):
                     self.playChannel2(program)
 
     def onClick(self, controlId):
-        debug('onClick')
+        debug('onClick: {}'.format(controlId))
         if self.isClosing:
             return
         self.lastKeystroke = datetime.datetime.now()
@@ -2969,8 +2974,7 @@ class mTVGuide(xbmcgui.WindowXML):
         if program is None:
             return
 
-        if ADDON.getSetting('info_osd') == "true":
-
+        if ADDON.getSetting('info_osd') == 'true':
             if not self.playChannel2(program):
                 result = self.streamingService.detectStream(program.channel)
                 if not result:
@@ -3060,10 +3064,8 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                    try:
+                    if self.osd:
                         self.osd.closeOSD()
-                    except:
-                        pass
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
 
@@ -3082,10 +3084,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.showListing(programList[index].channel)
                 else:
                     if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                        try:
+                        if self.osd:
                             self.osd.closeOSD()
-                        except:
-                            pass
 
 
         elif action == ACTION_STOP:
@@ -3156,10 +3156,8 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                    try:
+                    if self.osd:
                         self.osd.closeOSD()
-                    except:
-                        pass
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
 
@@ -3177,10 +3175,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.showNow(programList[index].channel)
                 else:
                     if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                        try:
+                        if self.osd:
                             self.osd.closeOSD()
-                        except:
-                            pass
 
         elif action == ACTION_STOP:
             return
@@ -3250,10 +3246,8 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                    try:
+                    if self.osd:
                         self.osd.closeOSD()
-                    except:
-                        pass
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
 
@@ -3271,10 +3265,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.showNext(programList[index].channel)
                 else:
                     if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                        try:
+                        if self.osd:
                             self.osd.closeOSD()
-                        except:
-                            pass
 
         elif action == ACTION_STOP:
             return
@@ -3435,10 +3427,8 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                    try:
+                    if self.osd:
                         self.osd.closeOSD()
-                    except:
-                        pass
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
 
@@ -3456,10 +3446,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.programSearch(programList[index].channel)
                 else:
                     if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                        try:
+                        if self.osd:
                             self.osd.closeOSD()
-                        except:
-                            pass
 
         elif action == ACTION_STOP:
             return
@@ -3553,10 +3541,8 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                    try:
+                    if self.osd:
                         self.osd.closeOSD()
-                    except:
-                        pass
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
 
@@ -3574,10 +3560,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.descriptionSearch(programList[index].channel)
                 else:
                     if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                        try:
+                        if self.osd:
                             self.osd.closeOSD()
-                        except:
-                            pass
 
         elif action == ACTION_STOP:
             return
@@ -3670,10 +3654,8 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                    try:
+                    if self.osd:
                         self.osd.closeOSD()
-                    except:
-                        pass
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
 
@@ -3691,10 +3673,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.categorySearchInput(programList[index].channel)
                 else:
                     if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                        try:
+                        if self.osd:
                             self.osd.closeOSD()
-                        except:
-                            pass
 
         elif action == ACTION_STOP:
             return
@@ -3763,10 +3743,8 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                    try:
+                    if self.osd:
                         self.osd.closeOSD()
-                    except:
-                        pass
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
 
@@ -3784,10 +3762,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.categorySearch(programList[index].channel)
                 else:
                     if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                        try:
-                            self.osd.closeOSD()
-                        except:
-                            pass 
+                        if self.osd:
+                            self.osd.closeOSD() 
 
         elif action == ACTION_STOP:
             return
@@ -3838,10 +3814,8 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                    try:
+                    if self.osd:
                         self.osd.closeOSD()
-                    except:
-                        pass
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
 
@@ -3859,10 +3833,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.channelSearch(programList[index].channel)
                 else:
                     if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                        try:
+                        if self.osd:
                             self.osd.closeOSD()
-                        except:
-                            pass
 
         elif action == ACTION_STOP:
             return
@@ -3921,10 +3893,8 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                    try:
+                    if self.osd:
                         self.osd.closeOSD()
-                    except:
-                        pass
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
 
@@ -3956,10 +3926,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.showReminders(programList[index].channel)
                 else:
                     if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                        try:
-                            self.osd.closeOSD()
-                        except:
-                            pass 
+                        if self.osd:
+                            self.osd.closeOSD() 
 
         elif action == ACTION_STOP:
             return
@@ -4018,10 +3986,8 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                    try:
+                    if self.osd:
                         self.osd.closeOSD()
-                    except:
-                        pass
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
 
@@ -4053,10 +4019,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.showFullReminders(programList[index].channel)
                 else:
                     if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                        try:
+                        if self.osd:
                             self.osd.closeOSD()
-                        except:
-                            pass
 
         elif action == ACTION_STOP:
             return
@@ -4115,10 +4079,8 @@ class mTVGuide(xbmcgui.WindowXML):
         elif action == KEY_CONTEXT_MENU:
             if index > -1:
                 if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                    try:
+                    if self.osd:
                         self.osd.closeOSD()
-                    except:
-                        pass
                 self.context = True
                 channelIdx = int(self.database.getCurrentChannelIdx(programList[index].channel))
 
@@ -4150,10 +4112,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.showFullRecordings(programList[index].channel)
                 else:
                     if xbmc.getCondVisibility('!Control.IsVisible(5001)'):
-                        try:
+                        if self.osd:
                             self.osd.closeOSD()
-                        except:
-                            pass
 
         elif action == ACTION_STOP:
             return
@@ -4919,7 +4879,7 @@ class mTVGuide(xbmcgui.WindowXML):
             return
 
         program = self._getProgramFromControl(controlInFocus)
-        if program is None:
+        if not program:
             return
 
         self.setControlLabel(C_MAIN_CHAN_NAME, '{}'.format(program.channel.title))
@@ -4927,24 +4887,23 @@ class mTVGuide(xbmcgui.WindowXML):
         self.setControlLabel(C_MAIN_TIME, '{} - {}'.format(self.formatTime(program.startDate), self.formatTime(program.endDate)))
 
         if xbmc.Player().isPlaying():
-            if ADDON.getSetting('info_osd') == "false" or self.program is None:
-                program, idx = self.getLastPlayingChannel()
+            program, idx = self.getLastPlayingChannel()
 
-                if not program:
-                    program = self.program
+            if not program:
+                program = self.program
 
-                try:
-                    self.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format(program.channel.title))
-                    self.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(program.title))
-                    self.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format(self.formatTime(program.startDate), self.formatTime(program.endDate)))
-                    self.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format((str(int(idx) + 1))))
+            try:
+                self.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format(program.channel.title))
+                self.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(program.title))
+                self.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format(self.formatTime(program.startDate), self.formatTime(program.endDate)))
+                self.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format((str(int(idx) + 1))))
 
-                except:
-                    self.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format('N/A'))
-                    self.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(strings(55016)))
-                    self.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format('N/A','N/A'))
-                    self.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format('-'))
-                    return
+            except:
+                self.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format('N/A'))
+                self.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(strings(55016)))
+                self.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format('N/A','N/A'))
+                self.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format('-'))
+                return
 
         if program.description:
             description = program.description
@@ -5466,7 +5425,7 @@ class mTVGuide(xbmcgui.WindowXML):
         if len(urlList) > 0:
             if ADDON.getSetting('start_video_minimalized') == 'false' and xbmc.Player().isPlaying():
                 xbmc.executebuiltin("Action(FullScreen)")
-            if ADDON.getSetting('info_osd') == "true":
+            if ADDON.getSetting('info_osd') == 'true':
                 self.createOSD(program, urlList)
             else:
                 self.playService.playUrlList(urlList, self.archiveService, self.archivePlaylist, resetReconnectCounter=True)
@@ -5483,8 +5442,8 @@ class mTVGuide(xbmcgui.WindowXML):
         # Playback for services
         if ADDON.getSetting('archive_support') == 'true':
             try:
-                ProgramEndDate = datetime.proxydt.strptime(str(self.program.endDate), '%Y-%m-%d %H:%M:%S')
-                ProgramStartDate = datetime.proxydt.strptime(str(self.program.startDate), '%Y-%m-%d %H:%M:%S')
+                ProgramEndDate = datetime.proxydt.strptime(str(program.endDate), '%Y-%m-%d %H:%M:%S')
+                ProgramStartDate = datetime.proxydt.strptime(str(program.startDate), '%Y-%m-%d %H:%M:%S')
             except:
                 ProgramEndDate = datetime.proxydt.strptime(str(dt), '%Y-%m-%d %H:%M:%S.%f')
                 ProgramStartDate = datetime.proxydt.strptime(str(dt), '%Y-%m-%d %H:%M:%S.%f')
@@ -5554,17 +5513,6 @@ class mTVGuide(xbmcgui.WindowXML):
                             # archiveService
                             if ADDON.getSetting('archive_finished_program') == 'true': 
                                 if program.channel.title.upper() in [k for k,v in catchupList] and program.endDate < dt:
-                                    self.archiveService = dt - ProgramStartDate
-                                else:
-                                    self.archiveService = ''
-                            else:
-                                if program.channel.title.upper() in [k for k,v in catchupList] and program.startDate < dt:
-                                    self.archiveService = dt - ProgramStartDate
-                                else:
-                                    self.archiveService = ''
-
-                            if ADDON.getSetting('archive_finished_program') == 'true': 
-                                if program.channel.title.upper() in [k for k,v in catchupList] and program.endDate < dt:
                                     from time import mktime
 
                                     n = dt
@@ -5598,8 +5546,11 @@ class mTVGuide(xbmcgui.WindowXML):
                                     self.archivePlaylist = '{duration}, {offset}, {utc}, {lutc}, {y}, {m}, {d}, {h}, {min}, {s}'.format(
                                         duration=duration, offset=offset, utc=utc, lutc=lutc, y=year, m=month, d=day, h=hour, min=minute, s=second)
 
+                                    self.archiveService = dt - ProgramStartDate
+
                                 else:
                                     self.archivePlaylist = ''
+                                    self.archiveService = ''
                             else:
                                 if program.channel.title.upper() in [k for k,v in catchupList] and program.startDate < dt:
                                     from time import mktime
@@ -5635,8 +5586,11 @@ class mTVGuide(xbmcgui.WindowXML):
                                     self.archivePlaylist = '{duration}, {offset}, {utc}, {lutc}, {y}, {m}, {d}, {h}, {min}, {s}'.format(
                                         duration=duration, offset=offset, utc=utc, lutc=lutc, y=year, m=month, d=day, h=hour, min=minute, s=second)
 
+                                    self.archiveService = dt - ProgramStartDate
+
                                 else:
                                     self.archivePlaylist = ''
+                                    self.archiveService = ''
 
                         else:
                             if ADDON.getSetting('archive_finished_program') == 'false':
@@ -5649,8 +5603,20 @@ class mTVGuide(xbmcgui.WindowXML):
                                 return 'None'
 
                     else:
-                        self.archiveService = ''
-                        self.archivePlaylist = ''
+                        if program.endDate > dt:
+                            self.archiveService = ''
+                            self.archivePlaylist = ''
+                        else:
+                            res = xbmcgui.Dialog().yesno(strings(30998), strings(59980))
+                            if res:
+                                self.archiveService = ''
+                                self.archivePlaylist = ''
+                            else:
+                                return 'None'
+
+                else:
+                    self.archiveService = ''
+                    self.archivePlaylist = ''
 
             except:
                 self.archiveService = ''
@@ -5670,7 +5636,7 @@ class mTVGuide(xbmcgui.WindowXML):
         if len(urlList) > 0:
             if ADDON.getSetting('start_video_minimalized') == 'false' and xbmc.Player().isPlaying():
                 xbmc.executebuiltin("Action(FullScreen)")
-            if ADDON.getSetting('info_osd') == "true":
+            if ADDON.getSetting('info_osd') == 'true':
                 self.createOSD(program, urlList)
             else:
                 self.playService.playUrlList(urlList, self.archiveService, self.archivePlaylist, resetReconnectCounter=True)
@@ -7636,7 +7602,7 @@ class InfoDialog(xbmcgui.WindowXMLDialog):
         return calcTime
 
     def onInit(self):
-        if self.program is None:
+        if not self.program:
             return
 
         self.setControlLabel(C_MAIN_TITLE, '{}'.format(self.program.title))
@@ -8072,32 +8038,31 @@ class Pla(xbmcgui.WindowXMLDialog):
 
         self.programs = self.database.getNowList(self.program.channel)
 
-        if ADDON.getSetting('info_osd') == "true":
-            program, idx = self.epg.getLastPlayingChannel()
+        program, idx = self.epg.getLastPlayingChannel()
 
-            if not program:
-                program = self.program
+        if not program:
+            program = self.program
 
-            try:
-                self.epg.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format(program.channel.title))
-                self.epg.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(program.title))
-                self.epg.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format(self.epg.formatTime(program.startDate), self.epg.formatTime(program.endDate)))
-                self.epg.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format((str(int(idx) + 1))))
+        try:
+            self.epg.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format(program.channel.title))
+            self.epg.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(program.title))
+            self.epg.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format(self.epg.formatTime(program.startDate), self.epg.formatTime(program.endDate)))
+            self.epg.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format((str(int(idx) + 1))))
 
-            except:
-                self.epg.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format('N/A'))
-                self.epg.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(strings(55016)))
-                self.epg.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format('N/A', 'N/A'))
-                self.epg.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format('-'))
-                return
+        except:
+            self.epg.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format('N/A'))
+            self.epg.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(strings(55016)))
+            self.epg.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format('N/A', 'N/A'))
+            self.epg.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format('-'))
+            return
 
-        if ADDON.getSetting('show_time') == "true":
+        if ADDON.getSetting('show_time') == 'true':
             nowtime = '$INFO[System.Time]'
 
             alignLeft = 0
             alignRight = 1
 
-            skin_resolution = config.get("Skin", "resolution")
+            skin_resolution = config.get('Skin', 'resolution')
             currentSkin = xbmc.getSkinDir()
             chkSkinKodi = currentSkin
 
