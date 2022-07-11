@@ -106,6 +106,7 @@ ACTION_GESTURE_SWIPE_UP = 531
 ACTION_GESTURE_SWIPE_DOWN = 541
 ACTION_TOUCH_TAP = 401
 
+ACTION_MOUSE_LEFT_CLICK = 100
 ACTION_MOUSE_RIGHT_CLICK = 101
 ACTION_MOUSE_MIDDLE_CLICK = 102
 ACTION_MOUSE_WHEEL_UP = 104
@@ -8405,7 +8406,7 @@ class Pla(xbmcgui.WindowXMLDialog):
                 osd.doModal()
                 del osd
 
-        elif action.getId() == ACTION_TOUCH_TAP and xbmc.Player().isPlaying():
+        elif action.getId() == ACTION_MOUSE_LEFT_CLICK and xbmc.Player().isPlaying():
             osd = VideoOSD(self)
             osd.doModal()
             del osd
