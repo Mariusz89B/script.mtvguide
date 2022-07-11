@@ -2693,9 +2693,12 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.createOSD(None, None)
                 return
 
-        elif action.getId() == ACTION_MOUSE_LEFT_CLICK: # need refactor, close vosd onClick
-            controlInFocus = self.getFocus()
-            program = self._getProgramFromControl(controlInFocus)
+        elif action.getId() == ACTION_MOUSE_LEFT_CLICK or action.getId() == ACTION_TOUCH_TAP:
+            try:
+                controlInFocus = self.getFocus()
+                program = self._getProgramFromControl(controlInFocus)
+            except:
+                program = None
             if not program and xbmc.Player().isPlaying():
                 if xbmc.getCondVisibility('Window.IsVisible(VideoFullScreen.xml)'):
                     if ADDON.getSetting('info_osd') == 'true' and not self.playingRecordedProgram and self.currentChannel is not None:
