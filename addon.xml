@@ -2,7 +2,7 @@
 <addon
     id="script.mtvguide"
     name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]"
-    version="9.9.624"
+    version="9.9.625-beta.1"
     provider-name="mariusz89b">
   <requires>
     <import addon="xbmc.addon" version="17.0.0"/>
@@ -41,7 +41,10 @@
     <forum>https://github.com/Mariusz89B/script.mtvguide/discussions</forum>
 	<website>https://github.com/Mariusz89B/script.mtvguide</website>
     <source>m-TVGuide © 2013 - 2022</source>
-    <news>v9.9.624 (2022-07-11)
+    <news>v9.9.625 (2022-07-12)
+- Updated translations.
+
+v9.9.624 (2022-07-11)
 - Fixed show Video OSD on touch tap.
 - Fixed recording filename input return action.
 - Bug fixes.

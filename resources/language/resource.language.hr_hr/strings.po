@@ -1517,12 +1517,12 @@ msgid "Channels have been removed."
 msgstr "Kanali su izbrisani."
 
 msgctxt "#60008"
-msgid "Save playlist to local drive"
-msgstr "Spremi popis za reprodukciju na lokalni disk"
+msgid "Cache playlist to local drive"
+msgstr "Predmemorija popisa za reprodukciju na lokalnom disku"
 
 msgctxt "#60009"
-msgid "Update playlist (days)"
-msgstr "Ažuriraj popis pjesama (dana)"
+msgid "Playlist cache update (days)"
+msgstr "Ažuriranje predmemorije popisa za reprodukciju (dani)"
 
 msgctxt "#60010"
 msgid "Add logo to selected channel"

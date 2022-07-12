@@ -1329,7 +1329,7 @@
 					<default>7</default>
 					<constraints>
 						<minimum>0</minimum>
-						<maximum>30</maximum>
+						<maximum>90</maximum>
 					</constraints>
 					<dependencies>
 						<dependency type="visible">
@@ -1557,7 +1557,7 @@
 					<default>7</default>
 					<constraints>
 						<minimum>0</minimum>
-						<maximum>30</maximum>
+						<maximum>90</maximum>
 					</constraints>
 					<dependencies>
 						<dependency type="visible">
@@ -1785,7 +1785,7 @@
 					<default>7</default>
 					<constraints>
 						<minimum>0</minimum>
-						<maximum>30</maximum>
+						<maximum>90</maximum>
 					</constraints>
 					<dependencies>
 						<dependency type="visible">
@@ -2013,7 +2013,7 @@
 					<default>7</default>
 					<constraints>
 						<minimum>0</minimum>
-						<maximum>30</maximum>
+						<maximum>90</maximum>
 					</constraints>
 					<dependencies>
 						<dependency type="visible">
@@ -2241,7 +2241,7 @@
 					<default>7</default>
 					<constraints>
 						<minimum>0</minimum>
-						<maximum>30</maximum>
+						<maximum>90</maximum>
 					</constraints>
 					<dependencies>
 						<dependency type="visible">

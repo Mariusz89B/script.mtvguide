@@ -1517,12 +1517,12 @@ msgid "Channels have been removed."
 msgstr "Kanaler er slettet."
 
 msgctxt "#60008"
-msgid "Save playlist to local drive"
-msgstr "Lagre spilleliste på lokal disk"
+msgid "Cache playlist to local drive"
+msgstr "Bufre spilleliste til lokal stasjon"
 
 msgctxt "#60009"
-msgid "Update playlist (days)"
-msgstr "Oppdater spilleliste (dager)"
+msgid "Playlist cache update (days)"
+msgstr "Oppdatering av spillelistebuffer (dager)"
 
 msgctxt "#60010"
 msgid "Add logo to selected channel"

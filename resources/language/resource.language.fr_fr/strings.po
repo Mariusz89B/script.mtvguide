@@ -1517,12 +1517,12 @@ msgid "Channels have been removed."
 msgstr "Les chaînes ont été supprimées."
 
 msgctxt "#60008"
-msgid "Save playlist to local drive"
-msgstr "Enregistrer la playlist sur le disque local"
+msgid "Cache playlist to local drive"
+msgstr "Cacher la liste de lecture sur le disque local"
 
 msgctxt "#60009"
-msgid "Update playlist (days)"
-msgstr "Mettre à jour la playlist (jours)"
+msgid "Playlist cache update (days)"
+msgstr "Mise à jour du cache de la playlist (jours)"
 
 msgctxt "#60010"
 msgid "Add logo to selected channel"
