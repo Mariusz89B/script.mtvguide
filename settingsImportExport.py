@@ -655,7 +655,7 @@ class SettingsImp:
 
         continent = xbmcgui.Dialog().select(strings(30725), [xbmc.getLocalizedString(593), strings(30727), strings(30728), strings(30729), strings(30730), strings(30731), strings(30732), '[COLOR red]' + strings(30726) + '[/COLOR]'])
 
-        if not continent:
+        if continent is None:
             enabling = True
             if options:
                 return xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)
