@@ -726,7 +726,7 @@ class mTVGuide(xbmcgui.WindowXML):
             progExec = self.settingsImp.countryUrlPicker(execute=ADDON, options=False)
 
         if progExec:
-            self.displayNamesEPG(epgType=0)
+            self.tutorialGetService(epgType=0)
         else:
             self.tutorialGetEPG()
 
@@ -735,18 +735,9 @@ class mTVGuide(xbmcgui.WindowXML):
             progExec = self.settingsImp.countryFilePicker(execute=ADDON, options=False)
 
         if progExec:
-            self.displayNamesEPG(epgType=1)
+            self.tutorialGetService(epgType=1)
         else:
             self.tutorialGetEPG()
-
-    def displayNamesEPG(self, epgType):
-        res = xbmcgui.Dialog().yesno(strings(60011), strings(60012))
-        if res:
-            ADDON.setSetting('epg_display_name', 'true')
-        else:
-            ADDON.setSetting('epg_display_name', 'false')
-
-        self.tutorialGetService(epgType)
 
     def tutorialGetService(self, epgType):
         progExec = False
@@ -1117,7 +1108,19 @@ class mTVGuide(xbmcgui.WindowXML):
                         self.tutorialGetService(epgType)
 
         if progExec:
-            self.tutorialCatchup(False)
+            playlist = False
+            if ADDON.getSetting('playlist_1_enabled') == 'true':
+                playlist = True
+            self.displayNamesEPG(playlist)
+
+    def displayNamesEPG(self, playlist):
+        res = xbmcgui.Dialog().yesno(strings(60011), strings(60012))
+        if res:
+            ADDON.setSetting('epg_display_name', 'true')
+        else:
+            ADDON.setSetting('epg_display_name', 'false')
+
+        self.tutorialCatchup(playlist)
 
     def tutorialCatchup(self, playlist):
         res = xbmcgui.Dialog().yesno(strings(59924), strings(60013))
