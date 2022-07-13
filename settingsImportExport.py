@@ -144,7 +144,7 @@ class SettingsImp:
                     xbmcgui.Dialog().ok(strings(58002).encode('utf-8'),'\n' + strings(58004).encode('utf-8'))
                 return success
 
-            deb('SettingsImp exportSettings to file %s' % os.path.join(dirname, filename))
+            deb('SettingsImp exportSettings to file {}'.format(os.path.join(dirname, filename)))
             try:
                 with zipfile.ZipFile(os.path.join(dirname, filename), mode='w', compression=compressionType) as zf:
                     for fileN in [ dbFileName, settingsFileName, categoriesFileName ]:
@@ -153,7 +153,7 @@ class SettingsImp:
                             success = True
 
             except:
-                deb('Exporting to ZIP failed with error: %s \n trying to copy files' % getExceptionString())
+                deb('Exporting to ZIP failed with error: {} \n trying to copy files'.format(getExceptionString()))
                 success = False
                 try:
                     os.remove(os.path.join(dirname, filename))
@@ -191,7 +191,7 @@ class SettingsImp:
             filename = xbmcgui.Dialog().browseSingle(type=1, heading=strings(58007).encode('utf-8'), shares='files', mask='.zip|settings.xml|source.db')
 
         if filename is not None and filename != '':
-            deb('SettingsImp importSettings file %s' % filename)
+            deb('SettingsImp importSettings file {}'.format(filename))
             if not os.path.isdir(self.profilePath):
                 if PY3:
                     os.makedirs(self.profilePath, exist_ok=True)
@@ -205,7 +205,7 @@ class SettingsImp:
                             zf.extract(fileN, self.profilePath)
                             success = True
                         except Exception as ex:
-                            deb('SettingsImp importSettings: Error got exception %s while reading archive %s' % (getExceptionString(), filename))
+                            deb('SettingsImp importSettings: Error got exception {} while reading archive {}'.format(getExceptionString(), filename))
                 except Exception as ex:
                     deb('importSettings Exception: {}'.format(ex))
                     ### Force import
@@ -222,7 +222,7 @@ class SettingsImp:
                 for fileN in [ dbFileName, settingsFileName, categoriesFileName ]:
                     try:
                         source_file = os.path.join(os.path.dirname(filename), fileN)
-                        deb('Trying to copy file: %s to %s' % (source_file, self.profilePath))
+                        deb('Trying to copy file: {} to {}'.format(source_file, self.profilePath))
                         shutil.copy2(source_file, self.profilePath)
                         success = True
                     except:
@@ -256,47 +256,51 @@ class SettingsImp:
                 deb('importRecordApp no file selected for import!')
                 return
             binaryFilename = os.path.basename(filename)
-            deb('RecordAppImporter filepath: %s, filename: %s, xbmcRootDir: %s' % (filename, binaryFilename, xbmcRootDir) )
+            deb('RecordAppImporter filepath: {}, filename: {}, xbmcRootDir: {}'.format(filename, binaryFilename, xbmcRootDir))
 
-            if '/data/data' in xbmcRootDir or '/data/user/0/' in xbmcRootDir or '/cache/apk/assets/' in xbmcRootDir:
-                #android
+            if xbmc.getCondVisibility('system.platform.android'):
                 deb('RecordAppImporter detected Android!')
-                recordDirName = 'recapp-' +  os.name
+
+                recordDirName = 'recapp-' + os.name
                 recordAppDir = os.path.join(xbmcRootDir.replace('cache/apk/assets/', ''), recordDirName)
                 recordAppLibDir = os.path.join(recordAppDir, 'lib')
-                deb('RecordAppImporter recordAppDir: %s, recordAppLibDir: %s' % (recordAppDir, recordAppLibDir))
+
+                deb('RecordAppImporter recordAppDir: {}, recordAppLibDir: {}'.format(recordAppDir, recordAppLibDir))
 
                 if 'ffmpeg' in binaryFilename or 'rtmpdump' in binaryFilename or 'avconv' in binaryFilename:
+                    # main
                     try:
                         if PY3:
                             os.makedirs(recordAppDir, exist_ok=True)
                         else:
                             os.makedirs(recordAppDir)
                     except:
-                        deb('RecordAppImporter exception: %s' % getExceptionString())
+                        deb('RecordAppImporter exception: {}'.format(getExceptionString()))
 
+                    # lib
                     try:
                         if PY3:
                             os.makedirs(recordAppLibDir, exist_ok=True)
                         else:
                             os.makedirs(recordAppLibDir)
                     except:
-                        deb('RecordAppImporter exception: %s' % getExceptionString())
+                        deb('RecordAppImporter exception: {}'.format(getExceptionString()))
 
+                    # copy file to root
                     deb('RecordAppImporter copying files')
                     try:
                         shutil.copy2(filename, recordAppDir)
                     except:
-                        deb('RecordAppImporter exception: %s' % getExceptionString())
+                        deb('RecordAppImporter exception: {}'.format(getExceptionString()))
 
                     fileLib = os.path.join(os.path.dirname(filename), 'lib')
                     if os.path.isdir(fileLib):
                         for filen in os.listdir(fileLib):
-                            deb('importRecordApp copy file from lib: %s' % filen)
+                            deb('importRecordApp copy file from lib: {}'.format(filen))
                             try:
                                 shutil.copy2(os.path.join(fileLib, filen), recordAppLibDir)
                             except:
-                                deb('RecordAppImporter exception: %s' % getExceptionString())
+                                deb('RecordAppImporter exception: {}'.format(getExceptionString()))
 
                     binaryFinalPath = os.path.join(recordAppDir, binaryFilename)
             else:
@@ -306,15 +310,16 @@ class SettingsImp:
                     binaryFinalPath = filename
 
             if binaryFinalPath is not None:
+                deb('binaryFinalPath: {}'.format(binaryFinalPath))
                 if os.path.isfile(binaryFinalPath):
                     try:
                         st = os.stat(binaryFinalPath)
-                        os.chmod(binaryFinalPath, st.st_mode | stat.S_IEXEC)
+                        os.chmod(binaryFinalPath, stat.S_ISVTX | stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR | stat.S_IREAD | stat.S_IWRITE | stat.S_IEXEC)
                     except:
-                        deb('Unable to set exec permissions to file %s' % binaryFinalPath)
+                        deb('Unable to set exec permissions to file {}'.format(binaryFinalPath))
 
                     if 'ffmpeg' in binaryFilename or 'avconv' in binaryFilename:
-                        deb('importRecordApp setting ffmpeg app to: %s' % binaryFinalPath)
+                        deb('importRecordApp setting ffmpeg app to: {}'.format(binaryFinalPath))
                         ADDON.setSetting(id='ffmpegExe', value=str(binaryFinalPath))
                         try:
                             xbmcgui.Dialog().ok(strings(69012),'\n' + 'FFMPEG ' + strings(69013))
@@ -322,17 +327,17 @@ class SettingsImp:
                             xbmcgui.Dialog().ok(strings(69012).encode('utf-8'),'\n' + 'FFMPEG ' + strings(69013).encode('utf-8'))
 
                     if 'rtmpdump' in binaryFilename:
-                        deb('importRecordApp setting rtmpdump app to: %s' % binaryFinalPath)
+                        deb('importRecordApp setting rtmpdump app to: {}'.format(binaryFinalPath))
                         ADDON.setSetting(id='rtmpdumpExe', value=str(binaryFinalPath))
                         try:
                             xbmcgui.Dialog().ok(strings(69012),'\n' + 'RTMPDUMP ' + strings(69013))
                         except:
                             xbmcgui.Dialog().ok(strings(69012).encode('utf-8'),'\n' + 'RTMPDUMP ' + strings(69013).encode('utf-8'))
                 else:
-                    deb('importRecordApp error destination file: %s does not exist' % binaryFinalPath)
+                    deb('importRecordApp error destination file: {} does not exist'.format(binaryFinalPath))
 
         except Exception as ex:
-            deb('RecordAppImporter Error: %s' % getExceptionString())
+            deb('RecordAppImporter Error: {}'.format(getExceptionString()))
             raise
 
     def downloadRecordApp(self):

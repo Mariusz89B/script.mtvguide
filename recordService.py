@@ -74,6 +74,11 @@ else:
 
 import requests
 
+if xbmc.getCondVisibility('system.platform.android'):
+    SHELL = True
+else:
+    SHELL = False
+
 recordIcon = 'recordIcon.png'
 downloadIcon = 'downloadIcon.png'
 
@@ -981,9 +986,9 @@ class RecordService(BasePlayService):
 
         try:
             threadData['stopDownloadTimer'] = threading.Timer(threadData['downloadDuration'], self.stopDownload, [threadData])
-            threadData['stopDownloadTimer'].start() 
+            threadData['stopDownloadTimer'].start()
 
-            threadData['downloadHandle'] = subprocess.Popen(recordCommand, shell=False, stdin=None, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True, startupinfo=si, env=recordEnviron)
+            threadData['downloadHandle'] = subprocess.Popen(recordCommand, shell=SHELL, stdin=None, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True, startupinfo=si, env=recordEnviron)
             duration = threadData['downloadDuration']
 
             self.downloading = True
@@ -1427,7 +1432,7 @@ class RecordService(BasePlayService):
             threadData['stopRecordTimer'] = threading.Timer(threadData['recordDuration'] + 5, self.stopRecord, [threadData])
             threadData['stopRecordTimer'].start()
 
-            threadData['recordHandle'] = subprocess.Popen(recordCommand, shell=False, stdin=None, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True, startupinfo=si, env=recordEnviron)
+            threadData['recordHandle'] = subprocess.Popen(recordCommand, shell=SHELL, stdin=None, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True, startupinfo=si, env=recordEnviron)
 
             output = threadData['recordHandle'].communicate()[0]
             returnCode = threadData['recordHandle'].returncode
@@ -1819,7 +1824,7 @@ class RecordService(BasePlayService):
                     recordEnviron = os.environ.copy()
                     oldLdPath = recordEnviron.get("LD_LIBRARY_PATH", '')
                     recordEnviron["LD_LIBRARY_PATH"] = os.path.join(os.path.dirname(recordCommand[0]), 'lib') + ':/lib:/usr/lib:/usr/local/lib'
-                    recordHandle = subprocess.Popen(recordCommand, shell=False, stdin=None, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, startupinfo=si, env=recordEnviron)
+                    recordHandle = subprocess.Popen(recordCommand, shell=SHELL, stdin=None, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, startupinfo=si, env=recordEnviron)
                     output = recordHandle.communicate()[0]
                     recordHandle.kill()
         except:
@@ -1894,7 +1899,7 @@ class RecordService(BasePlayService):
                     recordEnviron = os.environ.copy()
                     oldLdPath = recordEnviron.get("LD_LIBRARY_PATH", '')
                     recordEnviron["LD_LIBRARY_PATH"] = os.path.join(os.path.dirname(recordCommand[0]), 'lib') + ':/lib:/usr/lib:/usr/local/lib'
-                    recordHandle = subprocess.Popen(recordCommand, shell=False, stdin=None, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, startupinfo=si, env=recordEnviron)
+                    recordHandle = subprocess.Popen(recordCommand, shell=SHELL, stdin=None, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, startupinfo=si, env=recordEnviron)
                     output = recordHandle.communicate()[0]
                     recordHandle.kill()
 
