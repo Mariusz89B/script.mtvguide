@@ -637,8 +637,14 @@ class SettingsImp:
 
         xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)
 
-    def countryUrlPicker(self):
+    def countryUrlPicker(self, execute=None, options=True):
         deb('starting countryUrlPicker')
+        if execute:
+            ADDON = execute
+        else:
+            ADDON_ID = 'script.mtvguide'
+            ADDON = xbmcaddon.Addon(id=ADDON_ID)
+
         enabling = False
 
         ccListCh = list()
@@ -649,13 +655,19 @@ class SettingsImp:
 
         continent = xbmcgui.Dialog().select(strings(30725), [xbmc.getLocalizedString(593), strings(30727), strings(30728), strings(30729), strings(30730), strings(30731), strings(30732), '[COLOR red]' + strings(30726) + '[/COLOR]'])
 
-        if continent is None:
+        if not continent:
             enabling = True
-            return xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)
+            if options:
+                return xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)
+            else:
+                return False
 
         elif continent < 0:
             enabling = True
-            return xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)
+            if options:
+                return xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)
+            else:
+                return False
 
         elif continent == 0:
             filtered_dict = dict((k, v) for k, v in CC_DICT.items() if int(v['continent']) != 7)
@@ -724,7 +736,10 @@ class SettingsImp:
 
         if multiselect is None:
             enabling = True
-            return self.countryUrlPicker()
+            if options:
+                return self.countryUrlPicker()
+            else:
+                return self.countryUrlPicker(options=False)
 
         elif not multiselect:
             for cc in ccList:
@@ -735,7 +750,10 @@ class SettingsImp:
                 ADDON.setSetting(id='countryUrlChannels', value=str(strings(30720)))
             except:
                 ADDON.setSetting(id='countryUrlChannels', value=str(strings(30720).encode('utf-8', 'replace')))
-            return xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)
+            if options:
+                return xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)
+            else:
+                return False
 
         elif len(multiselect) == 1:
             for select in multiselect:
@@ -827,13 +845,22 @@ class SettingsImp:
                 break
 
         enabling = True
-        xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)
+        if options:
+            xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)
 
         for cc in removeList:
             ADDON.setSetting(id='country_code_{cc}'.format(cc=cc), value='false')
 
-    def countryFilePicker(self):
+        return True
+
+    def countryFilePicker(self, execute=None, options=True):
         deb('starting countryFilePicker')
+        if execute:
+            ADDON = execute
+        else:
+            ADDON_ID = 'script.mtvguide'
+            ADDON = xbmcaddon.Addon(id=ADDON_ID)
+
         enabling = False
 
         ccListCh = list()
@@ -846,11 +873,17 @@ class SettingsImp:
 
         if continent is None:
             enabling = True
-            return xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)
+            if options:
+                return xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)
+            else:
+                return False
 
         elif continent < 0:
             enabling = True
-            return xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)
+            if options:
+                return xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)
+            else:
+                return False
 
         elif continent == 0:
             filtered_dict = dict((k, v) for k, v in CC_DICT.items() if int(v['continent']) != 7)
@@ -913,7 +946,10 @@ class SettingsImp:
 
         if multiselect is None:
             enabling = True
-            return self.countryFilePicker()
+            if options:
+                return self.countryFilePicker()
+            else:
+                return self.countryFilePicker(options=False)
 
         elif not multiselect:
             for cc in ccList:
@@ -924,7 +960,10 @@ class SettingsImp:
                 ADDON.setSetting(id='countryFileChannels', value=str(strings(30720)))
             except:
                 ADDON.setSetting(id='countryFileChannels', value=str(strings(30720).encode('utf-8', 'replace')))
-            return xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)  
+            if options:
+                return xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)
+            else:
+                return False
 
         elif multiselect:
             for item in ccList:
@@ -956,6 +995,9 @@ class SettingsImp:
 
         enabling = True
 
-        xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)
+        if options:
+            xbmc.executebuiltin('Addon.OpenSettings(%s)' % ADDON_ID)
+
+        return True
 
 settingI = SettingsImp()

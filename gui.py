@@ -613,6 +613,7 @@ class mTVGuide(xbmcgui.WindowXML):
         self.streamingService = streaming.StreamsService()
         self.playService = playService.PlayService()
         self.recordService = RecordService(self)
+        self.settingsImp = SettingsImp()
         self.predefinedCategories = []
         self.getListLenght = []
         self.catchupChannels = None
@@ -714,162 +715,40 @@ class mTVGuide(xbmcgui.WindowXML):
 
         if res == 0:
             ADDON.setSetting('source', '1')
-
-            txt = ADDON.getSetting('m-TVGuide')
-            if txt == '' or txt == 'http://' or txt == 'https://':
-                txt = 'https://'
-
-            kb = xbmc.Keyboard(txt,'')
-            kb.setHeading(strings(59941))
-            kb.setHiddenInput(False)
-            kb.doModal()
-            c = kb.getText() if kb.isConfirmed() else None
-            if c == '': c = None
-
-            ADDON.setSetting('m-TVGuide', c)
-
-            if c is not None:
-                ans = xbmcgui.Dialog().yesno(strings(60011), strings(60012))
-                if ans:
-                    ADDON.setSetting('epg_display_name', 'true')
-                else:
-                    ADDON.setSetting('epg_display_name', 'false')
-                self.tutorialGetCountry()
-            else:
-                self.tutorialGetEPG()
-
+            self.tutorialGetCountryUrl()
 
         elif res == 1:
             ADDON.setSetting('source', '0')
-            fn = xbmcgui.Dialog().browse(1, strings(59942), '')
-            ADDON.setSetting('xmltv_file', fn)
-            if fn != '':
-                ans = xbmcgui.Dialog().yesno(strings(60011), strings(60012))
-                if ans:
-                    ADDON.setSetting('epg_display_name', 'true')
-                else:
-                    ADDON.setSetting('epg_display_name', 'false')
-                self.tutorialGetCountry()
-            else:
-                self.tutorialGetEPG()
+            self.tutorialGetCountryFile()
 
+    def tutorialGetCountryUrl(self):
+        with self.busyDialog():
+            progExec = self.settingsImp.countryUrlPicker(execute=ADDON, options=False)
 
-    def tutorialGetCountry(self):
-        CC_DICT = ccDict()
-
-        progExec = False
-        resExtra = False
-
-        langList = []
-        ccList = []
-
-        continent = xbmcgui.Dialog().select(strings(30725), [xbmc.getLocalizedString(593), strings(30727), strings(30728), strings(30729), strings(30730), strings(30731), strings(30732), '[COLOR red]' + strings(30726) + '[/COLOR]'])
-
-        if continent < 0:
-            resBack = xbmcgui.Dialog().yesno(strings(59924), strings(59938), yeslabel=strings(59939), nolabel=strings(30308))
-
-            if resBack:
-                self.tutorialGetEPG()
-
-            else:
-                ADDON.setSetting('tutorial', 'true')
-                self.exitAddon()
-
-        elif continent == 0:
-            filtered_dict = dict((k, v) for k, v in CC_DICT.items() if int(v['continent']) != 7)
-            ADDON.setSetting(id='show_group_channels', value='true')
-
-        elif continent == 7:
-            filtered_dict = dict((k, v) for k, v in CC_DICT.items() if int(v['continent']) == 7)
-            ADDON.setSetting(id='show_group_channels', value='false')
-
+        if progExec:
+            self.displayNamesEPG(epgType=0)
         else:
-            filtered_dict = dict((k, v) for k, v in CC_DICT.items() if int(v['continent']) == continent or (int(v['continent']) == -1 and continent != 6))
-            ADDON.setSetting(id='show_group_channels', value='true')
+            self.tutorialGetEPG()
 
-        if sys.version_info[0] < 3:
-            filtered_dict = collections.OrderedDict(sorted(filtered_dict.items()))
+    def tutorialGetCountryFile(self):
+        with self.busyDialog():
+            progExec = self.settingsImp.countryFilePicker(execute=ADDON, options=False)
 
-        for cc, value in filtered_dict.items():
-            lang = value.get('translated', '')
-            if lang == '':
-                lang = value['language']
-
-            if lang.isdigit():
-                country = strings(int(lang))
-            else:
-                country = lang
-
-            if cc == 'all':
-                langList.append(country)
-            else:
-                langList.append('[B]' + cc.upper() + '[/B] - ' + country)
-            ccList.append(cc)
-
-        res = xbmcgui.Dialog().multiselect(strings(59943), langList)
-
-        if not res:
-            self.tutorialGetCountry()
-
-        if res == 0:
-            for i in range(len(langList)):
-                if ccList[i] != 'all':
-                    ADDON.setSetting('country_code_{cc}'.format(cc=ccList[i]), 'false')
-                ADDON.setSetting('show_group_channels', 'false')
-            progExec = True
-
+        if progExec:
+            self.displayNamesEPG(epgType=1)
         else:
-            ADDON.setSetting('show_group_channels', 'true')
+            self.tutorialGetEPG()
 
-            if len(res) > 1:
-                resExtra = xbmcgui.Dialog().yesno(strings(59924), strings(59962))
+    def displayNamesEPG(self, epgType):
+        res = xbmcgui.Dialog().yesno(strings(60011), strings(60012))
+        if res:
+            ADDON.setSetting('epg_display_name', 'true')
+        else:
+            ADDON.setSetting('epg_display_name', 'false')
 
-            for i in range(len(langList)):
-                ADDON.setSetting('country_code_{cc}'.format(cc=ccList[i]), 'false')
-                if i in res:
-                    label = langList[i].lower()
-                    if ccList[i] != 'all':
-                        ADDON.setSetting('country_code_{cc}'.format(cc=ccList[i]), 'true')
-                    if resExtra:
-                        response = xbmcgui.Dialog().yesno(strings(59924), strings(59944).format(ccList[i].upper()))
-                        if response:
-                            ADDON.setSetting('source', 'm-TVGuide')
-                            if ccList[i] != 'all':
-                                txt = ADDON.getSetting('epg_{cc}'.format(cc=ccList[i]))
-                            else:
-                                txt = ADDON.getSetting('m-TVGuide')
-                            if txt == '':
-                                txt = 'https://'
+        self.tutorialGetService(epgType)
 
-                            kb = xbmc.Keyboard(txt,'')
-                            kb.setHeading(strings(59945).format(label))
-                            kb.setHiddenInput(False)
-                            kb.doModal()
-                            c = kb.getText() if kb.isConfirmed() else None
-                            if c == '': c = None
-
-                            ADDON.setSetting('epg_{cc}'.format(cc=ccList[i]), c)
-                            if c is not None:
-                                progExec = True
-
-                            else:
-                                ADDON.setSetting('country_code_{cc}'.format(cc=ccList[i]), 'false')
-                                self.tutorialGetCountry()
-
-                        else:
-                            progExec = True
-
-                    else:
-                        progExec = True
-
-        if progExec is True:
-            try:
-                ADDON.setSetting(id="countryUrlChannels", value=str(strings(30721) + ' (' + strings(59919)+')'))
-            except:
-                ADDON.setSetting(id="countryUrlChannels", value=str((strings(30721) + ' (' + strings(59919)+')').encode('utf-8', 'replace'))) 
-            self.tutorialGetService()
-
-    def tutorialGetService(self):
+    def tutorialGetService(self, epgType):
         progExec = False
 
         res = xbmcgui.Dialog().multiselect(strings(59946), [strings(59947), strings(59948)])
@@ -877,7 +756,10 @@ class mTVGuide(xbmcgui.WindowXML):
         if not res:
             resBack = xbmcgui.Dialog().yesno(strings(59924), strings(59938), yeslabel=strings(59939), nolabel=strings(30308))
             if resBack:
-                self.tutorialGetCountry()
+                if epgType == 0:
+                    self.tutorialGetCountryUrl()
+                elif epgType == 1:
+                    self.tutorialGetCountryFile()
 
             else:
                 ADDON.setSetting('tutorial', 'true')
@@ -890,7 +772,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 if not res:
                     resBack = xbmcgui.Dialog().yesno(strings(59924), strings(59938), yeslabel=strings(59939), nolabel=strings(30308))
                     if resBack:
-                        self.tutorialGetService()
+                        self.tutorialGetService(epgType)
 
                     else:
                         ADDON.setSetting('tutorial', 'true')
@@ -911,8 +793,8 @@ class mTVGuide(xbmcgui.WindowXML):
                             kb.setHeading(strings(59952) + ' ({})'.format(label))
                             kb.setHiddenInput(False)
                             kb.doModal()
-                            login = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
-                            if login == '': login = self.tutorialGetService()
+                            login = kb.getText() if kb.isConfirmed() else self.tutorialGetService(epgType)
+                            if login == '': login = self.tutorialGetService(epgType)
 
                             if login != '':
                                 ADDON.setSetting('cmore_username', login)
@@ -920,8 +802,8 @@ class mTVGuide(xbmcgui.WindowXML):
                                 kb.setHeading(strings(59953) + ' ({})'.format(label))
                                 kb.setHiddenInput(True)
                                 kb.doModal()
-                                pswd = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
-                                if pswd == '': pswd = self.tutorialGetService()
+                                pswd = kb.getText() if kb.isConfirmed() else self.tutorialGetService(epgType)
+                                if pswd == '': pswd = self.tutorialGetService(epgType)
 
                                 ADDON.setSetting('cmore_password', pswd)
                                 if pswd != '':
@@ -929,11 +811,11 @@ class mTVGuide(xbmcgui.WindowXML):
 
                                 else:
                                     ADDON.setSetting('cmore_enabled', 'false')
-                                    self.tutorialGetService()
+                                    self.tutorialGetService(epgType)
 
                             else:
                                 ADDON.setSetting('cmore_enabled', 'false')
-                                self.tutorialGetService()
+                                self.tutorialGetService(epgType)
 
                     if s == 1:
                         label = 'Ipla'
@@ -943,8 +825,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         kb.setHeading(strings(59952) + ' ({})'.format(label))
                         kb.setHiddenInput(False)
                         kb.doModal()
-                        login = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
-                        if login == '': login = self.tutorialGetService()
+                        login = kb.getText() if kb.isConfirmed() else self.tutorialGetService(epgType)
+                        if login == '': login = self.tutorialGetService(epgType)
 
                         if login != '':
                             ADDON.setSetting('ipla_username', login)
@@ -952,8 +834,8 @@ class mTVGuide(xbmcgui.WindowXML):
                             kb.setHeading(strings(59953) + ' ({})'.format(label))
                             kb.setHiddenInput(True)
                             kb.doModal()
-                            pswd = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
-                            if pswd == '': pswd = self.tutorialGetService()
+                            pswd = kb.getText() if kb.isConfirmed() else self.tutorialGetService(epgType)
+                            if pswd == '': pswd = self.tutorialGetService(epgType)
 
                             ADDON.setSetting('ipla_password', pswd)
                             if pswd != '':
@@ -963,7 +845,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
                                 if res < 0:
                                     ADDON.setSetting('ipla_enabled', 'false')
-                                    self.tutorialGetService()
+                                    self.tutorialGetService(epgType)
 
                                 if res == 0:
                                     ADDON.setSetting('ipla_client', 'Ipla')
@@ -973,11 +855,11 @@ class mTVGuide(xbmcgui.WindowXML):
 
                             else:
                                 ADDON.setSetting('ipla_enabled', 'false')
-                                self.tutorialGetService()
+                                self.tutorialGetService(epgType)
 
                         else:
                             ADDON.setSetting('ipla_enabled', 'false')
-                            self.tutorialGetService()
+                            self.tutorialGetService(epgType)
 
                     if s == 2:
                         label = 'nc+ GO'
@@ -987,8 +869,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         kb.setHeading(strings(59952) + ' ({})'.format(label))
                         kb.setHiddenInput(False)
                         kb.doModal()
-                        login = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
-                        if login == '': login = self.tutorialGetService()
+                        login = kb.getText() if kb.isConfirmed() else self.tutorialGetService(epgType)
+                        if login == '': login = self.tutorialGetService(epgType)
 
                         if login != '':
                             ADDON.setSetting('ncplusgo_username', login)
@@ -996,8 +878,8 @@ class mTVGuide(xbmcgui.WindowXML):
                             kb.setHeading(strings(59953) + ' ({})'.format(label))
                             kb.setHiddenInput(True)
                             kb.doModal()
-                            pswd = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
-                            if pswd == '': pswd = self.tutorialGetService()
+                            pswd = kb.getText() if kb.isConfirmed() else self.tutorialGetService(epgType)
+                            if pswd == '': pswd = self.tutorialGetService(epgType)
 
                             ADDON.setSetting('ncplusgo_password', pswd)
                             if pswd != '':
@@ -1005,11 +887,11 @@ class mTVGuide(xbmcgui.WindowXML):
 
                             else:
                                 ADDON.setSetting('ncplusgo_enabled', 'false')
-                                self.tutorialGetService()
+                                self.tutorialGetService(epgType)
 
                         else:
                             ADDON.setSetting('ncplusgo_enabled', 'false')
-                            self.tutorialGetService()
+                            self.tutorialGetService(epgType)
 
                     if s == 3:
                         label = 'PlayerPL'
@@ -1025,8 +907,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         kb.setHeading(strings(59952) + ' ({})'.format(label))
                         kb.setHiddenInput(False)
                         kb.doModal()
-                        login = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
-                        if login == '': login = self.tutorialGetService()
+                        login = kb.getText() if kb.isConfirmed() else self.tutorialGetService(epgType)
+                        if login == '': login = self.tutorialGetService(epgType)
 
                         if login != '':
                             ADDON.setSetting('polsatgo_username', login)
@@ -1034,8 +916,8 @@ class mTVGuide(xbmcgui.WindowXML):
                             kb.setHeading(strings(59953) + ' ({})'.format(label))
                             kb.setHiddenInput(True)
                             kb.doModal()
-                            pswd = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
-                            if pswd == '': pswd = self.tutorialGetService()
+                            pswd = kb.getText() if kb.isConfirmed() else self.tutorialGetService(epgType)
+                            if pswd == '': pswd = self.tutorialGetService(epgType)
 
                             ADDON.setSetting('polsatgo_password', pswd)
                             if pswd != '':
@@ -1045,7 +927,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
                                 if res < 0:
                                     ADDON.setSetting('polsatgo_enabled', 'false')
-                                    self.tutorialGetService()
+                                    self.tutorialGetService(epgType)
 
                                 elif res == 0:
                                     ADDON.setSetting('polsatgo_client', 'Ipla')
@@ -1055,11 +937,11 @@ class mTVGuide(xbmcgui.WindowXML):
 
                             else:
                                 ADDON.setSetting('polsatgo_enabled', 'false')
-                                self.tutorialGetService()
+                                self.tutorialGetService(epgType)
 
                         else:
                             ADDON.setSetting('polsatgo_enabled', 'false')
-                            self.tutorialGetService()
+                            self.tutorialGetService(epgType)
 
                     if s == 5:
                         label = 'Polsat GO Box'
@@ -1069,8 +951,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         kb.setHeading(strings(59952) + ' ({})'.format(label))
                         kb.setHiddenInput(False)
                         kb.doModal()
-                        login = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
-                        if login == '': login = self.tutorialGetService()
+                        login = kb.getText() if kb.isConfirmed() else self.tutorialGetService(epgType)
+                        if login == '': login = self.tutorialGetService(epgType)
 
                         if login != '':
                             ADDON.setSetting('pgobox_username', login)
@@ -1078,8 +960,8 @@ class mTVGuide(xbmcgui.WindowXML):
                             kb.setHeading(strings(59953) + ' ({})'.format(label))
                             kb.setHiddenInput(True)
                             kb.doModal()
-                            pswd = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
-                            if pswd == '': pswd = self.tutorialGetService()
+                            pswd = kb.getText() if kb.isConfirmed() else self.tutorialGetService(epgType)
+                            if pswd == '': pswd = self.tutorialGetService(epgType)
 
                             ADDON.setSetting('pgobox_password', pswd)
                             if pswd != '':
@@ -1089,7 +971,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
                                 if res < 0:
                                     ADDON.setSetting('pgobox_enabled', 'false')
-                                    self.tutorialGetService()
+                                    self.tutorialGetService(epgType)
 
                                 if res == 0:
                                     ADDON.setSetting('pgobox_client', 'Cyfrowy Polsat')
@@ -1102,11 +984,11 @@ class mTVGuide(xbmcgui.WindowXML):
 
                             else:
                                 ADDON.setSetting('pgobox_enabled', 'false')
-                                self.tutorialGetService()
+                                self.tutorialGetService(epgType)
 
                         else:
                             ADDON.setSetting('pgobox_enabled', 'false')
-                            self.tutorialGetService()
+                            self.tutorialGetService(epgType)
 
                     if s == 6:
                         label = 'TVP GO'
@@ -1122,8 +1004,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         kb.setHeading(strings(59952) + ' ({})'.format(label))
                         kb.setHiddenInput(False)
                         kb.doModal()
-                        login = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
-                        if login == '': login = self.tutorialGetService()
+                        login = kb.getText() if kb.isConfirmed() else self.tutorialGetService(epgType)
+                        if login == '': login = self.tutorialGetService(epgType)
 
                         if login != '':
                             ADDON.setSetting('teliaplay_username', login)
@@ -1131,8 +1013,8 @@ class mTVGuide(xbmcgui.WindowXML):
                             kb.setHeading(strings(59953) + ' ({})'.format(label))
                             kb.setHiddenInput(True)
                             kb.doModal()
-                            pswd = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
-                            if pswd == '': pswd = self.tutorialGetService()
+                            pswd = kb.getText() if kb.isConfirmed() else self.tutorialGetService(epgType)
+                            if pswd == '': pswd = self.tutorialGetService(epgType)
 
                             ADDON.setSetting('teliaplay_password', pswd)
                             if pswd != '':
@@ -1142,7 +1024,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
                                 if res < 0:
                                     ADDON.setSetting('teliaplay_enabled', 'false')
-                                    self.tutorialGetService()
+                                    self.tutorialGetService(epgType)
 
                                 if res == 0:
                                     ADDON.setSetting('teliaplay_locale', 'teliatv.dk')
@@ -1152,11 +1034,11 @@ class mTVGuide(xbmcgui.WindowXML):
 
                             else:
                                 ADDON.setSetting('teliaplay_enabled', 'false')
-                                self.tutorialGetService()
+                                self.tutorialGetService(epgType)
 
                         else:
                             ADDON.setSetting('teliaplay_enabled', 'false')
-                            self.tutorialGetService()
+                            self.tutorialGetService(epgType)
 
                     if s == 8:
                         label = 'WP Pilot'
@@ -1166,8 +1048,8 @@ class mTVGuide(xbmcgui.WindowXML):
                         kb.setHeading(strings(59952) + ' ({})'.format(label))
                         kb.setHiddenInput(False)
                         kb.doModal()
-                        login = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
-                        if login == '': login = self.tutorialGetService()
+                        login = kb.getText() if kb.isConfirmed() else self.tutorialGetService(epgType)
+                        if login == '': login = self.tutorialGetService(epgType)
 
                         if login != '':
                             ADDON.setSetting('videostar_username', login)
@@ -1175,8 +1057,8 @@ class mTVGuide(xbmcgui.WindowXML):
                             kb.setHeading(strings(59953) + ' ({})'.format(label))
                             kb.setHiddenInput(True)
                             kb.doModal()
-                            pswd = kb.getText() if kb.isConfirmed() else self.tutorialGetService()
-                            if pswd == '': pswd = self.tutorialGetService()
+                            pswd = kb.getText() if kb.isConfirmed() else self.tutorialGetService(epgType)
+                            if pswd == '': pswd = self.tutorialGetService(epgType)
 
                             ADDON.setSetting('videostar_password', pswd)
                             if pswd != '':
@@ -1184,11 +1066,11 @@ class mTVGuide(xbmcgui.WindowXML):
 
                             else:
                                 ADDON.setSetting('videostar_enabled', 'false')
-                                self.tutorialGetService()
+                                self.tutorialGetService(epgType)
 
                         else:
                             ADDON.setSetting('videostar_enabled', 'false')
-                            self.tutorialGetService()
+                            self.tutorialGetService(epgType)
 
             if p == 1:
                 ADDON.setSetting('nr_of_playlists', '1')
@@ -1198,7 +1080,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 if res < 0:
                     res = xbmcgui.Dialog().yesno(strings(59924), strings(59938), yeslabel=strings(59939), nolabel=strings(30308))
                     if res: 
-                        self.tutorialGetService()
+                        self.tutorialGetService(epgType)
                     else:
                         ADDON.setSetting('nr_of_playlists', '0')
                         ADDON.setSetting('playlist_1_enabled', 'false')
@@ -1223,7 +1105,7 @@ class mTVGuide(xbmcgui.WindowXML):
                         progExec = True
 
                     else:
-                        self.tutorialGetService()
+                        self.tutorialGetService(epgType)
 
                 elif res == 1:
                     ADDON.setSetting('playlist_1_source', '1')
@@ -1232,7 +1114,7 @@ class mTVGuide(xbmcgui.WindowXML):
                     if fn != '':
                         progExec = True
                     else:
-                        self.tutorialGetService()
+                        self.tutorialGetService(epgType)
 
         if progExec:
             self.tutorialCatchup(False)
@@ -2045,6 +1927,14 @@ class mTVGuide(xbmcgui.WindowXML):
 
         self.getListLenght = self.getChannelListLenght()
 
+    @contextmanager
+    def busyDialog(self):
+        xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
+        try:
+            yield
+        finally:
+            xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
+
     def updateEpg(self):
         if ADDON.getSetting('epg_interval') == '0':
             epgSize = ADDON.getSetting('epg_size')
@@ -2257,14 +2147,6 @@ class mTVGuide(xbmcgui.WindowXML):
             return xbmc.getCondVisibility('System.AddonIsEnabled({id})'.format(id='plugin.video.themoviedb.helper'))
         else:
             return xbmc.getCondVisibility('System.HasAddon({id})'.format(id='plugin.video.themoviedb.helper'))
-
-    @contextmanager
-    def busyDialog(self):
-        xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
-        try:
-            yield
-        finally:
-            xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
 
     def ExtendedInfo(self, program):
         extInfo = self.scriptChkExtendedInfo()
@@ -7433,7 +7315,7 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
             item = xbmcgui.ListItem(addon.getAddonInfo('name'))
             item.setProperty('stream', path)
             items.append(item)
-            
+
             for label in dirs:
                 stream = dirs[label]
                 if item.getProperty('addon_id') == "plugin.video.meta":
@@ -7470,11 +7352,11 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
             if self.playable:
                 self.previousDirsId = previousDirsId
                 self.playable = False
-        
+
         try:
             response = json.loads(xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "Files.GetDirectory", "params": {"directory": "%s", "media":"files"}, "id": 100}' % self.previousDirsId))
             files = response["result"]["files"]
-            
+
             dirs = {}
             items = []
 
@@ -7492,11 +7374,11 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
                 item = xbmcgui.ListItem(label)
                 item.setProperty('stream', stream)
                 items.append(item)
-            
+
             listControl = self.getControl(StreamSetupDialog.C_STREAM_BROWSE_DIRS)
             listControl.reset()
             listControl.addItems(items)
-        
+
         except:
             self.previousDirsId = previousDirsId
             if self.playable:
