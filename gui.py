@@ -4790,31 +4790,12 @@ class mTVGuide(xbmcgui.WindowXML):
             return
 
         program = self._getProgramFromControl(controlInFocus)
-        if not program:
+        if program is None:
             return
 
         self.setControlLabel(C_MAIN_CHAN_NAME, '{}'.format(program.channel.title))
         self.setControlLabel(C_MAIN_TITLE, '{} '.format(program.title))
         self.setControlLabel(C_MAIN_TIME, '{} - {}'.format(self.formatTime(program.startDate), self.formatTime(program.endDate)))
-
-        if xbmc.Player().isPlaying():
-            program, idx = self.getLastPlayingChannel()
-
-            if not program:
-                program = self.program
-
-            try:
-                self.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format(program.channel.title))
-                self.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(program.title))
-                self.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format(self.formatTime(program.startDate), self.formatTime(program.endDate)))
-                self.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format((str(int(idx) + 1))))
-
-            except:
-                self.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format('N/A'))
-                self.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(strings(55016)))
-                self.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format('N/A','N/A'))
-                self.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format('-'))
-                return
 
         if program.description:
             description = program.description
@@ -4947,11 +4928,25 @@ class mTVGuide(xbmcgui.WindowXML):
         else:
             self.setControlImage(C_MAIN_LIVE, '')
 
-        try:
-            self.realtimeDate(program)
-            self.calctimeLeft(program)
-        except:
-            pass
+        self.realtimeDate(program)
+        self.calctimeLeft(program)
+
+        if xbmc.Player().isPlaying():
+            if endDate < datetime.datetime.now():
+                program, idx = self.getLastPlayingChannel()
+
+            try:
+                self.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format(program.channel.title))
+                self.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(program.title))
+                self.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format(self.formatTime(program.startDate), self.formatTime(program.endDate)))
+                self.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format((str(int(idx) + 1))))
+
+            except:
+                self.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format('N/A'))
+                self.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(strings(55016)))
+                self.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format('N/A','N/A'))
+                self.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format('-'))
+                return
 
     def _left(self, currentFocus):
         # debug('_left')
@@ -7479,36 +7474,44 @@ class InfoDialog(xbmcgui.WindowXMLDialog):
 
     def realtimeDate(self, program):
         #Realtime date & weekday
-        startDate = str(program.startDate)
         try:
-            now = datetime.proxydt.strptime(startDate, '%Y-%m-%d %H:%M:%S')
+            startDate = str(program.startDate)
+            try:
+                now = datetime.proxydt.strptime(startDate, '%Y-%m-%d %H:%M:%S')
+            except:
+                now = datetime.proxydt.strptime(str(datetime.datetime.now()), '%Y-%m-%d %H:%M:%S.%f')
+
+            nowDay = now.strftime("%a").replace('Mon', xbmc.getLocalizedString(11)).replace('Tue', xbmc.getLocalizedString(12)).replace('Wed', xbmc.getLocalizedString(13)).replace('Thu', xbmc.getLocalizedString(14)).replace('Fri', xbmc.getLocalizedString(15)).replace('Sat', xbmc.getLocalizedString(16)).replace('Sun', xbmc.getLocalizedString(17))
+            nowDate = now.strftime("%d.%m.%Y")
+
+            self.setControlLabel(C_MAIN_DAY, '{}'.format(nowDate))
+            self.setControlLabel(C_MAIN_REAL_DATE, '{}'.format(nowDay))
+
         except:
-            now = datetime.proxydt.strptime(str(datetime.datetime.now()), '%Y-%m-%d %H:%M:%S.%f')
-
-        nowDay = now.strftime("%a").replace('Mon', xbmc.getLocalizedString(11)).replace('Tue', xbmc.getLocalizedString(12)).replace('Wed', xbmc.getLocalizedString(13)).replace('Thu', xbmc.getLocalizedString(14)).replace('Fri', xbmc.getLocalizedString(15)).replace('Sat', xbmc.getLocalizedString(16)).replace('Sun', xbmc.getLocalizedString(17))
-        nowDate = now.strftime("%d.%m.%Y")
-
-        self.setControlLabel(C_MAIN_DAY, '{}'.format(nowDate))
-        self.setControlLabel(C_MAIN_REAL_DATE, '{}'.format(nowDay))
+            pass
 
     def calctimeLeft(self, program):
-        startDelta = program.startDate
-        endDelta = program.endDate
+        try:
+            startDelta = program.startDate
+            endDelta = program.endDate
 
-        calcTime = (endDelta - startDelta)
+            calcTime = (endDelta - startDelta)
 
-        calcTime = re.sub(r'^0:', '', str(calcTime))
-        calcTime = re.sub(r':00$', 'min', str(calcTime))
-        calcTime = re.sub(':', 'h', str(calcTime))
+            calcTime = re.sub(r'^0:', '', str(calcTime))
+            calcTime = re.sub(r':00$', 'min', str(calcTime))
+            calcTime = re.sub(':', 'h', str(calcTime))
 
-        matchHour = re.search(r'h\d+min$', calcTime)
-        matchMin = re.search(r'^0\dmin', calcTime)
+            matchHour = re.search(r'h\d+min$', calcTime)
+            matchMin = re.search(r'^0\dmin', calcTime)
 
-        if matchHour:
-            calcTime = re.sub(r'min$', '', str(calcTime))
+            if matchHour:
+                calcTime = re.sub(r'min$', '', str(calcTime))
 
-        elif matchMin:
-            calcTime = re.sub(r'^0', '', str(calcTime))
+            elif matchMin:
+                calcTime = re.sub(r'^0', '', str(calcTime))
+
+        except:
+            calcTime = None
 
         return calcTime
 
