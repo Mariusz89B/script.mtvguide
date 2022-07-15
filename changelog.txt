@@ -1,5 +1,6 @@
-﻿v9.9.625 (2022-07-12)
+﻿v9.9.625 (2022-07-15)
 - Updated translations.
+- Improved configuration tutorial.
 
 v9.9.624 (2022-07-11)
 - Fixed show Video OSD on touch tap.
