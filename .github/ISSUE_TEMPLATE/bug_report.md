@@ -48,7 +48,7 @@ Steps to reproduce the behavior:
 ### Debuglog
 <!--- Put your text below this line -->
 <!--- A debuglog is always mandatory when creating an issue. Provide one! -->
-The debuglog can be obtained in m-TVGuide settings, database tab:
+The debug log can be obtained in m-TVGuide settings, debug tab:
 
 
 ### Screenshots 
@@ -76,6 +76,7 @@ Used Operating system:
 
  - Operating system version/name:
  - Kodi version:
+ - m-TVGuide version:
 
 
 <!--- End of this issue -->
