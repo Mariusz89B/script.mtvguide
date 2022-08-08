@@ -317,9 +317,14 @@ class RecordService(BasePlayService):
                 xbmcgui.Dialog().notification(strings(57051), strings(60015), xbmcgui.NOTIFICATION_WARNING, sound=True)
                 self.endInputDialog(endDate)
 
-    def renameFile(self, program):
+    def renameFile(self, program, startOffset):
+        startOffsetSec = startOffset * 60
+
+        startDate = program.startDate
+        startDate += datetime.timedelta(seconds=startOffsetSec)
+
         filename = None
-        kb = xbmc.Keyboard(self.normalizeString(program.title) + '_' + str(program.startDate.strftime('%Y-%m-%d_%H-%M')) + '.mpeg','')
+        kb = xbmc.Keyboard(self.normalizeString(program.title) + '_' + str(startDate.strftime('%Y-%m-%d_%H-%M')) + '.mpeg','')
         kb.setHeading(strings(60016))
         kb.setHiddenInput(False)
         kb.doModal()
@@ -329,8 +334,9 @@ class RecordService(BasePlayService):
         if c:
             filename = c
             if '.mpeg' not in filename:
-                xbmcgui.Dialog().notification(strings(30353), strings(60017))
-                return self.renameFile(program)
+                filename += '.mpeg'
+                #xbmcgui.Dialog().notification(strings(30353), strings(60017))
+                #return self.renameFile(program)
 
         if filename:
             filename = filename.replace('.mpeg', '')
@@ -376,7 +382,7 @@ class RecordService(BasePlayService):
                                     saveRecording, chkdate, self.startOffsetDownload, self.endOffsetDownload = downloadMenu.getOffsets()
 
                                 if saveRecording:
-                                    program = self.renameFile(program)
+                                    program = self.renameFile(program, self.startOffsetDownload)
                                     if not program.fileName:
                                         return
                                     self.startOffsetDownload *= 60
@@ -413,7 +419,7 @@ class RecordService(BasePlayService):
                         saveRecording, startOffset, endOffset = recordMenu.getOffsets()
 
                         if saveRecording:
-                            program = self.renameFile(program)
+                            program = self.renameFile(program, startOffset)
                             if not program.fileName:
                                 return
                             startOffset *= 60

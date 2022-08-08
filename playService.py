@@ -1323,7 +1323,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                             if p.match(url):
                                                 deb('archive_type(4) wrong type')
                                                 xbmcgui.Dialog().ok(strings(30998), strings(59979))
-                                            return res
+                                            return None
                                     else:
 
                                         # Default
@@ -1399,7 +1399,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                                 if p.match(url):
                                                     deb('archive_type(0) wrong type')
                                                     xbmcgui.Dialog().ok(strings(30998), strings(59979))
-                                                return res
+                                                return None
 
                                         # Append
                                         if ADDON.getSetting('archive_type') == '1':
@@ -1437,7 +1437,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                                 if p.match(url):
                                                     deb('archive_type(1) wrong type')
                                                     xbmcgui.Dialog().ok(strings(30998), strings(59979))
-                                                return res
+                                                return None
 
                                         # Xtream Codes
                                         if ADDON.getSetting('archive_type') == '2':
@@ -1469,7 +1469,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                                 if p.match(url):
                                                     deb('archive_type(2) wrong type')
                                                     xbmcgui.Dialog().ok(strings(30998), strings(59979))
-                                                return res
+                                                return None
 
                                         # Shift
                                         if ADDON.getSetting('archive_type') == '3':

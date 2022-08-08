@@ -1,4 +1,8 @@
-﻿v9.9.625 (2022-07-15)
+﻿v9.9.626 (2022-08-08)
+- Fixed recording naming issues.
+- Fixed dialog loop on catchup wrong type.
+
+v9.9.625 (2022-07-15)
 - Updated translations.
 - Improved configuration tutorial.
 
