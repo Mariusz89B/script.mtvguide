@@ -317,11 +317,12 @@ class RecordService(BasePlayService):
                 xbmcgui.Dialog().notification(strings(57051), strings(60015), xbmcgui.NOTIFICATION_WARNING, sound=True)
                 self.endInputDialog(endDate)
 
-    def renameFile(self, program, startOffset):
-        startOffsetSec = startOffset * 60
+    def renameFile(self, program, startOffset=None, startDate=None):
+        if startOffset:
+            startOffsetSec = startOffset * 60
 
-        startDate = program.startDate
-        startDate += datetime.timedelta(seconds=startOffsetSec)
+            startDate = program.startDate
+            startDate += datetime.timedelta(seconds=startOffsetSec)
 
         filename = None
         kb = xbmc.Keyboard(self.normalizeString(program.title) + '_' + str(startDate.strftime('%Y-%m-%d_%H-%M')) + '.mpeg','')
@@ -382,14 +383,16 @@ class RecordService(BasePlayService):
                                     saveRecording, chkdate, self.startOffsetDownload, self.endOffsetDownload = downloadMenu.getOffsets()
 
                                 if saveRecording:
-                                    program = self.renameFile(program, self.startOffsetDownload)
-                                    if not program.fileName:
-                                        return
                                     self.startOffsetDownload *= 60
                                     self.endOffsetDownload *= 60
                                     _program = self.epg.database.getPrograms(program.channel, program, self.program.startDate, self.program.endDate)
-                                    if _program is None:
+                                    if not _program:
                                         _program = program
+
+                                    _program = self.renameFile(_program, startDate=self.program.startDate)
+                                    if not _program.fileName:
+                                        return
+
                                     if self.scheduleDownload(_program, _program.startDate, _program.endDate):
                                         self.epg.database.addRecording(_program, _program.startDate, _program.endDate)
                                         updateDB = True
@@ -419,7 +422,7 @@ class RecordService(BasePlayService):
                         saveRecording, startOffset, endOffset = recordMenu.getOffsets()
 
                         if saveRecording:
-                            program = self.renameFile(program, startOffset)
+                            program = self.renameFile(program, startOffset=startOffset)
                             if not program.fileName:
                                 return
                             startOffset *= 60
