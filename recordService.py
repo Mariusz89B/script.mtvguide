@@ -318,7 +318,7 @@ class RecordService(BasePlayService):
                 self.endInputDialog(endDate)
 
     def renameFile(self, program, startOffset=None, startDate=None):
-        if startOffset:
+        if not startDate:
             startOffsetSec = startOffset * 60
 
             startDate = program.startDate
