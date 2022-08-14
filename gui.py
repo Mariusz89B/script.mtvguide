@@ -2560,23 +2560,21 @@ class mTVGuide(xbmcgui.WindowXML):
             return
 
         elif action.getId() == KEY_CONTEXT_MENU or action.getButtonCode() == KEY_CONTEXT or action.getId() == ACTION_MOUSE_RIGHT_CLICK:
-            if self.currentChannel is None:
-                prog, idx = self.getLastPlayingChannel()
-                try:
-                    self.currentChannel = prog.channel
-                except:
-                    self.currentChannel = None
-
             if xbmc.Player().isPlaying():
-                if ADDON.getSetting('start_video_minimalized') == 'false' or self.playingRecordedProgram or self.currentChannel is None:
+                if ADDON.getSetting('start_video_minimalized') == 'false' or self.playingRecordedProgram or not self.currentChannel:
                     xbmc.executebuiltin("Action(FullScreen)")
                 self._hideEpg()
-                if ADDON.getSetting('info_osd') == 'true' and not self.playingRecordedProgram and self.currentChannel is not None:
+                if ADDON.getSetting('info_osd') == 'true' and not self.playingRecordedProgram and self.currentChannel:
                     if ADDON.getSetting('archive_support') == 'true' and (self.archiveService != '' or self.archivePlaylist != ''):
                         self.createOSD(self.program, None)
                     else:
                         self.createOSD(None, None)
                 return
+
+            if not self.currentChannel:
+                prog, idx = self.getLastPlayingChannel()
+                if prog:
+                    self.currentChannel = prog.channel
 
         elif action.getId() == ACTION_MOUSE_LEFT_CLICK or action.getId() == ACTION_TOUCH_TAP:
             try:
@@ -4932,8 +4930,7 @@ class mTVGuide(xbmcgui.WindowXML):
         self.calctimeLeft(program)
 
         if xbmc.Player().isPlaying():
-            if endDate < datetime.datetime.now():
-                program, idx = self.getLastPlayingChannel()
+            program, idx = self.getLastPlayingChannel()
 
             try:
                 self.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format(program.channel.title))
@@ -4946,7 +4943,6 @@ class mTVGuide(xbmcgui.WindowXML):
                 self.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(strings(55016)))
                 self.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format('N/A','N/A'))
                 self.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format('-'))
-                return
 
     def _left(self, currentFocus):
         # debug('_left')
@@ -7927,10 +7923,11 @@ class Pla(xbmcgui.WindowXMLDialog):
         if ADDON.getSetting('show_osd_on_play') == 'true':
             self.showOsdOnPlay = True
             self.displayAutoOsd = True
-        if program is not None:
-            if urlList is None:
-                urlList = database.getStreamUrlList(program.channel)
+
+        if program:
             self.program = program
+        elif not urlList and program:
+            urlList = database.getStreamUrlList(program.channel)
         elif self.epg.currentChannel:
             self.program = self.getCurrentProgram(self.epg.currentChannel)
         else:

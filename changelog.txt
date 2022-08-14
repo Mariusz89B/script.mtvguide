@@ -1,6 +1,7 @@
 ﻿v9.9.627 (2022-08-14)
 - Fixed timebar update.
 - Fixed Telia Play and CMore catchup session timeout.
+- Fixed catchup return while playing.
 
 v9.9.626 (2022-08-14)
 - Fixed recording naming issues.
