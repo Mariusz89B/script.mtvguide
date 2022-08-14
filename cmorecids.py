@@ -859,9 +859,14 @@ class CmoreUpdater(baseServiceUpdater):
 
             data = stream_url
 
-            if data is not None and data != "":
+            if data and data != '':
                 chann.strm = data
                 chann.lic = license_url
+
+                chann.dashjs = self.dashjs
+                chann.beartoken = self.beartoken
+                chann.tv_client_boot_id = self.tv_client_boot_id
+
                 try:
                     self.log('getChannelStream found matching channel: cid: {}, name: {}, rtmp:{}'.format(chann.cid, chann.name, chann.strm))
                 except:

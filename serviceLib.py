@@ -520,14 +520,17 @@ class ShowList:
         return ret_lst
 
 class TvCid:
-    def __init__(self, cid, name, title, strm="", catchup="", lic="", img=""):
+    def __init__(self, cid, name, title, strm='', catchup='', lic='', dashjs='', beartoken='', tv_client_boot_id='', src='', img=''):
         self.cid = cid
         self.name = unidecodeStr(name)
         self.title = unidecodeStr(title)
         self.strm = strm
         self.catchup = catchup
         self.lic = lic
-        self.src = ""
+        self.dashjs = dashjs
+        self.beartoken = beartoken
+        self.tv_client_boot_id = tv_client_boot_id
+        self.src = src
         self.img = img
         self.rtmpdumpLink = None
         self.ffmpegdumpLink = None

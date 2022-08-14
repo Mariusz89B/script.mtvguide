@@ -2,7 +2,7 @@
 <addon
     id="script.mtvguide"
     name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]"
-    version="9.9.627-beta.1"
+    version="9.9.627-beta.2"
     provider-name="mariusz89b">
   <requires>
     <import addon="xbmc.addon" version="17.0.0"/>
@@ -43,6 +43,7 @@
     <source>m-TVGuide © 2013 - 2022</source>
     <news>v9.9.627 (2022-08-14)
 - Fixed timebar update.
+- Fixed Telia Play and CMore catchup session timeout.
 
 v9.9.626 (2022-08-14)
 - Fixed recording naming issues.

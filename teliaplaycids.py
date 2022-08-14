@@ -561,7 +561,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                     try:
                         res = channel["resolutions"]
 
-                        p = re.compile('\d+')
+                        p = re.compile(r'\d+')
                         res_int = p.search(res[0]).group(0)
 
                     except:
@@ -633,7 +633,7 @@ class TeliaPlayUpdater(baseServiceUpdater):
                 'Connection': 'keep-alive',
                 'tv-client-boot-id': self.tv_client_boot_id,
                 'DNT': '1',
-                'Authorization': 'Bearer '+ self.beartoken,
+                'Authorization': 'Bearer ' + self.beartoken,
                 'tv-client-tz': 'Europe/Stockholm',
                 'X-Country': cc[self.country],
                 'User-Agent': UA,
@@ -705,9 +705,14 @@ class TeliaPlayUpdater(baseServiceUpdater):
 
             data = stream_url
 
-            if data is not None and data != "":
+            if data and data != '':
                 chann.strm = data
                 chann.lic = license_url
+
+                chann.dashjs = self.dashjs
+                chann.beartoken = self.beartoken
+                chann.tv_client_boot_id = self.tv_client_boot_id
+
                 try:
                     self.log('getChannelStream found matching channel: cid: {}, name: {}, rtmp:{}'.format(chann.cid, chann.name, chann.strm))
                 except:
