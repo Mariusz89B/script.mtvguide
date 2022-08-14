@@ -6465,7 +6465,7 @@ class mTVGuide(xbmcgui.WindowXML):
                         background.setWidth(xPositionBar - x + 13)
                         self.timebarBack.setWidth(xPositionBar - x + 13)
 
-                    if xPositionBar > (self.epgView.left + ((self.epgView.right - self.epgView.left) * 0.8)):
+                    if xPositionBar >= (self.epgView.left + ((self.epgView.right - self.epgView.left) * 0.8)):
                         # Time bar exceeded EPG
                         # Check how long was since EPG was used
                         background.setWidth(p - int(cell_width))
@@ -6475,7 +6475,7 @@ class mTVGuide(xbmcgui.WindowXML):
                         diffSeconds = (diff.days * 86400) + diff.seconds
                         #debug('updateTimebar seconds since last user action {}'.format(diffSeconds))
                         if diffSeconds > 300:
-                            deb('updateTimebar redrawing EPG start')
+                            debug('updateTimebar redrawing EPG start')
                             self.lastKeystroke = datetime.datetime.now()
                             self.viewStartDate = datetime.datetime.today()
                             self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
@@ -6490,7 +6490,7 @@ class mTVGuide(xbmcgui.WindowXML):
                     diffSeconds = (diff.days * 86400) + diff.seconds
                     #debug('updateTimebar seconds since last user action {}'.format(diffSeconds))
                     if diffSeconds > 300:
-                        deb('updateTimebar redrawing EPG start')
+                        debug('updateTimebar redrawing EPG start')
                         self.lastKeystroke = datetime.datetime.now()
                         self.viewStartDate = datetime.datetime.today()
                         self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
@@ -6500,8 +6500,8 @@ class mTVGuide(xbmcgui.WindowXML):
                 try:
                     # Sometimes raises:
                     # exceptions.RuntimeError: Unknown exception thrown from the call "setVisible"
-                    if self.timebar is not None and self.timebarBack is not None:
-                        if self.lastKeystroke >= self.viewStartDate:# and xbmc.getCondVisibility('!Control.IsVisible(5000)'):
+                    if self.timebar and self.timebarBack:
+                        if self.lastKeystroke.replace(microsecond=0) >= self.viewStartDate.replace(microsecond=0):
                             if self.viewStartDate.date() == self.lastKeystroke.date():
                                 self.timebar.setVisible(True)
                                 self.timebarBack.setVisible(True)

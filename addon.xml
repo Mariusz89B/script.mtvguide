@@ -2,7 +2,7 @@
 <addon
     id="script.mtvguide"
     name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]"
-    version="9.9.626"
+    version="9.9.627-beta.1"
     provider-name="mariusz89b">
   <requires>
     <import addon="xbmc.addon" version="17.0.0"/>
@@ -41,7 +41,10 @@
     <forum>https://github.com/Mariusz89B/script.mtvguide/discussions</forum>
 	<website>https://github.com/Mariusz89B/script.mtvguide</website>
     <source>m-TVGuide © 2013 - 2022</source>
-    <news>v9.9.626 (2022-08-14)
+    <news>v9.9.627 (2022-08-14)
+- Fixed timebar update.
+
+v9.9.626 (2022-08-14)
 - Fixed recording naming issues.
 - Fixed dialog loop on catchup wrong type.
 
