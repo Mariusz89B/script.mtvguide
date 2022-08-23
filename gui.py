@@ -4930,7 +4930,11 @@ class mTVGuide(xbmcgui.WindowXML):
         self.calctimeLeft(program)
 
         if xbmc.Player().isPlaying():
-            program, idx = self.getLastPlayingChannel()
+            program = self.program
+            idx = self.database.getCurrentChannelIdx(program.channel)
+
+            if not program:
+                program, idx = self.getLastPlayingChannel()
 
             try:
                 self.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format(program.channel.title))
@@ -7949,10 +7953,11 @@ class Pla(xbmcgui.WindowXMLDialog):
 
         self.programs = self.database.getNowList(self.program.channel)
 
-        program, idx = self.epg.getLastPlayingChannel()
+        program = self.program
+        idx = self.database.getCurrentChannelIdx(program.channel)
 
         if not program:
-            program = self.program
+            program, idx = self.epg.getLastPlayingChannel()
 
         try:
             self.epg.setControlLabel(C_MAIN_CHAN_PLAY, '{}'.format(program.channel.title))
@@ -7965,7 +7970,6 @@ class Pla(xbmcgui.WindowXMLDialog):
             self.epg.setControlLabel(C_MAIN_PROG_PLAY, '{}'.format(strings(55016)))
             self.epg.setControlLabel(C_MAIN_TIME_PLAY, '{} - {}'.format('N/A', 'N/A'))
             self.epg.setControlLabel(C_MAIN_NUMB_PLAY, '{}'.format('-'))
-            return
 
         if ADDON.getSetting('show_time') == 'true':
             nowtime = '$INFO[System.Time]'
