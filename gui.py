@@ -5129,9 +5129,6 @@ class mTVGuide(xbmcgui.WindowXML):
     def playChannel2(self, program):
         deb('playChannel2: {}'.format(program))
 
-        if xbmc.Player().isPlaying():
-            time.sleep(0.2)
-
         self.program = program
 
         dt = datetime.datetime.now() + datetime.timedelta(minutes=int(timebarAdjust()))
@@ -5339,9 +5336,6 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def playChannel(self, channel, program=None):
         deb('playChannel: {}'.format(program))
-
-        if xbmc.Player().isPlaying():
-            time.sleep(0.2)
 
         dt = datetime.datetime.now() + datetime.timedelta(minutes=int(timebarAdjust()))
 
@@ -8017,7 +8011,7 @@ class Pla(xbmcgui.WindowXMLDialog):
                 for idx in range(len(nameList)):
                     name = nameList[idx]
                     size = sizeList[idx]
-                    size = re.sub('\.\d+$', '', size)
+                    size = re.sub(r'\.\d+$', '', size)
                     if int(size) > 25 and int(size) <= 35:
                         smallList.append(name)
                     if int(size) > 35 and int(size) <= 45:
@@ -8467,12 +8461,14 @@ class Pla(xbmcgui.WindowXMLDialog):
     def _channelUp(self):
         # debug('Pla _channelUp')
         channel = self.database.getNextChannel(self.epg.currentChannel)
-        self.playChannel(channel)
+        program = self.database.getCurrentProgram(channel)
+        self.playChannel(channel, program)
 
     def _channelDown(self):
         # debug('Pla _channelDown')
         channel = self.database.getPreviousChannel(self.epg.currentChannel)
-        self.playChannel(channel)
+        program = self.database.getCurrentProgram(channel)
+        self.playChannel(channel, program)
 
     def playChannel(self, channel, program=None):
         debug('Pla playChannel: {}'.format(program))

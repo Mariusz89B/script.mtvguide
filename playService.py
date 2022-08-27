@@ -709,6 +709,7 @@ class PlayService(xbmc.Player, BasePlayService):
 
     def LoadVideoLink(self, channel, service, url):
         deb('LoadVideoLink {} service'.format(service))
+        time.sleep(0.5)
 
         self.service = service
 
@@ -1238,7 +1239,7 @@ class PlayService(xbmc.Player, BasePlayService):
 
                             import inputstreamhelper
                             is_helper = inputstreamhelper.Helper(PROTOCOL)
-                            if is_helper.check_inputstream():  
+                            if is_helper.check_inputstream():
                                 ListItem = xbmcgui.ListItem(path=strmUrl)
                                 ListItem.setInfo( type="Video", infoLabels={ "Title": channelInfo.title, } )
                                 ListItem.setContentLookup(False)
@@ -1280,7 +1281,7 @@ class PlayService(xbmc.Player, BasePlayService):
 
                         strmUrl_catchup = channelInfo.catchup
 
-                        p = re.compile('service=playlist_\d&cid=\d+_AR.*')
+                        p = re.compile(r'service=playlist_\d&cid=\d+_AR.*')
 
                         duration = ''
 
@@ -1314,7 +1315,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                                 strmUrl = strmUrl_catchup.format(utc=utc, lutc=lutc)
 
                                             if 'mono' in strmUrl:
-                                                strmUrl = re.sub('\$', '', str(strmUrl))
+                                                strmUrl = re.sub(r'\$', '', str(strmUrl))
                                                 strmUrl = re.sub('mono', 'video', str(strmUrl))
                                         else:
                                             if p.match(url):
@@ -1402,7 +1403,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                         if ADDON.getSetting('archive_type') == '1':
                                             setting = ADDON.getSetting('archive_string')
 
-                                            putc = re.compile('(^\?utc=|^\&utc=)')
+                                            putc = re.compile(r'(^\?utc=|^\&utc=)')
                                             mutc = putc.match(setting)
 
                                             putv = re.compile('(^.*)(\{Y\}.\{m\}.\{d\}.*\{H\}.\{M\}.\{S\})(?=.*|$)')
@@ -1414,10 +1415,10 @@ class PlayService(xbmc.Player, BasePlayService):
                                             elif mutv:
                                                 catchup = ADDON.getSetting('archive_string').format(Y=year, m=month, d=day, H=hour, M=minute, S=second)
 
-                                            putc = re.compile('(^\?utc=|^\&utc=)')
+                                            putc = re.compile(r'(^\?utc=|^\&utc=)')
                                             mutc = putc.match(catchup)
 
-                                            putv = re.compile('(^.*)(\d{4}.\d{2}.\d{2}.*\d{2}.\d{2}.\d{2})(?=.*|$)')
+                                            putv = re.compile(r'(^.*)(\d{4}.\d{2}.\d{2}.*\d{2}.\d{2}.\d{2})(?=.*|$)')
                                             mutv = putv.match(catchup)
 
                                             m_catchupSource = strmUrl + catchup
@@ -1531,7 +1532,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                             strmUrl, strhdr = strmUrl.split('|')
                                             ListItem.setProperty('inputstream.adaptive.stream_headers', strhdr)
 
-                                        if PROTOCOL == 'dash':                            
+                                        if PROTOCOL == 'dash':
                                             ListItem.setProperty('inputstream.adaptive.manifest_update_parameter', 'full')
 
                                         if ffmpegdirect:
@@ -1573,7 +1574,7 @@ class PlayService(xbmc.Player, BasePlayService):
 
         if not self.userStoppedPlayback:
             self.checkConnection(self.strmUrl)
-        
+
     def onPlayBackStopped(self):
         self.playbackStopped = True
         self.unlockCurrentlyPlayedService()
@@ -1583,7 +1584,7 @@ class PlayService(xbmc.Player, BasePlayService):
 
         if not self.userStoppedPlayback:
             self.checkConnection(self.strmUrl)
-        
+
     def onPlayBackEnded(self):
         self.playbackStopped = True
         self.unlockCurrentlyPlayedService()
