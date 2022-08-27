@@ -8461,20 +8461,22 @@ class Pla(xbmcgui.WindowXMLDialog):
     def _channelUp(self):
         # debug('Pla _channelUp')
         channel = self.database.getNextChannel(self.epg.currentChannel)
-        program = self.database.getCurrentProgram(channel)
-        self.playChannel(channel, program)
+        self.playChannel(channel)
 
     def _channelDown(self):
         # debug('Pla _channelDown')
         channel = self.database.getPreviousChannel(self.epg.currentChannel)
-        program = self.database.getCurrentProgram(channel)
-        self.playChannel(channel, program)
+        self.playChannel(channel)
 
     def playChannel(self, channel, program=None):
         debug('Pla playChannel: {}'.format(program))
         if channel.id != self.epg.currentChannel.id:
             self.ChannelChanged = 1
             if program:
+                self.program = program
+                self.epg.program = program
+            else:
+                program = self.database.getCurrentProgram(channel)
                 self.program = program
                 self.epg.program = program
 

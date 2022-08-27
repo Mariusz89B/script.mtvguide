@@ -709,8 +709,6 @@ class PlayService(xbmc.Player, BasePlayService):
 
     def LoadVideoLink(self, channel, service, url):
         deb('LoadVideoLink {} service'.format(service))
-        time.sleep(0.5)
-
         self.service = service
 
         res = False
@@ -1601,7 +1599,7 @@ class PlayService(xbmc.Player, BasePlayService):
         self.closeDialog()
 
     def pausePlayback(self):
-        debug('PlayService stopPlayback')
+        debug('PlayService pausePlayback')
         self.urlList = None
         self.userStoppedPlayback = True
         self.nrOfResumeAttempts = 0
