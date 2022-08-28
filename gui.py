@@ -6494,21 +6494,23 @@ class mTVGuide(xbmcgui.WindowXML):
                 try:
                     # Sometimes raises:
                     # exceptions.RuntimeError: Unknown exception thrown from the call "setVisible"
-                    if self.timebar and self.timebarBack and xbmc.getCondVisibility('!Control.IsVisible(5000)'):
-                        if self.lastKeystroke.replace(microsecond=0) >= self.viewStartDate.replace(microsecond=0):
-                            if self.viewStartDate.date() == self.lastKeystroke.date():
-                                self.timebar.setVisible(True)
-                                self.timebarBack.setVisible(True)
+                    if self.timebar and self.timebarBack:
+                        if xbmc.getCondVisibility('!Control.IsVisible(5000)'):
+                            if self.lastKeystroke.replace(microsecond=0) >= self.viewStartDate.replace(microsecond=0):
+                                if self.viewStartDate.date() == self.lastKeystroke.date():
+                                    self.timebar.setVisible(True)
+                                    self.timebarBack.setVisible(True)
+                                else:
+                                    self.timebar.setVisible(False)
+                                    self.timebarBack.setVisible(True)
+
                             else:
                                 self.timebar.setVisible(False)
-                                self.timebarBack.setVisible(True)
+                                self.timebarBack.setVisible(False)
 
                         else:
                             self.timebar.setVisible(False)
                             self.timebarBack.setVisible(False)
-
-                    else:
-                        pass
 
                 except Exception as ex:
                     debug('setVisible error: {}'.format(ex))
