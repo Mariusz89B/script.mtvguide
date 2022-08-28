@@ -706,13 +706,6 @@ class PlayService(xbmc.Player, BasePlayService):
         deb('LoadVideoLink {} service'.format(service))
         self.service = service
 
-        if xbmc.Player().isPlaying():
-            try:
-                xbmc.Player().stop()
-            except:
-                xbmc.executebuiltin('PlayerControl(Stop)')
-            time.sleep(0.2)
-
         res = False
         startWindowed = False
 

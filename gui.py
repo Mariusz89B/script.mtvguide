@@ -6508,8 +6508,7 @@ class mTVGuide(xbmcgui.WindowXML):
                             self.timebarBack.setVisible(False)
 
                     else:
-                        self.timebar.setVisible(False)
-                        self.timebarBack.setVisible(False)
+                        pass
 
                 except Exception as ex:
                     debug('setVisible error: {}'.format(ex))
