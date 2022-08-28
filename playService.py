@@ -468,7 +468,7 @@ class PlayService(xbmc.Player, BasePlayService):
 
     def channCid(self, cid):
         try:
-            r = re.compile('^(.*?)_TS_.*$', re.IGNORECASE)
+            r = re.compile(r'^(.*?)_TS_.*$', re.IGNORECASE)
             cid = r.findall(cid)[0]
         except:
             cid 
@@ -545,16 +545,16 @@ class PlayService(xbmc.Player, BasePlayService):
 
             params = (
                 ('operationName', 'getTvChannel'),
-                ('variables', '{"timestamp":'+timestamp+',"offset":0,"id":"'+str(self.channCid(channelInfo.cid))+'"}'),
-                ('query', "\n query getTvChannel($timestamp: Timestamp!, $limit: Int, $offset: Int!, $id: String!) {\n"
-                  "channel(id: $id) {\n id\n  name\n  icons {\n    dark {\n      source\n    }\n }\n  playback {\n play "
-                  "{\n playbackSpec {\n videoId\n videoIdType\n watchMode\n accessControl\n      }\n    }\n  }"
-                  "recordAndWatch\n       programs(timestamp: $timestamp, limit: $limit, offset: $offset) {\n  id\n"
-                  "programItems {\n id \n title\n startTime{timestamp}\n endTime{timestamp}\n live\n rerun\n __typename\n"
-                  "media{\n ...sport \n ...movie \n ...episode}    }\n}}}\n"
-                  "\nfragment sport on SportEvent{id\n title\n descriptionLong\n images{\nshowcard2x3{\nsource}}\n playback\n{\nplay{\nsubscription {\nitem{\nid \nvalidFrom{\ntimestamp} \nvalidTo{\ntimestamp} \nplaybackSpec{\nvideoId \nvideoIdType \nwatchMode \naccessControl \n__typename}\n__typename }} }}\n genre\n mediaType\n __typename\n} "
-                  "\nfragment movie on Movie{id\n title\n descriptionLong\n images{\nshowcard2x3{\nsource}}\n playback\n{\nplay{\nsubscription {\nitem{\nid \nvalidFrom{\ntimestamp} \nvalidTo{\ntimestamp} \nplaybackSpec{\nvideoId \nvideoIdType \nwatchMode \naccessControl \n__typename}\n__typename }} }}\n genre\n mediaType\n __typename\n} "
-                  "\nfragment episode on Episode{id\n title\n descriptionLong\n images{\nshowcard2x3{\nsource}}\n  playback\n{\nplay{\nsubscription {\nitem{\nid \nvalidFrom{\ntimestamp} \nvalidTo{\ntimestamp} \nplaybackSpec{\nvideoId \nvideoIdType \nwatchMode \naccessControl \n__typename}\n__typename }} }}\n genre\n mediaType\n __typename\n} ")
+                ('variables', '{"timestamp":' + timestamp + ',"offset":0,"id":"' + str(self.channCid(channelInfo.cid))+'"}'),
+                ('query', '\n query getTvChannel($timestamp: Timestamp!, $limit: Int, $offset: Int!, $id: String!) {\n'
+                    'channel(id: $id) {\n id\n  name\n  icons {\n    dark {\n      source\n    }\n }\n  playback {\n play '
+                    '{\n playbackSpec {\n videoId\n videoIdType\n watchMode\n accessControl\n      }\n    }\n  }'
+                    'recordAndWatch\n       programs(timestamp: $timestamp, limit: $limit, offset: $offset) {\n  id\n'
+                    'programItems {\n id \n title\n startTime{timestamp}\n endTime{timestamp}\n live\n rerun\n __typename\n'
+                    'media{\n ...sport \n ...movie \n ...episode}    }\n}}}\n'
+                    '\nfragment sport on SportEvent{id\n title\n descriptionLong\n images{\nshowcard2x3{\nsource}}\n playback\n{\nplay{\nsubscription {\nitem{\nid \nvalidFrom{\ntimestamp} \nvalidTo{\ntimestamp} \nplaybackSpec{\nvideoId \nvideoIdType \nwatchMode \naccessControl \n__typename}\n__typename }} }}\n genre\n mediaType\n __typename\n} '
+                    '\nfragment movie on Movie{id\n title\n descriptionLong\n images{\nshowcard2x3{\nsource}}\n playback\n{\nplay{\nsubscription {\nitem{\nid \nvalidFrom{\ntimestamp} \nvalidTo{\ntimestamp} \nplaybackSpec{\nvideoId \nvideoIdType \nwatchMode \naccessControl \n__typename}\n__typename }} }}\n genre\n mediaType\n __typename\n} '
+                    '\nfragment episode on Episode{id\n title\n descriptionLong\n images{\nshowcard2x3{\nsource}}\n  playback\n{\nplay{\nsubscription {\nitem{\nid \nvalidFrom{\ntimestamp} \nvalidTo{\ntimestamp} \nplaybackSpec{\nvideoId \nvideoIdType \nwatchMode \naccessControl \n__typename}\n__typename }} }}\n genre\n mediaType\n __typename\n} ')
                 )
 
             response = requests.get(url, headers=headers, params=params, verify=False).json()
@@ -563,7 +563,7 @@ class PlayService(xbmc.Player, BasePlayService):
                 return None, None
 
             media_id = ''
-            watch_mode = ''
+            watch_modes = ''
 
             streamType = 'MEDIA'
 
@@ -574,7 +574,6 @@ class PlayService(xbmc.Player, BasePlayService):
                 end_time = item['endTime']['timestamp']
                 if int(utc) >= int(start_time) and int(utc) <= int(end_time):
                     media_id = item['media']['id']
-                    title = item['media']['title']
 
                     if PY3:
                         p = re.compile(r'\WwatchMode\W:\s*\W(.*?)\W,', re.M)
@@ -615,28 +614,28 @@ class PlayService(xbmc.Player, BasePlayService):
             )
 
             data = {
-                "sessionId": six.text_type(uuid.uuid4()),
-                "whiteLabelBrand": whiteLabelBrand,
-                "watchMode": catchupType,
-                "accessControl": "SUBSCRIPTION",
-                "device": {
-                    "deviceId": tv_client_boot_id,
-                    "category": "desktop_windows",
-                    "packagings": ["DASH_MP4_CTR"],
-                    "drmType": "WIDEVINE",
-                    "capabilities": [],
-                    "screen": {
-                        "height": 1080,
-                        "width": 1920
+                'sessionId': six.text_type(uuid.uuid4()),
+                'whiteLabelBrand': whiteLabelBrand,
+                'watchMode': catchupType,
+                'accessControl': 'SUBSCRIPTION',
+                'device': {
+                    'deviceId': tv_client_boot_id,
+                    'category': 'desktop_windows',
+                    'packagings': ['DASH_MP4_CTR'],
+                    'drmType': 'WIDEVINE',
+                    'capabilities': [],
+                    'screen': {
+                        'height': 1080,
+                        'width': 1920
                         },
 
-                    "os": "Windows",
-                    "model": "windows_desktop"
+                    'os': 'Windows',
+                    'model': 'windows_desktop'
                     },
 
-                    "preferences": {
-                        "audioLanguage":[],
-                        "accessibility":[]}
+                    'preferences': {
+                        'audioLanguage': [],
+                        'accessibility': []}
                 }
 
             response = requests.post(url, headers=headers, json=data, params=params, cookies=sess.cookies, verify=False).json()
@@ -671,7 +670,6 @@ class PlayService(xbmc.Player, BasePlayService):
 
             headers = {
                 'Connection': 'keep-alive',
-                'sec-ch-ua': '"Chromium";v="92", " Not A;Brand";v="99", "Microsoft Edge";v="92"',
                 'tv-client-boot-id': tv_client_boot_id,
                 'DNT': '1',
                 'sec-ch-ua-mobile': '?0',
@@ -681,9 +679,6 @@ class PlayService(xbmc.Player, BasePlayService):
                 'User-Agent': UA,
                 'Accept': '*/*',
                 'Origin': base[country],
-                'Sec-Fetch-Site': 'cross-site',
-                'Sec-Fetch-Mode': 'cors',
-                'Sec-Fetch-Dest': 'empty',
                 'Referer': base[country]+'/',
                 'Accept-Language': 'sv,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,pl;q=0.6',
             }
@@ -710,6 +705,13 @@ class PlayService(xbmc.Player, BasePlayService):
     def LoadVideoLink(self, channel, service, url):
         deb('LoadVideoLink {} service'.format(service))
         self.service = service
+
+        if xbmc.Player().isPlaying():
+            try:
+                xbmc.Player().stop()
+            except:
+                xbmc.executebuiltin('PlayerControl(Stop)')
+            time.sleep(0.2)
 
         res = False
         startWindowed = False
@@ -1324,7 +1326,7 @@ class PlayService(xbmc.Player, BasePlayService):
 
                                         # Default
                                         if ADDON.getSetting('archive_type') == '0':
-                                            matches = re.compile('^(http[s]?://[^/]+)/([^/]+)/([^/]*)(mpegts|\\.m3u8)(\\?.+=.+)?$')
+                                            matches = re.compile(r'^(http[s]?://[^/]+)/([^/]+)/([^/]*)(mpegts|\\.m3u8)(\\?.+=.+)?$')
 
                                             catchupList = ['hls-custom', 'mono']
 
@@ -1404,7 +1406,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                             putc = re.compile(r'(^\?utc=|^\&utc=)')
                                             mutc = putc.match(setting)
 
-                                            putv = re.compile('(^.*)(\{Y\}.\{m\}.\{d\}.*\{H\}.\{M\}.\{S\})(?=.*|$)')
+                                            putv = re.compile(r'(^.*)(\{Y\}.\{m\}.\{d\}.*\{H\}.\{M\}.\{S\})(?=.*|$)')
                                             mutv = putv.match(setting)
 
                                             if mutc:
@@ -1437,7 +1439,7 @@ class PlayService(xbmc.Player, BasePlayService):
 
                                         # Xtream Codes
                                         if ADDON.getSetting('archive_type') == '2':
-                                            matches = re.compile('^(http[s]?://[^/]+)/(?:live/)?([^/]+)/([^/]+)/([^/\\.]+)(\\.m3u[8]?|\\.ts)?$')
+                                            matches = re.compile(r'^(http[s]?://[^/]+)/(?:live/)?([^/]+)/([^/]+)/([^/\\.]+)(\\.m3u[8]?|\\.ts)?$')
 
                                             if matches.match(strmUrl):
                                                 xcHost = matches.search(strmUrl).group(1)

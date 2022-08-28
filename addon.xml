@@ -2,7 +2,7 @@
 <addon
     id="script.mtvguide"
     name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]"
-    version="9.9.628-beta.2"
+    version="9.9.628"
     provider-name="mariusz89b">
   <requires>
     <import addon="xbmc.addon" version="17.0.0"/>
@@ -41,8 +41,9 @@
     <forum>https://github.com/Mariusz89B/script.mtvguide/discussions</forum>
 	<website>https://github.com/Mariusz89B/script.mtvguide</website>
     <source>m-TVGuide © 2013 - 2022</source>
-    <news>v9.9.628 (2022-08-27)
+    <news>v9.9.628 (2022-08-28)
 - Fixed prog +/- channel switch.
+- Bug fixes.
 
 v9.9.627 (2022-08-23)
 - Fixed timebar update.

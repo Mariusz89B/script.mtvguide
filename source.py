@@ -291,8 +291,8 @@ class Program(object):
 
 
 class ProgramDescriptionParser(object):
-    DECORATE_REGEX = re.compile("\[COLOR\s*\w*\]|\[/COLOR\]|\[B\]|\[/B\]|\[I\]|\[/I\]",      re.IGNORECASE)
-    CATEGORY_REGEX = re.compile("((G:|Kategoria:|Genre:|Genere:|Category:|Kategori:|Cat.?gorie:|Kategorie:|Kategorija:|Sjanger:)(.*?\[\/B\]|.*?[^\.]*)(\.)?)",        re.IGNORECASE)
+    DECORATE_REGEX = re.compile(r'\[COLOR\s*\w*\]|\[/COLOR\]|\[B\]|\[/B\]|\[I\]|\[/I\]',      re.IGNORECASE)
+    CATEGORY_REGEX = re.compile(r'((G:|Kategoria:|Genre:|Genere:|Category:|Kategori:|Cat.?gorie:|Kategorie:|Kategorija:|Sjanger:)(.*?\[\/B\]|.*?[^\.]*)(\.)?)',        re.IGNORECASE)
 
     def __init__(self, description):
         self.description = description
@@ -301,7 +301,7 @@ class ProgramDescriptionParser(object):
         try:
             category = ProgramDescriptionParser.CATEGORY_REGEX.search(self.description).group(1)
             category = ProgramDescriptionParser.DECORATE_REGEX.sub("", category)
-            category = re.sub("G:|Kategoria:|Genre:|Category:|Kategori:|Cat.?gorie:|Kategorie:|Kategorija:|Sjanger:|Genere:", "", category).strip()
+            category = re.sub('G:|Kategoria:|Genre:|Category:|Kategori:|Cat.?gorie:|Kategorie:|Kategorija:|Sjanger:|Genere:', '', category).strip()
 
             self.description = ProgramDescriptionParser.CATEGORY_REGEX.sub("", self.description).strip()
         except:
@@ -311,11 +311,11 @@ class ProgramDescriptionParser(object):
 
     def extractProductionDate(self):
         try:
-            productionDate = re.search("((R:|Rok produkcji:|Producerat .?r:|Production date:|Produktions dato:|Date de production:|Produktionsdatum:|Godina proizvodnje:|Datum proizvodnje:|Produksjonsdato:|Productie datum:|Datum v.?roby:|Anno prodotto:)\s*(\[B\])?(\d{2,4}|live)(\[\/B\])?(\.)?)", self.description).group(4)
+            productionDate = re.search(r'((R:|Rok produkcji:|Producerat .?r:|Production date:|Produktions dato:|Date de production:|Produktionsdatum:|Godina proizvodnje:|Datum proizvodnje:|Produksjonsdato:|Productie datum:|Datum v.?roby:|Anno prodotto:)\s*(\[B\])?(\d{2,4}|live)(\[\/B\])?(\.)?)', self.description).group(4)
             productionDate = ProgramDescriptionParser.DECORATE_REGEX.sub("", productionDate)
-            productionDate = re.sub("R:|Rok produkcji:|Producerat .?r:|Production date:|Produktions dato:|Date de production:|Produktionsdatum:|Godina proizvodnje:|Datum proizvodnje:|Produksjonsdato:|Productie datum:|Datum v.?roby:|Anno prodotto:", "", productionDate).strip()
+            productionDate = re.sub('R:|Rok produkcji:|Producerat .?r:|Production date:|Produktions dato:|Date de production:|Produktionsdatum:|Godina proizvodnje:|Datum proizvodnje:|Produksjonsdato:|Productie datum:|Datum v.?roby:|Anno prodotto:', '', productionDate).strip()
 
-            self.description = re.sub("((R:|Rok produkcji:|Producerat .?r:|Production date:|Produktions dato:|Date de production:|Produktionsdatum:|Godina proizvodnje:|Datum proizvodnje:|Produksjonsdato:|Productie datum:|Datum v.?roby:|Anno prodotto:)\s*(\[B\])?(\d{2,4}|live)(\[\/B\])?(\.)?)", "", self.description).strip()
+            self.description = re.sub(r'((R:|Rok produkcji:|Producerat .?r:|Production date:|Produktions dato:|Date de production:|Produktionsdatum:|Godina proizvodnje:|Datum proizvodnje:|Produksjonsdato:|Productie datum:|Datum v.?roby:|Anno prodotto:)\s*(\[B\])?(\d{2,4}|live)(\[\/B\])?(\.)?)', '', self.description).strip()
         except:
             productionDate = ''
 
@@ -323,11 +323,11 @@ class ProgramDescriptionParser(object):
 
     def extractDirector(self):
         try:
-            director = re.search(".*((Re.?yser:|Regiss.?r:|Director:|Instrukt.?r:|R.?alisateur:|Regisseur:|Direktor:|Re.?is.?r:|Direttore:)(.*?\[\/B\]|.*?[^\.]*)).*", self.description).group(1)
+            director = re.search(r'.*((Re.?yser:|Regiss.?r:|Director:|Instrukt.?r:|R.?alisateur:|Regisseur:|Direktor:|Re.?is.?r:|Direttore:)(.*?\[\/B\]|.*?[^\.]*)).*', self.description).group(1)
             director = ProgramDescriptionParser.DECORATE_REGEX.sub("", director)
-            director = re.sub("Re.?yser:|Regiss.?r:|Director:|Instrukt.?r:|R.?alisateur:|Regisseur:|Direktor:|Re.?is.?r:|Direttore:", "", director).strip()
+            director = re.sub(r'Re.?yser:|Regiss.?r:|Director:|Instrukt.?r:|R.?alisateur:|Regisseur:|Direktor:|Re.?is.?r:|Direttore:', '', director).strip()
 
-            self.description = re.sub("(Re.?yser:|Regiss.?r:|Director:|Instrukt.?r:|R.?alisateur:|Regisseur:|Direktor:|Re.?is.?r:|Direttore:)(.*?\[\/B\]|.*?[^\.]*)(\.)?", "", self.description).strip()
+            self.description = re.sub(r'(Re.?yser:|Regiss.?r:|Director:|Instrukt.?r:|R.?alisateur:|Regisseur:|Direktor:|Re.?is.?r:|Direttore:)(.*?\[\/B\]|.*?[^\.]*)(\.)?', '', self.description).strip()
         except:
             director = ''
 
@@ -335,13 +335,13 @@ class ProgramDescriptionParser(object):
 
     def extractEpisode(self):
         try:
-            episode = re.search(".*((Odcinek:|Avsnitt:|Episode:|Episode:|.?pisode:|Folge:|Odjeljak:|Epizoda:|Aflevering:|Sezione:)\s*(\[B\])?(.*?\/B\]|.*?[^\.]*)(\.)?).*", self.description).group(1)
+            episode = re.search(r'.*((Odcinek:|Avsnitt:|Episode:|Episode:|.?pisode:|Folge:|Odjeljak:|Epizoda:|Aflevering:|Sezione:)\s*(\[B\])?(.*?\/B\]|.*?[^\.]*)(\.)?).*', self.description).group(1)
             episode = ProgramDescriptionParser.DECORATE_REGEX.sub("", episode)
-            episode = re.sub("Odcinek:|Avsnitt:|Episode:|.?pisode:|Folge:|Odjeljak:|Epizoda:|Aflevering:|Sezione:", "", episode).strip()
+            episode = re.sub('Odcinek:|Avsnitt:|Episode:|.?pisode:|Folge:|Odjeljak:|Epizoda:|Aflevering:|Sezione:', '', episode).strip()
 
-            self.description = re.sub("(Odcinek:|Avsnitt:|Episode:|.?pisode:|Folge:|Odjeljak:|Epizoda:|Aflevering:|Sezione:)\s*(\[B\])?(.*?\/B\]|.*?[^\.]*)(\.)?", "", self.description).strip()
+            self.description = re.sub(r'(Odcinek:|Avsnitt:|Episode:|.?pisode:|Folge:|Odjeljak:|Epizoda:|Aflevering:|Sezione:)\s*(\[B\])?(.*?\/B\]|.*?[^\.]*)(\.)?', '', self.description).strip()
 
-            p = re.compile('([*S|E]((S)?(\d{1,3})?\s*((E)?\d{1,5}(\/\d{1,5})?)))')
+            p = re.compile(r'([*S|E]((S)?(\d{1,3})?\s*((E)?\d{1,5}(\/\d{1,5})?)))')
             episode = p.search(self.description).group(1)
 
         except:
@@ -358,17 +358,17 @@ class ProgramDescriptionParser(object):
             icon = ''
             age = ''
             try:
-                age = re.search('(W:|Od lat:|.?r:|Rating:|Pendant des ann.?es:|.?ber die Jahre:|Godinama:|Jaar:|Rok:|Anni:).*?(\[B\])?(\d+)(\[\/B\])?(\.)?', self.description).group(3)
+                age = re.search(r'(W:|Od lat:|.?r:|Rating:|Pendant des ann.?es:|.?ber die Jahre:|Godinama:|Jaar:|Rok:|Anni:).*?(\[B\])?(\d+)(\[\/B\])?(\.)?', self.description).group(3)
                 if age == '3':
                     age = '0'
                 icon = os.path.join(addonPath, 'icons', 'age_rating', 'icon_{}.png'.format(age))
 
             except:
-                age = re.search('(W:|Od lat:|.?r:|Rating:|Pendant des ann.?es:|.?ber die Jahre:|Godinama:|Jaar:|Rok:|Anni:).*?(\[B\])?(\w+)(\[\/B\])?(\.)?', self.description).group(3)
+                age = re.search(r'(W:|Od lat:|.?r:|Rating:|Pendant des ann.?es:|.?ber die Jahre:|Godinama:|Jaar:|Rok:|Anni:).*?(\[B\])?(\w+)(\[\/B\])?(\.)?', self.description).group(3)
 
             age = ProgramDescriptionParser.DECORATE_REGEX.sub("", age)
 
-            self.description = re.sub("(W:|Od lat:|.?r:|Rating:|Pendant des ann.?es:|.?ber die Jahre:|Godinama:|Jaar:|Rok:|Anni:).*?(\[B\])?({Age}|.*)\s*(\+)?(\[\/B\])?(\.)?".format(Age=age), "", self.description).strip()
+            self.description = re.sub(r'(W:|Od lat:|.?r:|Rating:|Pendant des ann.?es:|.?ber die Jahre:|Godinama:|Jaar:|Rok:|Anni:).*?(\[B\])?({Age}|.*)\s*(\+)?(\[\/B\])?(\.)?'.format(Age=age), '', self.description).strip()
         except:
             icon = ''
             age = ''
@@ -377,11 +377,11 @@ class ProgramDescriptionParser(object):
 
     def extractRating(self):
         try:
-            rating = re.search("((O:|Ocena:|Betyg:|Starrating:|Bewertung:|Bed.?mmelse:|Bewertung:|Ocjena:|Notation:|Valutazione:|Hodnocen.?:)\s*(\[B\])?(\d+/\d+)(\[\/B\])?(\.)?)", self.description).group(4)
+            rating = re.search(r'((O:|Ocena:|Betyg:|Starrating:|Bewertung:|Bed.?mmelse:|Bewertung:|Ocjena:|Notation:|Valutazione:|Hodnocen.?:)\s*(\[B\])?(\d+/\d+)(\[\/B\])?(\.)?)', self.description).group(4)
             rating = ProgramDescriptionParser.DECORATE_REGEX.sub("", rating)
-            rating = re.sub("O:|Ocena:|Betyg:|Starrating:|Bewertung:|Bed.?mmelse:|Bewertung:|Ocjena:|Notation:|Valutazione:|Hodnocen.?:", "", rating).strip()
+            rating = re.sub('O:|Ocena:|Betyg:|Starrating:|Bewertung:|Bed.?mmelse:|Bewertung:|Ocjena:|Notation:|Valutazione:|Hodnocen.?:', '', rating).strip()
 
-            self.description = re.sub("((O:|Ocena:|Betyg:|Bewertung:|Bed.?mmelse:|Ocjena:|Bewertung:|Ocjena:|Notation:|Valutazione:|Hodnocen.?:)\s*(\[B\])?(\d+/\d+)(\[\/B\])?(\.)?)", "", self.description).strip()
+            self.description = re.sub(r'((O:|Ocena:|Betyg:|Bewertung:|Bed.?mmelse:|Ocjena:|Bewertung:|Ocjena:|Notation:|Valutazione:|Hodnocen.?:)\s*(\[B\])?(\d+/\d+)(\[\/B\])?(\.)?)', '', self.description).strip()
         except:
             rating = ''
 
@@ -389,11 +389,11 @@ class ProgramDescriptionParser(object):
 
     def extractActors(self):
         try:
-            actors = re.search(".*((Aktorzy:|Sk.?despelare:|Actors:|Skuespillere:|Acteurs:|Schauspiel:|Glumci:|Herec:|Attori:)(.*?\[\/B\]|.*?[^\.]*)).*", self.description).group(1)
+            actors = re.search(r'.*((Aktorzy:|Sk.?despelare:|Actors:|Skuespillere:|Acteurs:|Schauspiel:|Glumci:|Herec:|Attori:)(.*?\[\/B\]|.*?[^\.]*)).*', self.description).group(1)
             actors = ProgramDescriptionParser.DECORATE_REGEX.sub("", actors)
-            actors = re.sub("Aktorzy:|Sk.?despelare:|Actors:|Skuespillere:|Acteurs:|Schauspiel:|Glumci:|Herec:|Attori:", "", actors).strip()
+            actors = re.sub('Aktorzy:|Sk.?despelare:|Actors:|Skuespillere:|Acteurs:|Schauspiel:|Glumci:|Herec:|Attori:', '', actors).strip()
 
-            self.description = re.sub("(Aktorzy:|Sk.?despelare:|Actors:|Skuespillere:|Acteurs:|Schauspiel:|Glumci:|Herec:|Attori:)(.*?\[\/B\]|.*?[^\.]*)(\.)?", "", self.description).strip()
+            self.description = re.sub(r'(Aktorzy:|Sk.?despelare:|Actors:|Skuespillere:|Acteurs:|Schauspiel:|Glumci:|Herec:|Attori:)(.*?\[\/B\]|.*?[^\.]*)(\.)?', '', self.description).strip()
         except:
             actors = ''
 
@@ -984,7 +984,7 @@ class Database(object):
                         except:
                             pass
 
-                    p = re.compile('\s<channel id="(.*?)"', re.DOTALL)
+                    p = re.compile(r'\s<channel id="(.*?)"', re.DOTALL)
                     with open(os.path.join(profilePath, 'basemap_extra.xml'), 'rb') as f:
                         if PY3:
                             base = str(f.read(), 'utf-8')
@@ -1213,7 +1213,7 @@ class Database(object):
                         backup = False
 
                         for predefined in PREDEFINED_CATEGORIES:
-                            channel_regex = re.compile('.*({})$'.format(predefined))
+                            channel_regex = re.compile(r'.*({})$'.format(predefined))
                             if PY3:
                                 cat = channel_regex.fullmatch(x.channelid)
                             else:
@@ -1223,7 +1223,7 @@ class Database(object):
                                 if predefined not in categories:
                                     categories.append(predefined)
 
-                        backup_regex = re.compile('\w+\d+')
+                        backup_regex = re.compile(r'\w+\d+')
                         if PY3:
                             channel_match = backup_regex.fullmatch(x.channelid)
                         else:
@@ -1698,7 +1698,7 @@ class Database(object):
                 deb('Using predefined category: {}'.format(category))
                 predefined = '|'.join(categories)
 
-                channel_regex = re.compile('.*({})$'.format(predefined))
+                channel_regex = re.compile(r'.*({})$'.format(predefined))
                 newChannelList = [channel for channel in channelList[:] if channel_regex.search(channel.id)]
                 if not newChannelList:
                     channelList = []
@@ -3050,7 +3050,7 @@ class Source(object):
                     content_type = u.headers.get('Content-Type', '')
                     c_disposition = u.headers.get('Content-Disposition', '')
 
-                    filename_regex = re.compile('filename="(.+?)"')
+                    filename_regex = re.compile(r'filename="(.+?)"')
 
                     r = filename_regex.search(c_disposition)
                     filename = r.group(1) if r else url
@@ -3467,7 +3467,7 @@ class MTVGUIDESource(Source):
             self.timer.cancel()
 
 def catList(category_count):
-    cleanup_regex = re.compile('[!"”#$%&’()*+,-.\/:;<>?@\[\]^_`{|}~]|ADDON.*|^\s', re.IGNORECASE)
+    cleanup_regex = re.compile(r'[!"”#$%&’()*+,-.\/:;<>?@\[\]^_`{|}~]|ADDON.*|^\s', re.IGNORECASE)
 
     categoriesList = []
 
@@ -3764,7 +3764,7 @@ def parseXMLTV(context, f, size, progress_callback, zone, autozone, local, logoF
         if date == 'live':
             live = date
 
-        progEpisodeNumRe = re.compile('([*S|E]((S)?(\d{1,3})?\s*((E)?\d{1,5}(\/\d{1,5})?)))')
+        progEpisodeNumRe = re.compile(r'([*S|E]((S)?(\d{1,3})?\s*((E)?\d{1,5}(\/\d{1,5})?)))')
 
         if episode:
             r = progEpisodeNumRe.search(episode)

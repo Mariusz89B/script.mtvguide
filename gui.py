@@ -1248,7 +1248,7 @@ class mTVGuide(xbmcgui.WindowXML):
         # Check files
         checkDirProfile = xbmcvfs.listdir(os.path.join(self.profilePath, 'resources', 'skins', addonSkin, 'fonts'))
         for item in checkDirProfile:
-            r = re.compile('(.*?).ttf')
+            r = re.compile(r'(.*?).ttf')
             if PY3:
                 checkProfileFonts = list(filter(r.match, item))
             else:
@@ -1256,7 +1256,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
         checkDirKodi = xbmcvfs.listdir(os.path.join(self.kodiSkinPath, 'fonts', addonSkin))
         for item in checkDirKodi:
-            r = re.compile('(.*?).ttf')
+            r = re.compile(r'(.*?).ttf')
             if PY3:
                 checkKodiFonts = list(filter(r.match, item))
             else:
@@ -1969,7 +1969,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
         catchupList = {}
 
-        p = re.compile('service=.*_(TS|AR)_(.*?)(_.*)?$')
+        p = re.compile(r'service=.*_(TS|AR)_(.*?)(_.*)?$')
 
         for k,v in streams:
             v = list(v)
@@ -4046,7 +4046,7 @@ class mTVGuide(xbmcgui.WindowXML):
             self.onRedrawEPG(self.channelIdx, self.viewStartDate)
 
     def channelsRemove(self):
-        p = re.compile('\s<channel id="(.*?)"', re.DOTALL)
+        p = re.compile(r'\s<channel id="(.*?)"', re.DOTALL)
 
         with open(os.path.join(self.profilePath, 'basemap_extra.xml'), 'rb') as f:
             if PY3:
@@ -4059,7 +4059,7 @@ class mTVGuide(xbmcgui.WindowXML):
             res = xbmcgui.Dialog().multiselect(strings(70125), channList)
             if res:
                 for item in res:
-                    p = re.compile('<channel id="{}".*/>\n'.format(channList[item]))
+                    p = re.compile(r'<channel id="{}".*/>\n'.format(channList[item]))
                     base = p.sub('', base)
 
                 with open(os.path.join(self.profilePath, 'basemap_extra.xml'), 'wb') as f:
@@ -4854,7 +4854,7 @@ class mTVGuide(xbmcgui.WindowXML):
                         else:
                             addonPath = xbmc.translatePath(ADDON.getAddonInfo('path'))
 
-                        number_regex = re.compile('(\d+)')
+                        number_regex = re.compile(r'(\d+)')
 
                         r = number_regex.search(str(program.rating))
                         age = r.group(1) if r else ''
@@ -6494,7 +6494,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 try:
                     # Sometimes raises:
                     # exceptions.RuntimeError: Unknown exception thrown from the call "setVisible"
-                    if self.timebar and self.timebarBack:
+                    if self.timebar and self.timebarBack and xbmc.getCondVisibility('!Control.IsVisible(5000)'):
                         if self.lastKeystroke.replace(microsecond=0) >= self.viewStartDate.replace(microsecond=0):
                             if self.viewStartDate.date() == self.lastKeystroke.date():
                                 self.timebar.setVisible(True)
@@ -6506,6 +6506,10 @@ class mTVGuide(xbmcgui.WindowXML):
                         else:
                             self.timebar.setVisible(False)
                             self.timebarBack.setVisible(False)
+
+                    else:
+                        self.timebar.setVisible(False)
+                        self.timebarBack.setVisible(False)
 
                 except Exception as ex:
                     debug('setVisible error: {}'.format(ex))
@@ -7047,7 +7051,7 @@ class StreamSetupDialog(xbmcgui.WindowXMLDialog):
         addons = response["result"]["addons"]
         items = []
         for id in addons:
-            pattern = re.compile('^plugin')
+            pattern = re.compile(r'^plugin')
             if pattern.match(str(id['addonid'])):
                 if id.get('type', '') == 'xbmc.python.pluginsource':
                     try:
@@ -7574,7 +7578,7 @@ class InfoDialog(xbmcgui.WindowXMLDialog):
                         else:
                             addonPath = xbmc.translatePath(ADDON.getAddonInfo('path'))
 
-                        number_regex = re.compile('(\d+)')
+                        number_regex = re.compile(r'(\d+)')
 
                         r = number_regex.search(str(self.program.rating))
                         age = r.group(1) if r else ''
