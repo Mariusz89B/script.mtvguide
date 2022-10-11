@@ -256,6 +256,10 @@ msgctxt "#30176"
 msgid "Cache error, please reset custom streams in database settings."
 msgstr "Pogreška predmemorije, molimo poništite prilagođene tokove u postavkama baze podataka."
 
+msgctxt "#30177"
+msgid "Creating cached playlist"
+msgstr "Stvaranje popisa za reprodukciju u predmemoriji"
+
 msgctxt "#30200"
 msgid "on [B]{}[/B] in 5 minutes..."
 msgstr "na [B]{}[/B] za 5 minuta..."

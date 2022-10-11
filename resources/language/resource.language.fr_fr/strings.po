@@ -256,6 +256,10 @@ msgctxt "#30176"
 msgid "Cache error, please reset custom streams in database settings."
 msgstr "Erreur de cache, veuillez réinitialiser les flux personnalisés dans les paramètres de la base de données."
 
+msgctxt "#30177"
+msgid "Creating cached playlist"
+msgstr "Création d'une liste de lecture en cache"
+
 msgctxt "#30200"
 msgid "on [B]{}[/B] in 5 minutes..."
 msgstr "sur [B] {}[/B] en 5 minutes..."

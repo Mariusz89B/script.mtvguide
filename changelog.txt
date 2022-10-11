@@ -1,6 +1,8 @@
-﻿v9.9.628 (2022-08-28)
+﻿v9.9.629 (2022-10-11)
+- Updated requests headers.
+
+v9.9.628 (2022-08-27)
 - Fixed prog +/- channel switch.
-- Bug fixes.
 
 v9.9.627 (2022-08-23)
 - Fixed timebar update.

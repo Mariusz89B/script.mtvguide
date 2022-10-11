@@ -60,7 +60,7 @@ class clearDB:
         if self.command == 'deleteDbFile' or self.command == 'deleteAll' or self.command == 'deleteDb59908':
             self.database.deleteDbFile()
             self.database.close()
-            
+
             if PY3:
                 try:
                     self.profilePath = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
@@ -71,7 +71,7 @@ class clearDB:
                     self.profilePath = xbmc.translatePath(ADDON.getAddonInfo('profile'))
                 except:
                     self.profilePath = xbmc.translatePath(ADDON.getAddonInfo('profile')).decode('utf-8')
-    
+
             #Delete skinsFix check
             if xbmcvfs.exists(os.path.join(self.profilePath, 'skin_fonts.ini')) == True:
                 os.remove(os.path.join(self.profilePath, 'skin_fonts.ini'))
@@ -91,16 +91,16 @@ class clearDB:
         else:
             self.database.initialize(self.onInitialized)
 
-        ADDON.setSetting('database_cleared', 'true')
-
     def onDBCleared(self):
         xbmcgui.Dialog().ok(strings(CLEAR_DB), strings(DONE_DB)+'.')
 
     def onInitialized(self, success):
         if success:
             if self.command == 'clearAll':
+                ADDON.setSetting('database_cleared', 'true')
                 self.database.clearDB()
             if self.command == 'clearCustom':
+                ADDON.setSetting('database_cleared', 'true')
                 self.database.deleteAllStreams()
             if self.command == 'clearRecordings':
                 self.database.removeAllRecordings()

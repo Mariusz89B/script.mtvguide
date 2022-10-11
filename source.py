@@ -759,6 +759,14 @@ class Database(object):
         playlist_cache = os.path.join(PROFILE_PATH, 'playlist_cache.list')
         serviceName = serviceHandler.serviceName
 
+        src = ADDON.getSetting('{playlist}_source'.format(playlist=serviceName))
+        refr = ADDON.getSetting('{playlist}_refr'.format(playlist=serviceName))
+
+        if refr == 'true':
+            refr_c = serviceName
+        else:
+            refr_c = None
+
         n = datetime.now()
         d = timedelta(days=int(ADDON.getSetting('{playlist}_refr_days'.format(playlist=serviceName))))
 
@@ -803,9 +811,6 @@ class Database(object):
             cache = False
 
         else:
-            refr = ADDON.getSetting('{playlist}_refr'.format(playlist=serviceName))
-            src = ADDON.getSetting('{playlist}_source'.format(playlist=serviceName))
-
             if refr == 'true' and src == '0':
                 deb('[UPD] Cache playlist: Read')
                 cache = True
@@ -855,7 +860,7 @@ class Database(object):
                         if serviceName not in services:
                             f.write(serviceName+'\n')
 
-        return cache
+        return cache, refr_c
 
     def updateChannelAndProgramListCaches(self, callback, date = datetime.now(), progress_callback = None, initializing=False, startup=False, force=False, clearExistingProgramList = True):
         self.eventQueue.append([self._updateChannelAndProgramListCaches, callback, date, progress_callback, initializing, startup, force, clearExistingProgramList])
@@ -864,6 +869,8 @@ class Database(object):
     def _updateChannelAndProgramListCaches(self, date, progress_callback, initializing, startup, force, clearExistingProgramList):
         deb('_updateChannelAndProgramListCache')
         import sys
+
+        refr_lst = []
 
         # todo workaround service.py 'forgets' the adapter and convert set in _initialize.. wtf?!
         sqlite3.register_adapter(datetime, self.adapt_datetime)
@@ -882,15 +889,17 @@ class Database(object):
             for serviceName in playService.LIST:
                 serviceHandler = playService.LIST[serviceName]
                 services.append(serviceHandler)
-                cache = False
 
                 if serviceHandler.serviceEnabled == 'true':
                     serviceList.append(serviceHandler)
                     if 'playlist_' in serviceName:
-                        cache = self.cachePlaylist(serviceHandler)
+                        cache, refr_c = self.cachePlaylist(serviceHandler)
+                        refr_lst.append(refr_c)
                         if GET_DATABASE_CLEARED:
                             cache = False
                         self.cacheList.update({serviceHandler: {'cache': cache}})
+                    else:
+                        cache = False
 
                 if (not cache and not 'playlist_' in serviceName) or serviceHandler.serviceEnabled == 'false':
                     self.removePredefinedCategoriesDb(serviceName)
@@ -1133,7 +1142,10 @@ class Database(object):
                     service.startLoadingChannelList(automap=epgChannels, cache=cache)
 
                     if progress_callback:
-                        if not cache:
+                        if not cache and service.serviceName in refr_lst and not os.path.exists(os.path.join(PROFILE_PATH, 'playlists', '{playlist}.cache'.format(playlist=service.serviceName))):
+                            progress_callback(100, "{}: {}".format(strings(30177), service.getDisplayName()) )
+                            time.sleep(0.5)
+                        elif not cache:
                             progress_callback(100, "{}: {}".format(strings(59915), service.getDisplayName()) )
                         else:
                             progress_callback(100, "{}: {}".format(strings(59915), strings(69072)) )
@@ -2954,6 +2966,10 @@ class Database(object):
             except:
                 pass
 
+        lst = os.path.join(self.profilePath, 'playlist_cache.list')
+        if os.path.exists(lst): 
+            os.remove(lst)
+
         c = self.conn.cursor()
         c.execute('DELETE FROM custom_stream_url')
         self.conn.commit()
@@ -3421,13 +3437,21 @@ class MTVGUIDESource(Source):
         failedCounter = 0
         while failedCounter < 3:
             try:
-                headers = {'User-Agent': UA,
-                            'Keep-Alive': 'timeout=20',
-                            'ContentType': 'application/x-www-form-urlencoded',
-                            'Connection': 'Keep-Alive',
-                            }
+                if failedCounter > 2:
+                    UAx = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36 Edg/106.0.1370.37'
 
-                response = requests.get(self.MTVGUIDEUrl, headers=headers, verify=False, timeout=10)
+                    headers = {
+                        'User-Agent': UAx,
+                        'Keep-Alive': 'timeout=60',
+                        'Connection': 'keep-alive',
+                        }
+                else:
+                    headers = {
+                        'User-Agent': UA,
+                        'Connection': 'keep-alive',
+                        }
+
+                response = requests.get(self.MTVGUIDEUrl, headers=headers, verify=False, timeout=15)
 
                 try:
                     new_size = int(response.headers['Content-Length'].strip())
@@ -3441,14 +3465,15 @@ class MTVGUIDESource(Source):
                     deb('[UPD] getEpgSize Content: {}'.format(new_size))
 
                 #if new_size < 10000:
-                    #raise Exception('getEpgSize too smal EPG size received: {}'.format(new_size))
+                    #raise Exception('getEpgSize too small EPG size received: {}'.format(new_size))
 
                 self.EPGSize = new_size
                 break
+
             except Exception as ex:
                 deb('[UPD] getEpgSize exception {} failedCounter {}'.format(str(ex), failedCounter))
                 failedCounter = failedCounter + 1
-                time.sleep(0.1)
+                time.sleep(0.5)
 
         if self.EPGSize == 0:
             self.EPGSize = defaultSize

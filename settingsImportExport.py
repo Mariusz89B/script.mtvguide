@@ -65,14 +65,13 @@ try:
 except:
     pass
 
-#import gzip
 import collections
 
 dbFileName          = 'source.db'
 settingsFileName    = 'settings.xml'
 categoriesFileName  = 'categories.ini'
 WINDOWS_OS_NAME     = 'Windows'
-ANDROID_OS_NAME     = 'Android'
+ANDROID_OS_NAME     = 'Android (Root Android 10+)'
 MAC_OS_NAME         = 'MacOS'
 COREELEC_OS_NAME    = 'CoreELEC / LibreELEC'
 LINUX_OS_NAME       = 'Linux'
@@ -357,6 +356,7 @@ class SettingsImp:
                 systems.append(strings(30204))
             except:
                 systems.append(strings(30204).encode('utf-8', 'replace'))
+
             systems.append(WINDOWS_OS_NAME)
             systems.append(ANDROID_OS_NAME)
             systems.append(MAC_OS_NAME)
