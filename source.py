@@ -882,6 +882,7 @@ class Database(object):
             deb('[UPD] Starting updating STRM')
 
             playlist_cache = os.path.join(PROFILE_PATH, 'playlist_cache.list')
+            cache = False
 
             serviceList = list()
             services = list()
@@ -898,8 +899,6 @@ class Database(object):
                         if GET_DATABASE_CLEARED:
                             cache = False
                         self.cacheList.update({serviceHandler: {'cache': cache}})
-                    else:
-                        cache = False
 
                 if (not cache and not 'playlist_' in serviceName) or serviceHandler.serviceEnabled == 'false':
                     self.removePredefinedCategoriesDb(serviceName)
