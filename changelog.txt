@@ -1,4 +1,5 @@
-﻿v9.9.629 (2022-10-30)
+﻿v9.9.629 (2022-11-01)
+- Fixed timezone error.
 - Updated requests headers.
 
 v9.9.628 (2022-08-27)
