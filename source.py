@@ -3450,7 +3450,7 @@ class MTVGUIDESource(Source):
                         'Connection': 'keep-alive',
                         }
 
-                response = requests.get(self.MTVGUIDEUrl, headers=headers, verify=False, timeout=15)
+                response = requests.get(self.MTVGUIDEUrl, headers=headers, verify=False)
 
                 try:
                     new_size = int(response.headers['Content-Length'].strip())
@@ -3581,7 +3581,7 @@ def parseTvDate(dateString, zone, autozone, local):
         offset = zone
     elif local and offset == parseTvDate.utc:
         offset = local
-    else:
+    elif offset:
         dt += offset  # apply timezone offset
     return dt
 
