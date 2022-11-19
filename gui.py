@@ -5740,7 +5740,7 @@ class mTVGuide(xbmcgui.WindowXML):
         self.setFocusId(self.C_MAIN_LOADING_CANCEL)
 
         try:
-            self.channelIdx, channels, programs, cacheExpired = self.database.getEPGView(channelStart, startTime, self.onSourceProgressUpdate, initializing, startup, force, clearExistingProgramList=True)
+            self.channelIdx, channels, programs, cacheExpired = self.database.getEPGView(channelStart, startTime, self.onSourceProgressUpdate, initializing=initializing, startup=startup, force=force, clearExistingProgramList=True)
         except src.SourceException:
             self.blockInputDueToRedrawing = False
             debug('onRedrawEPG onEPGLoadError')
@@ -5754,7 +5754,7 @@ class mTVGuide(xbmcgui.WindowXML):
         try:
             deb('onRedrawEPG')
             if force:
-                self.updateEPG(channelStart, startTime, initializing, startup, debug)
+                self.updateEPG(channelStart, startTime, initializing=initializing, startup=startup, force=True)
                 return
 
             if self.redrawingEPG or (self.database is not None and self.database.updateInProgress) or self.isClosing or strings2.M_TVGUIDE_CLOSING:
@@ -5776,7 +5776,7 @@ class mTVGuide(xbmcgui.WindowXML):
             self.updateTimebar(scheduleTimer=False)
 
             try:
-                self.channelIdx, channels, programs, cacheExpired = self.database.getEPGView(channelStart, startTime, self.onSourceProgressUpdate, initializing, startup, force, clearExistingProgramList=True)
+                self.channelIdx, channels, programs, cacheExpired = self.database.getEPGView(channelStart, startTime, self.onSourceProgressUpdate, initializing=initializing, startup=startup, force=False, clearExistingProgramList=True)
 
             except src.SourceException:
                 self.blockInputDueToRedrawing = False

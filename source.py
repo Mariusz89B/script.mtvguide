@@ -2697,6 +2697,20 @@ class Database(object):
                     deb('Required m-TVGuide restart')
                     raise RestartRequired()
 
+            if version < [6, 7, 8]:
+                c.execute('DROP TABLE custom_stream_url')
+                c.execute('CREATE TABLE IF NOT EXISTS custom_stream_url(channel TEXT COLLATE NOCASE, stream_url TEXT, priority INTEGER DEFAULT 0, PRIMARY KEY (channel, stream_url))')
+                c.execute('DROP TABLE categories')
+                c.execute('CREATE TABLE IF NOT EXISTS categories(category TEXT, source TEXT COLLATE NOCASE, PRIMARY KEY (category, source))')
+                c.execute('UPDATE version SET major=6, minor=7, patch=8')
+                neededRestart = False
+
+                self.conn.commit()
+
+                if neededRestart:
+                    deb('Required m-TVGuide restart')
+                    raise RestartRequired()
+
             # make sure we have a record in sources for this Source
             c.execute('CREATE TABLE IF NOT EXISTS lastplayed(idx INTEGER, start_date TEXT, end_date TEXT, played_date TEXT)')
             c.execute("INSERT OR IGNORE INTO sources(id, channels_updated) VALUES(?, ?)", [self.source.KEY, 0])
@@ -3444,13 +3458,16 @@ class MTVGUIDESource(Source):
                         'Keep-Alive': 'timeout=60',
                         'Connection': 'keep-alive',
                         }
+
+                    response = urllib3.PoolManager().request('GET', self.MTVGUIDEUrl, headers=headers)
+
                 else:
                     headers = {
                         'User-Agent': UA,
                         'Connection': 'keep-alive',
                         }
 
-                response = requests.get(self.MTVGUIDEUrl, headers=headers, verify=False)
+                    response = requests.get(self.MTVGUIDEUrl, headers=headers, verify=False)
 
                 try:
                     new_size = int(response.headers['Content-Length'].strip())
@@ -3462,9 +3479,6 @@ class MTVGUIDESource(Source):
                     data = response.content
                     new_size = len(data)
                     deb('[UPD] getEpgSize Content: {}'.format(new_size))
-
-                #if new_size < 10000:
-                    #raise Exception('getEpgSize too small EPG size received: {}'.format(new_size))
 
                 self.EPGSize = new_size
                 break
