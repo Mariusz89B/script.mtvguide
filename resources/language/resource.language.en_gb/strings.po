@@ -288,6 +288,78 @@ msgctxt "#30206"
 msgid "Display current time during playback"
 msgstr ""
 
+msgctxt "#30207"
+msgid "Reinitialize guide"
+msgstr ""
+
+msgctxt "#30208"
+msgid "Reload services"
+msgstr ""
+
+msgctxt "#30209"
+msgid "Upload log file"
+msgstr ""
+
+msgctxt "#30210"
+msgid "Read log"
+msgstr ""
+
+msgctxt "#30211"
+msgid "Guide information"
+msgstr ""
+
+msgctxt "#30212"
+msgid "Response status"
+msgstr ""
+
+msgctxt "#30213"
+msgid "Python version"
+msgstr ""
+
+msgctxt "#30214"
+msgid "System information"
+msgstr ""
+
+msgctxt "#30215"
+msgid "Would you like to reinitialize EPG guide?"
+msgstr ""
+
+msgctxt "#30216"
+msgid "Response status"
+msgstr ""
+
+msgctxt "#30217"
+msgid "HTTP/S status"
+msgstr ""
+
+msgctxt "#30218"
+msgid "Internet connection"
+msgstr ""
+
+msgctxt "#30219"
+msgid "Repository connection"
+msgstr ""
+
+msgctxt "#30220"
+msgid "System information"
+msgstr ""
+
+msgctxt "#30221"
+msgid "System information not available."
+msgstr ""
+
+msgctxt "#30222"
+msgid "Guide information"
+msgstr ""
+
+msgctxt "#30223"
+msgid "Updated on"
+msgstr ""
+
+msgctxt "#30224"
+msgid "Unable to find kodi log file"
+msgstr ""
+
 msgctxt "#30300"
 msgid "Watch {}"
 msgstr ""

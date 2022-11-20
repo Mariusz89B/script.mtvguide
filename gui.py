@@ -4361,7 +4361,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
     def _debugMenu(self, program):
         deb('Debug')
-        res = xbmcgui.Dialog().contextmenu(['Reinitialize guide', 'Reload services', 'Upload log file', 'Read log', 'Guide information', 'Response status', 'Python version', 'System information'])
+        res = xbmcgui.Dialog().contextmenu([strings(30207), strings(30208), strings(30209), strings(30210), strings(30211), strings(30212), strings(30213), strings(30214)])
 
         if res < 0:
             self._showContextMenu(program)
@@ -4395,16 +4395,16 @@ class mTVGuide(xbmcgui.WindowXML):
             elif os.path.isfile(LOGFILE3):
                 logContent = self.getLog(LOGFILE3)
             else:
-                xbmcgui.Dialog().ok(strings(30150),"\n" + "Unable to find kodi log file")
+                xbmcgui.Dialog().ok(strings(30150), strings(30224))
                 self._debugMenu(program)
 
-            xbmcgui.Dialog().textviewer('Log - ' + strings(57051), logContent, True)
+            xbmcgui.Dialog().textviewer('{0} - '.format(strings(30225)) + strings(57051), logContent, True)
             self._debugMenu(program)
 
         elif res == 4:
             size, updated = self.database.getDbEPGSize()
 
-            xbmcgui.Dialog().textviewer('Guide information - ' + strings(57051), 'Content-Size: ' + str(formatFileSize(int( size ) )) + '[CR]Updated on: ' + str(updated.strftime("%Y-%m-%d %H:%M")), True)
+            xbmcgui.Dialog().textviewer('{0} -  {1}'.format(strings(30222), strings(57051)), 'Content-Size: ' + str(formatFileSize(int( size ) )) + '[CR]{0}: '.format(strings(30223)) + str(updated.strftime("%Y-%m-%d %H:%M")), True)
             self._debugMenu(program)
 
         elif res == 5:
@@ -4435,11 +4435,11 @@ class mTVGuide(xbmcgui.WindowXML):
             response_repo = requests.get('https://raw.githubusercontent.com/Mariusz89B/mods-kodi/master/mods-kodi-addons.xml', headers=headers_r)
 
             if response_repo.status_code < 400:
-                conn_r = '[COLOR green][B]Online[/B][/COLOR]'
+                conn_repo = '[COLOR green][B]Online[/B][/COLOR]'
             else:
-                conn_r = '[COLOR green][B]Offline[/B][/COLOR]'
+                conn_repo = '[COLOR green][B]Offline[/B][/COLOR]'
 
-            xbmcgui.Dialog().textviewer('Response status - ' + strings(57051), 'HTTP/S status: ' + str(response.status_code) + '[CR]Internet connection: ' + conn + '[CR]Repository connection: ' + conn_r, True)
+            xbmcgui.Dialog().textviewer('{response} - {head}'.format(response=strings(30216), head=strings(57051)), '{status} - {code}[CR]{internet}: {conn}[CR]{repo}: {conn_repo}'.format(status=strings(30217), code=str(response.status_code), internet=strings(30218), conn=conn, repo=strings(30219), conn_repo=conn_repo), True)
             self._debugMenu(program)
 
         elif res == 6:
@@ -4452,9 +4452,9 @@ class mTVGuide(xbmcgui.WindowXML):
                 uname = platform.uname()
 
                 info = 'System: {0} {1}, release {2}\nUser: {3}\nMachine: {4}\nProcessor: {5}'.format(uname.system, uname.release, uname.version, uname.node, uname.machine, uname.processor)
-                xbmcgui.Dialog().textviewer('System information - ' + strings(57051), info, True)
+                xbmcgui.Dialog().textviewer('{0} - {1}'.format(strings(30220), strings(57051)), info, True)
             except:
-                xbmcgui.Dialog().textviewer('System information - ' + strings(57051), 'System information not available.', True)
+                xbmcgui.Dialog().textviewer('{0} - {1}'.format(strings(30220), strings(57051)), strings(30221), True)
             self._debugMenu(program)
 
     def _showContextMenu(self, program):
@@ -4493,7 +4493,7 @@ class mTVGuide(xbmcgui.WindowXML):
         else:
             debug = False
 
-        menu = [strings(30346), strings(58000), strings(30356), remindControl, programRecordControl, strings(30337), strings(30377), strings(31022), strings(30309), strings(68005), strings(30913), strings(30602), chooseStrmControl, strings(30308)]
+        menu = [strings(30346), strings(58000), strings(30356), remindControl, programRecordControl, strings(30337), strings(30377), strings(31022), strings(30309), strings(68005), strings(30913), strings(30207), strings(30602), chooseStrmControl, strings(30308)]
         if debug:
             menu.insert(0, 'Debug')
 
@@ -4654,16 +4654,23 @@ class mTVGuide(xbmcgui.WindowXML):
             xbmcaddon.Addon(id=ADDON_ID).openSettings()
 
         elif ret == 11:
-            xbmc.executebuiltin("ActivateWindow(10134)")
+            res = xbmcgui.Dialog().yesno(strings(30207), strings(30215))
+            if res:
+                epgDbSize = self.database.source.getEpgSize()
+                self.onRedrawEPG(self.channelIdx, self.viewStartDate, force=True)
+                ADDON.setSetting('epg_size', str(epgDbSize))
 
         elif ret == 12:
+            xbmc.executebuiltin("ActivateWindow(10134)")
+
+        elif ret == 13:
             if removeStrm:
                 self.database.deleteCustomStreamUrl(program.channel)
             d = StreamSetupDialog(self.database, program.channel, self)
             d.doModal()
             del d
 
-        elif ret == 13:
+        elif ret == 14:
             self.close()
 
     def popupMenu(self, program):
