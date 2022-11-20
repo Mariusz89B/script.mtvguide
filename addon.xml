@@ -41,7 +41,7 @@
     <forum>https://github.com/Mariusz89B/script.mtvguide/discussions</forum>
 	<website>https://github.com/Mariusz89B/script.mtvguide</website>
     <source>m-TVGuide © 2013 - 2022</source>
-    <news>v9.9.631 (2022-11-18)
+    <news>v9.9.631 (2022-11-20)
 - Added setting for guide reinitializing to context menu.
 - Fixed guide reinitializing.
 - Fixed timezone error.

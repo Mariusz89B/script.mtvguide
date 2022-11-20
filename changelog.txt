@@ -1,5 +1,7 @@
-﻿v9.9.631 (2022-11-18)
+﻿v9.9.631 (2022-11-20)
+- Added setting for guide reinitializing to context menu.
 - Fixed guide reinitializing.
+- Fixed timezone error.
 
 v9.9.630 (2022-11-12)
 - Fixed timezone error.
