@@ -288,6 +288,14 @@ msgctxt "#30206"
 msgid "Display current time during playback"
 msgstr "Prikaz trenutnog vremena tijekom reprodukcije"
 
+msgctxt "#30207"
+msgid "Reinitialize guide"
+msgstr "Ponovno inicijaliziraj vodič"
+
+msgctxt "#30215"
+msgid "Would you like to reinitialize EPG guide?"
+msgstr "Želite li ponovno pokrenuti EPG vodič?"
+
 msgctxt "#30300"
 msgid "Watch {}"
 msgstr "Pogledajte {}"

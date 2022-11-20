@@ -288,6 +288,14 @@ msgctxt "#30206"
 msgid "Display current time during playback"
 msgstr "Afficher l'heure actuelle pendant la lecture"
 
+msgctxt "#30207"
+msgid "Reinitialize guide"
+msgstr "Guide de réinitialisation"
+
+msgctxt "#30215"
+msgid "Would you like to reinitialize EPG guide?"
+msgstr "Voulez vous réinitialiser le guide EPG?"
+
 msgctxt "#30300"
 msgid "Watch {}"
 msgstr "Regarder {}"
