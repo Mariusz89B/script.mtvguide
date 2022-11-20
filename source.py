@@ -3593,8 +3593,8 @@ def parseTvDate(dateString, zone, autozone, local):
     dt = datetime(*(int(dateString[i:i+2 if i else i+4]) for i in (0, 4, 6, 8, 10, 12)))
     if zone:
         offset = zone
-    elif local and offset == parseTvDate.utc:
-        offset += timedelta(hours=1)
+    elif zoneString and local and autozone and offset == parseTvDate.utc:
+        offset += local
 
     dt += offset  # apply timezone offset
     return dt
