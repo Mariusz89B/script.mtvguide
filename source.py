@@ -3440,11 +3440,9 @@ class MTVGUIDESource(Source):
         return False
 
     def getEpgSize(self, defaultSize = 0, forceCheck = False):
-        if not self.check_url(self.MTVGUIDEUrl):
+        if not self.check_url(self.MTVGUIDEUrl) or self.epgBasedOnLastModDate == 'false':
             return 0
-        if self.epgBasedOnLastModDate == 'false':
-            return 0
-        if self.EPGSize is not None and forceCheck == False:
+        if self.EPGSize is not None and not forceCheck:
             return self.EPGSize
         epgRecheckTimeout = 900
         failedCounter = 0
@@ -3486,7 +3484,8 @@ class MTVGUIDESource(Source):
             except Exception as ex:
                 deb('[UPD] getEpgSize exception {} failedCounter {}'.format(str(ex), failedCounter))
                 failedCounter = failedCounter + 1
-                time.sleep(0.5)
+                time.sleep(30)
+                continue
 
         if self.EPGSize == 0:
             self.EPGSize = defaultSize

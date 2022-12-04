@@ -660,8 +660,8 @@ class TeliaPlayUpdater(baseServiceUpdater):
                     'drmType': 'WIDEVINE',
                     'capabilities': [],
                     'screen': {
-                        'height': 1080,
-                        'width': 1920
+                        'height': 2160,
+                        'width': 3840
                     },
                     'os': 'Windows',
                     'model': 'windows_desktop'
@@ -682,9 +682,9 @@ class TeliaPlayUpdater(baseServiceUpdater):
 
             hea = ''
 
-            LICENSE_URL = response.get('streams', '')[0].get('drm', '').get('licenseUrl', '')
-            stream_url = response.get('streams', '')[0].get('url', '')
-            headr = response.get('streams', '')[0].get('drm', '').get('headers', '')
+            LICENSE_URL = response.get('streams', '')[-1].get('drm', '').get('licenseUrl', '')
+            stream_url = response.get('streams', '')[-1].get('url', '')
+            headr = response.get('streams', '')[-1].get('drm', '').get('headers', '')
 
             if 'X-AxDRM-Message' in headr:
                 hea = 'Content-Type=&X-AxDRM-Message=' + self.dashjs

@@ -1,4 +1,8 @@
-﻿v9.9.631 (2022-11-20)
+﻿v9.9.632 (2022-12-04)
+- Improved stream quality for services CMore and Telia Play.
+- Other fixes.
+
+v9.9.631 (2022-11-20)
 - Added setting for guide reinitializing to context menu.
 - Fixed guide reinitializing.
 - Fixed timezone error.
