@@ -473,12 +473,12 @@ class PlaylistUpdater(baseServiceUpdater):
 
             if not self.vod:
                 regexCorrectStream = re.compile('^(plugin|http(s)?|rtmp)(?!.*?[.](mp4|mkv|avi|mov|wma))', re.IGNORECASE)
-                regexRemoveList.append( re.compile('(\s|^)?(L\s*)?((?i)Vod|VOD|On\sDemand)(?=\s|$)', re.IGNORECASE) )
+                regexRemoveList.append( re.compile('(\s|^)?(L\s*)?(Vod|VOD|On\sDemand)(?=\s|$)', re.IGNORECASE) )
             else:
                 regexCorrectStream = re.compile('^(plugin|http(s)?|rtmp)', re.IGNORECASE)
 
             if self.xxx:
-                regexRemoveList.append( re.compile('(\s|^)?(L\s*)?((?i)Adult|XXX)(?=\s|$)', re.IGNORECASE) )
+                regexRemoveList.append( re.compile('(\s|^)?(L\s*)?(Adult|XXX)(?=\s|$)', re.IGNORECASE) )
 
             title = None
             tvg_title = None

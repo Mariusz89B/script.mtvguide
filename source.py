@@ -3048,32 +3048,33 @@ class Source(object):
     def _downloadUrl(self, url):
         from os.path import basename
         try:
+            u = ''
             remoteFilename = ''
             deb("[EPG] Downloading epg: {}".format(url))
             start = datetime.now()
-            failCounter = 0
-
-            while True:
+            failedCounter = 0
+            while failedCounter < 3:
                 try:
-                    u = None
+                    if failedCounter > 2:
+                        headers = {
+                            'User-Agent': UA,
+                            'Keep-Alive': 'timeout=60',
+                            'Connection': 'keep-alive',
+                        }
 
-                    filename = ''
-                    contentType = ''
-
-                    headers = {
-                        'User-Agent': UA,
-                        'Keep-Alive': 'timeout=20',
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'Connection': 'Keep-Alive',
-                    }
-
-                    try:
                         http = urllib3.PoolManager()
                         u = http.request('GET', url, headers=headers, timeout=20)
                         content = u.data
 
-                    except:
-                        u = requests.get(url, headers=headers, verify=False, timeout=20)
+                    else:
+                        UAx = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36 Edg/106.0.1370.37'
+
+                        headers = {
+                            'User-Agent': UAx,
+                            'Connection': 'keep-alive',
+                        }
+
+                        u = requests.get(url, headers=headers, verify=False)
                         content = u.content
 
                     content_type = u.headers.get('Content-Type', '')
@@ -3083,21 +3084,20 @@ class Source(object):
 
                     r = filename_regex.search(c_disposition)
                     filename = r.group(1) if r else url
-
                     break
 
                 except Exception as ex:
-                    failCounter+=1
-                    deb('_downloadUrl Error downloading url: {}, Exception: {}, failcounter: {}'.format(url, str(ex), failCounter))
+                    failedCounter += 1
+                    deb('_downloadUrl Error downloading url: {}, Exception: {}, failedCounter: {}'.format(url, str(ex), failedCounter))
                     if strings2.M_TVGUIDE_CLOSING:
                         raise SourceUpdateCanceledException()
-                    if failCounter > 3:
+                    if failedCounter > 3:
                         raise
                     time.sleep(1)
             try:
                 remoteFilename = u.headers['Content-Disposition'].split('filename=')[-1].replace('"','').replace(';','').strip()
             except:
-                pass
+                raise SourceFaultyEPGException(url)
 
             if url.lower().endswith('.xz') or remoteFilename.lower().endswith('.xz') or '.xz' in filename or 'xz' in content_type:
                 tnow = datetime.now()
@@ -3376,14 +3376,12 @@ class MTVGUIDESource(Source):
         return data
 
     def _getDataFromExternal(self, date=None, url=None, data=None, progress_callback=None):
-        xml = b''
+        xmls = []
 
         if data:
-            for url, v in data.items():
-                date = v['date']
-
+            for url in data:
                 try:
-                    xml += bytearray(self._downloadUrl(url))
+                    xmls.append(self._downloadUrl(url).decode('utf-8'))
 
                 except SourceUpdateCanceledException as cancelException:
                     raise cancelException
@@ -3392,9 +3390,11 @@ class MTVGUIDESource(Source):
                     deb("Error downloading EPG: {}\n\nDetails:\n{}".format(url, getExceptionString()))
                     raise SourceFaultyEPGException(url)
 
+                xml = ''.join(xmls)
+
         else:
             try:
-                xml = self._downloadUrl(url)
+                xml = self._downloadUrl(url).decode('utf-8')
 
             except SourceUpdateCanceledException as cancelException:
                     raise cancelException
@@ -3408,12 +3408,12 @@ class MTVGUIDESource(Source):
 
         zone, autozone, local = getTimeZone()
 
-        try:        
+        try:
             if CUSTOM_PARSER:
-                return customParseXMLTV(xml=xml.decode('utf-8'), progress_callback=progress_callback, zone=zone, autozone=autozone, local=local, logoFolder=self.logoFolder)
+                return customParseXMLTV(xml=xml, progress_callback=progress_callback, zone=zone, autozone=autozone, local=local, logoFolder=self.logoFolder)
 
             else:
-                iob = io.BytesIO(xml)
+                iob = io.StringIO(xml)
 
                 context = ElementTree.iterparse(iob, events=("start", "end"))
                 return parseXMLTV(context=context, f=iob, size=len(xml), progress_callback=progress_callback, zone=zone, autozone=autozone, local=local, logoFolder=self.logoFolder)
@@ -3449,10 +3449,8 @@ class MTVGUIDESource(Source):
         while failedCounter < 3:
             try:
                 if failedCounter > 2:
-                    UAx = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36 Edg/106.0.1370.37'
-
                     headers = {
-                        'User-Agent': UAx,
+                        'User-Agent': UA,
                         'Keep-Alive': 'timeout=60',
                         'Connection': 'keep-alive',
                         }
@@ -3460,8 +3458,10 @@ class MTVGUIDESource(Source):
                     response = urllib3.PoolManager().request('GET', self.MTVGUIDEUrl, headers=headers)
 
                 else:
+                    UAx = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36 Edg/106.0.1370.37'
+
                     headers = {
-                        'User-Agent': UA,
+                        'User-Agent': UAx,
                         'Connection': 'keep-alive',
                         }
 
@@ -3483,7 +3483,7 @@ class MTVGUIDESource(Source):
 
             except Exception as ex:
                 deb('[UPD] getEpgSize exception {} failedCounter {}'.format(str(ex), failedCounter))
-                failedCounter = failedCounter + 1
+                failedCounter += 1
                 time.sleep(30)
                 continue
 
