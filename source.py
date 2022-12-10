@@ -876,6 +876,9 @@ class Database(object):
         sqlite3.register_adapter(datetime, self.adapt_datetime)
         sqlite3.register_converter(str('timestamp'), self.convert_datetime)
 
+        if force:
+            self.services_updated = False
+
         # Start service threads
         updateServices = self.services_updated == False and UPDATE_CID
         if updateServices:
@@ -3097,7 +3100,7 @@ class Source(object):
             try:
                 remoteFilename = u.headers['Content-Disposition'].split('filename=')[-1].replace('"','').replace(';','').strip()
             except:
-                raise SourceFaultyEPGException(url)
+                pass #raise SourceFaultyEPGException(url)
 
             if url.lower().endswith('.xz') or remoteFilename.lower().endswith('.xz') or '.xz' in filename or 'xz' in content_type:
                 tnow = datetime.now()
@@ -3144,7 +3147,6 @@ class Source(object):
             u.close()
             tnow = datetime.now()
             deb("[EPG] Downloading done [{} sek.]".format(str((tnow-start).seconds)))
-
 
             if not b'<channel' in content:
                 deb('Detected not valid EPG XML, url: {}'.format(url))
@@ -3377,18 +3379,21 @@ class MTVGUIDESource(Source):
 
     def _getDataFromExternal(self, date=None, url=None, data=None, progress_callback=None):
         xmls = []
+        check = False
 
         if data:
             for url in data:
                 try:
                     xmls.append(self._downloadUrl(url).decode('utf-8'))
+                    check = True
 
                 except SourceUpdateCanceledException as cancelException:
                     raise cancelException
 
                 except Exception as ex:
-                    deb("Error downloading EPG: {}\n\nDetails:\n{}".format(url, getExceptionString()))
-                    raise SourceFaultyEPGException(url)
+                    if len(data) > 1 and check:
+                        deb("Error downloading EPG: {}\n\nDetails:\n{}".format(url, getExceptionString()))
+                        raise SourceFaultyEPGException(url)
 
                 xml = ''.join(xmls)
 
@@ -3397,7 +3402,7 @@ class MTVGUIDESource(Source):
                 xml = self._downloadUrl(url).decode('utf-8')
 
             except SourceUpdateCanceledException as cancelException:
-                    raise cancelException
+                raise cancelException
 
             except Exception as ex:
                 deb("Error downloading EPG: {}\n\nDetails:\n{}".format(url, getExceptionString()))
