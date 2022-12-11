@@ -616,6 +616,14 @@ msgctxt "#30379"
 msgid "Adjust to local timezone"
 msgstr "Dostosuj do lokalnej strefy czasowej"
 
+msgctxt "#30380"
+msgid "Manually adjust timezone"
+msgstr "Ręcznie dostosuj strefę czasową"
+
+msgctxt "#30381"
+msgid "Select type"
+msgstr "Wybierz typ"
+
 msgctxt "#30500"
 msgid "Edit channel order and visibility"
 msgstr "Edytuj kolejność i widoczność kanałów"

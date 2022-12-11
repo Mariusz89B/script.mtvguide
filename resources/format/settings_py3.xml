@@ -2750,20 +2750,17 @@
 			</group>
 			<group id="12" label="30742"/>
 			<group id="13" label="30365">
-				<setting help="95145" id="auto_time_zone" label="30378" type="boolean">
-					<level>1</level>
-					<default>true</default>
-					<control type="toggle"/>
-				</setting>
-				<setting help="95149" id="adjust_local_time" label="30379" type="boolean">
-					<level>1</level>
-					<default>true</default>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="is" setting="auto_time_zone">true</condition>
-						</dependency>
-					</dependencies>
-					<control type="toggle"/>
+				<setting help="95152" id="auto_time_zone" label="30381" type="string">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="30378">0</option> <!-- auto_time_zone -->
+							<option label="30379">1</option> <!-- adjust_local_time -->
+							<option label="30380">2</option> <!-- manual_set -->
+						</options>
+					</constraints>
+					<control format="string" type="spinner"/>
 				</setting>
 				<setting help="95041" id="time_zone" label="30911" type="string">
 					<level>1</level>
@@ -2813,7 +2810,7 @@
 					</constraints>
 					<dependencies>
 						<dependency type="visible">
-							<condition operator="is" setting="auto_time_zone">false</condition>
+							<condition operator="is" setting="auto_time_zone">2</condition>
 						</dependency>
 					</dependencies>
 					<control format="string" type="spinner"/>

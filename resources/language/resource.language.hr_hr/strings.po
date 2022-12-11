@@ -616,6 +616,14 @@ msgctxt "#30379"
 msgid "Adjust to local timezone"
 msgstr "Prilagodi lokalnoj vremenskoj zoni"
 
+msgctxt "#30380"
+msgid "Manually adjust timezone"
+msgstr "Ručno podešavanje vremenske zone"
+
+msgctxt "#30381"
+msgid "Select type"
+msgstr "Odaberite vrstu"
+
 msgctxt "#30500"
 msgid "Edit channel order and visibility"
 msgstr "Uredite redoslijed kanala i vidljivost"

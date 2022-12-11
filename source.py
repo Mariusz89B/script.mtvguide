@@ -3536,16 +3536,15 @@ def catList(category_count):
 def getTimeZone():
     ZONE = ADDON.getSetting('time_zone')
 
-    ADJUST_LOCAL_TIME = ADDON.getSetting('adjust_local_time')
-    if ADJUST_LOCAL_TIME == 'true':
+    ADJUST_LOCAL_TIME = ADDON.getSetting('auto_time_zone')
+    if ADJUST_LOCAL_TIME == '0':
+        TIME_ZONE_AUTO = True
+        LOCAL_TIME = True
+    elif ADJUST_LOCAL_TIME == '1':
+        TIME_ZONE_AUTO = False
         LOCAL_TIME = True
     else:
         LOCAL_TIME = False
-
-    ZONE_CONFIG = ADDON.getSetting('auto_time_zone')
-    if ZONE_CONFIG == 'true':
-        TIME_ZONE_AUTO = True
-    else:
         TIME_ZONE_AUTO = False
 
     return ZONE, TIME_ZONE_AUTO, LOCAL_TIME

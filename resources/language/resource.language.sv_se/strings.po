@@ -616,6 +616,14 @@ msgctxt "#30379"
 msgid "Adjust to local timezone"
 msgstr "Justera till lokal tidszon"
 
+msgctxt "#30380"
+msgid "Manually adjust timezone"
+msgstr "Justera tidszon manuellt"
+
+msgctxt "#30381"
+msgid "Select type"
+msgstr "Välj typ"
+
 msgctxt "#30500"
 msgid "Edit channel order and visibility"
 msgstr "Redigera kanalordning och synlighet"

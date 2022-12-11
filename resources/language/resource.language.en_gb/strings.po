@@ -684,6 +684,14 @@ msgctxt "#30379"
 msgid "Adjust to local timezone"
 msgstr ""
 
+msgctxt "#30380"
+msgid "Manually adjust timezone"
+msgstr ""
+
+msgctxt "#30381"
+msgid "Select type"
+msgstr ""
+
 msgctxt "#30500"
 msgid "Edit channel order and visibility"
 msgstr ""
@@ -3702,6 +3710,10 @@ msgstr ""
 
 msgctxt "#95151"
 msgid "If enabled debugging mode will be turned on and a Debug menu will be visible in add-on context options."
+msgstr ""
+
+msgctxt "#95152"
+msgid "Select timezone type. The options are: [Auto timezone] - Automatically adjusts timezone to value provided in EPG file, [Adjust local time] - Adjust parsed EPG date to local timezone, [Manually adjust timezone] - Manually set timezone value."
 msgstr ""
 
 msgctxt "#99994"
