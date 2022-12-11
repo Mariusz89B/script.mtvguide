@@ -1269,6 +1269,11 @@ class Database(object):
             for cat in categories:
                 c.execute("INSERT OR REPLACE INTO categories(category, source) VALUES(?, ?)", [cat, streamSource])
 
+            c.execute("SELECT * FROM categories")
+            for row in c:
+                if row[str('category')] not in PREDEFINED_CATEGORIES:
+                    c.execute("DELETE FROM categories WHERE category=?", [row[str('category')]])
+
             self.conn.commit()
             c.close()
 
