@@ -876,9 +876,6 @@ class Database(object):
         sqlite3.register_adapter(datetime, self.adapt_datetime)
         sqlite3.register_converter(str('timestamp'), self.convert_datetime)
 
-        if force:
-            self.services_updated = False
-
         # Start service threads
         updateServices = self.services_updated == False and UPDATE_CID
         if updateServices:
@@ -960,7 +957,7 @@ class Database(object):
         cacheExpired = self._isCacheExpired(date, initializing, startup, force)
         ADDON.setSetting('database_cleared', 'false')
 
-        if cacheExpired and not self.skipUpdateRetries:
+        if cacheExpired and not self.skipUpdateRetries or force:
             deb('_isCacheExpired')
             self.updateInProgress = True
             self.updateFailed = False

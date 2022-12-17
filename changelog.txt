@@ -1,4 +1,7 @@
-﻿v9.9.632 (2022-12-11)
+﻿v9.9.633 (2022-12-17)
+- Hotfix.
+
+v9.9.632 (2022-12-11)
 - Improved stream quality for services CMore and Telia Play.
 - Other fixes.
 
