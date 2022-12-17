@@ -1576,6 +1576,10 @@ msgctxt "#60017"
 msgid "Wrong filename input"
 msgstr "Falsche Eingabe des Dateinamens"
 
+msgctxt "#60018"
+msgid "Nordic"
+msgstr "Nordisch"
+
 msgctxt "#30913"
 msgid "Settings"
 msgstr "Einstellungen"

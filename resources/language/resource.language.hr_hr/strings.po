@@ -1576,6 +1576,10 @@ msgctxt "#60017"
 msgid "Wrong filename input"
 msgstr "Pogrešan unos naziva datoteke"
 
+msgctxt "#60018"
+msgid "Nordic"
+msgstr "Nordijske"
+
 msgctxt "#30913"
 msgid "Settings"
 msgstr "Postavke"

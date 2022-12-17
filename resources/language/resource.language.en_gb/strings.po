@@ -1652,6 +1652,10 @@ msgctxt "#60017"
 msgid "Wrong filename input"
 msgstr ""
 
+msgctxt "#60018"
+msgid "Nordic"
+msgstr ""
+
 msgctxt "#30912"
 msgid "Press one more time to return to main screen"
 msgstr ""

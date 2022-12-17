@@ -11,7 +11,7 @@
 		<setting label="90004" type="action" action="RunScript($CWD/credits.py,credits)" />
 	</category>
 	<category label="55007">
-		<setting id="country_service" label="60014" type="enum" default="0" lvalues="59933|59934"/>
+		<setting id="country_service" label="60014" type="enum" default="0" lvalues="59933|60018"/>
 		
 		<setting id="ipla_enabled" type="bool" label="80006" default="false" visible="eq(-1,0)"/>
 		<setting id="ipla_username" type="text" label="55002" default="" visible="eq(-1,true) + eq(-2,0)" subsetting="true"/>

@@ -1576,6 +1576,10 @@ msgctxt "#60017"
 msgid "Wrong filename input"
 msgstr "Feil inntasting av filnavn"
 
+msgctxt "#60018"
+msgid "Nordic"
+msgstr "Norden"
+
 msgctxt "#30913"
 msgid "Settings"
 msgstr "Oppsett"
