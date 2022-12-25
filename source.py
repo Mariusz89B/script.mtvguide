@@ -1141,14 +1141,15 @@ class Database(object):
                     service.startLoadingChannelList(automap=epgChannels, cache=cache)
 
                     if progress_callback:
-                        if not cache and service.serviceName in refr_lst and not os.path.exists(os.path.join(PROFILE_PATH, 'playlists', '{playlist}.cache'.format(playlist=service.serviceName))):
+                        source = ADDON.getSetting('{playlist}_source'.format(playlist=service.serviceName))
+                        if not cache and service.serviceName in refr_lst and not os.path.exists(os.path.join(PROFILE_PATH, 'playlists', '{playlist}.cache'.format(playlist=service.serviceName))) and source == '0':
                             progress_callback(100, "{}: {}".format(strings(30177), service.getDisplayName()) )
                             time.sleep(0.5)
-                        elif not cache:
-                            progress_callback(100, "{}: {}".format(strings(59915), service.getDisplayName()) )
-                        else:
+                        elif cache and source == '0':
                             progress_callback(100, "{}: {}".format(strings(59915), strings(69072)) )
                             time.sleep(0.5)
+                        else:
+                            progress_callback(100, "{}: {}".format(strings(59915), service.getDisplayName()) )
 
                     if not cache:
                         service.waitUntilDone()

@@ -384,11 +384,16 @@ class PlaylistUpdater(baseServiceUpdater):
             elif ADDON.getSetting('{}_pattern'.format(self.serviceName)) == '5':
                 PATTERN = 5
 
-            for cc, value in CC_DICT.items():
+            if self.filtered:
+                json_groups = {k: v for k, v in CC_DICT.items() if k in cc_settings}
+            else:
+                json_groups = CC_DICT
+
+            for cc, value in json_groups.items():
                 cc_pattern_regex = cc.upper() + ':?|' + value['alpha-3'] + ':?|' + re.escape('.' + cc.lower()) + ':?|' + value['language']
 
                 # Alpha-2
-                if PATTERN == 1:
+                if PATTERN == 0 or PATTERN == 1:
                     cc_pattern = cc.upper()
                     cc_pattern_regex = cc_pattern
 
@@ -411,41 +416,26 @@ class PlaylistUpdater(baseServiceUpdater):
                 else:
                     cc_pattern = ''
 
-                if cc in cc_settings or not self.filtered:
-                    alpha_1 = value['native']
-                    alpha_2 = value['language']
-                    alpha_3 = value['alpha-3']
-                    alpha_4 = value.get('alpha-4', value['alpha-3'])
+                alpha_1 = value['native']
+                alpha_2 = value['language']
+                alpha_3 = value['alpha-3']
+                alpha_4 = value.get('alpha-4', value['alpha-3'])
 
-                    ccList.append(cc.upper())
-                    a3List.append(alpha_3.upper())
-                    langList.append(alpha_2)
-                    nativeList.append(alpha_1)
-                    dotList.append('.' + cc.lower())
+                ccList.append(cc.upper())
+                a3List.append(alpha_3.upper())
+                langList.append(alpha_2)
+                nativeList.append(alpha_1)
+                dotList.append('.' + cc.lower())
 
-                    if self.filtered:
-                        try:
-                            langReplaceList.append({ 'regex': re.compile('(\s|^)(\s*'+cc.upper()+'$|'+alpha_4+':?|'+alpha_3+':?|'+alpha_2+':?|'+alpha_1+':?)(?=\s|$)|^('+alpha_4+':|'+alpha_3+':|'+alpha_2+':|'+alpha_1+':)', re.IGNORECASE), 'lang': cc_pattern})
-                        except:
-                            langReplaceList.append({ 'regex': re.compile('(\s|^)(\s*'+cc.upper()+'$|'+alpha_4+':?|'+alpha_3+':?|'+alpha_2+':?|'+alpha_1.encode('utf-8')+':?)(?=\s|$)|^('+alpha_4+':|'+alpha_3+':|'+alpha_2+':|'+alpha_1.encode('utf-8')+':)', re.IGNORECASE), 'lang': cc_pattern})
+                try:
+                    langReplaceList.append({ 'regex': re.compile('(\s|^)(\s*'+cc.upper()+'$|\.'+cc.lower()+'$|'+alpha_4+':?|'+alpha_3+':?|'+alpha_2+':?|'+alpha_1+':?)(?=\s|$)|^('+cc.upper()+':|'+alpha_4+':|'+alpha_3+':|'+alpha_2+':|'+alpha_1+':)', re.IGNORECASE), 'lang': cc_pattern})
+                except:
+                    langReplaceList.append({ 'regex': re.compile('(\s|^)(\s*'+cc.upper()+'$|\.'+cc.lower()+'$|'+alpha_4+':?|'+alpha_3+':?|'+alpha_2+':?|'+alpha_1.encode('utf-8')+':?)(?=\s|$)|^('+cc.upper()+':|'+alpha_4+':|'+alpha_3+':|'+alpha_2+':|'+alpha_1.encode('utf-8')+':)', re.IGNORECASE), 'lang': cc_pattern})
 
-                        langReplaceList.append({ 'regex': re.compile('(\s|^)('+cc.upper()+':?)(?=\s|$)|^('+cc.upper()+':?)'), 'lang': cc_pattern})
-                        prefixList.append(cc_pattern_regex + ':?')
+                prefixList.append(cc_pattern_regex + ':?')
 
-            if PATTERN == 0:
+            if PATTERN >= 0 and PATTERN < 5:
                 grouplist = ccList + a3List + langList + nativeList + dotList
-
-            elif PATTERN == 1:
-                grouplist = ccList
-
-            elif PATTERN == 2:
-                grouplist = a3List
-
-            elif PATTERN == 3:
-                grouplist = dotList
-
-            elif PATTERN == 4:
-                grouplist = langList + nativeList
 
             else:
                 grouplist = []
@@ -500,7 +490,6 @@ class PlaylistUpdater(baseServiceUpdater):
                 for line in channelsArray:
                     line = cleanup_regex.sub('', line)
                     stripLine = line.strip()
-
                     if '#EXTINF:' in stripLine:
                         tmpTitle = ''
                         name = ''
@@ -574,13 +563,16 @@ class PlaylistUpdater(baseServiceUpdater):
                             r = regex_match.search(title)
                             match = r.group(0) if r else None
 
-                            if match is None:
+                            if not match or match is None:
                                 pattern = re.compile(r'^\.')
 
-                                if pattern.match(self.append_cc):
-                                    space = ''
+                                if self.append_cc:
+                                    if pattern.match(self.append_cc):
+                                        space = ''
+                                    else:
+                                        space = ' '
                                 else:
-                                    space = ' '
+                                    space = ''
 
                                 title = title + space + self.append_cc
 
@@ -598,20 +590,21 @@ class PlaylistUpdater(baseServiceUpdater):
                                     group = r.group(1).strip() if r else ''
 
                                 if group:
+                                    group = group.replace('"', '')
                                     ccCh = [c for c in grouplist if group == c]
                                     cc = ccCh[0] if ccCh else ''
 
-                                    if PATTERN > 0:
+                                    if PATTERN >= 0:
                                         if '.' in cc:
                                             cc.replace('.', '')
-                                            string = cc.lower()
+                                            string = ' ' + cc.lower()
                                         else:
                                             string = ' ' + cc.upper()
                                         title = re.sub('$', string, title)
 
                             title = title.strip()
 
-                            if 1 >= PATTERN <= 3:
+                            if 0 >= PATTERN <= 3:
                                 if any(cc.lower() in title.lower() for cc in langList + nativeList):
                                     for cc in langList + nativeList:
                                         p = re.compile(re.escape(cc + ' '), re.IGNORECASE)
@@ -624,7 +617,7 @@ class PlaylistUpdater(baseServiceUpdater):
                                     if( regexRemove.findall(tvg_title) ):
                                         tvg_title = ''
 
-                            if PATTERN != 0:
+                            if PATTERN >= 0:
                                 for langReplaceMap in langReplaceList:
                                     title, match = langReplaceMap['regex'].subn('', title)
                                     if match > 0:
@@ -636,7 +629,8 @@ class PlaylistUpdater(baseServiceUpdater):
                                             else:
                                                 title += ' ' + langReplaceMap['lang']
 
-                                            title = title.strip()
+                                    title = title.strip()
+
 
                             if self.filtered and PATTERN != 5:
                                 for regexAdd in regexAddList:
