@@ -3583,30 +3583,31 @@ def parseTvDate(dateString, zone, autozone, local):
     `autozone` - parse timezone from EPG if true
     `local`    – local timezone to force for UTC, used if `autozone`
     """
+
     dateString, _, zoneString = dateString.partition(' ')
-    if ADJUST_LOCAL_TIME == '2':
+    if ADJUST_LOCAL_TIME == '0' and zoneString:
+        zoneString = '{0}:{1}'.format(zoneString[:-2], zoneString[-2:])
+    elif ADJUST_LOCAL_TIME == '1':
+        zoneString = local
+    elif ADJUST_LOCAL_TIME == '2':
         zoneString = zone
 
     offset = timedelta(hours=0)
 
-    if not autozone and local:
-        offset = local - timedelta(hours=1)
-
-    else:
-        if zoneString == '00:00':
+    if zoneString == '00:00':
+        offset = timedelta(hours=0)
+    elif not ADJUST_LOCAL_TIME == '1':
+        if not zoneString:
             offset = timedelta(hours=0)
         else:
-            if not zoneString:
-                offset = timedelta(hours=0)
-            else:
-                offset = timedelta(minutes=int(zoneString[:3]) * 60 + int(zoneString[-2:]))
+            offset = timedelta(minutes=int(zoneString[:3]) * 60 + int(zoneString[-2:]))
 
     dt = datetime(*(int(dateString[i:i+2 if i else i+4]) for i in (0, 4, 6, 8, 10, 12)))
 
-    if zoneString and local and autozone and offset == parseTvDate.utc:
+    if zoneString and local and offset == parseTvDate.utc:
         offset += local
 
-    dt += offset  # apply timezone offset
+    dt += offset # apply timezone offset
     return dt
 
 
