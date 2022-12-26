@@ -182,11 +182,13 @@ else:
 
 CHANNEL_FILTER = ADDON.getSetting('channel_filter_sort')
 if CHANNEL_FILTER == '0':
-    GET_CHANNEL_FILTER = "0"
+    GET_CHANNEL_FILTER = '0'
 elif CHANNEL_FILTER == '1':
-    GET_CHANNEL_FILTER = "1"
+    GET_CHANNEL_FILTER = '1'
 else:
-    GET_CHANNEL_FILTER = "2"
+    GET_CHANNEL_FILTER = '2'
+
+ADJUST_LOCAL_TIME = ADDON.getSetting('auto_time_zone')
 
 NUMBER_OF_SERVICE_PRIORITIES = 12
 SETTINGS_TO_CHECK = ['source', 'xmltv_file', 'xmltv_logo_folder',
@@ -3539,7 +3541,6 @@ def catList(category_count):
 def getTimeZone():
     ZONE = ADDON.getSetting('time_zone')
 
-    ADJUST_LOCAL_TIME = ADDON.getSetting('auto_time_zone')
     if ADJUST_LOCAL_TIME == '0':
         TIME_ZONE_AUTO = True
         LOCAL_TIME = True
@@ -3572,12 +3573,6 @@ def prepareTimeZone(zone, autozone, local):
             local = None
         zone = None
 
-    elif zone:
-        if zone == '00:00':
-            zone = timedelta(hours=0)
-        else:
-            zone = timedelta(minutes=int(zone[:3]) * 60 + int(zone[-2:]))
-
     return zone, autozone, local
 
 
@@ -3589,17 +3584,21 @@ def parseTvDate(dateString, zone, autozone, local):
     `local`    – local timezone to force for UTC, used if `autozone`
     """
     dateString, _, zoneString = dateString.partition(' ')
+    if ADJUST_LOCAL_TIME == '2':
+        zoneString = zone
 
     offset = timedelta(hours=0)
     if zoneString:
-        offset = timedelta(minutes=int(zoneString[:3]) * 60 + int(zoneString[-2:]))
+        if zoneString == '00:00':
+            offset = timedelta(hours=0)
+        else:
+            offset = timedelta(minutes=int(zoneString[:3]) * 60 + int(zoneString[-2:]))
     elif local and autozone:
         offset = local - timedelta(hours=1)
 
     dt = datetime(*(int(dateString[i:i+2 if i else i+4]) for i in (0, 4, 6, 8, 10, 12)))
-    if zone:
-        offset = zone
-    elif zoneString and local and autozone and offset == parseTvDate.utc:
+
+    if zoneString and local and autozone and offset == parseTvDate.utc:
         offset += local
 
     dt += offset  # apply timezone offset
