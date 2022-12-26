@@ -3596,7 +3596,10 @@ def parseTvDate(dateString, zone, autozone, local):
         if zoneString == '00:00':
             offset = timedelta(hours=0)
         else:
-            offset = timedelta(minutes=int(zoneString[:3]) * 60 + int(zoneString[-2:]))
+            if not zoneString:
+                offset = timedelta(hours=0)
+            else:
+                offset = timedelta(minutes=int(zoneString[:3]) * 60 + int(zoneString[-2:]))
 
     dt = datetime(*(int(dateString[i:i+2 if i else i+4]) for i in (0, 4, 6, 8, 10, 12)))
 
