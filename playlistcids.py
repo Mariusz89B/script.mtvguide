@@ -428,9 +428,9 @@ class PlaylistUpdater(baseServiceUpdater):
                 dotList.append('.' + cc.lower())
 
                 try:
-                    langReplaceList.append({ 'regex': re.compile('(\s|^)(\s*'+cc.upper()+'$|\.'+cc.lower()+'$|'+alpha_4+':?|'+alpha_3+':?|'+alpha_2+':?|'+alpha_1+':?)(?=\s|$)|^('+cc.upper()+':|'+alpha_4+':|'+alpha_3+':|'+alpha_2+':|'+alpha_1+':)', re.IGNORECASE), 'lang': cc_pattern})
+                    langReplaceList.append({ 'regex': re.compile('(\s|^)(\s*'+cc.upper()+'$|\.'+cc.lower()+'$|'+alpha_4+':?|'+alpha_3+':?|'+alpha_2+':?|'+alpha_1+':?|'+unidecode(alpha_1)+':?)(?=\s|$)|^('+cc.upper()+':|'+alpha_4+':|'+alpha_3+':|'+alpha_2+':|'+alpha_1+':|'+unidecode(alpha_1)+':)', re.IGNORECASE), 'lang': cc_pattern})
                 except:
-                    langReplaceList.append({ 'regex': re.compile('(\s|^)(\s*'+cc.upper()+'$|\.'+cc.lower()+'$|'+alpha_4+':?|'+alpha_3+':?|'+alpha_2+':?|'+alpha_1.encode('utf-8')+':?)(?=\s|$)|^('+cc.upper()+':|'+alpha_4+':|'+alpha_3+':|'+alpha_2+':|'+alpha_1.encode('utf-8')+':)', re.IGNORECASE), 'lang': cc_pattern})
+                    langReplaceList.append({ 'regex': re.compile('(\s|^)(\s*'+cc.upper()+'$|\.'+cc.lower()+'$|'+alpha_4+':?|'+alpha_3+':?|'+alpha_2+':?|'+alpha_1.encode('utf-8')+':?|'+unidecode(alpha_1.encode('utf-8'))+':?)(?=\s|$)|^('+cc.upper()+':|'+alpha_4+':|'+alpha_3+':|'+alpha_2+':|'+alpha_1.encode('utf-8')+':|'+unidecode(alpha_1.encode('utf-8'))+':)', re.IGNORECASE), 'lang': cc_pattern})
 
                 prefixList.append(cc_pattern_regex + ':?')
 
