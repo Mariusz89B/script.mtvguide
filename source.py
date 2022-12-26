@@ -3562,16 +3562,16 @@ def prepareTimeZone(zone, autozone, local):
     `local`    – force local timezone for UTC, used if not `autozone`
     """
 
-    if autozone:
-        if local:
-            # adjust for summertime
-            if PY3:
-                local = datetime.now(timezone.utc).astimezone().utcoffset()
-            else:
-                local = datetime.now() - datetime.utcnow()
+    if local:
+        # adjust for summertime
+        if PY3:
+            #print(zone, autozone, local)
+            local = datetime.now(timezone.utc).astimezone().utcoffset()
+            #print(zone, autozone, local)
         else:
-            local = None
-        zone = None
+            local = datetime.now() - datetime.utcnow()
+    else:
+        local = None
 
     return zone, autozone, local
 
@@ -3588,13 +3588,15 @@ def parseTvDate(dateString, zone, autozone, local):
         zoneString = zone
 
     offset = timedelta(hours=0)
-    if zoneString:
+
+    if not autozone and local:
+        offset = local - timedelta(hours=1)
+
+    else:
         if zoneString == '00:00':
             offset = timedelta(hours=0)
         else:
             offset = timedelta(minutes=int(zoneString[:3]) * 60 + int(zoneString[-2:]))
-    elif local and autozone:
-        offset = local - timedelta(hours=1)
 
     dt = datetime(*(int(dateString[i:i+2 if i else i+4]) for i in (0, 4, 6, 8, 10, 12)))
 
