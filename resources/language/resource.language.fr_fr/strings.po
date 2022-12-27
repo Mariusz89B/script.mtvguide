@@ -557,8 +557,8 @@ msgid "Show program thumbnail"
 msgstr "Voir les vignette du programme"
 
 msgctxt "#30365"
-msgid "Timezone [CR](EPG update required for the changes to take effect)"
-msgstr "Fuseau horaire [CR](Mise à jour EPG requise pour que les modifications prennent effet)"
+msgid "Timezone"
+msgstr "Fuseau horaire"
 
 msgctxt "#30366"
 msgid "Adjust timebar (min)"

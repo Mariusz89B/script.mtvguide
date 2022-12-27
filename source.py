@@ -193,20 +193,10 @@ ADJUST_LOCAL_TIME = ADDON.getSetting('auto_time_zone')
 NUMBER_OF_SERVICE_PRIORITIES = 12
 SETTINGS_TO_CHECK = ['source', 'xmltv_file', 'xmltv_logo_folder',
                      'm-TVGuide', 'm-TVGuide2', 'm-TVGuide3',
-                     'XXX_EPG', 'VOD_EPG', 'time_zone',
-                     'country_code_be', 'epg_be',
-                     'country_code_cz', 'epg_cz',
-                     'country_code_hr', 'epg_hr',
-                     'country_code_dk', 'epg_dk',
-                     'country_code_uk', 'epg_uk',
-                     'country_code_fr', 'epg_fr',
-                     'country_code_de', 'epg_de',
-                     'country_code_it', 'epg_it',
-                     'country_code_no', 'epg_no',
-                     'country_code_srb', 'epg_srb',
-                     'country_code_se', 'epg_se',
-                     'country_code_us', 'epg_us',
-                     'country_code_radio', 'epg_radio']
+                     'XXX_EPG', 'VOD_EPG', 'time_zone', 'auto_time_zone']
+
+for k, v in EPG_DICT.items():
+    SETTINGS_TO_CHECK.append('epg_{0}'.format(k))
 
 def unidecodeStr(s):
     if PY3:
@@ -629,6 +619,7 @@ class Database(object):
                 self.conn.rollback()
         except sqlite3.OperationalError:
             pass # no transaction is active
+
         if self.conn:
             self.conn.close()
 
@@ -641,12 +632,18 @@ class Database(object):
         for row in c:
             noRows = False
             key = row[str('key')]
+
+            regex_epg = re.compile(r'epg_\w{2,3}')
+            if regex_epg.match(key) and key not in ['epg_{0}'.format(x) for x in list(EPG_DICT.keys())]:
+                c.execute('DELETE FROM settings WHERE key=?', [key])
+
             if SETTINGS_TO_CHECK.count(key):
                 count += 1
                 setting = addon.getSetting(key)
                 if row[str('value')] != setting:
                     deb('Settings changed for key: {}, value id DB: {}, in settings.xml: {}'.format(key, row[str('value')], setting) )
                     settingsChanged = True
+
         if count != len(SETTINGS_TO_CHECK):
             deb('Settings changed - number of keys is different')
             settingsChanged = True
@@ -2711,6 +2708,22 @@ class Database(object):
                 c.execute('DROP TABLE categories')
                 c.execute('CREATE TABLE IF NOT EXISTS categories(category TEXT, source TEXT COLLATE NOCASE, PRIMARY KEY (category, source))')
                 c.execute('UPDATE version SET major=6, minor=7, patch=8')
+                neededRestart = False
+
+                self.conn.commit()
+
+                if neededRestart:
+                    deb('Required m-TVGuide restart')
+                    raise RestartRequired()
+
+            if version < [6, 7, 9]:
+                c.execute('DELETE FROM settings')
+                c.execute('UPDATE version SET major=6, minor=7, patch=9')
+                self.conn.commit()
+                try:
+                    c.execute('VACUUM')
+                except:
+                    deb('Error - unable to vacuum database!')
                 neededRestart = False
 
                 self.conn.commit()

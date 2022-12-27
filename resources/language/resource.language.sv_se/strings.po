@@ -557,8 +557,8 @@ msgid "Show program thumbnail"
 msgstr "Visa program miniatyrbild"
 
 msgctxt "#30365"
-msgid "Timezone [CR](EPG update required for the changes to take effect)"
-msgstr "Tidszon [CR](EPG uppdatering krävs för att ändringarna ska träda i kraft)"
+msgid "Timezone"
+msgstr "Tidszon"
 
 msgctxt "#30366"
 msgid "Adjust timebar (min)"

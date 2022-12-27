@@ -557,8 +557,8 @@ msgid "Show program thumbnail"
 msgstr "Wyświetlaj miniaturę programu"
 
 msgctxt "#30365"
-msgid "Timezone [CR](EPG update required for the changes to take effect)"
-msgstr "Strefa czasowa [CR](Wymagana aktualizacja EPG, aby zmiany zaczęły obowiązywać)"
+msgid "Timezone"
+msgstr "Strefa czasowa"
 
 msgctxt "#30366"
 msgid "Adjust timebar (min)"

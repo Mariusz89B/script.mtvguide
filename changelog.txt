@@ -1,5 +1,5 @@
 ﻿v9.9.635 (2022-12-27)
-- Manual timezone fix.
+- Timezone setting fixes.
 
 v9.9.634 (2022-12-26)
 - Hotfix.

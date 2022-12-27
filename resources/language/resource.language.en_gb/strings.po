@@ -625,7 +625,7 @@ msgid "Show program thumbnail"
 msgstr ""
 
 msgctxt "#30365"
-msgid "Timezone [CR](EPG update required for the changes to take effect)"
+msgid "Timezone"
 msgstr ""
 
 msgctxt "#30366"
