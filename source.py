@@ -191,7 +191,7 @@ else:
 ADJUST_LOCAL_TIME = ADDON.getSetting('auto_time_zone')
 
 NUMBER_OF_SERVICE_PRIORITIES = 12
-SETTINGS_TO_CHECK = ['source', 'xmltv_file', 'xmltv_logo_folder',
+SETTINGS_TO_CHECK = ['source', 'xmltv_file', 'xmltv_logo_folder', 'useCustomParser',
                      'm-TVGuide', 'm-TVGuide2', 'm-TVGuide3',
                      'XXX_EPG', 'VOD_EPG', 'time_zone', 'auto_time_zone']
 
@@ -1586,26 +1586,28 @@ class Database(object):
                     channelList.append(channel)
                 c.close()
 
-                NONE = "0"
-                SORT = "1"
-                CATEGORIES = "2"
+                NONE = '0'
+                SORT = '1'
+                CATEGORIES = '2'
                 newCList = []
 
                 cats = False
+
+                filter = []
 
                 if list(self.getAllCategories()):
                     cats = True
                     f = xbmcvfs.File('special://profile/addon_data/script.mtvguide/categories.ini','rb')
                     lines = f.read().splitlines()
                     f.close()
-                    filter = []
+
                     seen = set()
                     for line in lines:
                         if PY3:
-                            if "=" not in line:
+                            if '=' not in line:
                                 continue
                         else:
-                            if b"=" not in line:
+                            if b'=' not in line:
                                 continue
 
                         if PY3:

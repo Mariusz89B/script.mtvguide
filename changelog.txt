@@ -1,4 +1,8 @@
-﻿v9.9.635 (2022-12-27)
+﻿v9.9.636 (2022-12-28)
+- Updated language files.
+- Bug fixes.
+
+v9.9.635 (2022-12-27)
 - Timezone setting fixes.
 
 v9.9.634 (2022-12-26)
