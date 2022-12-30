@@ -1923,9 +1923,7 @@ class mTVGuide(xbmcgui.WindowXML):
 
         self.updateTimebar()
 
-        ADDON.setSetting('epg_size', '0')
-
-        self.interval = 900
+        self.interval = 300
         self.updateEpgTimer = epgTimer(self.interval, self.updateEpg)
 
         self.getListLenght = self.getChannelListLenght()
@@ -1943,15 +1941,11 @@ class mTVGuide(xbmcgui.WindowXML):
             epgSize = ADDON.getSetting('epg_size')
             epgDbSize = self.database.source.getEpgSize()
             if epgDbSize == '' or epgDbSize is None:
+                deb('updateEPG: No database size')
                 epgDbSize = 0
 
-            #deb('getEpgSize: {}'.format(epgSize))
-            #deb('getEpgDbSize: {}'.format(epgDbSize))
-
-            if ADDON.getSetting('epg_size') == '0':
-                ADDON.setSetting('epg_size', str(epgDbSize))
-
             if int(epgSize) != int(epgDbSize):
+                deb('updateEPG: epg size is {0}'.format(epgSize))
                 if xbmc.Player().isPlaying() and self.mode == MODE_TV:
                     self.onRedrawEPGPlaying(self.channelIdx, self.viewStartDate)
                 else:
@@ -5782,6 +5776,12 @@ class mTVGuide(xbmcgui.WindowXML):
             self._showControl(self.C_MAIN_EPG)
             self.updateTimebar(scheduleTimer=False)
 
+            if not self.predefinedCategories:
+                self.predefinedCategories = self.getPredefinedCategories()
+
+            # remove existing controls
+            self._clearEpg()
+
             try:
                 self.channelIdx, channels, programs, cacheExpired = self.database.getEPGView(channelStart, startTime, self.onSourceProgressUpdate, initializing=initializing, startup=startup, force=False, clearExistingProgramList=True)
 
@@ -5790,12 +5790,6 @@ class mTVGuide(xbmcgui.WindowXML):
                 debug('onRedrawEPG onEPGLoadError')
                 self.onEPGLoadError()
                 return
-
-            if not self.predefinedCategories:
-                self.predefinedCategories = self.getPredefinedCategories()
-
-             # remove existing controls
-            self._clearEpg()
 
             self.catchupChannels = channels
 

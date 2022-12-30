@@ -1,4 +1,9 @@
-﻿v9.9.636 (2022-12-28)
+﻿v9.9.637 (2022-12-30)
+- EPG redraw fixes.
+- Decreased interval for auto EPG update.
+- Other fixes.
+
+v9.9.636 (2022-12-28)
 - Updated language files.
 - Bug fixes.
 

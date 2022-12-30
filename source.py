@@ -529,11 +529,11 @@ class Database(object):
                 self.conn.execute("PRAGMA foreign_keys = ON");
                 self.conn.execute("PRAGMA locking_mode = EXCLUSIVE");
                 self.conn.execute("PRAGMA encoding = 'UTF-8'");
-                self.conn.execute("PRAGMA temp_store = 2");
+                self.conn.execute("PRAGMA temp_store = 0");
                 self.conn.execute("PRAGMA cache_size = -32000");
                 if GET_PRAGMA_MODE:
                     self.conn.execute("PRAGMA journal_mode = WAL");
-                    self.conn.execute("PRAGMA temp_store = MEMORY");
+                    self.conn.execute("PRAGMA temp_store = 2");
                     self.conn.execute("PRAGMA synchronous = NORMAL");
                 self.conn.row_factory = sqlite3.Row
 
@@ -3469,7 +3469,7 @@ class MTVGUIDESource(Source):
             return 0
         if self.EPGSize is not None and not forceCheck:
             return self.EPGSize
-        epgRecheckTimeout = 900
+        epgRecheckTimeout = 3600
         failedCounter = 0
         while failedCounter < 3:
             try:
@@ -3504,6 +3504,7 @@ class MTVGUIDESource(Source):
                     deb('[UPD] getEpgSize Content: {}'.format(new_size))
 
                 self.EPGSize = new_size
+
                 break
 
             except Exception as ex:
@@ -3514,7 +3515,7 @@ class MTVGUIDESource(Source):
 
         if self.EPGSize == 0:
             self.EPGSize = defaultSize
-            epgRecheckTimeout = 600 #recheck in 10 min
+            epgRecheckTimeout = 300 #recheck in 5 min
         #This will force checking for updates every 1h
         self.timer = threading.Timer(epgRecheckTimeout, self.resetEpgSize)
         self.timer.start()
