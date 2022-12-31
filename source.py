@@ -1234,20 +1234,31 @@ class Database(object):
                                 if predefined not in categories:
                                     categories.append(predefined)
 
-                        backup_regex = re.compile(r'\w+\d+')
+                        backup_regex = re.compile(r'^(.*?)([0-9]+(\.[0-9]+)?)(.*)$')
                         if PY3:
                             channel_match = backup_regex.fullmatch(x.channelid)
                         else:
                             channel_match = backup_regex.match(x.channelid)
 
-                        if channel_match and CH_DISP_NAME:
-                            channelid = re.sub(r"([0-9]+(\.[0-9]+)?)",r" \1", x.channelid).strip()
-                            backup = True
+                        if CH_DISP_NAME:
+                            if channel_match:
+                                channelid = re.sub(r'([0-9]+(\.[0-9]+)?)', r' \1', x.channelid).strip()
+                                backup = True
 
+                            backup_regex_2 = re.compile(r'^(.*?)(\s[0-9])(.*)$')
                             if PY3:
-                                c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url, priority) VALUES(?, ?, ?)", [channelid, x.strm + '_BACKUP', priority])
+                                channel_match_2 = backup_regex_2.fullmatch(x.channelid)
                             else:
-                                c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url, priority) VALUES(?, ?, ?)", [channelid.encode('utf-8').decode('utf-8'), x.strm + '_BACKUP', priority])
+                                channel_match_2 = backup_regex_2.match(x.channelid)
+
+                            if channel_match_2:
+                                channelid = re.sub(r'\s([0-9])', r'\1', x.channelid).strip()
+                                backup = True
+
+                                if PY3:
+                                    c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url, priority) VALUES(?, ?, ?)", [channelid, x.strm + '_BACKUP', priority])
+                                else:
+                                    c.execute("INSERT OR REPLACE INTO custom_stream_url(channel, stream_url, priority) VALUES(?, ?, ?)", [channelid.encode('utf-8').decode('utf-8'), x.strm + '_BACKUP', priority])
 
                         if PY3:
                             c.execute("INSERT OR IGNORE INTO custom_stream_url(channel, stream_url, priority) VALUES(?, ?, ?)", [x.channelid, x.strm, priority])
@@ -1572,10 +1583,17 @@ class Database(object):
                 channelList = list()
 
                 if self.ChannelsWithStream == 'true':
-                    if onlyVisible:
-                        c.execute('SELECT DISTINCT chann.id, chann.title, chann.logo, chann.stream_url, chann.source, chann.visible, chann.weight, chann.titles FROM channels AS chann INNER JOIN custom_stream_url AS custom ON UPPER(chann.id) = UPPER(custom.channel) WHERE source=? AND visible=? ORDER BY weight', [self.source.KEY, True])
+                    if CH_DISP_NAME:
+                        if onlyVisible:
+                            c.execute('SELECT DISTINCT chann.id, chann.title, chann.logo, chann.stream_url, chann.source, chann.visible, chann.weight, chann.titles FROM channels AS chann INNER JOIN custom_stream_url AS custom ON UPPER(chann.id) = UPPER(custom.channel) OR UPPER(chann.title) = UPPER(custom.channel) WHERE source=? AND visible=? ORDER BY weight', [self.source.KEY, True])
+                        else:
+                            c.execute('SELECT DISTINCT chann.id, chann.title, chann.logo, chann.stream_url, chann.source, chann.visible, chann.weight, chann.titles FROM channels AS chann INNER JOIN custom_stream_url AS custom ON UPPER(chann.id) = UPPER(custom.channel) OR UPPER(chann.title) = UPPER(custom.channel) WHERE source=? ORDER BY weight', [self.source.KEY])
                     else:
-                        c.execute('SELECT DISTINCT chann.id, chann.title, chann.logo, chann.stream_url, chann.source, chann.visible, chann.weight, chann.titles FROM channels AS chann INNER JOIN custom_stream_url AS custom ON UPPER(chann.id) = UPPER(custom.channel) WHERE source=? ORDER BY weight', [self.source.KEY])
+                        if onlyVisible:
+                            c.execute('SELECT DISTINCT chann.id, chann.title, chann.logo, chann.stream_url, chann.source, chann.visible, chann.weight, chann.titles FROM channels AS chann INNER JOIN custom_stream_url AS custom ON UPPER(chann.id) = UPPER(custom.channel) WHERE source=? AND visible=? ORDER BY weight', [self.source.KEY, True])
+                        else:
+                            c.execute('SELECT DISTINCT chann.id, chann.title, chann.logo, chann.stream_url, chann.source, chann.visible, chann.weight, chann.titles FROM channels AS chann INNER JOIN custom_stream_url AS custom ON UPPER(chann.id) = UPPER(custom.channel) WHERE source=? ORDER BY weight', [self.source.KEY])
+
                 else:
                     if onlyVisible:
                         c.execute('SELECT * FROM channels WHERE source=? AND visible=? ORDER BY weight', [self.source.KEY, True])

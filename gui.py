@@ -6135,7 +6135,7 @@ class mTVGuide(xbmcgui.WindowXML):
                                     if ADDON.getSetting('{}_append_country_code'.format(i)) == '':
                                         playlists.append(i)
 
-                                    if ADDON.getSetting('{}_refr'.format(i)) == 'true':
+                                    if ADDON.getSetting('{}_refr'.format(i)) == 'true' and ADDON.getSetting('{}_source'.format(i)) == '0':
                                         cached.append(i)
 
                             if xbmc.getCondVisibility('!Window.IsVisible(notification)'):

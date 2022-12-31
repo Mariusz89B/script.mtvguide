@@ -443,10 +443,7 @@ class PlaylistUpdater(baseServiceUpdater):
 
             prefix = '|'.join(map(str, prefixList))
 
-            if PATTERN == 3:
-                regexAddList.append( re.compile('(\.|\s|^)(L\s*)?({prefix})(?=\.|\s|$)'.format(prefix=prefix)) )
-            else:
-                regexAddList.append( re.compile('(\s|^)(L\s*)?({prefix})(?=\s|$)'.format(prefix=prefix)) )
+            regexAddList.append( re.compile('(\.|\s|^)(L\s*)?({prefix})(?=\.|\s|$)'.format(prefix=prefix)) )
 
             regexHD = re.compile('(\s|^)(FHD:?|HD:?|720:?|720p:?|1080:?|1080i:?|1080p:?|HD\sHD)(?=\s|$)', re.IGNORECASE)
             regexUHD = re.compile('(\s|^)(UHD:?|UHDTV:?|4K:?|2160p:?)(?=\s|$)', re.IGNORECASE)
