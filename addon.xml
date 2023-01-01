@@ -2,7 +2,7 @@
 <addon
     id="script.mtvguide"
     name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]"
-    version="9.9.637-beta.2"
+    version="9.9.637-beta.3"
     provider-name="mariusz89b">
   <requires>
     <import addon="xbmc.addon" version="17.0.0"/>
@@ -40,8 +40,8 @@
     <license>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007 and MIT LICENSE.</license>
     <forum>https://github.com/Mariusz89B/script.mtvguide/discussions</forum>
 	<website>https://github.com/Mariusz89B/script.mtvguide</website>
-    <source>m-TVGuide © 2013 - 2022</source>
-    <news>v9.9.637 (2022-12-30)
+    <source>m-TVGuide © 2013 - 2023</source>
+    <news>v9.9.637 (2023-01-01)
 - EPG redraw fixes.
 - Decreased interval for auto EPG update.
 - Other fixes.

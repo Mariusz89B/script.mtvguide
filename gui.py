@@ -1949,7 +1949,7 @@ class mTVGuide(xbmcgui.WindowXML):
                 if xbmc.Player().isPlaying() and self.mode == MODE_TV:
                     self.onRedrawEPGPlaying(self.channelIdx, self.viewStartDate)
                 else:
-                    self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
+                    self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus, hide=True)
                 ADDON.setSetting('epg_size', str(epgDbSize))
 
     def getStreamsCid(self, channels):
@@ -4958,7 +4958,7 @@ class mTVGuide(xbmcgui.WindowXML):
         elif control is None:
             self.viewStartDate -= datetime.timedelta(hours=2)
             self.focusPoint.x = self.epgView.right
-            self.onRedrawEPG(self.channelIdx, self.viewStartDate, focusFunction=self._findControlOnLeft)
+            self.onRedrawEPG(self.channelIdx, self.viewStartDate, focusFunction=self._findControlOnLeft, hide=True)
 
     def _right(self, currentFocus):
         # debug('_right')
@@ -4969,7 +4969,7 @@ class mTVGuide(xbmcgui.WindowXML):
         elif control is None:
             self.viewStartDate += datetime.timedelta(hours=2)
             self.focusPoint.x = self.epgView.left
-            self.onRedrawEPG(self.channelIdx, self.viewStartDate, focusFunction=self._findControlOnRight)
+            self.onRedrawEPG(self.channelIdx, self.viewStartDate, focusFunction=self._findControlOnRight, hide=True)
 
     def _up(self, currentFocus):
         # debug('_up')
@@ -5751,7 +5751,7 @@ class mTVGuide(xbmcgui.WindowXML):
         self.onRedrawEPG(self.channelIdx, self.viewStartDate, self._getCurrentProgramFocus)
 
 
-    def onRedrawEPG(self, channelStart, startTime, focusFunction=None, initializing=False, startup=False, force=False):
+    def onRedrawEPG(self, channelStart, startTime, focusFunction=None, initializing=False, startup=False, force=False, hide=False):
         try:
             deb('onRedrawEPG')
             if force:
@@ -5776,11 +5776,9 @@ class mTVGuide(xbmcgui.WindowXML):
             self._showControl(self.C_MAIN_EPG)
             self.updateTimebar(scheduleTimer=False)
 
-            if not self.predefinedCategories:
-                self.predefinedCategories = self.getPredefinedCategories()
-
-            # remove existing controls
-            self._clearEpg()
+            if hide:
+                # remove existing controls
+                self._clearEpg()
 
             try:
                 self.channelIdx, channels, programs, cacheExpired = self.database.getEPGView(channelStart, startTime, self.onSourceProgressUpdate, initializing=initializing, startup=startup, force=False, clearExistingProgramList=True)
@@ -5790,6 +5788,13 @@ class mTVGuide(xbmcgui.WindowXML):
                 debug('onRedrawEPG onEPGLoadError')
                 self.onEPGLoadError()
                 return
+
+            if not self.predefinedCategories:
+                self.predefinedCategories = self.getPredefinedCategories()
+
+            if not hide:
+                # remove existing controls, needed for predefined categories to show on startup
+                self._clearEpg()
 
             self.catchupChannels = channels
 
