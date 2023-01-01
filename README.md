@@ -104,4 +104,4 @@ https://github.com/Mariusz89B/script.mtvguide/discussions
 
 ![](https://i.imgur.com/ipTGRvj.jpg)
 
-Copyright m-TVGuide © 2013 - 2022
+Copyright m-TVGuide © 2013 - 2023
