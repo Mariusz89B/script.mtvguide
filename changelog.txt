@@ -1,4 +1,7 @@
-﻿v9.9.637 (2023-01-05)
+﻿v9.9.638 (2023-03-12)
+- Fixed catchup default setting for playing/downloading content longer than 1 hour.
+
+v9.9.637 (2023-01-05)
 - EPG redraw fixes.
 - Decreased interval for auto EPG update.
 - Other fixes.

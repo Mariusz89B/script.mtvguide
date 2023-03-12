@@ -1319,7 +1319,7 @@ class PlayService(xbmc.Player, BasePlayService):
 
                                         # Default
                                         if ADDON.getSetting('archive_type') == '0':
-                                            matches = re.compile(r'^(http[s]?://[^/]+)/([^/]+)/([^/]*)(mpegts|\\.m3u8)(\\?.+=.+)?$')
+                                            matches = re.compile(r'^(http[s]?://[^/]+)/([^/]+)/([^/]*)(mpegts|\.m3u8)(\\?.+=.+)?$')
 
                                             catchupList = ['hls-custom', 'mono']
 
@@ -1432,7 +1432,7 @@ class PlayService(xbmc.Player, BasePlayService):
 
                                         # Xtream Codes
                                         if ADDON.getSetting('archive_type') == '2':
-                                            matches = re.compile(r'^(http[s]?://[^/]+)/(?:live/)?([^/]+)/([^/]+)/([^/\\.]+)(\\.m3u[8]?|\\.ts)?$')
+                                            matches = re.compile(r'^(http[s]?://[^/]+)/(?:live/)?([^/]+)/([^/]+)/([^/\\.]+)(\.m3u[8]?|\.ts)?$')
 
                                             if matches.match(strmUrl):
                                                 xcHost = matches.search(strmUrl).group(1)

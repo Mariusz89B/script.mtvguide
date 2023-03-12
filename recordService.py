@@ -745,7 +745,7 @@ class RecordService(BasePlayService):
                 archivePlaylist = str(self.archiveString)
                 catchupList = archivePlaylist.split(', ')
 
-                p = re.compile('service=playlist_\d&cid=\d+_AR.*')
+                p = re.compile(r'service=playlist_\d&cid=\d+_AR.*')
 
                 if not p.match(url):
                     return False
@@ -770,7 +770,7 @@ class RecordService(BasePlayService):
                             strmUrl = strmUrl_catchup.format(utc=utc, lutc=lutc)
 
                         if 'mono' in strmUrl:
-                            strmUrl = re.sub('\$', '', str(strmUrl))
+                            strmUrl = re.sub(r'\$', '', str(strmUrl))
                             strmUrl = re.sub('mono', 'video', str(strmUrl))
                     else:
                         deb('archive_type(4) wrong type')
@@ -784,7 +784,7 @@ class RecordService(BasePlayService):
 
                     # Default
                     if ADDON.getSetting('archive_type') == '0':
-                        matches = re.compile('^(http[s]?://[^/]+)/([^/]+)/([^/]*)(mpegts|\\.m3u8)(\\?.+=.+)?$')
+                        matches = re.compile(r'^(http[s]?://[^/]+)/([^/]+)/([^/]*)(mpegts|\.m3u8)(\\?.+=.+)?$')
 
                         catchupList = ['hls-custom', 'mono']
 
@@ -874,10 +874,10 @@ class RecordService(BasePlayService):
                     if ADDON.getSetting('archive_type') == '1':
                         setting = ADDON.getSetting('archive_string')
 
-                        putc = re.compile('(^\?utc=|^\&utc=)')
+                        putc = re.compile(r'(^\?utc=|^\&utc=)')
                         mutc = putc.match(setting)
 
-                        putv = re.compile('(^.*)(\{Y\}.\{m\}.\{d\}.*\{H\}.\{M\}.\{S\})(?=.*|$)')
+                        putv = re.compile(r'(^.*)(\{Y\}.\{m\}.\{d\}.*\{H\}.\{M\}.\{S\})(?=.*|$)')
                         mutv = putv.match(setting)
 
                         if mutc:
@@ -886,15 +886,15 @@ class RecordService(BasePlayService):
                         elif mutv:
                             catchup = ADDON.getSetting('archive_string').format(Y=year, m=month, d=day, H=hour, M=minute, S=second)
 
-                        putc = re.compile('(^\?utc=|^\&utc=)')
+                        putc = re.compile(r'(^\?utc=|^\&utc=)')
                         mutc = putc.match(catchup)
 
-                        putv = re.compile('(^.*)(\d{4}.\d{2}.\d{2}.*\d{2}.\d{2}.\d{2})(?=.*|$)')
+                        putv = re.compile(r'(^.*)(\d{4}.\d{2}.\d{2}.*\d{2}.\d{2}.\d{2})(?=.*|$)')
                         mutv = putv.match(catchup)
 
                         m_catchupSource = strmUrl + catchup
 
-                        if mutc: 
+                        if mutc:
                             strmUrl = m_catchupSource + '-' + str(int(duration)*60)
 
                         elif mutv:
@@ -911,7 +911,7 @@ class RecordService(BasePlayService):
 
                     # Xtream Codes
                     if ADDON.getSetting('archive_type') == '2':
-                        matches = re.compile('^(http[s]?://[^/]+)/(?:live/)?([^/]+)/([^/]+)/([^/\\.]+)(\\.m3u[8]?|\\.ts)?$')
+                        matches = re.compile(r'^(http[s]?://[^/]+)/(?:live/)?([^/]+)/([^/]+)/([^/\\.]+)(\.m3u[8]?|\.ts)?$')
 
                         if matches.match(strmUrl):
                             xcHost = matches.search(strmUrl).group(1)
@@ -1003,7 +1003,7 @@ class RecordService(BasePlayService):
             self.downloading = True
 
             for line in threadData['downloadHandle'].stdout:
-                p = re.compile('.*time=(.*?)\s')
+                p = re.compile(r'.*time=(.*?)\s')
 
                 i = 1
 
@@ -1117,8 +1117,6 @@ class RecordService(BasePlayService):
         recordCommand = list()
         recordCommand.append(self.ffmpegdumpExe)
 
-        duration = datetime.timedelta(seconds=int(programDuration))
-
         streamSource = channelInfo.strm
 
         cookieSeparator = streamSource.find('|')
@@ -1129,7 +1127,7 @@ class RecordService(BasePlayService):
 
             headers = removedCookie.split('&')
             newHeader = ""
-            newCookie = ""  
+            newCookie = ""
 
             UA = serviceLib.HOST
 
@@ -1197,7 +1195,7 @@ class RecordService(BasePlayService):
             recordCommand.append("h264_mp4toannexb")
 
         recordCommand.append("-t")
-        recordCommand.append(str(duration))
+        recordCommand.append("{}".format(programDuration))
         recordCommand.append("-loglevel")
         recordCommand.append("info")
         recordCommand.append("-n")
