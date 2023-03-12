@@ -1497,7 +1497,7 @@ msgid "Enable catchup"
 msgstr ""
 
 msgctxt "#59979"
-msgid "Wrong timeshift format."
+msgid "Wrong catchup format."
 msgstr ""
 
 msgctxt "#59980"
