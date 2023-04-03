@@ -1580,6 +1580,10 @@ msgctxt "#60018"
 msgid "Nordic"
 msgstr "Nordique"
 
+msgctxt "#60019"
+msgid "Adjust starttime (hours)"
+msgstr "Ajuster l'heure de début (heures)"
+
 msgctxt "#30913"
 msgid "Settings"
 msgstr "Paramètres"

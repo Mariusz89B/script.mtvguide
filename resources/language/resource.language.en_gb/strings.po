@@ -1656,6 +1656,10 @@ msgctxt "#60018"
 msgid "Nordic"
 msgstr ""
 
+msgctxt "#60019"
+msgid "Adjust starttime (hours)"
+msgstr ""
+
 msgctxt "#30912"
 msgid "Press one more time to return to main screen"
 msgstr ""

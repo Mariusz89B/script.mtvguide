@@ -79,6 +79,11 @@ from settingsImportExport import SettingsImp
 from skins import Skin
 from source import Program, Channel
 
+try:
+    from datetime import timezone
+except ImportError:
+    pass
+
 import collections
 
 from contextlib import contextmanager
@@ -312,6 +317,12 @@ def timebarAdjust():
     if timebar_adjust == '' or timebar_adjust is None:
         timebar_adjust = 0
     return timebar_adjust
+
+def timezoneAdjust():
+    timezone_adjust = ADDON.getSetting('archive_timezone_adjust')
+    if timezone_adjust == '' or timezone_adjust is None:
+        timezone_adjust = 0
+    return timezone_adjust
 
 def getDistro():
     if xbmc.getCondVisibility('System.HasAddon(service.coreelec.settings)'):
@@ -5132,13 +5143,18 @@ class mTVGuide(xbmcgui.WindowXML):
 
         self.program = program
 
-        dt = datetime.datetime.now() + datetime.timedelta(minutes=int(timebarAdjust()))
+        if PY3:
+            local = datetime.datetime.now(timezone.utc).astimezone().utcoffset() - datetime.timedelta(hours=int(timezoneAdjust()))
+        else:
+            local = datetime.datetime.now() - datetime.datetime.utcnow() - datetime.timedelta(hours=int(timezoneAdjust()))
+
+        dt = datetime.datetime.now() + datetime.timedelta(minutes=int(timebarAdjust())) + local
 
         # Playback for services
         if ADDON.getSetting('archive_support') == 'true':
             try:
-                ProgramEndDate = datetime.proxydt.strptime(str(self.program.endDate), '%Y-%m-%d %H:%M:%S')
-                ProgramStartDate = datetime.proxydt.strptime(str(self.program.startDate), '%Y-%m-%d %H:%M:%S')
+                ProgramEndDate = datetime.proxydt.strptime(str(self.program.endDate + local), '%Y-%m-%d %H:%M:%S')
+                ProgramStartDate = datetime.proxydt.strptime(str(self.program.startDate + local), '%Y-%m-%d %H:%M:%S')
             except:
                 ProgramEndDate = datetime.proxydt.strptime(str(dt), '%Y-%m-%d %H:%M:%S.%f')
                 ProgramStartDate = datetime.proxydt.strptime(str(dt), '%Y-%m-%d %H:%M:%S.%f')
@@ -5338,13 +5354,18 @@ class mTVGuide(xbmcgui.WindowXML):
     def playChannel(self, channel, program=None):
         deb('playChannel: {}'.format(program))
 
-        dt = datetime.datetime.now() + datetime.timedelta(minutes=int(timebarAdjust()))
+        if PY3:
+            local = datetime.datetime.now(timezone.utc).astimezone().utcoffset() - datetime.timedelta(hours=int(timezoneAdjust()))
+        else:
+            local = datetime.datetime.now() - datetime.datetime.utcnow() - datetime.timedelta(hours=int(timezoneAdjust()))
+
+        dt = datetime.datetime.now() + datetime.timedelta(minutes=int(timebarAdjust())) + local
 
         # Playback for services
         if ADDON.getSetting('archive_support') == 'true':
             try:
-                ProgramEndDate = datetime.proxydt.strptime(str(program.endDate), '%Y-%m-%d %H:%M:%S')
-                ProgramStartDate = datetime.proxydt.strptime(str(program.startDate), '%Y-%m-%d %H:%M:%S')
+                ProgramEndDate = datetime.proxydt.strptime(str(program.endDate + local), '%Y-%m-%d %H:%M:%S')
+                ProgramStartDate = datetime.proxydt.strptime(str(program.startDate + local), '%Y-%m-%d %H:%M:%S')
             except:
                 ProgramEndDate = datetime.proxydt.strptime(str(dt), '%Y-%m-%d %H:%M:%S.%f')
                 ProgramStartDate = datetime.proxydt.strptime(str(dt), '%Y-%m-%d %H:%M:%S.%f')

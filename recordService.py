@@ -72,6 +72,11 @@ else:
     from urllib2 import HTTPError, URLError 
     from urllib2 import quote
 
+try:
+    from datetime import timezone
+except ImportError:
+    pass
+
 import requests
 
 if xbmc.getCondVisibility('system.platform.android'):
@@ -145,6 +150,12 @@ def asciiPath(s):
         s = s
 
     return s
+
+def timezoneAdjust():
+    timezone_adjust = ADDON.getSetting('archive_timezone_adjust')
+    if timezone_adjust == '' or timezone_adjust is None:
+        timezone_adjust = 0
+    return timezone_adjust
 
 class proxydt(datetime.datetime):
     @staticmethod
@@ -753,14 +764,28 @@ class RecordService(BasePlayService):
                 # Catchup strings
                 duration = catchupList[0]
                 offset = catchupList[1]
-                utc = catchupList[2]
-                lutc = catchupList[3]
+                utc = int(catchupList[2])
+                lutc = int(catchupList[3])
                 year = catchupList[4]
                 month = catchupList[5]
                 day = catchupList[6]
                 hour = catchupList[7]
                 minute = catchupList[8]
                 second = catchupList[9]
+
+                utc_dt = datetime.datetime.fromtimestamp(utc)
+                lutc_dt = datetime.datetime.fromtimestamp(lutc)
+
+                if PY3:
+                    local = datetime.datetime.now(timezone.utc).astimezone().utcoffset() - datetime.timedelta(hours=int(timezoneAdjust()))
+                else:
+                    local = datetime.datetime.now() - datetime.datetime.utcnow() - datetime.timedelta(hours=int(timezoneAdjust()))
+
+                dt_local_utc = utc_dt + local
+                dt_local_lutc = lutc_dt + local
+
+                utc = str(int(dt_local_utc.timestamp()))
+                lutc = str(int(dt_local_lutc.timestamp()))
 
                 if strmUrl_catchup or ADDON.getSetting('archive_type') == '4':
                     if strmUrl_catchup:

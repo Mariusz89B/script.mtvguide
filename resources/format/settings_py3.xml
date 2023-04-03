@@ -3886,6 +3886,22 @@
 						<popup>false</popup>
 					</control>
 				</setting>
+				<setting help="" id="archive_timezone_adjust" label="60019" type="integer">
+					<level>1</level>
+					<default>0</default>
+					<constraints>
+						<minimum>-25</minimum>
+						<maximum>24</maximum>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="archive_support">true</condition>
+						</dependency>
+					</dependencies>
+					<control format="integer" type="slider">
+						<popup>false</popup>
+					</control>
+				</setting>
 			</group>
 			<group id="2" label="59983">
 				<setting help="95104" id="archive_finished_program" label="59984" type="boolean">

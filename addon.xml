@@ -2,7 +2,7 @@
 <addon
     id="script.mtvguide"
     name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]"
-    version="9.9.638-beta.1"
+    version="9.9.638-beta.2"
     provider-name="mariusz89b">
   <requires>
     <import addon="xbmc.addon" version="17.0.0"/>
@@ -43,6 +43,7 @@
     <source>m-TVGuide © 2013 - 2023</source>
     <news>v9.9.638 (2023-03-12)
 - Fixed catchup default setting for playing/downloading content longer than 1 hour.
+- Added offset and timezone adjustment for archive.
 
 v9.9.637 (2023-01-05)
 - EPG redraw fixes.
