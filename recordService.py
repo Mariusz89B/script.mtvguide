@@ -773,12 +773,13 @@ class RecordService(BasePlayService):
                 minute = catchupList[8]
                 second = catchupList[9]
 
-                utc_dt = datetime.datetime.fromtimestamp(utc)
-                lutc_dt = datetime.datetime.fromtimestamp(lutc)
-
                 if PY3:
+                    utc_dt = datetime.datetime.fromtimestamp(utc)
+                    lutc_dt = datetime.datetime.fromtimestamp(lutc)
                     local = datetime.datetime.now(timezone.utc).astimezone().utcoffset() - datetime.timedelta(hours=int(timezoneAdjust()))
                 else:
+                    utc_dt = datetime.datetime.utcfromtimestamp(utc)
+                    lutc_dt = datetime.datetime.utcfromtimestamp(lutc)
                     local = datetime.datetime.now() - datetime.datetime.utcnow() - datetime.timedelta(hours=int(timezoneAdjust()))
 
                 dt_local_utc = utc_dt + local
@@ -811,7 +812,7 @@ class RecordService(BasePlayService):
                     if ADDON.getSetting('archive_type') == '0':
                         matches = re.compile(r'^(http[s]?://[^/]+)/([^/]+)/([^/]*)(mpegts|\.m3u8)(\\?.+=.+)?$')
 
-                        catchupList = ['hls-custom', 'mono']
+                        catchupList = ['hls-custom', 'mono', 'video']
 
                         if matches.match(strmUrl):
                             r = matches.search(strmUrl)
@@ -837,8 +838,8 @@ class RecordService(BasePlayService):
                                 if fsListType == 'index':
                                     m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/timeshift_rel-' + str(offset) + '.m3u8' + str(fsUrlAppend)
 
-                                elif fsListType == 'video':
-                                    m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/video-' + str(utc) + '-' + str(lutc) + '.m3u8' + str(fsUrlAppend)
+                                #elif fsListType == 'video':
+                                    #m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/video-' + str(utc) + '-' + str(lutc) + '.m3u8' + str(fsUrlAppend)
 
                                 elif any(x in fsListType for x in catchupList):
                                     # Temporary fix for PlusX service

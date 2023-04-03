@@ -76,6 +76,12 @@ import ssl
 import socket
 
 import datetime, threading, sys, re
+
+try:
+    from datetime import timezone
+except ImportError:
+    pass
+
 import xbmc, xbmcgui
 from strings import *
 import strings as strings2
@@ -408,6 +414,12 @@ class PlayService(xbmc.Player, BasePlayService):
             #deb('looping while playing')
 
         response = sess.delete(url, headers=headers)
+
+    def timezoneAdjust(self):
+        timezone_adjust = ADDON.getSetting('archive_timezone_adjust')
+        if timezone_adjust == '' or timezone_adjust is None:
+            timezone_adjust = 0
+        return timezone_adjust
 
     def getUrl(self, strmUrl, cid, service, retry=False):
         mimeType = ''
@@ -1291,14 +1303,29 @@ class PlayService(xbmc.Player, BasePlayService):
                                     # Catchup strings
                                     duration = catchupList[0]
                                     offset = catchupList[1]
-                                    utc = catchupList[2]
-                                    lutc = catchupList[3]
+                                    utc = int(catchupList[2])
+                                    lutc = int(catchupList[3])
                                     year = catchupList[4]
                                     month = catchupList[5]
                                     day = catchupList[6]
                                     hour = catchupList[7]
                                     minute = catchupList[8]
                                     second = catchupList[9]
+
+                                    if PY3:
+                                        utc_dt = datetime.datetime.fromtimestamp(utc)
+                                        lutc_dt = datetime.datetime.fromtimestamp(lutc)
+                                        local = datetime.datetime.now(timezone.utc).astimezone().utcoffset() - datetime.timedelta(hours=int(self.timezoneAdjust()))
+                                    else:
+                                        utc_dt = datetime.datetime.utcfromtimestamp(utc)
+                                        lutc_dt = datetime.datetime.utcfromtimestamp(lutc)
+                                        local = datetime.datetime.now() - datetime.datetime.utcnow() - datetime.timedelta(hours=int(self.timezoneAdjust()))
+
+                                    dt_local_utc = utc_dt + local
+                                    dt_local_lutc = lutc_dt + local
+
+                                    utc = str(int(dt_local_utc.timestamp()))
+                                    lutc = str(int(dt_local_lutc.timestamp()))
 
                                     if strmUrl_catchup or ADDON.getSetting('archive_type') == '4':
                                         if strmUrl_catchup:
@@ -1321,7 +1348,7 @@ class PlayService(xbmc.Player, BasePlayService):
                                         if ADDON.getSetting('archive_type') == '0':
                                             matches = re.compile(r'^(http[s]?://[^/]+)/([^/]+)/([^/]*)(mpegts|\.m3u8)(\\?.+=.+)?$')
 
-                                            catchupList = ['hls-custom', 'mono']
+                                            catchupList = ['hls-custom', 'mono', 'video']
 
                                             if matches.match(strmUrl):
                                                 r = matches.search(strmUrl)
@@ -1347,8 +1374,8 @@ class PlayService(xbmc.Player, BasePlayService):
                                                     if fsListType == 'index':
                                                         m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/timeshift_rel-' + str(offset) + '.m3u8' + str(fsUrlAppend)
 
-                                                    elif fsListType == 'video':
-                                                        m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/video-' + str(utc) + '-' + str(lutc) + '.m3u8' + str(fsUrlAppend)
+                                                    #elif fsListType == 'video':
+                                                        #m_catchupSource = str(fsHost) + '/' + str(fsChannelId) + '/video-' + str(utc) + '-' + str(lutc) + '.m3u8' + str(fsUrlAppend)
 
                                                     elif any(x in fsListType for x in catchupList):
                                                         new_url = strmUrl + '?utc={utc}&lutc={lutc}'.format(utc=utc, lutc=lutc)
