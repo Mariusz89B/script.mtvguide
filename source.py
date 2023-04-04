@@ -93,6 +93,8 @@ from groups import *
 
 UA = xbmc.getUserAgent()
 
+CACHELIST = {}
+
 if PY3:
     try:
         PROFILE_PATH = xbmcvfs.translatePath(ADDON.getAddonInfo('profile'))
@@ -437,7 +439,6 @@ class Database(object):
         self.channelList = list()
         self.channelListAll = list()
         self.servicePlaylist = dict()
-        self.cacheList = dict()
         self.category = None
 
         if PY3:
@@ -897,20 +898,20 @@ class Database(object):
                         refr_lst.append(refr_c)
                         if GET_DATABASE_CLEARED:
                             cache = False
-                        self.cacheList.update({serviceHandler: {'cache': cache}})
+                        CACHELIST.update({serviceName: {'cache': cache}})
 
                 if (not cache and not 'playlist_' in serviceName) or serviceHandler.serviceEnabled == 'false':
                     self.removePredefinedCategoriesDb(serviceName)
 
-            if not self.cacheList:
-                self.deleteAllCustomStreams()
-                if os.path.exists(playlist_cache):
-                    os.remove(playlist_cache)
+            for k, v in CACHELIST.items():
+                if not v['cache']:
+                    self.deleteAllCustomStreams()
+                    if os.path.exists(playlist_cache):
+                        os.remove(playlist_cache)
 
-                for num in range(1, 6):
-                    filepath = os.path.join(PROFILE_PATH, 'playlists', 'playlist_{playlist}.m3u'.format(playlist=num))
-                    urlpath = os.path.join(PROFILE_PATH, 'playlists', 'playlist_{playlist}.url'.format(playlist=num))
-                    cachepath = os.path.join(PROFILE_PATH, 'playlists', 'playlist_{playlist}.cache'.format(playlist=num))
+                    filepath = os.path.join(PROFILE_PATH, 'playlists', '{playlist}.m3u'.format(playlist=k))
+                    urlpath = os.path.join(PROFILE_PATH, 'playlists', '{playlist}.url'.format(playlist=k))
+                    cachepath = os.path.join(PROFILE_PATH, 'playlists', '{playlist}.cache'.format(playlist=k))
 
                     if os.path.exists(filepath):
                         os.remove(filepath)
@@ -918,40 +919,40 @@ class Database(object):
                         os.remove(urlpath)
                     if os.path.exists(cachepath):
                         os.remove(cachepath)
-            else:
-                for s in services:
-                    if s not in serviceList:
-                        self.deleteCustomStreams(s.serviceName, s.serviceRegex)
-                        if 'playlist_' in s.serviceName:
-                            filepath = os.path.join(PROFILE_PATH, 'playlists', '{playlist}.m3u'.format(playlist=s.serviceName))
-                            urlpath = os.path.join(PROFILE_PATH, 'playlists', '{playlist}.url'.format(playlist=s.serviceName))
-                            cachepath = os.path.join(PROFILE_PATH, 'playlists', '{playlist}.cache'.format(playlist=s.serviceName))
 
-                            if os.path.exists(filepath):
-                                os.remove(filepath)
-                            if os.path.exists(urlpath):
-                                os.remove(urlpath)
-                            if os.path.exists(cachepath):
-                                os.remove(cachepath)
+            for s in services:
+                if s not in serviceList:
+                    self.deleteCustomStreams(s.serviceName, s.serviceRegex)
+                    if 'playlist_' in s.serviceName:
+                        filepath = os.path.join(PROFILE_PATH, 'playlists', '{playlist}.m3u'.format(playlist=s.serviceName))
+                        urlpath = os.path.join(PROFILE_PATH, 'playlists', '{playlist}.url'.format(playlist=s.serviceName))
+                        cachepath = os.path.join(PROFILE_PATH, 'playlists', '{playlist}.cache'.format(playlist=s.serviceName))
 
-                            if PY3:
-                                if os.path.exists(playlist_cache):
-                                    with open(playlist_cache, 'r', encoding='utf-8') as r:
-                                        r_services = r.read().splitlines()
+                        if os.path.exists(filepath):
+                            os.remove(filepath)
+                        if os.path.exists(urlpath):
+                            os.remove(urlpath)
+                        if os.path.exists(cachepath):
+                            os.remove(cachepath)
 
-                                    with open(playlist_cache, 'w', encoding='utf-8') as f:
-                                        for service in r_services:
-                                            if service != s.serviceName:
-                                                f.write(service+'\n')
-                            else:
-                                if os.path.exists(playlist_cache):
-                                    with codecs.open(playlist_cache, 'r', encoding='utf-8') as r:
-                                        r_services = r.read().splitlines()
+                        if PY3:
+                            if os.path.exists(playlist_cache):
+                                with open(playlist_cache, 'r', encoding='utf-8') as r:
+                                    r_services = r.read().splitlines()
 
-                                    with codecs.open(playlist_cache, 'w', encoding='utf-8') as f:
-                                        for service in r_services:
-                                            if service != s.serviceName:
-                                                f.write(service+'\n')
+                                with open(playlist_cache, 'w', encoding='utf-8') as f:
+                                    for service in r_services:
+                                        if service != s.serviceName:
+                                            f.write(service+'\n')
+                        else:
+                            if os.path.exists(playlist_cache):
+                                with codecs.open(playlist_cache, 'r', encoding='utf-8') as r:
+                                    r_services = r.read().splitlines()
+
+                                with codecs.open(playlist_cache, 'w', encoding='utf-8') as f:
+                                    for service in r_services:
+                                        if service != s.serviceName:
+                                            f.write(service+'\n')
 
         cacheExpired = self._isCacheExpired(date, initializing, startup, force)
         ADDON.setSetting('database_cleared', 'false')
@@ -1131,7 +1132,7 @@ class Database(object):
                     break
 
                 if priority == service.servicePriority:
-                    cached_service = [v['cache'] for k,v in self.cacheList.items() if k == service]
+                    cached_service = [v['cache'] for k,v in CACHELIST.items() if k == service.serviceName]
                     if cached_service:
                         cache = cached_service[0]
                     else:
@@ -1331,7 +1332,7 @@ class Database(object):
         serviceLib.baseServiceUpdater.baseMapContent = None
         for serviceName in playService.LIST:
             serviceHandler = playService.LIST[serviceName]
-            cached_service = [v['cache'] for k,v in self.cacheList.items() if k == serviceHandler]
+            cached_service = [v['cache'] for k,v in CACHELIST.items() if k == serviceName]
             if cached_service:
                 cache = cached_service[0]
                 if cache:

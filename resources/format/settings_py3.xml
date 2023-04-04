@@ -3886,7 +3886,7 @@
 						<popup>false</popup>
 					</control>
 				</setting>
-				<setting help="" id="archive_timezone_adjust" label="60019" type="integer">
+				<setting help="95153" id="archive_timezone_adjust" label="60019" type="integer">
 					<level>1</level>
 					<default>0</default>
 					<constraints>

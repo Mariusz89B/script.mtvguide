@@ -6180,6 +6180,14 @@ class mTVGuide(xbmcgui.WindowXML):
         else:
             self.close()
 
+        for i in playService.SERVICES:
+            if ADDON.getSetting('{}_refr'.format(i)) == 'true' and ADDON.getSetting('{}_source'.format(i)) == '0':
+                cachepath = os.path.join(self.profilePath, 'playlists', '{playlist}.cache'.format(playlist=i))
+                if not os.path.exists(cachepath):
+                    info = xbmcgui.Dialog().ok(strings(57051), strings(30979))
+                    super(mTVGuide, self).close()
+                    break
+
         if ADDON.getSetting('autostart_channel') == 'true':
             if ADDON.getSetting('autostart_channel_last') == 'true':
                 try:

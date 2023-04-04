@@ -1801,8 +1801,8 @@ msgid "Database updated"
 msgstr "Datenbank aktualiSiert"
 
 msgctxt "#30979"
-msgid "m-TVGuide restart required"
-msgstr "m-TVGuide neustart erforderlich"
+msgid "m-TVGuide restart required."
+msgstr "m-TVGuide neustart erforderlich."
 
 msgctxt "#30980"
 msgid "[COLOR]**WARNING!**[CR]Resetting your database will cause losing all settings![/COLOR]"
