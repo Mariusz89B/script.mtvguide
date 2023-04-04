@@ -1,4 +1,4 @@
-﻿v9.9.638 (2023-03-12)
+﻿v9.9.638 (2023-04-04)
 - Fixed catchup default setting for playing/downloading content longer than 1 hour.
 - Added offset and timezone adjustment for archive.
 
