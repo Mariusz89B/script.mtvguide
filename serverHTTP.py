@@ -58,8 +58,18 @@ from contextlib import closing
 ADDON = xbmcaddon.Addon(id='script.mtvguide')
 import requests
 
-requests.packages.urllib3.disable_warnings()
-requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += ':HIGH:!DH:!aNULL'
+try:
+    requests.packages.urllib3.disable_warnings()
+    requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += ':HIGH:!DH:!aNULL'
+except:
+    requests.packages.urllib3.disable_warnings()
+
+try:
+    requests.packages.urllib3.contrib.pyopenssl.util.ssl_.DEFAULT_CIPHERS += ':HIGH:!DH:!aNULL'
+except AttributeError:
+    # no pyopenssl support used / needed / available
+    pass
+
 import ssl
 try:
     _create_unverified_https_context = ssl._create_unverified_context
