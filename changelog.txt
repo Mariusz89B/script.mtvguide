@@ -1,4 +1,7 @@
-﻿v9.9.638 (2023-04-04)
+﻿v9.9.639 (2023-12-03)
+- Fixed urllib3 dependency.
+
+v9.9.638 (2023-04-04)
 - Fixed catchup default setting for playing/downloading content longer than 1 hour.
 - Added offset and timezone adjustment for archive.
 
