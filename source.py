@@ -3999,6 +3999,8 @@ class RssFeed(object):
         for url in self.rssUrl:
             if 'mods-kodi.pl' in url:
                 rssData = self.downloader.getJsonFromExtendedAPI(url, customHeaders=customHeaders)
+            elif 'mtvguide.xyz' in url:
+                rssData = self.downloader.getJsonFromExtendedAPI(url, customHeaders=customHeaders)
             else:
                 rssData = self.downloader.getJsonFromExtendedAPI(url)
 

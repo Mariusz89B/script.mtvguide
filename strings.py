@@ -51,7 +51,7 @@ else:
     PY3 = False
 
 ADDON_ID            = 'script.mtvguide'
-RSS_FILE            = 'http://mods-kodi.pl/infusions/kodi_info/kodi_info.txt' 
+RSS_FILE            = 'https://mods-kodi.pl/infusions/kodi_info/kodi_info.txt' 
 RSS_FILE_BACKUP     = 'https://raw.githubusercontent.com/Mariusz89B/script.mtvguide-support/main/kodi_info.txt'
 M_TVGUIDE_SUPPORT   = 'https://raw.githubusercontent.com/Mariusz89B/script.mtvguide-support/main/'
 ADDON               = xbmcaddon.Addon(id = ADDON_ID)

@@ -2,7 +2,7 @@
 <addon
     id="script.mtvguide"
     name="m-TVGuide [COLOR gold][B]EPG[/B][/COLOR]"
-    version="9.9.639"
+    version="9.9.640"
     provider-name="mariusz89b">
   <requires>
     <import addon="xbmc.addon" version="17.0.0"/>
@@ -40,8 +40,11 @@
     <license>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007 and MIT LICENSE.</license>
     <forum>https://github.com/Mariusz89B/script.mtvguide/discussions</forum>
 	<website>https://github.com/Mariusz89B/script.mtvguide</website>
-    <source>m-TVGuide © 2013 - 2023</source>
-    <news>v9.9.639 (2023-12-03)
+    <source>m-TVGuide © 2013 - 2024</source>
+    <news>v9.9.639 (2024-08-26)
+- Domain replaced.
+
+v9.9.639 (2023-12-03)
 - Fixed urllib3 dependency.
 
 v9.9.638 (2023-04-04)

@@ -89,7 +89,7 @@ Please see the **`LICENSE.txt`** file for details.
 
 ## Support
 
-Please report any legal questions or issues to support@mods-kodi.pl
+Please report any legal questions or issues to support@mtvguide.xyz
 
 Bug reports should be reported in issues section:<br>
 https://github.com/Mariusz89B/script.mtvguide/issues/new/choose
